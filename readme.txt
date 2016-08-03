@@ -3,7 +3,7 @@
 ### setup
 
 - clone the repo
-- create a file in `./app/js/` called `sitesettings.js`:
+- create a file in `./app/` called `app.settings.js`:
 ```
 var SITE=test/
 var SITENAME="Test";
