@@ -1,6 +1,6 @@
 angular
     .module('riskApp')
-    .controller('DashboardController', [
+    .controller('ProjectsRisksController', [
         '$scope', 
         '$rootScope',
         function (
@@ -8,7 +8,7 @@ angular
             $rootScope
         ) {
 
-            console.log("DashboardController init");
+            console.log("ProjectsRisksController init");
 
         }
     ]);
