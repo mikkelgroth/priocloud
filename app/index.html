@@ -19,7 +19,7 @@
             </div>
             <div class="user-container" ng-show="user.authenticated">         
                 <span>{{ user.name }}</span>
-                <div class="button" ng-controller="LoginController" ng-click="doLogout()">logout</div>
+                <div class="button" ng-click="doLogout()">logout</div>
             </div>
         </div>
     </header>
@@ -45,6 +45,8 @@
 
     <script src="app.settings.js"></script>
     <script src="app.js"></script>
+
+    <script src="components/dashboard/dashboard.js"></script>
 
     <!--
 	<script src="js/sitesettings.js"></script>

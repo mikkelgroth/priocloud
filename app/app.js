@@ -4,8 +4,7 @@ angular
     .module('riskApp', [
         'ngRoute',
         'ngAnimate',
-        'ui.sortable',
-        //'riskApp.components'
+        'ui.sortable'
     ])
     .config(['$routeProvider', function($routeProvider) {
 
@@ -27,10 +26,9 @@ angular
     .run(['$rootScope', function($rootScope) {
         
         $rootScope.SITENAME = SITENAME;
-        $rootScope.route = "/login";
-        
-        $rootScope.$on('$routeChangeSuccess', function(next, current) { 
-            
-            $rootScope.route = current.originalPath;
-        });
+
+        //$rootScope.route = "/login";
+        //$rootScope.$on('$routeChangeSuccess', function(next, current) { 
+        //    $rootScope.route = current.originalPath;
+        //});
     }]);
