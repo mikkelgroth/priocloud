@@ -8,7 +8,16 @@ angular
             $rootScope
         ) {
 
-            console.log("ProjectsDeliverablesController init");
+            $scope.doLogout = function() {
 
+                $rootScope.user = {
+                    'authenticated': false,
+                    'email': null
+                };
+
+                $window.sessionStorage["user"] = null;
+                
+                $location.path('/');
+            };
         }
     ]);

@@ -44,10 +44,10 @@
                 </div>
             </div>
         </div>
-        <div ng-show="user.authenticated">
+        <div user-authenticated="{display: true}">
             <div id="login" class="login">
                 <b>Logged in as: </b>{{ user.name }} <br/>
-                <button ng-controller="LoginController" ng-click="doLogout()">Logout</button>
+                <button ng-click="logout()">Logout</button>
             </div>
         </div>
     </div>

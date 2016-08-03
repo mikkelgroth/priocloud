@@ -2,6 +2,7 @@
 
 angular
     .module('riskApp', [
+        'rx',
         'ngRoute',
         'ngAnimate',
         'ui.sortable'
