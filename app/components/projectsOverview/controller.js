@@ -3,12 +3,15 @@ angular
     .controller('ProjectsOverviewController', [
         '$scope', 
         '$rootScope',
+        'stateService',
         function (
             $scope, 
-            $rootScope
+            $rootScope,
+            stateService
         ) {
 
             console.log("ProjectsOverviewController init");
 
+            $scope.projects = stateService.getProjects();
         }
     ]);
