@@ -1,0 +1,40 @@
+<ul>
+    <li class="active">
+        <a id="menufane1" href="#/login">Home</a>
+        <ul>
+            <li><a href="#/login">Log in/out</a></li>
+            <li><a href="#/about">What is PrioCloud</a></li>
+            <li><a href="#/alternatives">Great alternatives</a></li>
+            <li><a href="#/register">Create a new Company Portfolio</a></li>
+            <li><a href="#/help">Help</a></li>
+        </ul>
+    </li>
+    <span ng-show="user.authenticated">
+        <li ng-class="{ active: route == '/dashboard' }">
+            <a id="menufane2" href="#/dashboard">Portfolio</a>
+            <ul>
+                <li><a href="#/projects">Project list - Overview</a></li>
+                <li><a href="#/projects/dependencies">Project list - Dependencies</a></li>
+                <li><a href="#/projects/kpi">Project list - KPI</a></li>
+                <li><a href="#/projects/status">Project list - Status</a></li>
+                <li><a href="#/projects/purpose">Project list - Purpose</a></li>
+                <li><a href="#/projects/risks">Risk list</a></li> 
+                <li><a href="#/projects/deliverables">Deliverable list</a></li>
+            </ul>
+        </li>
+        <li  ng-class="{ active: route == '/settings' }" ng-if="!user.demo">
+            <a id="menufane4" href="#/settings">Settings</a>
+        </li>
+        <li  ng-class="{ active: route == '/admin' }" ng-if="user.admin || user.subadmin">
+            <a id="menufane5" href="#/admin">Administration</a>
+            <ul ng-show="route==admin">
+            	<li><a href="#/admin">Company and business units</a></li>
+            	<li><a href="#/admin/users">Users</a></li>
+            	<li><a href="#/admin/projects">Projects</a></li>
+            	<li><a href="#/admin/project-ratings" ng-if="user.admin">Project ratings</a></li>
+            	<li><a href="#/admin/risk-ratings">Risk ratings</a></li>
+            	<li><a href="#/admin/delete" ng-if="user.admin">Delete account</a></li>
+            </ul>
+        </li>
+    </span>
+</ul>

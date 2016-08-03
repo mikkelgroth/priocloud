@@ -1,0 +1,54 @@
+<div id="login">
+    <div class="mainbox editboxon">
+        <h2>PrioCloud - BETA TESTING</h2>
+        <h3>-a free online project portfolio management tool</h3>
+        <div class="login login-container" ng-show="!user.authenticated" ng-controller="LoginController">
+            <div id="login" class="column small-6">
+                <div class="login-box">
+                    <b>Log in to PrioCloud</b>
+                    <form ng-submit="doLogin()">
+                        <div class="field">
+                            <input placeholder="Email address" type="email" name="email" ng-model="login.email" autofocus />
+                        </div>
+                        <div class="field">
+                            <input placeholder="Password" type="password" name="password" ng-model="login.password" />
+                        </div>
+                        <div class="button">
+                            <button ng-submit="doLogin()">Login</button>
+                        </div>
+                    </form>
+                    <div>
+                        <i>
+                            <a class="link" ng-click="resetUserPWEmail(login.email)">I forgot my password - send me an email to reset my password</a>
+                        </i>
+                    </div>
+                </div>
+            </div>
+            <div class="column small-6">
+                <div class="demo-box">
+                    <b>Demo login</b>
+                    <div>
+                        You can login as the boardmember in "The Bank Company".<br/> This "Boardmember" have access to all
+                        projects and information. But he cannot persist changes to priorities beyond your session.<br/>&nbsp;<br/>
+                        <table class="smaller">
+                            <tr>
+                                <td style="background-color:#fff;"><b>Use email:</b></td>
+                                <td>boardmember@bank.demo</td>
+                            </tr>
+                            <tr>
+                                <td style="background-color:#fff;"><b>Use password:</b></td>
+                                <td>demo</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div ng-show="user.authenticated">
+            <div id="login" class="login">
+                <b>Logged in as: </b>{{ user.name }} <br/>
+                <button ng-controller="LoginController" ng-click="doLogout()">Logout</button>
+            </div>
+        </div>
+    </div>
+</div>

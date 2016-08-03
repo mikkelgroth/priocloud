@@ -11,7 +11,11 @@ angular
         $routeProvider.when('/', { redirectTo: '/projects' });
         $routeProvider.when('/dashboard', { redirectTo: '/projects' });
 
-        $routeProvider.when('/login', { controller: 'LoginController', templateUrl: 'components/login/login.html' });
+        $routeProvider.when('/login', { controller: 'LoginController', templateUrl: 'components/login/template.html' });
+        $routeProvider.when('/about', { controller: 'AboutController', templateUrl: 'components/about/template.html' });
+        $routeProvider.when('/alternatives', { controller: 'AlternativesController', templateUrl: 'components/alternatives/template.html' });
+        $routeProvider.when('/register', { controller: 'RegisterController', templateUrl: 'components/register/template.html' });
+        $routeProvider.when('/help', { controller: 'HelpController', templateUrl: 'components/help/template.html' });
 
         // Overviews/lists
         $routeProvider.when('/projects', { controller: 'ProjectsOverviewController', templateUrl: 'components/projectsOverview/template.html' });
