@@ -1,10 +1,8 @@
 <div id="projects-overview">
-	<h2>Project list - Overview</h2>
+    <h2>Project list - Overview</h2>
     <div class="smaller">
         <div class="filter-order-container">
-            <div class="label">
-                Filter by:
-            </div>
+            <div class="label">Filter by:</div>
             <div class="field">
                 <select ng-model="search.bu.name">
                     <option value="">All business units</option>
@@ -14,7 +12,7 @@
                         <option value="">All PO</option>
                         <option ng-repeat="u in users | filter: {source: true} | orderBy:'name'" value="{{u.name}}">{{u.name}}</option>
                 </select>
-                
+
                 <select ng-model="search.pm.name">
                         <option value="">All PM</option>
                         <option ng-repeat="u in users | filter: {source: true} | orderBy:'name'" value="{{u.name}}">{{u.name}}</option>
@@ -67,7 +65,9 @@
         <div class="overview">
             <table class="tablelist" ng-if="projects.length > 0">
                 <tr class="listsubject">
-                    <td colspan="7"><h3>Projects</h3></td>
+                    <td colspan="7">
+                        <h3>Projects</h3>
+                    </td>
                 </tr>
                 <tr class="header">
                     <td>Project, PM<br/>BU, PO</td>
@@ -75,12 +75,30 @@
                     <td colspan="2">Project/Product<br/>User feedback</td>
                     <td>Status date<br/>Demo date</td>
                 </tr>
-                  <tr ng-repeat="project in projects | filter:search | orderBy:porderparam " ng-click="editProject(project)" class="link">
-                    <td class="{{project.statuses[project.statuses.length-1].status}}"><b>{{project.title}}</b>, {{project.pm.name}}<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>{{project.bu.name}}</b>, {{project.po.name}}</td>
-                    <td>{{project.statuses[project.statuses.length-1].statusstate}}<br/>{{project.statuses[project.statuses.length-1].apo}}</td>
-                      <td class="{{csrender(project.statuses[project.statuses.length-1].cs)}}">{{project.statuses[project.statuses.length-1].cs}}</td>
-                    <td class="{{csrender(project.statuses[project.statuses.length-1].productcs)}}">{{project.statuses[project.statuses.length-1].productcs}}</td>
-                    <td><div class="right">{{project.statuses[project.statuses.length-1].date | date:'yyyy-MM-dd'}}<br/>{{project.statuses[project.statuses.length-1].demodate | date:'yyyy-MM-dd'}}</div></td> 
+                <tr ng-repeat="project in projects | filter:search | orderBy:porderparam" ng-click="editProject(project)" class="link">
+                    <td class="{{project.statuses[project.statuses.length-1].status}}">
+                        <b>{{project.title}}</b>, {{project.pm.name}}
+                        <br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <b>{{project.bu.name}}</b>, {{project.po.name}}
+                    </td>
+                    <td>
+                        {{project.statuses[project.statuses.length-1].statusstate}}
+                        <br/>
+                        {{project.statuses[project.statuses.length-1].apo}}
+                    </td>
+                    <td class="{{csrender(project.statuses[project.statuses.length-1].cs)}}">
+                        {{project.statuses[project.statuses.length-1].cs}}
+                    </td>
+                    <td class="{{csrender(project.statuses[project.statuses.length-1].productcs)}}">
+                        {{project.statuses[project.statuses.length-1].productcs}}
+                    </td>
+                    <td>
+                        <div class="right">
+                            {{project.statuses[project.statuses.length-1].date | date:'yyyy-MM-dd'}}
+                            <br/>
+                            {{project.statuses[project.statuses.length-1].demodate | date:'yyyy-MM-dd'}}
+                        </div>
+                    </td>
                 </tr>
             </table>
         </div>
