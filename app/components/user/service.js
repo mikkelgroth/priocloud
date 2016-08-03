@@ -4,21 +4,23 @@ angular
  
         var _this = this;
 
-        _this.user = {
-            id: 1234,
-            name: 'mikkel',
-            authenticated: true
-        }
+        _this.user = new rx.BehaviorSubject({});
+        _this.userAuthenticated = new rx.BehaviorSubject(false);
 
-        _this.userAuthenticated = new rx.BehaviorSubject(true);
+        _this.user.subscribe(function(user) {
 
-        $window.sessionStorage["user"] = JSON.stringify(_this.user);
+            $window.sessionStorage["user"] = JSON.stringify(user);
+        });
 
-        $timeout(function() {
-            
-            _this.userAuthentication.onNext(false);
+        _this.authenticate = function (user) {
 
-        }, 5000);
+            _this.user.onNext(user);
+            _this.userAuthenticated.onNext(true);
+        };
 
+        _this.invalidate = function () {
 
+            _this.user.onNext({});
+            _this.userAuthenticated.onNext(false);
+        };
     }]);

@@ -1,5 +1,5 @@
 var SITE="";
 var SITENAME="PrioCloud";
-var DBSERVER="http://priocloud.com:8080/rest";
-var USERSERVER="http://priocloud.com:8080/user";
+var DBSERVER="https://www.priocloud.com/priorest";
+var USERSERVER="https://www.priocloud.com/priouser";
 var PRIVATECLOUD="true";

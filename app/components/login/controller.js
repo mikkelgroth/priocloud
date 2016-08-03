@@ -1,22 +1,38 @@
 angular
     .module('riskApp')
     .controller('LoginController', [
-        '$scope', 
-        '$rootScope',
+        '$scope',
+        '$http',
+        '$location',
+        'userService',
         function (
-            $scope, 
-            $rootScope
+            $scope,
+            $http,
+            $location,
+            userService
         ) {
 
-            $scope.doLogout = function() {
+            $scope.login = function () {
 
-                $rootScope.user = {
-                    'authenticated': false,
-                    'email': null
-                };
+                $http
+                    .post(USERSERVER + '?action=login&application=priocloud&email=' + $scope.email + '&password=' + $scope.password)
+                    .success(function (data, status, headers, config) {
 
-                $window.sessionStorage["user"] = null;
-                
+                        if (!data.authenticated) {
+
+                            alert('Login failure:\n\n' + data.message);
+
+                        } else {
+
+                            userService.authenticate(data);
+                            $location.path('/');
+                        }
+                    });
+            };
+
+            $scope.logout = function () {
+
+                userService.invalidate();
                 $location.path('/');
             };
         }
