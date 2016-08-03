@@ -1,0 +1,19 @@
+{
+  "name": "priocloud",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app/app.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://mikkeldamm@bitbucket.org/mikkeldamm/priocloud.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "homepage": "https://bitbucket.org/mikkeldamm/priocloud#readme",
+  "devDependencies": {
+    "static-server": "2.0.3"
+  }
+}
