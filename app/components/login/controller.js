@@ -35,5 +35,19 @@ angular
                 userService.invalidate();
                 $location.path('/');
             };
+
+            $scope.resetPassword = function (email) {
+
+                $http
+                    .post(SERVER + '?action=resetpassword&application=priocloud&email=' + email)
+                    .success(function (data, status, headers, config) {
+                        
+                        alert('PW reset and mail sent');
+                    
+                    }).error(function (dataResponse) {
+                        
+                        alert('failure: ' + dataResponse.message);
+                    });
+            };
         }
     ]);
