@@ -1,0 +1,33 @@
+.dndbox{
+    width: auto;
+}
+.sortable-container{
+    padding-left: 0px !important;
+}
+.well{
+    border:1px solid green;
+    background: green !important;
+    margin: 15px;
+}
+.beingDragged {
+    height: 24px;
+    margin-bottom: .5em !important;
+    border: 2px dotted #ccc !important;
+    background: none !important;
+}
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+.dot {
+  stroke: #000;
+}
+
+.tooltip {
+  position: absolute;
+  pointer-events: none;
+}

@@ -1,0 +1,9 @@
+Project,EtC,Strategy,Complexity,Production,Compliance,PM,Status
+P1,10000,7,4,1,6,MGA,Green
+P2,20000,4,5,8,1,MGA,Green
+P3,12000,1,6,7,8,MGA,Yellow
+P4,5000,2,1,6,2,MGA,Green
+P5,7000,3,2,2,7,MGA,Yellow
+P6,30000,5,8,3,3,MGA,Green
+P7,15000,6,7,4,4,MGA,Green
+P8,35000,8,3,5,5,MGA,Red

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>Project</title>
+        <meta name="description" content="Prio Project">
+        <link rel="stylesheet" href="main.css">
+    </head>
+    <body>
+        <table>
+            <tr>
+                <td><a href="prioPortfolioDashboard.html">Portfolio Dashboard</a></td>
+                <td><a href="prioProject.html">Project</a></td>
+                <td><a href="prioSettings.html">Settings</a></td>
+                <td><a href="prioPortfolioPrio.html">Portfolio Prio</a></td>
+                <td><a href="prioRiskPrio.html">Risk Prio</a></td>
+            </tr>
+        </table>
+
+        <h1>PrioCloud</h1>
+        <h2>Settings</h2>
+        <table>
+        <tr><td><p>Company</p></td><td><input id="title"/></td></tr>
+        <tr><td><p>Administrator</p></td><td><select id="proow"><option value="userID">User A</option></select></td></tr>
+        <tr><td><p>Days to closure</p></td><td><input id="title"/></td></tr>
+        </table>
+
+        <h2>Users</h2>
+        <table>
+            <tr>
+                <td>Name</td>
+                <td>Title</td>
+                <td>Email</td>
+                <td>Account link</td>
+           </tr>
+            <tr>
+                <td><input id="username" value="Mikkel"/></td>
+                <td><input id="usertitle" value="Portfolio Manager"/></td>
+               <td><input id="usermail" value="mikkel.groth.privat@gmail.com"/></td>
+               <td><input type="button" id="link" value="Send link now"/></td>
+            </tr>
+            <tr>
+                <td><input id="username" value=""/></td>
+                <td><input id="usertitle" value=""/></td>
+               <td><input id="usermail" value=""/></td>
+                <td></td>
+            </tr>
+        </table>
+
+        <h2>Business Units</h2>
+        <table>
+            <tr>
+                <td>Name</td>
+                <td>Owner</td>
+          </tr>
+            <tr>
+                <td><input id="buname" value="Logistic"/></td>
+                <td><select id="buowner"><option value="userID">User A</option></select></td>
+            </tr>
+            <tr>
+                <td><input id="buname" value=""/></td>
+                <td><select id="buowner"><option value="userID">User A</option></select></td>
+            </tr>
+        </table>
+
+        <h2>Projects</h2>
+        <table>
+            <tr>
+                <td>Title</td>
+                <td>State</td>
+                <td>PM</td>
+                <td>BU</td>
+          </tr>
+         <tr>
+             <td><input id="title" value="P1"/></td>
+             <td><select id="state"><option value="proposed">Proposed</option><option value="active">Active</option><option value="onhold">On hold</option><option value="closed">Closed</option></select></td>
+             <td><p>PM</p></td><td><select id="propm"><option value="userID">User A</option></select></td>
+             <td><p>BU</p></td><td><select id="probu"><option value="buID">BU 1</option></select></td>
+            </tr>
+         <tr>
+             <td><input id="title"/></td>
+             <td><select id="state"><option value="proposed">Proposed</option><option value="active">Active</option><option value="onhold">On hold</option><option value="closed">Closed</option></select></td>
+             <td><p>PM</p></td><td><select id="propm"><option value="userID">User A</option></select></td>
+             <td><p>BU</p></td><td><select id="probu"><option value="buID">BU 1</option></select></td>
+            </tr>
+
+        </table>
+
+
+    </body>
+</html>

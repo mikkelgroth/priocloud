@@ -1,0 +1,167 @@
+
+<div ng-controller="ProjectCtrl">
+    <div class="fane set">{{project.title}}</div>
+</div>
+<div class="mainbox">
+    <div ng-controller="ProjectCtrl">
+        <h2>Risk priority 
+            <div class="right">
+                <button type="button" ng-click="editProject(project)">back to project</button> 
+                <button type="button"  ng-click="saveProject()" ng-if="(user.email==project.po.email || user.email==project.pm.email || user.isOwner || user.admin || user.prio) && !user.demo">save this priority</button>
+            </div>
+        </h2>
+    </div>
+    <div class="overview smaller"><div id='dashboard'></div></div>
+    <br/>
+    <div class="fanes">
+        <div id="fane1" class="fane bottom set" onclick="javascript:showhidesub(1,3)"><a>{{company.riskkpi1lable}} ({{company.riskkpi1weight}}<input type="hidden" ng-model="company.riskkpi1weight"/><input type="hidden" ng-model="company.riskkpi1sort"/>)</a></div>
+        <div id="fane2" class="fane bottom back" onclick="javascript:showhidesub(2,3)"><a>{{company.riskkpi2lable}} ({{company.riskkpi2weight}}<input type="hidden" ng-model="company.riskkpi2weight"/><input type="hidden" ng-model="company.riskkpi2sort"/>)</a></div>
+        <div id="fane3" class="fane bottom back" onclick="javascript:showhidesub(3,3)"><a>{{company.riskkpi3lable}} ({{company.riskkpi3weight}}<input type="hidden" ng-model="company.riskkpi3weight"/><input type="hidden" ng-model="company.riskkpi3sort"/>)</a></div>
+    </div>
+    <table class="smaller noborder">
+    <tr>
+        <td style="vertical-align: top;">
+        <div id="linkdiv1" class="view">
+            <div ng-if="user.email==riskproject.po.email || user.email==riskproject.pm.email || user.isOwner || user.admin || user.prio">
+            <div ng-if="company.riskkpi1sort == 'tophigh'" class="sortable-container" >
+                <h3 class="zeromargin">Drag and drop to sort the list</h3>
+                <ul ui-sortable="kpi1Config" ng-model="kpi1" class="sortable-container">
+                  <li ng-repeat="item in freqData | orderBy:'-freq.kpi1'">
+                    <b>{{item.title}}</b> &nbsp; &nbsp; &nbsp;  <div class="right">({{item.freq.kpi1}}) </div>
+                    </li>
+                </ul>
+            </div>
+            <div ng-if="company.riskkpi1sort != 'tophigh'" class="sortable-container" >
+                <h3 class="zeromargin">Drag and drop to sort the list</h3>
+                <ul ui-sortable="kpi1Config" ng-model="kpi1" class="sortable-container">
+                  <li ng-repeat="item in freqData | orderBy:'freq.kpi1'">
+                    <b>{{item.title}}</b> &nbsp; &nbsp; &nbsp;  <div class="right">({{item.freq.kpi1}}) </div>
+                    </li>
+                </ul>
+            </div>
+            </div>
+            <div ng-if="!(user.email==riskproject.po.email || user.email==riskproject.pm.email || user.isOwner || user.admin || user.prio) && company.riskkpi1sort == 'tophigh'">
+                <h3 class="zeromargin">Sorted list</h3>
+                <div class="overview">
+                <table class="tablelist">
+                    <tr class="header"><td><b>Risk title</b> - {{company.riskkpi1lable}} ({{company.riskkpi1weight}})</td><td>Value (1-100)</td></tr>
+                    <tr ng-repeat="item in freqData | orderBy:'-freq.kpi1'">
+                        <td><b>{{item.title}}</b></td><td><div class="right">({{item.freq.kpi1}})</div></td>
+                    </tr>
+                </table>
+                </div>
+            </div>
+            <div ng-if="!(user.email==riskproject.po.email || user.email==riskproject.pm.email || user.isOwner || user.admin || user.prio) && company.riskkpi1sort != 'tophigh'">
+                <h3 class="zeromargin">Sorted list</h3>
+                <div class="overview">
+                <table class="tablelist">
+                    <tr class="header"><td><b>Risk title</b> - {{company.riskkpi1lable}} ({{company.riskkpi1weight}})</td><td>Value (1-100)</td></tr>
+                    <tr ng-repeat="item in freqData | orderBy:'freq.kpi1'">
+                        <td><b>{{item.title}}</b></td><td><div class="right">({{item.freq.kpi1}})</div></td>
+                    </tr>
+                </table>
+                </div>
+            </div>
+        </div>
+        <div id="linkdiv2" class="noview">
+            <div ng-if="user.email==riskproject.po.email || user.email==riskproject.pm.email || user.isOwner || user.admin || user.prio">
+            <div ng-if="company.riskkpi2sort == 'tophigh'" class="sortable-container" >
+                <h3 class="zeromargin">Drag and drop to sort the list</h3>
+                <ul ui-sortable="kpi2Config" ng-model="kpi2" class="sortable-container">
+                  <li ng-repeat="item in freqData | orderBy:'-freq.kpi2'">
+                    <b>{{item.title}}</b> &nbsp; &nbsp; &nbsp;  <div class="right">({{item.freq.kpi2}}) </div>
+                    </li>
+                </ul>
+            </div>
+            <div ng-if="company.riskkpi2sort != 'tophigh'" class="sortable-container" >
+                <h3 class="zeromargin">Drag and drop to sort the list</h3>
+                <ul ui-sortable="kpi2Config" ng-model="kpi2" class="sortable-container">
+                  <li ng-repeat="item in freqData | orderBy:'freq.kpi2'">
+                     <b>{{item.title}}</b> &nbsp; &nbsp; &nbsp;  <div class="right">({{item.freq.kpi2}})</div>
+                    </li>
+                </ul>
+            </div>
+            </div>
+            <div ng-if="!(user.email==riskproject.po.email || user.email==riskproject.pm.email || user.isOwner || user.admin || user.prio) && company.riskkpi2sort == 'tophigh'">
+                <h3 class="zeromargin">Sorted list</h3>
+                <div class="overview">
+                <table class="tablelist">
+                    <tr class="header"><td><b>Risk title</b> - {{company.riskkpi2lable}} ({{company.riskkpi2weight}})</td><td>Value (1-100)</td></tr>
+                    <tr ng-repeat="item in freqData | orderBy:'-freq.kpi2'">
+                        <td><b>{{item.title}}</b></td><td><div class="right">({{item.freq.kpi2}})</div></td>
+                    </tr>
+                </table>
+                </div>
+            </div>
+            <div ng-if="!(user.email==riskproject.po.email || user.email==riskproject.pm.email || user.isOwner || user.admin || user.prio) && company.riskkpi2sort != 'tophigh'">
+                <h3 class="zeromargin">Sorted list</h3>
+                <div class="overview">
+                <table class="tablelist">
+                    <tr class="header"><td><b>Risk title</b> - {{company.riskkpi2lable}} ({{company.riskkpi2weight}})</td><td>Value (1-100)</td></tr>
+                    <tr ng-repeat="item in freqData | orderBy:'freq.kpi2'">
+                        <td><b>{{item.title}}</b></td><td><div class="right">({{item.freq.kpi2}})</div></td>
+                    </tr>
+                </table>
+                </div>
+            </div>
+        
+        </div>
+        <div id="linkdiv3" class="noview">
+            <div ng-if="user.email==riskproject.po.email || user.email==riskproject.pm.email || user.isOwner || user.admin || user.prio">
+            <div ng-if="company.riskkpi3sort == 'tophigh'" class="sortable-container" >
+                <h3 class="zeromargin">Drag and drop to sort the list</h3>
+                <ul ui-sortable="kpi3Config" ng-model="kpi3" class="sortable-container">
+                  <li ng-repeat="item in freqData | orderBy:'-freq.kpi3'">
+                     <b>{{item.title}}</b> &nbsp; &nbsp; &nbsp;  <div class="right">({{item.freq.kpi3}})</div>
+                    </li>
+                </ul>
+            </div>
+            <div ng-if="company.riskkpi3sort != 'tophigh'" class="sortable-container" >
+                <h3 class="zeromargin">Drag and drop to sort the list</h3>
+                <ul ui-sortable="kpi3Config" ng-model="kpi3" class="sortable-container">
+                  <li ng-repeat="item in freqData | orderBy:'freq.kpi3'">
+                    <b>{{item.title}}</b> &nbsp; &nbsp; &nbsp;  <div class="right">({{item.freq.kpi3}}) </div>
+                    </li>
+                </ul>
+            </div>
+            </div>
+            <div ng-if="!(user.email==riskproject.po.email || user.email==riskproject.pm.email || user.isOwner || user.admin || user.prio) && company.riskkpi3sort == 'tophigh'">
+                <h3 class="zeromargin">Sorted list</h3>
+                <div class="overview">
+                <table class="tablelist">
+                    <tr class="header"><td><b>Risk title</b> - {{company.riskkpi3lable}} ({{company.riskkpi3weight}})</td><td>Value (1-100)</td></tr>
+                    <tr ng-repeat="item in freqData | orderBy:'-freq.kpi3'">
+                        <td><b>{{item.title}}</b></td><td><div class="right">({{item.freq.kpi3}})</div></td>
+                    </tr>
+                </table>
+                </div>
+            </div>
+            <div ng-if="!(user.email==riskproject.po.email || user.email==riskproject.pm.email || user.isOwner || user.admin || user.prio) && company.riskkpi3sort != 'tophigh'">
+                <h3 class="zeromargin">Sorted list</h3>
+                <div class="overview">
+                <table class="tablelist">
+                    <tr class="header"><td><b>Risk title</b> - {{company.riskkpi3lable}} ({{company.riskkpi3weight}})</td><td>Value (1-100)</td></tr>
+                    <tr ng-repeat="item in freqData | orderBy:'freq.kpi3'">
+                        <td><b>{{item.title}}</b></td><td><div class="right">({{item.freq.kpi3}})</div></td>
+                    </tr>
+                </table>
+                </div>
+            </div>
+        
+        </div>
+
+   </td>
+        <td  style="vertical-align: top;">
+            <h3 class="zeromargin">Final sorted and weighted list</h3>
+            <div class="overview">
+            <table class="tablelist">
+                <tr class="header"><td><b>Risk title</b></td><td>Total value (1-100)</td></tr>
+                    <tr ng-repeat="item in freqData | orderBy:'-total'">
+                   <td><b>{{item.title}}</b></td><td><div class="right">({{item.total}})</div></td>   
+                </tr>
+            </table> 
+            </div>
+        </td> 
+    </tr>
+</table>    
+</div>       

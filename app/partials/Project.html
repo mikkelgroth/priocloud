@@ -1,0 +1,1874 @@
+<form ng-submit="saveProject()">
+    <div class="fanes">
+        <div id="fane1" class="fane set" onclick="javascript:showhide(1,8)"><a>{{project.title}}</a></div>
+        <div id="fane2" class="fane" onclick="javascript:showhide(2,8)"><a>Details</a></div>
+        <div id="fane3" class="fane" onclick="javascript:showhide(3,8)"><a>Status</a></div>
+        <div id="fane4" class="fane" onclick="javascript:showhide(4,8)"><a>Deliver.</a></div>
+        <div id="fane5" class="fane" onclick="javascript:showhide(5,8)"><a>Risks</a></div>
+        <div id="fane6" class="fane" onclick="javascript:showhide(6,8)"><a>Depend.</a></div>
+        <div id="fane7" class="fane" onclick="javascript:showhide(7,8)"><a>KPI</a></div>
+        <div id="fane8" class="fane" onclick="javascript:showhide(8,8)"><a>Finan.</a></div>
+    </div>
+
+<div id="linkdiv1" class="view">
+    <div class="mainbox" id="overview">
+        <h2 class="{{editstatus.status}}">
+            {{project.title}} - {{project.state}}
+        </h2>
+    	<table class="noborder nopadding smaller gutter-top">
+            
+            <tr>
+                <td>
+                    <div class="overview">
+                        <table class="tablelist">
+                            <tr class="header"><td colspan="2">Business unit: {{project.bu.name}}</td></tr>
+                            <tr><td class="label">PM </td><td class="wrap">{{project.pm.name}}</td></tr>
+                            <tr><td class="label">PO </td><td class="wrap">{{project.po.name}}</td></tr>
+                            <tr><td class="label texttop">Steering members</td><td class="wrap"><pre>{{project.memberssteering}}</pre></td></tr>
+                            <tr><td class="label texttop">Project members</td><td class="wrap"><pre>{{project.membersproject}}</pre></td></tr>
+                        </table>
+                    </div>
+                </td>
+            </tr>
+                      
+            <tr>
+                <td colspan="3">
+                    <div class="overview">
+                        <table class="tablelist">
+                            <tr class="header">
+                                <td>Date: {{editstatus.date | date:'yyyy-MM-dd'}}</td>
+                                <td>Status state: {{editstatus.statusstate}}<br/>PO approval: {{editstatus.apo}}</td>
+                                <td class="{{csrender(editstatus.cs)}}">Project feedback: {{editstatus.cs}}</td>
+                                <td class="{{csrender(editstatus.productcs)}}">Product feedback: {{editstatus.productcs}}</td>
+                            </tr>
+                            
+                            <tr>
+                                <td class="{{editstatus.status}} l texttop">Overall status</td>
+                                <td colspan="3" class="wrap xxxl"><pre>{{editstatus.overallcomments}}</pre></td>
+                            </tr>
+                            <tr>
+                                <td>Demo date</td>
+                                <td colspan="3" class="wrap xxxl"><pre>{{editstatus.demodate | date:'yyyy-MM-dd'}}</pre></td>
+                            </tr>
+                            <tr class="header">
+                                <td colspan="4">Status flags</td>
+                            </tr>
+                            <tr>
+                                <td class="{{editstatus.statusbc}} l texttop">Business case</td>
+                                <td colspan="3" class="wrap xxxl"><pre>{{editstatus.bccomments}}</pre></td>
+                            </tr>
+                            <tr>
+                                <td class="{{editstatus.statussc}} l texttop">Scope</td>
+                                <td colspan="3" class="wrap xxxl"><pre>{{editstatus.sccomments}}</pre></td>
+                            </tr>
+                            <tr>
+                                <td class="{{editstatus.statustl}} l texttop">Time line</td>
+                                <td colspan="3" class="wrap xxxl"><pre>{{editstatus.tlcomments}}</pre></td>
+                            </tr>
+                            <tr>
+                                <td class="{{editstatus.statusres}} l texttop">Resources</td>
+                                <td colspan="3" class="wrap xxxl"><pre>{{editstatus.rescomments}}</pre></td>
+                            </tr>
+                            <tr>
+                                <td class="{{editstatus.statusbud}} l texttop">Budget</td>
+                                <td colspan="3" class="wrap xxxl"><pre>{{editstatus.budcomments}}</pre></td>
+                            </tr>
+                            <tr>
+                                <td class="{{editstatus.statusrisk}} l texttop">Risks</td>
+                                <td colspan="3" class="wrap xxxl"><pre>{{editstatus.riskcomments}}</pre></td>
+                            </tr>
+                            <tr><td class="header" colspan="4">Status elaboration </td></tr>
+                            
+                            <tr><td class="label texttop">Delivered </td><td colspan="3" class="wrap xxxl"><pre>{{editstatus.del}}</pre></td></tr>
+                            <tr><td class="label texttop">Next </td><td colspan="3" class="wrap xxxl"><pre>{{editstatus.next}}</pre></td></tr>
+                            <tr><td class="label texttop">Concerns </td><td colspan="3" class="wrap xxxl"><pre>{{editstatus.concerns}}</pre></td></tr>
+                            <tr><td class="label texttop">Changes </td><td colspan="3" class="wrap xxxl"><pre>{{editstatus.changes}}</pre></td></tr>
+                            
+                        </table>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="3">
+                    <div class="overview">
+                        <table  class="tablelist">
+                            <tr class="header"><td>Economy</td><td>Budget</td><td>Posted</td><td>EtC</td></tr>
+                            <tr>
+                                <td class="header">Project total</td>
+                                <td class="wrap"><div class="right">{{editstatus.ab | currency:'TDKK ':0}}</div></td>
+                                <td class="wrap"><div class="right">{{editstatus.std | currency:'TDKK ':0}}</div></td>
+                                <td class="wrap"><div class="right">{{editstatus.EtC | currency:'TDKK ':0}}</div></td>
+                            </tr>
+                            <tr>
+                                <td class="header">Current year</td>
+                                <td class="wrap"><div class="right">{{editstatus.cab | currency:'TDKK ':0}}</div></td>
+                                <td class="wrap"><div class="right">{{editstatus.cstd | currency:'TDKK ':0}}</div></td>
+                                <td class="wrap"><div class="right">{{editstatus.cEtC | currency:'TDKK ':0}}</div></td>
+                            </tr>
+                            <tr>
+                                <td class="header">Next year</td>
+                                <td class="wrap"><div class="right">{{editstatus.nab | currency:'TDKK ':0}}</div></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                        </table>
+                    </div>
+                </td>
+            </tr>        
+              
+            <tr>
+                <td colspan="3">
+                    <div class="overview">
+                        <table class="tablelist">
+                            <tr class="header" ><td colspan="7">Brief business case</td></tr>
+                            <tr>
+                                <td class="label piecell">Prio total <div id="kpi7"></div></td>
+                                <td class="label piecell">{{company.projkpi1lable}} <div id="kpi1"></div></td>
+                                <td class="label piecell">{{company.projkpi2lable}} <div id="kpi2"></div></td>
+                                <td class="label piecell">{{company.projkpi3lable}} <div id="kpi3"></div></td>
+                                <td class="label piecell">{{company.projkpi4lable}} <div id="kpi4"></div></td>
+                                <td class="label piecell">{{company.projkpi5lable}} <div id="kpi5"></div></td>
+                                <td class="label piecell">{{company.projkpi6lable}} <div id="kpi6"></div></td>
+                            </tr>
+                            <tr><td class="label l texttop">Purpose </td><td class="wrap" colspan="6"><pre>{{project.outcome}}</pre></td></tr>
+                            <tr><td class="label l texttop">Benefits </td><td class="wrap" colspan="6"><pre>{{project.costbenefit}}</pre></td></tr>
+                            <tr><td class="label l texttop">Don't do impact </td><td class="wrap" colspan="6"><pre>{{project.costrisk}}</pre></td></tr>
+                        </table>
+                    </div>
+                </td>
+            </tr>
+             <tr>
+                <td colspan="3">
+                    <div class="overview">
+                        <table class="tablelist" ng-if="project.risks.length > 0">
+                            <tr class="header">
+                                <td class="label l">Risk</td>
+                                <td class="label">Prob.</td>
+                                <td class="label">Imp.</td>
+                                <td class="label">Response</td>
+                                <td class="label">Audience</td>
+                            </tr>
+                            <tr ng-repeat="risk in project.risks | orderBy:'-total'" ng-click="directRiskLink(risk)" class="link" ng-if="risk.state!='Closed'&&risk.audience!='Confidential'||(risk.audience=='Confidential'&&(user.email==project.po.email || user.email==project.pm.email || user.isOwner || user.admin)&&risk.state!='Closed'&&project.showconfrisk=='true')">
+                                <td class="{{risk.status}}">{{risk.title}}</td>
+                                <td ng-class="riskbarrender(risk.prob)"></td>
+                                <td ng-class="riskbarrender(risk.impact)"></td>
+                                <td>&nbsp;{{risk.response}}</td>
+                                <td>&nbsp;{{risk.audience}}</td>
+                            </tr>
+                        </table>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="3">
+                    <div class="overview">
+                        <table class="tablelist" ng-if="project.milestones.length > 0">
+                            <tr class="header">
+                                <td class="label l">(WSJF) Deliverable</td>                   
+                                <td class="label">Q1</td>
+                                <td class="label">Q2</td>
+                                <td class="label">Q3</td>
+                                <td class="label">Q4</td>
+                                <td class="label">State</td>
+                                <td class="label">End Date</td>
+                                
+                            </tr>
+                            <tr ng-repeat="mile in project.milestones | orderBy:'enddate'" ng-click="directMilestoneLink(mile)" class="link"  ng-if="mile.state!='Done' && mile.state!='Canceled'">
+                          
+                                <td class="{{mile.status}}">({{mile.wsjf}}) {{mile.title}}</td>
+                                <td class="bar xl" ng-style="barrender(mile)" colspan="4"></td>
+                                <td>&nbsp;{{mile.state}}</td>
+                                <td>&nbsp;{{mile.enddate | date:'yyyy-MM-dd'}}</td>
+                                
+                            </tr>
+                        </table>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="3">
+                    <div class="overview">
+                        <table class="tablelist">
+                            <tr class="header"><td>Dependencies</td><td>Required</td><td>Timing criticality</td><td>Skills/Availability status</td></tr>
+                            <tr ng-if="project.res1fte!='None'">
+                                <td class="header {{skillrender(project.res1skill)}} {{sizerender(project.res1)}}">{{company.res1lable}}</td>
+                                <td>{{project.res1fte}}</td>
+                                <td>{{project.res1}}</td>
+                                <td>{{project.res1skill}}</td>
+                            </tr>
+                            <tr ng-if="project.res2fte!='None'">
+                                <td class="header {{skillrender(project.res2skill)}} {{sizerender(project.res2)}}">{{company.res2lable}}</td>
+                                <td>{{project.res2fte}}</td>
+                                <td>{{project.res2}}</td>
+                                <td>{{project.res2skill}}</td>
+                            </tr>
+                            <tr ng-if="project.res3fte!='None'">
+                                <td class="header {{skillrender(project.res3skill)}} {{sizerender(project.res3)}}">{{company.res3lable}}</td>
+                                <td>{{project.res3fte}}</td>
+                                <td>{{project.res3}}</td>
+                                <td>{{project.res3skill}}</td>
+                            </tr>
+                            <tr ng-if="project.res4fte!='None'">
+                                <td class="header {{skillrender(project.res4skill)}} {{sizerender(project.res4)}}">{{company.res4lable}}</td>
+                                <td>{{project.res4fte}}</td>
+                                <td>{{project.res4}}</td>
+                                <td>{{project.res4skill}}</td>
+                            </tr>
+                            <tr ng-if="project.res5fte!='None'">
+                                <td class="header {{skillrender(project.res5skill)}} {{sizerender(project.res5)}}">{{company.res5lable}}</td>
+                                <td>{{project.res5fte}}</td>
+                                <td>{{project.res5}}</td>
+                                <td>{{project.res5skill}}</td>
+                            </tr>
+                            <tr ng-if="project.res6fte!='None'">
+                                <td class="header {{skillrender(project.res6skill)}} {{sizerender(project.res6)}}">{{company.res6lable}}</td>
+                                <td>{{project.res6fte}}</td>
+                                <td>{{project.res6}}</td>
+                                <td>{{project.res6skill}}</td>
+                            </tr>
+                            <tr ng-if="project.res7fte!='None'">
+                                <td class="header {{skillrender(project.res7skill)}} {{sizerender(project.res7)}}">{{company.res7lable}}</td>
+                                <td>{{project.res7fte}}</td>
+                                <td>{{project.res7}}</td>
+                                <td>{{project.res7skill}}</td>
+                            </tr>
+                            <tr ng-if="project.res8fte!='None'">
+                                <td class="header {{skillrender(project.res8skill)}} {{sizerender(project.res8)}}">{{company.res8lable}}</td>
+                                <td>{{project.res8fte}}</td>
+                                <td>{{project.res8}}</td>
+                                <td>{{project.res8skill}}</td>
+                            </tr>
+                            
+                        </table>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+<div id="linkdiv2" class="noview">
+    <div class="mainbox editboxon" id="details">
+        <h2>
+            Details 
+            <div class="right">
+                <button type="button" ng-class="{'Red': projecthaschanged}" ng-if="user.email==project.po.email || user.email==project.pm.email || user.email==project.altpo.email || user.email==project.altpm.email || user.isOwner || user.admin" ng-click="saveProject()">save project</button> 
+            </div>
+        </h2>
+        <table class="smaller gutter-top">
+            <tr>
+                <td class="l header">Title</td>
+                <td colspan="3"><div  ng-if="!user.isOwner && !user.admin">{{project.title}}</div>
+                    <input ng-if="user.isOwner || user.admin" ng-model="project.title" ng-change="$parent.projecthaschanged=true" id="title"/>
+                </td>
+            </tr>
+ 
+            
+            
+            <tr>
+                <td class="header">BU</td>
+                <td>
+                    <div  ng-if="!user.isOwner && !user.admin">{{project.bu.name}}</div>
+                    <select  ng-if="user.isOwner || user.admin" ng-model="project.bu" id="probu" ng-options="bu.name for bu in bus track by bu.name" ng-change="$parent.projecthaschanged=true"></select></td>
+                <td class="header">Audience</td>
+                <td><div ng-if="!user.isOwner && !user.admin">{{project.audience}}</div>
+                    <select  ng-if="user.isOwner || user.admin" ng-model="project.audience" ng-change="$parent.projecthaschanged=true">
+                        <option value="Project">Project</option>
+                        <option value="Business Unit">Business Unit</option>
+                        <option value="Company">Company</option>
+                     </select>
+                </td>
+            </tr>
+            <tr>
+                <td class="header">State</td>
+                <td>
+                    <div  ng-if="!user.isOwner && !user.admin">{{project.state}}</div>
+                    <select  ng-if="user.isOwner || user.admin" ng-model="project.state" id="state" ng-change="$parent.projecthaschanged=true">
+                    <option value="Proposed">Proposed</option>
+                    <option value="Progress">Progress</option>
+                    <option value="Onhold">On hold</option>
+                    <option value="Closed">Closed</option>
+                    </select>
+                </td>     
+                <td class="header">Supported</td>
+                <td><div ng-if="!user.isOwner && !user.admin">{{project.support}}</div>
+                    <select ng-if="user.isOwner || user.admin" ng-model="project.support" ng-change="$parent.projecthaschanged=true">
+                        <option value="None">None</option>
+                        <option value="PMO">PMO</option>
+                     </select>
+                </td>    
+            </tr>
+            <tr>
+                <td class="l header" colspan="4">Organization</td>
+            </tr>
+ 
+            
+             <tr>
+                <td class="header">PM</td>
+                <td><div  ng-if="!user.isOwner && !user.admin">{{project.pm.name}}</div>
+                    <select  ng-if="user.isOwner || user.admin" ng-model="project.pm" id="propm" ng-change="$parent.projecthaschanged=true" ng-options="u.name for u in users | filter: {source: true} | orderBy:'name' track by u.name"></select>
+               </td>
+                <td class="header">PO</td>
+                <td><div ng-if="!user.isOwner && !user.admin">{{project.po.name}}</div>
+                    <select  ng-if="user.isOwner || user.admin" ng-model="project.po" id="propo" ng-options="u.name for u in users | filter: {source: true} | orderBy:'name' track by u.name"  ng-change="$parent.projecthaschanged=true"></select></td>    
+            </tr>
+           <tr>
+                <td class="header">Alt. PM</td>
+                <td><div  ng-if="!user.isOwner && !user.admin">{{project.altpm.name}}</div>
+                    <select  ng-if="user.isOwner || user.admin" ng-model="project.altpm" id="proaltpm" ng-change="$parent.projecthaschanged=true" ng-options="u.name for u in users | filter: {source: true} | orderBy:'name' track by u.name"></select>
+               </td>
+                <td class="header">Alt. PO</td>
+                <td><div ng-if="!user.isOwner && !user.admin">{{project.altpo.name}}</div>
+                    <select  ng-if="user.isOwner || user.admin" ng-model="project.altpo" id="proaltpo" ng-options="u.name for u in users | filter: {source: true} | orderBy:'name' track by u.name"  ng-change="$parent.projecthaschanged=true"></select></td>    
+            </tr>
+           
+           <tr>
+                <td><p>Steering Commitee members</p></td>
+                <td colspan="3">
+                    <div class="field">
+                        <textarea ng-model="project.memberssteering" ng-change="projecthaschanged=true" placeholder="Name the members of your steering commitee."></textarea>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td><p>Project members</p></td>
+                <td colspan="3">
+                    <div class="field">
+                        <textarea ng-model="project.membersproject" ng-change="projecthaschanged=true" placeholder="Name the members of your project."></textarea>
+                    </div>
+                </td>
+            </tr>
+            
+            <tr>
+                <td class="l header" colspan="4">Brief business case</td>
+            </tr>
+            
+         
+            <tr>
+                <td><p>Purpose<span id="detailoutcome_count" class="right"></span></p></td>
+                <td colspan="3">
+                    <div class="field">
+                        <textarea ng-model="project.outcome" maxlength="300" ng-change="projecthaschanged=true" id="detailoutcome" placeholder="Your Elevator Pitch: What changes are you going to make to your business and customers and what is the overall business benefit."></textarea>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td><p>Benefits<span id="detailbenefit_count" class="right"></span></p></td>
+                <td colspan="3">
+                    <div class="field ">
+                        <textarea ng-model="project.costbenefit" maxlength="300" ng-change="projecthaschanged=true" id="detailbenefit" placeholder="What will you achieve by running this project and what will the business gain by this investment."></textarea>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td><p>Don't do impact<span id="detailrisk_count" class="right"></span></p></td>
+                <td colspan="3">
+                    <div class="field">
+                        <textarea ng-model="project.costrisk" maxlength="300" ng-change="projecthaschanged=true" id="detailrisk" placeholder="What will it cost the company to not make this investment."></textarea>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td><p>Benefit realisation plan<span id="detailreal_count" class="right"></span></p></td>
+                <td colspan="3">
+                    <div class="field">
+                        <textarea ng-model="project.benefitplan" maxlength="300" ng-change="projecthaschanged=true" id="detailreal" placeholder="When in time will you asses the results of this project and evaluate its bennefits."></textarea>
+                    </div>
+                </td>
+            </tr>
+        </table>
+        <h2>Project logs</h2>
+        <h3>Save log</h3>
+                    <table>
+                        <tr ng-repeat="log in project.logSave">
+                            <td>{{log.date | date:'yyyy-MM-dd @ HH:mm'}}</td><td>{{log.username}}</td><td>{{log.desc}}</td>                  
+                        </tr>
+                    </table>
+        <h3>View log</h3>
+                    <table>
+                        <tr ng-repeat="log in project.logWatch">
+                            <td>{{log.date | date:'yyyy-MM-dd @ HH:mm'}}</td><td>{{log.username}}</td><td>{{log.desc}}</td>                  
+                        </tr>
+                    </table>
+               
+    </div>
+</div>
+</form>
+
+<div id="linkdiv3" class="noview"> 
+    <div id="popdiv3" class="noview">  
+        <h2 class="{{editstatus.status}}">Status per. {{editstatus.date | date:'yyyy-MM-dd'}}
+            <div class="right">
+                <button type="button" ng-show="saveStatusEnabled" ng-click="saveStatus()" onclick="javascript:showhidepop(3,false)"  ng-if="(user.email==project.po.email || user.email==project.pm.email || user.email==project.altpo.email || user.email==project.altpm.email || user.isOwner || user.admin) && (editstatus.active==null || editstatus.active)">save status</button> 
+                <button type="button" onclick="javascript:showhidepop(3,false)">close</button> 
+                <button type="button" ng-click="newCloneStatus(editstatus)"  ng-if="user.email==project.po.email || user.email==project.pm.email || user.email==project.altpo.email || user.email==project.altpm.email || user.isOwner || user.admin"  onclick="javascript:showhidepop(3,false)">clone status</button>
+                <button type="button" ng-click="removeStatus(editstatus)"  ng-if="user.admin" onclick="javascript:showhidepop(3,false)">delete status</button>
+            </div>
+        </h2>
+    	<table class="smaller">
+            <tr>
+                <td class="header">Title</td>
+                <td><div class="field"><input ng-model="editstatus.title"/></div></td>
+                <td class="header">Next demo</td>
+                <td>
+                    <div class="field">
+                        <input class="time" id="demodate" ng-model="editstatus.demodate"/>
+                        <script type="text/javascript">new datepickr('#demodate');</script>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td class="header {{editstatus.status}}"><p>Overall flag <span id="overallstatus_count" class="right"></span></p></td>
+                <td>
+                    <select ng-model="editstatus.status">
+                        <option value="Green">OK (Green)</option>
+                        <option value="Yellow">Observe (Yellow)</option>
+                        <option value="Orange">Assist (Orange)</option>
+                        <option value="Red">Intervention (Red)</option>
+                    </select>
+                </td>
+                <td class="header"><p>Status state</p></td>
+                <td>
+                    <div ng-if="editstatus.statusstate!='Final'">
+                    <select ng-model="editstatus.statusstate">
+                            <option value="Draft">Draft</option>
+                            <option value="Ready">Ready</option>
+                    </select>
+                    </div>
+                    <div ng-if="editstatus.statusstate=='Final'">
+                        Final
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td class="header">Overall status</td>
+                <td colspan="3">
+                    <div class="field">
+                        <textarea ng-model="editstatus.overallcomments" maxlength="300" id="overallstatus" placeholder="Comments"></textarea>
+                    </div>
+                </td>
+            </tr>
+        </table>
+        <br/>
+        
+        <table class="smaller">
+            <tr>
+                <td class="header" colspan="3">Status flags</td>
+            </tr>
+            
+            
+            <tr>
+                <td class="{{editstatus.statusbc}}"><p>Business case <span id="bcstatus_count" class="right"></span></p></td>
+                <td>
+                    <select ng-model="editstatus.statusbc">
+                        <option value="Green">OK (Green)</option>
+                        <option value="Yellow">Observe (Yellow)</option>
+                        <option value="Orange">Assist (Orange)</option>
+                        <option value="Red">Intervention (Red)</option>
+                    </select>
+                </td>
+                <td>
+                    <div class="field">
+                        <textarea ng-model="editstatus.bccomments" maxlength="300" id="bcstatus" placeholder="Comments"></textarea>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td class="{{editstatus.statussc}}"><p>Scope <span id="scstatus_count" class="right"></span></p></td>
+                <td>
+                    <select ng-model="editstatus.statussc">
+                        <option value="Green">OK (Green)</option>
+                        <option value="Yellow">Observe (Yellow)</option>
+                        <option value="Orange">Assist (Orange)</option>
+                        <option value="Red">Intervention (Red)</option>
+                    </select>
+                </td>
+                <td>
+                    <div class="field">
+                        <textarea ng-model="editstatus.sccomments" maxlength="300" id="scstatus" placeholder="Comments"></textarea>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td class="{{editstatus.statustl}}"><p>Time line <span id="tlstatus_count" class="right"></span></p></td>
+                <td>
+                    <select ng-model="editstatus.statustl">
+                        <option value="Green">OK (Green)</option>
+                        <option value="Yellow">Observe (Yellow)</option>
+                        <option value="Orange">Assist (Orange)</option>
+                        <option value="Red">Intervention (Red)</option>
+                    </select>
+                </td>
+                <td>
+                    <div class="field">
+                        <textarea ng-model="editstatus.tlcomments" maxlength="300" id="tlstatus" placeholder="Comments"></textarea>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td class="{{editstatus.statusres}}"><p>Resources <span id="resstatus_count" class="right"></span></p></td>
+                <td>
+                    <select ng-model="editstatus.statusres">
+                        <option value="Green">OK (Green)</option>
+                        <option value="Yellow">Observe (Yellow)</option>
+                        <option value="Orange">Assist (Orange)</option>
+                        <option value="Red">Intervention (Red)</option>
+                    </select>
+                </td>
+                <td>
+                    <div class="field">
+                        <textarea ng-model="editstatus.rescomments" maxlength="300" id="resstatus" placeholder="Comments"></textarea>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td class="{{editstatus.statusbud}}"><p>Budget <span id="budstatus_count" class="right"></span></p></td>
+                <td>
+                    <select ng-model="editstatus.statusbud">
+                        <option value="Green">OK (Green)</option>
+                        <option value="Yellow">Observe (Yellow)</option>
+                        <option value="Orange">Assist (Orange)</option>
+                        <option value="Red">Intervention (Red)</option>
+                    </select>
+                </td>
+                <td>
+                    <div class="field">
+                        <textarea ng-model="editstatus.budcomments" maxlength="300" id="budstatus" placeholder="Comments"></textarea>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td class="{{editstatus.statusrisk}}"><p>Risks <span id="riskstatus_count" class="right"></span></p></td>
+                <td>
+                    <select ng-model="editstatus.statusrisk">
+                        <option value="Green">OK (Green)</option>
+                        <option value="Yellow">Observe (Yellow)</option>
+                        <option value="Orange">Assist (Orange)</option>
+                        <option value="Red">Intervention (Red)</option>
+                    </select>
+                </td>
+                <td>
+                    <div class="field">
+                        <textarea ng-model="editstatus.riskcomments" maxlength="300" id="riskstatus" placeholder="Comments"></textarea>
+                    </div>
+                </td>
+            </tr>
+            
+            
+            
+            <tr>
+                <td class="header" colspan="3">Status elaboration</td>
+            </tr>
+            
+            <tr>
+                <td><p>Delivered <span id="statusdel_count" class="right"></span></p></td>
+                <td colspan="2">
+                    <div class="field">
+                        <textarea ng-model="editstatus.del" maxlength="300" id="statusdel" placeholder="What have the project delivered compared to last status report."></textarea>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td><p>Next <span id="statusnext_count" class="right"></span></p></td>
+                <td colspan="2">
+                    <div class="field">
+                        <textarea ng-model="editstatus.next" maxlength="300" id="statusnext" placeholder="What are the project to deliver in the next iteration (until next status report)"></textarea>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td><p>Concerns <span id="statusconcerns_count" class="right"></span></p></td>
+                <td colspan="2">
+                    <div class="field">
+                        <textarea ng-model="editstatus.concerns" maxlength="300" id="statusconcerns" placeholder="What concerns regarding deliveries, milestones and risks needs highliting?"></textarea>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td><p>Changes <span id="statuschanges_count" class="right"></span></p></td>
+                <td colspan="2">
+                    <div class="field">
+                        <textarea ng-model="editstatus.changes" maxlength="300" id="statuschanges" placeholder="Is there changes to economy, deliveries, milestones and risk?"></textarea>
+                    </div>
+                </td>
+            </tr>
+
+            <tr ng-if="user.email==project.po.email || user.email==project.pm.email|| user.email==project.altpo.email || user.email==project.altpm.email || user.isOwner || user.admin">
+                <td><p>Comments <span id="statuscomments_count" class="right"></span></p></td>
+                <td colspan="2">
+                    <div class="field">
+                        <textarea ng-model="editstatus.comments" maxlength="300" id="statuscomments"></textarea>
+                    </div>
+                </td>
+            </tr>
+        </table>
+        <br/>
+        
+        <table class="smaller">
+            <tr class="header"><td>Economy</td><td>Budget (TDKK)</td><td>Posted (TDKK)</td><td>EtC (TDKK)</td></tr>
+            <tr>
+                <td class="header">Project total</td>
+                <td><div class="field"><input type="number" ng-model="editstatus.ab"/></div></td>
+                <td><div class="field"><input type="number" ng-model="editstatus.std"/></div></td>
+                <td><div class="field"><input type="number" ng-model="editstatus.EtC"/></div></td>
+            </tr>
+            <tr>
+                <td class="header">Current year</td>
+                <td><div class="field"><input type="number" ng-model="editstatus.cab"/></div></td>
+                <td><div class="field"><input type="number" ng-model="editstatus.cstd"/></div></td>
+                <td><div class="field"><input type="number" ng-model="editstatus.cEtC"/></div></td>
+            </tr>
+            <tr>
+                <td class="header">Next year</td>
+                <td><div class="field"><input type="number" ng-model="editstatus.nab"/></div></td>
+                <td></td>
+                <td></td>
+            </tr>
+        </table>
+        <br/>
+        
+        <br/>
+        <table class="smaller">
+            <tr>
+                <td class="header" colspan="4">PO section</td>
+            </tr>
+            <tr>
+                <td class="header">PO feedback</td>
+                <td>
+                    <div ng-if="user.email==project.po.email || user.email==project.altpo.email || user.isOwner || user.admin">
+                        <select ng-model="editstatus.apo">
+                            <option value="Not evaluated">Not evaluated</option>
+                            <option value="Amend">Amend</option>
+                            <option value="Approved">Approved</option>
+                        </select>
+                    </div>
+                    <div ng-if="user.email!=project.po.email && user.email!=project.altpo.email && !user.isOwner && !user.admin">
+                        {{editstatus.apo}}
+                    </div>
+                </td>
+                <td class="header">Status state</td>
+                <td>
+                    <div ng-if="user.email==project.po.email || user.email==project.altpo.email || user.isOwner || user.admin">
+                        <select ng-model="editstatus.statusstate">
+                            <option value="Draft">Draft</option>
+                            <option value="Ready">Ready</option>
+                            <option value="Final">Final</option>
+                         </select>
+                    </div>
+                    <div ng-if="user.email!=project.po.email && user.email!=project.altpo.email && !user.isOwner && !user.admin">
+                        {{editstatus.statusstate}}
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td class="header {{csrender(editstatus.cs)}}">Project feedback</td>
+                <td>
+                        <div ng-if="user.email==project.po.email || user.email==project.altpo.email || user.isOwner || user.admin">
+                        <select ng-model="editstatus.cs">
+                            <option value="1">1. Total breakdown</option>
+                            <option value="2">2. No value</option>
+                            <option value="3">3. Lack of trust</option>
+                            <option value="4">4. Comply</option>
+                            <option value="5">5. Trust</option>
+                            <option value="6">6. Real value</option>
+                            <option value="7">7. Great value</option>
+                            <option value="8">8. Exeptional</option>
+                        </select>
+                    </div>
+                    <div ng-if="user.email!=project.po.email && user.email!=project.altpo.email && !user.isOwner && !user.admin">
+                        {{editstatus.cs}}
+                    </div>
+                </td>
+                <td class="header {{csrender(editstatus.productcs)}}">Product feedback</td>
+                <td>
+                        <div ng-if="user.email==project.po.email || user.email==project.altpo.email || user.isOwner || user.admin">
+                        <select ng-model="editstatus.productcs">
+                            <option value="1">1. Total breakdown</option>
+                            <option value="2">2. No value</option>
+                            <option value="3">3. Lack of trust</option>
+                            <option value="4">4. Comply</option>
+                            <option value="5">5. Trust</option>
+                            <option value="6">6. Real value</option>
+                            <option value="7">7. Great value</option>
+                            <option value="8">8. Exeptional</option>
+                        </select>
+                    </div>
+                    <div ng-if="user.email!=project.po.email && user.email!=project.altpo.email && !user.isOwner && !user.admin">
+                        {{editstatus.productcs}}
+                    </div>
+                </td>   
+            </tr>
+            <tr>
+                <td colspan="4">
+                    <div class="right">
+                    <button type="button" ng-show="saveStatusEnabled" ng-click="saveStatus()" onclick="javascript:showhidepop(3,false)"  ng-if="(user.email==project.po.email || user.email==project.altpo.email || user.email==project.altpo.email || user.email==project.altpm.email || user.isOwner || user.admin) && (editstatus.active==null || editstatus.active)">save </button>
+                    </div>
+                </td>
+            </tr>
+        </table>
+  	</div>
+    <div class="mainbox" id="statushistory">
+        <h2>Status history 
+            <div class="right">
+                <button type="button" ng-click="newStatus()"  ng-if="user.email==project.po.email || user.email==project.pm.email || user.email==project.altpo.email || user.email==project.altpm.email || user.isOwner || user.admin" onclick="javascript:showhidepop(3,true)">create new status</button>
+            </div>
+        </h2>
+        <div class="overview">
+            <table class="tablelist smaller" ng-if="project.statuses.length > 0">
+                <tr class="header">
+                    <td>Title<br/>Audience</td>
+                    <td>Status state<br/>PO feedback</td>
+                    <td>Project feedback<br/>Product feedback</td>
+                    <td>Status date<br/>Demo date</td>
+                    <td>Spend<br/>Approved Budget</td>
+                </tr>
+               <tr ng-repeat="status in project.statuses"  ng-click="viewStatus(status)"  onclick="javascript:showhidepop(3,true)" class="link">
+                    <td class="{{status.status}}">&nbsp;{{status.title}}<br/>&nbsp;{{status.audience}}</td>
+                    <td ng-if="project.statuses.indexOf(status)==project.statuses.length-1" class="Blue">&nbsp;{{status.statusstate}}<br/>&nbsp;{{status.apo}}</td>
+                    <td ng-if="project.statuses.indexOf(status)!=project.statuses.length-1">&nbsp;{{status.statusstate}}<br/>&nbsp;{{status.apo}}</td>
+                    <td><table><tr><td class="{{csrender(status.cs)}}">{{status.cs}}</td><td class="{{csrender(status.productcs)}}">{{status.productcs}}</td></tr></table></td>
+                    <td><div class="right">&nbsp;{{status.date | date:'yyyy-MM-dd'}}<br/>&nbsp;{{status.demodate | date:'yyyy-MM-dd'}}</div></td>
+                   <td><div class="right">&nbsp;{{status.std | currency:'DKK ':0}}<br/>&nbsp;{{status.ab | currency:'DKK ':0}}</div></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div id="linkdiv4" class="noview">        
+    <div id="popdiv4" class="noview">
+        <h2 class="{{editmile.status}}">
+            ({{editmile.wsjf}}) {{editmile.title}}
+            <div class="right">
+                <button type="button" ng-click="saveMilestones()"  ng-if="user.email==project.po.email || user.email==project.pm.email || user.email==project.altpo.email || user.email==project.altpm.email || user.isOwner || user.admin" onclick="javascript:showhidepop(4,false)">save deliverable</button> 
+                <button type="button" onclick="javascript:showhidepop(4,false)">close</button> 
+            </div>
+        </h2>
+        <table class="smaller">
+            <tr>
+                <td class="header">Title</td>
+                <td>
+                    <div class="field">
+                        <input ng-model="editmile.title"/>
+                    </div>
+                </td>
+                <td class="header">Audience</td>
+                <td><select ng-model="editmile.audience">
+                        <option value="Project">Project</option>
+                        <option value="Business Unit">Business Unit</option>
+                        <option value="Company">Company</option>
+                     </select></td>
+            </tr>
+            <tr>
+                <td class="header">Delivery responsible</td>
+                <td>
+                    <select ng-model="editmile.responsible" ng-change="projecthaschanged=true" ng-options="u.name for u in users | filter: {source: true} | orderBy:'name' track by u.name"></select>
+                </td>
+                <td class="header">Delivery approver</td>
+                <td>
+                    <select ng-model="editmile.acountable" ng-change="projecthaschanged=true" ng-options="u.name for u in users | filter: {source: true} | orderBy:'name' track by u.name"></select>
+                    </td>
+            </tr>
+            <tr>
+                <td class="header">Start Date</td>
+                <td>
+                    <div class="field">
+                        <input class="time" id="miledate" ng-model="editmile.date"/>
+                        <script type="text/javascript">new datepickr('#miledate');</script>
+                    </div>
+                </td>
+                <td class="header">End Date</td>
+                <td>
+                    <div class="field">
+                        <input class="time" id="mileenddate" ng-model="editmile.enddate"/>
+                        <script type="text/javascript">new datepickr('#mileenddate');</script>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td class="header">Status</td>
+                <td><select ng-model="editmile.status">
+                        <option value="Green">OK (Green)</option>
+                        <option value="Yellow">Observe (Yellow)</option>
+                        <option value="Orange">Assist (Orange)</option>
+                        <option value="Red">Intervention (Red)</option>
+                    </select></td>
+                <td class="header">State</td>
+                <td><select ng-model="editmile.state">
+                        <option value="Target">Target</option>
+                        <option value="Qualified">Qualified</option>
+                        <option value="Progress">Progress</option>
+                        <option value="Done">Done</option>
+                        <option value="Canceled">Canceled</option>
+                    </select></td>
+            </tr>
+            <tr>
+                <td class="header">WSJF = {{editmile.wsjf}}</td>
+                <td class="header">Value enabler</td>
+                <td class="header"></td>
+                <td class="header">Value limiter</td>
+            </tr>
+            <tr>
+                <td class="header {{valuebarrender(editmile.bena)}}">Business enabler</td>
+                <td>
+                    <select  ng-model="editmile.bena">
+                        <option value="1">1. Minimal value</option>
+                        <option value="2">2. Medium value</option>
+                        <option value="3">3. Large value</option>
+                        <option value="4">4. Game changer</option>
+                    </select>
+                </td>
+                <td class="header {{riskbarrender(editmile.effort)}}">Effort</td>
+                <td>
+                    <select  ng-model="editmile.effort">
+                        <option value="1">1. Minimal effort</option>
+                        <option value="2">2. Medium effort</option>
+                        <option value="3">3. Large effort</option>
+                        <option value="4">4. Unknown effort</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td class="header {{valuebarrender(editmile.sena)}}">Strategy enabler</td>
+                <td>
+                    <select  ng-model="editmile.sena">
+                        <option value="1">1. Minimal value</option>
+                        <option value="2">2. Medium value</option>
+                        <option value="3">3. Large value</option>
+                        <option value="4">4. Game changer</option>
+                    </select>
+                </td>
+                <td class="header {{riskbarrender(editmile.risklevel)}}">Risk of failure</td>
+                <td>
+                    <select  ng-model="editmile.risklevel">
+                        <option value="1">1. Slim risk</option>
+                        <option value="2">2. Could happen</option>
+                        <option value="3">3. Likely to happen</option>
+                        <option value="4">4. Most likely to happen</option>
+                    </select>
+                </td>
+            </tr>
+            
+            <tr>
+                <td><p>Description<span id="miledel_count" class="right"></span></p></td>
+                <td colspan="3">
+                    <div class="field">
+                        <textarea ng-model="editmile.delivarables" maxlength="300" id="miledel" placeholder="Describe the key business delivery that this deliverable will produce."></textarea>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td><p>Value enablers<span id="milecom_count" class="right"></span></p></td>
+                <td colspan="3">
+                    <div class="field">
+                        <textarea ng-model="editmile.comments" maxlength="300" id="milecom" placeholder="Describe the enablers of creating value both on implementation and if it enables further strategic work in the future"></textarea>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td><p>Value limiters<span id="milerisk_count" class="right"></span></p></td>
+                <td colspan="3">
+                    <div class="field">
+                        <textarea ng-model="editmile.risks" maxlength="300" id="milerisk" placeholder="Describe the limiters that work against creating value like the amount of work and the assosiated risk of failure"></textarea>
+                    </div>
+                </td>
+            </tr>
+            <tr><td colspan="4"><div class="right">
+                <button type="button" ng-click="removeMilestone(editmile)"  ng-if="user.email==project.po.email || user.email==project.pm.email || user.isOwner || user.admin" onclick="javascript:showhidepop(4,false)">delete deliverable</button></div>
+                </td></tr>
+        </table>
+    </div>
+    <div class="mainbox" id="milestonelist">
+        <h2>
+            Deliverables 
+            <div class="right">
+                <select ng-model="orderdate" ng-init="orderdate='enddate'" style="font-size: 12px;">
+                    <option value="enddate" selected="selected">Order by end date</option>
+                    <option value="date">Order by start date</option>
+                    <option value="-wsjf">Order by WSJF</option>
+                  </select>
+                <button type="button" ng-click="newMilestone()"  ng-if="user.email==project.po.email || user.email==project.pm.email || user.email==project.altpo.email || user.email==project.altpm.email || user.isOwner || user.admin" onclick="javascript:showhidepop(4,true)">create new deliverable</button>
+            </div>
+        </h2>
+        <div class="overview">
+            <table class="tablelist smaller" ng-if="project.milestones.length > 0">
+                <tr class="header">
+                    <td>Title</td>
+                    <td>WSJF<br/>State</td>
+                    <td>Q1</td>
+                    <td>Q2</td>
+                    <td>Q3</td>
+                    <td>Q4</td>
+                    <td>Start Date<br/>End Date</td>
+                    <td>Responsible<br/>Approver</td>
+                </tr>
+                <tr ng-repeat="mile in project.milestones | orderBy:orderdate" ng-click="editMile(mile)"  onclick="javascript:showhidepop(4,true)" class="link">
+                    <td class="{{mile.status}}"><b>{{mile.title}}</b></td>
+                    <td><b>{{mile.wsjf}}</b><br/>{{mile.state}}</td>
+                    <td class="bar" ng-style="barrender(mile)" colspan="4"></td>
+                    <td><b>{{mile.date | date:'yyyy-MM-dd'}}</b><br/>{{mile.enddate | date:'yyyy-MM-dd'}}</td>
+                    <td><b>{{mile.responsible.name }}</b><br/>{{mile.acountable.name }}</td>
+                    
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>    
+</div>    
+    
+<div id="linkdiv5" class="noview">        
+    <div id="popdiv5" class="noview">
+        <h2 class="{{editrisk.status}}">
+            Risk
+            <div class="right">
+                <button type="button" ng-click="saveRisk()"  onclick="javascript:showhidepop(5,false)"  ng-if="user.email==project.po.email || user.email==project.pm.email || user.email==editrisk.acc.email || user.email==project.altpo.email || user.email==project.altpm.email || user.isOwner || user.admin">save risk</button> 
+                <button type="button" onclick="javascript:showhidepop(5,false)">close</button>
+            </div>
+        </h2>
+        <table class="smaller">
+            <tr>
+                <td class="header">Title</td>
+                <td>
+                    <div class="field">
+                        <input ng-model="editrisk.title"/>
+                    </div>
+                </td>
+                <td class="header">Response</td>
+                <td>
+                    <select  ng-model="editrisk.response">
+                        <option value="Accept">Accept</option>
+                        <option value="Mitigation">Mitigation</option>
+                        <option value="Contingency">Contingency</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td class="header">Responsible</td>
+                <td>
+                    <select ng-model="editrisk.acc" ng-change="projecthaschanged=true" ng-options="u.name for u in users | filter: {source: true} | orderBy:'name' track by u.name"></select>
+                </td>
+                <td class="header">Audience</td>
+                <td>
+                    <select  ng-model="editrisk.audience">
+                        <option value="Confidential">Confidential</option>
+                        <option value="Project">Project</option>
+                        <option value="Business Unit">Business Unit</option>
+                        <option value="Company">Company</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td class="header {{editrisk.status}}">Status</td>
+                <td>
+                    <select  ng-model="editrisk.status">
+                        <option value="Green">OK (Green)</option>
+                        <option value="Yellow">Observe (Yellow)</option>
+                        <option value="Orange">Assist (Orange)</option>
+                        <option value="Red">Intervention (Red)</option>
+                    </select>
+                </td>
+                <td class="header">State</td>
+                <td>
+                    <select ng-model="editrisk.state">
+                        <option value="New">New</option>
+                        <option value="Open">Open</option>
+                        <option value="Closed">Closed</option>
+                    </select>
+                </td>
+            </tr> 
+            <tr>
+                <td class="header {{riskbarrender(editrisk.prob)}}">Probability</td>
+                <td>
+                    <select  ng-model="editrisk.prob">
+                        <option value="1">1. Slim chance</option>
+                        <option value="2">2. Could happen</option>
+                        <option value="3">3. Likely to happen</option>
+                        <option value="4">4. Most likely to happen</option>
+                    </select>
+                </td>
+                <td class="header {{riskbarrender(editrisk.impact)}}">Impact</td>
+                <td>
+                    <select  ng-model="editrisk.impact">
+                        <option value="1">1. Minor Project impact</option>
+                        <option value="2">2. Major Project impact</option>
+                        <option value="3">3. Business Unit impact</option>
+                        <option value="4">4. Company impact</option>
+                    </select>
+                </td>
+            </tr> 
+            <tr>
+                <td><p>Description<span id="riskdesc_count" class="right"></span></p></td>
+                <td colspan="3">
+                    <div class="field">
+                        <textarea ng-model="editrisk.desc" maxlength="300" id="riskdesc" placeholder="Describe the risk and the associated loss of brand, time and/or cost."></textarea>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td><p>Mitigation<span id="riskmit_count" class="right"></span></p></td>
+                <td colspan="3">
+                    <div class="field">
+                        <textarea ng-model="editrisk.miti" maxlength="300" id="riskmit" placeholder="Describe actions beside normal work or attention that can decrease or remove the risk and its associatted cost."></textarea>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td><p>Contingency trigger<span id="risktrig_count" class="right"></span></p></td>
+                <td colspan="3">
+                    <div class="field">
+                        <textarea ng-model="editrisk.trigger" maxlength="300" id="risktrig" placeholder="Describe the tippingpoint were a risk turns in to an issue that demands for the contingency plan to come in to effect."></textarea>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td><p>Contingency plan<span id="riskplan_count" class="right"></span></p></td>
+                <td colspan="3">
+                    <div class="field">
+                        <textarea ng-model="editrisk.cont" maxlength="300" id="riskplan" placeholder="Describe the plan and associated cost for getting back in control after an risk incident."></textarea>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td><p>Status change comment<span id="riskplan_count" class="right"></span></p></td>
+                <td colspan="3">
+                    <div class="field">
+                        <textarea ng-model="editrisk.comment" maxlength="300" id="riskplan" placeholder="Comments regarding the change of state, probability and impact."></textarea>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="4" ng-if="user.email==project.po.email || user.email==project.pm.email || user.email==project.altpo.email || user.email==project.altpm.email || user.isOwner || user.admin">
+                    <div class="right">
+                        <button type="button" ng-click="removeRisk(editrisk)"  onclick="javascript:showhidepop(5,false)">delete risk</button>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="mainbox" id="risklist">
+        <h2>
+            Open risks 
+            <div class="right">
+                    <button type="button" ng-click="newRisk()" onclick="javascript:showhidepop(5,true)"  ng-if="user.email==project.po.email || user.email==project.pm.email || user.email==project.altpo.email || user.email==project.altpm.email || user.isOwner || user.admin">create new risk</button>
+                <!--    
+                <a href="#/risk">
+                        <button type="button">risk priority</button>
+                    </a>
+                -->
+            </div>
+        </h2>
+        <div class="overview">
+            <table class="tablelist smaller" ng-if="project.risks.length > 0">
+                <tr><td colspan="6">
+                    <select ng-if="user.email==project.po.email || user.email==project.pm.email || user.email==project.altpo.email || user.email==project.altpm.email || user.isOwner || user.admin" ng-model="project.showconfrisk" class="right">
+                        <option value="true" default>Show confidential risks</option>
+                        <option value="false">Hide confidential risks</option>
+                    </select>
+                    <select ng-model="riskpmsearch.acc.name" class="right">
+                        <option value="">All responsibles</option>
+                        <option ng-repeat="u in users | filter: {source: true} | orderBy:'name'" value="{{u.name}}">{{u.name}}</option>
+                    </select>
+        </td></tr>
+                <tr class="header">
+                    <td class="label">Title</td>
+                    <td class="label">Probability</td>
+                    <td class="label">Impact</td>
+                    <td class="label">Description</td>
+                    <td class="label">State<br/>Response</td>
+                    <td class="label">Audience<br/>Responsible</td>
+                </tr>
+                <tr ng-repeat="risk in project.risks | filter:riskpmsearch | orderBy:'-total'"  ng-click="editRisk(risk)" onclick="javascript:showhidepop(5,true)"  class="link" ng-if="(risk.state!='Closed' && risk.audience!='Confidential')||(risk.state!='Closed'&&risk.audience=='Confidential'&&project.showconfrisk=='true'&&(user.email==project.po.email || user.email==project.pm.email || user.email==project.altpo.email || user.email==project.altpm.email || user.isOwner || user.admin))">
+                    <td class="texttop {{risk.status}}"><b>{{risk.title}}</b> <div class="right">({{risk.total}})</div></td>
+                    <td class="texttop {{riskbarrender(risk.prob)}}">{{risk.prob}}</td>
+                    <td class="texttop {{riskbarrender(risk.impact)}}">{{risk.impact}}</td>
+                    <td class="wrap texttop"><pre>{{risk.desc}}</pre></td>
+                    <td class="texttop">&nbsp;{{risk.state}}<br/>&nbsp;{{risk.response}}</td>
+                    <td class="texttop">&nbsp;{{risk.audience}}<br/>&nbsp;{{risk.acc.name}}</td>
+                </tr>
+            </table>
+        </div>
+        <h2>Closed risks</h2>
+        <div class="overview">
+            <table class="tablelist smaller" ng-if="project.risks.length > 0">
+                <tr class="header">
+                    <td class="l">Title</td>
+                    <td class="l">Description</td>
+                    <td class="l">Response</td>
+                </tr>
+                <tr ng-repeat="risk in project.risks | orderBy:'-total'"  ng-click="editRisk(risk)" onclick="javascript:showhidepop(5,true)"  class="link" ng-if="(risk.state=='Closed'&&risk.audience!='Confidential')||(risk.state=='Closed'&&risk.audience=='Confidential'&&(user.email==project.po.email || user.email==project.pm.email || user.email==project.altpo.email || user.email==project.altpm.email || user.isOwner || user.admin))">
+                    <td class="{{risk.status}}">{{risk.title}}</td>
+                    <td class="wrap">{{risk.desc.substring(0,80)}} ...</td>
+                    <td>{{risk.response}}</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+<div id="linkdiv6" class="noview">        
+        <h2>
+            Dependencies  
+            <div class="right">
+                <button type="button" ng-class="{'Red': projecthaschanged}" ng-if="user.email==project.po.email || user.email==project.pm.email || user.email==project.altpo.email || user.email==project.altpm.email || user.isOwner || user.admin" ng-click="saveProject()">save project</button> 
+            </div>
+        </h2>
+         <table class="smaller">
+             <tr class="header"><td>Resource type</td><td>Required</td><td>Timing criticality</td><td>Skills/Availability status</td></tr>
+            <tr><td  class="header {{skillrender(project.res1skill)}} {{sizerender(project.res1)}}">{{company.res1lable}}</td>
+                <td><select ng-model="project.res1fte" ng-change="$parent.projecthaschanged=true">
+                        <option value="None">None</option>
+                        <option value="Minor tasks">Minor tasks</option>
+                        <option value="Major tasks">Major tasks</option>
+                        <option value="1 FTE">1 FTE</option>
+                        <option value="2-3 FTE">2-3 FTE</option>
+                        <option value="4-7 FTE">4-7 FTE</option>
+                        <option value="8- FTE">8- FTE</option>
+                    </select>
+                </td>
+                <td><select ng-if="project.res1fte!='None'" ng-model="project.res1" ng-change="$parent.projecthaschanged=true">
+                        <option value="No dependency">No dependency</option>
+                        <option value="Minor dependency">Minor dependency</option>
+                        <option value="Major dependency">Major dependency</option>
+                        <option value="Critical dependency">Critical dependency</option>
+                    </select>
+                </td>
+                <td><select ng-if="project.res1fte!='None'" ng-model="project.res1skill" ng-change="$parent.projecthaschanged=true">
+                        <option value="Ok">Ok</option>
+                        <option value="Minor issue">Minor issue</option>
+                        <option value="Major issue">Major issue</option>
+                        <option value="Emergency">Emergency</option>
+                    </select>
+                </td>
+                
+             </tr>
+            <tr><td  class="header {{skillrender(project.res2skill)}} {{sizerender(project.res2)}}">{{company.res2lable}}</td>
+                <td><select ng-model="project.res2fte" ng-change="$parent.projecthaschanged=true">
+                        <option value="None">None</option>
+                        <option value="Minor tasks">Minor tasks</option>
+                        <option value="Major tasks">Major tasks</option>
+                        <option value="1 FTE">1 FTE</option>
+                        <option value="2-3 FTE">2-3 FTE</option>
+                        <option value="4-7 FTE">4-7 FTE</option>
+                        <option value="8- FTE">8- FTE</option>
+                    </select>
+                </td>
+                <td><select ng-if="project.res2fte!='None'" ng-model="project.res2" ng-change="$parent.projecthaschanged=true">
+                        <option value="No dependency">No dependency</option>
+                        <option value="Minor dependency">Minor dependency</option>
+                        <option value="Major dependency">Major dependency</option>
+                        <option value="Critical dependency">Critical dependency</option>
+                    </select>
+                </td>
+                <td><select ng-if="project.res2fte!='None'" ng-model="project.res2skill" ng-change="$parent.projecthaschanged=true">
+                        <option value="Ok">Ok</option>
+                        <option value="Minor issue">Minor issue</option>
+                        <option value="Major issue">Major issue</option>
+                        <option value="Emergency">Emergency</option>
+                    </select>
+                </td>
+                
+             </tr>
+            <tr><td  class="header {{skillrender(project.res3skill)}} {{sizerender(project.res3)}}">{{company.res3lable}}</td>
+                <td><select ng-model="project.res3fte" ng-change="$parent.projecthaschanged=true">
+                        <option value="None">None</option>
+                        <option value="Minor tasks">Minor tasks</option>
+                        <option value="Major tasks">Major tasks</option>
+                        <option value="1 FTE">1 FTE</option>
+                        <option value="2-3 FTE">2-3 FTE</option>
+                        <option value="4-7 FTE">4-7 FTE</option>
+                        <option value="8- FTE">8- FTE</option>
+                    </select>
+                </td>
+                <td><select ng-if="project.res3fte!='None'" ng-model="project.res3" ng-change="$parent.projecthaschanged=true">
+                        <option value="No dependency">No dependency</option>
+                        <option value="Minor dependency">Minor dependency</option>
+                        <option value="Major dependency">Major dependency</option>
+                        <option value="Critical dependency">Critical dependency</option>
+                    </select>
+                </td>
+                <td><select ng-if="project.res3fte!='None'" ng-model="project.res3skill" ng-change="$parent.projecthaschanged=true">
+                        <option value="Ok">Ok</option>
+                        <option value="Minor issue">Minor issue</option>
+                        <option value="Major issue">Major issue</option>
+                        <option value="Emergency">Emergency</option>
+                    </select>
+                </td>
+                
+             </tr>
+            <tr><td  class="header {{skillrender(project.res4skill)}} {{sizerender(project.res4)}}">{{company.res4lable}}</td>
+                <td><select ng-model="project.res4fte" ng-change="$parent.projecthaschanged=true">
+                        <option value="None">None</option>
+                        <option value="Minor tasks">Minor tasks</option>
+                        <option value="Major tasks">Major tasks</option>
+                        <option value="1 FTE">1 FTE</option>
+                        <option value="2-3 FTE">2-3 FTE</option>
+                        <option value="4-7 FTE">4-7 FTE</option>
+                        <option value="8- FTE">8- FTE</option>
+                    </select>
+                </td><td><select ng-if="project.res4fte!='None'" ng-model="project.res4" ng-change="$parent.projecthaschanged=true">
+                        <option value="No dependency">No dependency</option>
+                        <option value="Minor dependency">Minor dependency</option>
+                        <option value="Major dependency">Major dependency</option>
+                        <option value="Critical dependency">Critical dependency</option>
+                    </select>
+                </td>
+                <td><select ng-if="project.res4fte!='None'" ng-model="project.res4skill" ng-change="$parent.projecthaschanged=true">
+                        <option value="Ok">Ok</option>
+                        <option value="Minor issue">Minor issue</option>
+                        <option value="Major issue">Major issue</option>
+                        <option value="Emergency">Emergency</option>
+                    </select>
+                </td>
+                
+             </tr>
+            <tr><td  class="header {{skillrender(project.res5skill)}} {{sizerender(project.res5)}}">{{company.res5lable}}</td>
+                <td><select ng-model="project.res5fte" ng-change="$parent.projecthaschanged=true">
+                        <option value="None">None</option>
+                        <option value="Minor tasks">Minor tasks</option>
+                        <option value="Major tasks">Major tasks</option>
+                        <option value="1 FTE">1 FTE</option>
+                        <option value="2-3 FTE">2-3 FTE</option>
+                        <option value="4-7 FTE">4-7 FTE</option>
+                        <option value="8- FTE">8- FTE</option>
+                    </select>
+                </td>
+                <td><select ng-if="project.res5fte!='None'" ng-model="project.res5" ng-change="$parent.projecthaschanged=true">
+                        <option value="No dependency">No dependency</option>
+                        <option value="Minor dependency">Minor dependency</option>
+                        <option value="Major dependency">Major dependency</option>
+                        <option value="Critical dependency">Critical dependency</option>
+                    </select>
+                </td>
+                <td><select ng-if="project.res5fte!='None'" ng-model="project.res5skill" ng-change="$parent.projecthaschanged=true">
+                        <option value="Ok">Ok</option>
+                        <option value="Minor issue">Minor issue</option>
+                        <option value="Major issue">Major issue</option>
+                        <option value="Emergency">Emergency</option>
+                    </select>
+                </td>
+                
+             </tr>
+            <tr><td  class="header {{skillrender(project.res6skill)}} {{sizerender(project.res6)}}">{{company.res6lable}}</td>
+                <td><select ng-model="project.res6fte" ng-change="$parent.projecthaschanged=true">
+                        <option value="None">None</option>
+                        <option value="Minor tasks">Minor tasks</option>
+                        <option value="Major tasks">Major tasks</option>
+                        <option value="1 FTE">1 FTE</option>
+                        <option value="2-3 FTE">2-3 FTE</option>
+                        <option value="4-7 FTE">4-7 FTE</option>
+                        <option value="8- FTE">8- FTE</option>
+                    </select>
+                </td>
+                <td><select ng-if="project.res6fte!='None'" ng-model="project.res6" ng-change="$parent.projecthaschanged=true">
+                        <option value="No dependency">No dependency</option>
+                        <option value="Minor dependency">Minor dependency</option>
+                        <option value="Major dependency">Major dependency</option>
+                        <option value="Critical dependency">Critical dependency</option>
+                    </select>
+                </td>
+                <td><select ng-if="project.res6fte!='None'" ng-model="project.res6skill" ng-change="$parent.projecthaschanged=true">
+                        <option value="Ok">Ok</option>
+                        <option value="Minor issue">Minor issue</option>
+                        <option value="Major issue">Major issue</option>
+                        <option value="Emergency">Emergency</option>
+                    </select>
+                </td>
+                
+             </tr>
+            <tr><td  class="header {{skillrender(project.res7skill)}} {{sizerender(project.res7)}}">{{company.res7lable}}</td>
+                <td><select ng-model="project.res7fte" ng-change="$parent.projecthaschanged=true">
+                        <option value="None">None</option>
+                        <option value="Minor tasks">Minor tasks</option>
+                        <option value="Major tasks">Major tasks</option>
+                        <option value="1 FTE">1 FTE</option>
+                        <option value="2-3 FTE">2-3 FTE</option>
+                        <option value="4-7 FTE">4-7 FTE</option>
+                        <option value="8- FTE">8- FTE</option>
+                    </select>
+                </td>
+                <td><select ng-if="project.res7fte!='None'" ng-model="project.res7" ng-change="$parent.projecthaschanged=true">
+                        <option value="No dependency">No dependency</option>
+                        <option value="Minor dependency">Minor dependency</option>
+                        <option value="Major dependency">Major dependency</option>
+                        <option value="Critical dependency">Critical dependency</option>
+                    </select>
+                </td>
+                <td><select ng-if="project.res7fte!='None'" ng-model="project.res7skill" ng-change="$parent.projecthaschanged=true">
+                        <option value="Ok">Ok</option>
+                        <option value="Minor issue">Minor issue</option>
+                        <option value="Major issue">Major issue</option>
+                        <option value="Emergency">Emergency</option>
+                    </select>
+                </td>
+                
+             </tr>
+            <tr><td  class="header {{skillrender(project.res8skill)}} {{sizerender(project.res8)}}">{{company.res8lable}}</td>
+                <td><select ng-model="project.res8fte" ng-change="$parent.projecthaschanged=true">
+                        <option value="None">None</option>
+                        <option value="Minor tasks">Minor tasks</option>
+                        <option value="Major tasks">Major tasks</option>
+                        <option value="1 FTE">1 FTE</option>
+                        <option value="2-3 FTE">2-3 FTE</option>
+                        <option value="4-7 FTE">4-7 FTE</option>
+                        <option value="8- FTE">8- FTE</option>
+                    </select>
+                </td>
+                <td><select ng-if="project.res8fte!='None'" ng-model="project.res8" ng-change="$parent.projecthaschanged=true">
+                        <option value="No dependency">No dependency</option>
+                        <option value="Minor dependency">Minor dependency</option>
+                        <option value="Major dependency">Major dependency</option>
+                        <option value="Critical dependency">Critical dependency</option>
+                    </select>
+                </td>
+                <td><select ng-if="project.res8fte!='None'" ng-model="project.res8skill" ng-change="$parent.projecthaschanged=true">
+                        <option value="Ok">Ok</option>
+                        <option value="Minor issue">Minor issue</option>
+                        <option value="Major issue">Major issue</option>
+                        <option value="Emergency">Emergency</option>
+                    </select>
+                </td>
+                
+             </tr>
+            
+            
+        </table>
+</div>
+<div id="linkdiv7" class="noview">        
+        <h2>
+            KPIs  
+            <div class="right">
+                <button type="button" ng-class="{'Red': projecthaschanged}" ng-if="user.email==project.po.email || user.email==project.pm.email || user.email==project.altpo.email || user.email==project.altpm.email || user.isOwner || user.admin" ng-click="saveProject()">save project</button> 
+            </div>
+        </h2>
+         <table class="smaller">
+             <tr class="header"><td>Project KPI</td><td>Value</td></tr>
+            <tr><td>{{company.projkpi1lable}}</td>
+                <td><select ng-model="project.kpi1" ng-change="$parent.projecthaschanged=true">
+                        <option value="0">No value</option>
+                        <option value="10">Small business unit impact</option>
+                        <option value="20">Large business unit impact</option>
+                        <option value="40">Small division impact</option>
+                        <option value="50">Large division impact</option>
+                        <option value="70">Small company impact</option>
+                        <option value="80">Large company impact</option>
+                        <option value="100">Game changer</option>
+                        
+                    </select>
+                </td>
+            </tr>
+            <tr><td>{{company.projkpi2lable}}</td>
+                <td><select ng-model="project.kpi2" ng-change="$parent.projecthaschanged=true">
+                        <option value="0">No value</option>
+                        <option value="10">Small business unit impact</option>
+                        <option value="20">Large business unit impact</option>
+                        <option value="40">Small division impact</option>
+                        <option value="50">Large division impact</option>
+                        <option value="70">Small company impact</option>
+                        <option value="80">Large company impact</option>
+                        <option value="100">Game changer</option>
+                        
+                    </select>
+                </td>
+            </tr>
+            <tr><td>{{company.projkpi3lable}}</td>
+                <td><select ng-model="project.kpi3" ng-change="$parent.projecthaschanged=true">
+                        <option value="0">No value</option>
+                        <option value="10">Small business unit impact</option>
+                        <option value="20">Large business unit impact</option>
+                        <option value="40">Small division impact</option>
+                        <option value="50">Large division impact</option>
+                        <option value="70">Small company impact</option>
+                        <option value="80">Large company impact</option>
+                        <option value="100">Game changer</option>
+                        
+                    </select>
+                </td>
+            </tr>
+            <tr><td>{{company.projkpi4lable}}</td>
+                <td><select ng-model="project.kpi4" ng-change="$parent.projecthaschanged=true">
+                        <option value="0">No value</option>
+                        <option value="10">Small business unit impact</option>
+                        <option value="20">Large business unit impact</option>
+                        <option value="40">Small division impact</option>
+                        <option value="50">Large division impact</option>
+                        <option value="70">Small company impact</option>
+                        <option value="80">Large company impact</option>
+                        <option value="100">Game changer</option>
+                        
+                    </select>
+                </td>
+            </tr>
+            <tr><td>{{company.projkpi5lable}}</td>
+                <td><select ng-model="project.kpi5" ng-change="$parent.projecthaschanged=true">
+                        <option value="0">No value</option>
+                        <option value="10">Small business unit impact</option>
+                        <option value="20">Large business unit impact</option>
+                        <option value="40">Small division impact</option>
+                        <option value="50">Large division impact</option>
+                        <option value="70">Small company impact</option>
+                        <option value="80">Large company impact</option>
+                        <option value="100">Game changer</option>
+                        
+                    </select>
+                </td>
+            </tr>
+            <tr><td>{{company.projkpi6lable}}</td>
+                <td><select ng-model="project.kpi6" ng-change="$parent.projecthaschanged=true">
+                        <option value="0">No value</option>
+                        <option value="10">Small business unit impact</option>
+                        <option value="20">Large business unit impact</option>
+                        <option value="40">Small division impact</option>
+                        <option value="50">Large division impact</option>
+                        <option value="70">Small company impact</option>
+                        <option value="80">Large company impact</option>
+                        <option value="100">Game changer</option>
+                        
+                    </select>
+                </td>
+            </tr>
+            
+            
+        </table>
+</div>
+
+<div id="linkdiv8" class="noview">
+    <h2>
+            Finance  
+            <div class="right">
+                <button type="button" ng-class="{'Red': projecthaschanged}" ng-if="user.email==project.po.email || user.email==project.pm.email || user.email==project.altpo.email || user.email==project.altpm.email || user.isOwner || user.admin" ng-click="saveProject()">save project</button> 
+            </div>
+        </h2>
+<h3>Budget this year</h3>
+<table class="smaller smallinput">
+    <tr class="header"><td>TDKK Ex. Vat</td><td>Q1</td><td>Q2</td><td>Q3</td><td>Q4</td><td>Total</td></tr>
+    <tr class="header"><td colspan="6">Capex</td></tr>
+    <tr>
+        <td>External</td>
+        <td><div class="field"><input ng-model="project.finance.budcapextq1"/></div></td>
+        <td><div class="field"><input ng-model="project.finance.budcapextq2"/></div></td>
+        <td><div class="field"><input ng-model="project.finance.budcapextq3"/></div></td>
+        <td><div class="field"><input ng-model="project.finance.budcapextq4"/></div></td>
+        <td class="sums">{{(project.finance.budcapextq1-0)+(project.finance.budcapextq2-0)+(project.finance.budcapextq3-0)+(project.finance.budcapextq4-0) | currency:"":0}}</td>
+    </tr>
+    <tr>
+        <td>Ext. One-Off</td>
+        <td><div class="field"><input ng-model="project.finance.budcapextoneq1"/></div></td>
+        <td><div class="field"><input ng-model="project.finance.budcapextoneq2"/></div></td>
+        <td><div class="field"><input ng-model="project.finance.budcapextoneq3"/></div></td>
+        <td><div class="field"><input ng-model="project.finance.budcapextoneq4"/></div></td>
+        <td class="sums">{{(project.finance.budcapextoneq1-0)+(project.finance.budcapextoneq2-0)+(project.finance.budcapextoneq3-0)+(project.finance.budcapextoneq4-0) | currency:"":0}}</td>
+    </tr>
+    <tr>
+        <td>Internal</td>
+        <td><div class="field"><input ng-model="project.finance.budcapintq1"/></div></td>
+        <td><div class="field"><input ng-model="project.finance.budcapintq2"/></div></td>
+        <td><div class="field"><input ng-model="project.finance.budcapintq3"/></div></td>
+        <td><div class="field"><input ng-model="project.finance.budcapintq4"/></div></td>
+        <td class="sums">{{(project.finance.budcapintq1-0)+(project.finance.budcapintq2-0)+(project.finance.budcapintq3-0)+(project.finance.budcapintq4-0) | currency:"":0}}</td>
+    </tr>
+    <tr>
+        <td>Capex total</td>
+        <td class="sums">{{(project.finance.budcapextq1-0)+(project.finance.budcapextoneq1-0)+(project.finance.budcapintq1-0) | currency:"":0}}</td>
+        <td class="sums">{{(project.finance.budcapextq2-0)+(project.finance.budcapextoneq2-0)+(project.finance.budcapintq2-0) | currency:"":0}}</td>
+        <td class="sums">{{(project.finance.budcapextq3-0)+(project.finance.budcapextoneq3-0)+(project.finance.budcapintq3-0) | currency:"":0}}</td>
+        <td class="sums">{{(project.finance.budcapextq4-0)+(project.finance.budcapextoneq4-0)+(project.finance.budcapintq4-0) | currency:"":0}}</td>
+        <td class="sums">{{(project.finance.budcapextq1-0)+(project.finance.budcapextoneq1-0)+(project.finance.budcapintq1-0)+(project.finance.budcapextq2-0)+(project.finance.budcapextoneq2-0)+(project.finance.budcapintq2-0)+(project.finance.budcapextq3-0)+(project.finance.budcapextoneq3-0)+(project.finance.budcapintq3-0)+(project.finance.budcapextq4-0)+(project.finance.budcapextoneq4-0)+(project.finance.budcapintq4-0) | currency:"":0}}</td>
+    </tr>
+    <tr class="header"><td colspan="6">Opex</td></tr>
+    <tr>
+        <td>External</td>
+        <td><div class="field"><input ng-model="project.finance.budopextq1"/></div></td>
+        <td><div class="field"><input ng-model="project.finance.budopextq2"/></div></td>
+        <td><div class="field"><input ng-model="project.finance.budopextq3"/></div></td>
+        <td><div class="field"><input ng-model="project.finance.budopextq4"/></div></td>
+        <td class="sums">{{(project.finance.budopextq1-0)+(project.finance.budopextq2-0)+(project.finance.budopextq3-0)+(project.finance.budopextq4-0) | currency:"":0}}</td>
+    </tr>
+    <tr>
+        <td>Internal</td>
+        <td><div class="field"><input ng-model="project.finance.budopintq1"/></div></td>
+        <td><div class="field"><input ng-model="project.finance.budopintq2"/></div></td>
+        <td><div class="field"><input ng-model="project.finance.budopintq3"/></div></td>
+        <td><div class="field"><input ng-model="project.finance.budopintq4"/></div></td>
+        <td class="sums">{{(project.finance.budopintq1-0)+(project.finance.budopintq2-0)+(project.finance.budopintq3-0)+(project.finance.budopintq4-0) | currency:"":0}}</td>
+    </tr>
+    <tr>
+        <td>Opex total</td>
+        <td class="sums">{{(project.finance.budopextq1-0)+(project.finance.budopintq1-0)}}</td>
+        <td class="sums">{{(project.finance.budopextq2-0)+(project.finance.budopintq2-0)}}</td>
+        <td class="sums">{{(project.finance.budopextq3-0)+(project.finance.budopintq3-0)}}</td>
+        <td class="sums">{{(project.finance.budopextq4-0)+(project.finance.budopintq4-0)}}</td>
+        <td class="sums">{{(project.finance.budopextq1-0)+(project.finance.budopintq1-0)+(project.finance.budopextq2-0)+(project.finance.budopintq2-0)+(project.finance.budopextq3-0)+(project.finance.budopintq3-0)+(project.finance.budopextq4-0)+(project.finance.budopintq4-0) | currency:"":0}}</td>
+    </tr>
+    <tr class="header"><td colspan="6">External/Internal</td></tr>
+    <tr>
+        <td>External total</td>
+        <td class="sums">{{(project.finance.budcapextq1-0)+(project.finance.budcapextoneq1-0)+(project.finance.budopextq1-0) | currency:"":0}}</td>
+        <td class="sums">{{(project.finance.budcapextq2-0)+(project.finance.budcapextoneq2-0)+(project.finance.budopextq2-0) | currency:"":0}}</td>
+        <td class="sums">{{(project.finance.budcapextq3-0)+(project.finance.budcapextoneq3-0)+(project.finance.budopextq3-0) | currency:"":0}}</td>
+        <td class="sums">{{(project.finance.budcapextq4-0)+(project.finance.budcapextoneq4-0)+(project.finance.budopextq4-0) | currency:"":0}}</td>
+        <td class="sums">{{(project.finance.budcapextq1-0)+(project.finance.budcapextoneq1-0)+(project.finance.budopextq1-0)+(project.finance.budcapextq2-0)+(project.finance.budcapextoneq2-0)+(project.finance.budopextq2-0)+(project.finance.budcapextq3-0)+(project.finance.budcapextoneq3-0)+(project.finance.budopextq3-0)+(project.finance.budcapextq4-0)+(project.finance.budcapextoneq4-0)+(project.finance.budopextq4-0) | currency:"":0}}</td>
+    </tr>
+    <tr>
+        <td>Internal total</td>
+        <td class="sums">{{(project.finance.budcapintq1-0)+(project.finance.budopintq1-0) | currency:"":0}}</td>
+        <td class="sums">{{(project.finance.budcapintq2-0)+(project.finance.budopintq2-0) | currency:"":0}}</td>
+        <td class="sums">{{(project.finance.budcapintq3-0)+(project.finance.budopintq3-0) | currency:"":0}}</td>
+        <td class="sums">{{(project.finance.budcapintq4-0)+(project.finance.budopintq4-0) | currency:"":0}}</td>
+        <td class="sums">{{(project.finance.budcapintq1-0)+(project.finance.budopintq1-0)+(project.finance.budcapintq2-0)+(project.finance.budopintq2-0)+(project.finance.budcapintq3-0)+(project.finance.budopintq3-0)+(project.finance.budcapintq4-0)+(project.finance.budopintq4-0) | currency:"":0}}</td>
+    </tr>
+    <tr class="header">
+        <td>Budget total</td>
+        <td class="sums">{{(project.finance.budcapextq1-0)+(project.finance.budcapextoneq1-0)+(project.finance.budopextq1-0)+(project.finance.budcapintq1-0)+(project.finance.budopintq1-0) | currency:"":0}}</td>
+        <td class="sums">{{(project.finance.budcapextq2-0)+(project.finance.budcapextoneq2-0)+(project.finance.budopextq2-0)+(project.finance.budcapintq2-0)+(project.finance.budopintq2-0) | currency:"":0}}</td>
+        <td class="sums">{{(project.finance.budcapextq3-0)+(project.finance.budcapextoneq3-0)+(project.finance.budopextq3-0)+(project.finance.budcapintq3-0)+(project.finance.budopintq3-0) | currency:"":0}}</td>
+        <td class="sums">{{(project.finance.budcapextq4-0)+(project.finance.budcapextoneq4-0)+(project.finance.budopextq4-0)+(project.finance.budcapintq4-0)+(project.finance.budopintq4-0) | currency:"":0}}</td>
+        <td class="sums">{{(project.finance.budcapextq1-0)+(project.finance.budcapextoneq1-0)+(project.finance.budopextq1-0)+(project.finance.budcapintq1-0)+(project.finance.budopintq1-0)+(project.finance.budcapextq2-0)+(project.finance.budcapextoneq2-0)+(project.finance.budopextq2-0)+(project.finance.budcapintq2-0)+(project.finance.budopintq2-0)+(project.finance.budcapextq3-0)+(project.finance.budcapextoneq3-0)+(project.finance.budopextq3-0)+(project.finance.budcapintq3-0)+(project.finance.budopintq3-0)+(project.finance.budcapextq4-0)+(project.finance.budcapextoneq4-0)+(project.finance.budopextq4-0)+(project.finance.budcapintq4-0)+(project.finance.budopintq4-0) | currency:"":0}}</td>
+    </tr>
+    <tr>
+        <td>Acc. total</td>
+        <td class="sums">{{(project.finance.budcapextq1-0)+(project.finance.budcapextoneq1-0)+(project.finance.budopextq1-0)+(project.finance.budcapintq1-0)+(project.finance.budopintq1-0) | currency:"":0}}</td>
+        <td class="sums">{{(project.finance.budcapextq1-0)+(project.finance.budcapextoneq1-0)+(project.finance.budopextq1-0)+(project.finance.budcapintq1-0)+(project.finance.budopintq1-0)+(project.finance.budcapextq2-0)+(project.finance.budcapextoneq2-0)+(project.finance.budopextq2-0)+(project.finance.budcapintq2-0)+(project.finance.budopintq2-0) | currency:"":0}}</td>
+        <td class="sums">{{(project.finance.budcapextq1-0)+(project.finance.budcapextoneq1-0)+(project.finance.budopextq1-0)+(project.finance.budcapintq1-0)+(project.finance.budopintq1-0)+(project.finance.budcapextq2-0)+(project.finance.budcapextoneq2-0)+(project.finance.budopextq2-0)+(project.finance.budcapintq2-0)+(project.finance.budopintq2-0)+(project.finance.budcapextq3-0)+(project.finance.budcapextoneq3-0)+(project.finance.budopextq3-0)+(project.finance.budcapintq3-0)+(project.finance.budopintq3-0) | currency:"":0}}</td>
+        <td class="sums">{{(project.finance.budcapextq1-0)+(project.finance.budcapextoneq1-0)+(project.finance.budopextq1-0)+(project.finance.budcapintq1-0)+(project.finance.budopintq1-0)+(project.finance.budcapextq2-0)+(project.finance.budcapextoneq2-0)+(project.finance.budopextq2-0)+(project.finance.budcapintq2-0)+(project.finance.budopintq2-0)+(project.finance.budcapextq3-0)+(project.finance.budcapextoneq3-0)+(project.finance.budopextq3-0)+(project.finance.budcapintq3-0)+(project.finance.budopintq3-0)+(project.finance.budcapextq4-0)+(project.finance.budcapextoneq4-0)+(project.finance.budopextq4-0)+(project.finance.budcapintq4-0)+(project.finance.budopintq4-0) | currency:"":0}}</td>
+        <td></td>
+    </tr>
+</table>
+
+
+
+
+<h3>Posted this year</h3>
+<table class="smaller smallinput">
+    <tr class="header"><td>TDKK Ex. Vat</td><td>Q1</td><td>Q2</td><td>Q3</td><td>Q4</td><td>Total</td></tr>
+    <tr class="header"><td colspan="6">Capex</td></tr>
+    <tr>
+        <td>External</td>
+        <td><div class="field"><input ng-model="project.finance.postcapextq1"/></div></td>
+        <td><div class="field"><input ng-model="project.finance.postcapextq2"/></div></td>
+        <td><div class="field"><input ng-model="project.finance.postcapextq3"/></div></td>
+        <td><div class="field"><input ng-model="project.finance.postcapextq4"/></div></td>
+        <td class="sums">{{(project.finance.postcapextq1-0)+(project.finance.postcapextq2-0)+(project.finance.postcapextq3-0)+(project.finance.postcapextq4-0) | currency:"":0}}</td>
+    </tr>
+    <tr>
+        <td>Ext. One-Off</td>
+        <td><div class="field"><input ng-model="project.finance.postcapextoneq1"/></div></td>
+        <td><div class="field"><input ng-model="project.finance.postcapextoneq2"/></div></td>
+        <td><div class="field"><input ng-model="project.finance.postcapextoneq3"/></div></td>
+        <td><div class="field"><input ng-model="project.finance.postcapextoneq4"/></div></td>
+        <td class="sums">{{(project.finance.postcapextoneq1-0)+(project.finance.postcapextoneq2-0)+(project.finance.postcapextoneq3-0)+(project.finance.postcapextoneq4-0) | currency:"":0}}</td>
+    </tr>
+    <tr>
+        <td>Internal</td>
+        <td><div class="field"><input ng-model="project.finance.postcapintq1"/></div></td>
+        <td><div class="field"><input ng-model="project.finance.postcapintq2"/></div></td>
+        <td><div class="field"><input ng-model="project.finance.postcapintq3"/></div></td>
+        <td><div class="field"><input ng-model="project.finance.postcapintq4"/></div></td>
+        <td class="sums">{{(project.finance.postcapintq1-0)+(project.finance.postcapintq2-0)+(project.finance.postcapintq3-0)+(project.finance.postcapintq4-0) | currency:"":0}}</td>
+    </tr>
+    <tr>
+        <td>Capex total</td>
+        <td class="sums">{{(project.finance.postcapextq1-0)+(project.finance.postcapextoneq1-0)+(project.finance.postcapintq1-0) | currency:"":0}}</td>
+        <td class="sums">{{(project.finance.postcapextq2-0)+(project.finance.postcapextoneq2-0)+(project.finance.postcapintq2-0) | currency:"":0}}</td>
+        <td class="sums">{{(project.finance.postcapextq3-0)+(project.finance.postcapextoneq3-0)+(project.finance.postcapintq3-0) | currency:"":0}}</td>
+        <td class="sums">{{(project.finance.postcapextq4-0)+(project.finance.postcapextoneq4-0)+(project.finance.postcapintq4-0) | currency:"":0}}</td>
+        <td class="sums">{{(project.finance.postcapextq1-0)+(project.finance.postcapextoneq1-0)+(project.finance.postcapintq1-0)+(project.finance.postcapextq2-0)+(project.finance.postcapextoneq2-0)+(project.finance.postcapintq2-0)+(project.finance.postcapextq3-0)+(project.finance.postcapextoneq3-0)+(project.finance.postcapintq3-0)+(project.finance.postcapextq4-0)+(project.finance.postcapextoneq4-0)+(project.finance.postcapintq4-0) | currency:"":0}}</td>
+    </tr>
+    <tr><td class="header" colspan="6">Opex</td></tr>
+    <tr>
+        <td>External</td>
+        <td><div class="field"><input ng-model="project.finance.postopextq1"/></div></td>
+        <td><div class="field"><input ng-model="project.finance.postopextq2"/></div></td>
+        <td><div class="field"><input ng-model="project.finance.postopextq3"/></div></td>
+        <td><div class="field"><input ng-model="project.finance.postopextq4"/></div></td>
+        <td class="sums">{{(project.finance.postopextq1-0)+(project.finance.postopextq2-0)+(project.finance.postopextq3-0)+(project.finance.postopextq4-0) | currency:"":0}}</td>
+    </tr>
+    <tr>
+        <td>Internal</td>
+        <td><div class="field"><input ng-model="project.finance.postopintq1"/></div></td>
+        <td><div class="field"><input ng-model="project.finance.postopintq2"/></div></td>
+        <td><div class="field"><input ng-model="project.finance.postopintq3"/></div></td>
+        <td><div class="field"><input ng-model="project.finance.postopintq4"/></div></td>
+        <td class="sums">{{(project.finance.postopintq1-0)+(project.finance.postopintq2-0)+(project.finance.postopintq3-0)+(project.finance.postopintq4-0) | currency:"":0}}</td>
+    </tr>
+    <tr>
+        <td>Opex total</td>
+        <td class="sums">{{(project.finance.postopextq1-0)+(project.finance.postopintq1-0)}}</td>
+        <td class="sums">{{(project.finance.postopextq2-0)+(project.finance.postopintq2-0)}}</td>
+        <td class="sums">{{(project.finance.postopextq3-0)+(project.finance.postopintq3-0)}}</td>
+        <td class="sums">{{(project.finance.postopextq4-0)+(project.finance.postopintq4-0)}}</td>
+        <td class="sums">{{(project.finance.postopextq1-0)+(project.finance.postopintq1-0)+(project.finance.postopextq2-0)+(project.finance.postopintq2-0)+(project.finance.postopextq3-0)+(project.finance.postopintq3-0)+(project.finance.postopextq4-0)+(project.finance.postopintq4-0) | currency:"":0}}</td>
+    </tr>
+    <tr><td class="header" colspan="6">External/Internal</td></tr>
+    <tr>
+        <td>External total</td>
+        <td class="sums">{{(project.finance.postcapextq1-0)+(project.finance.postcapextoneq1-0)+(project.finance.postopextq1-0) | currency:"":0}}</td>
+        <td class="sums">{{(project.finance.postcapextq2-0)+(project.finance.postcapextoneq2-0)+(project.finance.postopextq2-0) | currency:"":0}}</td>
+        <td class="sums">{{(project.finance.postcapextq3-0)+(project.finance.postcapextoneq3-0)+(project.finance.postopextq3-0) | currency:"":0}}</td>
+        <td class="sums">{{(project.finance.postcapextq4-0)+(project.finance.postcapextoneq4-0)+(project.finance.postopextq4-0) | currency:"":0}}</td>
+        <td class="sums">{{(project.finance.postcapextq1-0)+(project.finance.postcapextoneq1-0)+(project.finance.postopextq1-0)+(project.finance.postcapextq2-0)+(project.finance.postcapextoneq2-0)+(project.finance.postopextq2-0)+(project.finance.postcapextq3-0)+(project.finance.postcapextoneq3-0)+(project.finance.postopextq3-0)+(project.finance.postcapextq4-0)+(project.finance.postcapextoneq4-0)+(project.finance.postopextq4-0) | currency:"":0}}</td>
+    </tr>
+    <tr>
+        <td>Internal total</td>
+        <td class="sums">{{(project.finance.postcapintq1-0)+(project.finance.postopintq1-0) | currency:"":0}}</td>
+        <td class="sums">{{(project.finance.postcapintq2-0)+(project.finance.postopintq2-0) | currency:"":0}}</td>
+        <td class="sums">{{(project.finance.postcapintq3-0)+(project.finance.postopintq3-0) | currency:"":0}}</td>
+        <td class="sums">{{(project.finance.postcapintq4-0)+(project.finance.postopintq4-0) | currency:"":0}}</td>
+        <td class="sums">{{(project.finance.postcapintq1-0)+(project.finance.postopintq1-0)+(project.finance.postcapintq2-0)+(project.finance.postopintq2-0)+(project.finance.postcapintq3-0)+(project.finance.postopintq3-0)+(project.finance.postcapintq4-0)+(project.finance.postopintq4-0) | currency:"":0}}</td>
+    </tr>
+    <tr class="header">
+        <td>Posted total</td>
+        <td class="sums">{{(project.finance.postcapextq1-0)+(project.finance.postcapextoneq1-0)+(project.finance.postopextq1-0)+(project.finance.postcapintq1-0)+(project.finance.postopintq1-0) | currency:"":0}}</td>
+        <td class="sums">{{(project.finance.postcapextq2-0)+(project.finance.postcapextoneq2-0)+(project.finance.postopextq2-0)+(project.finance.postcapintq2-0)+(project.finance.postopintq2-0) | currency:"":0}}</td>
+        <td class="sums">{{(project.finance.postcapextq3-0)+(project.finance.postcapextoneq3-0)+(project.finance.postopextq3-0)+(project.finance.postcapintq3-0)+(project.finance.postopintq3-0) | currency:"":0}}</td>
+        <td class="sums">{{(project.finance.postcapextq4-0)+(project.finance.postcapextoneq4-0)+(project.finance.postopextq4-0)+(project.finance.postcapintq4-0)+(project.finance.postopintq4-0) | currency:"":0}}</td>
+        <td class="sums">{{(project.finance.postcapextq1-0)+(project.finance.postcapextoneq1-0)+(project.finance.postopextq1-0)+(project.finance.postcapintq1-0)+(project.finance.postopintq1-0)+(project.finance.postcapextq2-0)+(project.finance.postcapextoneq2-0)+(project.finance.postopextq2-0)+(project.finance.postcapintq2-0)+(project.finance.postopintq2-0)+(project.finance.postcapextq3-0)+(project.finance.postcapextoneq3-0)+(project.finance.postopextq3-0)+(project.finance.postcapintq3-0)+(project.finance.postopintq3-0)+(project.finance.postcapextq4-0)+(project.finance.postcapextoneq4-0)+(project.finance.postopextq4-0)+(project.finance.postcapintq4-0)+(project.finance.postopintq4-0) | currency:"":0}}</td>
+    </tr>
+    <tr>
+        <td>Acc. total</td>
+        <td class="sums">{{(project.finance.postcapextq1-0)+(project.finance.postcapextoneq1-0)+(project.finance.postopextq1-0)+(project.finance.postcapintq1-0)+(project.finance.postopintq1-0) | currency:"":0}}</td>
+        <td class="sums">{{(project.finance.postcapextq1-0)+(project.finance.postcapextoneq1-0)+(project.finance.postopextq1-0)+(project.finance.postcapintq1-0)+(project.finance.postopintq1-0)+(project.finance.postcapextq2-0)+(project.finance.postcapextoneq2-0)+(project.finance.postopextq2-0)+(project.finance.postcapintq2-0)+(project.finance.postopintq2-0) | currency:"":0}}</td>
+        <td class="sums">{{(project.finance.postcapextq1-0)+(project.finance.postcapextoneq1-0)+(project.finance.postopextq1-0)+(project.finance.postcapintq1-0)+(project.finance.postopintq1-0)+(project.finance.postcapextq2-0)+(project.finance.postcapextoneq2-0)+(project.finance.postopextq2-0)+(project.finance.postcapintq2-0)+(project.finance.postopintq2-0)+(project.finance.postcapextq3-0)+(project.finance.postcapextoneq3-0)+(project.finance.postopextq3-0)+(project.finance.postcapintq3-0)+(project.finance.postopintq3-0) | currency:"":0}}</td>
+        <td class="sums">{{(project.finance.postcapextq1-0)+(project.finance.postcapextoneq1-0)+(project.finance.postopextq1-0)+(project.finance.postcapintq1-0)+(project.finance.postopintq1-0)+(project.finance.postcapextq2-0)+(project.finance.postcapextoneq2-0)+(project.finance.postopextq2-0)+(project.finance.postcapintq2-0)+(project.finance.postopintq2-0)+(project.finance.postcapextq3-0)+(project.finance.postcapextoneq3-0)+(project.finance.postopextq3-0)+(project.finance.postcapintq3-0)+(project.finance.postopintq3-0)+(project.finance.postcapextq4-0)+(project.finance.postcapextoneq4-0)+(project.finance.postopextq4-0)+(project.finance.postcapintq4-0)+(project.finance.postopintq4-0) | currency:"":0}}</td>
+        <td></td>
+    </tr>
+</table>
+    
+
+<h3>Deviation this year</h3>
+<table class="smaller smallinput">
+    <tr class="header"><td>TDKK Ex. Vat</td><td>Q1</td><td>Q2</td><td>Q3</td><td>Q4</td><td>Total</td></tr>
+    <tr><td class="header" colspan="6">Capex</td></tr>
+    <tr>
+        <td>External</td>
+        <td class="sums">{{(project.finance.budcapextq1-0) - (project.finance.postcapextq1-0) | currency:"":0}}</td>
+        <td class="sums">{{(project.finance.budcapextq2-0) - (project.finance.postcapextq2-0) | currency:"":0}}</td>
+        <td class="sums">{{(project.finance.budcapextq3-0) - (project.finance.postcapextq3-0) | currency:"":0}}</td>
+        <td class="sums">{{(project.finance.budcapextq4-0) - (project.finance.postcapextq4-0) | currency:"":0}}</td>
+        <td class="sums">{{(project.finance.budcapextq1-0) - (project.finance.postcapextq1-0)+(project.finance.budcapextq2-0) - (project.finance.postcapextq2-0)+(project.finance.budcapextq3-0) - (project.finance.postcapextq3-0)+(project.finance.budcapextq4-0) - (project.finance.postcapextq4-0) | currency:"":0}}</td>
+    </tr>
+    <tr>
+        <td>Ext. One-Off</td>
+        <td class="sums">{{(project.finance.budcapextoneq1-0) - (project.finance.postcapextoneq1-0) | currency:"":0}}</td>
+        <td class="sums">{{(project.finance.budcapextoneq2-0) - (project.finance.postcapextoneq2-0) | currency:"":0}}</td>
+        <td class="sums">{{(project.finance.budcapextoneq3-0) - (project.finance.postcapextoneq3-0) | currency:"":0}}</td>
+        <td class="sums">{{(project.finance.budcapextoneq4-0) - (project.finance.postcapextoneq4-0) | currency:"":0}}</td>
+        <td class="sums">{{(project.finance.budcapextoneq1-0) - (project.finance.postcapextoneq1-0)+(project.finance.budcapextoneq2-0) - (project.finance.postcapextoneq2-0)+(project.finance.budcapextoneq3-0) - (project.finance.postcapextoneq3-0)+(project.finance.budcapextoneq4-0) - (project.finance.postcapextoneq4-0) | currency:"":0}}</td>
+    </tr>
+    <tr>
+        <td>Internal</td>
+        <td class="sums">{{(project.finance.budcapintq1-0) - (project.finance.postcapintq1-0) | currency:"":0}}</td>
+        <td class="sums">{{(project.finance.budcapintq2-0) - (project.finance.postcapintq2-0) | currency:"":0}}</td>
+        <td class="sums">{{(project.finance.budcapintq3-0) - (project.finance.postcapintq3-0) | currency:"":0}}</td>
+        <td class="sums">{{(project.finance.budcapintq4-0) - (project.finance.postcapintq4-0) | currency:"":0}}</td>
+        <td class="sums">{{(project.finance.budcapintq1-0) - (project.finance.postcapintq1-0)+(project.finance.budcapintq2-0) - (project.finance.postcapintq2-0)+(project.finance.budcapintq3-0) - (project.finance.postcapintq3-0)+(project.finance.budcapintq4-0) - (project.finance.postcapintq4-0) | currency:"":0}}</td>
+    </tr>
+    <tr>
+        <td>Capex total</td>
+        <td class="sums">{{(project.finance.budcapextq1-0) - (project.finance.postcapextq1-0)+(project.finance.budcapextoneq1-0) - (project.finance.postcapextoneq1-0)+(project.finance.budcapintq1-0) - (project.finance.postcapintq1-0) | currency:"":0}}</td>
+        <td class="sums">{{(project.finance.budcapextq2-0) - (project.finance.postcapextq2-0)+(project.finance.budcapextoneq2-0) - (project.finance.postcapextoneq2-0)+(project.finance.budcapintq2-0) - (project.finance.postcapintq2-0) | currency:"":0}}</td>
+        <td class="sums">{{(project.finance.budcapextq3-0) - (project.finance.postcapextq3-0)+(project.finance.budcapextoneq3-0) - (project.finance.postcapextoneq3-0)+(project.finance.budcapintq3-0) - (project.finance.postcapintq3-0) | currency:"":0}}</td>
+        <td class="sums">{{(project.finance.budcapextq4-0) - (project.finance.postcapextq4-0)+(project.finance.budcapextoneq4-0) - (project.finance.postcapextoneq4-0)+(project.finance.budcapintq4-0) - (project.finance.postcapintq4-0) | currency:"":0}}</td>
+        <td class="sums">{{(project.finance.budcapextq1-0) - (project.finance.postcapextq1-0)+(project.finance.budcapextoneq1-0) - (project.finance.postcapextoneq1-0)+(project.finance.budcapintq1-0) - (project.finance.postcapintq1-0)+(project.finance.budcapextq2-0) - (project.finance.postcapextq2-0)+(project.finance.budcapextoneq2-0) - (project.finance.postcapextoneq2-0)+(project.finance.budcapintq2-0) - (project.finance.postcapintq2-0)+(project.finance.budcapextq3-0) - (project.finance.postcapextq3-0)+(project.finance.budcapextoneq3-0) - (project.finance.postcapextoneq3-0)+(project.finance.budcapintq3-0) - (project.finance.postcapintq3-0)+(project.finance.budcapextq4-0) - (project.finance.postcapextq4-0)+(project.finance.budcapextoneq4-0) - (project.finance.postcapextoneq4-0)+(project.finance.budcapintq4-0) - (project.finance.postcapintq4-0) | currency:"":0}}</td>
+    </tr>
+    <tr><td class="header" colspan="6">Opex</td></tr>
+    <tr>
+        <td>External</td>
+        <td class="sums">{{(project.finance.budopextq1-0) - (project.finance.postopextq1-0) | currency:"":0}}</td>
+        <td class="sums">{{(project.finance.budopextq2-0) - (project.finance.postopextq2-0) | currency:"":0}}</td>
+        <td class="sums">{{(project.finance.budopextq3-0) - (project.finance.postopextq3-0) | currency:"":0}}</td>
+        <td class="sums">{{(project.finance.budopextq4-0) - (project.finance.postopextq4-0) | currency:"":0}}</td>
+        <td class="sums">{{(project.finance.budopextq1-0) - (project.finance.postopextq1-0)+(project.finance.budopextq2-0) - (project.finance.postopextq2-0)+(project.finance.budopextq3-0) - (project.finance.postopextq3-0)+(project.finance.budopextq4-0) - (project.finance.postopextq4-0) | currency:"":0}}</td>
+    </tr>
+    <tr>
+        <td>Internal</td>
+        <td class="sums">{{(project.finance.budopintq1-0) - (project.finance.postopintq1-0) | currency:"":0}}</td>
+        <td class="sums">{{(project.finance.budopintq2-0) - (project.finance.postopintq2-0) | currency:"":0}}</td>
+        <td class="sums">{{(project.finance.budopintq3-0) - (project.finance.postopintq3-0) | currency:"":0}}</td>
+        <td class="sums">{{(project.finance.budopintq4-0) - (project.finance.postopintq4-0) | currency:"":0}}</td>
+        <td class="sums">{{(project.finance.budopintq1-0) - (project.finance.postopintq1-0)+(project.finance.budopintq2-0) - (project.finance.postopintq2-0)+(project.finance.budopintq3-0) - (project.finance.postopintq3-0)+(project.finance.budopintq4-0) - (project.finance.postopintq4-0) | currency:"":0}}</td>
+    </tr>
+    <tr>
+        <td>Opex total</td>
+        <td class="sums">{{(project.finance.budopextq1-0) - (project.finance.postopextq1-0)+(project.finance.budopintq1-0) - (project.finance.postopintq1-0) | currency:"":0}}</td>
+        <td class="sums">{{(project.finance.budopextq2-0) - (project.finance.postopextq2-0)+(project.finance.budopintq2-0) - (project.finance.postopintq2-0) | currency:"":0}}</td>
+        <td class="sums">{{(project.finance.budopextq3-0) - (project.finance.postopextq3-0)+(project.finance.budopintq3-0) - (project.finance.postopintq3-0) | currency:"":0}}</td>
+        <td class="sums">{{(project.finance.budopextq4-0) - (project.finance.postopextq4-0)+(project.finance.budopintq4-0) - (project.finance.postopintq4-0) | currency:"":0}}</td>
+        <td class="sums">{{(project.finance.budopextq1-0) - (project.finance.postopextq1-0)+(project.finance.budopintq1-0) - (project.finance.postopintq1-0)+(project.finance.budopextq2-0) - (project.finance.postopextq2-0)+(project.finance.budopintq2-0) - (project.finance.postopintq2-0)+(project.finance.budopextq3-0) - (project.finance.postopextq3-0)+(project.finance.budopintq3-0) - (project.finance.postopintq3-0)+(project.finance.budopextq4-0) - (project.finance.postopextq4-0)+(project.finance.budopintq4-0) - (project.finance.postopintq4-0) | currency:"":0}}</td>
+    </tr>
+    <tr><td class="header" colspan="6">External/Internal</td></tr>
+    <tr>
+        <td>External total</td>
+        <td class="sums">{{(project.finance.budcapextq1-0) - (project.finance.postcapextq1-0)+(project.finance.budcapextoneq1-0) - (project.finance.postcapextoneq1-0)+(project.finance.budopextq1-0) - (project.finance.postopextq1-0) | currency:"":0}}</td>
+        <td class="sums">{{(project.finance.budcapextq2-0) - (project.finance.postcapextq2-0)+(project.finance.budcapextoneq2-0) - (project.finance.postcapextoneq2-0)+(project.finance.budopextq2-0) - (project.finance.postopextq2-0) | currency:"":0}}</td>
+        <td class="sums">{{(project.finance.budcapextq3-0) - (project.finance.postcapextq3-0)+(project.finance.budcapextoneq3-0) - (project.finance.postcapextoneq3-0)+(project.finance.budopextq3-0) - (project.finance.postopextq3-0) | currency:"":0}}</td>
+        <td class="sums">{{(project.finance.budcapextq4-0) - (project.finance.postcapextq4-0)+(project.finance.budcapextoneq4-0) - (project.finance.postcapextoneq4-0)+(project.finance.budopextq4-0) - (project.finance.postopextq4-0) | currency:"":0}}</td>
+        <td class="sums">{{(project.finance.budcapextq1-0) - (project.finance.postcapextq1-0)+(project.finance.budcapextoneq1-0) - (project.finance.postcapextoneq1-0)+(project.finance.budopextq1-0) - (project.finance.postopextq1-0)+(project.finance.budcapextq2-0) - (project.finance.postcapextq2-0)+(project.finance.budcapextoneq2-0) - (project.finance.postcapextoneq2-0)+(project.finance.budopextq2-0) - (project.finance.postopextq2-0)+(project.finance.budcapextq3-0) - (project.finance.postcapextq3-0)+(project.finance.budcapextoneq3-0) - (project.finance.postcapextoneq3-0)+(project.finance.budopextq3-0) - (project.finance.postopextq3-0)+(project.finance.budcapextq4-0) - (project.finance.postcapextq4-0)+(project.finance.budcapextoneq4-0) - (project.finance.postcapextoneq4-0)+(project.finance.budopextq4-0) - (project.finance.postopextq4-0) | currency:"":0}}</td>
+
+    </tr>
+    <tr>
+        <td>Internal total</td>
+        <td class="sums">{{(project.finance.budcapintq1-0) - (project.finance.postcapintq1-0)+(project.finance.budopintq1-0) - (project.finance.postopintq1-0) | currency:"":0}}</td>
+        <td class="sums">{{(project.finance.budcapintq2-0) - (project.finance.postcapintq2-0)+(project.finance.budopintq2-0) - (project.finance.postopintq2-0) | currency:"":0}}</td>
+        <td class="sums">{{(project.finance.budcapintq3-0) - (project.finance.postcapintq3-0)+(project.finance.budopintq3-0) - (project.finance.postopintq3-0) | currency:"":0}}</td>
+        <td class="sums">{{(project.finance.budcapintq4-0) - (project.finance.postcapintq4-0)+(project.finance.budopintq4-0) - (project.finance.postopintq4-0) | currency:"":0}}</td>
+        <td class="sums">{{(project.finance.budcapintq1-0) - (project.finance.postcapintq1-0)+(project.finance.budopintq1-0) - (project.finance.postopintq1-0)+(project.finance.budcapintq2-0) - (project.finance.postcapintq2-0)+(project.finance.budopintq2-0) - (project.finance.postopintq2-0)+(project.finance.budcapintq3-0) - (project.finance.postcapintq3-0)+(project.finance.budopintq3-0) - (project.finance.postopintq3-0)+(project.finance.budcapintq4-0) - (project.finance.postcapintq4-0)+(project.finance.budopintq4-0) - (project.finance.postopintq4-0) | currency:"":0}}</td>
+    </tr>
+    <tr class="header">
+        <td>Budget/Posted total</td>
+        <td class="sums">{{(project.finance.budcapextq1-0) - (project.finance.postcapextq1-0)+(project.finance.budcapextoneq1-0) - (project.finance.postcapextoneq1-0)+(project.finance.budopextq1-0) - (project.finance.postopextq1-0)+(project.finance.budcapintq1-0) - (project.finance.postcapintq1-0)+(project.finance.budopintq1-0) - (project.finance.postopintq1-0) | currency:"":0}}</td>
+        <td class="sums">{{(project.finance.budcapextq2-0) - (project.finance.postcapextq2-0)+(project.finance.budcapextoneq2-0) - (project.finance.postcapextoneq2-0)+(project.finance.budopextq2-0) - (project.finance.postopextq2-0)+(project.finance.budcapintq2-0) - (project.finance.postcapintq2-0)+(project.finance.budopintq2-0) - (project.finance.postopintq2-0) | currency:"":0}}</td>
+        <td class="sums">{{(project.finance.budcapextq3-0) - (project.finance.postcapextq3-0)+(project.finance.budcapextoneq3-0) - (project.finance.postcapextoneq3-0)+(project.finance.budopextq3-0) - (project.finance.postopextq3-0)+(project.finance.budcapintq3-0) - (project.finance.postcapintq3-0)+(project.finance.budopintq3-0) - (project.finance.postopintq3-0) | currency:"":0}}</td>
+        <td class="sums">{{(project.finance.budcapextq4-0) - (project.finance.postcapextq4-0)+(project.finance.budcapextoneq4-0) - (project.finance.postcapextoneq4-0)+(project.finance.budopextq4-0) - (project.finance.postopextq4-0)+(project.finance.budcapintq4-0) - (project.finance.postcapintq4-0)+(project.finance.budopintq4-0) - (project.finance.postopintq4-0) | currency:"":0}}</td>
+        
+        <td class="sums">{{(project.finance.budcapextq1-0) - (project.finance.postcapextq1-0)+(project.finance.budcapextoneq1-0) - (project.finance.postcapextoneq1-0)+(project.finance.budopextq1-0) - (project.finance.postopextq1-0)+(project.finance.budcapintq1-0) - (project.finance.postcapintq1-0)+(project.finance.budopintq1-0) - (project.finance.postopintq1-0)+(project.finance.budcapextq2-0) - (project.finance.postcapextq2-0)+(project.finance.budcapextoneq2-0) - (project.finance.postcapextoneq2-0)+(project.finance.budopextq2-0) - (project.finance.postopextq2-0)+(project.finance.budcapintq2-0) - (project.finance.postcapintq2-0)+(project.finance.budopintq2-0) - (project.finance.postopintq2-0)+(project.finance.budcapextq3-0) - (project.finance.postcapextq3-0)+(project.finance.budcapextoneq3-0) - (project.finance.postcapextoneq3-0)+(project.finance.budopextq3-0) - (project.finance.postopextq3-0)+(project.finance.budcapintq3-0) - (project.finance.postcapintq3-0)+(project.finance.budopintq3-0) - (project.finance.postopintq3-0)+(project.finance.budcapextq4-0) - (project.finance.postcapextq4-0)+(project.finance.budcapextoneq4-0) - (project.finance.postcapextoneq4-0)+(project.finance.budopextq4-0) - (project.finance.postopextq4-0)+(project.finance.budcapintq4-0) - (project.finance.postcapintq4-0)+(project.finance.budopintq4-0) - (project.finance.postopintq4-0) | currency:"":0}}</td>
+        
+    </tr>
+    <tr>
+        <td>Acc. total</td>
+        <td class="sums">{{(project.finance.budcapextq1-0) - (project.finance.postcapextq1-0)+(project.finance.budcapextoneq1-0) - (project.finance.postcapextoneq1-0)+(project.finance.budopextq1-0) - (project.finance.postopextq1-0)+(project.finance.budcapintq1-0) - (project.finance.postcapintq1-0)+(project.finance.budopintq1-0) - (project.finance.postopintq1-0) | currency:"":0}}</td>
+        
+        
+        <td class="sums">{{(project.finance.budcapextq1-0) - (project.finance.postcapextq1-0)+(project.finance.budcapextoneq1-0) - (project.finance.postcapextoneq1-0)+(project.finance.budopextq1-0) - (project.finance.postopextq1-0)+(project.finance.budcapintq1-0) - (project.finance.postcapintq1-0)+(project.finance.budopintq1-0) - (project.finance.postopintq1-0)+(project.finance.budcapextq2-0) - (project.finance.postcapextq2-0)+(project.finance.budcapextoneq2-0) - (project.finance.postcapextoneq2-0)+(project.finance.budopextq2-0) - (project.finance.postopextq2-0)+(project.finance.budcapintq2-0) - (project.finance.postcapintq2-0)+(project.finance.budopintq2-0) - (project.finance.postopintq2-0) | currency:"":0}}</td>
+        
+        
+        <td class="sums">{{(project.finance.budcapextq1-0) - (project.finance.postcapextq1-0)+(project.finance.budcapextoneq1-0) - (project.finance.postcapextoneq1-0)+(project.finance.budopextq1-0) - (project.finance.postopextq1-0)+(project.finance.budcapintq1-0) - (project.finance.postcapintq1-0)+(project.finance.budopintq1-0) - (project.finance.postopintq1-0)+(project.finance.budcapextq2-0) - (project.finance.postcapextq2-0)+(project.finance.budcapextoneq2-0) - (project.finance.postcapextoneq2-0)+(project.finance.budopextq2-0) - (project.finance.postopextq2-0)+(project.finance.budcapintq2-0) - (project.finance.postcapintq2-0)+(project.finance.budopintq2-0) - (project.finance.postopintq2-0)+(project.finance.budcapextq3-0) - (project.finance.postcapextq3-0)+(project.finance.budcapextoneq3-0) - (project.finance.postcapextoneq3-0)+(project.finance.budopextq3-0) - (project.finance.postopextq3-0)+(project.finance.budcapintq3-0) - (project.finance.postcapintq3-0)+(project.finance.budopintq3-0) - (project.finance.postopintq3-0) | currency:"":0}}</td>
+        
+        
+        <td class="sums">{{(project.finance.budcapextq1-0) - (project.finance.postcapextq1-0)+(project.finance.budcapextoneq1-0) - (project.finance.postcapextoneq1-0)+(project.finance.budopextq1-0) - (project.finance.postopextq1-0)+(project.finance.budcapintq1-0) - (project.finance.postcapintq1-0)+(project.finance.budopintq1-0) - (project.finance.postopintq1-0)+(project.finance.budcapextq2-0) - (project.finance.postcapextq2-0)+(project.finance.budcapextoneq2-0) - (project.finance.postcapextoneq2-0)+(project.finance.budopextq2-0) - (project.finance.postopextq2-0)+(project.finance.budcapintq2-0) - (project.finance.postcapintq2-0)+(project.finance.budopintq2-0) - (project.finance.postopintq2-0)+(project.finance.budcapextq3-0) - (project.finance.postcapextq3-0)+(project.finance.budcapextoneq3-0) - (project.finance.postcapextoneq3-0)+(project.finance.budopextq3-0) - (project.finance.postopextq3-0)+(project.finance.budcapintq3-0) - (project.finance.postcapintq3-0)+(project.finance.budopintq3-0) - (project.finance.postopintq3-0)+(project.finance.budcapextq4-0) - (project.finance.postcapextq4-0)+(project.finance.budcapextoneq4-0) - (project.finance.postcapextoneq4-0)+(project.finance.budopextq4-0) - (project.finance.postopextq4-0)+(project.finance.budcapintq4-0) - (project.finance.postcapintq4-0)+(project.finance.budopintq4-0) - (project.finance.postopintq4-0) | currency:"":0}}</td>
+        
+        <td></td>
+    </tr>
+</table>
+        
+<h2>Deviation report</h2>
+<table>
+    <tr>
+        <td class="header"><p>Deviation Q1 <span id="financedevQ1_count" class="right"></span></p></td>
+        <td>
+            <div class="field">
+                <textarea ng-model="project.finance.devq1" maxlength="300" id="devq1" placeholder="Describe major changes and impact on Q1 financing."></textarea>
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <td class="header"><p>Deviation Q2 <span id="financedevQ2_count" class="right"></span></p></td>
+        <td>
+            <div class="field">
+                <textarea ng-model="project.finance.devq2" maxlength="300" id="devq2" placeholder="Describe major changes and impact on Q2 financing."></textarea>
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <td class="header"><p>Deviation Q3 <span id="financedevQ3_count" class="right"></span></p></td>
+        <td>
+            <div class="field">
+                <textarea ng-model="project.finance.devq3" maxlength="300" id="devq3" placeholder="Describe major changes and impact on Q3 financing."></textarea>
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <td class="header"><p>Deviation Q4 <span id="financedevQ4_count" class="right"></span></p></td>
+        <td>
+            <div class="field">
+                <textarea ng-model="project.finance.devq4" maxlength="300" id="devq4" placeholder="Describe major changes and impact on Q4 financing."></textarea>
+            </div>
+        </td>
+    </tr>          
+</table>
+
+<h3>Budget next year</h3>
+<table class="smaller smallinput">
+    <tr class="header"><td>TDKK Ex. Vat</td><td>Q1</td><td>Q2</td><td>Q3</td><td>Q4</td><td>Total</td></tr>
+    <tr><td  class="header" colspan="6">Capex</td></tr>
+    <tr>
+        <td>External</td>
+        <td><div class="field"><input ng-model="project.finance.nextbudcapextq1"/></div></td>
+        <td><div class="field"><input ng-model="project.finance.nextbudcapextq2"/></div></td>
+        <td><div class="field"><input ng-model="project.finance.nextbudcapextq3"/></div></td>
+        <td><div class="field"><input ng-model="project.finance.nextbudcapextq4"/></div></td>
+        <td class="sums">{{(project.finance.nextbudcapextq1-0)+(project.finance.nextbudcapextq2-0)+(project.finance.nextbudcapextq3-0)+(project.finance.nextbudcapextq4-0) | currency:"":0}}</td>
+    </tr>
+    <tr>
+        <td>Ext. One-Off</td>
+        <td><div class="field"><input ng-model="project.finance.nextbudcapextoneq1"/></div></td>
+        <td><div class="field"><input ng-model="project.finance.nextbudcapextoneq2"/></div></td>
+        <td><div class="field"><input ng-model="project.finance.nextbudcapextoneq3"/></div></td>
+        <td><div class="field"><input ng-model="project.finance.nextbudcapextoneq4"/></div></td>
+        <td class="sums">{{(project.finance.nextbudcapextoneq1-0)+(project.finance.nextbudcapextoneq2-0)+(project.finance.nextbudcapextoneq3-0)+(project.finance.nextbudcapextoneq4-0) | currency:"":0}}</td>
+    </tr>
+    <tr>
+        <td>Internal</td>
+        <td><div class="field"><input ng-model="project.finance.nextbudcapintq1"/></div></td>
+        <td><div class="field"><input ng-model="project.finance.nextbudcapintq2"/></div></td>
+        <td><div class="field"><input ng-model="project.finance.nextbudcapintq3"/></div></td>
+        <td><div class="field"><input ng-model="project.finance.nextbudcapintq4"/></div></td>
+        <td class="sums">{{(project.finance.nextbudcapintq1-0)+(project.finance.nextbudcapintq2-0)+(project.finance.nextbudcapintq3-0)+(project.finance.nextbudcapintq4-0) | currency:"":0}}</td>
+    </tr>
+    <tr>
+        <td>Capex total</td>
+        <td class="sums">{{(project.finance.nextbudcapextq1-0)+(project.finance.nextbudcapextoneq1-0)+(project.finance.nextbudcapintq1-0) | currency:"":0}}</td>
+        <td class="sums">{{(project.finance.nextbudcapextq2-0)+(project.finance.nextbudcapextoneq2-0)+(project.finance.nextbudcapintq2-0) | currency:"":0}}</td>
+        <td class="sums">{{(project.finance.nextbudcapextq3-0)+(project.finance.nextbudcapextoneq3-0)+(project.finance.nextbudcapintq3-0) | currency:"":0}}</td>
+        <td class="sums">{{(project.finance.nextbudcapextq4-0)+(project.finance.nextbudcapextoneq4-0)+(project.finance.nextbudcapintq4-0) | currency:"":0}}</td>
+        <td class="sums">{{(project.finance.nextbudcapextq1-0)+(project.finance.nextbudcapextoneq1-0)+(project.finance.nextbudcapintq1-0)+(project.finance.nextbudcapextq2-0)+(project.finance.nextbudcapextoneq2-0)+(project.finance.nextbudcapintq2-0)+(project.finance.nextbudcapextq3-0)+(project.finance.nextbudcapextoneq3-0)+(project.finance.nextbudcapintq3-0)+(project.finance.nextbudcapextq4-0)+(project.finance.nextbudcapextoneq4-0)+(project.finance.nextbudcapintq4-0) | currency:"":0}}</td>
+    </tr>
+    <tr><td class="header" colspan="6">Opex</td></tr>
+    <tr>
+        <td>External</td>
+        <td><div class="field"><input ng-model="project.finance.nextbudopextq1"/></div></td>
+        <td><div class="field"><input ng-model="project.finance.nextbudopextq2"/></div></td>
+        <td><div class="field"><input ng-model="project.finance.nextbudopextq3"/></div></td>
+        <td><div class="field"><input ng-model="project.finance.nextbudopextq4"/></div></td>
+        <td class="sums">{{(project.finance.nextbudopextq1-0)+(project.finance.nextbudopextq2-0)+(project.finance.nextbudopextq3-0)+(project.finance.nextbudopextq4-0) | currency:"":0}}</td>
+    </tr>
+    <tr>
+        <td>Internal</td>
+        <td><div class="field"><input ng-model="project.finance.nextbudopintq1"/></div></td>
+        <td><div class="field"><input ng-model="project.finance.nextbudopintq2"/></div></td>
+        <td><div class="field"><input ng-model="project.finance.nextbudopintq3"/></div></td>
+        <td><div class="field"><input ng-model="project.finance.nextbudopintq4"/></div></td>
+        <td class="sums">{{(project.finance.nextbudopintq1-0)+(project.finance.nextbudopintq2-0)+(project.finance.nextbudopintq3-0)+(project.finance.nextbudopintq4-0) | currency:"":0}}</td>
+    </tr>
+    <tr>
+        <td>Opex total</td>
+        <td class="sums">{{(project.finance.nextbudopextq1-0)+(project.finance.nextbudopintq1-0)}}</td>
+        <td class="sums">{{(project.finance.nextbudopextq2-0)+(project.finance.nextbudopintq2-0)}}</td>
+        <td class="sums">{{(project.finance.nextbudopextq3-0)+(project.finance.nextbudopintq3-0)}}</td>
+        <td class="sums">{{(project.finance.nextbudopextq4-0)+(project.finance.nextbudopintq4-0)}}</td>
+        <td class="sums">{{(project.finance.nextbudopextq1-0)+(project.finance.nextbudopintq1-0)+(project.finance.nextbudopextq2-0)+(project.finance.nextbudopintq2-0)+(project.finance.nextbudopextq3-0)+(project.finance.nextbudopintq3-0)+(project.finance.nextbudopextq4-0)+(project.finance.nextbudopintq4-0) | currency:"":0}}</td>
+    </tr>
+    <tr><td class="header" colspan="6">External/Internal</td></tr>
+    <tr>
+        <td>External total</td>
+        <td class="sums">{{(project.finance.nextbudcapextq1-0)+(project.finance.nextbudcapextoneq1-0)+(project.finance.nextbudopextq1-0) | currency:"":0}}</td>
+        <td class="sums">{{(project.finance.nextbudcapextq2-0)+(project.finance.nextbudcapextoneq2-0)+(project.finance.nextbudopextq2-0) | currency:"":0}}</td>
+        <td class="sums">{{(project.finance.nextbudcapextq3-0)+(project.finance.nextbudcapextoneq3-0)+(project.finance.nextbudopextq3-0) | currency:"":0}}</td>
+        <td class="sums">{{(project.finance.nextbudcapextq4-0)+(project.finance.nextbudcapextoneq4-0)+(project.finance.nextbudopextq4-0) | currency:"":0}}</td>
+        <td class="sums">{{(project.finance.nextbudcapextq1-0)+(project.finance.nextbudcapextoneq1-0)+(project.finance.nextbudopextq1-0)+(project.finance.nextbudcapextq2-0)+(project.finance.nextbudcapextoneq2-0)+(project.finance.nextbudopextq2-0)+(project.finance.nextbudcapextq3-0)+(project.finance.nextbudcapextoneq3-0)+(project.finance.nextbudopextq3-0)+(project.finance.nextbudcapextq4-0)+(project.finance.nextbudcapextoneq4-0)+(project.finance.nextbudopextq4-0) | currency:"":0}}</td>
+    </tr>
+    <tr>
+        <td>Internal total</td>
+        <td class="sums">{{(project.finance.nextbudcapintq1-0)+(project.finance.nextbudopintq1-0) | currency:"":0}}</td>
+        <td class="sums">{{(project.finance.nextbudcapintq2-0)+(project.finance.nextbudopintq2-0) | currency:"":0}}</td>
+        <td class="sums">{{(project.finance.nextbudcapintq3-0)+(project.finance.nextbudopintq3-0) | currency:"":0}}</td>
+        <td class="sums">{{(project.finance.nextbudcapintq4-0)+(project.finance.nextbudopintq4-0) | currency:"":0}}</td>
+        <td class="sums">{{(project.finance.nextbudcapintq1-0)+(project.finance.nextbudopintq1-0)+(project.finance.nextbudcapintq2-0)+(project.finance.nextbudopintq2-0)+(project.finance.nextbudcapintq3-0)+(project.finance.nextbudopintq3-0)+(project.finance.nextbudcapintq4-0)+(project.finance.nextbudopintq4-0) | currency:"":0}}</td>
+    </tr>
+    <tr class="header">
+        <td>Budget total</td>
+        <td class="sums">{{(project.finance.nextbudcapextq1-0)+(project.finance.nextbudcapextoneq1-0)+(project.finance.nextbudopextq1-0)+(project.finance.nextbudcapintq1-0)+(project.finance.nextbudopintq1-0) | currency:"":0}}</td>
+        <td class="sums">{{(project.finance.nextbudcapextq2-0)+(project.finance.nextbudcapextoneq2-0)+(project.finance.nextbudopextq2-0)+(project.finance.nextbudcapintq2-0)+(project.finance.nextbudopintq2-0) | currency:"":0}}</td>
+        <td class="sums">{{(project.finance.nextbudcapextq3-0)+(project.finance.nextbudcapextoneq3-0)+(project.finance.nextbudopextq3-0)+(project.finance.nextbudcapintq3-0)+(project.finance.nextbudopintq3-0) | currency:"":0}}</td>
+        <td class="sums">{{(project.finance.nextbudcapextq4-0)+(project.finance.nextbudcapextoneq4-0)+(project.finance.nextbudopextq4-0)+(project.finance.nextbudcapintq4-0)+(project.finance.nextbudopintq4-0) | currency:"":0}}</td>
+        <td class="sums">{{(project.finance.nextbudcapextq1-0)+(project.finance.nextbudcapextoneq1-0)+(project.finance.nextbudopextq1-0)+(project.finance.nextbudcapintq1-0)+(project.finance.nextbudopintq1-0)+(project.finance.nextbudcapextq2-0)+(project.finance.nextbudcapextoneq2-0)+(project.finance.nextbudopextq2-0)+(project.finance.nextbudcapintq2-0)+(project.finance.nextbudopintq2-0)+(project.finance.nextbudcapextq3-0)+(project.finance.nextbudcapextoneq3-0)+(project.finance.nextbudopextq3-0)+(project.finance.nextbudcapintq3-0)+(project.finance.nextbudopintq3-0)+(project.finance.nextbudcapextq4-0)+(project.finance.nextbudcapextoneq4-0)+(project.finance.nextbudopextq4-0)+(project.finance.nextbudcapintq4-0)+(project.finance.nextbudopintq4-0) | currency:"":0}}</td>
+    </tr>
+    <tr>
+        <td>Acc. total</td>
+        <td class="sums">{{(project.finance.nextbudcapextq1-0)+(project.finance.nextbudcapextoneq1-0)+(project.finance.nextbudopextq1-0)+(project.finance.nextbudcapintq1-0)+(project.finance.nextbudopintq1-0) | currency:"":0}}</td>
+        <td class="sums">{{(project.finance.nextbudcapextq1-0)+(project.finance.nextbudcapextoneq1-0)+(project.finance.nextbudopextq1-0)+(project.finance.nextbudcapintq1-0)+(project.finance.nextbudopintq1-0)+(project.finance.nextbudcapextq2-0)+(project.finance.nextbudcapextoneq2-0)+(project.finance.nextbudopextq2-0)+(project.finance.nextbudcapintq2-0)+(project.finance.nextbudopintq2-0) | currency:"":0}}</td>
+        <td class="sums">{{(project.finance.nextbudcapextq1-0)+(project.finance.nextbudcapextoneq1-0)+(project.finance.nextbudopextq1-0)+(project.finance.nextbudcapintq1-0)+(project.finance.nextbudopintq1-0)+(project.finance.nextbudcapextq2-0)+(project.finance.nextbudcapextoneq2-0)+(project.finance.nextbudopextq2-0)+(project.finance.nextbudcapintq2-0)+(project.finance.nextbudopintq2-0)+(project.finance.nextbudcapextq3-0)+(project.finance.nextbudcapextoneq3-0)+(project.finance.nextbudopextq3-0)+(project.finance.nextbudcapintq3-0)+(project.finance.nextbudopintq3-0) | currency:"":0}}</td>
+        <td class="sums">{{(project.finance.nextbudcapextq1-0)+(project.finance.nextbudcapextoneq1-0)+(project.finance.nextbudopextq1-0)+(project.finance.nextbudcapintq1-0)+(project.finance.nextbudopintq1-0)+(project.finance.nextbudcapextq2-0)+(project.finance.nextbudcapextoneq2-0)+(project.finance.nextbudopextq2-0)+(project.finance.nextbudcapintq2-0)+(project.finance.nextbudopintq2-0)+(project.finance.nextbudcapextq3-0)+(project.finance.nextbudcapextoneq3-0)+(project.finance.nextbudopextq3-0)+(project.finance.nextbudcapintq3-0)+(project.finance.nextbudopintq3-0)+(project.finance.nextbudcapextq4-0)+(project.finance.nextbudcapextoneq4-0)+(project.finance.nextbudopextq4-0)+(project.finance.nextbudcapintq4-0)+(project.finance.nextbudopintq4-0) | currency:"":0}}</td>
+        <td></td>
+    </tr>
+</table>
+    
+</div>    
+<script type="text/javascript" src="../js/count.js"></script>

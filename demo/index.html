@@ -1,0 +1,31 @@
+<!doctype html>
+<html  lang="en" ng-app="riskApp">
+<head>
+	<script src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
+	<script src="http://code.angularjs.org/1.2.4/angular.min.js"></script>
+	<script src="https://code.jquery.com/ui/1.11.2/jquery-ui.min.js"></script>
+	<script src="https://rawgithub.com/angular-ui/ui-sortable/angular1.2/src/sortable.js"></script>
+	<script src="js/d3.v3.min.js"></script>
+	<!--<script src="js/angular-sortable-view.js"></script>-->
+
+	<script src="js/angular-route.js"></script>
+	<script src="js/app.js"></script>
+	<script src="js/controllers.js"></script>
+	<script src="js/dashboard.js"></script>
+	<script src="js/orgdia.js"></script>
+    
+	<link rel="stylesheet" href="css/orgdia.css">
+	<link rel="stylesheet" href="css/dashboard.css">
+	<link rel="stylesheet" href="css/sort.css">
+	<link rel="stylesheet" href="css/dnd.css">
+</head>
+
+<body>
+    
+	<div ng-show="!user.authenticated"><a href="#/login">Login</a></div>
+    <div ng-show="user.authenticated">Email: {{ user.email }} <button ng-controller="LoginController" ng-click="doLogout()">Logout</button></div>
+    
+    <div ng-view></div>
+    
+</body>
+</html>

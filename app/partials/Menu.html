@@ -1,0 +1,42 @@
+<ul>
+    <li ng-class="{ active: route == '/login' || route == '/' }">
+        <a id="menufane1" href="#/login">Home</a>
+        <ul>
+        	<li><a ng-click="showPanel(1)">Log in/out</a></li>
+        	<li><a ng-click="showPanel(2)">What is PrioCloud</a></li>
+        	<li><a ng-click="showPanel(3)">Great alternatives</a></li>
+        	<li><a ng-click="showPanel(4)">Create a new Company Portfolio</a></li>
+        	<li><a ng-click="showPanel(5)">Help</a></li>
+        </ul>
+    </li>
+    <span ng-show="user.authenticated">
+        <li ng-class="{ active: route == '/dashboard' }">
+            <a id="menufane2" href="#/dashboard">Portfolio</a>
+            <ul>
+                <li><a ng-click="showPanel(1)">Project list - Overview</a></li>
+                <li><a ng-click="showPanel(2)">Project list - Dependencies</a></li>
+                <li><a ng-click="showPanel(3)">Project list - KPI</a></li>
+                <li><a ng-click="showPanel(4)">Project list - Status</a></li>
+                <li><a ng-click="showPanel(5)">Project list - Purpose</a></li>
+                <li><a ng-click="showPanel(6)">Risk list</a></li> 
+                <li><a ng-click="showPanel(7)">Deliverable list</a></li>
+                
+            </ul>
+        </li>
+
+        <li  ng-class="{ active: route == '/settings' }" ng-if="!user.demo">
+            <a id="menufane4" href="#/settings">Settings</a>
+        </li>
+        <li  ng-class="{ active: route == '/admin' }" ng-if="user.admin || user.subadmin">
+            <a id="menufane5" href="#/admin">Administration</a>
+            <ul ng-show="route==admin">
+            	<li><a ng-click="showPanel(1)">Company and business units</a></li>
+            	<li><a ng-click="showPanel(2)">Users</a></li>
+            	<li><a ng-click="showPanel(3)">Projects</a></li>
+            	<li><a ng-click="showPanel(4)" ng-if="user.admin">Project ratings</a></li>
+            	<li><a ng-click="showPanel(5)">Risk ratings</a></li>
+            	<li><a ng-click="showPanel(6)" ng-if="user.admin">Delete account</a></li>
+            </ul>
+        </li>
+    </span>
+</ul>

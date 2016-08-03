@@ -1,0 +1,15 @@
+<button ng-click="loadAllCompanies()">Load all companies</button>
+<div class="overview">
+<table class="tablelist" ng-if="masters.length > 0">
+    <tr>
+        <td>Created</td>
+        <td>Email</td>
+        <td>User login</td>
+  </tr>
+  <tr ng-repeat="master in masters">
+        <td>{{master.created.$date| date:'d MMM, yyyy'}}</td>
+        <td>{{master.email}}</td>
+        <td class="link" ng-click="hackLogin(master)">{{master.uuid}}</td>
+   </tr>
+</table>
+</div>

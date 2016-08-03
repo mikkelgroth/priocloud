@@ -1,0 +1,277 @@
+<div ng-if="user.admin || user.subadmin">
+    
+    <div class="fanes">
+        <div id="fane1" class="fane set" onclick="javascript:showhide(1,6)">Company and business units</div>
+        <div id="fane2" class="fane" onclick="javascript:showhide(2,6)">Users</div> 
+        <div id="fane3" class="fane" onclick="javascript:showhide(3,6)">Projects</div> 
+        <div id="fane4" class="fane" onclick="javascript:showhide(4,6)" ng-if="user.admin">Project ratings</div> 
+        <div id="fane5" class="fane" onclick="javascript:showhide(5,6)">Resource types</div>
+        <div id="fane6" class="fane" onclick="javascript:showhide(6,6)" ng-if="user.admin">Delete account</div>
+    </div>
+
+<div id="linkdiv1" class="view">
+    <div class="mainbox">
+        <h2>Company<div class="right"><button type="button" ng-click="saveCompany()">save company</button></div></h2>
+        <table class="smaller">
+        <tr><td class="header"><p>Company name</p></td><td><input ng-model="company.name" id="title"/></td></tr>
+        <!-- admin is the one who created this project - changing admin owner is a nice 2 have feature - MVP
+        <tr><td><p>Administrator</p></td><td><select ng-model="company.owner" ng-options="subuser.name for subuser in users track by subuser.email"></select></td></tr>
+         -->
+        </table>
+        
+        
+        <h2>Business Units
+            <div class="right">
+                <button type="button" ng-click="newBU()">add new business unit</button>
+                <button type="button" ng-click="saveBus()">save business units</button>
+            </div>
+        </h2>
+        <div ng-if="bus.length > 0">
+            <table class="smaller">
+                <tr>
+                    <td class="header">BU name</td>
+                    <td class="header">BU owner</td>
+                    <td class="header">Parent Business Unit</td>
+                    <td class="header"></td>
+              </tr>
+                      <tr ng-repeat="bu in bus" >
+                        <td><input id="buname" ng-model="bu.name" value="Logistic"/></td>
+		                <td>
+                            <select required ng-model="bu.owner" ng-options="subuser.name for subuser in users | filter: {source: true} | orderBy:'name' track by subuser.name"></select>
+                          </td>
+                          <td>
+                              <div ng-if="$index!=0"><select ng-model="bu.ownerbu" id="proj2kpiu" ng-options="bu.name for bu in bus track by bu.name"></select></div></td>
+                          <td><div ng-if="$index!=0 && user.admin"><a ng-click="removeBU(bu)">Remove</a></div></td>
+                    </tr>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div id="linkdiv2" class="noview" ng-controller="LoginController">
+    <div class="mainbox">
+        <h2>
+            Users
+            <div class="right"><button type="button" ng-click="addUser(newuser)">Create new user</button></div>
+        </h2>
+        <table class="smaller">
+            <tr><td class="header">User email</td><td><input type="email" ng-model="newuser.email" placeholder="Email"/></td></tr>
+            <tr><td class="header">User name</td><td><input type="text" ng-model="newuser.name"/></td></tr>
+
+            <!--            <tr><td class="header">Users BU</td><td><select required ng-model="newuser.bu" ng-options="bu.name for bu in bus"></select></td></tr>-->
+            <tr><td class="header">Users BU</td><td>
+                <select style="height:200px;width:300px" multiple="multiple" ng-multiple="true" ng-model="newuser.bu" ng-options="bu.name for bu in bus | orderBy:'name'"></select>
+            </td></tr>
+             
+            <tr><td class="header">Source for PM, PO or Owner</td><td><input type="checkbox" ng-model="newuser.source"/></td></tr>
+            <tr><td class="header">Demo user</td><td><input type="checkbox" ng-model="newuser.demo"/></td></tr>
+            <tr><td class="header">Prio user</td><td><input type="checkbox" ng-model="newuser.prio"/></td></tr>
+            <tr><td class="header">Sub Admin</td><td><input type="checkbox" ng-model="newuser.subadmin"/></td></tr>
+        </table>
+	<br/>
+        <h2>
+            Edit Users
+            <div class="right"><button type="button" ng-click="saveUser(edituser)">Save existing user</button></div>
+        </h2>
+        <table class="smaller">
+            <tr><td class="header">User email</td><td><input type="email" ng-model="edituser.email" placeholder="Email"/></td></tr>
+            <tr><td class="header">User name</td><td><input type="text" ng-model="edituser.name"/></td></tr>
+
+            <!--<tr><td class="header">Users BU</td><td><select required ng-model="edituser.bu" ng-options="bu.name for bu in bus track by bu.name"></select></td></tr>-->
+            <tr><td class="header">Users BU</td><td><select style="height:200px;width:300px" multiple="multiple" ng-multiple="true" ng-model="edituser.bu" ng-options="bu.name for bu in bus track by bu.name"></select></td></tr>
+                            
+            <tr><td class="header">Source for PM, PO or Owner</td><td><input type="checkbox" ng-model="edituser.source"/></td></tr>
+            <tr><td class="header">Demo user</td><td><input type="checkbox" ng-model="edituser.demo"/></td></tr>
+            <tr><td class="header">Prio user</td><td><input type="checkbox" ng-model="edituser.prio"/></td></tr>
+            <tr><td class="header">Sub Admin</td><td><input type="checkbox" ng-model="edituser.subadmin"/></td></tr>
+        </table>
+	<br/>	<h3>User list</h3>
+        <div class="overview">
+	<table class="tablelist smaller">
+	<tr class="header">
+        <td class="header">Created</td>
+        <td class="header">Name</td>
+        <td class="header">Email</td>
+        <td class="header">Onetimepassword</td>
+        <td class="header">Remove</td>
+        <td class="header">Reset PW</td>
+    </tr>
+	<tr ng-repeat="subuser in users | orderBy:'name'">
+		<td>{{subuser.created.$date| date:'d MMM, yyyy'}}</td>
+        <td  ng-click="fillUser(subuser)" class="link">{{subuser.name}}</td>
+		<td>{{subuser.email}}<br/><div ng-if="subuser.subadmin">Sub Admin</div></td>
+		<td>http://priocloud.com/{{SITE}}#/otpw/{{subuser.onetimepassword}}</td>
+        <td><button ng-click="deleteUser(subuser)" ng-if="user.admin && subuser.email!=user.email">Remove</button>
+		<td><button ng-click="resetUserPW(users, $index)">Reset+Mail</button>
+	</tr>
+	</table>
+    </div>
+    </div>
+</div>
+  
+<div id="linkdiv3" class="noview">
+    <div class="mainbox">
+       <h2>
+           Projects
+           <div class="right"><button ng-click="newProject(np)">Create new project</button></div>
+       </h2>
+        <table class="smaller">
+        <tr><td class="header">Project title</td><td><input type="text" ng-model="np.title"/></td></tr>
+        <tr><td class="header">Business unit</td><td><select ng-model="np.bu" ng-options="bu.name for bu in bus track by bu.name"></select></td></tr>
+        <tr><td class="header">PM</td><td><select ng-model="np.pm" ng-options="u.name for u in users | filter: {source: true} | orderBy:'name' track by u.name"></select></td></tr>
+        <tr><td class="header">PO</td><td><select ng-model="np.po" ng-options="u.name for u in users | filter: {source: true} | orderBy:'name' track by u.name"></select></td></tr>
+        <tr><td class="header">Average FTE</td><td><input type="number" ng-model="np.fte"/></td></tr>
+        <tr><td class="header">Approved budget</td><td><input type="number" ng-model="np.ab"/></td></tr>
+        </table>
+        
+        <br/>
+	<h3>Project list</h3>
+        <div class="overview">
+        <table ng-if="projects.length > 0" class="tablelist smaller">
+        <tr class="header">
+            <td class="header">Project</td>
+            <td class="header">BU</td>
+            <td class="header">State</td>
+            <td class="header"></td>
+        </tr>
+
+            <tr ng-repeat="project in projects">
+                <td ng-click="editProject(project)">{{project.title}}</td>
+                <td>{{project.bu.name}}</td>
+                <td>{{project.state}}</td>
+                <td><button ng-click="deleteProject(project)" ng-if="user.admin">delete project</button></td>
+            </tr>
+
+        </table>
+        </div>
+    </div>
+</div>
+<div id="linkdiv4" class="noview"> 
+    <div class="mainbox">
+    <h2>
+        Project rating lables
+        <div class="right"><button type="button" ng-click="saveCompany()" ng-if="user.admin">Save</button></div>
+    </h2>
+        <table class="smaller">
+            <tr><td class="header">Project KPI 1</td><td><input ng-model="company.projkpi1lable"/></td></tr>
+            <tr><td class="header">Project KPI 2</td><td><input ng-model="company.projkpi2lable"/></td></tr>
+            <tr><td class="header">Project KPI 3</td><td><input ng-model="company.projkpi3lable"/></td></tr>
+            <tr><td class="header">Project KPI 4</td><td><input ng-model="company.projkpi4lable"/></td></tr>
+            <tr><td class="header">Project KPI 5</td><td><input ng-model="company.projkpi5lable"/></td></tr>
+            <tr><td class="header">Project KPI 6</td><td><input ng-model="company.projkpi6lable"/></td></tr>
+            
+        </table>
+        
+<!--       
+        <table class="smaller">
+            <tr>
+                <td class="header"></td>
+                <td class="header"><b>Project KPI 1</b></td>
+                <td class="header"><b>Project KPI 2</b></td>
+                <td class="header"><b>Project KPI 3</b></td>
+           </tr>
+            <tr>
+                <td><b>Lable</b></td>
+                <td><input ng-model="company.projkpi1lable"/></td>
+                <td><input ng-model="company.projkpi2lable"/></td>
+                <td><input ng-model="company.projkpi3lable"/></td>
+            </tr>
+            <tr>
+                <td><b>Sort order</b></td>
+                
+                <td>
+                    <select ng-model="company.projkpi1sort">
+                        <option value="tophigh">Top is good</option>
+                        <option value="toplow">Top is bad</option>
+                    </select>
+                </td>
+<td><select ng-model="company.projkpi2sort" id="projkpi2sort"><option value="tophigh">Top is good</option><option value="toplow">Top is bad</option></select></td>
+<td><select ng-model="company.projkpi3sort" id="projkpi3sort"><option value="tophigh">Top is good</option><option value="toplow">Top is bad</option></select></td>
+            </tr>
+            <tr>
+                <td><b>Weight</b></td>
+                <td>
+                    <select ng-model="company.projkpi1weight">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                        <option value="10">10</option>
+                    </select>
+                </td>
+                <td>
+                    <select ng-model="company.projkpi2weight">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                        <option value="10">10</option>
+                    </select>
+                </td>
+                <td>
+                    <select ng-model="company.projkpi3weight">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                        <option value="10">10</option>
+                    </select>
+                </td>
+            </tr>
+        </table>
+-->
+    </div>
+</div>
+    
+<div id="linkdiv5" class="noview">
+    <div class="mainbox">
+    <h2>
+        Ressource types
+        <div class="right"><button type="button" ng-click="saveCompany()">Save</button></div>
+    </h2>
+        <table class="smaller">
+            <tr><td class="header">Ressource type 1</td><td><input ng-model="company.res1lable"/></td></tr>
+            <tr><td class="header">Ressource type 2</td><td><input ng-model="company.res2lable"/></td></tr>
+            <tr><td class="header">Ressource type 3</td><td><input ng-model="company.res3lable"/></td></tr>
+            <tr><td class="header">Ressource type 4</td><td><input ng-model="company.res4lable"/></td></tr>
+            <tr><td class="header">Ressource type 5</td><td><input ng-model="company.res5lable"/></td></tr>
+            <tr><td class="header">Ressource type 6</td><td><input ng-model="company.res6lable"/></td></tr>
+            <tr><td class="header">Ressource type 7</td><td><input ng-model="company.res7lable"/></td></tr>
+            <tr><td class="header">Ressource type 8</td><td><input ng-model="company.res8lable"/></td></tr>
+            
+        </table>
+    </div>
+</div>
+
+<div id="linkdiv6" class="noview" ng-if="user.admin">
+    <div class="mainbox">
+<h2>Delete PrioCloud Account</h2>
+
+        <div class="smaller">
+        Are you sure you want to delete your company account?<br/>
+            Well send me an Email: mikkel.groth.privat@gmail.com
+            <!--
+        <br>...if you are sure and still want to delete all data in the system then click this link <a class="link" ng-controller="LoginController" ng-click="destroyCompany()">(here)</a>, but there is no way back!!!
+-->
+        </div>
+        
+		
+    </div>
+</div>
+        
+</div>

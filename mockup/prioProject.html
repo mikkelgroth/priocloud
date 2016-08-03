@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>Project</title>
+        <meta name="description" content="Prio Project">
+        <link rel="stylesheet" href="main.css">
+    </head>
+    <body>
+        <table>
+            <tr>
+                <td><a href="prioPortfolioDashboard.html">Portfolio Dashboard</a></td>
+                <td><a href="prioSettings.html">Settings</a></td>
+                <td><a href="prioPortfolioPrio.html">Portfolio Prio</a></td>
+                <td><a href="prioRiskPrio.html">Risk Prio</a></td>
+            </tr>
+        </table>
+
+        <h1>PrioCloud</h1>
+        <h2>Project</h2>
+        <table>
+        <tr><td><p>Title</p></td><td><input id="title"/></td></tr>
+        <tr><td><p>State</p></td><td><select id="state"><option value="proposed">Proposed</option><option value="active">Active</option><option value="onhold">On hold</option><option value="closed">Closed</option></select></td></tr>
+        <tr><td><p>PM</p></td><td><select id="propm"><option value="userID">User A</option></select></td></tr>
+        <tr><td><p>PO</p></td><td><select id="propo"><option value="userID">User A</option></select></td></tr>
+        <tr><td><p>BU</p></td><td><select id="probu"><option value="buID">BU 1</option></select></td></tr>
+        <tr><td><p>Deliverables</p></td><td><input id="del"/></td></tr>
+        <tr><td><p>Project Start</p></td><td><input id="ps"/></td></tr>
+        <tr><td><p>Project Close</p></td><td><input id="pc"/></td></tr>
+        <tr><td><p>Cost Benefit</p></td><td><input id="cb"/></td></tr>
+        <tr><td><p>Cost Risk</p></td><td><input id="cr"/></td></tr>
+        <tr><td><p>Estimate to complete</p></td><td><input id="bb"/></td></tr>
+        <tr><td><p>EtC Internal</p></td><td><input id="bi"/></td></tr>
+        <tr><td><p>EtC External</p></td><td><input id="be"/></td></tr>
+        <tr><td><p>Rating points</p></td><td>ratepoints</td></tr>
+        <tr><td><p>Strategy Rating</p></td><td>strrate</td></tr>
+        <tr><td><p>Complexity Rating</p></td><td>comrate</td></tr>
+        <tr><td><p>Production Rating</p></td><td>prorate</td></tr>
+        <tr><td><p>Compliance Rating</p></td><td>comrate</td></tr>
+        </table>
+        
+        (if admin button med DELETE)
+
+        <h2>Risklist</h2>
+        <table>
+            <tr>
+                <td>Risk Points</td>
+                <td>Title</td>
+                <td>Group</td>
+                <td>Acountable</td>
+                <td>Description</td>
+                <td>Probability</td>
+                <td>Impact</td>
+                <td>Proximity</td>
+                <td>Trigger</td>
+                <td>Mitigation</td>
+                <td>Contingency</td>
+            </tr>
+            <tr>
+                <td>12</td>
+               <td><input id="risktitle" value="Late operation"/></td>
+                <td><select id="riskgroup"><option value="project">Project</option><option value="portfolio">Portfolio</option><option value="business">Business</option></select></td>
+                <td><select id="riskacountable"><option value="userID">User A</option></select></td>
+                <td><input id="riskdescr" value="Operational setup and servers not in place for UAT"/></td>
+                <td>1</td>
+                <td>1</td>
+                <td>1</td>
+                <td><input id="risktrig" value="If expected delay > 1 week"/></td>
+                <td><input id="riskmit" value="By Amazon cloud"/></td>
+                <td><input id="riskcon" value="Hire consultant and implement in Amazon"/></td>
+            </tr>
+            <tr>
+                <td><input id="risktitle"/></td>
+                <td><select id="riskgroup"><option value="project">Project</option><option value="portfolio">Portfolio</option><option value="business">Business</option></select></td>
+                <td><select id="riskacountable"><option value="userID">User A</option></select></td>
+                <td><input id="riskdescr"/></td>
+                <td>probrate</td>
+                <td>imprate</td>
+                <td>proxrate</td>
+                <td><input id="risktrig"/></td>
+                <td><input id="riskmit"/></td>
+                <td><input id="riskcon"/></td>
+            </tr>
+        </table>
+      
+        <h2>Statuslist</h2>
+        <table>
+            <tr>
+                <td>Flag</td>
+                <td>Delivered</td>
+                <td>Next</td>
+                <td>Concerns</td>
+                <td>Actions</td>
+                <td>Descisions</td>
+           </tr>
+            <tr>
+                <td><select id="statusflag"><option value="green">Green</option><option value="yellow">Yellow</option><option value="red">Red</option></select></td>
+                <td><input id="statusdel"/></td>
+                <td><input id="statusnext"/></td>
+                <td><input id="statuscon"/></td>
+                <td><input id="statusact"/></td>
+                <td><input id="statusdec"/></td>
+             </tr>
+        </table>
+      
+
+
+    </body>
+</html>

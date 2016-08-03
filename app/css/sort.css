@@ -1,0 +1,65 @@
+header, section {
+display: block;
+}
+h1 {
+text-align: center;
+font-weight: normal;
+}
+#features {
+margin: auto;
+width: 600px;
+font-size: 0.9em;
+}
+.connected, .sortable, .exclude, .handles {
+margin: auto;
+padding: 0;
+width: 600px;
+-webkit-touch-callout: none;
+-webkit-user-select: none;
+-khtml-user-select: none;
+-moz-user-select: none;
+-ms-user-select: none;
+user-select: none;
+}
+.sortable.grid {
+overflow: hidden;
+}
+.connected li, .sortable li, .exclude li, .handles li {
+list-style: none;
+color: #1C94C4;
+margin: 10px;
+padding: 10px;
+height: 15px;
+}
+.handles span {
+cursor: move;
+}
+li.disabled {
+opacity: 0.5;
+}
+.sortable.grid li {
+line-height: 80px;
+float: left;
+width: 10px;
+height: 80px;
+text-align: left;
+}
+li.highlight {
+background: #FEE25F;
+}
+#connected {
+width: 600px;
+overflow: hidden;
+margin: auto;
+}
+.connected {
+float: left;
+width: 300px;
+}
+.connected.no2 {
+float: left;
+}
+li.sortable-placeholder {
+border: 1px dashed #CCC;
+background: none;
+}

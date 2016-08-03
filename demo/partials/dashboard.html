@@ -1,0 +1,48 @@
+<div  ng-controller="projectListCtrl">
+     Department: {{department}}
+    <div id='dashboard'></div>
+
+    <div id="dndbox"> <!-- dnd box -->
+
+<div class="sortable-container" >
+DnD impact:
+    <ul ui-sortable="lable1Config" ng-model="impact" ng-change="changeHandler()">
+      <li ng-repeat="item in freqData | orderBy:'freq.impact':reverse=true">
+		{{item.proj}}: {{item.freq.impact}}
+        </li>
+    </ul>
+</div>
+
+
+<div class="sortable-container" >
+DnD prob:
+    <ul ui-sortable="probConfig" ng-model="prob">
+      <li ng-repeat="item in freqData | orderBy:'freq.prob':reverse=true">
+		{{item.proj}}: {{item.freq.prob}}
+        </li>
+    </ul>
+</div>
+
+<div class="sortable-container" >
+DnD prox:
+    <ul ui-sortable="proxiConfig" ng-model="proxi">
+      <li ng-repeat="item in freqData | orderBy:'freq.prox':reverse=true">
+		{{item.proj}}: {{item.freq.prox}}
+        </li>
+    </ul>
+</div>
+    
+    </div>  <!-- dnd box -->
+    
+    <hr>
+
+    Data:
+	<div ng-repeat="item in freqData">
+		{{item}}
+	</div>
+
+    <button ng-click="saveData()">Save</button>
+    <button ng-click="deleteData()">Delete</button>
+    <button ng-click="addItem()">Add Item</button>
+
+</div>
