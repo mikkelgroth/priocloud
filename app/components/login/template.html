@@ -2,7 +2,7 @@
     <div class="mainbox editboxon">
         <h2>PrioCloud - BETA TESTING</h2>
         <h3>-a free online project portfolio management tool</h3>
-        <div user-authenticated="{display: false}" class="login login-container">
+        <div prio-user-authenticated="{display: false}" class="login login-container">
             <div id="login" class="column small-6">
                 <div class="login-box">
                     <b>Log in to PrioCloud</b>
@@ -44,7 +44,7 @@
                 </div>
             </div>
         </div>
-        <div user-authenticated="{display: true}">
+        <div prio-user-authenticated="{display: true}">
             <div id="login" class="login">
                 <b>Logged in as: </b>{{ user.name }} <br/>
                 <button ng-click="logout()">Logout</button>

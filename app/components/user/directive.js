@@ -1,6 +1,6 @@
 angular
     .module('riskApp')
-    .directive('userAuthenticated', ['userService', function(userService) {
+    .directive('prioUserAuthenticated', ['userService', function(userService) {
         
         function linkFunction(scope, element, attrs, controller) {
             
@@ -17,7 +17,7 @@ angular
         return {
             restrict: 'A',
             scope: {
-                data: '=userAuthenticated'
+                data: '=prioUserAuthenticated'
             },
             link: linkFunction
         };

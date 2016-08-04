@@ -40,12 +40,37 @@ angular
             redirectTo: '/projects'
         });
     }])
-    .run(['$rootScope', function($rootScope) {
+    .run(['$rootScope', '$location', 'routeService', 'userService', function($rootScope, $location, routeService, userService) {
         
         $rootScope.SITENAME = SITENAME;
 
-        //$rootScope.route = "/login";
-        //$rootScope.$on('$routeChangeSuccess', function(next, current) { 
-        //    $rootScope.route = current.originalPath;
-        //});
+        $rootScope.$on('$routeChangeSuccess', function(next, current) { 
+
+            routeService.setRoute(current.originalPath);
+        });
+
+        $rootScope.logout = function () {
+
+            userService.invalidate();
+            $location.path('/login');
+        };
+
+        $rootScope.userHasBeenValidated = false;
+
+        userService
+            .checkIfUserIsAuthenticated()
+            .then(function(data) {
+                
+                $rootScope.userHasBeenValidated = true;
+
+                if (data.authenticated) {
+
+                    userService.authenticate(data.user);
+
+                } else {
+
+                    userService.invalidate();
+                    $location.path('/login');
+                }
+            });
     }]);

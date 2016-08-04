@@ -1,6 +1,6 @@
 angular
     .module('riskApp')
-    .controller('ProjectsOverviewController', [
+    .controller('ProjectsDependenciesController', [
         '$scope', 
         '$rootScope',
         function (
@@ -8,7 +8,7 @@ angular
             $rootScope
         ) {
 
-            console.log("ProjectsOverviewController init");
+            console.log("ProjectsDependenciesController init");
 
         }
     ]);

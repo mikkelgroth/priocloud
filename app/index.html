@@ -10,27 +10,28 @@
     <link rel="stylesheet" href="css/datepickr.css">
     <link rel="stylesheet" href="css/new/main.css" />
 </head>
-
-<body ng-cloak class="ng-cloak">
-    <header>
-        <div class="row">
-            <div class="brand">
-                <div class="logo">{{ SITENAME }}</div>
+<body>
+    <div ng-cloak class="ng-cloak" ng-show="userHasBeenValidated">
+        <header>
+            <div class="row">
+                <div class="brand">
+                    <div class="logo">{{ SITENAME }}</div>
+                </div>
+                <div class="user-container" prio-user-authenticated="{display: true}">         
+                    <span>{{ user.name }}</span>
+                    <div class="button" ng-click="logout()">logout</div>
+                </div>
             </div>
-            <div class="user-container" ng-show="user.authenticated">         
-                <span>{{ user.name }}</span>
-                <div class="button" ng-click="doLogout()">logout</div>
+        </header>
+        <div class="main-container row">
+            <nav>
+                <menu></menu>
+            </nav>
+            <div class="content-container">
+                <div class="content" ng-view></div>
             </div>
+            <div style="clear:both;"></div>
         </div>
-    </header>
-    <div class="main-container row">
-        <nav>
-            <menu></menu>
-        </nav>
-        <div class="content-container">
-            <div class="content" ng-view></div>
-        </div>
-        <div style="clear:both;"></div>
     </div>
 
     <script src="extfiles/jquery-2.1.1.min.js"></script>
@@ -51,6 +52,9 @@
 
     <script src="services/restService.js"></script>
     <script src="services/stateService.js"></script>
+
+    <script src="components/route/directive.js"></script>
+    <script src="components/route/service.js"></script>
 
     <script src="components/menu/directive.js"></script>
 
