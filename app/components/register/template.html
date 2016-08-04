@@ -6,16 +6,30 @@
         <h2>Create a new Company Portfolio</h2>
         <p>If your company do not have an account, create an account and get started instantly.<br/> The tool is free to use
             with no limits to portfolio size or number of users.<br/><br/></p>
-        <div ng-show="!user.authenticated">
-            <div>My company do not have an account and my email is not used in PrioCloud let me...<br/>&nbsp;<br/>
-                <button ng-click="showCreate = !showCreate">Start creating a new company portfolio now!</button><br/>&nbsp;<br/>
+        <div prio-user-authenticated="{display: false}">
+            <div>
+                My company do not have an account and my email is not used in PrioCloud let me...
+                <br/>
+                &nbsp;
+                <br/>
+                <button ng-click="showCreate = !showCreate">Start creating a new company portfolio now!</button>
+                <br/>
+                &nbsp;
+                <br/>
             </div>
             <div class="login zontop">
-                <div id="createUser" class="fadein fadeout overview" ng-show="showCreate">
+                <div class="fadein fadeout overview" ng-show="showCreate">
                     <h3>Company Account sign up:</h3>
-                    <form ng-submit="createUser()">
-                        Company name: <input placeholder="Company name" type="text" name="companyname" ng-model="create.companyname">                        <br/> Admin email: <input placeholder="Email address" type="email" name="email" ng-model="create.email">                        <br/> Admin password: <input placeholder="Password" type="password" name="password" ng-model="create.password">                        <br/>&nbsp;<br/>
-                        <button ng-submit="createUser()">Create Company Account</button><br/>&nbsp;<br/>
+                    <form ng-submit="register()">
+                        Company name: <input placeholder="Company name" type="text" name="companyname" ng-model="companyname">
+                        <br/>
+                        Admin email: <input placeholder="Email address" type="email" name="email" ng-model="email">
+                        <br/>
+                        Admin password: <input placeholder="Password" type="password" name="password" ng-model="password">
+                        <br/>
+                        &nbsp;
+                        <br/>
+                        <button type="submit">Create Company Account</button>
                     </form>
                 </div>
             </div>
