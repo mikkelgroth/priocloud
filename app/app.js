@@ -12,13 +12,14 @@ angular
         $routeProvider.when('/', { redirectTo: '/projects' });
         $routeProvider.when('/dashboard', { redirectTo: '/projects' });
 
+        // home menu
         $routeProvider.when('/login', { controller: 'LoginController', templateUrl: 'components/login/template.html' });
         $routeProvider.when('/about', { controller: 'AboutController', templateUrl: 'components/about/template.html' });
         $routeProvider.when('/alternatives', { controller: 'AlternativesController', templateUrl: 'components/alternatives/template.html' });
         $routeProvider.when('/register', { controller: 'RegisterController', templateUrl: 'components/register/template.html' });
         $routeProvider.when('/help', { controller: 'HelpController', templateUrl: 'components/help/template.html' });
 
-        // Overviews/lists
+        // projects menu
         $routeProvider.when('/projects', { controller: 'ProjectsOverviewController', templateUrl: 'components/projectsOverview/template.html' });
         $routeProvider.when('/projects/dependencies', { controller: 'ProjectsDependenciesController', templateUrl: 'components/projectsDependencies/template.html' });
         $routeProvider.when('/projects/kpi', { controller: 'ProjectsKpiController', templateUrl: 'components/projectsKpi/template.html' });

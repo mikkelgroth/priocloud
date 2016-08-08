@@ -2,42 +2,45 @@
     <h2>Project list - Overview</h2>
     <div class="smaller">
         <div class="filter-order-container">
-            <div class="label">Filter by:</div>
-            <div class="field">
-                <select ng-model="search.bu.name">
+            <div class="label" style="height:110px;">
+                Filter by:<br/>
+                BU<br/>PO<br/>PM
+            </div>
+            <div class="field multiple-select">
+                <select multiple="multiple" ng-multiple="true" ng-model="search.buname">
                     <option value="">All business units</option>
                     <option ng-repeat="bu in bus" value="{{bu.name}}">{{bu.name}}</option>
                 </select>
-                <select ng-model="search.po.name">
-                        <option value="">All PO</option>
-                        <option ng-repeat="u in users | filter: {source: true} | orderBy:'name'" value="{{u.name}}">{{u.name}}</option>
+                <select multiple="multiple" ng-multiple="true" ng-model="search.poname">
+                    <option value="">All PO</option>
+                    <option ng-repeat="u in users | filter: {source: true} | orderBy:'name'" value="{{u.name}}">{{u.name}}</option>
                 </select>
-
-                <select ng-model="search.pm.name">
-                        <option value="">All PM</option>
-                        <option ng-repeat="u in users | filter: {source: true} | orderBy:'name'" value="{{u.name}}">{{u.name}}</option>
+                <select multiple="multiple" ng-multiple="true" ng-model="search.pmname">
+                    <option value="">All PM</option>
+                    <option ng-repeat="u in users | filter: {source: true} | orderBy:'name'" value="{{u.name}}">{{u.name}}</option>
                 </select>
             </div>
         </div>
         <div class="filter-order-container">
-            <div class="label">
-                Filter by:
+            <div class="label" style="height:110px;">
+                Filter by:<br/>
+                State<br/>Audience<br/>Support
             </div>
-            <div class="field">
-                <select ng-model="search.state" ng-init="search.state = 'Progress'">
+            <div class="field multiple-select">
+                <select multiple="multiple" ng-multiple="true" ng-model="search.state">
                     <option value="">All States</option>
                     <option value="Proposed">Proposed</option>
                     <option value="Progress">Progress</option>
                     <option value="Onhold">On hold</option>
                     <option value="Closed">Closed</option>
                 </select>
-                <select ng-model="search.audience">
+                <select multiple="multiple" ng-multiple="true" ng-model="search.audience">
                     <option value="">All Audience</option>
                     <option value="Project">Project</option>
                     <option value="Business Unit">Business Unit</option>
                     <option value="Company">Company</option>
                 </select>
-                <select ng-model="search.support">
+                <select multiple="multiple" ng-multiple="true" ng-model="search.support">
                     <option value="">All support types</option>
                     <option value="None">None</option>
                     <option value="PMO">PMO</option>
@@ -49,7 +52,7 @@
                 Order by:
             </div>
             <div class="field">
-                <select ng-model="porderparam" ng-init="porderparam='-total'">
+                <select ng-model="porderparam">
                     <option value="-total">KPI: Total points</option>
                     <option value="-kpi1">KPI: {{company.projkpi1lable}}</option>
                     <option value="-kpi2">KPI: {{company.projkpi2lable}}</option>
@@ -63,7 +66,7 @@
             </div>
         </div>
         <div class="overview">
-            <table class="tablelist" ng-if="projects.length > 0">
+            <table class="tablelist" ng-if="projectList.length > 0">
                 <tr class="listsubject">
                     <td colspan="7">
                         <h3>Projects</h3>
@@ -75,7 +78,7 @@
                     <td colspan="2">Project/Product<br/>User feedback</td>
                     <td>Status date<br/>Demo date</td>
                 </tr>
-                <tr ng-repeat="project in projects | filter:search | orderBy:porderparam" ng-click="editProject(project)" class="link">
+                <tr ng-repeat="project in projectList | filter:search | orderBy:porderparam" ng-click="goToProject(project.id)" class="link">
                     <td class="{{project.statuses[project.statuses.length-1].status}}">
                         <b>{{project.title}}</b>, {{project.pm.name}}
                         <br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;

@@ -1,17 +1,30 @@
 angular
     .module('riskApp')
     .controller('ProjectsOverviewController', [
-        '$scope', 
-        '$rootScope',
-        'stateService',
+        '$scope',
+        '$location',
+        'companyService',
         function (
-            $scope, 
-            $rootScope,
-            stateService
+            $scope,
+            $location,
+            companyService
         ) {
 
-            console.log("ProjectsOverviewController init");
+            companyService.projects.subscribe(function (projects) {
 
-            $scope.projects = stateService.getProjects();
+                $scope.projectList = projects.map(function (project) {
+
+                    project.buname = project.bu.name;
+                    project.poname = project.po.name;
+                    project.pmname = project.pm.name;
+
+                    return project;
+                });
+            });
+
+            $scope.goToProject = function (projectId) {
+
+		        $location.path('/project/' + projectId);
+            };
         }
     ]);
