@@ -1,34 +1,40 @@
 angular
     .module('riskApp')
-    .service('restService', ['$http', function ($http) {
+    .service('restService', ['$http', 'userService', function ($http, userService) {
 
-        var SERVER = DBSERVER
+        var _this = this;
+        var _SERVER = DBSERVER
 
-        var auid;
-        var uuid;
+        userService.user.subscribe(function (user) {
 
-        this.setApplication = function (auid, uuid) {
-            this.auid = auid;
-            this.uuid = uuid;
-        };
+            _this.auid = user.auid;
+            _this.uuid = user.uuid;
+        });
 
-        this.getData = function (collection, oid) {
+        _this.getData = function (collection, oid) {
+            
             if (oid) {
-                return $http.get(SERVER + '/' + this.auid + '/' + this.uuid + '/' + collection + '/' + oid + '?rnd=' + (Math.random()));
+
+                return $http.get(_SERVER + '/' + _this.auid + '/' + _this.uuid + '/' + collection + '/' + oid + '?rnd=' + (Math.random()));
+            
             } else {
-                return $http.get(SERVER + '/' + this.auid + '/' + this.uuid + '/' + collection + '?rnd=' + (Math.random()));
+
+                return $http.get(_SERVER + '/' + _this.auid + '/' + _this.uuid + '/' + collection + '?rnd=' + (Math.random()));
             }
         };
 
-        this.updateData = function (collection, data) {
-            return $http.put(SERVER + '/' + this.auid + '/' + this.uuid + '/' + collection + '/' + data._id.$oid, data);
+        _this.updateData = function (collection, data) {
+
+            return $http.put(_SERVER + '/' + _this.auid + '/' + _this.uuid + '/' + collection + '/' + data._id.$oid, data);
         };
 
-        this.saveData = function (collection, data) {
-            return $http.post(SERVER + '/' + this.auid + '/' + this.uuid + '/' + collection + '', data);
+        _this.saveData = function (collection, data) {
+
+            return $http.post(_SERVER + '/' + _this.auid + '/' + _this.uuid + '/' + collection + '', data);
         };
 
-        this.deleteData = function (collection, data) {
-            return $http.delete(SERVER + '/' + this.auid + '/' + this.uuid + '/' + collection + '/' + data._id.$oid);
+        _this.deleteData = function (collection, data) {
+            
+            return $http.delete(_SERVER + '/' + _this.auid + '/' + _this.uuid + '/' + collection + '/' + data._id.$oid);
         };
     }]);

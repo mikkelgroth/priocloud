@@ -1,6 +1,6 @@
 angular
     .module('riskApp')
-    .directive('menu', [function() {
+    .directive('prioMenu', [function() {
         
         function menuController($scope) {
             
