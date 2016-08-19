@@ -1,29 +1,5 @@
 angular
     .module('riskApp')
-    .directive('prioCsRender', [function () {
-
-        function linkFunction(scope, element, attrs) {
-
-            var cl = "Red";
-
-            if (scope.prioCsRender != null) {
-
-                if (scope.prioCsRender == 8 || scope.prioCsRender == 7 || scope.prioCsRender == 6) cl = "Green";
-                if (scope.prioCsRender == 5 || scope.prioCsRender == 4) cl = "Yellow";
-                if (scope.prioCsRender == 3 || scope.prioCsRender == 2) cl = "Orange";
-            }
-
-            element.addClass(cl);
-        }
-
-        return {
-            restrict: 'A',
-            scope: {
-                prioCsRender: '=prioCsRender'
-            },
-            link: linkFunction
-        };
-    }])
     .directive('prioClass', [function () {
 
         function linkFunction(scope, element, attrs) {
