@@ -14,7 +14,6 @@ angular
 
             companyService.projects.subscribe(function (projects) {
 
-                console.log(projects);
                 $scope.projectList = setProjectList(projects);
             });
 

@@ -30,8 +30,6 @@ angular
 
             $scope.goToRiskInProject = function (projectId) {
 
-                console.log("goto: /project/" + projectId + "/risks");
-
                 $location.path('/project/' + projectId + '/risks');
             };
 

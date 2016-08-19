@@ -30,8 +30,6 @@ angular
 
             $scope.goToMilestoneInProject = function (projectId) {
 
-                console.log("goto: /project/" + projectId + "/milestone");
-
                 $location.path('/project/' + projectId + '/milestone');
             };
 
