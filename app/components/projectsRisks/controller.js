@@ -31,7 +31,7 @@ angular
             $scope.goToRiskInProject = function (projectId) {
 
                 console.log("goto: /project/" + projectId + "/risks");
-                
+
                 $location.path('/project/' + projectId + '/risks');
             };
 
@@ -66,10 +66,8 @@ angular
                         return risk;
                     });
                 }));
-
-                console.log(risks);
-
-                return risks; //[].concat.apply([], risks);
+                
+                return risks;
             }
         }
     ]);

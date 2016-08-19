@@ -1,4 +1,74 @@
 <div id="projects-deliverables">
-	<h2>Deliverables</h2>
-    
+    <h2>Deliverables</h2>
+    <div class="smaller">
+        <div class="filter-order-container">
+            <div class="label" style="height:110px;">
+                Filter by:<br/> BU
+                <br/>Project<br/>Responsible
+            </div>
+            <div class="field multiple-select">
+                <select multiple="multiple" ng-multiple="true" ng-model="milesearch.buname" ng-options="bu.name as bu.name for bu in bus | orderBy: 'name'"></select>
+                <select multiple="multiple" ng-multiple="true" ng-model="milesearch.projecttitle" ng-options="p.title as p.title for p in projects | filter:{state: '!Closed'} | orderBy: 'title'"></select>
+                <select multiple="multiple" ng-multiple="true" ng-model="milesearch.acname" ng-options="u.name as u.name for u in users | filter: {source: true} | orderBy:'name'"></select>
+            </div>
+        </div>
+        <div class="filter-order-container">
+            <div class="label" style="height:110px;">
+                Filter by:<br/> Status
+                <br/>State<br/>Audience
+            </div>
+            <div class="field multiple-select">
+                <select multiple="multiple" ng-multiple="true" ng-model="milesearch.status">
+                    <option value="Green">Accept</option>
+                    <option value="Yellow">Observe</option>
+                    <option value="Orange">Assist</option>
+                    <option value="Red">Intervent</option>
+                </select>
+                <select multiple="multiple" ng-multiple="true" ng-model="milesearch.state">
+                    <option value="Target">Target</option>
+                    <option value="Qualified">Qualified</option>
+                    <option value="Progress">Progress</option>
+                </select>
+                <select multiple="multiple" ng-multiple="true" ng-model="milesearch.audience">
+                    <option value="Project">Project</option>
+                    <option value="Business Unit">Business Unit</option>
+                    <option value="Company">Company</option>
+                </select>
+            </div>
+        </div>
+        <div class="filter-order-container">
+            <div class="label">
+                Order by:
+            </div>
+            <div class="field">
+                <select ng-model="orderdate" ng-init="orderdate='enddate'">
+                    <option value="enddate" selected="selected">Order by end date</option>
+                    <option value="date">Order by start date</option>
+                    <option value="-wsjf">Order by WSJF</option>
+                    <option value="title">Deliverable title</option>
+                    <option value="projecttitle">Project title</option>
+                </select>
+            </div>
+        </div>
+        <div class="overview">
+            <table class="tablelist" ng-if="milestoneList.length > 0">
+                <tr class="header">
+                    <td>(WSJF) Deliverable<br/>Project</td>
+                    <td>Q1</td>
+                    <td>Q2</td>
+                    <td>Q3</td>
+                    <td>Q4</td>
+                    <td>Start Date<br/>End Date</td>
+                    <td>State<br/>Responsible</td>
+                </tr>
+                <tr ng-repeat="mile in milestoneList | multiFilter:milesearch | orderBy:orderdate" ng-click="goToMilestoneInProject(mile.projectid)"
+                    class="link" ng-if="mile.state!='Done' && mile.state!='Canceled'">
+                    <td class="{{mile.status}}"><b>({{mile.wsjf}}) {{mile.title}}</b><br/>{{mile.projecttitle}}</td>
+                    <td class="bar" ng-style="barRender(mile)" colspan="4"></td>
+                    <td><b>{{mile.date | date:'d MMM, yyyy'}}</b><br/>{{mile.enddate | date:'d MMM, yyyy'}}</td>
+                    <td><b>{{mile.state}}</b><br/>{{mile.acountable.name}}</td>
+                </tr>
+            </table>
+        </div>
+    </div>
 </div>
