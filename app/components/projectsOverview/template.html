@@ -46,7 +46,7 @@
                 Order by:
             </div>
             <div class="field">
-                <select ng-model="porderparam">
+                <select ng-model="porderparam" ng-init="porderparam='-total'">
                     <option value="-total">KPI: Total points</option>
                     <option value="-kpi1">KPI: {{company.projkpi1lable}}</option>
                     <option value="-kpi2">KPI: {{company.projkpi2lable}}</option>
