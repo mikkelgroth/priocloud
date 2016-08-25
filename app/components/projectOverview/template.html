@@ -1,0 +1,340 @@
+<prio-project-menu prio-project-id="123" prio-project-title="Fast Guest account"></prio-project-menu>
+
+<div id="project-overview" class="view">
+    <div class="mainbox" id="overview">
+        <h2 class="{{editstatus.status}}">
+            {{project.title}} - {{project.state}}
+        </h2>
+        <table class="noborder nopadding smaller gutter-top">
+            <tr>
+                <td>
+                    <div class="overview">
+                        <table class="tablelist">
+                            <tr class="header">
+                                <td colspan="2">Business unit: {{project.bu.name}}</td>
+                            </tr>
+                            <tr>
+                                <td class="label">PM </td>
+                                <td class="wrap">{{project.pm.name}}</td>
+                            </tr>
+                            <tr>
+                                <td class="label">PO </td>
+                                <td class="wrap">{{project.po.name}}</td>
+                            </tr>
+                            <tr>
+                                <td class="label texttop">Steering members</td>
+                                <td class="wrap">
+                                    <pre>{{project.memberssteering}}</pre>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="label texttop">Project members</td>
+                                <td class="wrap">
+                                    <pre>{{project.membersproject}}</pre>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="3">
+                    <div class="overview">
+                        <table class="tablelist">
+                            <tr class="header">
+                                <td>Date: {{editstatus.date | date:'yyyy-MM-dd'}}</td>
+                                <td>Status state: {{editstatus.statusstate}}<br/>PO approval: {{editstatus.apo}}</td>
+                                <td class="{{csrender(editstatus.cs)}}">Project feedback: {{editstatus.cs}}</td>
+                                <td class="{{csrender(editstatus.productcs)}}">Product feedback: {{editstatus.productcs}}</td>
+                            </tr>
+                            <tr>
+                                <td class="{{editstatus.status}} l texttop">Overall status</td>
+                                <td colspan="3" class="wrap xxxl">
+                                    <pre>{{editstatus.overallcomments}}</pre>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Demo date</td>
+                                <td colspan="3" class="wrap xxxl">
+                                    <pre>{{editstatus.demodate | date:'yyyy-MM-dd'}}</pre>
+                                </td>
+                            </tr>
+                            <tr class="header">
+                                <td colspan="4">Status flags</td>
+                            </tr>
+                            <tr>
+                                <td class="{{editstatus.statusbc}} l texttop">Business case</td>
+                                <td colspan="3" class="wrap xxxl">
+                                    <pre>{{editstatus.bccomments}}</pre>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="{{editstatus.statussc}} l texttop">Scope</td>
+                                <td colspan="3" class="wrap xxxl">
+                                    <pre>{{editstatus.sccomments}}</pre>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="{{editstatus.statustl}} l texttop">Time line</td>
+                                <td colspan="3" class="wrap xxxl">
+                                    <pre>{{editstatus.tlcomments}}</pre>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="{{editstatus.statusres}} l texttop">Resources</td>
+                                <td colspan="3" class="wrap xxxl">
+                                    <pre>{{editstatus.rescomments}}</pre>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="{{editstatus.statusbud}} l texttop">Budget</td>
+                                <td colspan="3" class="wrap xxxl">
+                                    <pre>{{editstatus.budcomments}}</pre>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="{{editstatus.statusrisk}} l texttop">Risks</td>
+                                <td colspan="3" class="wrap xxxl">
+                                    <pre>{{editstatus.riskcomments}}</pre>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="header" colspan="4">Status elaboration </td>
+                            </tr>
+                            <tr>
+                                <td class="label texttop">Delivered </td>
+                                <td colspan="3" class="wrap xxxl">
+                                    <pre>{{editstatus.del}}</pre>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="label texttop">Next </td>
+                                <td colspan="3" class="wrap xxxl">
+                                    <pre>{{editstatus.next}}</pre>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="label texttop">Concerns </td>
+                                <td colspan="3" class="wrap xxxl">
+                                    <pre>{{editstatus.concerns}}</pre>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="label texttop">Changes </td>
+                                <td colspan="3" class="wrap xxxl">
+                                    <pre>{{editstatus.changes}}</pre>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="3">
+                    <div class="overview">
+                        <table class="tablelist">
+                            <tr class="header">
+                                <td>Economy</td>
+                                <td>Budget</td>
+                                <td>Posted</td>
+                                <td>EtC</td>
+                            </tr>
+                            <tr>
+                                <td class="header">Project total</td>
+                                <td class="wrap">
+                                    <div class="right">{{editstatus.ab | currency:'TDKK ':0}}</div>
+                                </td>
+                                <td class="wrap">
+                                    <div class="right">{{editstatus.std | currency:'TDKK ':0}}</div>
+                                </td>
+                                <td class="wrap">
+                                    <div class="right">{{editstatus.EtC | currency:'TDKK ':0}}</div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="header">Current year</td>
+                                <td class="wrap">
+                                    <div class="right">{{editstatus.cab | currency:'TDKK ':0}}</div>
+                                </td>
+                                <td class="wrap">
+                                    <div class="right">{{editstatus.cstd | currency:'TDKK ':0}}</div>
+                                </td>
+                                <td class="wrap">
+                                    <div class="right">{{editstatus.cEtC | currency:'TDKK ':0}}</div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="header">Next year</td>
+                                <td class="wrap">
+                                    <div class="right">{{editstatus.nab | currency:'TDKK ':0}}</div>
+                                </td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                        </table>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td colspan="3">
+                    <div class="overview">
+                        <table class="tablelist">
+                            <tr class="header">
+                                <td colspan="7">Brief business case</td>
+                            </tr>
+                            <tr>
+                                <td class="label piecell">Prio total
+                                    <div id="kpi7"></div>
+                                </td>
+                                <td class="label piecell">{{company.projkpi1lable}}
+                                    <div id="kpi1"></div>
+                                </td>
+                                <td class="label piecell">{{company.projkpi2lable}}
+                                    <div id="kpi2"></div>
+                                </td>
+                                <td class="label piecell">{{company.projkpi3lable}}
+                                    <div id="kpi3"></div>
+                                </td>
+                                <td class="label piecell">{{company.projkpi4lable}}
+                                    <div id="kpi4"></div>
+                                </td>
+                                <td class="label piecell">{{company.projkpi5lable}}
+                                    <div id="kpi5"></div>
+                                </td>
+                                <td class="label piecell">{{company.projkpi6lable}}
+                                    <div id="kpi6"></div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="label l texttop">Purpose </td>
+                                <td class="wrap" colspan="6">
+                                    <pre>{{project.outcome}}</pre>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="label l texttop">Benefits </td>
+                                <td class="wrap" colspan="6">
+                                    <pre>{{project.costbenefit}}</pre>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="label l texttop">Don't do impact </td>
+                                <td class="wrap" colspan="6">
+                                    <pre>{{project.costrisk}}</pre>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="3">
+                    <div class="overview">
+                        <table class="tablelist" ng-if="project.risks.length > 0">
+                            <tr class="header">
+                                <td class="label l">Risk</td>
+                                <td class="label">Prob.</td>
+                                <td class="label">Imp.</td>
+                                <td class="label">Response</td>
+                                <td class="label">Audience</td>
+                            </tr>
+                            <tr ng-repeat="risk in project.risks | orderBy:'-total'" ng-click="directRiskLink(risk)" class="link" ng-if="risk.state!='Closed'&&risk.audience!='Confidential'||(risk.audience=='Confidential'&&(user.email==project.po.email || user.email==project.pm.email || user.isOwner || user.admin)&&risk.state!='Closed'&&project.showconfrisk=='true')">
+                                <td class="{{risk.status}}">{{risk.title}}</td>
+                                <td ng-class="riskbarrender(risk.prob)"></td>
+                                <td ng-class="riskbarrender(risk.impact)"></td>
+                                <td>&nbsp;{{risk.response}}</td>
+                                <td>&nbsp;{{risk.audience}}</td>
+                            </tr>
+                        </table>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="3">
+                    <div class="overview">
+                        <table class="tablelist" ng-if="project.milestones.length > 0">
+                            <tr class="header">
+                                <td class="label l">(WSJF) Deliverable</td>
+                                <td class="label">Q1</td>
+                                <td class="label">Q2</td>
+                                <td class="label">Q3</td>
+                                <td class="label">Q4</td>
+                                <td class="label">State</td>
+                                <td class="label">End Date</td>
+                            </tr>
+                            <tr ng-repeat="mile in project.milestones | orderBy:'enddate'" ng-click="directMilestoneLink(mile)" class="link" ng-if="mile.state!='Done' && mile.state!='Canceled'">
+                                <td class="{{mile.status}}">({{mile.wsjf}}) {{mile.title}}</td>
+                                <td class="bar xl" ng-style="barrender(mile)" colspan="4"></td>
+                                <td>&nbsp;{{mile.state}}</td>
+                                <td>&nbsp;{{mile.enddate | date:'yyyy-MM-dd'}}</td>
+                            </tr>
+                        </table>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="3">
+                    <div class="overview">
+                        <table class="tablelist">
+                            <tr class="header">
+                                <td>Dependencies</td>
+                                <td>Required</td>
+                                <td>Timing criticality</td>
+                                <td>Skills/Availability status</td>
+                            </tr>
+                            <tr ng-if="project.res1fte!='None'">
+                                <td class="header {{skillrender(project.res1skill)}} {{sizerender(project.res1)}}">{{company.res1lable}}</td>
+                                <td>{{project.res1fte}}</td>
+                                <td>{{project.res1}}</td>
+                                <td>{{project.res1skill}}</td>
+                            </tr>
+                            <tr ng-if="project.res2fte!='None'">
+                                <td class="header {{skillrender(project.res2skill)}} {{sizerender(project.res2)}}">{{company.res2lable}}</td>
+                                <td>{{project.res2fte}}</td>
+                                <td>{{project.res2}}</td>
+                                <td>{{project.res2skill}}</td>
+                            </tr>
+                            <tr ng-if="project.res3fte!='None'">
+                                <td class="header {{skillrender(project.res3skill)}} {{sizerender(project.res3)}}">{{company.res3lable}}</td>
+                                <td>{{project.res3fte}}</td>
+                                <td>{{project.res3}}</td>
+                                <td>{{project.res3skill}}</td>
+                            </tr>
+                            <tr ng-if="project.res4fte!='None'">
+                                <td class="header {{skillrender(project.res4skill)}} {{sizerender(project.res4)}}">{{company.res4lable}}</td>
+                                <td>{{project.res4fte}}</td>
+                                <td>{{project.res4}}</td>
+                                <td>{{project.res4skill}}</td>
+                            </tr>
+                            <tr ng-if="project.res5fte!='None'">
+                                <td class="header {{skillrender(project.res5skill)}} {{sizerender(project.res5)}}">{{company.res5lable}}</td>
+                                <td>{{project.res5fte}}</td>
+                                <td>{{project.res5}}</td>
+                                <td>{{project.res5skill}}</td>
+                            </tr>
+                            <tr ng-if="project.res6fte!='None'">
+                                <td class="header {{skillrender(project.res6skill)}} {{sizerender(project.res6)}}">{{company.res6lable}}</td>
+                                <td>{{project.res6fte}}</td>
+                                <td>{{project.res6}}</td>
+                                <td>{{project.res6skill}}</td>
+                            </tr>
+                            <tr ng-if="project.res7fte!='None'">
+                                <td class="header {{skillrender(project.res7skill)}} {{sizerender(project.res7)}}">{{company.res7lable}}</td>
+                                <td>{{project.res7fte}}</td>
+                                <td>{{project.res7}}</td>
+                                <td>{{project.res7skill}}</td>
+                            </tr>
+                            <tr ng-if="project.res8fte!='None'">
+                                <td class="header {{skillrender(project.res8skill)}} {{sizerender(project.res8)}}">{{company.res8lable}}</td>
+                                <td>{{project.res8fte}}</td>
+                                <td>{{project.res8}}</td>
+                                <td>{{project.res8skill}}</td>
+                            </tr>
+                        </table>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>

@@ -32,7 +32,7 @@ angular
             $routeProvider.when('/projects/deliverables', { controller: 'ProjectsDeliverablesController', templateUrl: 'components/projectsDeliverables/template.html' });
 
             // project
-            $routeProvider.when('/project/:id', { controller: 'ProjectsOverviewController', templateUrl: 'components/projectsOverview/template.html' });
+            $routeProvider.when('/project/:id', { controller: 'ProjectOverviewController', templateUrl: 'components/projectOverview/template.html' });
             
 
             $routeProvider.when('/project', { controller: 'ProjectController', templateUrl: 'components/project/project.html' });

@@ -449,26 +449,38 @@ td .field {
 
 /* FANE(S) */
 .fanes {
-	display: table;
-	width: 100%;
-	table-layout: fixed;
-	margin-bottom: 1.5em;
-	background-color: #DDEAF2;
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+    list-style: none;
+    padding: 0;
+    margin: 0;
 }
 .fanes .fane {
-	display: table-cell;
-	padding: 0.2em 0.2em;
-	cursor: pointer;
-	border-right: 4px solid #FFF;
-	text-align: center;
-	vertical-align: middle;
+	display: block;
+    padding: 0.2em 0.2em;
+    color: #4B636F;
+    text-decoration: none;
 }
-.fanes .fane a {
-	color: #4B636F;
+.fanes li {
+    display: table-cell;
+    margin-right: 4px;
+    background-color: #DDEAF2;
+    text-align: center;
+    vertical-align: middle;
+    border-right: 2px solid #fff;
+    border-left: 2px solid #fff;
+    cursor: pointer;
 }
-.fanes .fane:hover, 
-.fanes .fane.set {
+.fanes li:hover, 
+.fanes li.set {
 	background-color: #C2D6E2;
+}
+.fanes li:first-child {
+    border-left: 0;
+}
+.fanes li:last-child {
+    border-right: 0;
 }
 
 /* SORTABLE */
