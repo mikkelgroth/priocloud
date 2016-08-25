@@ -17,6 +17,10 @@ angular
                 loadUsers(user.auid, user.uuid);
             });
 
+            // HACK
+            user.isOwner = true;
+            user.admin = true;
+
             _this.user.onNext(user);
             _this.userAuthenticated.onNext(true);
         };
