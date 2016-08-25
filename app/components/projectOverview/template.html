@@ -1,4 +1,4 @@
-<prio-project-menu prio-project-id="123" prio-project-title="Fast Guest account"></prio-project-menu>
+<prio-project-menu prio-project-id="{{project._id.$oid}}" prio-project-title="{{project.title}}"></prio-project-menu>
 
 <div id="project-overview" class="view">
     <div class="mainbox" id="overview">
@@ -44,8 +44,8 @@
                             <tr class="header">
                                 <td>Date: {{editstatus.date | date:'yyyy-MM-dd'}}</td>
                                 <td>Status state: {{editstatus.statusstate}}<br/>PO approval: {{editstatus.apo}}</td>
-                                <td class="{{csrender(editstatus.cs)}}">Project feedback: {{editstatus.cs}}</td>
-                                <td class="{{csrender(editstatus.productcs)}}">Product feedback: {{editstatus.productcs}}</td>
+                                <td prio-class prio-cs-render="editstatus.cs">Project feedback: {{editstatus.cs}}</td>
+                                <td prio-class prio-cs-render="editstatus.productcs">Product feedback: {{editstatus.productcs}}</td>
                             </tr>
                             <tr>
                                 <td class="{{editstatus.status}} l texttop">Overall status</td>
@@ -185,25 +185,25 @@
                             </tr>
                             <tr>
                                 <td class="label piecell">Prio total
-                                    <div id="kpi7"></div>
+                                    <prio-mini-pie prio-val="project.total"></prio-mini-pie>
                                 </td>
                                 <td class="label piecell">{{company.projkpi1lable}}
-                                    <div id="kpi1"></div>
+                                    <prio-mini-pie prio-val="project.kpi1"></prio-mini-pie>
                                 </td>
                                 <td class="label piecell">{{company.projkpi2lable}}
-                                    <div id="kpi2"></div>
+                                    <prio-mini-pie prio-val="project.kpi2"></prio-mini-pie>
                                 </td>
                                 <td class="label piecell">{{company.projkpi3lable}}
-                                    <div id="kpi3"></div>
+                                    <prio-mini-pie prio-val="project.kpi3"></prio-mini-pie>
                                 </td>
                                 <td class="label piecell">{{company.projkpi4lable}}
-                                    <div id="kpi4"></div>
+                                    <prio-mini-pie prio-val="project.kpi4"></prio-mini-pie>
                                 </td>
                                 <td class="label piecell">{{company.projkpi5lable}}
-                                    <div id="kpi5"></div>
+                                    <prio-mini-pie prio-val="project.kpi5"></prio-mini-pie>
                                 </td>
                                 <td class="label piecell">{{company.projkpi6lable}}
-                                    <div id="kpi6"></div>
+                                    <prio-mini-pie prio-val="project.kpi6"></prio-mini-pie>
                                 </td>
                             </tr>
                             <tr>
@@ -239,10 +239,10 @@
                                 <td class="label">Response</td>
                                 <td class="label">Audience</td>
                             </tr>
-                            <tr ng-repeat="risk in project.risks | orderBy:'-total'" ng-click="directRiskLink(risk)" class="link" ng-if="risk.state!='Closed'&&risk.audience!='Confidential'||(risk.audience=='Confidential'&&(user.email==project.po.email || user.email==project.pm.email || user.isOwner || user.admin)&&risk.state!='Closed'&&project.showconfrisk=='true')">
+                            <tr ng-repeat="risk in project.risks | orderBy:'-total'" ng-click="goToRiskInProject(risk)" class="link" ng-if="risk.state!='Closed'&&risk.audience!='Confidential'||(risk.audience=='Confidential'&&(user.email==project.po.email || user.email==project.pm.email || user.isOwner || user.admin)&&risk.state!='Closed'&&project.showconfrisk=='true')">
                                 <td class="{{risk.status}}">{{risk.title}}</td>
-                                <td ng-class="riskbarrender(risk.prob)"></td>
-                                <td ng-class="riskbarrender(risk.impact)"></td>
+                                <td prio-class prio-risk-bar-render="risk.prob"></td>
+                                <td prio-class prio-risk-bar-render="risk.impact"></td>
                                 <td>&nbsp;{{risk.response}}</td>
                                 <td>&nbsp;{{risk.audience}}</td>
                             </tr>
@@ -263,9 +263,9 @@
                                 <td class="label">State</td>
                                 <td class="label">End Date</td>
                             </tr>
-                            <tr ng-repeat="mile in project.milestones | orderBy:'enddate'" ng-click="directMilestoneLink(mile)" class="link" ng-if="mile.state!='Done' && mile.state!='Canceled'">
+                            <tr ng-repeat="mile in project.milestones | orderBy:'enddate'" ng-click="goToMilestoneInProject(mile)" class="link" ng-if="mile.state!='Done' && mile.state!='Canceled'">
                                 <td class="{{mile.status}}">({{mile.wsjf}}) {{mile.title}}</td>
-                                <td class="bar xl" ng-style="barrender(mile)" colspan="4"></td>
+                                <td class="bar xl" ng-style="barRender(mile)" colspan="4"></td>
                                 <td>&nbsp;{{mile.state}}</td>
                                 <td>&nbsp;{{mile.enddate | date:'yyyy-MM-dd'}}</td>
                             </tr>
@@ -283,50 +283,50 @@
                                 <td>Timing criticality</td>
                                 <td>Skills/Availability status</td>
                             </tr>
-                            <tr ng-if="project.res1fte!='None'">
-                                <td class="header {{skillrender(project.res1skill)}} {{sizerender(project.res1)}}">{{company.res1lable}}</td>
+                            <tr ng-if="project.res1fte != 'None'">
+                                <td class="header" prio-class prio-skill-render="project.res1skill" prio-size-render="project.res1">{{company.res1lable}}</td>
                                 <td>{{project.res1fte}}</td>
                                 <td>{{project.res1}}</td>
                                 <td>{{project.res1skill}}</td>
                             </tr>
-                            <tr ng-if="project.res2fte!='None'">
-                                <td class="header {{skillrender(project.res2skill)}} {{sizerender(project.res2)}}">{{company.res2lable}}</td>
+                            <tr ng-if="project.res2fte != 'None'">
+                                <td class="header" prio-class prio-skill-render="project.res2skill" prio-size-render="project.res2">{{company.res2lable}}</td>
                                 <td>{{project.res2fte}}</td>
                                 <td>{{project.res2}}</td>
                                 <td>{{project.res2skill}}</td>
                             </tr>
-                            <tr ng-if="project.res3fte!='None'">
-                                <td class="header {{skillrender(project.res3skill)}} {{sizerender(project.res3)}}">{{company.res3lable}}</td>
+                            <tr ng-if="project.res3fte != 'None'">
+                                <td class="header" prio-class prio-skill-render="project.res3skill" prio-size-render="project.res3">{{company.res3lable}}</td>
                                 <td>{{project.res3fte}}</td>
                                 <td>{{project.res3}}</td>
                                 <td>{{project.res3skill}}</td>
                             </tr>
-                            <tr ng-if="project.res4fte!='None'">
-                                <td class="header {{skillrender(project.res4skill)}} {{sizerender(project.res4)}}">{{company.res4lable}}</td>
+                            <tr ng-if="project.res4fte != 'None'">
+                                <td class="header" prio-class prio-skill-render="project.res4skill" prio-size-render="project.res4">{{company.res4lable}}</td>
                                 <td>{{project.res4fte}}</td>
                                 <td>{{project.res4}}</td>
                                 <td>{{project.res4skill}}</td>
                             </tr>
-                            <tr ng-if="project.res5fte!='None'">
-                                <td class="header {{skillrender(project.res5skill)}} {{sizerender(project.res5)}}">{{company.res5lable}}</td>
+                            <tr ng-if="project.res5fte != 'None'">
+                                <td class="header" prio-class prio-skill-render="project.res5skill" prio-size-render="project.res5">{{company.res5lable}}</td>
                                 <td>{{project.res5fte}}</td>
                                 <td>{{project.res5}}</td>
                                 <td>{{project.res5skill}}</td>
                             </tr>
-                            <tr ng-if="project.res6fte!='None'">
-                                <td class="header {{skillrender(project.res6skill)}} {{sizerender(project.res6)}}">{{company.res6lable}}</td>
+                            <tr ng-if="project.res6fte != 'None'">
+                                <td class="header" prio-class prio-skill-render="project.res6skill" prio-size-render="project.res6">{{company.res6lable}}</td>
                                 <td>{{project.res6fte}}</td>
                                 <td>{{project.res6}}</td>
                                 <td>{{project.res6skill}}</td>
                             </tr>
-                            <tr ng-if="project.res7fte!='None'">
-                                <td class="header {{skillrender(project.res7skill)}} {{sizerender(project.res7)}}">{{company.res7lable}}</td>
+                            <tr ng-if="project.res7fte != 'None'">
+                                <td class="header" prio-class prio-skill-render="project.res7skill" prio-size-render="project.res7">{{company.res7lable}}</td>
                                 <td>{{project.res7fte}}</td>
                                 <td>{{project.res7}}</td>
                                 <td>{{project.res7skill}}</td>
                             </tr>
-                            <tr ng-if="project.res8fte!='None'">
-                                <td class="header {{skillrender(project.res8skill)}} {{sizerender(project.res8)}}">{{company.res8lable}}</td>
+                            <tr ng-if="project.res8fte != 'None'">
+                                <td class="header" prio-class prio-skill-render="project.res8skill" prio-size-render="project.res8">{{company.res8lable}}</td>
                                 <td>{{project.res8fte}}</td>
                                 <td>{{project.res8}}</td>
                                 <td>{{project.res8skill}}</td>

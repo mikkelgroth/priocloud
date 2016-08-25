@@ -14,8 +14,6 @@ angular
             companyService
         ) {
 
-            console.log($routeParams.id);
-
             companyService.projects.subscribe(function (projects) {
 
                 $scope.projectList = setProjectList(projects);

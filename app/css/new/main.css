@@ -455,6 +455,7 @@ td .field {
     list-style: none;
     padding: 0;
     margin: 0;
+    margin-bottom: 1.5em;
 }
 .fanes .fane {
 	display: block;
