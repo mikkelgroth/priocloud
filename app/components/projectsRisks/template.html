@@ -102,7 +102,7 @@
                     <td>Description</td>
                     <td>Response<br/>Responsible</td>
                 </tr>
-                <tr ng-repeat="risk in riskList | multiFilter:risksearch | orderBy:[orderparam, orderparam2]" ng-click="goToRiskInProject(risk.projectid)" class="link"  ng-if="risk.state != 'Closed' && risk.audience != 'Confidential'">
+                <tr ng-repeat="risk in riskList | multiFilter:risksearch | orderBy:[orderparam, orderparam2]" ng-click="goToRiskInProject(risk._id, risk.projectid)" class="link"  ng-if="risk.state != 'Closed' && risk.audience != 'Confidential'">
                     <td class="{{risk.status}}"><b>{{risk.title}} <div class="right">({{risk.total}})</div></b><br/>{{risk.projecttitle}}<div class="right">({{risk.ptotal}})</div></td>
                     <td class="wrap xl">{{risk.desc.substring(0,80)}} ...</td>
                     <td><b>{{risk.response}}</b><br/>{{risk.acc.name}}</td>

@@ -28,9 +28,9 @@ angular
                 $scope.users = users;
             });
 
-            $scope.goToMilestoneInProject = function (projectId) {
+            $scope.goToMilestoneInProject = function (milestoneId, projectId) {
 
-                $location.path('/project/' + projectId + '/milestone');
+                $location.path('/project/' + projectId + '/milestone/' + milestoneId);
             };
 
             $scope.barRender = function (mile) {

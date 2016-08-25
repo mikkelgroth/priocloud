@@ -61,7 +61,7 @@
                     <td>Start Date<br/>End Date</td>
                     <td>State<br/>Responsible</td>
                 </tr>
-                <tr ng-repeat="mile in milestoneList | multiFilter:milesearch | orderBy:orderdate" ng-click="goToMilestoneInProject(mile.projectid)"
+                <tr ng-repeat="mile in milestoneList | multiFilter:milesearch | orderBy:orderdate" ng-click="goToMilestoneInProject(mile._id, mile.projectid)"
                     class="link" ng-if="mile.state!='Done' && mile.state!='Canceled'">
                     <td class="{{mile.status}}"><b>({{mile.wsjf}}) {{mile.title}}</b><br/>{{mile.projecttitle}}</td>
                     <td class="bar" ng-style="barRender(mile)" colspan="4"></td>

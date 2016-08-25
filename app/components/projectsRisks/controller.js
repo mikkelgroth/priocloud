@@ -28,9 +28,9 @@ angular
                 $scope.users = users;
             });
 
-            $scope.goToRiskInProject = function (projectId) {
+            $scope.goToRiskInProject = function (riskId, projectId) {
 
-                $location.path('/project/' + projectId + '/risks');
+                $location.path('/project/' + projectId + '/risks/' + riskId);
             };
 
             function setRiskList(projects) {
