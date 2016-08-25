@@ -1,6 +1,6 @@
 <prio-project-menu prio-project-id="{{project._id.$oid}}" prio-project-title="{{project.title}}"></prio-project-menu>
 
-<form ng-submit="saveProject()">
+<form ng-submit="saveProject(project)">
     <div id="linkdiv2" class="view">
         <div class="mainbox editboxon" id="details">
             <h2>
@@ -8,8 +8,13 @@
                 <div class="right">
                     <button type="button" 
                         ng-class="{'Red': projecthaschanged}" 
-                        ng-if="isAllowedToSave()"
-                        ng-click="saveProject()">save project</button>
+                        ng-if="user.email == project.po.email || 
+                        user.email == project.pm.email || 
+                        user.email == project.altpo.email || 
+                        user.email == project.altpm.email || 
+                        user.isOwner || 
+                        user.admin"
+                        ng-click="saveProject(project)">save project</button>
                 </div>
             </h2>
             <table class="smaller gutter-top">

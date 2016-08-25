@@ -36,14 +36,23 @@ angular
                     }
                 });
 
-            $scope.isAllowedToSave = function () {
+            companyService
+                .businessUnits
+                .subscribe(function (units) {
 
-                return $scope.user.email == $scope.project.po.email || 
-                    $scope.user.email == $scope.project.pm.email || 
-                    $scope.user.email == $scope.project.altpo.email || 
-                    $scope.user.email == $scope.project.altpm.email || 
-                    $scope.user.isOwner || 
-                    $scope.user.admin;
+                    $scope.bus = units;
+                });
+
+            userService
+                .users
+                .subscribe(function (users) {
+
+                    $scope.users = users;
+                });
+
+            $scope.saveProject = function (project) {
+
+                companyService.saveProject(project);
             };
         }
     ]);
