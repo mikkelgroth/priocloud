@@ -6,14 +6,12 @@ angular
         '$location',
         'userService',
         'companyService',
-        'rx',
         function (
             $scope,
             $routeParams,
             $location,
             userService,
-            companyService,
-            rx
+            companyService
         ) {
 
             var projectId = $routeParams.id;

@@ -33,7 +33,7 @@ angular
 
             // project
             $routeProvider.when('/project/:id', { controller: 'ProjectOverviewController', templateUrl: 'components/projectOverview/template.html' });
-            $routeProvider.when('/project/:id/details', { controller: 'ProjectOverviewController', templateUrl: 'components/projectOverview/template.html' });
+            $routeProvider.when('/project/:id/details', { controller: 'ProjectDetailsController', templateUrl: 'components/projectDetails/template.html' });
             $routeProvider.when('/project/:id/status', { controller: 'ProjectOverviewController', templateUrl: 'components/projectOverview/template.html' });
             $routeProvider.when('/project/:id/milestone', { controller: 'ProjectOverviewController', templateUrl: 'components/projectOverview/template.html' });
             $routeProvider.when('/project/:id/risks', { controller: 'ProjectOverviewController', templateUrl: 'components/projectOverview/template.html' });
@@ -47,10 +47,7 @@ angular
             // project milestone
             $routeProvider.when('/project/:id/milestone/:milestoneid', { controller: 'ProjectOverviewController', templateUrl: 'components/projectOverview/template.html' });
             
-
-            $routeProvider.when('/project', { controller: 'ProjectController', templateUrl: 'components/project/project.html' });
-            $routeProvider.when('/prio', { controller: 'PrioController', templateUrl: 'components/prio/prio.html' });
-            $routeProvider.when('/risk', { controller: 'RiskController', templateUrl: 'components/risk/risk.html' });
+            // other
             $routeProvider.when('/settings', { controller: 'SettingsController', templateUrl: 'components/settings/settings.html' });
             $routeProvider.when('/admin', { controller: 'AdminController', templateUrl: 'components/admin/admin.html' });
             $routeProvider.when('/master', { controller: 'MasterController', templateUrl: 'components/master/master.html' });
@@ -59,6 +56,12 @@ angular
             $routeProvider.otherwise({
                 redirectTo: '/projects'
             });
+
+            /*
+            $routeProvider.when('/project', { controller: 'ProjectController', templateUrl: 'components/project/project.html' });
+            $routeProvider.when('/prio', { controller: 'PrioController', templateUrl: 'components/prio/prio.html' });
+            $routeProvider.when('/risk', { controller: 'RiskController', templateUrl: 'components/risk/risk.html' });
+            */
     }])
     .run([
         '$rootScope', 
