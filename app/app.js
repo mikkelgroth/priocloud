@@ -34,7 +34,7 @@ angular
             // project
             $routeProvider.when('/project/:id', { controller: 'ProjectOverviewController', templateUrl: 'components/projectOverview/template.html' });
             $routeProvider.when('/project/:id/details', { controller: 'ProjectDetailsController', templateUrl: 'components/projectDetails/template.html' });
-            $routeProvider.when('/project/:id/status', { controller: 'ProjectOverviewController', templateUrl: 'components/projectOverview/template.html' });
+            $routeProvider.when('/project/:id/status', { controller: 'ProjectStatusController', templateUrl: 'components/projectStatus/template.html' });
             $routeProvider.when('/project/:id/milestone', { controller: 'ProjectOverviewController', templateUrl: 'components/projectOverview/template.html' });
             $routeProvider.when('/project/:id/risks', { controller: 'ProjectOverviewController', templateUrl: 'components/projectOverview/template.html' });
             $routeProvider.when('/project/:id/dependencies', { controller: 'ProjectOverviewController', templateUrl: 'components/projectOverview/template.html' });

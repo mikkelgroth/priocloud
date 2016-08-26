@@ -1,0 +1,435 @@
+<prio-project-menu prio-project-id="{{project._id.$oid}}" prio-project-title="{{project.title}}"></prio-project-menu>
+
+<div id="linkdiv3" class="view">
+    <div id="popdiv3" ng-if="showStatusForm">
+        <h2 class="{{editstatus.status}}">
+            Status per. {{editstatus.date | date:'yyyy-MM-dd'}}
+            <div class="right">
+                <!-- TODO: make directive for ng-if based on user.email == project.something -->
+                <button type="button" 
+                    ng-show="saveStatusEnabled" 
+                    ng-click="saveStatus(editstatus)"
+                    ng-if="(user.email == project.po.email || 
+                            user.email == project.pm.email || 
+                            user.email == project.altpo.email || 
+                            user.email == project.altpm.email || 
+                            user.isOwner || 
+                            user.admin) && (editstatus.active == null || editstatus.active)">save status</button>
+                <button type="button" ng-click="hideStatusForm()">close</button>
+                <button type="button" 
+                    ng-click="newCloneStatus(editstatus)" 
+                    ng-if="user.email == project.po.email || 
+                                user.email == project.pm.email || 
+                                user.email == project.altpo.email || 
+                                user.email == project.altpm.email || 
+                                user.isOwner || 
+                                user.admin">clone status</button>
+                <button type="button" 
+                    ng-click="removeStatus(editstatus)" 
+                    ng-if="user.admin">delete status</button>
+            </div>
+        </h2>
+        <table class="smaller">
+            <tr>
+                <td class="header">Title</td>
+                <td>
+                    <div class="field"><input ng-model="editstatus.title" /></div>
+                </td>
+                <td class="header">Next demo</td>
+                <td>
+                    <div class="field">
+                        <input class="time" id="demodate" ng-model="editstatus.demodate" />
+                        <!-- TODO: make datepicker directive -->
+                        <!--<script type="text/javascript">new datepickr('#demodate');</script>-->
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td class="header {{editstatus.status}}">
+                    <p>Overall flag <span id="overallstatus_count" class="right"></span></p>
+                </td>
+                <td>
+                    <select ng-model="editstatus.status">
+                        <option value="Green">OK (Green)</option>
+                        <option value="Yellow">Observe (Yellow)</option>
+                        <option value="Orange">Assist (Orange)</option>
+                        <option value="Red">Intervention (Red)</option>
+                    </select>
+                </td>
+                <td class="header">
+                    <p>Status state</p>
+                </td>
+                <td>
+                    <div ng-if="editstatus.statusstate != 'Final'">
+                        <select ng-model="editstatus.statusstate">
+                            <option value="Draft">Draft</option>
+                            <option value="Ready">Ready</option>
+                        </select>
+                    </div>
+                    <div ng-if="editstatus.statusstate == 'Final'">
+                        Final
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td class="header">Overall status</td>
+                <td colspan="3">
+                    <div class="field">
+                        <textarea ng-model="editstatus.overallcomments" maxlength="300" id="overallstatus" placeholder="Comments"></textarea>
+                    </div>
+                </td>
+            </tr>
+        </table>
+        <br/>
+        <table class="smaller">
+            <tr>
+                <td class="header" colspan="3">Status flags</td>
+            </tr>
+            <tr>
+                <td class="{{editstatus.statusbc}}">
+                    <p>Business case <span id="bcstatus_count" class="right"></span></p>
+                </td>
+                <td>
+                    <select ng-model="editstatus.statusbc">
+                        <option value="Green">OK (Green)</option>
+                        <option value="Yellow">Observe (Yellow)</option>
+                        <option value="Orange">Assist (Orange)</option>
+                        <option value="Red">Intervention (Red)</option>
+                    </select>
+                </td>
+                <td>
+                    <div class="field">
+                        <textarea ng-model="editstatus.bccomments" maxlength="300" id="bcstatus" placeholder="Comments"></textarea>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td class="{{editstatus.statussc}}">
+                    <p>Scope <span id="scstatus_count" class="right"></span></p>
+                </td>
+                <td>
+                    <select ng-model="editstatus.statussc">
+                        <option value="Green">OK (Green)</option>
+                        <option value="Yellow">Observe (Yellow)</option>
+                        <option value="Orange">Assist (Orange)</option>
+                        <option value="Red">Intervention (Red)</option>
+                    </select>
+                </td>
+                <td>
+                    <div class="field">
+                        <textarea ng-model="editstatus.sccomments" maxlength="300" id="scstatus" placeholder="Comments"></textarea>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td class="{{editstatus.statustl}}">
+                    <p>Time line <span id="tlstatus_count" class="right"></span></p>
+                </td>
+                <td>
+                    <select ng-model="editstatus.statustl">
+                        <option value="Green">OK (Green)</option>
+                        <option value="Yellow">Observe (Yellow)</option>
+                        <option value="Orange">Assist (Orange)</option>
+                        <option value="Red">Intervention (Red)</option>
+                    </select>
+                </td>
+                <td>
+                    <div class="field">
+                        <textarea ng-model="editstatus.tlcomments" maxlength="300" id="tlstatus" placeholder="Comments"></textarea>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td class="{{editstatus.statusres}}">
+                    <p>Resources <span id="resstatus_count" class="right"></span></p>
+                </td>
+                <td>
+                    <select ng-model="editstatus.statusres">
+                        <option value="Green">OK (Green)</option>
+                        <option value="Yellow">Observe (Yellow)</option>
+                        <option value="Orange">Assist (Orange)</option>
+                        <option value="Red">Intervention (Red)</option>
+                    </select>
+                </td>
+                <td>
+                    <div class="field">
+                        <textarea ng-model="editstatus.rescomments" maxlength="300" id="resstatus" placeholder="Comments"></textarea>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td class="{{editstatus.statusbud}}">
+                    <p>Budget <span id="budstatus_count" class="right"></span></p>
+                </td>
+                <td>
+                    <select ng-model="editstatus.statusbud">
+                        <option value="Green">OK (Green)</option>
+                        <option value="Yellow">Observe (Yellow)</option>
+                        <option value="Orange">Assist (Orange)</option>
+                        <option value="Red">Intervention (Red)</option>
+                    </select>
+                </td>
+                <td>
+                    <div class="field">
+                        <textarea ng-model="editstatus.budcomments" maxlength="300" id="budstatus" placeholder="Comments"></textarea>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td class="{{editstatus.statusrisk}}">
+                    <p>Risks <span id="riskstatus_count" class="right"></span></p>
+                </td>
+                <td>
+                    <select ng-model="editstatus.statusrisk">
+                        <option value="Green">OK (Green)</option>
+                        <option value="Yellow">Observe (Yellow)</option>
+                        <option value="Orange">Assist (Orange)</option>
+                        <option value="Red">Intervention (Red)</option>
+                    </select>
+                </td>
+                <td>
+                    <div class="field">
+                        <textarea ng-model="editstatus.riskcomments" maxlength="300" id="riskstatus" placeholder="Comments"></textarea>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td class="header" colspan="3">Status elaboration</td>
+            </tr>
+            <tr>
+                <td>
+                    <p>Delivered <span id="statusdel_count" class="right"></span></p>
+                </td>
+                <td colspan="2">
+                    <div class="field">
+                        <textarea ng-model="editstatus.del" maxlength="300" id="statusdel" placeholder="What have the project delivered compared to last status report."></textarea>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <p>Next <span id="statusnext_count" class="right"></span></p>
+                </td>
+                <td colspan="2">
+                    <div class="field">
+                        <textarea ng-model="editstatus.next" maxlength="300" id="statusnext" placeholder="What are the project to deliver in the next iteration (until next status report)"></textarea>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <p>Concerns <span id="statusconcerns_count" class="right"></span></p>
+                </td>
+                <td colspan="2">
+                    <div class="field">
+                        <textarea ng-model="editstatus.concerns" maxlength="300" id="statusconcerns" placeholder="What concerns regarding deliveries, milestones and risks needs highliting?"></textarea>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <p>Changes <span id="statuschanges_count" class="right"></span></p>
+                </td>
+                <td colspan="2">
+                    <div class="field">
+                        <textarea ng-model="editstatus.changes" maxlength="300" id="statuschanges" placeholder="Is there changes to economy, deliveries, milestones and risk?"></textarea>
+                    </div>
+                </td>
+            </tr>
+            <!-- TODO: use - upper described - directive here -->
+            <tr ng-if="user.email==project.po.email || user.email==project.pm.email|| user.email==project.altpo.email || user.email==project.altpm.email || user.isOwner || user.admin">
+                <td>
+                    <p>Comments <span id="statuscomments_count" class="right"></span></p>
+                </td>
+                <td colspan="2">
+                    <div class="field">
+                        <textarea ng-model="editstatus.comments" maxlength="300" id="statuscomments"></textarea>
+                    </div>
+                </td>
+            </tr>
+        </table>
+        <br/>
+        <table class="smaller">
+            <tr class="header">
+                <td>Economy</td>
+                <td>Budget (TDKK)</td>
+                <td>Posted (TDKK)</td>
+                <td>EtC (TDKK)</td>
+            </tr>
+            <tr>
+                <td class="header">Project total</td>
+                <td>
+                    <div class="field"><input type="number" ng-model="editstatus.ab" /></div>
+                </td>
+                <td>
+                    <div class="field"><input type="number" ng-model="editstatus.std" /></div>
+                </td>
+                <td>
+                    <div class="field"><input type="number" ng-model="editstatus.EtC" /></div>
+                </td>
+            </tr>
+            <tr>
+                <td class="header">Current year</td>
+                <td>
+                    <div class="field"><input type="number" ng-model="editstatus.cab" /></div>
+                </td>
+                <td>
+                    <div class="field"><input type="number" ng-model="editstatus.cstd" /></div>
+                </td>
+                <td>
+                    <div class="field"><input type="number" ng-model="editstatus.cEtC" /></div>
+                </td>
+            </tr>
+            <tr>
+                <td class="header">Next year</td>
+                <td>
+                    <div class="field"><input type="number" ng-model="editstatus.nab" /></div>
+                </td>
+                <td></td>
+                <td></td>
+            </tr>
+        </table>
+        <br/>
+        <br/>
+        <table class="smaller">
+            <tr>
+                <td class="header" colspan="4">PO section</td>
+            </tr>
+            <tr>
+                <td class="header">PO feedback</td>
+                <td>
+                    <div ng-if="user.email==project.po.email || user.email==project.altpo.email || user.isOwner || user.admin">
+                        <select ng-model="editstatus.apo">
+                            <option value="Not evaluated">Not evaluated</option>
+                            <option value="Amend">Amend</option>
+                            <option value="Approved">Approved</option>
+                        </select>
+                    </div>
+                    <div ng-if="user.email!=project.po.email && user.email!=project.altpo.email && !user.isOwner && !user.admin">
+                        {{editstatus.apo}}
+                    </div>
+                </td>
+                <td class="header">Status state</td>
+                <td>
+                    <div ng-if="user.email==project.po.email || user.email==project.altpo.email || user.isOwner || user.admin">
+                        <select ng-model="editstatus.statusstate">
+                            <option value="Draft">Draft</option>
+                            <option value="Ready">Ready</option>
+                            <option value="Final">Final</option>
+                         </select>
+                    </div>
+                    <div ng-if="user.email!=project.po.email && user.email!=project.altpo.email && !user.isOwner && !user.admin">
+                        {{editstatus.statusstate}}
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td class="header {{csrender(editstatus.cs)}}">Project feedback</td>
+                <td>
+                    <div ng-if="user.email==project.po.email || user.email==project.altpo.email || user.isOwner || user.admin">
+                        <select ng-model="editstatus.cs">
+                            <option value="1">1. Total breakdown</option>
+                            <option value="2">2. No value</option>
+                            <option value="3">3. Lack of trust</option>
+                            <option value="4">4. Comply</option>
+                            <option value="5">5. Trust</option>
+                            <option value="6">6. Real value</option>
+                            <option value="7">7. Great value</option>
+                            <option value="8">8. Exeptional</option>
+                        </select>
+                    </div>
+                    <div ng-if="user.email!=project.po.email && user.email!=project.altpo.email && !user.isOwner && !user.admin">
+                        {{editstatus.cs}}
+                    </div>
+                </td>
+                <td class="header {{csrender(editstatus.productcs)}}">Product feedback</td>
+                <td>
+                    <div ng-if="user.email==project.po.email || user.email==project.altpo.email || user.isOwner || user.admin">
+                        <select ng-model="editstatus.productcs">
+                            <option value="1">1. Total breakdown</option>
+                            <option value="2">2. No value</option>
+                            <option value="3">3. Lack of trust</option>
+                            <option value="4">4. Comply</option>
+                            <option value="5">5. Trust</option>
+                            <option value="6">6. Real value</option>
+                            <option value="7">7. Great value</option>
+                            <option value="8">8. Exeptional</option>
+                        </select>
+                    </div>
+                    <div ng-if="user.email!=project.po.email && user.email!=project.altpo.email && !user.isOwner && !user.admin">
+                        {{editstatus.productcs}}
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="4">
+                    <div class="right">
+                        <button type="button" ng-show="saveStatusEnabled" ng-click="saveStatus()" ng-if="(user.email==project.po.email || user.email==project.altpo.email || user.email==project.altpo.email || user.email==project.altpm.email || user.isOwner || user.admin) && (editstatus.active == null || editstatus.active)">save </button>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="mainbox" id="statushistory">
+        <h2>Status history
+            <div class="right">
+                <button type="button" ng-click="newStatus()" ng-if="user.email == project.po.email || 
+                        user.email == project.pm.email || 
+                        user.email == project.altpo.email || 
+                        user.email == project.altpm.email || 
+                        user.isOwner || 
+                        user.admin">create new status</button>
+            </div>
+        </h2>
+        <div class="overview">
+            <table class="tablelist smaller" ng-if="project.statuses.length > 0">
+                <tr class="header">
+                    <td>Title<br/>Audience</td>
+                    <td>Status state<br/>PO feedback</td>
+                    <td>Project feedback<br/>Product feedback</td>
+                    <td>Status date<br/>Demo date</td>
+                    <td>Spend<br/>Approved Budget</td>
+                </tr>
+                <tr ng-repeat="status in project.statuses" ng-click="viewStatus(status)" class="link">
+                    <td class="{{status.status}}">
+                        &nbsp;{{status.title}}
+                        <br/>
+                        &nbsp;{{status.audience}}
+                    </td>
+                    <td ng-if="project.statuses.indexOf(status) == project.statuses.length-1" class="Blue">
+                        &nbsp;{{status.statusstate}}
+                        <br/>
+                        &nbsp;{{status.apo}}
+                    </td>
+                    <td ng-if="project.statuses.indexOf(status) != project.statuses.length-1">
+                        &nbsp;{{status.statusstate}}
+                        <br/>
+                        &nbsp;{{status.apo}}
+                    </td>
+                    <td>
+                        <table>
+                            <tr>
+                                <td prio-class prio-cs-render="status.cs">{{status.cs}}</td>
+                                <td prio-class prio-cs-render="status.productcs">{{status.productcs}}</td>
+                            </tr>
+                        </table>
+                    </td>
+                    <td>
+                        <div class="right">
+                            &nbsp;{{status.date | date:'yyyy-MM-dd'}}
+                            <br/>
+                            &nbsp;{{status.demodate | date:'yyyy-MM-dd'}}
+                        </div>
+                    </td>
+                    <td>
+                        <div class="right">
+                            &nbsp;{{status.std | currency:'DKK ':0}}
+                            <br/>
+                            &nbsp;{{status.ab | currency:'DKK ':0}}
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
