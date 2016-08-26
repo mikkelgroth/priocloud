@@ -276,7 +276,7 @@ angular.module('riskApp.controllers', [])
     $timeout.cancel(reloadTimer);
     idleTimer=$timeout(callIdle, 9*60*1000);
   }
-  angular.element(document.body).on('mousemove keydown DOMMouseScroll mousewheel mousedown touchstart', movement);
+  angular.element(document.body).on('keydown DOMMouseScroll mousedown touchstart', movement);
     
     
 	$scope.doLogin = function() {

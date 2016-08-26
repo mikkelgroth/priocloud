@@ -1,7 +1,7 @@
 <prio-project-menu prio-project-id="{{project._id.$oid}}" prio-project-title="{{project.title}}"></prio-project-menu>
 
 <div id="linkdiv3" class="view">
-    <div id="popdiv3" ng-if="showStatusForm">
+    <div id="popdiv3" ng-show="showStatusForm">
         <h2 class="{{editstatus.status}}">
             Status per. {{editstatus.date | date:'yyyy-MM-dd'}}
             <div class="right">
@@ -370,8 +370,9 @@
             </tr>
         </table>
     </div>
-    <div class="mainbox" id="statushistory">
-        <h2>Status history
+    <div class="mainbox" id="statushistory" ng-show="!showStatusForm">
+        <h2>
+            Status history
             <div class="right">
                 <button type="button" ng-click="newStatus()" ng-if="user.email == project.po.email || 
                         user.email == project.pm.email || 
