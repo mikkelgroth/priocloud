@@ -36,13 +36,13 @@ angular
             $routeProvider.when('/project/:id/details', { controller: 'ProjectDetailsController', templateUrl: 'components/projectDetails/template.html' });
             $routeProvider.when('/project/:id/status', { controller: 'ProjectStatusController', templateUrl: 'components/projectStatus/template.html' });
             $routeProvider.when('/project/:id/milestone', { controller: 'ProjectMilestoneController', templateUrl: 'components/projectMilestone/template.html' });
-            $routeProvider.when('/project/:id/risks', { controller: 'ProjectOverviewController', templateUrl: 'components/projectOverview/template.html' });
+            $routeProvider.when('/project/:id/risks', { controller: 'ProjectRisksController', templateUrl: 'components/projectRisks/template.html' });
             $routeProvider.when('/project/:id/dependencies', { controller: 'ProjectOverviewController', templateUrl: 'components/projectOverview/template.html' });
             $routeProvider.when('/project/:id/kpi', { controller: 'ProjectOverviewController', templateUrl: 'components/projectOverview/template.html' });
             $routeProvider.when('/project/:id/finance', { controller: 'ProjectOverviewController', templateUrl: 'components/projectOverview/template.html' });
 
             // project risks
-            $routeProvider.when('/project/:id/risks/:riskid', { controller: 'ProjectOverviewController', templateUrl: 'components/projectOverview/template.html' });
+            $routeProvider.when('/project/:id/risks/:riskid', { controller: 'ProjectRisksController', templateUrl: 'components/projectRisks/template.html' });
             
             // project milestone
             $routeProvider.when('/project/:id/milestone/:milestoneid', { controller: 'ProjectMilestoneController', templateUrl: 'components/projectMilestone/template.html' });
