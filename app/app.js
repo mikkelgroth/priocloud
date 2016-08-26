@@ -35,7 +35,7 @@ angular
             $routeProvider.when('/project/:id', { controller: 'ProjectOverviewController', templateUrl: 'components/projectOverview/template.html' });
             $routeProvider.when('/project/:id/details', { controller: 'ProjectDetailsController', templateUrl: 'components/projectDetails/template.html' });
             $routeProvider.when('/project/:id/status', { controller: 'ProjectStatusController', templateUrl: 'components/projectStatus/template.html' });
-            $routeProvider.when('/project/:id/milestone', { controller: 'ProjectOverviewController', templateUrl: 'components/projectOverview/template.html' });
+            $routeProvider.when('/project/:id/milestone', { controller: 'ProjectMilestoneController', templateUrl: 'components/projectMilestone/template.html' });
             $routeProvider.when('/project/:id/risks', { controller: 'ProjectOverviewController', templateUrl: 'components/projectOverview/template.html' });
             $routeProvider.when('/project/:id/dependencies', { controller: 'ProjectOverviewController', templateUrl: 'components/projectOverview/template.html' });
             $routeProvider.when('/project/:id/kpi', { controller: 'ProjectOverviewController', templateUrl: 'components/projectOverview/template.html' });
@@ -45,7 +45,7 @@ angular
             $routeProvider.when('/project/:id/risks/:riskid', { controller: 'ProjectOverviewController', templateUrl: 'components/projectOverview/template.html' });
             
             // project milestone
-            $routeProvider.when('/project/:id/milestone/:milestoneid', { controller: 'ProjectOverviewController', templateUrl: 'components/projectOverview/template.html' });
+            $routeProvider.when('/project/:id/milestone/:milestoneid', { controller: 'ProjectMilestoneController', templateUrl: 'components/projectMilestone/template.html' });
             
             // other
             $routeProvider.when('/settings', { controller: 'SettingsController', templateUrl: 'components/settings/settings.html' });

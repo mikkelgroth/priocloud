@@ -15,6 +15,7 @@ angular
         ) {
 
             var projectId = $routeParams.id;
+            var milestoneId = $routeParams.milestoneid;
 
             userService
                 .user
