@@ -1,0 +1,765 @@
+<prio-project-menu prio-project-id="{{project._id.$oid}}" prio-project-title="{{project.title}}"></prio-project-menu>
+
+<div id="linkdiv8" class="view">
+    <h2>
+        Finance
+        <div class="right">
+            <button type="button" ng-class="{'Red': projecthaschanged}" ng-if="user.email==project.po.email || user.email==project.pm.email || user.email==project.altpo.email || user.email==project.altpm.email || user.isOwner || user.admin"
+                ng-click="saveProject(project)">save project</button>
+        </div>
+    </h2>
+    <h3>Budget this year</h3>
+    <table class="smaller smallinput">
+        <tr class="header">
+            <td>TDKK Ex. Vat</td>
+            <td>Q1</td>
+            <td>Q2</td>
+            <td>Q3</td>
+            <td>Q4</td>
+            <td>Total</td>
+        </tr>
+        <tr class="header">
+            <td colspan="6">Capex</td>
+        </tr>
+        <tr>
+            <td>External</td>
+            <td>
+                <div class="field"><input ng-model="project.finance.budcapextq1" /></div>
+            </td>
+            <td>
+                <div class="field"><input ng-model="project.finance.budcapextq2" /></div>
+            </td>
+            <td>
+                <div class="field"><input ng-model="project.finance.budcapextq3" /></div>
+            </td>
+            <td>
+                <div class="field"><input ng-model="project.finance.budcapextq4" /></div>
+            </td>
+            <td class="sums">{{(project.finance.budcapextq1-0)+(project.finance.budcapextq2-0)+(project.finance.budcapextq3-0)+(project.finance.budcapextq4-0)
+                | currency:"":0}}</td>
+        </tr>
+        <tr>
+            <td>Ext. One-Off</td>
+            <td>
+                <div class="field"><input ng-model="project.finance.budcapextoneq1" /></div>
+            </td>
+            <td>
+                <div class="field"><input ng-model="project.finance.budcapextoneq2" /></div>
+            </td>
+            <td>
+                <div class="field"><input ng-model="project.finance.budcapextoneq3" /></div>
+            </td>
+            <td>
+                <div class="field"><input ng-model="project.finance.budcapextoneq4" /></div>
+            </td>
+            <td class="sums">{{(project.finance.budcapextoneq1-0)+(project.finance.budcapextoneq2-0)+(project.finance.budcapextoneq3-0)+(project.finance.budcapextoneq4-0)
+                | currency:"":0}}</td>
+        </tr>
+        <tr>
+            <td>Internal</td>
+            <td>
+                <div class="field"><input ng-model="project.finance.budcapintq1" /></div>
+            </td>
+            <td>
+                <div class="field"><input ng-model="project.finance.budcapintq2" /></div>
+            </td>
+            <td>
+                <div class="field"><input ng-model="project.finance.budcapintq3" /></div>
+            </td>
+            <td>
+                <div class="field"><input ng-model="project.finance.budcapintq4" /></div>
+            </td>
+            <td class="sums">{{(project.finance.budcapintq1-0)+(project.finance.budcapintq2-0)+(project.finance.budcapintq3-0)+(project.finance.budcapintq4-0)
+                | currency:"":0}}</td>
+        </tr>
+        <tr>
+            <td>Capex total</td>
+            <td class="sums">{{(project.finance.budcapextq1-0)+(project.finance.budcapextoneq1-0)+(project.finance.budcapintq1-0) | currency:"":0}}</td>
+            <td class="sums">{{(project.finance.budcapextq2-0)+(project.finance.budcapextoneq2-0)+(project.finance.budcapintq2-0) | currency:"":0}}</td>
+            <td class="sums">{{(project.finance.budcapextq3-0)+(project.finance.budcapextoneq3-0)+(project.finance.budcapintq3-0) | currency:"":0}}</td>
+            <td class="sums">{{(project.finance.budcapextq4-0)+(project.finance.budcapextoneq4-0)+(project.finance.budcapintq4-0) | currency:"":0}}</td>
+            <td class="sums">{{(project.finance.budcapextq1-0)+(project.finance.budcapextoneq1-0)+(project.finance.budcapintq1-0)+(project.finance.budcapextq2-0)+(project.finance.budcapextoneq2-0)+(project.finance.budcapintq2-0)+(project.finance.budcapextq3-0)+(project.finance.budcapextoneq3-0)+(project.finance.budcapintq3-0)+(project.finance.budcapextq4-0)+(project.finance.budcapextoneq4-0)+(project.finance.budcapintq4-0)
+                | currency:"":0}}</td>
+        </tr>
+        <tr class="header">
+            <td colspan="6">Opex</td>
+        </tr>
+        <tr>
+            <td>External</td>
+            <td>
+                <div class="field"><input ng-model="project.finance.budopextq1" /></div>
+            </td>
+            <td>
+                <div class="field"><input ng-model="project.finance.budopextq2" /></div>
+            </td>
+            <td>
+                <div class="field"><input ng-model="project.finance.budopextq3" /></div>
+            </td>
+            <td>
+                <div class="field"><input ng-model="project.finance.budopextq4" /></div>
+            </td>
+            <td class="sums">{{(project.finance.budopextq1-0)+(project.finance.budopextq2-0)+(project.finance.budopextq3-0)+(project.finance.budopextq4-0)
+                | currency:"":0}}</td>
+        </tr>
+        <tr>
+            <td>Internal</td>
+            <td>
+                <div class="field"><input ng-model="project.finance.budopintq1" /></div>
+            </td>
+            <td>
+                <div class="field"><input ng-model="project.finance.budopintq2" /></div>
+            </td>
+            <td>
+                <div class="field"><input ng-model="project.finance.budopintq3" /></div>
+            </td>
+            <td>
+                <div class="field"><input ng-model="project.finance.budopintq4" /></div>
+            </td>
+            <td class="sums">{{(project.finance.budopintq1-0)+(project.finance.budopintq2-0)+(project.finance.budopintq3-0)+(project.finance.budopintq4-0)
+                | currency:"":0}}</td>
+        </tr>
+        <tr>
+            <td>Opex total</td>
+            <td class="sums">{{(project.finance.budopextq1-0)+(project.finance.budopintq1-0)}}</td>
+            <td class="sums">{{(project.finance.budopextq2-0)+(project.finance.budopintq2-0)}}</td>
+            <td class="sums">{{(project.finance.budopextq3-0)+(project.finance.budopintq3-0)}}</td>
+            <td class="sums">{{(project.finance.budopextq4-0)+(project.finance.budopintq4-0)}}</td>
+            <td class="sums">{{(project.finance.budopextq1-0)+(project.finance.budopintq1-0)+(project.finance.budopextq2-0)+(project.finance.budopintq2-0)+(project.finance.budopextq3-0)+(project.finance.budopintq3-0)+(project.finance.budopextq4-0)+(project.finance.budopintq4-0)
+                | currency:"":0}}</td>
+        </tr>
+        <tr class="header">
+            <td colspan="6">External/Internal</td>
+        </tr>
+        <tr>
+            <td>External total</td>
+            <td class="sums">{{(project.finance.budcapextq1-0)+(project.finance.budcapextoneq1-0)+(project.finance.budopextq1-0) | currency:"":0}}</td>
+            <td class="sums">{{(project.finance.budcapextq2-0)+(project.finance.budcapextoneq2-0)+(project.finance.budopextq2-0) | currency:"":0}}</td>
+            <td class="sums">{{(project.finance.budcapextq3-0)+(project.finance.budcapextoneq3-0)+(project.finance.budopextq3-0) | currency:"":0}}</td>
+            <td class="sums">{{(project.finance.budcapextq4-0)+(project.finance.budcapextoneq4-0)+(project.finance.budopextq4-0) | currency:"":0}}</td>
+            <td class="sums">{{(project.finance.budcapextq1-0)+(project.finance.budcapextoneq1-0)+(project.finance.budopextq1-0)+(project.finance.budcapextq2-0)+(project.finance.budcapextoneq2-0)+(project.finance.budopextq2-0)+(project.finance.budcapextq3-0)+(project.finance.budcapextoneq3-0)+(project.finance.budopextq3-0)+(project.finance.budcapextq4-0)+(project.finance.budcapextoneq4-0)+(project.finance.budopextq4-0)
+                | currency:"":0}}</td>
+        </tr>
+        <tr>
+            <td>Internal total</td>
+            <td class="sums">{{(project.finance.budcapintq1-0)+(project.finance.budopintq1-0) | currency:"":0}}</td>
+            <td class="sums">{{(project.finance.budcapintq2-0)+(project.finance.budopintq2-0) | currency:"":0}}</td>
+            <td class="sums">{{(project.finance.budcapintq3-0)+(project.finance.budopintq3-0) | currency:"":0}}</td>
+            <td class="sums">{{(project.finance.budcapintq4-0)+(project.finance.budopintq4-0) | currency:"":0}}</td>
+            <td class="sums">{{(project.finance.budcapintq1-0)+(project.finance.budopintq1-0)+(project.finance.budcapintq2-0)+(project.finance.budopintq2-0)+(project.finance.budcapintq3-0)+(project.finance.budopintq3-0)+(project.finance.budcapintq4-0)+(project.finance.budopintq4-0)
+                | currency:"":0}}</td>
+        </tr>
+        <tr class="header">
+            <td>Budget total</td>
+            <td class="sums">{{(project.finance.budcapextq1-0)+(project.finance.budcapextoneq1-0)+(project.finance.budopextq1-0)+(project.finance.budcapintq1-0)+(project.finance.budopintq1-0)
+                | currency:"":0}}</td>
+            <td class="sums">{{(project.finance.budcapextq2-0)+(project.finance.budcapextoneq2-0)+(project.finance.budopextq2-0)+(project.finance.budcapintq2-0)+(project.finance.budopintq2-0)
+                | currency:"":0}}</td>
+            <td class="sums">{{(project.finance.budcapextq3-0)+(project.finance.budcapextoneq3-0)+(project.finance.budopextq3-0)+(project.finance.budcapintq3-0)+(project.finance.budopintq3-0)
+                | currency:"":0}}</td>
+            <td class="sums">{{(project.finance.budcapextq4-0)+(project.finance.budcapextoneq4-0)+(project.finance.budopextq4-0)+(project.finance.budcapintq4-0)+(project.finance.budopintq4-0)
+                | currency:"":0}}</td>
+            <td class="sums">{{(project.finance.budcapextq1-0)+(project.finance.budcapextoneq1-0)+(project.finance.budopextq1-0)+(project.finance.budcapintq1-0)+(project.finance.budopintq1-0)+(project.finance.budcapextq2-0)+(project.finance.budcapextoneq2-0)+(project.finance.budopextq2-0)+(project.finance.budcapintq2-0)+(project.finance.budopintq2-0)+(project.finance.budcapextq3-0)+(project.finance.budcapextoneq3-0)+(project.finance.budopextq3-0)+(project.finance.budcapintq3-0)+(project.finance.budopintq3-0)+(project.finance.budcapextq4-0)+(project.finance.budcapextoneq4-0)+(project.finance.budopextq4-0)+(project.finance.budcapintq4-0)+(project.finance.budopintq4-0)
+                | currency:"":0}}</td>
+        </tr>
+        <tr>
+            <td>Acc. total</td>
+            <td class="sums">{{(project.finance.budcapextq1-0)+(project.finance.budcapextoneq1-0)+(project.finance.budopextq1-0)+(project.finance.budcapintq1-0)+(project.finance.budopintq1-0)
+                | currency:"":0}}</td>
+            <td class="sums">{{(project.finance.budcapextq1-0)+(project.finance.budcapextoneq1-0)+(project.finance.budopextq1-0)+(project.finance.budcapintq1-0)+(project.finance.budopintq1-0)+(project.finance.budcapextq2-0)+(project.finance.budcapextoneq2-0)+(project.finance.budopextq2-0)+(project.finance.budcapintq2-0)+(project.finance.budopintq2-0)
+                | currency:"":0}}</td>
+            <td class="sums">{{(project.finance.budcapextq1-0)+(project.finance.budcapextoneq1-0)+(project.finance.budopextq1-0)+(project.finance.budcapintq1-0)+(project.finance.budopintq1-0)+(project.finance.budcapextq2-0)+(project.finance.budcapextoneq2-0)+(project.finance.budopextq2-0)+(project.finance.budcapintq2-0)+(project.finance.budopintq2-0)+(project.finance.budcapextq3-0)+(project.finance.budcapextoneq3-0)+(project.finance.budopextq3-0)+(project.finance.budcapintq3-0)+(project.finance.budopintq3-0)
+                | currency:"":0}}</td>
+            <td class="sums">{{(project.finance.budcapextq1-0)+(project.finance.budcapextoneq1-0)+(project.finance.budopextq1-0)+(project.finance.budcapintq1-0)+(project.finance.budopintq1-0)+(project.finance.budcapextq2-0)+(project.finance.budcapextoneq2-0)+(project.finance.budopextq2-0)+(project.finance.budcapintq2-0)+(project.finance.budopintq2-0)+(project.finance.budcapextq3-0)+(project.finance.budcapextoneq3-0)+(project.finance.budopextq3-0)+(project.finance.budcapintq3-0)+(project.finance.budopintq3-0)+(project.finance.budcapextq4-0)+(project.finance.budcapextoneq4-0)+(project.finance.budopextq4-0)+(project.finance.budcapintq4-0)+(project.finance.budopintq4-0)
+                | currency:"":0}}</td>
+            <td></td>
+        </tr>
+    </table>
+
+
+
+
+    <h3>Posted this year</h3>
+    <table class="smaller smallinput">
+        <tr class="header">
+            <td>TDKK Ex. Vat</td>
+            <td>Q1</td>
+            <td>Q2</td>
+            <td>Q3</td>
+            <td>Q4</td>
+            <td>Total</td>
+        </tr>
+        <tr class="header">
+            <td colspan="6">Capex</td>
+        </tr>
+        <tr>
+            <td>External</td>
+            <td>
+                <div class="field"><input ng-model="project.finance.postcapextq1" /></div>
+            </td>
+            <td>
+                <div class="field"><input ng-model="project.finance.postcapextq2" /></div>
+            </td>
+            <td>
+                <div class="field"><input ng-model="project.finance.postcapextq3" /></div>
+            </td>
+            <td>
+                <div class="field"><input ng-model="project.finance.postcapextq4" /></div>
+            </td>
+            <td class="sums">{{(project.finance.postcapextq1-0)+(project.finance.postcapextq2-0)+(project.finance.postcapextq3-0)+(project.finance.postcapextq4-0)
+                | currency:"":0}}</td>
+        </tr>
+        <tr>
+            <td>Ext. One-Off</td>
+            <td>
+                <div class="field"><input ng-model="project.finance.postcapextoneq1" /></div>
+            </td>
+            <td>
+                <div class="field"><input ng-model="project.finance.postcapextoneq2" /></div>
+            </td>
+            <td>
+                <div class="field"><input ng-model="project.finance.postcapextoneq3" /></div>
+            </td>
+            <td>
+                <div class="field"><input ng-model="project.finance.postcapextoneq4" /></div>
+            </td>
+            <td class="sums">{{(project.finance.postcapextoneq1-0)+(project.finance.postcapextoneq2-0)+(project.finance.postcapextoneq3-0)+(project.finance.postcapextoneq4-0)
+                | currency:"":0}}</td>
+        </tr>
+        <tr>
+            <td>Internal</td>
+            <td>
+                <div class="field"><input ng-model="project.finance.postcapintq1" /></div>
+            </td>
+            <td>
+                <div class="field"><input ng-model="project.finance.postcapintq2" /></div>
+            </td>
+            <td>
+                <div class="field"><input ng-model="project.finance.postcapintq3" /></div>
+            </td>
+            <td>
+                <div class="field"><input ng-model="project.finance.postcapintq4" /></div>
+            </td>
+            <td class="sums">{{(project.finance.postcapintq1-0)+(project.finance.postcapintq2-0)+(project.finance.postcapintq3-0)+(project.finance.postcapintq4-0)
+                | currency:"":0}}</td>
+        </tr>
+        <tr>
+            <td>Capex total</td>
+            <td class="sums">{{(project.finance.postcapextq1-0)+(project.finance.postcapextoneq1-0)+(project.finance.postcapintq1-0) | currency:"":0}}</td>
+            <td class="sums">{{(project.finance.postcapextq2-0)+(project.finance.postcapextoneq2-0)+(project.finance.postcapintq2-0) | currency:"":0}}</td>
+            <td class="sums">{{(project.finance.postcapextq3-0)+(project.finance.postcapextoneq3-0)+(project.finance.postcapintq3-0) | currency:"":0}}</td>
+            <td class="sums">{{(project.finance.postcapextq4-0)+(project.finance.postcapextoneq4-0)+(project.finance.postcapintq4-0) | currency:"":0}}</td>
+            <td class="sums">{{(project.finance.postcapextq1-0)+(project.finance.postcapextoneq1-0)+(project.finance.postcapintq1-0)+(project.finance.postcapextq2-0)+(project.finance.postcapextoneq2-0)+(project.finance.postcapintq2-0)+(project.finance.postcapextq3-0)+(project.finance.postcapextoneq3-0)+(project.finance.postcapintq3-0)+(project.finance.postcapextq4-0)+(project.finance.postcapextoneq4-0)+(project.finance.postcapintq4-0)
+                | currency:"":0}}</td>
+        </tr>
+        <tr>
+            <td class="header" colspan="6">Opex</td>
+        </tr>
+        <tr>
+            <td>External</td>
+            <td>
+                <div class="field"><input ng-model="project.finance.postopextq1" /></div>
+            </td>
+            <td>
+                <div class="field"><input ng-model="project.finance.postopextq2" /></div>
+            </td>
+            <td>
+                <div class="field"><input ng-model="project.finance.postopextq3" /></div>
+            </td>
+            <td>
+                <div class="field"><input ng-model="project.finance.postopextq4" /></div>
+            </td>
+            <td class="sums">{{(project.finance.postopextq1-0)+(project.finance.postopextq2-0)+(project.finance.postopextq3-0)+(project.finance.postopextq4-0)
+                | currency:"":0}}</td>
+        </tr>
+        <tr>
+            <td>Internal</td>
+            <td>
+                <div class="field"><input ng-model="project.finance.postopintq1" /></div>
+            </td>
+            <td>
+                <div class="field"><input ng-model="project.finance.postopintq2" /></div>
+            </td>
+            <td>
+                <div class="field"><input ng-model="project.finance.postopintq3" /></div>
+            </td>
+            <td>
+                <div class="field"><input ng-model="project.finance.postopintq4" /></div>
+            </td>
+            <td class="sums">{{(project.finance.postopintq1-0)+(project.finance.postopintq2-0)+(project.finance.postopintq3-0)+(project.finance.postopintq4-0)
+                | currency:"":0}}</td>
+        </tr>
+        <tr>
+            <td>Opex total</td>
+            <td class="sums">{{(project.finance.postopextq1-0)+(project.finance.postopintq1-0)}}</td>
+            <td class="sums">{{(project.finance.postopextq2-0)+(project.finance.postopintq2-0)}}</td>
+            <td class="sums">{{(project.finance.postopextq3-0)+(project.finance.postopintq3-0)}}</td>
+            <td class="sums">{{(project.finance.postopextq4-0)+(project.finance.postopintq4-0)}}</td>
+            <td class="sums">{{(project.finance.postopextq1-0)+(project.finance.postopintq1-0)+(project.finance.postopextq2-0)+(project.finance.postopintq2-0)+(project.finance.postopextq3-0)+(project.finance.postopintq3-0)+(project.finance.postopextq4-0)+(project.finance.postopintq4-0)
+                | currency:"":0}}</td>
+        </tr>
+        <tr>
+            <td class="header" colspan="6">External/Internal</td>
+        </tr>
+        <tr>
+            <td>External total</td>
+            <td class="sums">{{(project.finance.postcapextq1-0)+(project.finance.postcapextoneq1-0)+(project.finance.postopextq1-0) | currency:"":0}}</td>
+            <td class="sums">{{(project.finance.postcapextq2-0)+(project.finance.postcapextoneq2-0)+(project.finance.postopextq2-0) | currency:"":0}}</td>
+            <td class="sums">{{(project.finance.postcapextq3-0)+(project.finance.postcapextoneq3-0)+(project.finance.postopextq3-0) | currency:"":0}}</td>
+            <td class="sums">{{(project.finance.postcapextq4-0)+(project.finance.postcapextoneq4-0)+(project.finance.postopextq4-0) | currency:"":0}}</td>
+            <td class="sums">{{(project.finance.postcapextq1-0)+(project.finance.postcapextoneq1-0)+(project.finance.postopextq1-0)+(project.finance.postcapextq2-0)+(project.finance.postcapextoneq2-0)+(project.finance.postopextq2-0)+(project.finance.postcapextq3-0)+(project.finance.postcapextoneq3-0)+(project.finance.postopextq3-0)+(project.finance.postcapextq4-0)+(project.finance.postcapextoneq4-0)+(project.finance.postopextq4-0)
+                | currency:"":0}}</td>
+        </tr>
+        <tr>
+            <td>Internal total</td>
+            <td class="sums">{{(project.finance.postcapintq1-0)+(project.finance.postopintq1-0) | currency:"":0}}</td>
+            <td class="sums">{{(project.finance.postcapintq2-0)+(project.finance.postopintq2-0) | currency:"":0}}</td>
+            <td class="sums">{{(project.finance.postcapintq3-0)+(project.finance.postopintq3-0) | currency:"":0}}</td>
+            <td class="sums">{{(project.finance.postcapintq4-0)+(project.finance.postopintq4-0) | currency:"":0}}</td>
+            <td class="sums">{{(project.finance.postcapintq1-0)+(project.finance.postopintq1-0)+(project.finance.postcapintq2-0)+(project.finance.postopintq2-0)+(project.finance.postcapintq3-0)+(project.finance.postopintq3-0)+(project.finance.postcapintq4-0)+(project.finance.postopintq4-0)
+                | currency:"":0}}</td>
+        </tr>
+        <tr class="header">
+            <td>Posted total</td>
+            <td class="sums">{{(project.finance.postcapextq1-0)+(project.finance.postcapextoneq1-0)+(project.finance.postopextq1-0)+(project.finance.postcapintq1-0)+(project.finance.postopintq1-0)
+                | currency:"":0}}</td>
+            <td class="sums">{{(project.finance.postcapextq2-0)+(project.finance.postcapextoneq2-0)+(project.finance.postopextq2-0)+(project.finance.postcapintq2-0)+(project.finance.postopintq2-0)
+                | currency:"":0}}</td>
+            <td class="sums">{{(project.finance.postcapextq3-0)+(project.finance.postcapextoneq3-0)+(project.finance.postopextq3-0)+(project.finance.postcapintq3-0)+(project.finance.postopintq3-0)
+                | currency:"":0}}</td>
+            <td class="sums">{{(project.finance.postcapextq4-0)+(project.finance.postcapextoneq4-0)+(project.finance.postopextq4-0)+(project.finance.postcapintq4-0)+(project.finance.postopintq4-0)
+                | currency:"":0}}</td>
+            <td class="sums">{{(project.finance.postcapextq1-0)+(project.finance.postcapextoneq1-0)+(project.finance.postopextq1-0)+(project.finance.postcapintq1-0)+(project.finance.postopintq1-0)+(project.finance.postcapextq2-0)+(project.finance.postcapextoneq2-0)+(project.finance.postopextq2-0)+(project.finance.postcapintq2-0)+(project.finance.postopintq2-0)+(project.finance.postcapextq3-0)+(project.finance.postcapextoneq3-0)+(project.finance.postopextq3-0)+(project.finance.postcapintq3-0)+(project.finance.postopintq3-0)+(project.finance.postcapextq4-0)+(project.finance.postcapextoneq4-0)+(project.finance.postopextq4-0)+(project.finance.postcapintq4-0)+(project.finance.postopintq4-0)
+                | currency:"":0}}</td>
+        </tr>
+        <tr>
+            <td>Acc. total</td>
+            <td class="sums">{{(project.finance.postcapextq1-0)+(project.finance.postcapextoneq1-0)+(project.finance.postopextq1-0)+(project.finance.postcapintq1-0)+(project.finance.postopintq1-0)
+                | currency:"":0}}</td>
+            <td class="sums">{{(project.finance.postcapextq1-0)+(project.finance.postcapextoneq1-0)+(project.finance.postopextq1-0)+(project.finance.postcapintq1-0)+(project.finance.postopintq1-0)+(project.finance.postcapextq2-0)+(project.finance.postcapextoneq2-0)+(project.finance.postopextq2-0)+(project.finance.postcapintq2-0)+(project.finance.postopintq2-0)
+                | currency:"":0}}</td>
+            <td class="sums">{{(project.finance.postcapextq1-0)+(project.finance.postcapextoneq1-0)+(project.finance.postopextq1-0)+(project.finance.postcapintq1-0)+(project.finance.postopintq1-0)+(project.finance.postcapextq2-0)+(project.finance.postcapextoneq2-0)+(project.finance.postopextq2-0)+(project.finance.postcapintq2-0)+(project.finance.postopintq2-0)+(project.finance.postcapextq3-0)+(project.finance.postcapextoneq3-0)+(project.finance.postopextq3-0)+(project.finance.postcapintq3-0)+(project.finance.postopintq3-0)
+                | currency:"":0}}</td>
+            <td class="sums">{{(project.finance.postcapextq1-0)+(project.finance.postcapextoneq1-0)+(project.finance.postopextq1-0)+(project.finance.postcapintq1-0)+(project.finance.postopintq1-0)+(project.finance.postcapextq2-0)+(project.finance.postcapextoneq2-0)+(project.finance.postopextq2-0)+(project.finance.postcapintq2-0)+(project.finance.postopintq2-0)+(project.finance.postcapextq3-0)+(project.finance.postcapextoneq3-0)+(project.finance.postopextq3-0)+(project.finance.postcapintq3-0)+(project.finance.postopintq3-0)+(project.finance.postcapextq4-0)+(project.finance.postcapextoneq4-0)+(project.finance.postopextq4-0)+(project.finance.postcapintq4-0)+(project.finance.postopintq4-0)
+                | currency:"":0}}</td>
+            <td></td>
+        </tr>
+    </table>
+
+
+    <h3>Deviation this year</h3>
+    <table class="smaller smallinput">
+        <tr class="header">
+            <td>TDKK Ex. Vat</td>
+            <td>Q1</td>
+            <td>Q2</td>
+            <td>Q3</td>
+            <td>Q4</td>
+            <td>Total</td>
+        </tr>
+        <tr>
+            <td class="header" colspan="6">Capex</td>
+        </tr>
+        <tr>
+            <td>External</td>
+            <td class="sums">{{(project.finance.budcapextq1-0) - (project.finance.postcapextq1-0) | currency:"":0}}</td>
+            <td class="sums">{{(project.finance.budcapextq2-0) - (project.finance.postcapextq2-0) | currency:"":0}}</td>
+            <td class="sums">{{(project.finance.budcapextq3-0) - (project.finance.postcapextq3-0) | currency:"":0}}</td>
+            <td class="sums">{{(project.finance.budcapextq4-0) - (project.finance.postcapextq4-0) | currency:"":0}}</td>
+            <td class="sums">{{(project.finance.budcapextq1-0) - (project.finance.postcapextq1-0)+(project.finance.budcapextq2-0) - (project.finance.postcapextq2-0)+(project.finance.budcapextq3-0)
+                - (project.finance.postcapextq3-0)+(project.finance.budcapextq4-0) - (project.finance.postcapextq4-0) | currency:"":0}}</td>
+        </tr>
+        <tr>
+            <td>Ext. One-Off</td>
+            <td class="sums">{{(project.finance.budcapextoneq1-0) - (project.finance.postcapextoneq1-0) | currency:"":0}}</td>
+            <td class="sums">{{(project.finance.budcapextoneq2-0) - (project.finance.postcapextoneq2-0) | currency:"":0}}</td>
+            <td class="sums">{{(project.finance.budcapextoneq3-0) - (project.finance.postcapextoneq3-0) | currency:"":0}}</td>
+            <td class="sums">{{(project.finance.budcapextoneq4-0) - (project.finance.postcapextoneq4-0) | currency:"":0}}</td>
+            <td class="sums">{{(project.finance.budcapextoneq1-0) - (project.finance.postcapextoneq1-0)+(project.finance.budcapextoneq2-0)
+                - (project.finance.postcapextoneq2-0)+(project.finance.budcapextoneq3-0) - (project.finance.postcapextoneq3-0)+(project.finance.budcapextoneq4-0)
+                - (project.finance.postcapextoneq4-0) | currency:"":0}}</td>
+        </tr>
+        <tr>
+            <td>Internal</td>
+            <td class="sums">{{(project.finance.budcapintq1-0) - (project.finance.postcapintq1-0) | currency:"":0}}</td>
+            <td class="sums">{{(project.finance.budcapintq2-0) - (project.finance.postcapintq2-0) | currency:"":0}}</td>
+            <td class="sums">{{(project.finance.budcapintq3-0) - (project.finance.postcapintq3-0) | currency:"":0}}</td>
+            <td class="sums">{{(project.finance.budcapintq4-0) - (project.finance.postcapintq4-0) | currency:"":0}}</td>
+            <td class="sums">{{(project.finance.budcapintq1-0) - (project.finance.postcapintq1-0)+(project.finance.budcapintq2-0) - (project.finance.postcapintq2-0)+(project.finance.budcapintq3-0)
+                - (project.finance.postcapintq3-0)+(project.finance.budcapintq4-0) - (project.finance.postcapintq4-0) | currency:"":0}}</td>
+        </tr>
+        <tr>
+            <td>Capex total</td>
+            <td class="sums">{{(project.finance.budcapextq1-0) - (project.finance.postcapextq1-0)+(project.finance.budcapextoneq1-0) - (project.finance.postcapextoneq1-0)+(project.finance.budcapintq1-0)
+                - (project.finance.postcapintq1-0) | currency:"":0}}</td>
+            <td class="sums">{{(project.finance.budcapextq2-0) - (project.finance.postcapextq2-0)+(project.finance.budcapextoneq2-0) - (project.finance.postcapextoneq2-0)+(project.finance.budcapintq2-0)
+                - (project.finance.postcapintq2-0) | currency:"":0}}</td>
+            <td class="sums">{{(project.finance.budcapextq3-0) - (project.finance.postcapextq3-0)+(project.finance.budcapextoneq3-0) - (project.finance.postcapextoneq3-0)+(project.finance.budcapintq3-0)
+                - (project.finance.postcapintq3-0) | currency:"":0}}</td>
+            <td class="sums">{{(project.finance.budcapextq4-0) - (project.finance.postcapextq4-0)+(project.finance.budcapextoneq4-0) - (project.finance.postcapextoneq4-0)+(project.finance.budcapintq4-0)
+                - (project.finance.postcapintq4-0) | currency:"":0}}</td>
+            <td class="sums">{{(project.finance.budcapextq1-0) - (project.finance.postcapextq1-0)+(project.finance.budcapextoneq1-0) - (project.finance.postcapextoneq1-0)+(project.finance.budcapintq1-0)
+                - (project.finance.postcapintq1-0)+(project.finance.budcapextq2-0) - (project.finance.postcapextq2-0)+(project.finance.budcapextoneq2-0)
+                - (project.finance.postcapextoneq2-0)+(project.finance.budcapintq2-0) - (project.finance.postcapintq2-0)+(project.finance.budcapextq3-0)
+                - (project.finance.postcapextq3-0)+(project.finance.budcapextoneq3-0) - (project.finance.postcapextoneq3-0)+(project.finance.budcapintq3-0)
+                - (project.finance.postcapintq3-0)+(project.finance.budcapextq4-0) - (project.finance.postcapextq4-0)+(project.finance.budcapextoneq4-0)
+                - (project.finance.postcapextoneq4-0)+(project.finance.budcapintq4-0) - (project.finance.postcapintq4-0)
+                | currency:"":0}}</td>
+        </tr>
+        <tr>
+            <td class="header" colspan="6">Opex</td>
+        </tr>
+        <tr>
+            <td>External</td>
+            <td class="sums">{{(project.finance.budopextq1-0) - (project.finance.postopextq1-0) | currency:"":0}}</td>
+            <td class="sums">{{(project.finance.budopextq2-0) - (project.finance.postopextq2-0) | currency:"":0}}</td>
+            <td class="sums">{{(project.finance.budopextq3-0) - (project.finance.postopextq3-0) | currency:"":0}}</td>
+            <td class="sums">{{(project.finance.budopextq4-0) - (project.finance.postopextq4-0) | currency:"":0}}</td>
+            <td class="sums">{{(project.finance.budopextq1-0) - (project.finance.postopextq1-0)+(project.finance.budopextq2-0) - (project.finance.postopextq2-0)+(project.finance.budopextq3-0)
+                - (project.finance.postopextq3-0)+(project.finance.budopextq4-0) - (project.finance.postopextq4-0) | currency:"":0}}</td>
+        </tr>
+        <tr>
+            <td>Internal</td>
+            <td class="sums">{{(project.finance.budopintq1-0) - (project.finance.postopintq1-0) | currency:"":0}}</td>
+            <td class="sums">{{(project.finance.budopintq2-0) - (project.finance.postopintq2-0) | currency:"":0}}</td>
+            <td class="sums">{{(project.finance.budopintq3-0) - (project.finance.postopintq3-0) | currency:"":0}}</td>
+            <td class="sums">{{(project.finance.budopintq4-0) - (project.finance.postopintq4-0) | currency:"":0}}</td>
+            <td class="sums">{{(project.finance.budopintq1-0) - (project.finance.postopintq1-0)+(project.finance.budopintq2-0) - (project.finance.postopintq2-0)+(project.finance.budopintq3-0)
+                - (project.finance.postopintq3-0)+(project.finance.budopintq4-0) - (project.finance.postopintq4-0) | currency:"":0}}</td>
+        </tr>
+        <tr>
+            <td>Opex total</td>
+            <td class="sums">{{(project.finance.budopextq1-0) - (project.finance.postopextq1-0)+(project.finance.budopintq1-0) - (project.finance.postopintq1-0)
+                | currency:"":0}}</td>
+            <td class="sums">{{(project.finance.budopextq2-0) - (project.finance.postopextq2-0)+(project.finance.budopintq2-0) - (project.finance.postopintq2-0)
+                | currency:"":0}}</td>
+            <td class="sums">{{(project.finance.budopextq3-0) - (project.finance.postopextq3-0)+(project.finance.budopintq3-0) - (project.finance.postopintq3-0)
+                | currency:"":0}}</td>
+            <td class="sums">{{(project.finance.budopextq4-0) - (project.finance.postopextq4-0)+(project.finance.budopintq4-0) - (project.finance.postopintq4-0)
+                | currency:"":0}}</td>
+            <td class="sums">{{(project.finance.budopextq1-0) - (project.finance.postopextq1-0)+(project.finance.budopintq1-0) - (project.finance.postopintq1-0)+(project.finance.budopextq2-0)
+                - (project.finance.postopextq2-0)+(project.finance.budopintq2-0) - (project.finance.postopintq2-0)+(project.finance.budopextq3-0)
+                - (project.finance.postopextq3-0)+(project.finance.budopintq3-0) - (project.finance.postopintq3-0)+(project.finance.budopextq4-0)
+                - (project.finance.postopextq4-0)+(project.finance.budopintq4-0) - (project.finance.postopintq4-0) | currency:"":0}}</td>
+        </tr>
+        <tr>
+            <td class="header" colspan="6">External/Internal</td>
+        </tr>
+        <tr>
+            <td>External total</td>
+            <td class="sums">{{(project.finance.budcapextq1-0) - (project.finance.postcapextq1-0)+(project.finance.budcapextoneq1-0) - (project.finance.postcapextoneq1-0)+(project.finance.budopextq1-0)
+                - (project.finance.postopextq1-0) | currency:"":0}}</td>
+            <td class="sums">{{(project.finance.budcapextq2-0) - (project.finance.postcapextq2-0)+(project.finance.budcapextoneq2-0) - (project.finance.postcapextoneq2-0)+(project.finance.budopextq2-0)
+                - (project.finance.postopextq2-0) | currency:"":0}}</td>
+            <td class="sums">{{(project.finance.budcapextq3-0) - (project.finance.postcapextq3-0)+(project.finance.budcapextoneq3-0) - (project.finance.postcapextoneq3-0)+(project.finance.budopextq3-0)
+                - (project.finance.postopextq3-0) | currency:"":0}}</td>
+            <td class="sums">{{(project.finance.budcapextq4-0) - (project.finance.postcapextq4-0)+(project.finance.budcapextoneq4-0) - (project.finance.postcapextoneq4-0)+(project.finance.budopextq4-0)
+                - (project.finance.postopextq4-0) | currency:"":0}}</td>
+            <td class="sums">{{(project.finance.budcapextq1-0) - (project.finance.postcapextq1-0)+(project.finance.budcapextoneq1-0) - (project.finance.postcapextoneq1-0)+(project.finance.budopextq1-0)
+                - (project.finance.postopextq1-0)+(project.finance.budcapextq2-0) - (project.finance.postcapextq2-0)+(project.finance.budcapextoneq2-0)
+                - (project.finance.postcapextoneq2-0)+(project.finance.budopextq2-0) - (project.finance.postopextq2-0)+(project.finance.budcapextq3-0)
+                - (project.finance.postcapextq3-0)+(project.finance.budcapextoneq3-0) - (project.finance.postcapextoneq3-0)+(project.finance.budopextq3-0)
+                - (project.finance.postopextq3-0)+(project.finance.budcapextq4-0) - (project.finance.postcapextq4-0)+(project.finance.budcapextoneq4-0)
+                - (project.finance.postcapextoneq4-0)+(project.finance.budopextq4-0) - (project.finance.postopextq4-0) |
+                currency:"":0}}</td>
+
+        </tr>
+        <tr>
+            <td>Internal total</td>
+            <td class="sums">{{(project.finance.budcapintq1-0) - (project.finance.postcapintq1-0)+(project.finance.budopintq1-0) - (project.finance.postopintq1-0)
+                | currency:"":0}}</td>
+            <td class="sums">{{(project.finance.budcapintq2-0) - (project.finance.postcapintq2-0)+(project.finance.budopintq2-0) - (project.finance.postopintq2-0)
+                | currency:"":0}}</td>
+            <td class="sums">{{(project.finance.budcapintq3-0) - (project.finance.postcapintq3-0)+(project.finance.budopintq3-0) - (project.finance.postopintq3-0)
+                | currency:"":0}}</td>
+            <td class="sums">{{(project.finance.budcapintq4-0) - (project.finance.postcapintq4-0)+(project.finance.budopintq4-0) - (project.finance.postopintq4-0)
+                | currency:"":0}}</td>
+            <td class="sums">{{(project.finance.budcapintq1-0) - (project.finance.postcapintq1-0)+(project.finance.budopintq1-0) - (project.finance.postopintq1-0)+(project.finance.budcapintq2-0)
+                - (project.finance.postcapintq2-0)+(project.finance.budopintq2-0) - (project.finance.postopintq2-0)+(project.finance.budcapintq3-0)
+                - (project.finance.postcapintq3-0)+(project.finance.budopintq3-0) - (project.finance.postopintq3-0)+(project.finance.budcapintq4-0)
+                - (project.finance.postcapintq4-0)+(project.finance.budopintq4-0) - (project.finance.postopintq4-0) | currency:"":0}}</td>
+        </tr>
+        <tr class="header">
+            <td>Budget/Posted total</td>
+            <td class="sums">{{(project.finance.budcapextq1-0) - (project.finance.postcapextq1-0)+(project.finance.budcapextoneq1-0) - (project.finance.postcapextoneq1-0)+(project.finance.budopextq1-0)
+                - (project.finance.postopextq1-0)+(project.finance.budcapintq1-0) - (project.finance.postcapintq1-0)+(project.finance.budopintq1-0)
+                - (project.finance.postopintq1-0) | currency:"":0}}</td>
+            <td class="sums">{{(project.finance.budcapextq2-0) - (project.finance.postcapextq2-0)+(project.finance.budcapextoneq2-0) - (project.finance.postcapextoneq2-0)+(project.finance.budopextq2-0)
+                - (project.finance.postopextq2-0)+(project.finance.budcapintq2-0) - (project.finance.postcapintq2-0)+(project.finance.budopintq2-0)
+                - (project.finance.postopintq2-0) | currency:"":0}}</td>
+            <td class="sums">{{(project.finance.budcapextq3-0) - (project.finance.postcapextq3-0)+(project.finance.budcapextoneq3-0) - (project.finance.postcapextoneq3-0)+(project.finance.budopextq3-0)
+                - (project.finance.postopextq3-0)+(project.finance.budcapintq3-0) - (project.finance.postcapintq3-0)+(project.finance.budopintq3-0)
+                - (project.finance.postopintq3-0) | currency:"":0}}</td>
+            <td class="sums">{{(project.finance.budcapextq4-0) - (project.finance.postcapextq4-0)+(project.finance.budcapextoneq4-0) - (project.finance.postcapextoneq4-0)+(project.finance.budopextq4-0)
+                - (project.finance.postopextq4-0)+(project.finance.budcapintq4-0) - (project.finance.postcapintq4-0)+(project.finance.budopintq4-0)
+                - (project.finance.postopintq4-0) | currency:"":0}}</td>
+
+            <td class="sums">{{(project.finance.budcapextq1-0) - (project.finance.postcapextq1-0)+(project.finance.budcapextoneq1-0) - (project.finance.postcapextoneq1-0)+(project.finance.budopextq1-0)
+                - (project.finance.postopextq1-0)+(project.finance.budcapintq1-0) - (project.finance.postcapintq1-0)+(project.finance.budopintq1-0)
+                - (project.finance.postopintq1-0)+(project.finance.budcapextq2-0) - (project.finance.postcapextq2-0)+(project.finance.budcapextoneq2-0)
+                - (project.finance.postcapextoneq2-0)+(project.finance.budopextq2-0) - (project.finance.postopextq2-0)+(project.finance.budcapintq2-0)
+                - (project.finance.postcapintq2-0)+(project.finance.budopintq2-0) - (project.finance.postopintq2-0)+(project.finance.budcapextq3-0)
+                - (project.finance.postcapextq3-0)+(project.finance.budcapextoneq3-0) - (project.finance.postcapextoneq3-0)+(project.finance.budopextq3-0)
+                - (project.finance.postopextq3-0)+(project.finance.budcapintq3-0) - (project.finance.postcapintq3-0)+(project.finance.budopintq3-0)
+                - (project.finance.postopintq3-0)+(project.finance.budcapextq4-0) - (project.finance.postcapextq4-0)+(project.finance.budcapextoneq4-0)
+                - (project.finance.postcapextoneq4-0)+(project.finance.budopextq4-0) - (project.finance.postopextq4-0)+(project.finance.budcapintq4-0)
+                - (project.finance.postcapintq4-0)+(project.finance.budopintq4-0) - (project.finance.postopintq4-0) | currency:"":0}}</td>
+
+        </tr>
+        <tr>
+            <td>Acc. total</td>
+            <td class="sums">{{(project.finance.budcapextq1-0) - (project.finance.postcapextq1-0)+(project.finance.budcapextoneq1-0) - (project.finance.postcapextoneq1-0)+(project.finance.budopextq1-0)
+                - (project.finance.postopextq1-0)+(project.finance.budcapintq1-0) - (project.finance.postcapintq1-0)+(project.finance.budopintq1-0)
+                - (project.finance.postopintq1-0) | currency:"":0}}</td>
+
+
+            <td class="sums">{{(project.finance.budcapextq1-0) - (project.finance.postcapextq1-0)+(project.finance.budcapextoneq1-0) - (project.finance.postcapextoneq1-0)+(project.finance.budopextq1-0)
+                - (project.finance.postopextq1-0)+(project.finance.budcapintq1-0) - (project.finance.postcapintq1-0)+(project.finance.budopintq1-0)
+                - (project.finance.postopintq1-0)+(project.finance.budcapextq2-0) - (project.finance.postcapextq2-0)+(project.finance.budcapextoneq2-0)
+                - (project.finance.postcapextoneq2-0)+(project.finance.budopextq2-0) - (project.finance.postopextq2-0)+(project.finance.budcapintq2-0)
+                - (project.finance.postcapintq2-0)+(project.finance.budopintq2-0) - (project.finance.postopintq2-0) | currency:"":0}}</td>
+
+
+            <td class="sums">{{(project.finance.budcapextq1-0) - (project.finance.postcapextq1-0)+(project.finance.budcapextoneq1-0) - (project.finance.postcapextoneq1-0)+(project.finance.budopextq1-0)
+                - (project.finance.postopextq1-0)+(project.finance.budcapintq1-0) - (project.finance.postcapintq1-0)+(project.finance.budopintq1-0)
+                - (project.finance.postopintq1-0)+(project.finance.budcapextq2-0) - (project.finance.postcapextq2-0)+(project.finance.budcapextoneq2-0)
+                - (project.finance.postcapextoneq2-0)+(project.finance.budopextq2-0) - (project.finance.postopextq2-0)+(project.finance.budcapintq2-0)
+                - (project.finance.postcapintq2-0)+(project.finance.budopintq2-0) - (project.finance.postopintq2-0)+(project.finance.budcapextq3-0)
+                - (project.finance.postcapextq3-0)+(project.finance.budcapextoneq3-0) - (project.finance.postcapextoneq3-0)+(project.finance.budopextq3-0)
+                - (project.finance.postopextq3-0)+(project.finance.budcapintq3-0) - (project.finance.postcapintq3-0)+(project.finance.budopintq3-0)
+                - (project.finance.postopintq3-0) | currency:"":0}}</td>
+
+
+            <td class="sums">{{(project.finance.budcapextq1-0) - (project.finance.postcapextq1-0)+(project.finance.budcapextoneq1-0) - (project.finance.postcapextoneq1-0)+(project.finance.budopextq1-0)
+                - (project.finance.postopextq1-0)+(project.finance.budcapintq1-0) - (project.finance.postcapintq1-0)+(project.finance.budopintq1-0)
+                - (project.finance.postopintq1-0)+(project.finance.budcapextq2-0) - (project.finance.postcapextq2-0)+(project.finance.budcapextoneq2-0)
+                - (project.finance.postcapextoneq2-0)+(project.finance.budopextq2-0) - (project.finance.postopextq2-0)+(project.finance.budcapintq2-0)
+                - (project.finance.postcapintq2-0)+(project.finance.budopintq2-0) - (project.finance.postopintq2-0)+(project.finance.budcapextq3-0)
+                - (project.finance.postcapextq3-0)+(project.finance.budcapextoneq3-0) - (project.finance.postcapextoneq3-0)+(project.finance.budopextq3-0)
+                - (project.finance.postopextq3-0)+(project.finance.budcapintq3-0) - (project.finance.postcapintq3-0)+(project.finance.budopintq3-0)
+                - (project.finance.postopintq3-0)+(project.finance.budcapextq4-0) - (project.finance.postcapextq4-0)+(project.finance.budcapextoneq4-0)
+                - (project.finance.postcapextoneq4-0)+(project.finance.budopextq4-0) - (project.finance.postopextq4-0)+(project.finance.budcapintq4-0)
+                - (project.finance.postcapintq4-0)+(project.finance.budopintq4-0) - (project.finance.postopintq4-0) | currency:"":0}}</td>
+
+            <td></td>
+        </tr>
+    </table>
+
+    <h2>Deviation report</h2>
+    <table>
+        <tr>
+            <td class="header">
+                <p>Deviation Q1 <span id="financedevQ1_count" class="right"></span></p>
+            </td>
+            <td>
+                <div class="field">
+                    <textarea ng-model="project.finance.devq1" maxlength="300" id="devq1" placeholder="Describe major changes and impact on Q1 financing."></textarea>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td class="header">
+                <p>Deviation Q2 <span id="financedevQ2_count" class="right"></span></p>
+            </td>
+            <td>
+                <div class="field">
+                    <textarea ng-model="project.finance.devq2" maxlength="300" id="devq2" placeholder="Describe major changes and impact on Q2 financing."></textarea>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td class="header">
+                <p>Deviation Q3 <span id="financedevQ3_count" class="right"></span></p>
+            </td>
+            <td>
+                <div class="field">
+                    <textarea ng-model="project.finance.devq3" maxlength="300" id="devq3" placeholder="Describe major changes and impact on Q3 financing."></textarea>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td class="header">
+                <p>Deviation Q4 <span id="financedevQ4_count" class="right"></span></p>
+            </td>
+            <td>
+                <div class="field">
+                    <textarea ng-model="project.finance.devq4" maxlength="300" id="devq4" placeholder="Describe major changes and impact on Q4 financing."></textarea>
+                </div>
+            </td>
+        </tr>
+    </table>
+
+    <h3>Budget next year</h3>
+    <table class="smaller smallinput">
+        <tr class="header">
+            <td>TDKK Ex. Vat</td>
+            <td>Q1</td>
+            <td>Q2</td>
+            <td>Q3</td>
+            <td>Q4</td>
+            <td>Total</td>
+        </tr>
+        <tr>
+            <td class="header" colspan="6">Capex</td>
+        </tr>
+        <tr>
+            <td>External</td>
+            <td>
+                <div class="field"><input ng-model="project.finance.nextbudcapextq1" /></div>
+            </td>
+            <td>
+                <div class="field"><input ng-model="project.finance.nextbudcapextq2" /></div>
+            </td>
+            <td>
+                <div class="field"><input ng-model="project.finance.nextbudcapextq3" /></div>
+            </td>
+            <td>
+                <div class="field"><input ng-model="project.finance.nextbudcapextq4" /></div>
+            </td>
+            <td class="sums">{{(project.finance.nextbudcapextq1-0)+(project.finance.nextbudcapextq2-0)+(project.finance.nextbudcapextq3-0)+(project.finance.nextbudcapextq4-0)
+                | currency:"":0}}</td>
+        </tr>
+        <tr>
+            <td>Ext. One-Off</td>
+            <td>
+                <div class="field"><input ng-model="project.finance.nextbudcapextoneq1" /></div>
+            </td>
+            <td>
+                <div class="field"><input ng-model="project.finance.nextbudcapextoneq2" /></div>
+            </td>
+            <td>
+                <div class="field"><input ng-model="project.finance.nextbudcapextoneq3" /></div>
+            </td>
+            <td>
+                <div class="field"><input ng-model="project.finance.nextbudcapextoneq4" /></div>
+            </td>
+            <td class="sums">{{(project.finance.nextbudcapextoneq1-0)+(project.finance.nextbudcapextoneq2-0)+(project.finance.nextbudcapextoneq3-0)+(project.finance.nextbudcapextoneq4-0)
+                | currency:"":0}}</td>
+        </tr>
+        <tr>
+            <td>Internal</td>
+            <td>
+                <div class="field"><input ng-model="project.finance.nextbudcapintq1" /></div>
+            </td>
+            <td>
+                <div class="field"><input ng-model="project.finance.nextbudcapintq2" /></div>
+            </td>
+            <td>
+                <div class="field"><input ng-model="project.finance.nextbudcapintq3" /></div>
+            </td>
+            <td>
+                <div class="field"><input ng-model="project.finance.nextbudcapintq4" /></div>
+            </td>
+            <td class="sums">{{(project.finance.nextbudcapintq1-0)+(project.finance.nextbudcapintq2-0)+(project.finance.nextbudcapintq3-0)+(project.finance.nextbudcapintq4-0)
+                | currency:"":0}}</td>
+        </tr>
+        <tr>
+            <td>Capex total</td>
+            <td class="sums">{{(project.finance.nextbudcapextq1-0)+(project.finance.nextbudcapextoneq1-0)+(project.finance.nextbudcapintq1-0)
+                | currency:"":0}}</td>
+            <td class="sums">{{(project.finance.nextbudcapextq2-0)+(project.finance.nextbudcapextoneq2-0)+(project.finance.nextbudcapintq2-0)
+                | currency:"":0}}</td>
+            <td class="sums">{{(project.finance.nextbudcapextq3-0)+(project.finance.nextbudcapextoneq3-0)+(project.finance.nextbudcapintq3-0)
+                | currency:"":0}}</td>
+            <td class="sums">{{(project.finance.nextbudcapextq4-0)+(project.finance.nextbudcapextoneq4-0)+(project.finance.nextbudcapintq4-0)
+                | currency:"":0}}</td>
+            <td class="sums">{{(project.finance.nextbudcapextq1-0)+(project.finance.nextbudcapextoneq1-0)+(project.finance.nextbudcapintq1-0)+(project.finance.nextbudcapextq2-0)+(project.finance.nextbudcapextoneq2-0)+(project.finance.nextbudcapintq2-0)+(project.finance.nextbudcapextq3-0)+(project.finance.nextbudcapextoneq3-0)+(project.finance.nextbudcapintq3-0)+(project.finance.nextbudcapextq4-0)+(project.finance.nextbudcapextoneq4-0)+(project.finance.nextbudcapintq4-0)
+                | currency:"":0}}</td>
+        </tr>
+        <tr>
+            <td class="header" colspan="6">Opex</td>
+        </tr>
+        <tr>
+            <td>External</td>
+            <td>
+                <div class="field"><input ng-model="project.finance.nextbudopextq1" /></div>
+            </td>
+            <td>
+                <div class="field"><input ng-model="project.finance.nextbudopextq2" /></div>
+            </td>
+            <td>
+                <div class="field"><input ng-model="project.finance.nextbudopextq3" /></div>
+            </td>
+            <td>
+                <div class="field"><input ng-model="project.finance.nextbudopextq4" /></div>
+            </td>
+            <td class="sums">{{(project.finance.nextbudopextq1-0)+(project.finance.nextbudopextq2-0)+(project.finance.nextbudopextq3-0)+(project.finance.nextbudopextq4-0)
+                | currency:"":0}}</td>
+        </tr>
+        <tr>
+            <td>Internal</td>
+            <td>
+                <div class="field"><input ng-model="project.finance.nextbudopintq1" /></div>
+            </td>
+            <td>
+                <div class="field"><input ng-model="project.finance.nextbudopintq2" /></div>
+            </td>
+            <td>
+                <div class="field"><input ng-model="project.finance.nextbudopintq3" /></div>
+            </td>
+            <td>
+                <div class="field"><input ng-model="project.finance.nextbudopintq4" /></div>
+            </td>
+            <td class="sums">{{(project.finance.nextbudopintq1-0)+(project.finance.nextbudopintq2-0)+(project.finance.nextbudopintq3-0)+(project.finance.nextbudopintq4-0)
+                | currency:"":0}}</td>
+        </tr>
+        <tr>
+            <td>Opex total</td>
+            <td class="sums">{{(project.finance.nextbudopextq1-0)+(project.finance.nextbudopintq1-0)}}</td>
+            <td class="sums">{{(project.finance.nextbudopextq2-0)+(project.finance.nextbudopintq2-0)}}</td>
+            <td class="sums">{{(project.finance.nextbudopextq3-0)+(project.finance.nextbudopintq3-0)}}</td>
+            <td class="sums">{{(project.finance.nextbudopextq4-0)+(project.finance.nextbudopintq4-0)}}</td>
+            <td class="sums">{{(project.finance.nextbudopextq1-0)+(project.finance.nextbudopintq1-0)+(project.finance.nextbudopextq2-0)+(project.finance.nextbudopintq2-0)+(project.finance.nextbudopextq3-0)+(project.finance.nextbudopintq3-0)+(project.finance.nextbudopextq4-0)+(project.finance.nextbudopintq4-0)
+                | currency:"":0}}</td>
+        </tr>
+        <tr>
+            <td class="header" colspan="6">External/Internal</td>
+        </tr>
+        <tr>
+            <td>External total</td>
+            <td class="sums">{{(project.finance.nextbudcapextq1-0)+(project.finance.nextbudcapextoneq1-0)+(project.finance.nextbudopextq1-0)
+                | currency:"":0}}</td>
+            <td class="sums">{{(project.finance.nextbudcapextq2-0)+(project.finance.nextbudcapextoneq2-0)+(project.finance.nextbudopextq2-0)
+                | currency:"":0}}</td>
+            <td class="sums">{{(project.finance.nextbudcapextq3-0)+(project.finance.nextbudcapextoneq3-0)+(project.finance.nextbudopextq3-0)
+                | currency:"":0}}</td>
+            <td class="sums">{{(project.finance.nextbudcapextq4-0)+(project.finance.nextbudcapextoneq4-0)+(project.finance.nextbudopextq4-0)
+                | currency:"":0}}</td>
+            <td class="sums">{{(project.finance.nextbudcapextq1-0)+(project.finance.nextbudcapextoneq1-0)+(project.finance.nextbudopextq1-0)+(project.finance.nextbudcapextq2-0)+(project.finance.nextbudcapextoneq2-0)+(project.finance.nextbudopextq2-0)+(project.finance.nextbudcapextq3-0)+(project.finance.nextbudcapextoneq3-0)+(project.finance.nextbudopextq3-0)+(project.finance.nextbudcapextq4-0)+(project.finance.nextbudcapextoneq4-0)+(project.finance.nextbudopextq4-0)
+                | currency:"":0}}</td>
+        </tr>
+        <tr>
+            <td>Internal total</td>
+            <td class="sums">{{(project.finance.nextbudcapintq1-0)+(project.finance.nextbudopintq1-0) | currency:"":0}}</td>
+            <td class="sums">{{(project.finance.nextbudcapintq2-0)+(project.finance.nextbudopintq2-0) | currency:"":0}}</td>
+            <td class="sums">{{(project.finance.nextbudcapintq3-0)+(project.finance.nextbudopintq3-0) | currency:"":0}}</td>
+            <td class="sums">{{(project.finance.nextbudcapintq4-0)+(project.finance.nextbudopintq4-0) | currency:"":0}}</td>
+            <td class="sums">{{(project.finance.nextbudcapintq1-0)+(project.finance.nextbudopintq1-0)+(project.finance.nextbudcapintq2-0)+(project.finance.nextbudopintq2-0)+(project.finance.nextbudcapintq3-0)+(project.finance.nextbudopintq3-0)+(project.finance.nextbudcapintq4-0)+(project.finance.nextbudopintq4-0)
+                | currency:"":0}}</td>
+        </tr>
+        <tr class="header">
+            <td>Budget total</td>
+            <td class="sums">{{(project.finance.nextbudcapextq1-0)+(project.finance.nextbudcapextoneq1-0)+(project.finance.nextbudopextq1-0)+(project.finance.nextbudcapintq1-0)+(project.finance.nextbudopintq1-0)
+                | currency:"":0}}</td>
+            <td class="sums">{{(project.finance.nextbudcapextq2-0)+(project.finance.nextbudcapextoneq2-0)+(project.finance.nextbudopextq2-0)+(project.finance.nextbudcapintq2-0)+(project.finance.nextbudopintq2-0)
+                | currency:"":0}}</td>
+            <td class="sums">{{(project.finance.nextbudcapextq3-0)+(project.finance.nextbudcapextoneq3-0)+(project.finance.nextbudopextq3-0)+(project.finance.nextbudcapintq3-0)+(project.finance.nextbudopintq3-0)
+                | currency:"":0}}</td>
+            <td class="sums">{{(project.finance.nextbudcapextq4-0)+(project.finance.nextbudcapextoneq4-0)+(project.finance.nextbudopextq4-0)+(project.finance.nextbudcapintq4-0)+(project.finance.nextbudopintq4-0)
+                | currency:"":0}}</td>
+            <td class="sums">{{(project.finance.nextbudcapextq1-0)+(project.finance.nextbudcapextoneq1-0)+(project.finance.nextbudopextq1-0)+(project.finance.nextbudcapintq1-0)+(project.finance.nextbudopintq1-0)+(project.finance.nextbudcapextq2-0)+(project.finance.nextbudcapextoneq2-0)+(project.finance.nextbudopextq2-0)+(project.finance.nextbudcapintq2-0)+(project.finance.nextbudopintq2-0)+(project.finance.nextbudcapextq3-0)+(project.finance.nextbudcapextoneq3-0)+(project.finance.nextbudopextq3-0)+(project.finance.nextbudcapintq3-0)+(project.finance.nextbudopintq3-0)+(project.finance.nextbudcapextq4-0)+(project.finance.nextbudcapextoneq4-0)+(project.finance.nextbudopextq4-0)+(project.finance.nextbudcapintq4-0)+(project.finance.nextbudopintq4-0)
+                | currency:"":0}}</td>
+        </tr>
+        <tr>
+            <td>Acc. total</td>
+            <td class="sums">{{(project.finance.nextbudcapextq1-0)+(project.finance.nextbudcapextoneq1-0)+(project.finance.nextbudopextq1-0)+(project.finance.nextbudcapintq1-0)+(project.finance.nextbudopintq1-0)
+                | currency:"":0}}</td>
+            <td class="sums">{{(project.finance.nextbudcapextq1-0)+(project.finance.nextbudcapextoneq1-0)+(project.finance.nextbudopextq1-0)+(project.finance.nextbudcapintq1-0)+(project.finance.nextbudopintq1-0)+(project.finance.nextbudcapextq2-0)+(project.finance.nextbudcapextoneq2-0)+(project.finance.nextbudopextq2-0)+(project.finance.nextbudcapintq2-0)+(project.finance.nextbudopintq2-0)
+                | currency:"":0}}</td>
+            <td class="sums">{{(project.finance.nextbudcapextq1-0)+(project.finance.nextbudcapextoneq1-0)+(project.finance.nextbudopextq1-0)+(project.finance.nextbudcapintq1-0)+(project.finance.nextbudopintq1-0)+(project.finance.nextbudcapextq2-0)+(project.finance.nextbudcapextoneq2-0)+(project.finance.nextbudopextq2-0)+(project.finance.nextbudcapintq2-0)+(project.finance.nextbudopintq2-0)+(project.finance.nextbudcapextq3-0)+(project.finance.nextbudcapextoneq3-0)+(project.finance.nextbudopextq3-0)+(project.finance.nextbudcapintq3-0)+(project.finance.nextbudopintq3-0)
+                | currency:"":0}}</td>
+            <td class="sums">{{(project.finance.nextbudcapextq1-0)+(project.finance.nextbudcapextoneq1-0)+(project.finance.nextbudopextq1-0)+(project.finance.nextbudcapintq1-0)+(project.finance.nextbudopintq1-0)+(project.finance.nextbudcapextq2-0)+(project.finance.nextbudcapextoneq2-0)+(project.finance.nextbudopextq2-0)+(project.finance.nextbudcapintq2-0)+(project.finance.nextbudopintq2-0)+(project.finance.nextbudcapextq3-0)+(project.finance.nextbudcapextoneq3-0)+(project.finance.nextbudopextq3-0)+(project.finance.nextbudcapintq3-0)+(project.finance.nextbudopintq3-0)+(project.finance.nextbudcapextq4-0)+(project.finance.nextbudcapextoneq4-0)+(project.finance.nextbudopextq4-0)+(project.finance.nextbudcapintq4-0)+(project.finance.nextbudopintq4-0)
+                | currency:"":0}}</td>
+            <td></td>
+        </tr>
+    </table>
+</div>

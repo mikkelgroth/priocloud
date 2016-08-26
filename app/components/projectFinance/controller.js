@@ -1,6 +1,6 @@
 angular
     .module('riskApp')
-    .controller('ProjectKpiController', [
+    .controller('ProjectFinanceController', [
         '$scope',
         '$routeParams',
         '$location',

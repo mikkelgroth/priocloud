@@ -28,8 +28,6 @@ angular
                 .subscribe(function (project) {
 
                     $scope.project = project;
-
-                    showMilestone();
                 });
 
             companyService
