@@ -8,18 +8,26 @@ angular
         _this.userAuthenticated = new rx.BehaviorSubject(false);
         _this.users = new rx.BehaviorSubject([]);
 
+        _this.isUserSubscriptionBound = false;
+
         _this.authenticate = function (user) {
 
-            _this.user.subscribe(function (user) {
+            if (!_this.isUserSubscriptionBound) {
+                _this.isUserSubscriptionBound = true;
 
-                $window.sessionStorage["user"] = (user === 'null') ? 'null' : JSON.stringify(user);
+                _this.user.subscribe(function (user) {
 
-                loadUsers(user.auid, user.uuid);
-            });
+                    $window.sessionStorage["user"] = (user === 'null') ? 'null' : JSON.stringify(user);
 
-            // HACK
+                    loadUsers(user.auid, user.uuid);
+                });
+            }
+
+            // RISK: HACK user to be admin and not demo
             user.isOwner = true;
             user.admin = true;
+            user.demo = false;
+            //
 
             _this.user.onNext(user);
             _this.userAuthenticated.onNext(true);

@@ -4,9 +4,24 @@ angular
         
         function linkFunction(scope, element, attrs, controller) {
             
+            var expressions = [scope.expression];
+            if (scope.expression.indexOf('|') > -1) {
+                expressions = scope.expression.split('|')
+            }
+
             routeService.route.subscribe(function (route) {
 
-                if (route.indexOf(scope.expression) > -1) {
+                var isActive = false;
+                for (var i = 0; i < expressions.length; i++) {
+
+                    if (route.indexOf(expressions[i]) > -1) {
+
+                        isActive = true;
+                        break;
+                    }
+                }
+
+                if (isActive) {
                     element.addClass('active');
                 } else {
                     element.removeClass('active');

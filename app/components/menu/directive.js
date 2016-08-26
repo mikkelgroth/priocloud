@@ -2,10 +2,6 @@ angular
     .module('riskApp')
     .directive('prioMenu', [function() {
         
-        function menuController($scope) {
-            
-        }
-        
         function linkFunction(scope, element, attributes) {
             
         }	
@@ -13,8 +9,10 @@ angular
         return {
             restrict: 'E',
             replace: true,
+            scope: {
+                user: "=prioMenuUser"
+            },
             templateUrl: 'components/menu/template.html',
-            controller: ['$scope', menuController],
             link: linkFunction
         };
     }]);

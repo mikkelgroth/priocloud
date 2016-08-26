@@ -21,7 +21,8 @@ angular
             $routeProvider.when('/alternatives', { controller: 'AlternativesController', templateUrl: 'components/alternatives/template.html' });
             $routeProvider.when('/register', { controller: 'RegisterController', templateUrl: 'components/register/template.html' });
             $routeProvider.when('/help', { controller: 'HelpController', templateUrl: 'components/help/template.html' });
-
+            $routeProvider.when('/settings', { controller: 'SettingsController', templateUrl: 'components/settings/template.html' });
+            
             // projects menu
             $routeProvider.when('/projects', { controller: 'ProjectsOverviewController', templateUrl: 'components/projectsOverview/template.html' });
             $routeProvider.when('/projects/dependencies', { controller: 'ProjectsDependenciesController', templateUrl: 'components/projectsDependencies/template.html' });
@@ -36,21 +37,16 @@ angular
             $routeProvider.when('/project/:id/details', { controller: 'ProjectDetailsController', templateUrl: 'components/projectDetails/template.html' });
             $routeProvider.when('/project/:id/status', { controller: 'ProjectStatusController', templateUrl: 'components/projectStatus/template.html' });
             $routeProvider.when('/project/:id/milestone', { controller: 'ProjectMilestoneController', templateUrl: 'components/projectMilestone/template.html' });
+            $routeProvider.when('/project/:id/milestone/:milestoneid', { controller: 'ProjectMilestoneController', templateUrl: 'components/projectMilestone/template.html' });
             $routeProvider.when('/project/:id/risks', { controller: 'ProjectRisksController', templateUrl: 'components/projectRisks/template.html' });
+            $routeProvider.when('/project/:id/risks/:riskid', { controller: 'ProjectRisksController', templateUrl: 'components/projectRisks/template.html' });
             $routeProvider.when('/project/:id/dependencies', { controller: 'ProjectDependenciesController', templateUrl: 'components/projectDependencies/template.html' });
             $routeProvider.when('/project/:id/kpi', { controller: 'ProjectKpiController', templateUrl: 'components/projectKpi/template.html' });
             $routeProvider.when('/project/:id/finance', { controller: 'ProjectFinanceController', templateUrl: 'components/projectFinance/template.html' });
 
-            // project risks
-            $routeProvider.when('/project/:id/risks/:riskid', { controller: 'ProjectRisksController', templateUrl: 'components/projectRisks/template.html' });
-            
-            // project milestone
-            $routeProvider.when('/project/:id/milestone/:milestoneid', { controller: 'ProjectMilestoneController', templateUrl: 'components/projectMilestone/template.html' });
-            
             // other
-            $routeProvider.when('/settings', { controller: 'SettingsController', templateUrl: 'components/settings/settings.html' });
-            $routeProvider.when('/admin', { controller: 'AdminController', templateUrl: 'components/admin/admin.html' });
-            $routeProvider.when('/master', { controller: 'MasterController', templateUrl: 'components/master/master.html' });
+            $routeProvider.when('/admin', { controller: 'AdminController', templateUrl: 'components/admin/template.html' });
+            $routeProvider.when('/master', { controller: 'MasterController', templateUrl: 'components/master/template.html' });
             $routeProvider.when('/otpw/:otpw', { controller: 'LoginController', templateUrl: 'components/login/onetimepassword.html' });
             
             $routeProvider.otherwise({
@@ -109,11 +105,12 @@ angular
                 });
 
             userService
-                .userAuthenticated
-                .subscribe(function (isAuthenticated) {
+                .user
+                .subscribe(function (user) {
 
-                    if (isAuthenticated) {
+                    if (user.authenticated) {
                         
+                        $rootScope.user = user;
                         companyService.loadCompany();
                     }
                 });
