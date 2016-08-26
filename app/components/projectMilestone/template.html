@@ -1,2 +1,214 @@
 <prio-project-menu prio-project-id="{{project._id.$oid}}" prio-project-title="{{project.title}}"></prio-project-menu>
 
+<div id="linkdiv4" class="view">
+    <div id="popdiv4" ng-show="showMilestoneForm">
+        <h2 class="{{editmile.status}}">
+            ({{editmile.wsjf}}) {{editmile.title}}
+            <div class="right">
+                <button type="button" 
+                    ng-click="saveMilestones(editmile)" 
+                    ng-if="user.email==project.po.email || 
+                    user.email==project.pm.email || 
+                    user.email==project.altpo.email || 
+                    user.email==project.altpm.email || 
+                    user.isOwner || user.admin">save deliverable</button>
+                <button type="button" ng-click="hideMilestoneForm()">close</button>
+            </div>
+        </h2>
+        <table class="smaller">
+            <tr>
+                <td class="header">Title</td>
+                <td>
+                    <div class="field">
+                        <input ng-model="editmile.title" />
+                    </div>
+                </td>
+                <td class="header">Audience</td>
+                <td>
+                    <select ng-model="editmile.audience">
+                        <option value="Project">Project</option>
+                        <option value="Business Unit">Business Unit</option>
+                        <option value="Company">Company</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td class="header">Delivery responsible</td>
+                <td>
+                    <select ng-model="editmile.responsible" ng-change="projecthaschanged=true" ng-options="u.name for u in users | filter: {source: true} | orderBy:'name' track by u.name"></select>
+                </td>
+                <td class="header">Delivery approver</td>
+                <td>
+                    <select ng-model="editmile.acountable" ng-change="projecthaschanged=true" ng-options="u.name for u in users | filter: {source: true} | orderBy:'name' track by u.name"></select>
+                </td>
+            </tr>
+            <tr>
+                <td class="header">Start Date</td>
+                <td>
+                    <div class="field">
+                        <input class="time" id="miledate" ng-model="editmile.date" />
+                        <!-- TODO: make datepicker directive -->
+                        <!--<script type="text/javascript">new datepickr('#miledate');</script>-->
+                    </div>
+                </td>
+                <td class="header">End Date</td>
+                <td>
+                    <div class="field">
+                        <input class="time" id="mileenddate" ng-model="editmile.enddate" />
+                        <!-- TODO: make datepicker directive -->
+                        <!--<script type="text/javascript">new datepickr('#mileenddate');</script>-->
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td class="header">Status</td>
+                <td>
+                    <select ng-model="editmile.status">
+                        <option value="Green">OK (Green)</option>
+                        <option value="Yellow">Observe (Yellow)</option>
+                        <option value="Orange">Assist (Orange)</option>
+                        <option value="Red">Intervention (Red)</option>
+                    </select>
+                </td>
+                <td class="header">State</td>
+                <td>
+                    <select ng-model="editmile.state">
+                        <option value="Target">Target</option>
+                        <option value="Qualified">Qualified</option>
+                        <option value="Progress">Progress</option>
+                        <option value="Done">Done</option>
+                        <option value="Canceled">Canceled</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td class="header">WSJF = {{editmile.wsjf}}</td>
+                <td class="header">Value enabler</td>
+                <td class="header"></td>
+                <td class="header">Value limiter</td>
+            </tr>
+            <tr>
+                <td class="header" prio-class prio-value-bar-render="editmile.bena">Business enabler{{editmile.bena}}</td>
+                <td>
+                    <select ng-model="editmile.bena">
+                        <option value="1">1. Minimal value</option>
+                        <option value="2">2. Medium value</option>
+                        <option value="3">3. Large value</option>
+                        <option value="4">4. Game changer</option>
+                    </select>
+                </td>
+                <td class="header" prio-class prio-value-bar-render="editmile.effort">Effort</td>
+                <td>
+                    <select ng-model="editmile.effort">
+                        <option value="1">1. Minimal effort</option>
+                        <option value="2">2. Medium effort</option>
+                        <option value="3">3. Large effort</option>
+                        <option value="4">4. Unknown effort</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td class="header" prio-class prio-value-bar-render="editmile.sena">Strategy enabler</td>
+                <td>
+                    <select ng-model="editmile.sena">
+                        <option value="1">1. Minimal value</option>
+                        <option value="2">2. Medium value</option>
+                        <option value="3">3. Large value</option>
+                        <option value="4">4. Game changer</option>
+                    </select>
+                </td>
+                <td class="header" prio-class prio-value-bar-render="editmile.risklevel">Risk of failure</td>
+                <td>
+                    <select ng-model="editmile.risklevel">
+                        <option value="1">1. Slim risk</option>
+                        <option value="2">2. Could happen</option>
+                        <option value="3">3. Likely to happen</option>
+                        <option value="4">4. Most likely to happen</option>
+                    </select>
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    <p>Description<span id="miledel_count" class="right"></span></p>
+                </td>
+                <td colspan="3">
+                    <div class="field">
+                        <textarea ng-model="editmile.delivarables" maxlength="300" id="miledel" placeholder="Describe the key business delivery that this deliverable will produce."></textarea>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <p>Value enablers<span id="milecom_count" class="right"></span></p>
+                </td>
+                <td colspan="3">
+                    <div class="field">
+                        <textarea ng-model="editmile.comments" maxlength="300" id="milecom" placeholder="Describe the enablers of creating value both on implementation and if it enables further strategic work in the future"></textarea>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <p>Value limiters<span id="milerisk_count" class="right"></span></p>
+                </td>
+                <td colspan="3">
+                    <div class="field">
+                        <textarea ng-model="editmile.risks" maxlength="300" id="milerisk" placeholder="Describe the limiters that work against creating value like the amount of work and the assosiated risk of failure"></textarea>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="4">
+                    <div class="right">
+                        <button type="button" 
+                            ng-click="removeMilestone(editmile)" 
+                            ng-if="user.email==project.po.email || 
+                            user.email==project.pm.email || 
+                            user.isOwner || user.admin">delete deliverable</button>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="mainbox" id="milestonelist" ng-show="!showMilestoneForm">
+        <h2>
+            Deliverables
+            <div class="right">
+                <select ng-model="orderdate" ng-init="orderdate='enddate'" style="font-size: 12px;">
+                    <option value="enddate" selected="selected">Order by end date</option>
+                    <option value="date">Order by start date</option>
+                    <option value="-wsjf">Order by WSJF</option>
+                </select>
+                <button type="button"
+                    ng-click="newMilestone()"
+                    ng-if="user.email==project.po.email || 
+                    user.email==project.pm.email || 
+                    user.email==project.altpo.email || 
+                    user.email==project.altpm.email || 
+                    user.isOwner || user.admin">create new deliverable</button>
+            </div>
+        </h2>
+        <div class="overview">
+            <table class="tablelist smaller" ng-if="project.milestones.length > 0">
+                <tr class="header">
+                    <td>Title</td>
+                    <td>WSJF<br/>State</td>
+                    <td>Q1</td>
+                    <td>Q2</td>
+                    <td>Q3</td>
+                    <td>Q4</td>
+                    <td>Start Date<br/>End Date</td>
+                    <td>Responsible<br/>Approver</td>
+                </tr>
+                <tr ng-repeat="mile in project.milestones | orderBy:orderdate" ng-click="beginEditMile(mile)" class="link">
+                    <td class="{{mile.status}}"><b>{{mile.title}}</b></td>
+                    <td><b>{{mile.wsjf}}</b><br/>{{mile.state}}</td>
+                    <td class="bar" ng-style="barRender(mile)" colspan="4"></td>
+                    <td><b>{{mile.date | date:'yyyy-MM-dd'}}</b><br/>{{mile.enddate | date:'yyyy-MM-dd'}}</td>
+                    <td><b>{{mile.responsible.name }}</b><br/>{{mile.acountable.name }}</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
