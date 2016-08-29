@@ -39,33 +39,9 @@ angular
                     $scope.bus = units;
                 });
 
-            $scope.saveCompany = function () {
+            $scope.saveCompany = function (company) {
 
-                if ($scope.company._id) {	//update
-
-                    restService.updateData('company', angular.fromJson($scope.company)).success(function (dataResponse) {
-
-                    }).error(function (dataResponse) { 
-
-                        console.log('ERROR ...'); 
-                    });
-                
-                } else {	//add
-
-                    restService.saveData('company', angular.fromJson($scope.company)).success(function (dataResponse) {
-
-                        $scope.company = dataResponse;	//update the oid via angular
-                        //add a BU with company name 
-                        var bu = { name: $scope.company.name };
-                        restService.saveData('bu', angular.fromJson(bu)).success(function (dataResponse) {
-                            $scope.bus[0] = dataResponse;
-                        });
-
-                    }).error(function (dataResponse) { 
-
-                        console.log('ERROR ...'); 
-                    });
-                }
+                companyService.saveCompany(company);
             };
 
             $scope.newBU = function() {

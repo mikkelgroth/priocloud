@@ -4,11 +4,21 @@ angular
 
         var _this = this;
 
+        _this._company = {};
         _this._projects = [];
 
         _this.company = new rx.BehaviorSubject({});
         _this.businessUnits = new rx.BehaviorSubject([]);
         _this.projects = new rx.BehaviorSubject([]);
+
+        _this.projects.subscribe(function (projects) {
+            _this._projects = projects;
+        });
+
+        _this.company.subscribe(function (company) {
+            _this._company = company;
+        });
+
 
         _this.loadCompany = function () {
 
@@ -28,10 +38,23 @@ angular
             });
         };
 
-        _this.projects.subscribe(function (projects) {
+        _this.saveCompany = function (company) {
 
-            _this._projects = projects;
-        });
+            if (company._id) {	//update
+
+                restService.updateData('company', angular.fromJson(company)).success(function () {
+
+                    _this.company.onNext(company);
+                });
+            
+            } else {	//add
+
+                restService.saveData('company', angular.fromJson(company)).success(function (dataResponse) {
+
+                    _this.company.onNext(dataResponse);
+                });
+            }
+        };
 
         _this.getProject = function (projectId) {
 
