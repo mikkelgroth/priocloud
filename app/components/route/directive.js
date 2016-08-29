@@ -14,7 +14,7 @@ angular
                 var isActive = false;
                 for (var i = 0; i < expressions.length; i++) {
 
-                    if (route.indexOf(expressions[i]) > -1) {
+                    if (route.indexOf('/' + expressions[i]) === 0) {
 
                         isActive = true;
                         break;

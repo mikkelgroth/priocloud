@@ -59,24 +59,26 @@ angular
             // Update project if it exists
             if (project._id) {
 
-                restService.updateData('project', angular.fromJson(project)).success(function (updatedProject) {
+                restService
+                    .updateData('project', angular.fromJson(project))
+                    .success(function (updatedProject) {
 
-                    console.log("----- PROJECT UPDATED (" + project._id.$oid + ")");
+                        console.log("----- PROJECT UPDATED (" + project._id.$oid + ")");
 
-                    var projectIndex = _this._projects
-                        .map(function (p) { return p._id.$oid; })
-                        .indexOf(updatedProject._id.$oid);
+                        var projectIndex = _this._projects
+                            .map(function (p) { return p._id.$oid; })
+                            .indexOf(updatedProject._id.$oid);
 
-                    if (~projectIndex) {
+                        if (~projectIndex) {
 
-                        _this._projects[projectIndex] = updatedProject;
-                        _this.projects.onNext(_this._projects);
-                    }
+                            _this._projects[projectIndex] = updatedProject;
+                            _this.projects.onNext(_this._projects);
+                        }
+                    })
+                    .error(function (dataResponse) {
 
-                }).error(function (dataResponse) {
-
-                    console.log('ERROR ...');
-                });
+                        console.log('ERROR ...');
+                    });
 
             // Add project if id doesn't exists
             } else {
@@ -89,16 +91,38 @@ angular
                 project.kpi6 = 0;
                 project.total = 0;
 
-                restService.saveData('project', angular.fromJson(project)).success(function (newProject) {
+                restService
+                    .saveData('project', angular.fromJson(project))
+                    .success(function (newProject) {
 
-                    _this._projects.push(newProject);
-                    _this.projects.onNext(_this._projects);
+                        _this._projects.push(newProject);
+                        _this.projects.onNext(_this._projects);
 
-                }).error(function (dataResponse) {
+                    })
+                    .error(function (dataResponse) {
 
-                    console.log('ERROR ...');
-                });
+                        console.log('ERROR ...');
+                    });
             }
+        };
+
+        _this.deleteProject = function (project) {
+
+            restService
+                .deleteData('project', angular.fromJson(project))
+                .success(function (dataResponse) {
+                    
+                    var projectIndex = _this._projects
+                        .map(function (p) { return p._id.$oid; })
+                        .indexOf(project._id.$oid);
+
+                    _this._projects.splice(projectIndex, 1);
+                    _this.projects.onNext(_this._projects);
+                })
+                .error(function (dataResponse) { 
+
+                    console.log('ERROR DELETE PROJECT'); 
+                });
         };
 
         function loadCompanyData() {
