@@ -1,0 +1,53 @@
+<prio-admin-menu></prio-admin-menu>
+
+<div id="admin" class="view">
+    <div class="mainbox">
+        <h2>Company
+            <div class="right">
+                <button type="button" ng-click="saveCompany()">save company</button>
+            </div>
+        </h2>
+        <table class="smaller">
+            <tr>
+                <td class="header">
+                    <p>Company name</p>
+                </td>
+                <td>
+                    <input ng-model="company.name" id="title" />
+                </td>
+            </tr>
+        </table>
+        <h2>Business Units
+            <div class="right">
+                <button type="button" ng-click="newBU()">add new business unit</button>
+                <button type="button" ng-click="saveBus()">save business units</button>
+            </div>
+        </h2>
+        <div ng-if="bus.length > 0">
+            <table class="smaller">
+                <tr>
+                    <td class="header">BU name</td>
+                    <td class="header">BU owner</td>
+                    <td class="header">Parent Business Unit</td>
+                    <td class="header"></td>
+                </tr>
+                <tr ng-repeat="bu in bus">
+                    <td>
+                        <input id="buname" ng-model="bu.name" value="Logistic" />
+                    </td>
+                    <td>
+                        <select required ng-model="bu.owner" ng-options="subuser.name for subuser in users | filter: {source: true} | orderBy:'name' track by subuser.name"></select>
+                    </td>
+                    <td>
+                        <div ng-if="$index != 0">
+                            <select ng-model="bu.ownerbu" id="proj2kpiu" ng-options="bu.name for bu in bus track by bu.name"></select>
+                        </div>
+                    </td>
+                    <td>
+                        <div ng-if="$index != 0 && user.admin"><a ng-click="removeBU(bu)">Remove</a></div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
