@@ -1,0 +1,113 @@
+<prio-admin-menu></prio-admin-menu>
+
+<div id="admin-users" class="view">
+    <div class="mainbox">
+        <h2>
+            Users
+            <div class="right"><button type="button" ng-click="addUser(newuser)">Create new user</button></div>
+        </h2>
+        <table class="smaller">
+            <tr>
+                <td class="header">User email</td>
+                <td><input type="email" ng-model="newuser.email" placeholder="Email" /></td>
+            </tr>
+            <tr>
+                <td class="header">User name</td>
+                <td><input type="text" ng-model="newuser.name" /></td>
+            </tr>
+            <tr>
+                <td class="header">Users BU</td>
+                <td>
+                    <select style="height:200px;width:300px" multiple="multiple" ng-multiple="true" ng-model="newuser.bu" ng-options="bu.name for bu in bus | orderBy:'name'"></select>
+                </td>
+            </tr>
+            <tr>
+                <td class="header">Source for PM, PO or Owner</td>
+                <td><input type="checkbox" ng-model="newuser.source" /></td>
+            </tr>
+            <tr>
+                <td class="header">Demo user</td>
+                <td><input type="checkbox" ng-model="newuser.demo" /></td>
+            </tr>
+            <tr>
+                <td class="header">Prio user</td>
+                <td><input type="checkbox" ng-model="newuser.prio" /></td>
+            </tr>
+            <tr>
+                <td class="header">Sub Admin</td>
+                <td><input type="checkbox" ng-model="newuser.subadmin" /></td>
+            </tr>
+        </table>
+        <br/>
+        <h2>
+            Edit Users
+            <div class="right"><button type="button" ng-click="saveUser(edituser)">Save existing user</button></div>
+        </h2>
+        <table class="smaller">
+            <tr>
+                <td class="header">User email</td>
+                <td><input type="email" ng-model="edituser.email" placeholder="Email" /></td>
+            </tr>
+            <tr>
+                <td class="header">User name</td>
+                <td><input type="text" ng-model="edituser.name" /></td>
+            </tr>
+            <tr>
+                <td class="header">Users BU</td>
+                <td><select style="height:200px;width:300px" multiple="multiple" ng-multiple="true" ng-model="edituser.bu" ng-options="bu.name for bu in bus track by bu.name"></select></td>
+            </tr>
+            <tr>
+                <td class="header">Source for PM, PO or Owner</td>
+                <td><input type="checkbox" ng-model="edituser.source" /></td>
+            </tr>
+            <tr>
+                <td class="header">Demo user</td>
+                <td><input type="checkbox" ng-model="edituser.demo" /></td>
+            </tr>
+            <tr>
+                <td class="header">Prio user</td>
+                <td><input type="checkbox" ng-model="edituser.prio" /></td>
+            </tr>
+            <tr>
+                <td class="header">Sub Admin</td>
+                <td><input type="checkbox" ng-model="edituser.subadmin" /></td>
+            </tr>
+        </table>
+        <br/>
+        <h3>User list</h3>
+        <div class="overview">
+            <table class="tablelist smaller">
+                <tr class="header">
+                    <td class="header">Created</td>
+                    <td class="header">Name</td>
+                    <td class="header">Email</td>
+                    <td class="header">Onetimepassword</td>
+                    <td class="header">Remove</td>
+                    <td class="header">Reset PW</td>
+                </tr>
+                <tr ng-repeat="subuser in users | orderBy:'name'">
+                    <td>
+                        {{subuser.created.$date| date:'d MMM, yyyy'}}
+                    </td>
+                    <td ng-click="fillUser(subuser)" class="link">
+                        {{subuser.name}}
+                    </td>
+                    <td>
+                        {{subuser.email}}
+                        <br/>
+                        <div ng-if="subuser.subadmin">Sub Admin</div>
+                    </td>
+                    <td>
+                        http://priocloud.com/{{SITE}}#/otpw/{{subuser.onetimepassword}}
+                    </td>
+                    <td>
+                        <button ng-click="deleteUser(subuser)" ng-if="user.admin && subuser.email != user.email">Remove</button>
+                    </td>
+                    <td>
+                        <button ng-click="resetPassword(subuser)">Reset+Mail</button>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>

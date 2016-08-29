@@ -4,6 +4,8 @@ angular
 
         var _this = this;
 
+        _this._internalUser = null;
+
         _this.user = new rx.BehaviorSubject('null');
         _this.userAuthenticated = new rx.BehaviorSubject(false);
         _this.users = new rx.BehaviorSubject([]);
@@ -18,6 +20,8 @@ angular
                 _this.user.subscribe(function (user) {
 
                     $window.sessionStorage["user"] = (user === 'null') ? 'null' : JSON.stringify(user);
+
+                    _this._internalUser = user;
 
                     loadUsers(user.auid, user.uuid);
                 });
@@ -57,33 +61,79 @@ angular
 
             _this
                 .validateUser(userDataParsed.auid, userDataParsed.uuid)
-                .then(function(data) {
+                .then(function (data) {
                     if (data && data.length > 0) {
                         defer.resolve({ authenticated: true, user: userDataParsed });
                     } else {
                         defer.resolve({ authenticated: false });
                     }
                 })
-                .catch(function() { 
+                .catch(function () {
                     defer.resolve({ authenticated: false });
                 });
 
             return defer.promise;
         };
 
+        _this.deleteUser = function (user) {
+
+            return $http
+                .post(USERSERVER + '?action=deleteuser&application=priocloud&auid=' + _this._internalUser.auid + '&uuid=' + _this._internalUser.uuid + '&email=' + user.email)
+                .success(function (data, status, headers, config) {
+
+                    return loadUsers(_this._internalUser.auid, _this._internalUser.uuid);
+                });
+        };
+
+        _this.createUser = function (user) {
+
+            var data = angular.fromJson(user);
+
+            return $http
+                .post(USERSERVER + '?action=adduser&application=priocloud&auid=' + _this._internalUser.auid + '&uuid=' + _this._internalUser.uuid, data)
+                .success(function (data, status, headers, config) {
+
+                    return loadUsers(_this._internalUser.auid, _this._internalUser.uuid);
+                });
+        };
+
+        _this.updateUser = function (user) {
+
+            var data = angular.fromJson(user);
+
+            return $http
+                .post(USERSERVER + '?action=updateuser&application=priocloud&auid=' + _this._internalUser.auid + '&uuid=' + user.uuid, data)
+                .success(function (data, status, headers, config) {
+
+                    return loadUsers(_this._internalUser.auid, _this._internalUser.uuid);
+                });
+        };
+
+        _this.resetPassword = function (user) {
+
+            $http
+                .post(USERSERVER + '?action=resetpassword&application=priocloud&email=' + user.mail)
+                .success(function (data, status, headers, config) {
+                    
+                    alert('PW reset and mail sent');
+                });
+        };
+
         function loadUsers(auid, uuid) {
 
-            loadUserForAccount(auid, uuid).then(function(data) {
+            return loadUserForAccount(auid, uuid).then(function (data) {
 
                 if (data && data.length > 0) {
-                    
+
                     _this.users.onNext(data);
                 }
+
+                return data;
             });
         };
 
         function loadUserForAccount(auid, uuid) {
-            
+
             return $http
                 .post(USERSERVER + '?action=getusers&application=priocloud&auid=' + auid + '&uuid=' + uuid)
                 .then(function (response) {
