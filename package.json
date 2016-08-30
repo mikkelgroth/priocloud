@@ -14,6 +14,8 @@
   "license": "ISC",
   "homepage": "https://bitbucket.org/mikkeldamm/priocloud#readme",
   "devDependencies": {
-    "static-server": "2.0.3"
+    "static-server": "2.0.3",
+    "rx": "4.1.0",
+    "rx-angular": "1.1.3"
   }
 }
