@@ -1,6 +1,6 @@
 <prio-project-menu prio-project-id="{{project._id.$oid}}" prio-project-title="{{project.title}}"></prio-project-menu>
 
-<div id="linkdiv6" class="view">
+<div id="project-dependencies" class="view">
     <h2>
         Dependencies
         <div class="right">
@@ -14,6 +14,7 @@
             <td>Required</td>
             <td>Timing criticality</td>
             <td>Skills/Availability status</td>
+            <td>Comment</td>
         </tr>
         <tr>
             <td class="header" prio-class prio-skill-render="project.res1skill" prio-size-render="project.res1">{{company.res1lable}}</td>
@@ -43,6 +44,9 @@
                     <option value="Major issue">Major issue</option>
                     <option value="Emergency">Emergency</option>
                 </select>
+            </td>
+            <td>
+                <input type="text" ng-model="project.res1comment" />
             </td>
         </tr>
         <tr>
@@ -74,6 +78,9 @@
                     <option value="Emergency">Emergency</option>
                 </select>
             </td>
+            <td>
+                <input type="text" ng-model="project.res2comment" />
+            </td>
         </tr>
         <tr>
             <td class="header" prio-class prio-skill-render="project.res3skill" prio-size-render="project.res3">{{company.res3lable}}</td>
@@ -104,7 +111,9 @@
                     <option value="Emergency">Emergency</option>
                 </select>
             </td>
-
+            <td>
+                <input type="text" ng-model="project.res3comment" />
+            </td>
         </tr>
         <tr>
             <td class="header" prio-class prio-skill-render="project.res4skill" prio-size-render="project.res4">{{company.res4lable}}</td>
@@ -135,7 +144,9 @@
                     <option value="Emergency">Emergency</option>
                 </select>
             </td>
-
+            <td>
+                <input type="text" ng-model="project.res4comment" />
+            </td>
         </tr>
         <tr>
             <td class="header" prio-class prio-skill-render="project.res5skill" prio-size-render="project.res5">{{company.res5lable}}</td>
@@ -166,7 +177,9 @@
                     <option value="Emergency">Emergency</option>
                 </select>
             </td>
-
+            <td>
+                <input type="text" ng-model="project.res5comment" />
+            </td>
         </tr>
         <tr>
             <td class="header" prio-class prio-skill-render="project.res6skill" prio-size-render="project.res6">{{company.res6lable}}</td>
@@ -197,7 +210,9 @@
                     <option value="Emergency">Emergency</option>
                 </select>
             </td>
-
+            <td>
+                <input type="text" ng-model="project.res6comment" />
+            </td>
         </tr>
         <tr>
             <td class="header" prio-class prio-skill-render="project.res7skill" prio-size-render="project.res7">{{company.res7lable}}</td>
@@ -228,6 +243,9 @@
                     <option value="Emergency">Emergency</option>
                 </select>
             </td>
+            <td>
+                <input type="text" ng-model="project.res7comment" />
+            </td>
         </tr>
         <tr>
             <td class="header" prio-class prio-skill-render="project.res8skill" prio-size-render="project.res8">{{company.res8lable}}</td>
@@ -257,6 +275,9 @@
                     <option value="Major issue">Major issue</option>
                     <option value="Emergency">Emergency</option>
                 </select>
+            </td>
+            <td>
+                <input type="text" ng-model="project.res8comment" />
             </td>
         </tr>
     </table>

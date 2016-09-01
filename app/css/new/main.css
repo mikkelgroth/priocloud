@@ -623,3 +623,10 @@ select {
 	}
 		
 }
+
+/* Project dependencies */
+#project-dependencies table td select,
+#project-dependencies table td input {
+    min-width: 0;
+    width: 100%;
+}

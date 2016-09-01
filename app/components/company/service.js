@@ -27,8 +27,8 @@ angular
 
                 data.projects.map(function (project) {
 
-                    generateUniqueIdsForAllRisksOnProject(project);
-                    generateUniqueIdsForAllMilestonesOnProject(project);
+                    //generateUniqueIdsForAllRisksOnProject(project);
+                    //generateUniqueIdsForAllMilestonesOnProject(project);
 
                     return project;
                 });
@@ -37,6 +37,16 @@ angular
                 _this.projects.onNext(data.projects);
             });
         };
+
+        /**
+         * SOCKET CONN for new project
+         */
+        /*
+        io('https://server.dk/api/projects').listen('new', function (project) {
+
+            _this.projects.onNext(_this._projects.concat([project]));
+        });
+        */
 
         _this.saveCompany = function (company) {
 

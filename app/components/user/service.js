@@ -28,9 +28,9 @@ angular
             }
 
             // RISK: HACK user to be admin and not demo
-            user.isOwner = true;
-            user.admin = true;
-            user.demo = false;
+            //user.isOwner = true;
+            //user.admin = true;
+            //user.demo = false;
             //
 
             _this.user.onNext(user);
