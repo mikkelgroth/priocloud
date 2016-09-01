@@ -38,6 +38,9 @@ angular
                 var risks = [];
                 risks = risks.concat.apply([], projects.map(function (project) {
 
+                    if (!project.risks)
+                        return [];
+
                     return project.risks.map(function (risk) {
 
                         risk['projectid'] = project._id.$oid;

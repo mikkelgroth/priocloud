@@ -27,8 +27,13 @@ angular
 
                 data.projects.map(function (project) {
 
-                    //generateUniqueIdsForAllRisksOnProject(project);
-                    //generateUniqueIdsForAllMilestonesOnProject(project);
+                    var anyNewRiskIds = generateUniqueIdsForAllRisksOnProject(project);
+                    var anyNewMilestoneIds = generateUniqueIdsForAllMilestonesOnProject(project);
+
+                    if (anyNewRiskIds || anyNewMilestoneIds) {
+
+                        _this.saveProject(project);
+                    }
 
                     return project;
                 });
@@ -212,17 +217,35 @@ angular
 
         function generateUniqueIdsForAllRisksOnProject(project) {
 
-            project.risks.map(function (risk) {
-                risk._id = Math.random().toString(36).substr(2, 9);
-                return risk;
-            });
+            var anyNewIds = false;
+
+            if (project.risks) {
+                project.risks.map(function (risk) {
+                    if (!risk._id) {
+                        risk._id = Math.random().toString(36).substr(2, 9);
+                        anyNewIds = true;
+                    }
+                    return risk;
+                });
+            }
+
+            return anyNewIds;
         }
 
         function generateUniqueIdsForAllMilestonesOnProject(project) {
 
-            project.milestones.map(function (milestone) {
-                milestone._id = Math.random().toString(36).substr(2, 9);
-                return milestone;
-            });
+            var anyNewIds = false;
+
+            if (project.milestones) {
+                project.milestones.map(function (milestone) {
+                    if (!milestone._id) {
+                        milestone._id = Math.random().toString(36).substr(2, 9);
+                        anyNewIds = true;
+                    }
+                    return milestone;
+                });
+            }
+
+            return anyNewIds;
         }
     }]);

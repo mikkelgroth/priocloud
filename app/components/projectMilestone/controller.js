@@ -81,6 +81,7 @@ angular
                 var newdate = (new Date()).toISOString();
                 
                 $scope.editmile = $scope.project.milestones[$scope.project.milestones.length - 1];
+                $scope.editmile._id = Math.random().toString(36).substr(2, 9);
                 $scope.editmile.date = newdate;
                 $scope.editmile.enddate = newdate;
                 $scope.editmile.status = 'Green';
@@ -122,9 +123,9 @@ angular
                         return milestone._id === milestoneId;
                     });
 
-                    if (milestone) {
+                    if (milestone[0]) {
 
-                        $scope.editmile = milestone;
+                        $scope.editmile = milestone[0];
                         $scope.showMilestoneForm = true;
                     }
                 }

@@ -52,6 +52,7 @@ angular
             $scope.newRisk = function () {
 
                 $scope.editrisk = {};
+                $scope.editrisk._id = Math.random().toString(36).substr(2, 9);
                 $scope.editrisk.freq = {};
                 $scope.editrisk.freq.kpi1 = 0;
                 $scope.editrisk.freq.kpi2 = 0;
@@ -124,9 +125,9 @@ angular
                         return risk._id === riskId;
                     });
 
-                    if (risk) {
+                    if (risk[0]) {
 
-                        $scope.editrisk = risk;
+                        $scope.editrisk = risk[0];
                         $scope.showRiskForm = true;
                     }
                 }

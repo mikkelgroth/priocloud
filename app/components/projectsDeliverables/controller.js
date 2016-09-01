@@ -42,6 +42,10 @@ angular
                 var milestones = [];
                 milestones = milestones.concat.apply([], projects.map(function (project) {
 
+                    if (!project.milestones) {
+                        return [];
+                    }
+
                     return project.milestones.map(function (milestone) {
 
                         milestone['projectid'] = project._id.$oid;
