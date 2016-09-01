@@ -42,7 +42,13 @@ angular
             $routeProvider.when('/project/:id/risks/:riskid', { controller: 'ProjectRisksController', templateUrl: 'components/projectRisks/template.html' });
             $routeProvider.when('/project/:id/dependencies', { controller: 'ProjectDependenciesController', templateUrl: 'components/projectDependencies/template.html' });
             $routeProvider.when('/project/:id/kpi', { controller: 'ProjectKpiController', templateUrl: 'components/projectKpi/template.html' });
+           
+            // finance
             $routeProvider.when('/project/:id/finance', { controller: 'ProjectFinanceController', templateUrl: 'components/projectFinance/template.html' });
+            $routeProvider.when('/project/:id/finance/posted', { controller: 'ProjectFinanceController', templateUrl: 'components/projectFinance/template.html' });
+            $routeProvider.when('/project/:id/finance/deviation', { controller: 'ProjectFinanceController', templateUrl: 'components/projectFinance/template.html' });
+            $routeProvider.when('/project/:id/finance/deviation-report', { controller: 'ProjectFinanceController', templateUrl: 'components/projectFinance/template.html' });
+            $routeProvider.when('/project/:id/finance/next-year', { controller: 'ProjectFinanceController', templateUrl: 'components/projectFinance/template.html' });
 
             // admin
             $routeProvider.when('/admin', { controller: 'AdminController', templateUrl: 'components/admin/template.html' });
