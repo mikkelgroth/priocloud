@@ -59,12 +59,6 @@ angular
             $routeProvider.otherwise({
                 redirectTo: '/projects'
             });
-
-            /*
-            $routeProvider.when('/project', { controller: 'ProjectController', templateUrl: 'components/project/project.html' });
-            $routeProvider.when('/prio', { controller: 'PrioController', templateUrl: 'components/prio/prio.html' });
-            $routeProvider.when('/risk', { controller: 'RiskController', templateUrl: 'components/risk/risk.html' });
-            */
     }])
     .run([
         '$rootScope', 
