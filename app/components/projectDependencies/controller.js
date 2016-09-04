@@ -37,6 +37,13 @@ angular
                     $scope.bus = units;
                 });
 
+            companyService
+                .company
+                .subscribe(function (company) {
+
+                    $scope.company = company;
+                });
+
             userService
                 .users
                 .subscribe(function (users) {

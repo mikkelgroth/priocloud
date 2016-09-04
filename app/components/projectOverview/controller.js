@@ -29,6 +29,13 @@ angular
                     }
                 });
 
+            companyService
+                .company
+                .subscribe(function (company) {
+
+                    $scope.company = company;
+                });
+
             $scope.goToRiskInProject = function (risk) {
 
                 $location.path('/project/' + projectId + '/risks/' + risk._id);
