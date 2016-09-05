@@ -23,14 +23,7 @@
                 <td class="header">PO</td>
                 <td><select ng-model="np.po" ng-options="u.name for u in users | filter: {source: true} | orderBy:'name' track by u.name"></select></td>
             </tr>
-            <tr>
-                <td class="header">Average FTE</td>
-                <td><input type="number" ng-model="np.fte" /></td>
-            </tr>
-            <tr>
-                <td class="header">Approved budget</td>
-                <td><input type="number" ng-model="np.ab" /></td>
-            </tr>
+
         </table>
         <br/>
         <h3>Project list</h3>
