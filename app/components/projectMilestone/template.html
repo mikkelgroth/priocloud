@@ -194,17 +194,16 @@
                 <tr class="header">
                     <td>Title</td>
                     <td>WSJF<br/>State</td>
-                    <td>Q1</td>
-                    <td>Q2</td>
-                    <td>Q3</td>
-                    <td>Q4</td>
+                    <td>2015</td>
+                    <td>2016</td>
+                    <td>2017</td>
                     <td>Start Date<br/>End Date</td>
                     <td>Responsible<br/>Approver</td>
                 </tr>
                 <tr ng-repeat="mile in project.milestones | orderBy:orderdate" ng-click="beginEditMile(mile)" class="link">
                     <td class="{{mile.status}}"><b>{{mile.title}}</b></td>
                     <td><b>{{mile.wsjf}}</b><br/>{{mile.state}}</td>
-                    <td class="bar" ng-style="barRender(mile)" colspan="4"></td>
+                    <td class="bar" ng-style="barRender(mile)" colspan="3"></td>
                     <td><b>{{mile.date | date:'yyyy-MM-dd'}}</b><br/>{{mile.enddate | date:'yyyy-MM-dd'}}</td>
                     <td><b>{{mile.responsible.name }}</b><br/>{{mile.acountable.name }}</td>
                 </tr>
