@@ -27,6 +27,13 @@ angular
                 $scope.users = users;
             });
 
+            companyService
+                .company
+                .subscribe(function (company) {
+
+                    $scope.company = company;
+                });
+
             $scope.goToProject = function (projectId) {
 
 		        $location.path('/project/' + projectId);
