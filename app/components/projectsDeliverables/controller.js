@@ -61,6 +61,7 @@ angular
                 return milestones;
             }
 
+//BarRender START
             function barRender(mi) {
 
                 var s = new Date(Date.parse(mi.date));
@@ -70,16 +71,21 @@ angular
 
                 var thisyear = new Date();
                 var base = new Date();
+                var startbase = new Date();
                 base.setFullYear(thisyear.getFullYear(), 0, 1);
+                startbase.setFullYear(thisyear.getFullYear()-1, 0, 1);
 
-                var today = Math.round(((thisyear.getTime() - base.getTime()) / 86400000) * 100 / 365);
+                var today = Math.round((((thisyear.getTime() - base.getTime()) / 86400000) * 33 / 365)+33);
                 var oneday = today + 1;
 
-                if (today == 100) { today = 99; oneday = 100; }
-                if (thisyear.getFullYear() == s.getFullYear()) start = Math.round(((s.getTime() - base.getTime()) / 86400000) * 100 / 365);
-                if (thisyear.getFullYear() == e.getFullYear()) end = Math.round(((e.getTime() - base.getTime()) / 86400000) * 100 / 365);
+//console.log("thisyear-1 = " + (thisyear.getFullYear()-1));
+
+                if ((thisyear.getFullYear()-1) == s.getFullYear()||thisyear.getFullYear() == s.getFullYear()||(thisyear.getFullYear()+1) == s.getFullYear()) start = Math.round(((s.getTime() - startbase.getTime()) / 86400000) * 100 / (3*365));
+                if ((thisyear.getFullYear()-1) == e.getFullYear()||thisyear.getFullYear() == e.getFullYear()||(thisyear.getFullYear()+1) == e.getFullYear()) end = Math.round(((e.getTime() - startbase.getTime()) / 86400000) * 100 / (3*365));
                 if (start == end && end != 100) end = end + 1;
                 if (start == 100) start--;
+//console.log("Start = " + start);
+//console.log("End = " + end);
 
                 var color = "grey";
                 var colorlevel = "Red";
@@ -103,18 +109,19 @@ angular
                         if ((mi.state == "Progress" || mi.state == "Target" || mi.state == "Qualified")) color = "red";
                         ret = "linear-gradient(to right, #f6f1d3 " + start + "%, " + colorlevel + " " + start + "%, " + colorlevel + " " + end + "%, #f6f1d3 " + end + "%, #f6f1d3 " + today + "%, " + color + " " + today + "%, " + color + " " + oneday + "%, #f6f1d3 " + oneday + "%)";
                     }
-                    if (thisyear.getFullYear() > s.getFullYear() && thisyear.getFullYear() > e.getFullYear()) {
-                        var dist = Math.round(today / 2);
+                    if ((thisyear.getFullYear()-1) > s.getFullYear() && (thisyear.getFullYear()-1) > e.getFullYear()) {
+                        var dist = Math.round(today / 4);
                         if ((mi.state == "Progress" || mi.state == "Target" || mi.state == "Qualified")) color = "red";
                         ret = "linear-gradient(to right, " + colorlevel + " 0%, #f6f1d3 " + dist + "%, #f6f1d3 " + today + "%, " + color + " " + today + "%, " + color + " " + oneday + "%, #f6f1d3 " + oneday + "%)";
                     }
-                    if (thisyear.getFullYear() < s.getFullYear() && thisyear.getFullYear() < e.getFullYear()) {
-                        var dist = 100 - Math.round((100 - today) / 2);
+                    if ((thisyear.getFullYear()+1) < s.getFullYear() && (thisyear.getFullYear()+1) < e.getFullYear()) {
+                        var dist = 100 - Math.round((100 - today) / 4);
                         ret = "linear-gradient(to right, #f6f1d3 " + today + "%, " + color + " " + today + "%, " + color + " " + oneday + "%, #f6f1d3 " + oneday + "%, #f6f1d3 " + dist + "%, " + colorlevel + " 100%)";
                     }
                 }
 
                 return { background: ret }
             }
+//BarRender END
         }
     ]);

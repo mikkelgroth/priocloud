@@ -54,17 +54,16 @@
             <table class="tablelist" ng-if="milestoneList.length > 0">
                 <tr class="header">
                     <td>(WSJF) Deliverable<br/>Project</td>
-                    <td>Q1</td>
-                    <td>Q2</td>
-                    <td>Q3</td>
-                    <td>Q4</td>
+                    <td>2015</td>
+                    <td>2016</td>
+                    <td>2017</td>
                     <td>Start Date<br/>End Date</td>
                     <td>State<br/>Responsible</td>
                 </tr>
                 <tr ng-repeat="mile in milestoneList | multiFilter:milesearch | orderBy:orderdate" ng-click="goToMilestoneInProject(mile._id, mile.projectid)"
                     class="link" ng-if="mile.state!='Done' && mile.state!='Canceled'">
                     <td class="{{mile.status}}"><b>({{mile.wsjf}}) {{mile.title}}</b><br/>{{mile.projecttitle}}</td>
-                    <td class="bar" ng-style="barRender(mile)" colspan="4"></td>
+                    <td class="bar" ng-style="barRender(mile)" colspan="3"></td>
                     <td><b>{{mile.date | date:'d MMM, yyyy'}}</b><br/>{{mile.enddate | date:'d MMM, yyyy'}}</td>
                     <td><b>{{mile.state}}</b><br/>{{mile.acountable.name}}</td>
                 </tr>

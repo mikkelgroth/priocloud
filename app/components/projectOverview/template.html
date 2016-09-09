@@ -256,16 +256,15 @@
                         <table class="tablelist" ng-if="project.milestones.length > 0">
                             <tr class="header">
                                 <td class="label l">(WSJF) Deliverable</td>
-                                <td class="label">Q1</td>
-                                <td class="label">Q2</td>
-                                <td class="label">Q3</td>
-                                <td class="label">Q4</td>
+                                <td>2015</td>
+                                <td>2016</td>
+                                <td>2017</td>
                                 <td class="label">State</td>
                                 <td class="label">End Date</td>
                             </tr>
                             <tr ng-repeat="mile in project.milestones | orderBy:'enddate'" ng-click="goToMilestoneInProject(mile)" class="link" ng-if="mile.state!='Done' && mile.state!='Canceled'">
                                 <td class="{{mile.status}}">({{mile.wsjf}}) {{mile.title}}</td>
-                                <td class="bar xl" ng-style="barRender(mile)" colspan="4"></td>
+                                <td class="bar xl" ng-style="barRender(mile)" colspan="3"></td>
                                 <td>&nbsp;{{mile.state}}</td>
                                 <td>&nbsp;{{mile.enddate | date:'yyyy-MM-dd'}}</td>
                             </tr>
