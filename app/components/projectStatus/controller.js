@@ -73,7 +73,6 @@ angular
             $scope.newCloneStatus = function (status) {
 
                 $scope.editstatus = angular.copy(status);
-                $scope.editstatus = $scope.project.statuses[$scope.project.statuses.length - 1];
                 $scope.editstatus.apo = "Not evaluated";
                 $scope.editstatus.title = "No title";
                 $scope.editstatus.statusstate = "Draft";
