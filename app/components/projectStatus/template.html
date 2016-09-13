@@ -250,48 +250,6 @@
         </table>
         <br/>
         <table class="smaller">
-            <tr class="header">
-                <td>Economy</td>
-                <td>Budget (TDKK)</td>
-                <td>Posted (TDKK)</td>
-                <td>EtC (TDKK)</td>
-            </tr>
-            <tr>
-                <td class="header">Project total</td>
-                <td>
-                    <div class="field"><input type="number" ng-model="editstatus.ab" /></div>
-                </td>
-                <td>
-                    <div class="field"><input type="number" ng-model="editstatus.std" /></div>
-                </td>
-                <td>
-                    <div class="field"><input type="number" ng-model="editstatus.EtC" /></div>
-                </td>
-            </tr>
-            <tr>
-                <td class="header">Current year</td>
-                <td>
-                    <div class="field"><input type="number" ng-model="editstatus.cab" /></div>
-                </td>
-                <td>
-                    <div class="field"><input type="number" ng-model="editstatus.cstd" /></div>
-                </td>
-                <td>
-                    <div class="field"><input type="number" ng-model="editstatus.cEtC" /></div>
-                </td>
-            </tr>
-            <tr>
-                <td class="header">Next year</td>
-                <td>
-                    <div class="field"><input type="number" ng-model="editstatus.nab" /></div>
-                </td>
-                <td></td>
-                <td></td>
-            </tr>
-        </table>
-        <br/>
-        <br/>
-        <table class="smaller">
             <tr>
                 <td class="header" colspan="4">PO section</td>
             </tr>
@@ -387,9 +345,9 @@
                 <tr class="header">
                     <td>Title<br/>Audience</td>
                     <td>Status state<br/>PO feedback</td>
-                    <td>Project feedback<br/>Product feedback</td>
+                    <td>Project feedback</td>
+                    <td>Product feedback</td>
                     <td>Status date<br/>Demo date</td>
-                    <td>Spend<br/>Approved Budget</td>
                 </tr>
                 <tr ng-repeat="status in project.statuses" ng-click="viewStatus(status)" class="link">
                     <td class="{{status.status}}">
@@ -407,26 +365,13 @@
                         <br/>
                         &nbsp;{{status.apo}}
                     </td>
-                    <td>
-                        <table>
-                            <tr>
-                                <td prio-class prio-cs-render="status.cs">{{status.cs}}</td>
-                                <td prio-class prio-cs-render="status.productcs">{{status.productcs}}</td>
-                            </tr>
-                        </table>
-                    </td>
+                    <td prio-class prio-cs-render="status.cs">{{status.cs}}</td>
+                    <td prio-class prio-cs-render="status.productcs">{{status.productcs}}</td>
                     <td>
                         <div class="right">
                             &nbsp;{{status.date | date:'yyyy-MM-dd'}}
                             <br/>
                             &nbsp;{{status.demodate | date:'yyyy-MM-dd'}}
-                        </div>
-                    </td>
-                    <td>
-                        <div class="right">
-                            &nbsp;{{status.std | currency:'DKK ':0}}
-                            <br/>
-                            &nbsp;{{status.ab | currency:'DKK ':0}}
                         </div>
                     </td>
                 </tr>

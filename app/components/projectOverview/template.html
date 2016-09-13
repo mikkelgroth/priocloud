@@ -134,42 +134,44 @@
                     <div class="overview">
                         <table class="tablelist">
                             <tr class="header">
-                                <td>Economy</td>
-                                <td>Budget</td>
-                                <td>Posted</td>
-                                <td>EtC</td>
+                                <td>Finance, TDKK</td>
+                                <td>Prev</td>
+                                <td>Q1</td>
+                                <td>Q2</td>
+                                <td>Q3</td>
+                                <td>Q4</td>
+                                <td>Year</td>
+                                <td>Grand</td>
                             </tr>
                             <tr>
-                                <td class="header">Project total</td>
-                                <td class="wrap">
-                                    <div class="right">{{editstatus.ab | currency:'TDKK ':0}}</div>
-                                </td>
-                                <td class="wrap">
-                                    <div class="right">{{editstatus.std | currency:'TDKK ':0}}</div>
-                                </td>
-                                <td class="wrap">
-                                    <div class="right">{{editstatus.EtC | currency:'TDKK ':0}}</div>
-                                </td>
+                                <td>Budget total</td>
+                                <td class="sums">{{ project.finance.budTotalprev }}</td>
+                                <td class="sums">{{ project.finance.budTotalq1 }}</td>
+                                <td class="sums">{{ project.finance.budTotalq2 }}</td>
+                                <td class="sums">{{ project.finance.budTotalq3 }}</td>
+                                <td class="sums">{{ project.finance.budTotalq4 }}</td>
+                                <td class="sums">{{ project.finance.budTotalSum }}</td>
+                                <td class="sums">{{ project.finance.budTotalgrandSum }}</td>
                             </tr>
                             <tr>
-                                <td class="header">Current year</td>
-                                <td class="wrap">
-                                    <div class="right">{{editstatus.cab | currency:'TDKK ':0}}</div>
-                                </td>
-                                <td class="wrap">
-                                    <div class="right">{{editstatus.cstd | currency:'TDKK ':0}}</div>
-                                </td>
-                                <td class="wrap">
-                                    <div class="right">{{editstatus.cEtC | currency:'TDKK ':0}}</div>
-                                </td>
+                                <td>Posted total</td>
+                                <td class="sums">{{ project.finance.postTotalprev }}</td>
+                                <td class="sums">{{ project.finance.postTotalq1 }}</td>
+                                <td class="sums">{{ project.finance.postTotalq2 }}</td>
+                                <td class="sums">{{ project.finance.postTotalq3 }}</td>
+                                <td class="sums">{{ project.finance.postTotalq4 }}</td>
+                                <td class="sums">{{ project.finance.postTotalSum }}</td>
+                                <td class="sums">{{ project.finance.postTotalgrandSum }}</td>
                             </tr>
-                            <tr>
-                                <td class="header">Next year</td>
-                                <td class="wrap">
-                                    <div class="right">{{editstatus.nab | currency:'TDKK ':0}}</div>
-                                </td>
-                                <td></td>
-                                <td></td>
+                            <tr class="header">
+                                <td>Deviation total</td>
+                                <td class="sums">{{ project.finance.devTotalprev }}</td>
+                                <td class="sums">{{ project.finance.devTotalq1 }}</td>
+                                <td class="sums">{{ project.finance.devTotalq2 }}</td>
+                                <td class="sums">{{ project.finance.devTotalq3 }}</td>
+                                <td class="sums">{{ project.finance.devTotalq4 }}</td>
+                                <td class="sums">{{ project.finance.devTotalSum }}</td>
+                                <td class="sums">{{ project.finance.devTotalgrandSum }}</td>
                             </tr>
                         </table>
                     </div>
