@@ -14,10 +14,9 @@
             <td>Required</td>
             <td>Timing criticality</td>
             <td>Skills/Availability status</td>
-            <td>Comment</td>
         </tr>
-        <tr>
-            <td class="header" prio-class prio-skill-render="project.res1skill" prio-size-render="project.res1">{{company.res1lable}}</td>
+        <tr class="header">
+            <td prio-class prio-skill-render="project.res1skill" prio-size-render="project.res1">{{company.res1lable}}</td>
             <td>
                 <select ng-model="project.res1fte" ng-change="$parent.projecthaschanged=true">
                     <option value="None">None</option>
@@ -45,12 +44,17 @@
                     <option value="Emergency">Emergency</option>
                 </select>
             </td>
-            <td>
-                <input type="text" ng-model="project.res1comment" />
-            </td>
         </tr>
         <tr>
-            <td class="header" prio-class prio-skill-render="project.res2skill" prio-size-render="project.res2">{{company.res2lable}}</td>
+            <td>Resource comment</td>
+            <td colspan="3">
+                <div class="field">
+                <textarea ng-if="project.res1fte!='None'" ng-model="project.res1comment" maxlength="300" id="res1comment" placeholder="Describe issues like, unavailability, timing, competence, priority ect."></textarea>
+            </div>
+            </td>
+        </tr>
+        <tr class="header">
+            <td prio-class prio-skill-render="project.res2skill" prio-size-render="project.res2">{{company.res2lable}}</td>
             <td>
                 <select ng-model="project.res2fte" ng-change="$parent.projecthaschanged=true">
                     <option value="None">None</option>
@@ -78,12 +82,17 @@
                     <option value="Emergency">Emergency</option>
                 </select>
             </td>
-            <td>
-                <input type="text" ng-model="project.res2comment" />
-            </td>
         </tr>
         <tr>
-            <td class="header" prio-class prio-skill-render="project.res3skill" prio-size-render="project.res3">{{company.res3lable}}</td>
+            <td>Resource comment</td>
+            <td colspan="3">
+                <div class="field">
+                <textarea ng-if="project.res2fte!='None'" ng-model="project.res2comment" maxlength="300" id="res2comment" placeholder="Describe issues like, unavailability, timing, competence, priority ect."></textarea>
+            </div>
+            </td>
+        </tr>
+        <tr class="header">
+            <td prio-class prio-skill-render="project.res3skill" prio-size-render="project.res3">{{company.res3lable}}</td>
             <td>
                 <select ng-model="project.res3fte" ng-change="$parent.projecthaschanged=true">
                     <option value="None">None</option>
@@ -111,12 +120,17 @@
                     <option value="Emergency">Emergency</option>
                 </select>
             </td>
-            <td>
-                <input type="text" ng-model="project.res3comment" />
-            </td>
         </tr>
         <tr>
-            <td class="header" prio-class prio-skill-render="project.res4skill" prio-size-render="project.res4">{{company.res4lable}}</td>
+            <td>Resource comment</td>
+            <td colspan="3">
+                <div class="field">
+                <textarea ng-if="project.res3fte!='None'" ng-model="project.res3comment" maxlength="300" id="res3comment" placeholder="Describe issues like, unavailability, timing, competence, priority ect."></textarea>
+            </div>
+            </td>
+        </tr>
+        <tr class="header">
+            <td prio-class prio-skill-render="project.res4skill" prio-size-render="project.res4">{{company.res4lable}}</td>
             <td>
                 <select ng-model="project.res4fte" ng-change="$parent.projecthaschanged=true">
                     <option value="None">None</option>
@@ -144,12 +158,17 @@
                     <option value="Emergency">Emergency</option>
                 </select>
             </td>
-            <td>
-                <input type="text" ng-model="project.res4comment" />
-            </td>
         </tr>
         <tr>
-            <td class="header" prio-class prio-skill-render="project.res5skill" prio-size-render="project.res5">{{company.res5lable}}</td>
+            <td>Resource comment</td>
+            <td colspan="3">
+                <div class="field">
+                <textarea ng-if="project.res4fte!='None'" ng-model="project.res4comment" maxlength="300" id="res4comment" placeholder="Describe issues like, unavailability, timing, competence, priority ect."></textarea>
+            </div>
+            </td>
+        </tr>
+        <tr class="header">
+            <td prio-class prio-skill-render="project.res5skill" prio-size-render="project.res5">{{company.res5lable}}</td>
             <td>
                 <select ng-model="project.res5fte" ng-change="$parent.projecthaschanged=true">
                     <option value="None">None</option>
@@ -177,12 +196,17 @@
                     <option value="Emergency">Emergency</option>
                 </select>
             </td>
-            <td>
-                <input type="text" ng-model="project.res5comment" />
-            </td>
         </tr>
         <tr>
-            <td class="header" prio-class prio-skill-render="project.res6skill" prio-size-render="project.res6">{{company.res6lable}}</td>
+            <td>Resource comment</td>
+            <td colspan="3">
+                <div class="field">
+                <textarea ng-if="project.res5fte!='None'" ng-model="project.res5comment" maxlength="300" id="res5comment" placeholder="Describe issues like, unavailability, timing, competence, priority ect."></textarea>
+            </div>
+            </td>
+        </tr>
+        <tr class="header">
+            <td prio-class prio-skill-render="project.res6skill" prio-size-render="project.res6">{{company.res6lable}}</td>
             <td>
                 <select ng-model="project.res6fte" ng-change="$parent.projecthaschanged=true">
                     <option value="None">None</option>
@@ -210,12 +234,17 @@
                     <option value="Emergency">Emergency</option>
                 </select>
             </td>
-            <td>
-                <input type="text" ng-model="project.res6comment" />
-            </td>
         </tr>
         <tr>
-            <td class="header" prio-class prio-skill-render="project.res7skill" prio-size-render="project.res7">{{company.res7lable}}</td>
+            <td>Resource comment</td>
+            <td colspan="3">
+                <div class="field">
+                <textarea ng-if="project.res6fte!='None'" ng-model="project.res6comment" maxlength="300" id="res6comment" placeholder="Describe issues like, unavailability, timing, competence, priority ect."></textarea>
+            </div>
+            </td>
+        </tr>
+        <tr class="header">
+            <td prio-class prio-skill-render="project.res7skill" prio-size-render="project.res7">{{company.res7lable}}</td>
             <td>
                 <select ng-model="project.res7fte" ng-change="$parent.projecthaschanged=true">
                     <option value="None">None</option>
@@ -243,12 +272,17 @@
                     <option value="Emergency">Emergency</option>
                 </select>
             </td>
-            <td>
-                <input type="text" ng-model="project.res7comment" />
-            </td>
         </tr>
         <tr>
-            <td class="header" prio-class prio-skill-render="project.res8skill" prio-size-render="project.res8">{{company.res8lable}}</td>
+            <td>Resource comment</td>
+            <td colspan="3">
+                <div class="field">
+                <textarea ng-if="project.res7fte!='None'" ng-model="project.res7comment" maxlength="300" id="res7comment" placeholder="Describe issues like, unavailability, timing, competence, priority ect."></textarea>
+            </div>
+            </td>
+        </tr>
+        <tr class="header">
+            <td prio-class prio-skill-render="project.res8skill" prio-size-render="project.res8">{{company.res8lable}}</td>
             <td>
                 <select ng-model="project.res8fte" ng-change="$parent.projecthaschanged=true">
                     <option value="None">None</option>
@@ -276,8 +310,13 @@
                     <option value="Emergency">Emergency</option>
                 </select>
             </td>
-            <td>
-                <input type="text" ng-model="project.res8comment" />
+        </tr>
+        <tr>
+            <td>Resource comment</td>
+            <td colspan="3">
+                <div class="field">
+                <textarea ng-if="project.res8fte!='None'" ng-model="project.res8comment" maxlength="300" id="res8comment" placeholder="Describe issues like, unavailability, timing, competence, priority ect."></textarea>
+                </div>
             </td>
         </tr>
     </table>
