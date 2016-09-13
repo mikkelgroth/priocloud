@@ -9,7 +9,53 @@
                 ng-click="saveProject(project)">save project</button>
         </div>
     </h2>
-    <div id="budget" ng-show="route == 'finance'">
+    <div id="finance" ng-show="route == 'finance'">
+        <h3>Key project figures</h3>
+        <table class="smaller smallinput">
+            <tr class="header">
+                <td>TDKK Ex. Vat</td>
+                <td>Prev</td>
+                <td>Q1</td>
+                <td>Q2</td>
+                <td>Q3</td>
+                <td>Q4</td>
+                <td>Year</td>
+                <td>Grand</td>
+            </tr>
+            <tr>
+                <td>Budget total</td>
+                <td class="sums">{{ project.finance.budTotalprev }}</td>
+                <td class="sums">{{ project.finance.budTotalq1 }}</td>
+                <td class="sums">{{ project.finance.budTotalq2 }}</td>
+                <td class="sums">{{ project.finance.budTotalq3 }}</td>
+                <td class="sums">{{ project.finance.budTotalq4 }}</td>
+                <td class="sums">{{ project.finance.budTotalSum }}</td>
+                <td class="sums">{{ project.finance.budTotalgrandSum }}</td>
+            </tr>
+            <tr>
+                <td>Posted total</td>
+                <td class="sums">{{ project.finance.postTotalprev }}</td>
+                <td class="sums">{{ project.finance.postTotalq1 }}</td>
+                <td class="sums">{{ project.finance.postTotalq2 }}</td>
+                <td class="sums">{{ project.finance.postTotalq3 }}</td>
+                <td class="sums">{{ project.finance.postTotalq4 }}</td>
+                <td class="sums">{{ project.finance.postTotalSum }}</td>
+                <td class="sums">{{ project.finance.postTotalgrandSum }}</td>
+            </tr>
+            <tr class="header">
+                <td>Deviation total</td>
+                <td class="sums">{{ project.finance.devTotalprev }}</td>
+                <td class="sums">{{ project.finance.devTotalq1 }}</td>
+                <td class="sums">{{ project.finance.devTotalq2 }}</td>
+                <td class="sums">{{ project.finance.devTotalq3 }}</td>
+                <td class="sums">{{ project.finance.devTotalq4 }}</td>
+                <td class="sums">{{ project.finance.devTotalSum }}</td>
+                <td class="sums">{{ project.finance.devTotalgrandSum }}</td>
+            </tr>
+        </table>
+    </div>
+
+    <div id="budget" ng-show="route == 'budget'">
         <h3>Budget this year</h3>
         <table class="smaller smallinput">
             <tr class="header">
@@ -276,7 +322,7 @@
                 <td class="sums">{{ project.finance.postInternalTotalgrandSum }}</td>
             </tr>
             <tr class="header">
-                <td>postget total</td>
+                <td>Posted total</td>
                 <td class="sums">{{ project.finance.postTotalprev }}</td>
                 <td class="sums">{{ project.finance.postTotalq1 }}</td>
                 <td class="sums">{{ project.finance.postTotalq2 }}</td>
@@ -420,7 +466,7 @@
                 <td class="sums">{{ project.finance.devInternalTotalgrandSum }}</td>
             </tr>
             <tr class="header">
-                <td>devget total</td>
+                <td>Deviation total</td>
                 <td class="sums">{{ project.finance.devTotalprev }}</td>
                 <td class="sums">{{ project.finance.devTotalq1 }}</td>
                 <td class="sums">{{ project.finance.devTotalq2 }}</td>

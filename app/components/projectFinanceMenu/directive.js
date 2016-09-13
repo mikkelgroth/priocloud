@@ -5,7 +5,6 @@ angular
         function linkFunction(scope, element, attributes) {
             
         }	
-        
         return {
             restrict: 'E',
             replace: true,

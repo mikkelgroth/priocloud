@@ -45,6 +45,7 @@ angular
            
             // finance
             $routeProvider.when('/project/:id/finance', { controller: 'ProjectFinanceController', templateUrl: 'components/projectFinance/template.html' });
+            $routeProvider.when('/project/:id/finance/budget', { controller: 'ProjectFinanceController', templateUrl: 'components/projectFinance/template.html' });
             $routeProvider.when('/project/:id/finance/posted', { controller: 'ProjectFinanceController', templateUrl: 'components/projectFinance/template.html' });
             $routeProvider.when('/project/:id/finance/deviation', { controller: 'ProjectFinanceController', templateUrl: 'components/projectFinance/template.html' });
             $routeProvider.when('/project/:id/finance/deviation-report', { controller: 'ProjectFinanceController', templateUrl: 'components/projectFinance/template.html' });
