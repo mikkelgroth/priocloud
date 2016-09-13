@@ -73,7 +73,105 @@ angular
 
                     calculateForBudgetThisYear();
                     calculateForPosted();
+                    calculateForDeviation();
+                    calculateForNextYear();
                 });
+            }
+
+            function calculateForDeviation(){
+                $scope.project.finance.devcapextprev = ($scope.project.finance.budcapextprev - $scope.project.finance.postcapextprev);
+                $scope.project.finance.devcapextq1 = ($scope.project.finance.budcapextq1 - $scope.project.finance.postcapextq1);
+                $scope.project.finance.devcapextq2 = ($scope.project.finance.budcapextq2 - $scope.project.finance.postcapextq2);
+                $scope.project.finance.devcapextq3 = ($scope.project.finance.budcapextq3 - $scope.project.finance.postcapextq3);
+                $scope.project.finance.devcapextq4 = ($scope.project.finance.budcapextq4 - $scope.project.finance.postcapextq4);
+                $scope.project.finance.devcapexExternal = ($scope.project.finance.budcapexExternal - $scope.project.finance.postcapexExternal);
+                $scope.project.finance.devcapexExternalgrand = ($scope.project.finance.budcapexExternalgrand - $scope.project.finance.postcapexExternalgrand);
+            
+                $scope.project.finance.devcapextoneprev = ($scope.project.finance.budcapextoneprev - $scope.project.finance.postcapextoneprev);
+                $scope.project.finance.devcapextoneq1 = ($scope.project.finance.budcapextoneq1 - $scope.project.finance.postcapextoneq1);
+                $scope.project.finance.devcapextoneq2 = ($scope.project.finance.budcapextoneq2 - $scope.project.finance.postcapextoneq2);
+                $scope.project.finance.devcapextoneq3 = ($scope.project.finance.budcapextoneq3 - $scope.project.finance.postcapextoneq3);
+                $scope.project.finance.devcapextoneq4 = ($scope.project.finance.budcapextoneq4 - $scope.project.finance.postcapextoneq4);
+                $scope.project.finance.devcapexExtOff = ($scope.project.finance.budcapexExtOff - $scope.project.finance.postcapexExtOff);
+                $scope.project.finance.devcapexExtOffgrand = ($scope.project.finance.budcapexExtOffgrand - $scope.project.finance.postcapexExtOffgrand);
+            
+                $scope.project.finance.devcapintprev = ($scope.project.finance.budcapintprev - $scope.project.finance.postcapintprev);
+                $scope.project.finance.devcapintq1 = ($scope.project.finance.budcapintq1 - $scope.project.finance.postcapintq1);
+                $scope.project.finance.devcapintq2 = ($scope.project.finance.budcapintq2 - $scope.project.finance.postcapintq2);
+                $scope.project.finance.devcapintq3 = ($scope.project.finance.budcapintq3 - $scope.project.finance.postcapintq3);
+                $scope.project.finance.devcapintq4 = ($scope.project.finance.budcapintq4 - $scope.project.finance.postcapintq4);
+                $scope.project.finance.devcapexInternal = ($scope.project.finance.budcapexInternal - $scope.project.finance.postcapexInternal);
+                $scope.project.finance.devcapexInternalgrand = ($scope.project.finance.budcapexInternalgrand - $scope.project.finance.postcapexInternalgrand);
+            
+                $scope.project.finance.devcapexprevSum = ($scope.project.finance.budcapexprevSum - $scope.project.finance.postcapexprevSum);
+                $scope.project.finance.devcapexq1Sum = ($scope.project.finance.budcapexq1Sum - $scope.project.finance.postcapexq1Sum);
+                $scope.project.finance.devcapexq2Sum = ($scope.project.finance.budcapexq2Sum - $scope.project.finance.postcapexq2Sum);
+                $scope.project.finance.devcapexq3Sum = ($scope.project.finance.budcapexq3Sum - $scope.project.finance.postcapexq3Sum);
+                $scope.project.finance.devcapexq4Sum = ($scope.project.finance.budcapexq4Sum - $scope.project.finance.postcapexq4Sum);
+                $scope.project.finance.devcapexTotal = ($scope.project.finance.budcapexTotal - $scope.project.finance.postcapexTotal);
+                $scope.project.finance.devcapexTotalgrand = ($scope.project.finance.budcapexTotalgrand - $scope.project.finance.postcapexTotalgrand);
+            
+                $scope.project.finance.devopextprev = ($scope.project.finance.budopextprev - $scope.project.finance.postopextprev);
+                $scope.project.finance.devopextq1 = ($scope.project.finance.budopextq1 - $scope.project.finance.postopextq1);
+                $scope.project.finance.devopextq2 = ($scope.project.finance.budopextq2 - $scope.project.finance.postopextq2);
+                $scope.project.finance.devopextq3 = ($scope.project.finance.budopextq3 - $scope.project.finance.postopextq3);
+                $scope.project.finance.devopextq4 = ($scope.project.finance.budopextq4 - $scope.project.finance.postopextq4);
+                $scope.project.finance.devopexExternal = ($scope.project.finance.budopexExternal - $scope.project.finance.postopexExternal);
+                $scope.project.finance.devopexExternalgrand = ($scope.project.finance.budopexExternalgrand - $scope.project.finance.postopexExternalgrand);
+            
+                $scope.project.finance.devopextoneprev = ($scope.project.finance.budopextoneprev - $scope.project.finance.postopextoneprev);
+                $scope.project.finance.devopextoneq1 = ($scope.project.finance.budopextoneq1 - $scope.project.finance.postopextoneq1);
+                $scope.project.finance.devopextoneq2 = ($scope.project.finance.budopextoneq2 - $scope.project.finance.postopextoneq2);
+                $scope.project.finance.devopextoneq3 = ($scope.project.finance.budopextoneq3 - $scope.project.finance.postopextoneq3);
+                $scope.project.finance.devopextoneq4 = ($scope.project.finance.budopextoneq4 - $scope.project.finance.postopextoneq4);
+                $scope.project.finance.devopexExtOff = ($scope.project.finance.budopexExtOff - $scope.project.finance.postopexExtOff);
+                $scope.project.finance.devopexExtOffgrand = ($scope.project.finance.budopexExtOff - $scope.project.finance.postopexExtOff);
+            
+                $scope.project.finance.devopintprev = ($scope.project.finance.budopintprev - $scope.project.finance.postopintprev);
+                $scope.project.finance.devopintq1 = ($scope.project.finance.budopintq1 - $scope.project.finance.postopintq1);
+                $scope.project.finance.devopintq2 = ($scope.project.finance.budopintq2 - $scope.project.finance.postopintq2);
+                $scope.project.finance.devopintq3 = ($scope.project.finance.budopintq3 - $scope.project.finance.postopintq3);
+                $scope.project.finance.devopintq4 = ($scope.project.finance.budopintq4 - $scope.project.finance.postopintq4);
+                $scope.project.finance.devopexInternal = ($scope.project.finance.budopexInternal - $scope.project.finance.postopexInternal);
+                $scope.project.finance.devopexInternalgrand = ($scope.project.finance.budopexInternalgrand - $scope.project.finance.postopexInternalgrand);
+            
+                $scope.project.finance.devopexprevSum = ($scope.project.finance.budopexprevSum - $scope.project.finance.postopexprevSum);
+                $scope.project.finance.devopexq1Sum = ($scope.project.finance.budopexq1Sum - $scope.project.finance.postopexq1Sum);
+                $scope.project.finance.devopexq2Sum = ($scope.project.finance.budopexq2Sum - $scope.project.finance.postopexq2Sum);
+                $scope.project.finance.devopexq3Sum = ($scope.project.finance.budopexq3Sum - $scope.project.finance.postopexq3Sum);
+                $scope.project.finance.devopexq4Sum = ($scope.project.finance.budopexq4Sum - $scope.project.finance.postopexq4Sum);
+                $scope.project.finance.devopexTotal = ($scope.project.finance.budopexTotal - $scope.project.finance.postopexTotal);
+                $scope.project.finance.devopexTotalgrand = ($scope.project.finance.budopexTotalgrand - $scope.project.finance.postopexTotalgrand);
+            
+                $scope.project.finance.devExternalprevTotal = ($scope.project.finance.budExternalprevTotal - $scope.project.finance.postExternalprevTotal);
+                $scope.project.finance.devExternalq1Total = ($scope.project.finance.budExternalq1Total - $scope.project.finance.postExternalq1Total);
+                $scope.project.finance.devExternalq2Total = ($scope.project.finance.budExternalq2Total - $scope.project.finance.postExternalq2Total);
+                $scope.project.finance.devExternalq3Total = ($scope.project.finance.budExternalq3Total - $scope.project.finance.postExternalq3Total);
+                $scope.project.finance.devExternalq4Total = ($scope.project.finance.budExternalq4Total - $scope.project.finance.postExternalq4Total);
+                $scope.project.finance.devExternalTotalSum = ($scope.project.finance.budExternalTotalSum - $scope.project.finance.postExternalTotalSum);
+                $scope.project.finance.devExternalTotalgrandSum = ($scope.project.finance.budExternalTotalgrandSum - $scope.project.finance.postExternalTotalgrandSum);
+            
+                $scope.project.finance.devInternalprevTotal = ($scope.project.finance.budInternalprevTotal -$scope.project.finance.postInternalprevTotal);
+                $scope.project.finance.devInternalq1Total = ($scope.project.finance.budInternalq1Total - $scope.project.finance.postInternalq1Total);
+                $scope.project.finance.devInternalq2Total = ($scope.project.finance.budInternalq2Total - $scope.project.finance.postInternalq2Total);
+                $scope.project.finance.devInternalq3Total = ($scope.project.finance.budInternalq3Total - $scope.project.finance.postInternalq3Total);
+                $scope.project.finance.devInternalq4Total = ($scope.project.finance.budInternalq4Total - $scope.project.finance.postInternalq4Total);
+                $scope.project.finance.devInternalTotalSum = ($scope.project.finance.budInternalTotalSum - $scope.project.finance.postInternalTotalSum);
+                $scope.project.finance.devInternalTotalgrandSum = ($scope.project.finance.budInternalTotalgrandSum - $scope.project.finance.postInternalTotalgrandSum);
+            
+                $scope.project.finance.devTotalprev = ($scope.project.finance.budTotalprev - $scope.project.finance.postTotalprev);
+                $scope.project.finance.devTotalq1 = ($scope.project.finance.budTotalq1 - $scope.project.finance.postTotalq1);
+                $scope.project.finance.devTotalq2 = ($scope.project.finance.budTotalq2 - $scope.project.finance.postTotalq2);
+                $scope.project.finance.devTotalq3 = ($scope.project.finance.budTotalq3 - $scope.project.finance.postTotalq3);
+                $scope.project.finance.devTotalq4 = ($scope.project.finance.budTotalq4 - $scope.project.finance.postTotalq4);
+                $scope.project.finance.devTotalSum = ($scope.project.finance.budTotalSum - $scope.project.finance.postTotalSum);
+                $scope.project.finance.devTotalgrandSum = ($scope.project.finance.budTotalgrandSum - $scope.project.finance.postTotalgrandSum);
+            
+                $scope.project.finance.devAccq1 = ($scope.project.finance.budAccq1 - $scope.project.finance.postAccq1);
+                $scope.project.finance.devAccq2 = ($scope.project.finance.budAccq2 - $scope.project.finance.postAccq2);
+                $scope.project.finance.devAccq3 = ($scope.project.finance.budAccq3 - $scope.project.finance.postAccq3);
+                $scope.project.finance.devAccq4 = ($scope.project.finance.budAccq4 - $scope.project.finance.postAccq4);
+                
             }
 
             function calculateForPosted() {
@@ -219,5 +317,78 @@ angular
                 $scope.project.finance.budAccq3 = $scope.project.finance.budTotalq1 + $scope.project.finance.budTotalq2 + $scope.project.finance.budTotalq3;
                 $scope.project.finance.budAccq4 = $scope.project.finance.budTotalq1 + $scope.project.finance.budTotalq2 + $scope.project.finance.budTotalq3 + $scope.project.finance.budTotalq4;
             }
+
+            function calculateForNextYear() {
+
+                // Capex
+                $scope.project.finance.nextcapexprevSum = Number($scope.project.finance.nextcapextprev) + Number($scope.project.finance.nextcapextoneprev) + Number($scope.project.finance.nextcapintprev);
+                $scope.project.finance.nextcapexq1Sum = Number($scope.project.finance.nextcapextq1) + Number($scope.project.finance.nextcapextoneq1) + Number($scope.project.finance.nextcapintq1);
+                $scope.project.finance.nextcapexq2Sum = Number($scope.project.finance.nextcapextq2) + Number($scope.project.finance.nextcapextoneq2) + Number($scope.project.finance.nextcapintq2);
+                $scope.project.finance.nextcapexq3Sum = Number($scope.project.finance.nextcapextq3) + Number($scope.project.finance.nextcapextoneq3) + Number($scope.project.finance.nextcapintq3);
+                $scope.project.finance.nextcapexq4Sum = Number($scope.project.finance.nextcapextq4) + Number($scope.project.finance.nextcapextoneq4) + Number($scope.project.finance.nextcapintq4);
+                
+                $scope.project.finance.nextcapexExternal = Number($scope.project.finance.nextcapextq1) + Number($scope.project.finance.nextcapextq2) + Number($scope.project.finance.nextcapextq3) + Number($scope.project.finance.nextcapextq4);
+                $scope.project.finance.nextcapexExternalgrand = Number($scope.project.finance.nextcapexExternal) + Number($scope.project.finance.nextcapextprev);
+                $scope.project.finance.nextcapexExtOff = Number($scope.project.finance.nextcapextoneq1) + Number($scope.project.finance.nextcapextoneq2) + Number($scope.project.finance.nextcapextoneq3) + Number($scope.project.finance.nextcapextoneq4);
+                $scope.project.finance.nextcapexExtOffgrand = Number($scope.project.finance.nextcapexExtOff) + Number($scope.project.finance.nextcapextoneprev);
+                $scope.project.finance.nextcapexInternal = Number($scope.project.finance.nextcapintq1) + Number($scope.project.finance.nextcapintq2) + Number($scope.project.finance.nextcapintq3) + Number($scope.project.finance.nextcapintq4);
+                $scope.project.finance.nextcapexInternalgrand = Number($scope.project.finance.nextcapexInternal) + Number($scope.project.finance.nextcapintprev);
+                
+                $scope.project.finance.nextcapexTotal = ($scope.project.finance.nextcapexExternal + $scope.project.finance.nextcapexExtOff + $scope.project.finance.nextcapexInternal);
+                $scope.project.finance.nextcapexTotalgrand = ($scope.project.finance.nextcapexTotal + $scope.project.finance.nextcapexprevSum);
+            
+                // Opex
+                $scope.project.finance.nextopexprevSum = Number($scope.project.finance.nextopextprev) + Number($scope.project.finance.nextopextoneprev) + Number($scope.project.finance.nextopintprev);
+                $scope.project.finance.nextopexq1Sum = Number($scope.project.finance.nextopextq1) + Number($scope.project.finance.nextopextoneq1) + Number($scope.project.finance.nextopintq1);
+                $scope.project.finance.nextopexq2Sum = Number($scope.project.finance.nextopextq2) + Number($scope.project.finance.nextopextoneq2) + Number($scope.project.finance.nextopintq2);
+                $scope.project.finance.nextopexq3Sum = Number($scope.project.finance.nextopextq3) + Number($scope.project.finance.nextopextoneq3) + Number($scope.project.finance.nextopintq3);
+                $scope.project.finance.nextopexq4Sum = Number($scope.project.finance.nextopextq4) + Number($scope.project.finance.nextopextoneq4) + Number($scope.project.finance.nextopintq4);
+                
+                $scope.project.finance.nextopexExternal = Number($scope.project.finance.nextopextq1) + Number($scope.project.finance.nextopextq2) + Number($scope.project.finance.nextopextq3) + Number($scope.project.finance.nextopextq4);
+                $scope.project.finance.nextopexExternalgrand = Number($scope.project.finance.nextopexExternal) + Number($scope.project.finance.nextopextprev);
+                $scope.project.finance.nextopexExtOff = Number($scope.project.finance.nextopextoneq1) + Number($scope.project.finance.nextopextoneq2) + Number($scope.project.finance.nextopextoneq3) + Number($scope.project.finance.nextopextoneq4);
+                $scope.project.finance.nextopexExtOffgrand = Number($scope.project.finance.nextopexExtOff) + Number($scope.project.finance.nextopextoneprev);
+                $scope.project.finance.nextopexInternal = Number($scope.project.finance.nextopintq1) + Number($scope.project.finance.nextopintq2) + Number($scope.project.finance.nextopintq3) + Number($scope.project.finance.nextopintq4);
+                $scope.project.finance.nextopexInternalgrand = Number($scope.project.finance.nextopexInternal) + Number($scope.project.finance.nextopintprev);
+                
+                $scope.project.finance.nextopexTotal = ($scope.project.finance.nextopexExternal + $scope.project.finance.nextopexExtOff + $scope.project.finance.nextopexInternal);
+                $scope.project.finance.nextopexTotalgrand = ($scope.project.finance.nextopexTotal + $scope.project.finance.nextopexprevSum);
+            
+
+
+                // Totals
+                $scope.project.finance.nextExternalprevTotal = Number($scope.project.finance.nextcapextprev) + Number($scope.project.finance.nextcapextoneprev) + Number($scope.project.finance.nextopextprev) + Number($scope.project.finance.nextopextoneprev);
+                $scope.project.finance.nextExternalq1Total = Number($scope.project.finance.nextcapextq1) + Number($scope.project.finance.nextcapextoneq1) + Number($scope.project.finance.nextopextq1) + Number($scope.project.finance.nextopextoneq1);
+                $scope.project.finance.nextExternalq2Total = Number($scope.project.finance.nextcapextq2) + Number($scope.project.finance.nextcapextoneq2) + Number($scope.project.finance.nextopextq2) + Number($scope.project.finance.nextopextoneq2);
+                $scope.project.finance.nextExternalq3Total = Number($scope.project.finance.nextcapextq3) + Number($scope.project.finance.nextcapextoneq3) + Number($scope.project.finance.nextopextq3) + Number($scope.project.finance.nextopextoneq3);
+                $scope.project.finance.nextExternalq4Total = Number($scope.project.finance.nextcapextq4) + Number($scope.project.finance.nextcapextoneq4) + Number($scope.project.finance.nextopextq4) + Number($scope.project.finance.nextopextoneq4);
+
+                $scope.project.finance.nextExternalTotalSum = $scope.project.finance.nextExternalq1Total + $scope.project.finance.nextExternalq2Total + $scope.project.finance.nextExternalq3Total + $scope.project.finance.nextExternalq4Total;
+                $scope.project.finance.nextExternalTotalgrandSum = $scope.project.finance.nextExternalTotalSum + $scope.project.finance.nextExternalprevTotal;
+
+                $scope.project.finance.nextInternalprevTotal = Number($scope.project.finance.nextopintprev) + Number($scope.project.finance.nextcapintprev);
+                $scope.project.finance.nextInternalq1Total = Number($scope.project.finance.nextcapintq1) + Number($scope.project.finance.nextopintq1);
+                $scope.project.finance.nextInternalq2Total = Number($scope.project.finance.nextcapintq2) + Number($scope.project.finance.nextopintq2);
+                $scope.project.finance.nextInternalq3Total = Number($scope.project.finance.nextcapintq3) + Number($scope.project.finance.nextopintq3);
+                $scope.project.finance.nextInternalq4Total = Number($scope.project.finance.nextcapintq4) + Number($scope.project.finance.nextopintq4);
+
+                $scope.project.finance.nextInternalTotalSum = $scope.project.finance.nextInternalq1Total + $scope.project.finance.nextInternalq2Total + $scope.project.finance.nextInternalq3Total + $scope.project.finance.nextInternalq4Total;
+                $scope.project.finance.nextInternalTotalgrandSum = $scope.project.finance.nextInternalTotalSum + $scope.project.finance.nextInternalprevTotal;
+
+                $scope.project.finance.nextTotalprev = $scope.project.finance.nextExternalprevTotal + $scope.project.finance.nextInternalprevTotal;
+                $scope.project.finance.nextTotalq1 = $scope.project.finance.nextExternalq1Total + $scope.project.finance.nextInternalq1Total;
+                $scope.project.finance.nextTotalq2 = $scope.project.finance.nextExternalq2Total + $scope.project.finance.nextInternalq2Total;
+                $scope.project.finance.nextTotalq3 = $scope.project.finance.nextExternalq3Total + $scope.project.finance.nextInternalq3Total;
+                $scope.project.finance.nextTotalq4 = $scope.project.finance.nextExternalq4Total + $scope.project.finance.nextInternalq4Total;
+
+                $scope.project.finance.nextTotalSum = $scope.project.finance.nextTotalq1 + $scope.project.finance.nextTotalq2 + $scope.project.finance.nextTotalq3 + $scope.project.finance.nextTotalq4;
+                $scope.project.finance.nextTotalgrandSum = $scope.project.finance.nextTotalSum + $scope.project.finance.nextTotalprev;
+            
+                $scope.project.finance.nextAccq1 = $scope.project.finance.nextTotalq1;
+                $scope.project.finance.nextAccq2 = $scope.project.finance.nextTotalq1 + $scope.project.finance.nextTotalq2;
+                $scope.project.finance.nextAccq3 = $scope.project.finance.nextTotalq1 + $scope.project.finance.nextTotalq2 + $scope.project.finance.nextTotalq3;
+                $scope.project.finance.nextAccq4 = $scope.project.finance.nextTotalq1 + $scope.project.finance.nextTotalq2 + $scope.project.finance.nextTotalq3 + $scope.project.finance.nextTotalq4;
+            }
+
         }
     ]);
