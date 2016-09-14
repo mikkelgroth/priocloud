@@ -46,7 +46,8 @@
                 <td class="header">Start Date</td>
                 <td>
                     <div class="field">
-                        <input class="time" id="miledate" ng-model="editmile.date" />
+                        <input type="text" id="miledate" datepicker="" ng-model="editmile.date" ng-change="dateChanged(editmile.date)" />
+                        <!-- <input class="time" id="miledate" ng-model="editmile.date" /> -->
                         <!-- TODO: make datepicker directive -->
                         <!--<script type="text/javascript">new datepickr('#miledate');</script>-->
                     </div>
@@ -54,7 +55,8 @@
                 <td class="header">End Date</td>
                 <td>
                     <div class="field">
-                        <input class="time" id="mileenddate" ng-model="editmile.enddate" />
+                        <input type="text" id="mileenddate" datepicker="" ng-model="editmile.enddate" ng-change="dateChanged(editmile.enddate)" />
+                        <!-- <input class="time" id="mileenddate" ng-model="editmile.enddate" /> -->
                         <!-- TODO: make datepicker directive -->
                         <!--<script type="text/javascript">new datepickr('#mileenddate');</script>-->
                     </div>
