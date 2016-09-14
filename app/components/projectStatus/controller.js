@@ -114,11 +114,11 @@ angular
                     status.date = ed;
                 }
 
-                var dd = new Date($("#demodate")[0].value);
+                
+                var dd = new Date(Date.parse($("#demodate")[0].value));
                 if (dd instanceof Date && !isNaN(dd.valueOf())) {
                     status.demodate = dd.toISOString();
                 }
-
                 if ($scope.project.pm.email == $scope.user.email) {
                     status.apo = "Not evaluated";
                 }

@@ -146,3 +146,17 @@ angular
             link: linkFunction
         };
     }])
+.directive('datepicker', function() {
+  return {
+    require: 'ngModel',
+    link: function(scope, el, attr, ngModel) {
+      $(el).datepicker({
+        onSelect: function(dateText) {
+          scope.$apply(function() {
+            ngModel.$setViewValue(Date);
+          });
+        }
+      });
+    }
+  };
+});
