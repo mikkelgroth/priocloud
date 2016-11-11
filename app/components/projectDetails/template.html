@@ -20,9 +20,15 @@
             <table class="smaller gutter-top">
                 <tr>
                     <td class="l header">Title</td>
-                    <td colspan="3">
+                    <td>
                         <div ng-if="!user.isOwner && !user.admin">{{project.title}}</div>
                         <input ng-if="user.isOwner || user.admin" ng-model="project.title" ng-change="$parent.projecthaschanged=true" id="title"
+                        />
+                    </td>
+                    <td class="l header">Project number</td>
+                    <td>
+                        <div ng-if="!user.isOwner && !user.admin">{{project.projectnumber}}</div>
+                        <input ng-if="user.isOwner || user.admin" ng-model="project.projectnumber" ng-change="$parent.projecthaschanged=true" id="projectnumber"
                         />
                     </td>
                 </tr>

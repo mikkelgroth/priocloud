@@ -67,18 +67,18 @@
                     </td>
                 </tr>
                 <tr class="header">
-                    <td>Project<br/>Status date</td>
+                    <td>Project<br/>P.Num.</td>
                     <td>PO approval<br/>BU</td>
                     <td>Purpose</td>
-                    <td>Overall status</td>
+                    <td>Status date<br>Overall status</td>
                     <td colspan="2">Project/Product<br/>feedback</td>
                 </tr>
                 <tr ng-repeat="project in projectList | multiFilter:search | orderBy:porderparam " ng-click="goToProject(project._id.$oid)" class="link">
-                    <td class="texttop {{project.lastStatus.status}}">&nbsp;{{project.title}}<br/>&nbsp;{{project.lastStatus.date | date:'d MMM, yyyy'}}</td>
+                    <td class="texttop {{project.lastStatus.status}}">&nbsp;{{project.title}}<br/>&nbsp;<b>#:{{project.projectnumber}}</b></td>
                     <td class="texttop">{{project.lastStatus.apo}}<br/>{{project.bu.name}}</td>
                     <td class="texttop">{{project.outcome}}</td>
-                    <td class="texttop">{{project.lastStatus.overallcomments}}</td>
-                    <td prio-class prio-cs-render="project.lastStatus.cs">{{project.lastStatus.cs}}</td>
+                    <td class="texttop">&nbsp;{{project.lastStatus.date | date:'d MMM, yyyy'}}<br/>{{project.lastStatus.overallcomments}}</td>
+                    <td prio-class prio-cs-render="project.lastStatus.cs">&nbsp;{{project.lastStatus.cs}}</td>
                     <td prio-class prio-cs-render="project.lastStatus.productcs">{{project.lastStatus.productcs}}</td>
                 </tr>
             </table>
