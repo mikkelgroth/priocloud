@@ -111,7 +111,7 @@ angular
         _this.resetPassword = function (user) {
 
             $http
-                .post(USERSERVER + '?action=resetpassword&application=priocloud&email=' + user.mail)
+                .post(USERSERVER + '?action=resetpassword&application=priocloud&email=' + user.email)
                 .success(function (data, status, headers, config) {
                     
                     alert('PW reset and mail sent');
