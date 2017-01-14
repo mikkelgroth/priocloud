@@ -57,6 +57,17 @@ angular
 
             }, true);
 
+            scope.$watch(attrs['prioValueBarRenderNeg'], function (newVal) {
+                
+                if (newVal == 1) classList['prioValueBarRenderNeg'] = "Green";
+                else if (newVal == 2) classList['prioValueBarRenderNeg'] = "Yellow";
+                else if (newVal == 3) classList['prioValueBarRenderNeg'] = "Orange";
+                else if (newVal) classList['prioValueBarRenderNeg'] = "Red";
+
+                repaintClasses();
+
+            }, true);
+
             scope.$watch(attrs['prioRiskBarRender'], function (newVal) {
                 
                 if (newVal == 1) classList['prioRiskBarRender'] = "Green";
