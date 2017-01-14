@@ -85,9 +85,13 @@ angular
 
             $scope.newMilestone = function () {
 
+                if($scope.project.milestones==null){
+                    $scope.project.milestones=[];
+                }
+                $scope.project.milestones.push({});
+                $scope.editmile=$scope.project.milestones[$scope.project.milestones.length-1];
                 var newdate = (new Date()).toISOString();
                 
-                $scope.editmile = $scope.project.milestones[$scope.project.milestones.length - 1];
                 $scope.editmile._id = Math.random().toString(36).substr(2, 9);
                 $scope.editmile.date = newdate;
                 $scope.editmile.enddate = newdate;
@@ -96,8 +100,7 @@ angular
                 $scope.editmile.audience = 'Project';
                 $scope.editmile.acountable = 'TBD';
 
-                $scope.project.milestones.push({});
-
+                
                 $scope.showMilestoneForm = true;
             };
 
