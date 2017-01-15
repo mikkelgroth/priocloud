@@ -32,12 +32,14 @@
                 <tr class="header">
                     <td class="header">Project</td>
                     <td class="header">BU</td>
+                    <td class="header">Portfolio</td>
                     <td class="header">State</td>
                     <td class="header"></td>
                 </tr>
                 <tr ng-repeat="project in projects">
                     <td ng-click="editProject(project)">{{project.title}}</td>
                     <td>{{project.bu.name}}</td>
+                    <td>{{project.support}}</td>
                     <td>{{project.state}}</td>
                     <td><button ng-click="deleteProject(project)" ng-if="user.admin">delete project</button></td>
                 </tr>

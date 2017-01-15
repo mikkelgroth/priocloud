@@ -52,6 +52,7 @@ angular
                         milestone['projectoid'] = project._id.$oid;
                         milestone['projecttitle'] = project.title;
                         milestone['buname'] = project.bu.name;
+                        milestone['support'] = project.support;
                         milestone['acname'] = (milestone.acountable != null) ? milestone.acountable.name : 'TBD';
 
                         return milestone;

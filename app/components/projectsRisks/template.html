@@ -2,9 +2,9 @@
 	<h2>Risk list</h2>
     <div class="smaller">
         <div class="filter-order-container">
-            <div class="label" style="height:110px;">
+            <div class="label" style="height:120px;">
                 Filter by:<br/>
-                BU<br/>Project<br/>Responsible<br/>Audience
+                BU<br/>Project<br/>Responsible<br/>Audience<br/>Portfolio
             </div>
             <div class="field multiple-select">
                 <select multiple="multiple" ng-multiple="true" ng-model="risksearch.buname" ng-options="bu.name as bu.name for bu in bus | orderBy:'name'"></select> 
@@ -15,10 +15,13 @@
                     <option value="Portfolio">Portfolio</option>
                     <option value="Company">Company</option>
                 </select>
+                <select multiple="multiple" ng-multiple="true" ng-model="risksearch.support">
+                    <option ng-repeat="bu in bus" value="{{bu.name}}">{{bu.name}}</option>
+                </select>
             </div>
         </div>
         <div class="filter-order-container">
-            <div class="label" style="height:110px;">
+            <div class="label" style="height:120px;">
                 Filter by:<br/>
                 Status<br/>Response<br/>Probability<br/>Impact
             </div>

@@ -2,7 +2,7 @@
     <h2>Project list - Overview</h2>
     <div class="smaller">
         <div class="filter-order-container">
-            <div class="label" style="height:110px;">
+            <div class="label" style="height:120px;">
                 Filter by:<br/>
                 BU<br/>PO<br/>PM
             </div>
@@ -19,9 +19,9 @@
             </div>
         </div>
         <div class="filter-order-container">
-            <div class="label" style="height:110px;">
+            <div class="label" style="height:120px;">
                 Filter by:<br/>
-                State<br/>Audience<br/>Support
+                State<br/>Audience<br/>Portfolio
             </div>
             <div class="field multiple-select">
                 <select multiple="multiple" ng-multiple="true" ng-model="search.state">
@@ -36,8 +36,7 @@
                     <option value="Company">Company</option>
                 </select>
                 <select multiple="multiple" ng-multiple="true" ng-model="search.support">
-                    <option value="None">None</option>
-                    <option value="PMO">PMO</option>
+                    <option ng-repeat="bu in bus" value="{{bu.name}}">{{bu.name}}</option>
                 </select>
             </div>
         </div>

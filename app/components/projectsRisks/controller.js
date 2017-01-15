@@ -53,6 +53,7 @@ angular
                         risk['projectstate'] = project.state;
                         risk['projectoid'] = project._id.$oid;
                         risk['buname'] = project.bu.name;
+                        risk['support'] = project.support;
                         risk['pkpi1'] = project.kpi1;
                         risk['pkpi2'] = project.kpi2;
                         risk['pkpi3'] = project.kpi3;

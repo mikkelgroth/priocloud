@@ -59,14 +59,12 @@
                             <option value="Closed">Closed</option>
                         </select>
                     </td>
-                    <td class="header">Supported</td>
+                    <td class="header">Portfolio</td>
                     <td>
-                        <div ng-if="!user.isOwner && !user.admin">{{project.support}}</div>
+                        <div ng-if="!user.isOwner && !user.admin">{{project.bu.name}}</div>
                         <select ng-if="user.isOwner || user.admin" ng-model="project.support" ng-change="$parent.projecthaschanged=true">
-                            <option value="None">None</option>
-                            <option value="PMO">PMO</option>
-                        </select>
-                    </td>
+                            <option ng-repeat="bu in bus" value="{{bu.name}}">{{bu.name}}</option>
+                        </select></td>
                 </tr>
                 <tr>
                     <td class="l header" colspan="4">Organization</td>
