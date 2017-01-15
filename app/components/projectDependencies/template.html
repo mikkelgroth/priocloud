@@ -25,7 +25,7 @@
                     <option value="1 FTE">1 FTE</option>
                     <option value="2-3 FTE">2-3 FTE</option>
                     <option value="4-7 FTE">4-7 FTE</option>
-                    <option value="8- FTE">8- FTE</option>
+                    <option value=">7 FTE">>7 FTE</option>
                 </select>
             </td>
             <td>
@@ -63,7 +63,7 @@
                     <option value="1 FTE">1 FTE</option>
                     <option value="2-3 FTE">2-3 FTE</option>
                     <option value="4-7 FTE">4-7 FTE</option>
-                    <option value="8- FTE">8- FTE</option>
+                    <option value=">7 FTE">>7 FTE</option>
                 </select>
             </td>
             <td>
@@ -101,7 +101,7 @@
                     <option value="1 FTE">1 FTE</option>
                     <option value="2-3 FTE">2-3 FTE</option>
                     <option value="4-7 FTE">4-7 FTE</option>
-                    <option value="8- FTE">8- FTE</option>
+                    <option value=">7 FTE">>7 FTE</option>
                 </select>
             </td>
             <td>
@@ -139,7 +139,7 @@
                     <option value="1 FTE">1 FTE</option>
                     <option value="2-3 FTE">2-3 FTE</option>
                     <option value="4-7 FTE">4-7 FTE</option>
-                    <option value="8- FTE">8- FTE</option>
+                    <option value=">7 FTE">>7 FTE</option>
                 </select>
             </td>
             <td>
@@ -177,7 +177,7 @@
                     <option value="1 FTE">1 FTE</option>
                     <option value="2-3 FTE">2-3 FTE</option>
                     <option value="4-7 FTE">4-7 FTE</option>
-                    <option value="8- FTE">8- FTE</option>
+                    <option value=">7 FTE">>7 FTE</option>
                 </select>
             </td>
             <td>
@@ -215,7 +215,7 @@
                     <option value="1 FTE">1 FTE</option>
                     <option value="2-3 FTE">2-3 FTE</option>
                     <option value="4-7 FTE">4-7 FTE</option>
-                    <option value="8- FTE">8- FTE</option>
+                    <option value=">7 FTE">>7 FTE</option>
                 </select>
             </td>
             <td>
@@ -253,7 +253,7 @@
                     <option value="1 FTE">1 FTE</option>
                     <option value="2-3 FTE">2-3 FTE</option>
                     <option value="4-7 FTE">4-7 FTE</option>
-                    <option value="8- FTE">8- FTE</option>
+                    <option value=">7 FTE">>7 FTE</option>
                 </select>
             </td>
             <td>
@@ -291,7 +291,7 @@
                     <option value="1 FTE">1 FTE</option>
                     <option value="2-3 FTE">2-3 FTE</option>
                     <option value="4-7 FTE">4-7 FTE</option>
-                    <option value="8- FTE">8- FTE</option>
+                    <option value=">7 FTE">>7 FTE</option>
                 </select>
             </td>
             <td>
@@ -319,5 +319,123 @@
                 </div>
             </td>
         </tr>
+    
+    <tr class="header">
+            <td prio-class prio-skill-render="project.res9skill" prio-size-render="project.res9">{{company.res9lable}}</td>
+            <td>
+                <select ng-model="project.res9fte" ng-change="$parent.projecthaschanged=true">
+                    <option value="None">None</option>
+                    <option value="Minor tasks">Minor tasks</option>
+                    <option value="Major tasks">Major tasks</option>
+                    <option value="1 FTE">1 FTE</option>
+                    <option value="2-3 FTE">2-3 FTE</option>
+                    <option value="4-7 FTE">4-7 FTE</option>
+                    <option value=">7 FTE">>7 FTE</option>
+                </select>
+            </td>
+            <td>
+                <select ng-if="project.res9fte!='None'" ng-model="project.res9" ng-change="$parent.projecthaschanged=true">
+                    <option value="No dependency">No dependency</option>
+                    <option value="Minor dependency">Minor dependency</option>
+                    <option value="Major dependency">Major dependency</option>
+                    <option value="Critical dependency">Critical dependency</option>
+                </select>
+            </td>
+            <td>
+                <select ng-if="project.res9fte!='None'" ng-model="project.res9skill" ng-change="$parent.projecthaschanged=true">
+                    <option value="Ok">Ok</option>
+                    <option value="Minor issue">Minor issue</option>
+                    <option value="Major issue">Major issue</option>
+                    <option value="Emergency">Emergency</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td>Resource comment</td>
+            <td colspan="3">
+                <div class="field">
+                <textarea ng-if="project.res9fte!='None'" ng-model="project.res9comment" maxlength="300" id="res9comment" placeholder="Describe issues like, unavailability, timing, competence, priority ect."></textarea>
+                </div>
+            </td>
+        </tr>
+    
+    <tr class="header">
+            <td prio-class prio-skill-render="project.res10skill" prio-size-render="project.res10">{{company.res10lable}}</td>
+            <td>
+                <select ng-model="project.res10fte" ng-change="$parent.projecthaschanged=true">
+                    <option value="None">None</option>
+                    <option value="Minor tasks">Minor tasks</option>
+                    <option value="Major tasks">Major tasks</option>
+                    <option value="1 FTE">1 FTE</option>
+                    <option value="2-3 FTE">2-3 FTE</option>
+                    <option value="4-7 FTE">4-7 FTE</option>
+                    <option value=">7 FTE">>7 FTE</option>
+                </select>
+            </td>
+            <td>
+                <select ng-if="project.res10fte!='None'" ng-model="project.res10" ng-change="$parent.projecthaschanged=true">
+                    <option value="No dependency">No dependency</option>
+                    <option value="Minor dependency">Minor dependency</option>
+                    <option value="Major dependency">Major dependency</option>
+                    <option value="Critical dependency">Critical dependency</option>
+                </select>
+            </td>
+            <td>
+                <select ng-if="project.res10fte!='None'" ng-model="project.res10skill" ng-change="$parent.projecthaschanged=true">
+                    <option value="Ok">Ok</option>
+                    <option value="Minor issue">Minor issue</option>
+                    <option value="Major issue">Major issue</option>
+                    <option value="Emergency">Emergency</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td>Resource comment</td>
+            <td colspan="3">
+                <div class="field">
+                <textarea ng-if="project.res10fte!='None'" ng-model="project.res10comment" maxlength="300" id="res10comment" placeholder="Describe issues like, unavailability, timing, competence, priority ect."></textarea>
+                </div>
+            </td>
+        </tr>
+    <tr class="header">
+            <td prio-class prio-skill-render="project.res11skill" prio-size-render="project.res11">{{company.res11lable}}</td>
+            <td>
+                <select ng-model="project.res11fte" ng-change="$parent.projecthaschanged=true">
+                    <option value="None">None</option>
+                    <option value="Minor tasks">Minor tasks</option>
+                    <option value="Major tasks">Major tasks</option>
+                    <option value="1 FTE">1 FTE</option>
+                    <option value="2-3 FTE">2-3 FTE</option>
+                    <option value="4-7 FTE">4-7 FTE</option>
+                    <option value=">7 FTE">>7 FTE</option>
+                </select>
+            </td>
+            <td>
+                <select ng-if="project.res11fte!='None'" ng-model="project.res11" ng-change="$parent.projecthaschanged=true">
+                    <option value="No dependency">No dependency</option>
+                    <option value="Minor dependency">Minor dependency</option>
+                    <option value="Major dependency">Major dependency</option>
+                    <option value="Critical dependency">Critical dependency</option>
+                </select>
+            </td>
+            <td>
+                <select ng-if="project.res11fte!='None'" ng-model="project.res11skill" ng-change="$parent.projecthaschanged=true">
+                    <option value="Ok">Ok</option>
+                    <option value="Minor issue">Minor issue</option>
+                    <option value="Major issue">Major issue</option>
+                    <option value="Emergency">Emergency</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td>Resource comment</td>
+            <td colspan="3">
+                <div class="field">
+                <textarea ng-if="project.res11fte!='None'" ng-model="project.res11comment" maxlength="300" id="res11comment" placeholder="Describe issues like, unavailability, timing, competence, priority ect."></textarea>
+                </div>
+            </td>
+        </tr>
+    
+
     </table>
 </div>

@@ -64,44 +64,30 @@
                     <option value="res6">{{company.res6lable}}</option>
                     <option value="res7">{{company.res7lable}}</option>
                     <option value="res8">{{company.res8lable}}</option>
+                    <option value="res9">{{company.res9lable}}</option>
+                    <option value="res10">{{company.res10lable}}</option>
                 </select>
             </div>
         </div>
         <div class="overview">
             <table class="tablelist" ng-if="projectList.length > 0">
-                <tr class="listsubject">
-                    <td colspan="9">
-                        <h3>Projects</h3>
-                    </td>
-                </tr>
                 <tr class="header">
                     <td>
                         Project
                     </td>
-                    <td class="verttd">
-                        <div class="vert">{{company.res1lable}}</div>
-                    </td>
-                    <td class="verttd">
-                        <div class="vert">{{company.res2lable}}</div>
-                    </td>
-                    <td class="verttd">
-                        <div class="vert">{{company.res3lable}}</div>
-                    </td>
-                    <td class="verttd">
-                        <div class="vert">{{company.res4lable}}</div>
-                    </td>
-                    <td class="verttd">
-                        <div class="vert">{{company.res5lable}}</div>
-                    </td>
-                    <td class="verttd">
-                        <div class="vert">{{company.res6lable}}</div>
-                    </td>
-                    <td class="verttd">
-                        <div class="vert">{{company.res7lable}}</div>
-                    </td>
-                    <td class="verttd">
-                        <div class="vert">{{company.res8lable}}</div>
-                    </td>
+                    <td>{{company.res1lableshort}}</td>
+                    <td>{{company.res2lableshort}}</td>
+                    <td>{{company.res3lableshort}}</td>
+                    <td>{{company.res4lableshort}}</td>
+                    <td>{{company.res5lableshort}}</td>
+                    <td>{{company.res6lableshort}}</td>
+                    <td>{{company.res7lableshort}}</td>
+                    <td>{{company.res8lableshort}}</td>
+                    <td>{{company.res9lableshort}}</td>
+                    <td>{{company.res10lableshort}}</td>
+                    <td>{{company.res11lableshort}}</td>
+                    
+                    
                 </tr>
                 <tr ng-repeat="project in projectList | multiFilter:search | orderBy:porderparam" ng-click="goToProject(project._id.$oid)" class="link">
                     <td class="{{project.lastStatus.status}}">
@@ -130,6 +116,15 @@
                     </td>
                     <td prio-class prio-skill-render="project.res8skill" prio-size-render="project.res8">
                         <div ng-if="project.res8fte != 'None'">{{project.res8fte}}</div>
+                    </td>
+                    <td prio-class prio-skill-render="project.res9skill" prio-size-render="project.res9">
+                        <div ng-if="project.res9fte != 'None'">{{project.res9fte}}</div>
+                    </td>
+                    <td prio-class prio-skill-render="project.res10skill" prio-size-render="project.res10">
+                        <div ng-if="project.res10fte != 'None'">{{project.res10fte}}</div>
+                    </td>
+                    <td prio-class prio-skill-render="project.res11skill" prio-size-render="project.res11">
+                        <div ng-if="project.res11fte != 'None'">{{project.res11fte}}</div>
                     </td>
                 </tr>
             </table>
