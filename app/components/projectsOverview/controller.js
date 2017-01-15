@@ -41,9 +41,15 @@ angular
                     project.buname = project.bu.name;
                     project.poname = project.po.name;
                     project.pmname = project.pm.name;
-
+                    project.warn = "";
                     // set last status
                     project.lastStatus = project.statuses[project.statuses.length - 1];
+
+                    var now = new Date();
+                    var status = new Date(project.lastStatus.date);
+                    if(Math.round((status.getTime()-now.getTime()) / (1000*60*60*24)) < -14){project.warn = "!";}
+                    if(Math.round((status.getTime()-now.getTime()) / (1000*60*60*24)) < -30){project.warn = "!!";}
+                    if(Math.round((status.getTime()-now.getTime()) / (1000*60*60*24)) < -45){project.warn = "!!!";}
 
                     return project;
                 });

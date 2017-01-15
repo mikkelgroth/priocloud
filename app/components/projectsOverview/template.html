@@ -90,7 +90,7 @@
                     </td>
                     <td>
                         <div class="right">
-                            {{project.lastStatus.date | date:'yyyy-MM-dd'}}
+                            <b>{{project.warn}}</b> {{project.lastStatus.date | date:'yyyy-MM-dd'}}
                             <br/>
                             {{project.lastStatus.demodate | date:'yyyy-MM-dd'}}
                         </div>

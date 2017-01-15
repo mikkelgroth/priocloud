@@ -323,7 +323,7 @@
             <tr>
                 <td colspan="4">
                     <div class="right">
-                        <button type="button" ng-show="saveStatusEnabled" ng-click="saveStatus()" ng-if="(user.email==project.po.email || user.email==project.altpo.email || user.email==project.altpo.email || user.email==project.altpm.email || user.isOwner || user.admin) && (editstatus.active == null || editstatus.active)">save </button>
+                        <button type="button" ng-show="saveStatusEnabled" ng-click="saveStatus(editstatus)" ng-if="(user.email==project.po.email || user.email==project.altpo.email || user.email==project.altpo.email || user.email==project.altpm.email || user.isOwner || user.admin) && (editstatus.active == null || editstatus.active)">save </button>
                     </div>
                 </td>
             </tr>
