@@ -110,9 +110,10 @@ angular
                     risk.freq.kpi2 = 0;
                     risk.freq.kpi3 = 0;
                 }
-
+                if($scope.project.risks==null){
+                    $scope.project.risks=[];
+                }
                 if ($scope.project.risks.indexOf(risk) == -1) {
-
                     $scope.project.risks.push(risk);
                 }
                 
