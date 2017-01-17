@@ -89,8 +89,9 @@
                         {{project.lastStatus.productcs}}
                     </td>
                     <td>
+                        <b>{{project.warn}}</b>
                         <div class="right">
-                            <b>{{project.warn}}</b> {{project.lastStatus.date | date:'yyyy-MM-dd'}}
+                            {{project.lastStatus.date | date:'yyyy-MM-dd'}}
                             <br/>
                             {{project.lastStatus.demodate | date:'yyyy-MM-dd'}}
                         </div>
