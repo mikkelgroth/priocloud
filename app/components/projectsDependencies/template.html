@@ -55,16 +55,20 @@
                     <option value="-kpi6">KPI: {{company.projkpi6lable}}</option>
                     <option value="title">Title</option>
                     <option value="bu.name">BU</option>
-                    <option value="res1">{{company.res1lable}}</option>
-                    <option value="res2">{{company.res2lable}}</option>
-                    <option value="res3">{{company.res3lable}}</option>
-                    <option value="res4">{{company.res4lable}}</option>
-                    <option value="res5">{{company.res5lable}}</option>
-                    <option value="res6">{{company.res6lable}}</option>
-                    <option value="res7">{{company.res7lable}}</option>
-                    <option value="res8">{{company.res8lable}}</option>
-                    <option value="res9">{{company.res9lable}}</option>
-                    <option value="res10">{{company.res10lable}}</option>
+                    <option value="res1">Resource: {{company.res1lable}}</option>
+                    <option value="res2">Resource: {{company.res2lable}}</option>
+                    <option value="res3">Resource: {{company.res3lable}}</option>
+                    <option value="res4">Resource: {{company.res4lable}}</option>
+                    <option value="res5">Resource: {{company.res5lable}}</option>
+                    <option value="res6">Resource: {{company.res6lable}}</option>
+                    <option value="res7">Resource: {{company.res7lable}}</option>
+                    <option value="res8">Resource: {{company.res8lable}}</option>
+                    <option value="res9">Resource: {{company.res9lable}}</option>
+                    <option value="res10">Resource: {{company.res10lable}}</option>
+                    <option value="res11">Resource: {{company.res11lable}}</option>
+                    <option value="res12">Resource: {{company.res12lable}}</option>
+                    <option value="res13">Resource: {{company.res13lable}}</option>
+                    <option value="res14">Resource: {{company.res14lable}}</option>
                 </select>
             </div>
         </div>
@@ -85,6 +89,9 @@
                     <td>{{company.res9lableshort}}</td>
                     <td>{{company.res10lableshort}}</td>
                     <td>{{company.res11lableshort}}</td>
+                    <td>{{company.res12lableshort}}</td>
+                    <td>{{company.res13lableshort}}</td>
+                    <td>{{company.res14lableshort}}</td>
                     
                     
                 </tr>
@@ -92,39 +99,78 @@
                     <td class="{{project.lastStatus.status}}">
                         {{project.title}}
                     </td>
-                    <td prio-class prio-skill-render="project.res1skill" prio-size-render="project.res1">
-                        <div ng-if="project.res1fte != 'None'">{{project.res1fte}}</div>
+                    <td prio-class prio-skill-render="project.res1skill" prio-size-render="project.res1" class="tooltip">
+                        <div ng-if="project.res1fte != 'None'">
+                            <span class="tooltiptext">Request: {{project.res1fte}}<br/>{{project.res1comment}}</span>
+                        </div>
                     </td>
-                    <td prio-class prio-skill-render="project.res2skill" prio-size-render="project.res2">
-                        <div ng-if="project.res2fte != 'None'">{{project.res2fte}}</div>
+<td prio-class prio-skill-render="project.res2skill" prio-size-render="project.res2" class="tooltip">
+                        <div ng-if="project.res2fte != 'None'">
+                            <span class="tooltiptext">Request: {{project.res2fte}}<br/>{{project.res2comment}}</span>
+                        </div>
                     </td>
-                    <td prio-class prio-skill-render="project.res3skill" prio-size-render="project.res3">
-                        <div ng-if="project.res3fte != 'None'">{{project.res3fte}}</div>
+<td prio-class prio-skill-render="project.res3skill" prio-size-render="project.res3" class="tooltip">
+                        <div ng-if="project.res3fte != 'None'">
+                            <span class="tooltiptext">Request: {{project.res3fte}}<br/>{{project.res3comment}}</span>
+                        </div>
                     </td>
-                    <td prio-class prio-skill-render="project.res4skill" prio-size-render="project.res4">
-                        <div ng-if="project.res4fte != 'None'">{{project.res4fte}}</div>
+<td prio-class prio-skill-render="project.res4skill" prio-size-render="project.res4" class="tooltip">
+                        <div ng-if="project.res4fte != 'None'">
+                            <span class="tooltiptext">Request: {{project.res4fte}}<br/>{{project.res4comment}}</span>
+                        </div>
                     </td>
-                    <td prio-class prio-skill-render="project.res5skill" prio-size-render="project.res5">
-                        <div ng-if="project.res5fte != 'None'">{{project.res5fte}}</div>
+<td prio-class prio-skill-render="project.res5skill" prio-size-render="project.res5" class="tooltip">
+                        <div ng-if="project.res5fte != 'None'">
+                            <span class="tooltiptext">Request: {{project.res5fte}}<br/>{{project.res5comment}}</span>
+                        </div>
                     </td>
-                    <td prio-class prio-skill-render="project.res6skill" prio-size-render="project.res6">
-                        <div ng-if="project.res6fte != 'None'">{{project.res6fte}}</div>
+<td prio-class prio-skill-render="project.res6skill" prio-size-render="project.res6" class="tooltip">
+                        <div ng-if="project.res6fte != 'None'">
+                            <span class="tooltiptext">Request: {{project.res6fte}}<br/>{{project.res6comment}}</span>
+                        </div>
                     </td>
-                    <td prio-class prio-skill-render="project.res7skill" prio-size-render="project.res7">
-                        <div ng-if="project.res7fte != 'None'">{{project.res7fte}}</div>
+<td prio-class prio-skill-render="project.res7skill" prio-size-render="project.res7" class="tooltip">
+                        <div ng-if="project.res7fte != 'None'">
+                            <span class="tooltiptext">Request: {{project.res7fte}}<br/>{{project.res7comment}}</span>
+                        </div>
                     </td>
-                    <td prio-class prio-skill-render="project.res8skill" prio-size-render="project.res8">
-                        <div ng-if="project.res8fte != 'None'">{{project.res8fte}}</div>
+<td prio-class prio-skill-render="project.res8skill" prio-size-render="project.res8" class="tooltip">
+                        <div ng-if="project.res8fte != 'None'">
+                            <span class="tooltiptext">Request: {{project.res8fte}}<br/>{{project.res8comment}}</span>
+                        </div>
                     </td>
-                    <td prio-class prio-skill-render="project.res9skill" prio-size-render="project.res9">
-                        <div ng-if="project.res9fte != 'None'">{{project.res9fte}}</div>
+<td prio-class prio-skill-render="project.res9skill" prio-size-render="project.res9" class="tooltip">
+                        <div ng-if="project.res9fte != 'None'">
+                            <span class="tooltiptext">Request: {{project.res9fte}}<br/>{{project.res9comment}}</span>
+                        </div>
                     </td>
-                    <td prio-class prio-skill-render="project.res10skill" prio-size-render="project.res10">
-                        <div ng-if="project.res10fte != 'None'">{{project.res10fte}}</div>
+<td prio-class prio-skill-render="project.res10skill" prio-size-render="project.res10" class="tooltip">
+                        <div ng-if="project.res10fte != 'None'">
+                            <span class="tooltiptext">Request: {{project.res10fte}}<br/>{{project.res10comment}}</span>
+                        </div>
                     </td>
-                    <td prio-class prio-skill-render="project.res11skill" prio-size-render="project.res11">
-                        <div ng-if="project.res11fte != 'None'">{{project.res11fte}}</div>
+<td prio-class prio-skill-render="project.res11skill" prio-size-render="project.res11" class="tooltip">
+                        <div ng-if="project.res11fte != 'None'">
+                            <span class="tooltiptext">Request: {{project.res11fte}}<br/>{{project.res11comment}}</span>
+                        </div>
                     </td>
+<td prio-class prio-skill-render="project.res12skill" prio-size-render="project.res12" class="tooltip">
+                        <div ng-if="project.res12fte != 'None'">
+                            <span class="tooltiptext">Request: {{project.res12fte}}<br/>{{project.res12comment}}</span>
+                        </div>
+                    </td>
+<td prio-class prio-skill-render="project.res13skill" prio-size-render="project.res13" class="tooltip">
+                        <div ng-if="project.res13fte != 'None'">
+                            <span class="tooltiptext">Request: {{project.res13fte}}<br/>{{project.res13comment}}</span>
+                        </div>
+                    </td>
+<td prio-class prio-skill-render="project.res14skill" prio-size-render="project.res14" class="tooltip">
+                        <div ng-if="project.res14fte != 'None'">
+                            <span class="tooltiptext">Request: {{project.res14fte}}<br/>{{project.res14comment}}</span>
+                        </div>
+                    </td>
+
+
                 </tr>
             </table>
         </div>

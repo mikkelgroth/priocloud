@@ -262,7 +262,7 @@ tr.listsubject td h3 {
 	height: 10px;
 	background-color: transparent;
 	border-radius: 100%;
-	margin-right: 10px;
+	margin-right: 6px;
 	border: 1px solid transparent;
 }
 
@@ -310,32 +310,32 @@ h2.Green:before {
 	height: 0px;	
 }
 .rad1:before{
+	width: 10px;
+	height: 10px;	
+}
+.rad2:before{
+	width: 12px;
+	height: 12px;	
+}
+.rad3:before{
 	width: 14px;
 	height: 14px;	
 }
-.rad2:before{
+.rad4:before{
 	width: 16px;
 	height: 16px;	
 }
-.rad3:before{
+.rad5:before{
+	width: 18px;
+	height: 18px;	
+}
+.rad6:before{
 	width: 20px;
 	height: 20px;	
 }
-.rad4:before{
-	width: 26px;
-	height: 26px;	
-}
-.rad5:before{
-	width: 30px;
-	height: 30px;	
-}
-.rad6:before{
-	width: 35px;
-	height: 35px;	
-}
 .rad7:before{
-	width: 40px;
-	height: 40px;	
+	width: 22px;
+	height: 22px;	
 }
 
 
@@ -348,7 +348,7 @@ h2.Green:before {
 	width: 100%;
 	position: relative;
 }
-.tooltip {
+/*.tooltip {
 	position: absolute;
 	background-color: #FFF;
 	padding: 1em;
@@ -356,7 +356,7 @@ h2.Green:before {
 	border: 1px solid #A8A9A9;
 	min-width: 100px;
 }
-
+*/
 
 
 .dndbox{
@@ -629,4 +629,43 @@ select {
 #project-dependencies table td input {
     min-width: 0;
     width: 100%;
+}
+
+/* Tooltips */
+.tooltip {
+    position: relative;
+
+}
+
+.tooltip .tooltiptext {
+    visibility: hidden;
+    width: 200px;
+    background-color: #555;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    position: absolute;
+    z-index: 1;
+    bottom: 100%;
+    left: 50%;
+    margin-left: -100px;
+    opacity: 0;
+    transition: opacity 1s;
+}
+
+.tooltip .tooltiptext::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: #555 transparent transparent transparent;
+}
+
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+    opacity: 1;
 }

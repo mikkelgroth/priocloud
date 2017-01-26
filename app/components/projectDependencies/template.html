@@ -435,6 +435,120 @@
                 </div>
             </td>
         </tr>
+    <tr class="header">
+            <td prio-class prio-skill-render="project.res12skill" prio-size-render="project.res12">{{company.res12lable}}</td>
+            <td>
+                <select ng-model="project.res12fte" ng-change="$parent.projecthaschanged=true">
+                    <option value="None">None</option>
+                    <option value="Minor tasks">Minor tasks</option>
+                    <option value="Major tasks">Major tasks</option>
+                    <option value="1 FTE">1 FTE</option>
+                    <option value="2-3 FTE">2-3 FTE</option>
+                    <option value="4-7 FTE">4-7 FTE</option>
+                    <option value=">7 FTE">>7 FTE</option>
+                </select>
+            </td>
+            <td>
+                <select ng-if="project.res12fte!='None'" ng-model="project.res12" ng-change="$parent.projecthaschanged=true">
+                    <option value="No dependency">No dependency</option>
+                    <option value="Minor dependency">Minor dependency</option>
+                    <option value="Major dependency">Major dependency</option>
+                    <option value="Critical dependency">Critical dependency</option>
+                </select>
+            </td>
+            <td>
+                <select ng-if="project.res12fte!='None'" ng-model="project.res12skill" ng-change="$parent.projecthaschanged=true">
+                    <option value="Ok">Ok</option>
+                    <option value="Minor issue">Minor issue</option>
+                    <option value="Major issue">Major issue</option>
+                    <option value="Emergency">Emergency</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td>Resource comment</td>
+            <td colspan="3">
+                <div class="field">
+                <textarea ng-if="project.res12fte!='None'" ng-model="project.res12comment" maxlength="300" id="res12comment" placeholder="Describe issues like, unavailability, timing, competence, priority ect."></textarea>
+                </div>
+            </td>
+        </tr>
+    <tr class="header">
+            <td prio-class prio-skill-render="project.res13skill" prio-size-render="project.res13">{{company.res13lable}}</td>
+            <td>
+                <select ng-model="project.res13fte" ng-change="$parent.projecthaschanged=true">
+                    <option value="None">None</option>
+                    <option value="Minor tasks">Minor tasks</option>
+                    <option value="Major tasks">Major tasks</option>
+                    <option value="1 FTE">1 FTE</option>
+                    <option value="2-3 FTE">2-3 FTE</option>
+                    <option value="4-7 FTE">4-7 FTE</option>
+                    <option value=">7 FTE">>7 FTE</option>
+                </select>
+            </td>
+            <td>
+                <select ng-if="project.res13fte!='None'" ng-model="project.res13" ng-change="$parent.projecthaschanged=true">
+                    <option value="No dependency">No dependency</option>
+                    <option value="Minor dependency">Minor dependency</option>
+                    <option value="Major dependency">Major dependency</option>
+                    <option value="Critical dependency">Critical dependency</option>
+                </select>
+            </td>
+            <td>
+                <select ng-if="project.res13fte!='None'" ng-model="project.res13skill" ng-change="$parent.projecthaschanged=true">
+                    <option value="Ok">Ok</option>
+                    <option value="Minor issue">Minor issue</option>
+                    <option value="Major issue">Major issue</option>
+                    <option value="Emergency">Emergency</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td>Resource comment</td>
+            <td colspan="3">
+                <div class="field">
+                <textarea ng-if="project.res13fte!='None'" ng-model="project.res13comment" maxlength="300" id="res13comment" placeholder="Describe issues like, unavailability, timing, competence, priority ect."></textarea>
+                </div>
+            </td>
+        </tr>
+    <tr class="header">
+            <td prio-class prio-skill-render="project.res14skill" prio-size-render="project.res14">{{company.res14lable}}</td>
+            <td>
+                <select ng-model="project.res14fte" ng-change="$parent.projecthaschanged=true">
+                    <option value="None">None</option>
+                    <option value="Minor tasks">Minor tasks</option>
+                    <option value="Major tasks">Major tasks</option>
+                    <option value="1 FTE">1 FTE</option>
+                    <option value="2-3 FTE">2-3 FTE</option>
+                    <option value="4-7 FTE">4-7 FTE</option>
+                    <option value=">7 FTE">>7 FTE</option>
+                </select>
+            </td>
+            <td>
+                <select ng-if="project.res14fte!='None'" ng-model="project.res14" ng-change="$parent.projecthaschanged=true">
+                    <option value="No dependency">No dependency</option>
+                    <option value="Minor dependency">Minor dependency</option>
+                    <option value="Major dependency">Major dependency</option>
+                    <option value="Critical dependency">Critical dependency</option>
+                </select>
+            </td>
+            <td>
+                <select ng-if="project.res14fte!='None'" ng-model="project.res14skill" ng-change="$parent.projecthaschanged=true">
+                    <option value="Ok">Ok</option>
+                    <option value="Minor issue">Minor issue</option>
+                    <option value="Major issue">Major issue</option>
+                    <option value="Emergency">Emergency</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td>Resource comment</td>
+            <td colspan="3">
+                <div class="field">
+                <textarea ng-if="project.res14fte!='None'" ng-model="project.res14comment" maxlength="300" id="res14comment" placeholder="Describe issues like, unavailability, timing, competence, priority ect."></textarea>
+                </div>
+            </td>
+        </tr>
     
 
     </table>
