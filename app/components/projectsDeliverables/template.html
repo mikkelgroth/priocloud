@@ -17,10 +17,16 @@
         </div>
         <div class="filter-order-container">
             <div class="label" style="height:120px;">
-                Filter by:<br/> Status
-                <br/>State<br/>Audience
+                Filter by:<br/> P. State<br/>Status
+                <br/>R. State<br/>Audience
             </div>
             <div class="field multiple-select">
+                <select multiple="multiple" ng-multiple="true" ng-model="milesearch.pstate">
+                    <option value="Proposed">Proposed</option>
+                    <option value="Progress" ng-selected="true">Progress</option>
+                    <option value="Onhold">On hold</option>
+                    <option value="Closed">Closed</option>
+                </select>
                 <select multiple="multiple" ng-multiple="true" ng-model="milesearch.status">
                     <option value="Green">Accept</option>
                     <option value="Yellow">Observe</option>

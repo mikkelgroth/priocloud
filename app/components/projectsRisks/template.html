@@ -23,9 +23,15 @@
         <div class="filter-order-container">
             <div class="label" style="height:120px;">
                 Filter by:<br/>
-                Status<br/>Response<br/>Probability<br/>Impact
+                P. State<br/>Status<br/>Response<br/>Probability<br/>Impact
             </div>
             <div class="field multiple-select">
+                <select multiple="multiple" ng-multiple="true" ng-model="risksearch.projectstate">
+                    <option value="Proposed">Proposed</option>
+                    <option value="Progress" ng-selected="true">Progress</option>
+                    <option value="Onhold">On hold</option>
+                    <option value="Closed">Closed</option>
+                </select>
                 <select multiple="multiple" ng-multiple="true" ng-model="risksearch.status">
                     <option value="Green">Accept</option>
                     <option value="Yellow">Observe</option>
