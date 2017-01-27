@@ -43,7 +43,22 @@ angular
   }
   angular.element(document.body).on('keydown DOMMouseScroll mousedown', movement);
     
+$scope.newPassword = function() {
+	    //alert("Setting new password for user [" + $scope.email+ "]: " +$scope.newpassword);
+		$http.post(SERVER+'?action=updatepassword&application=priocloud&email=' + $scope.email + '&password=' + $scope.newpassword + '&onetimepassword='+$routeParams.otpw).
+		success(function(data, status, headers, config) {
+			$rootScope.user = data;
+			$window.sessionStorage["user"] = JSON.stringify($rootScope.user);
 
+			if (!$rootScope.user.authenticated) {
+				alert('Reset failure:\n\n' + data.message);
+			}else{
+				movement(); //init when login is done
+                            userService.authenticate(data);
+                            $location.path('/');
+			}
+		});
+	}
 
 
             $scope.login = function () {
