@@ -7,13 +7,17 @@ angular
         '$location',
         'userService', 
         '$timeout',
+        '$window',
+        '$routeParams',
         function (
             $scope,
             $rootScope,
             $http,
             $location,
             userService, 
-            $timeout
+            $timeout,
+            $window,
+            $routeParams
         ) {
 
 
@@ -45,7 +49,7 @@ angular
     
 $scope.newPassword = function() {
 	    //alert("Setting new password for user [" + $scope.email+ "]: " +$scope.newpassword);
-		$http.post(SERVER+'?action=updatepassword&application=priocloud&email=' + $scope.email + '&password=' + $scope.newpassword + '&onetimepassword='+$routeParams.otpw).
+		$http.post(USERSERVER+'?action=updatepassword&application=priocloud&email=' + $scope.email + '&password=' + $scope.newpassword + '&onetimepassword='+$routeParams.otpw).
 		success(function(data, status, headers, config) {
 			$rootScope.user = data;
 			$window.sessionStorage["user"] = JSON.stringify($rootScope.user);
@@ -88,7 +92,7 @@ console.log("Logout...");
             $scope.resetPassword = function (email) {
 
                 $http
-                    .post(SERVER + '?action=resetpassword&application=priocloud&email=' + email)
+                    .post(USERSERVER + '?action=resetpassword&application=priocloud&email=' + email)
                     .success(function (data, status, headers, config) {
                         
                         alert('PW reset and mail sent');
