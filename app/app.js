@@ -105,10 +105,21 @@ angular
 
                         userService.authenticate(data.user);
 
-                    } else {
+                    }
 
-                        userService.invalidate();
-                        $location.path('/login');
+                    
+                    else {
+                        var pid=$location.path().split("/")[1]||"Unknown";
+                        console.log(pid);
+                        if(pid==="otpw"){
+                            console.log('direct to otpw');
+
+                        }else{
+                            console.log('Login redirect from app.js' + $location.path());
+                            userService.invalidate();
+                            $location.path('/login');
+
+                        }
                     }
                 });
 
