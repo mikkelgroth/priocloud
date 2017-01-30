@@ -157,7 +157,7 @@ angular.module('riskApp.controllers', [])
 			if (!$rootScope.user.authenticated) {
 				alert('Reset failure:\n\n' + data.message);
 			}else{
-				$location.path('/dashboard');
+				$location.path('/projects');
 				console.log('loading projects');
 				restService.setApplication($rootScope.user.auid, $rootScope.user.uuid);
 				stateService.loadCompany();
