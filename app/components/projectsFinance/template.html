@@ -76,7 +76,7 @@
                     <td>Grand</td>
                 </tr>
                 <tr ng-repeat="project in projectList | multiFilter:search | orderBy:porderparam" ng-click="goToProject(project._id.$oid)" class="link">
-                    <td class="{{project.lastStatus.status}} tooltip">{{project.title}}
+                    <td class="{{project.lastStatus.status}} tooltip">{{project.projectnumber}}-{{project.title}}
                         <span class="tooltiptext">
                             <b>Deviation comments</b><br/>
                             Q1: {{project.finance.devq1}}<br/>
