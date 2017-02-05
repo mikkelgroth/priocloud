@@ -62,11 +62,11 @@
             <table class="tablelist" ng-if="projectList.length > 0">
                 <tr class="listsubject">
                     <td colspan="8">
-                        <h3>Projects Finance - Deviation</h3>
+                        <h3>Projects Finance - Deviations in TDKK</h3>
                     </td>
                 </tr>
                 <tr class="header">
-                    <td>Deviation, TDKK</td>
+                    <td>Control status, Proj. number, Proj.</td>
                     <td>Prev</td>
                     <td>Q1</td>
                     <td>Q2</td>
@@ -76,7 +76,7 @@
                     <td>Grand</td>
                 </tr>
                 <tr ng-repeat="project in projectList | multiFilter:search | orderBy:porderparam" ng-click="goToProject(project._id.$oid)" class="link">
-                    <td class="{{project.lastStatus.status}} tooltip">{{project.projectnumber}}-{{project.title}}
+                    <td class="{{project.financeControl}} tooltip">{{project.projectnumber}}-{{project.title}}
                         <span class="tooltiptext">
                             <b>Deviation comments</b><br/>
                             Q1: {{project.finance.devq1}}<br/>

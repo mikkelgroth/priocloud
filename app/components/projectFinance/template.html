@@ -4,14 +4,37 @@
 <div id="linkdiv8" class="view">
     <h2>
         Finance
-        <div class="right">
-            <button type="button" ng-class="{'Red': projecthaschanged}" ng-if="user.email==project.po.email || user.email==project.pm.email || user.email==project.altpo.email || user.email==project.altpm.email || user.isOwner || user.admin"
+        
+    </h2>
+    <div class="right">
+            
+            <button type="button" ng-class="{'Red': projecthaschanged}" ng-if="user.email==project.po.email || user.email==project.pm.email || user.email==project.altpo.email || user.email==project.altpm.email || user.isOwner || user.admin || user.controller"
                 ng-click="saveProject(project)">save project</button>
         </div>
-    </h2>
     <div id="finance" ng-show="route == 'finance'">
         <h3>Key project figures</h3>
         <table class="smaller smallinput">
+            <tr class="header">
+                <td colspan="8"><div class="right">
+                    <div ng-if="user.controller || user.admin">
+                    <select ng-model="project.financeControl">
+                        <option value="Green">Finance controlled (Green)</option>
+                        <option value="Yellow">Please update (Yellow)</option>
+                        <option value="Orange">Deviation unexplained (Orange)</option>
+                        <option value="Red">Budget breached (Red)</option>
+                    </select>
+                    </div>
+                    <div ng-if="!user.controller && !user.admin">
+                    <select ng-model="project.financeControl" disabled>
+                        <option value="Green">Finance controlled (Green)</option>
+                        <option value="Yellow">Please update (Yellow)</option>
+                        <option value="Orange">Deviation unexplained (Orange)</option>
+                        <option value="Red">Budget breached (Red)</option>
+                    </select>
+                    </div>
+                    </div>
+                </td>
+            </tr>
             <tr class="header">
                 <td>TDKK Ex. Vat</td>
                 <td>Prev</td>
