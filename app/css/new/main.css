@@ -266,6 +266,7 @@ tr.listsubject td h3 {
 	border: 1px solid transparent;
 }
 
+
 .Yellow:before {
 	background-color: #FE0;
     border-color: #E6CA01;
@@ -282,6 +283,8 @@ tr.listsubject td h3 {
 	background-color: orange;
     border-color: darkorange;	
 }
+
+
 .Blue:before {
 	background-color: lightblue;
     border-color: darkblue;	

@@ -30,6 +30,8 @@ angular
 
             }, true);
 
+
+
             scope.$watch(attrs['prioKpiSizeRender'], function (newVal) {
                 
                 if (newVal == '0') classList['prioKpiSizeRender'] = "rad0";
