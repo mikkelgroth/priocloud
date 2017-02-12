@@ -635,6 +635,9 @@ select {
 	.fanes {
 		display: none;
 	}
+	.disp {
+		display: none;
+	}
 	
 	.main-container {
 		margin: 0 auto;

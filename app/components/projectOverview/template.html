@@ -1,12 +1,21 @@
 <prio-project-menu prio-project-id="{{project._id.$oid}}" prio-project-title="{{project.title}}"></prio-project-menu>
-
+<div class="disp">
+<b>Show:</b>  <input type="checkbox" ng-model="showDetails" ng-init="showDetails=true"> Details,&nbsp;
+<input type="checkbox" ng-model="showStatus" ng-init="showStatus=true"> Status,&nbsp;
+ <input type="checkbox" ng-model="showFinance" ng-init="showFinance=true"> Finance,&nbsp;
+ <input type="checkbox" ng-model="showBusinesscase" ng-init="showBusinesscase=true"> Business case,&nbsp;
+ <input type="checkbox" ng-model="showIssues" ng-init="showIssues=true"> Issues,&nbsp;
+ <input type="checkbox" ng-model="showRisks" ng-init="showRisks=true"> Risks,&nbsp;
+ <input type="checkbox" ng-model="showDeliverables" ng-init="showDeliverables=true"> Deliverables,&nbsp;
+ <input type="checkbox" ng-model="showDepend" ng-init="showDepend=true"> Dependencies
+</div>
 <div id="project-overview" class="view">
     <div class="mainbox" id="overview">
         <h2 class="{{editstatus.status}}">
             {{project.title}} - {{project.state}}
         </h2>
         <table class="noborder nopadding smaller gutter-top">
-            <tr>
+            <tr ng-if="showDetails">
                 <td>
                     <div class="overview">
                         <table class="tablelist">
@@ -37,7 +46,7 @@
                     </div>
                 </td>
             </tr>
-            <tr>
+            <tr ng-if="showStatus">
                 <td colspan="3">
                     <div class="overview">
                         <table class="tablelist">
@@ -129,7 +138,7 @@
                     </div>
                 </td>
             </tr>
-            <tr>
+            <tr ng-if="showFinance">
                 <td colspan="3">
                     <div class="overview">
                         <table class="tablelist">
@@ -178,7 +187,7 @@
                 </td>
             </tr>
 
-            <tr>
+            <tr ng-if="showBusinesscase">
                 <td colspan="3">
                     <div class="overview">
                         <table class="tablelist">
@@ -230,14 +239,13 @@
                     </div>
                 </td>
             </tr>
-            <tr>
+            <tr ng-if="showIssues">
                 <td colspan="3">
                     <div class="overview">
                         <table class="tablelist" ng-if="project.risks.length > 0">
                             <tr class="header">
                                 <td class="label l">Issue</td>
-                                <td class="label">Description</td>
-                                <td class="label">Response</td>
+                                <td class="label">Request</td>
                                 <td class="label">Audience</td>
                             </tr>
                             <tr ng-repeat="risk in project.risks | orderBy:'-total'" ng-click="goToRiskInProject(risk)" class="link" 
@@ -252,15 +260,14 @@
                             risk.state!='Closed' && 
                             project.showconfrisk=='true')">
                                 <td class="{{risk.status}}">{{risk.title}}</td>
-                                <td>&nbsp;{{risk.desc}}</td>
-                                <td>&nbsp;{{risk.response}}</td>
+                                <td>&nbsp;{{risk.request}}</td>
                                 <td>&nbsp;{{risk.audience}}</td>
                             </tr>
                         </table>
                     </div>
                 </td>
             </tr>
-            <tr>
+            <tr ng-if="showRisks">
                 <td colspan="3">
                     <div class="overview">
                         <table class="tablelist" ng-if="project.risks.length > 0">
@@ -283,7 +290,7 @@
                     </div>
                 </td>
             </tr>
-            <tr>
+            <tr ng-if="showDeliverables">
                 <td colspan="3">
                     <div class="overview">
                         <table class="tablelist" ng-if="project.milestones.length > 0">
@@ -305,7 +312,7 @@
                     </div>
                 </td>
             </tr>
-            <tr>
+            <tr ng-if="showDepend">
                 <td colspan="3">
                     <div class="overview">
                         <table class="tablelist">
