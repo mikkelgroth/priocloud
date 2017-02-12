@@ -10,10 +10,10 @@ angular
 
             scope.$watch(attrs['prioSizeRender'], function (newVal) {
                 
-                if (newVal == 'No dependency') classList['prioSizeRender'] = "rad0";
+                if (newVal == 'No dependency') classList['prioSizeRender'] = "rad1";
                 else if (newVal == 'Minor dependency') classList['prioSizeRender'] = "rad2";
                 else if (newVal == 'Major dependency') classList['prioSizeRender'] = "rad4";
-                else if (newVal) classList['prioSizeRender'] = "rad6";
+                else if (newVal) classList['prioSizeRender'] = "rad7";
 
                 repaintClasses();
 
@@ -25,6 +25,17 @@ angular
                 else if (newVal == 'Minor issue') classList['prioSkillRender'] = "Yellow";
                 else if (newVal == 'Major issue') classList['prioSkillRender'] = "Orange";
                 else if (newVal) classList['prioSkillRender'] = "Red";
+
+                repaintClasses();
+
+            }, true);
+
+            scope.$watch(attrs['prioResRender'], function (newVal) {
+                
+                if (newVal == 'Committed') classList['prioResRender'] = "ResGreen";
+                else if (newVal == 'Backlog') classList['prioResRender'] = "ResYellow";
+                else if (newVal == 'Tentative') classList['prioResRender'] = "ResOrange";
+                else if (newVal) classList['prioResRender'] = "ResRed";
 
                 repaintClasses();
 

@@ -99,88 +99,200 @@
                     <td class="{{project.lastStatus.status}}">
                         {{project.title}}
                     </td>
-                    <td prio-class prio-skill-render="project.res1skill" prio-size-render="project.res1" class="tooltip">
+                    <td class="tooltip">
                         <div ng-if="project.res1fte != 'None'">
-                            {{project.res1owner| limitTo:3}}.
-                            <span class="tooltiptext">Request: {{project.res1fte}}<br/>{{project.res1comment}}</span>
+                           <div prio-class prio-skill-render="project.res1skill" prio-size-render="project.res1"></div>
+                           <div prio-class prio-res-render="project.res1owner"></div>
+                            <span class="tooltiptext">
+                                <table class="tooltiptext">
+                                    <tr><td><b>Request:</b></td><td>{{project.res1fte}}</td></tr>
+                                    <tr><td><b>Project:</b></td><td>{{project.res1comment}}</td></tr>
+                                    <tr><td><b>Response:</b></td><td>{{project.res1owner}}</td></tr>
+                                    <tr><td><b>Res. Owner:</b></td><td>{{project.res1ownercomment}}</td></tr>
+                                </table>
+                            </span>
                         </div>
                     </td>
-<td prio-class prio-skill-render="project.res2skill" prio-size-render="project.res2" class="tooltip">
+                    <td class="tooltip">
                         <div ng-if="project.res2fte != 'None'">
-                            {{project.res2owner| limitTo:3}}.
-                            <span class="tooltiptext">Request: {{project.res2fte}}<br/>{{project.res2comment}}</span>
+                           <div prio-class prio-skill-render="project.res2skill" prio-size-render="project.res2"></div>
+                           <div prio-class prio-res-render="project.res2owner"></div>
+                            <span class="tooltiptext">
+                                <table class="tooltiptext">
+                                    <tr><td><b>Request:</b></td><td>{{project.res2fte}}</td></tr>
+                                    <tr><td><b>Project:</b></td><td>{{project.res2comment}}</td></tr>
+                                    <tr><td><b>Response:</b></td><td>{{project.res2owner}}</td></tr>
+                                    <tr><td><b>Res. Owner:</b></td><td>{{project.res2ownercomment}}</td></tr>
+                                </table>
+                            </span>
                         </div>
                     </td>
-<td prio-class prio-skill-render="project.res3skill" prio-size-render="project.res3" class="tooltip">
+                    <td class="tooltip">
                         <div ng-if="project.res3fte != 'None'">
-                            {{project.res3owner| limitTo:3}}.
-                            <span class="tooltiptext">Request: {{project.res3fte}}<br/>{{project.res3comment}}</span>
+                            <div prio-class prio-skill-render="project.res3skill" prio-size-render="project.res3"></div>
+                           <div prio-class prio-res-render="project.res3owner"></div>
+                            <span class="tooltiptext">
+                                <table class="tooltiptext">
+                                    <tr><td><b>Request:</b></td><td>{{project.res3fte}}</td></tr>
+                                    <tr><td><b>Project:</b></td><td>{{project.res3comment}}</td></tr>
+                                    <tr><td><b>Response:</b></td><td>{{project.res3owner}}</td></tr>
+                                    <tr><td><b>Res. Owner:</b></td><td>{{project.res3ownercomment}}</td></tr>
+                                </table>
+                            </span>
                         </div>
                     </td>
-<td prio-class prio-skill-render="project.res4skill" prio-size-render="project.res4" class="tooltip">
+<td class="tooltip">
                         <div ng-if="project.res4fte != 'None'">
-                            {{project.res4owner| limitTo:3}}.
-                            <span class="tooltiptext">Request: {{project.res4fte}}<br/>{{project.res4comment}}</span>
+                            <div prio-class prio-skill-render="project.res4skill" prio-size-render="project.res4"></div>
+                           <div prio-class prio-res-render="project.res4owner"></div>
+                            <span class="tooltiptext">
+                                <table class="tooltiptext">
+                                    <tr><td><b>Request:</b></td><td>{{project.res4fte}}</td></tr>
+                                    <tr><td><b>Project:</b></td><td>{{project.res4comment}}</td></tr>
+                                    <tr><td><b>Response:</b></td><td>{{project.res4owner}}</td></tr>
+                                    <tr><td><b>Res. Owner:</b></td><td>{{project.res4ownercomment}}</td></tr>
+                                </table>
+                            </span>
                         </div>
                     </td>
-<td prio-class prio-skill-render="project.res5skill" prio-size-render="project.res5" class="tooltip">
+<td class="tooltip">
                         <div ng-if="project.res5fte != 'None'">
-                            {{project.res5owner| limitTo:3}}.
-                            <span class="tooltiptext">Request: {{project.res5fte}}<br/>{{project.res5comment}}</span>
+                            <div prio-class prio-skill-render="project.res5skill" prio-size-render="project.res5"></div>
+                           <div prio-class prio-res-render="project.res5owner"></div>
+                            <span class="tooltiptext">
+                                <table class="tooltiptext">
+                                    <tr><td><b>Request:</b></td><td>{{project.res5fte}}</td></tr>
+                                    <tr><td><b>Project:</b></td><td>{{project.res5comment}}</td></tr>
+                                    <tr><td><b>Response:</b></td><td>{{project.res5owner}}</td></tr>
+                                    <tr><td><b>Res. Owner:</b></td><td>{{project.res5ownercomment}}</td></tr>
+                                </table>
+                            </span>
                         </div>
                     </td>
-<td prio-class prio-skill-render="project.res6skill" prio-size-render="project.res6" class="tooltip">
+<td class="tooltip">
                         <div ng-if="project.res6fte != 'None'">
-                            {{project.res6owner| limitTo:3}}.
-                            <span class="tooltiptext">Request: {{project.res6fte}}<br/>{{project.res6comment}}</span>
+                            <div prio-class prio-skill-render="project.res6skill" prio-size-render="project.res6"></div>
+                           <div prio-class prio-res-render="project.res6owner"></div>
+                            <span class="tooltiptext">
+                                <table class="tooltiptext">
+                                    <tr><td><b>Request:</b></td><td>{{project.res6fte}}</td></tr>
+                                    <tr><td><b>Project:</b></td><td>{{project.res6comment}}</td></tr>
+                                    <tr><td><b>Response:</b></td><td>{{project.res6owner}}</td></tr>
+                                    <tr><td><b>Res. Owner:</b></td><td>{{project.res6ownercomment}}</td></tr>
+                                </table>
+                            </span>
                         </div>
                     </td>
-<td prio-class prio-skill-render="project.res7skill" prio-size-render="project.res7" class="tooltip">
+<td class="tooltip">
                         <div ng-if="project.res7fte != 'None'">
-                            {{project.res7owner| limitTo:3}}.
-                            <span class="tooltiptext">Request: {{project.res7fte}}<br/>{{project.res7comment}}</span>
+                            <div prio-class prio-skill-render="project.res7skill" prio-size-render="project.res7"></div>
+                           <div prio-class prio-res-render="project.res7owner"></div>
+                            <span class="tooltiptext">
+                                <table class="tooltiptext">
+                                    <tr><td><b>Request:</b></td><td>{{project.res7fte}}</td></tr>
+                                    <tr><td><b>Project:</b></td><td>{{project.res7comment}}</td></tr>
+                                    <tr><td><b>Response:</b></td><td>{{project.res7owner}}</td></tr>
+                                    <tr><td><b>Res. Owner:</b></td><td>{{project.res7ownercomment}}</td></tr>
+                                </table>
+                            </span>
                         </div>
                     </td>
-<td prio-class prio-skill-render="project.res8skill" prio-size-render="project.res8" class="tooltip">
+<td class="tooltip">
                         <div ng-if="project.res8fte != 'None'">
-                            {{project.res8owner| limitTo:3}}.
-                            <span class="tooltiptext">Request: {{project.res8fte}}<br/>{{project.res8comment}}</span>
+                            <div prio-class prio-skill-render="project.res8skill" prio-size-render="project.res8"></div>
+                           <div prio-class prio-res-render="project.res8owner"></div>
+                            <span class="tooltiptext">
+                                <table class="tooltiptext">
+                                    <tr><td><b>Request:</b></td><td>{{project.res8fte}}</td></tr>
+                                    <tr><td><b>Project:</b></td><td>{{project.res8comment}}</td></tr>
+                                    <tr><td><b>Response:</b></td><td>{{project.res8owner}}</td></tr>
+                                    <tr><td><b>Res. Owner:</b></td><td>{{project.res8ownercomment}}</td></tr>
+                                </table>
+                            </span>
                         </div>
                     </td>
-<td prio-class prio-skill-render="project.res9skill" prio-size-render="project.res9" class="tooltip">
+<td class="tooltip">
                         <div ng-if="project.res9fte != 'None'">
-                            {{project.res9owner| limitTo:3}}.
-                            <span class="tooltiptext">Request: {{project.res9fte}}<br/>{{project.res9comment}}</span>
+                            <div prio-class prio-skill-render="project.res9skill" prio-size-render="project.res9"></div>
+                           <div prio-class prio-res-render="project.res9owner"></div>
+                            <span class="tooltiptext">
+                                <table class="tooltiptext">
+                                    <tr><td><b>Request:</b></td><td>{{project.res9fte}}</td></tr>
+                                    <tr><td><b>Project:</b></td><td>{{project.res9comment}}</td></tr>
+                                    <tr><td><b>Response:</b></td><td>{{project.res9owner}}</td></tr>
+                                    <tr><td><b>Res. Owner:</b></td><td>{{project.res9ownercomment}}</td></tr>
+                                </table>
+                            </span>
                         </div>
                     </td>
-<td prio-class prio-skill-render="project.res10skill" prio-size-render="project.res10" class="tooltip">
+<td class="tooltip">
                         <div ng-if="project.res10fte != 'None'">
-                            {{project.res10owner| limitTo:3}}.
-                            <span class="tooltiptext">Request: {{project.res10fte}}<br/>{{project.res10comment}}</span>
+                            <div prio-class prio-skill-render="project.res10skill" prio-size-render="project.res10"></div>
+                           <div prio-class prio-res-render="project.res10owner"></div>
+                            <span class="tooltiptext">
+                                <table class="tooltiptext">
+                                    <tr><td><b>Request:</b></td><td>{{project.res10fte}}</td></tr>
+                                    <tr><td><b>Project:</b></td><td>{{project.res10comment}}</td></tr>
+                                    <tr><td><b>Response:</b></td><td>{{project.res10owner}}</td></tr>
+                                    <tr><td><b>Res. Owner:</b></td><td>{{project.res10ownercomment}}</td></tr>
+                                </table>
+                            </span>
                         </div>
                     </td>
-<td prio-class prio-skill-render="project.res11skill" prio-size-render="project.res11" class="tooltip">
+<td class="tooltip">
                         <div ng-if="project.res11fte != 'None'">
-                            {{project.res11owner| limitTo:3}}.
-                            <span class="tooltiptext">Request: {{project.res11fte}}<br/>{{project.res11comment}}</span>
+                            <div prio-class prio-skill-render="project.res11skill" prio-size-render="project.res11"></div>
+                           <div prio-class prio-res-render="project.res11owner"></div>
+                            <span class="tooltiptext">
+                                <table class="tooltiptext">
+                                    <tr><td><b>Request:</b></td><td>{{project.res11fte}}</td></tr>
+                                    <tr><td><b>Project:</b></td><td>{{project.res11comment}}</td></tr>
+                                    <tr><td><b>Response:</b></td><td>{{project.res11owner}}</td></tr>
+                                    <tr><td><b>Res. Owner:</b></td><td>{{project.res11ownercomment}}</td></tr>
+                                </table>
+                            </span>
                         </div>
                     </td>
-<td prio-class prio-skill-render="project.res12skill" prio-size-render="project.res12" class="tooltip">
+<td class="tooltip">
                         <div ng-if="project.res12fte != 'None'">
-                            {{project.res12owner| limitTo:3}}.
-                            <span class="tooltiptext">Request: {{project.res12fte}}<br/>{{project.res12comment}}</span>
+                            <div prio-class prio-skill-render="project.res12skill" prio-size-render="project.res12"></div>
+                           <div prio-class prio-res-render="project.res12owner"></div>
+                            <span class="tooltiptext">
+                                <table class="tooltiptext">
+                                    <tr><td><b>Request:</b></td><td>{{project.res12fte}}</td></tr>
+                                    <tr><td><b>Project:</b></td><td>{{project.res12comment}}</td></tr>
+                                    <tr><td><b>Response:</b></td><td>{{project.res12owner}}</td></tr>
+                                    <tr><td><b>Res. Owner:</b></td><td>{{project.res12ownercomment}}</td></tr>
+                                </table>
+                            </span>
                         </div>
                     </td>
-<td prio-class prio-skill-render="project.res13skill" prio-size-render="project.res13" class="tooltip">
+<td class="tooltip">
                         <div ng-if="project.res13fte != 'None'">
-                            {{project.res13owner| limitTo:3}}.
-                            <span class="tooltiptext">Request: {{project.res13fte}}<br/>{{project.res13comment}}</span>
+                            <div prio-class prio-skill-render="project.res13skill" prio-size-render="project.res13"></div>
+                           <div prio-class prio-res-render="project.res13owner"></div>
+                            <span class="tooltiptext">
+                                <table class="tooltiptext">
+                                    <tr><td><b>Request:</b></td><td>{{project.res13fte}}</td></tr>
+                                    <tr><td><b>Project:</b></td><td>{{project.res13comment}}</td></tr>
+                                    <tr><td><b>Response:</b></td><td>{{project.res13owner}}</td></tr>
+                                    <tr><td><b>Res. Owner:</b></td><td>{{project.res13ownercomment}}</td></tr>
+                                </table>
+                            </span>
                         </div>
                     </td>
-<td prio-class prio-skill-render="project.res14skill" prio-size-render="project.res14" class="tooltip">
+<td class="tooltip">
                         <div ng-if="project.res14fte != 'None'">
-                            {{project.res14owner| limitTo:3}}.
-                            <span class="tooltiptext">Request: {{project.res14fte}}<br/>{{project.res14comment}}</span>
+                            <div prio-class prio-skill-render="project.res14skill" prio-size-render="project.res14"></div>
+                           <div prio-class prio-res-render="project.res14owner"></div>
+                            <span class="tooltiptext">
+                                <table class="tooltiptext">
+                                    <tr><td><b>Request:</b></td><td>{{project.res14fte}}</td></tr>
+                                    <tr><td><b>Project:</b></td><td>{{project.res14comment}}</td></tr>
+                                    <tr><td><b>Response:</b></td><td>{{project.res14owner}}</td></tr>
+                                    <tr><td><b>Res. Owner:</b></td><td>{{project.res14ownercomment}}</td></tr>
+                                </table>
+                            </span>
                         </div>
                     </td>
 

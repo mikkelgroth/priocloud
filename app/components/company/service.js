@@ -1,6 +1,6 @@
 angular
     .module('riskApp')
-    .service('companyService', ['$rootScope', '$q', 'rx', 'restService', function ($rootScope, $q, rx, restService) {
+    .service('companyService', ['$rootScope','$q', 'rx', 'restService', function ($rootScope,$q, rx, restService) {
 
         var _this = this;
 
@@ -93,7 +93,7 @@ angular
                 parseInt(project.kpi5) +
                 parseInt(project.kpi6)
             ) / 6);
-
+            projecthaschanged=false;
             // Update project if it exists
             if (project._id) {
 
@@ -102,6 +102,7 @@ angular
                     .success(function (updatedProject) {
 
                         console.log("----- PROJECT UPDATED (" + project._id.$oid + ")");
+                        projecthaschanged=false;
 
                         var projectIndex = _this._projects
                             .map(function (p) { return p._id.$oid; })

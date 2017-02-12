@@ -239,7 +239,7 @@ td.header {
 	font-weight: bold;
 }
 table td, table th {
-	padding: 0.6em 0.9em;
+	padding: 0.4em 0.7em;
 	border: 1px solid #D1D6D7;
 }
 tr.listsubject td {
@@ -251,6 +251,10 @@ tr.listsubject td h3 {
 }
 
 /* DOTS (STATUS) */
+.ResYellow:before,
+.ResRed:before,
+.ResOrange:before,
+.ResGreen:before,
 .Yellow:before,
 .Red:before,
 .Orange:before,
@@ -282,6 +286,23 @@ tr.listsubject td h3 {
 .Orange:before {
 	background-color: orange;
     border-color: darkorange;	
+}
+
+.ResYellow:before {
+	background-color: #FE0;
+    border: 2px solid black;
+}
+.ResRed:before {
+    background-color: #FF5858;
+    border: 2px solid black;
+}
+.ResGreen:before {
+	background-color: #14C714;
+    border: 2px solid black;
+}
+.ResOrange:before {
+	background-color: orange;
+   border: 2px solid black;
 }
 
 
@@ -317,28 +338,28 @@ h2.Green:before {
 	height: 10px;	
 }
 .rad2:before{
-	width: 12px;
-	height: 12px;	
-}
-.rad3:before{
 	width: 14px;
 	height: 14px;	
 }
-.rad4:before{
+.rad3:before{
 	width: 16px;
 	height: 16px;	
 }
-.rad5:before{
+.rad4:before{
 	width: 18px;
 	height: 18px;	
 }
-.rad6:before{
+.rad5:before{
 	width: 20px;
 	height: 20px;	
 }
-.rad7:before{
+.rad6:before{
 	width: 22px;
 	height: 22px;	
+}
+.rad7:before{
+	width: 24px;
+	height: 24px;	
 }
 
 
@@ -645,7 +666,8 @@ select {
     width: 200px;
     background-color: #555;
     color: #fff;
-    text-align: center;
+    text-align: left;
+	vertical-align: top !important;
     border-radius: 6px;
     padding: 5px 0;
     position: absolute;
@@ -655,6 +677,10 @@ select {
     margin-left: -100px;
     opacity: 0;
     transition: opacity 1s;
+}
+.tooltip .tooltiptext table td{
+    text-align: left;
+	vertical-align: top !important;
 }
 
 .tooltip .tooltiptext::after {
