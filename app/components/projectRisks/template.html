@@ -3,7 +3,7 @@
 <div id="linkdiv5" class="view">
     <div id="popdiv5" ng-show="showRiskForm">
         <h2 class="{{editrisk.status}}">
-            Risk
+            {{editrisk.type}}
             <div class="right">
                 <button type="button" 
                     ng-click="saveRisk(editrisk)" 
@@ -18,6 +18,23 @@
                     <div class="field">
                         <input ng-model="editrisk.title" />
                     </div>
+                </td>
+                <td class="header">Type</td>
+                <td>
+                    <select ng-model="editrisk.type">
+                        <option value="Risk">Risk</option>
+                        <option value="Issue">Issue</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td class="header">Proximity</td>
+                <td>
+                    <select ng-model="editrisk.proximity">
+                        <option value="Project">Project</option>
+                        <option value="Go-live">Go-live</option>
+                        <option value="Production">Production</option>
+                    </select>
                 </td>
                 <td class="header">Response</td>
                 <td>
@@ -143,24 +160,49 @@
     </div>
     <div class="mainbox" id="risklist" ng-show="!showRiskForm">
         <h2>
-            Open risks
+            Risk and issues
             <div class="right">
                 <button type="button" 
                     ng-click="newRisk()"
-                    ng-if="user.email==project.po.email || user.email==project.pm.email || user.email==project.altpo.email || user.email==project.altpm.email || user.isOwner || user.admin">create new risk</button>
+                    ng-if="user.email==project.po.email || user.email==project.pm.email || user.email==project.altpo.email || user.email==project.altpm.email || user.isOwner || user.admin">create new risk or issue</button>
             </div>
         </h2>
         <div class="overview">
             <table class="tablelist smaller" ng-if="project.risks.length > 0">
-                <tr>
+                <tr class="header">
                     <td colspan="6">
-                        <select ng-if="user.email==project.po.email || user.email==project.pm.email || user.email==project.altpo.email || user.email==project.altpm.email || user.isOwner || user.admin"
-                            ng-model="project.showconfrisk" class="right">
-                        <option value="true" default>Show confidential risks</option>
-                        <option value="false">Hide confidential risks</option>
+                    <span>Filters</span>
+                    <select ng-model="riskpmsearch.audience" class="right">
+                        <option value="" default>Show all audience</option>
+                        <option value="Confidential">Show only Confidential</option>
+                        <option value="Project">Show only Project</option>
+                        <option value="Portfolio">Show only Portfolio</option>
+                        <option value="Company">Show only Company</option>
                     </select>
-                        <select ng-model="riskpmsearch.acc.name" class="right">
-                        <option value="">All responsibles</option>
+                    <select ng-model="riskpmsearch.type" class="right">
+                        <option value="" default>Show all risks and issues</option>
+                        <option value="Risk">Show only risks</option>
+                        <option value="Issue">Show only issues</option>
+                    </select>
+                    <select ng-model="riskpmsearch.state" class="right">
+                        <option value="" default>Show all states</option>
+                        <option value="New">Show only New</option>
+                        <option value="Open">Show only Open</option>
+                        <option value="Closed">Show only Closed</option>
+                    </select>
+                    <select ng-model="riskpmsearch.proximity" class="right">
+                        <option value="" default>Show all proximity</option>
+                        <option value="Project">Show only Project proximity</option>
+                        <option value="Go-live">Show only Go-live proximity</option>
+                        <option value="Production">Show only Production proximity</option>
+                    </select>
+                    <select ng-if="user.email==project.po.email || user.email==project.pm.email || user.email==project.altpo.email || user.email==project.altpm.email || user.isOwner || user.admin"
+                            ng-model="project.showconfrisk" class="right">
+                        <option value="true" default>Show confidential</option>
+                        <option value="false">Hide confidential</option>
+                    </select>
+                    <select ng-model="riskpmsearch.acc.name" class="right">
+                        <option value="">Show all responsibles</option>
                         <option ng-repeat="u in users | filter: {source: true} | orderBy:'name'" value="{{u.name}}">{{u.name}}</option>
                     </select>
                     </td>
@@ -169,42 +211,24 @@
                     <td class="label">Title</td>
                     <td class="label">Probability</td>
                     <td class="label">Impact</td>
-                    <td class="label">Description</td>
+                    <td class="label">Type<br/>Proximity</td>
                     <td class="label">State<br/>Response</td>
                     <td class="label">Audience<br/>Responsible</td>
                 </tr>
                 <tr class="link" 
                     ng-repeat="risk in project.risks | filter:riskpmsearch | orderBy:'-total'"
                     ng-click="beginEditRisk(risk)"
-                    ng-if="(risk.state!='Closed' && risk.audience!='Confidential')||(risk.state!='Closed'&&risk.audience=='Confidential'&&project.showconfrisk=='true'&&(user.email==project.po.email || user.email==project.pm.email || user.email==project.altpo.email || user.email==project.altpm.email     || user.isOwner || user.admin))">
+                    ng-if="risk.audience!='Confidential' ||
+                    (risk.audience=='Confidential'&&project.showconfrisk=='true' &&
+                    (user.email==project.po.email || user.email==project.pm.email || user.email==project.altpo.email || user.email==project.altpm.email || user.isOwner || user.admin))">
                     <td class="texttop {{risk.status}}"><b>{{risk.title}}</b>
                         <div class="right">({{risk.total}})</div>
                     </td>
                     <td class="texttop" prio-class prio-risk-bar-render="risk.prob">{{risk.prob}}</td>
                     <td class="texttop" prio-class prio-risk-bar-render="risk.impact">{{risk.impact}}</td>
-                    <td class="wrap texttop">
-                        <pre>{{risk.desc}}</pre>
-                    </td>
+                    <td class="texttop">&nbsp;{{risk.type}}<br/>&nbsp;{{risk.proximity}}</td>
                     <td class="texttop">&nbsp;{{risk.state}}<br/>&nbsp;{{risk.response}}</td>
                     <td class="texttop">&nbsp;{{risk.audience}}<br/>&nbsp;{{risk.acc.name}}</td>
-                </tr>
-            </table>
-        </div>
-        <h2>Closed risks</h2>
-        <div class="overview">
-            <table class="tablelist smaller" ng-if="project.risks.length > 0">
-                <tr class="header">
-                    <td class="l">Title</td>
-                    <td class="l">Description</td>
-                    <td class="l">Response</td>
-                </tr>
-                <tr class="link" 
-                    ng-repeat="risk in project.risks | orderBy:'-total'" 
-                    ng-click="beginEditRisk(risk)"
-                    ng-if="(risk.state=='Closed'&&risk.audience!='Confidential')||(risk.state=='Closed'&&risk.audience=='Confidential'&&(user.email==project.po.email || user.email==project.pm.email || user.email==project.altpo.email || user.email==project.altpm.email || user.isOwner || user.admin))">
-                    <td class="{{risk.status}}">{{risk.title}}</td>
-                    <td class="wrap">{{risk.desc.substring(0,80)}} ...</td>
-                    <td>{{risk.response}}</td>
                 </tr>
             </table>
         </div>
