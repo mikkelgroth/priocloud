@@ -14,27 +14,27 @@
     <div id="finance" ng-show="route == 'finance'">
         <h3>Key project figures</h3>
         <table class="smaller smallinput">
-            <tr class="header">
-                <td colspan="8"><div class="right">
-                    <div ng-if="user.controller || user.admin">
+            <tr class="header" ng-if="user.controller || user.admin">
+                <td>
+                    Controller status: 
                     <select ng-model="project.financeControl">
                         <option value="Green">Finance controlled (Green)</option>
                         <option value="Yellow">Please update (Yellow)</option>
                         <option value="Orange">Deviation unexplained (Orange)</option>
                         <option value="Red">Budget breached (Red)</option>
                     </select>
-                    </div>
-                    <div ng-if="!user.controller && !user.admin">
-                    <select ng-model="project.financeControl" disabled>
-                        <option value="Green">Finance controlled (Green)</option>
-                        <option value="Yellow">Please update (Yellow)</option>
-                        <option value="Orange">Deviation unexplained (Orange)</option>
-                        <option value="Red">Budget breached (Red)</option>
-                    </select>
-                    </div>
-                    </div>
+                </td>
+                <td colspan="3">To be controlled<input type="checkbox" ng-model="project.isControlled" /></td>
+                <td colspan="4">
+                    Project number: <input ng-model="project.projectnumber" ng-change="$parent.projecthaschanged=true" id="projectnumber" />
                 </td>
             </tr>
+            <tr class="header" ng-if="!user.controller && !user.admin">
+                <td>Controller status: {{project.financeControl}}</td>
+                <td colspan="3"><div ng-if="project.isControlled">To be controlled, </div></td>
+                <td colspan="4">Project number: {{project.projectnumber}}</td>
+            </tr>
+
             <tr class="header">
                 <td>TDKK Ex. Vat</td>
                 <td>Prev</td>
@@ -511,47 +511,62 @@
         </table>
     </div>
     <div id="deviation-report" ng-show="route == 'deviation-report'">
-        <h2>Deviation report</h2>
+        <h2>Comments</h2>
         <table>
             <tr>
-                <td class="header">
-                    <p>Deviation Q1 <span id="financedevQ1_count" class="right"></span></p>
-                </td>
-                <td>
-                    <div class="field">
-                        <textarea ng-model="project.finance.devq1" maxlength="300" id="devq1" placeholder="Describe major changes and impact on Q1 financing."></textarea>
-                    </div>
-                </td>
+                <td class="header" rowspan="3">Q1</td>
+                <td class="header"><p>Budget <span id="financebudQ1_count" class="right"></span></p></td>
+                <td><div class="field"><textarea ng-model="project.finance.budq1" maxlength="300" id="budq1" placeholder="Describe budget decisions on Q1 financing."></textarea></div></td>
             </tr>
             <tr>
-                <td class="header">
-                    <p>Deviation Q2 <span id="financedevQ2_count" class="right"></span></p>
-                </td>
-                <td>
-                    <div class="field">
-                        <textarea ng-model="project.finance.devq2" maxlength="300" id="devq2" placeholder="Describe major changes and impact on Q2 financing."></textarea>
-                    </div>
-                </td>
+                <td class="header"><p>Deviation <span id="financepostQ1_count" class="right"></span></p></td>
+                <td><div class="field"><textarea ng-model="project.finance.postq1" maxlength="300" id="postq1" placeholder="Describe posted figures on Q1 financing."></textarea></div></td>
             </tr>
             <tr>
-                <td class="header">
-                    <p>Deviation Q3 <span id="financedevQ3_count" class="right"></span></p>
-                </td>
-                <td>
-                    <div class="field">
-                        <textarea ng-model="project.finance.devq3" maxlength="300" id="devq3" placeholder="Describe major changes and impact on Q3 financing."></textarea>
-                    </div>
-                </td>
+                <td class="header"><p>Budget <span id="financedevQ1_count" class="right"></span></p></td>
+                <td><div class="field"><textarea ng-model="project.finance.devq1" maxlength="300" id="devq1" placeholder="Describe major changes and impact on Q1 financing."></textarea></div></td>
+            </tr>
+
+            <tr>
+                <td class="header" rowspan="3">Q2</td>
+                <td class="header"><p>Budget <span id="financebudQ2_count" class="right"></span></p></td>
+                <td><div class="field"><textarea ng-model="project.finance.budq2" maxlength="300" id="budq2" placeholder="Describe budget decisions on Q2 financing."></textarea></div></td>
             </tr>
             <tr>
-                <td class="header">
-                    <p>Deviation Q4 <span id="financedevQ4_count" class="right"></span></p>
-                </td>
-                <td>
-                    <div class="field">
-                        <textarea ng-model="project.finance.devq4" maxlength="300" id="devq4" placeholder="Describe major changes and impact on Q4 financing."></textarea>
-                    </div>
-                </td>
+                <td class="header"><p>Deviation <span id="financepostQ2_count" class="right"></span></p></td>
+                <td><div class="field"><textarea ng-model="project.finance.postq2" maxlength="300" id="postq2" placeholder="Describe posted figures on Q2 financing."></textarea></div></td>
+            </tr>
+            <tr>
+                <td class="header"><p>Budget <span id="financedevQ2_count" class="right"></span></p></td>
+                <td><div class="field"><textarea ng-model="project.finance.devq2" maxlength="300" id="devq2" placeholder="Describe major changes and impact on Q2 financing."></textarea></div></td>
+            </tr>
+
+            <tr>
+                <td class="header" rowspan="3">Q3</td>
+                <td class="header"><p>Budget <span id="financebudQ3_count" class="right"></span></p></td>
+                <td><div class="field"><textarea ng-model="project.finance.budq3" maxlength="300" id="budq3" placeholder="Describe budget decisions on Q3 financing."></textarea></div></td>
+            </tr>
+            <tr>
+                <td class="header"><p>Deviation <span id="financepostQ3_count" class="right"></span></p></td>
+                <td><div class="field"><textarea ng-model="project.finance.postq3" maxlength="300" id="postq3" placeholder="Describe posted figures on Q3 financing."></textarea></div></td>
+            </tr>
+            <tr>
+                <td class="header"><p>Budget <span id="financedevQ3_count" class="right"></span></p></td>
+                <td><div class="field"><textarea ng-model="project.finance.devq3" maxlength="300" id="devq3" placeholder="Describe major changes and impact on Q3 financing."></textarea></div></td>
+            </tr>
+
+            <tr>
+                <td class="header" rowspan="3">Q4</td>
+                <td class="header"><p>Budget <span id="financebudQ4_count" class="right"></span></p></td>
+                <td><div class="field"><textarea ng-model="project.finance.budq4" maxlength="300" id="budq4" placeholder="Describe budget decisions on Q4 financing."></textarea></div></td>
+            </tr>
+            <tr>
+                <td class="header"><p>Deviation <span id="financepostQ4_count" class="right"></span></p></td>
+                <td><div class="field"><textarea ng-model="project.finance.postq4" maxlength="300" id="postq4" placeholder="Describe posted figures on Q4 financing."></textarea></div></td>
+            </tr>
+            <tr>
+                <td class="header"><p>Budget <span id="financedevQ4_count" class="right"></span></p></td>
+                <td><div class="field"><textarea ng-model="project.finance.devq4" maxlength="300" id="devq4" placeholder="Describe major changes and impact on Q4 financing."></textarea></div></td>
             </tr>
         </table>
     </div>

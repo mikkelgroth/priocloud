@@ -25,11 +25,9 @@
                         <input ng-if="user.isOwner || user.admin" ng-model="project.title" ng-change="$parent.projecthaschanged=true" id="title"
                         />
                     </td>
-                    <td class="l header">Project number</td>
+                    <td class="l header"></td>
                     <td>
-                        <div ng-if="!user.isOwner && !user.admin">{{project.projectnumber}}</div>
-                        <input ng-if="user.isOwner || user.admin" ng-model="project.projectnumber" ng-change="$parent.projecthaschanged=true" id="projectnumber"
-                        />
+                        
                     </td>
                 </tr>
                 <tr>

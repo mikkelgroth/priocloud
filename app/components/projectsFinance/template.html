@@ -54,19 +54,40 @@
                     <option value="-kpi5">KPI: {{company.projkpi5lable}}</option>
                     <option value="-kpi6">KPI: {{company.projkpi6lable}}</option>
                     <option value="title">Title</option>
+                    <option value="projectnumber">Project number</option>
                     <option value="bu.name">BU</option>
                 </select>
             </div>
         </div>
         <div class="overview">
             <table class="tablelist" ng-if="projectList.length > 0">
+                <tr class="header">
+                    <td colspan="2">
+                        <select ng-model="showType" ng-init="showType='capex'">
+                            <option value="total">Show total</option>
+                            <option value="capex">Show capex</option>
+                            <option value="opex">Show opex</option>
+                            <option value="externals">Show externals</option>
+                            <option value="internals">Show internals</option>
+                        </select>
+                    </td>
+                    <td colspan="7">
+                        Show only finance controlled <input type="checkbox" ng-model="showControlled" />
+                    </td>
+                </tr>
                 <tr class="listsubject">
-                    <td colspan="8">
-                        <h3>Projects Finance - Deviations in TDKK</h3>
+                    <td colspan="9">
+                        <div ng-if="showType=='total'"><h3>Projects Finance - Total deviations in TDKK</h3></div>
+                        <div ng-if="showType=='capex'"><h3>Projects Finance - Capex deviations in TDKK</h3></div>
+                        <div ng-if="showType=='opex'"><h3>Projects Finance - Opex deviations in TDKK</h3></div>
+                        <div ng-if="showType=='externals'"><h3>Projects Finance - Externals deviations in TDKK</h3></div>
+                        <div ng-if="showType=='internals'"><h3>Projects Finance - Internals deviations in TDKK</h3></div>
+                        
                     </td>
                 </tr>
                 <tr class="header">
-                    <td>Control status, Proj. number, Proj.</td>
+                    <td>Control status, Project</td>
+                    <td>Number</td>
                     <td>Prev</td>
                     <td>Q1</td>
                     <td>Q2</td>
@@ -75,8 +96,8 @@
                     <td>Year</td>
                     <td>Grand</td>
                 </tr>
-                <tr ng-repeat="project in projectList | multiFilter:search | orderBy:porderparam" ng-click="goToProject(project._id.$oid)" class="link">
-                    <td class="{{project.financeControl}} tooltip">{{project.projectnumber}}-{{project.title}}
+                <tr ng-repeat="project in projectList | multiFilter:search | orderBy:porderparam" ng-if="showType=='total' && (!showControlled || (project.isControlled && showControlled))" ng-click="goToProject(project._id.$oid)" class="link">
+                    <td class="{{project.financeControl}} tooltip">{{project.title}}
                         <span class="tooltiptext">
                             <b>Deviation comments</b><br/>
                             Q1: {{project.finance.devq1}}<br/>
@@ -84,6 +105,7 @@
                             Q3: {{project.finance.devq3}}<br/>
                             Q4: {{project.finance.devq4}}<br/>
                     </td>
+                    <td>{{project.projectnumber}}</td>
                     <td class="sums tooltip">{{ project.finance.devTotalprev }}
                         <span class="tooltiptext">Budget: {{project.finance.budTotalprev}}<br/>Posted: {{project.finance.postTotalprev}}<br/>Deviation: {{project.finance.devTotalprev}}</span>
                     </td>
@@ -106,6 +128,139 @@
                         <span class="tooltiptext">Budget: {{project.finance.budTotalgrandSum}}<br/>Posted: {{project.finance.postTotalgrandSum}}<br/>Deviation: {{project.finance.devTotalgrandSum}}</span>
                     </td>
                 </tr>
+
+                <tr ng-repeat="project in projectList | multiFilter:search | orderBy:porderparam" ng-if="showType=='capex' && (!showControlled || (project.isControlled && showControlled))" ng-click="goToProject(project._id.$oid)" class="link">
+                    <td class="{{project.financeControl}} tooltip">{{project.title}}
+                        <span class="tooltiptext">
+                            <b>Deviation comments</b><br/>
+                            Q1: {{project.finance.devq1}}<br/>
+                            Q2: {{project.finance.devq2}}<br/>
+                            Q3: {{project.finance.devq3}}<br/>
+                            Q4: {{project.finance.devq4}}<br/>
+                    </td>
+                    <td>{{project.projectnumber}}</td>
+                    <td class="sums tooltip">{{ project.finance.devcapexprevSum }}
+                        <span class="tooltiptext">Budget: {{project.finance.budcapexprevSum}}<br/>Posted: {{project.finance.postcapexprevSum}}<br/>Deviation: {{project.finance.devcapexprevSum}}</span>
+                    </td>
+                    <td class="sums tooltip">{{ project.finance.devcapexq1Sum }}
+                        <span class="tooltiptext">Budget: {{project.finance.budcapexq1Sum}}<br/>Posted: {{project.finance.postcapexq1Sum}}<br/>Deviation: {{project.finance.devcapexq1Sum}}</span>
+                    </td>
+                    <td class="sums tooltip">{{ project.finance.devcapexq2Sum }}
+                        <span class="tooltiptext">Budget: {{project.finance.budcapexq2Sum}}<br/>Posted: {{project.finance.postcapexq2Sum}}<br/>Deviation: {{project.finance.devcapexq2Sum}}</span>
+                    </td>
+                    <td class="sums tooltip">{{ project.finance.devcapexq3Sum }}
+                        <span class="tooltiptext">Budget: {{project.finance.budcapexq3Sum}}<br/>Posted: {{project.finance.postcapexq3Sum}}<br/>Deviation: {{project.finance.devcapexq3Sum}}</span>
+                    </td>
+                    <td class="sums tooltip">{{ project.finance.devcapexq4Sum }}
+                        <span class="tooltiptext">Budget: {{project.finance.budcapexq4Sum}}<br/>Posted: {{project.finance.postcapexq4Sum}}<br/>Deviation: {{project.finance.devcapexq4Sum}}</span>
+                    </td>
+                    <td class="sums tooltip">{{ project.finance.devcapexTotal }}
+                        <span class="tooltiptext">Budget: {{project.finance.budcapexTotal}}<br/>Posted: {{project.finance.postcapexTotal}}<br/>Deviation: {{project.finance.devcapexTotal}}</span>
+                    </td>
+                    <td class="sums tooltip">{{ project.finance.devcapexTotalgrand }}
+                        <span class="tooltiptext">Budget: {{project.finance.budcapexTotalgrand}}<br/>Posted: {{project.finance.postcapexTotalgrand}}<br/>Deviation: {{project.finance.devcapexTotalgrand}}</span>
+                    </td>
+                </tr>
+            
+                <tr ng-repeat="project in projectList | multiFilter:search | orderBy:porderparam" ng-if="showType=='opex' && (!showControlled || (project.isControlled && showControlled))" ng-click="goToProject(project._id.$oid)" class="link">
+                    <td class="{{project.financeControl}} tooltip">{{project.title}}
+                        <span class="tooltiptext">
+                            <b>Deviation comments</b><br/>
+                            Q1: {{project.finance.devq1}}<br/>
+                            Q2: {{project.finance.devq2}}<br/>
+                            Q3: {{project.finance.devq3}}<br/>
+                            Q4: {{project.finance.devq4}}<br/>
+                    </td>
+                    <td>{{project.projectnumber}}</td>
+                    <td class="sums tooltip">{{ project.finance.devopexprevSum }}
+                        <span class="tooltiptext">Budget: {{project.finance.budopexprevSum}}<br/>Posted: {{project.finance.postopexprevSum}}<br/>Deviation: {{project.finance.devopexprevSum}}</span>
+                    </td>
+                    <td class="sums tooltip">{{ project.finance.devopexq1Sum }}
+                        <span class="tooltiptext">Budget: {{project.finance.budopexq1Sum}}<br/>Posted: {{project.finance.postopexq1Sum}}<br/>Deviation: {{project.finance.devopexq1Sum}}</span>
+                    </td>
+                    <td class="sums tooltip">{{ project.finance.devopexq2Sum }}
+                        <span class="tooltiptext">Budget: {{project.finance.budopexq2Sum}}<br/>Posted: {{project.finance.postopexq2Sum}}<br/>Deviation: {{project.finance.devopexq2Sum}}</span>
+                    </td>
+                    <td class="sums tooltip">{{ project.finance.devopexq3Sum }}
+                        <span class="tooltiptext">Budget: {{project.finance.budopexq3Sum}}<br/>Posted: {{project.finance.postopexq3Sum}}<br/>Deviation: {{project.finance.devopexq3Sum}}</span>
+                    </td>
+                    <td class="sums tooltip">{{ project.finance.devopexq4Sum }}
+                        <span class="tooltiptext">Budget: {{project.finance.budopexq4Sum}}<br/>Posted: {{project.finance.postopexq4Sum}}<br/>Deviation: {{project.finance.devopexq4Sum}}</span>
+                    </td>
+                    <td class="sums tooltip">{{ project.finance.devopexTotal }}
+                        <span class="tooltiptext">Budget: {{project.finance.budopexTotal}}<br/>Posted: {{project.finance.postopexTotal}}<br/>Deviation: {{project.finance.devopexTotal}}</span>
+                    </td>
+                    <td class="sums tooltip">{{ project.finance.devopexTotalgrand }}
+                        <span class="tooltiptext">Budget: {{project.finance.budopexTotalgrand}}<br/>Posted: {{project.finance.postopexTotalgrand}}<br/>Deviation: {{project.finance.devopexTotalgrand}}</span>
+                    </td>
+                </tr>
+            
+                <tr ng-repeat="project in projectList | multiFilter:search | orderBy:porderparam" ng-if="showType=='externals' && (!showControlled || (project.isControlled && showControlled))" ng-click="goToProject(project._id.$oid)" class="link">
+                    <td class="{{project.financeControl}} tooltip">{{project.title}}
+                        <span class="tooltiptext">
+                            <b>Deviation comments</b><br/>
+                            Q1: {{project.finance.devq1}}<br/>
+                            Q2: {{project.finance.devq2}}<br/>
+                            Q3: {{project.finance.devq3}}<br/>
+                            Q4: {{project.finance.devq4}}<br/>
+                    </td>
+                    <td>{{project.projectnumber}}</td>
+                    <td class="sums tooltip">{{ project.finance.devExternalprevTotal }}
+                        <span class="tooltiptext">Budget: {{project.finance.budExternalprevTotal}}<br/>Posted: {{project.finance.postExternalprevTotal}}<br/>Deviation: {{project.finance.devExternalprevTotal}}</span>
+                    </td>
+                    <td class="sums tooltip">{{ project.finance.devExternalq1Total }}
+                        <span class="tooltiptext">Budget: {{project.finance.budExternalq1Total}}<br/>Posted: {{project.finance.postExternalq1Total}}<br/>Deviation: {{project.finance.devExternalq1Total}}</span>
+                    </td>
+                    <td class="Totals tooltip">{{ project.finance.devExternalq2Total }}
+                        <span class="tooltiptext">Budget: {{project.finance.budExternalq2Total}}<br/>Posted: {{project.finance.postExternalq2Total}}<br/>Deviation: {{project.finance.devExternalq2Total}}</span>
+                    </td>
+                    <td class="Totals tooltip">{{ project.finance.devExternalq3Total }}
+                        <span class="tooltiptext">Budget: {{project.finance.budExternalq3Total}}<br/>Posted: {{project.finance.postExternalq3Total}}<br/>Deviation: {{project.finance.devExternalq3Total}}</span>
+                    </td>
+                    <td class="Totals tooltip">{{ project.finance.devExternalq4Total }}
+                        <span class="tooltiptext">Budget: {{project.finance.budExternalq4Total}}<br/>Posted: {{project.finance.postExternalq4Total}}<br/>Deviation: {{project.finance.devExternalq4Total}}</span>
+                    </td>
+                    <td class="sums tooltip">{{ project.finance.budExternalTotalSum }}
+                        <span class="tooltiptext">Budget: {{project.finance.budExternalTotalSum}}<br/>Posted: {{project.finance.postExternalTotalSum}}<br/>Deviation: {{project.finance.devExternalTotalSum}}</span>
+                    </td>
+                    <td class="sums tooltip">{{ project.finance.budExternalTotalgrandSum }}
+                        <span class="tooltiptext">Budget: {{project.finance.budExternalTotalgrandSum}}<br/>Posted: {{project.finance.postExternalTotalgrandSum}}<br/>Deviation: {{project.finance.devExternalTotalgrandSum}}</span>
+                    </td>
+                </tr>
+            
+                <tr ng-repeat="project in projectList | multiFilter:search | orderBy:porderparam" ng-if="showType=='internals' && (!showControlled || (project.isControlled && showControlled))" ng-click="goToProject(project._id.$oid)" class="link">
+                    <td class="{{project.financeControl}} tooltip">{{project.title}}
+                        <span class="tooltiptext">
+                            <b>Deviation comments</b><br/>
+                            Q1: {{project.finance.devq1}}<br/>
+                            Q2: {{project.finance.devq2}}<br/>
+                            Q3: {{project.finance.devq3}}<br/>
+                            Q4: {{project.finance.devq4}}<br/>
+                    </td>
+                    <td>{{project.projectnumber}}</td>
+                    <td class="sums tooltip">{{ project.finance.devInternalprevTotal }}
+                        <span class="tooltiptext">Budget: {{project.finance.budInternalprevTotal}}<br/>Posted: {{project.finance.postInternalprevTotal}}<br/>Deviation: {{project.finance.devInternalprevTotal}}</span>
+                    </td>
+                    <td class="sums tooltip">{{ project.finance.devInternalq1Total }}
+                        <span class="tooltiptext">Budget: {{project.finance.budInternalq1Total}}<br/>Posted: {{project.finance.postInternalq1Total}}<br/>Deviation: {{project.finance.devInternalq1Total}}</span>
+                    </td>
+                    <td class="Totals tooltip">{{ project.finance.devInternalq2Total }}
+                        <span class="tooltiptext">Budget: {{project.finance.budInternalq2Total}}<br/>Posted: {{project.finance.postInternalq2Total}}<br/>Deviation: {{project.finance.devInternalq2Total}}</span>
+                    </td>
+                    <td class="Totals tooltip">{{ project.finance.devInternalq3Total }}
+                        <span class="tooltiptext">Budget: {{project.finance.budInternalq3Total}}<br/>Posted: {{project.finance.postInternalq3Total}}<br/>Deviation: {{project.finance.devInternalq3Total}}</span>
+                    </td>
+                    <td class="Totals tooltip">{{ project.finance.devInternalq4Total }}
+                        <span class="tooltiptext">Budget: {{project.finance.budInternalq4Total}}<br/>Posted: {{project.finance.postInternalq4Total}}<br/>Deviation: {{project.finance.devInternalq4Total}}</span>
+                    </td>
+                    <td class="sums tooltip">{{ project.finance.budInternalTotalSum }}
+                        <span class="tooltiptext">Budget: {{project.finance.budInternalTotalSum}}<br/>Posted: {{project.finance.postInternalTotalSum}}<br/>Deviation: {{project.finance.devInternalTotalSum}}</span>
+                    </td>
+                    <td class="sums tooltip">{{ project.finance.budInternalTotalgrandSum }}
+                        <span class="tooltiptext">Budget: {{project.finance.budInternalTotalgrandSum}}<br/>Posted: {{project.finance.postInternalTotalgrandSum}}<br/>Deviation: {{project.finance.devInternalTotalgrandSum}}</span>
+                    </td>
+                </tr>
+            
             </table>
         </div>
     </div>
