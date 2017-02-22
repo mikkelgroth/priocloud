@@ -188,6 +188,15 @@ h2 button {
 	margin-right: 10px;
 	height: 34px;
 }
+.datebox {
+	border: 1px solid #08486C;
+	background-color: white;
+	box-shadow: 1px 2px 1px 0px rgba(0, 0, 0, 0.1);
+	color: #000;
+	cursor: pointer;
+	height: 20px;
+	width: 80px !important;
+}
 
 a {
 	color: #0869A1;

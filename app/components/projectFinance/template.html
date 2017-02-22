@@ -15,7 +15,7 @@
         <h3>Key project figures</h3>
         <table class="smaller smallinput">
             <tr class="header" ng-if="user.controller || user.admin">
-                <td>
+                <td rowspan="2">
                     Controller status: 
                     <select ng-model="project.financeControl">
                         <option value="Green">Finance controlled (Green)</option>
@@ -29,11 +29,29 @@
                     Project number: <input ng-model="project.projectnumber" ng-change="$parent.projecthaschanged=true" id="projectnumber" />
                 </td>
             </tr>
+            <tr class="header" ng-if="user.controller || user.admin">
+                <td colspan="3">
+                   <div class="field">
+                        Dep. date: <input type="text" id="depriciationdate" datepicker="" ng-model="project.depriciationdate" ng-change="dateChanged(project.depriciationdate)" class="datebox"/>
+                   </div>
+                </td>
+                <td colspan="4">
+                    Depriciation: <input ng-model="project.depriciation" ng-change="$parent.projecthaschanged=true" id="depriciation" />
+                </td>
+            </tr>
+
+
             <tr class="header" ng-if="!user.controller && !user.admin">
-                <td>Controller status: {{project.financeControl}}</td>
+                <td rowspan="2">Controller status: {{project.financeControl}}</td>
                 <td colspan="3"><div ng-if="project.isControlled">To be controlled, </div></td>
                 <td colspan="4">Project number: {{project.projectnumber}}</td>
             </tr>
+            <tr class="header" ng-if="!user.controller && !user.admin">
+                
+                <td colspan="3">Dep. date {{project.depriciationdate | date:'yyyy-MM-dd'}}</td>
+                <td colspan="4">Depriciation: {{project.depriciation}}</td>
+            </tr>
+
 
             <tr class="header">
                 <td>TDKK Ex. Vat</td>

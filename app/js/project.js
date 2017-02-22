@@ -652,6 +652,8 @@ $scope.editProject = function(project) {
 	}
 	$scope.saveProject = function() {
 		
+       
+
         $scope.project.total=
             Math.round((parseInt($scope.project.kpi1)+
              parseInt($scope.project.kpi2)+
