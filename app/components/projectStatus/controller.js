@@ -109,6 +109,8 @@ angular
             $scope.saveStatus = function (status) {
 
                 //TODO: change datepickr to be integrated with angular objects
+
+
                 var ed = new Date();
                 if (ed instanceof Date && !isNaN(ed.valueOf())) {
                     status.date = ed;
@@ -124,11 +126,12 @@ angular
                 }
 
                 // RISK: this can be manipulated with and set even if you are not admin
-                if (($scope.project.po.email == $scope.user.email || $scope.user.admin) &&
+                if (($scope.project.altpo.email == $scope.user.email || $scope.project.po.email == $scope.user.email || $scope.user.admin) &&
                     (status.statusstate == "Final" || status.apo == "Approved")) {
 
                     status.apo = "Approved";
                     status.statusstate = "Final";
+                    status.savedfinalby=$scope.user.name;
                     status.active = false;
                 }
 
