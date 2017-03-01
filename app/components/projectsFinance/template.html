@@ -54,7 +54,8 @@
                     <option value="-kpi5">KPI: {{company.projkpi5lable}}</option>
                     <option value="-kpi6">KPI: {{company.projkpi6lable}}</option>
                     <option value="title">Title</option>
-                    <option value="projectnumber">Project number</option>
+                    <option value="projectnumber">Capex Project number</option>
+                    <option value="opexprojectnumber">Opex Project number</option>
                     <option value="bu.name">BU</option>
                 </select>
             </div>
@@ -62,7 +63,7 @@
         <div class="overview">
             <table class="tablelist" ng-if="projectList.length > 0">
                 <tr class="header">
-                    <td colspan="2">
+                    <td colspan="3">
                         <select ng-model="showType" ng-init="showType='capex'">
                             <option value="total">Show total</option>
                             <option value="capex">Show capex</option>
@@ -76,7 +77,7 @@
                     </td>
                 </tr>
                 <tr class="listsubject">
-                    <td colspan="9">
+                    <td colspan="10">
                         <div ng-if="showType=='total'"><h3>Projects Finance - Total deviations in TDKK</h3></div>
                         <div ng-if="showType=='capex'"><h3>Projects Finance - Capex deviations in TDKK</h3></div>
                         <div ng-if="showType=='opex'"><h3>Projects Finance - Opex deviations in TDKK</h3></div>
@@ -87,7 +88,8 @@
                 </tr>
                 <tr class="header">
                     <td>Control status, Project</td>
-                    <td>Number</td>
+                    <td>Cap. #</td>
+                    <td>Ope. #</td>
                     <td>Prev</td>
                     <td>Q1</td>
                     <td>Q2</td>
@@ -106,6 +108,7 @@
                             Q4: {{project.finance.devq4}}<br/>
                     </td>
                     <td>{{project.projectnumber}}</td>
+                    <td>{{project.opexprojectnumber}}</td>
                     <td class="sums tooltip">{{ project.finance.devTotalprev }}
                         <span class="tooltiptext">Budget: {{project.finance.budTotalprev}}<br/>Posted: {{project.finance.postTotalprev}}<br/>Deviation: {{project.finance.devTotalprev}}</span>
                     </td>
@@ -139,6 +142,7 @@
                             Q4: {{project.finance.devq4}}<br/>
                     </td>
                     <td>{{project.projectnumber}}</td>
+                    <td>{{project.opexprojectnumber}}</td>
                     <td class="sums tooltip">{{ project.finance.devcapexprevSum }}
                         <span class="tooltiptext">Budget: {{project.finance.budcapexprevSum}}<br/>Posted: {{project.finance.postcapexprevSum}}<br/>Deviation: {{project.finance.devcapexprevSum}}</span>
                     </td>
@@ -172,6 +176,7 @@
                             Q4: {{project.finance.devq4}}<br/>
                     </td>
                     <td>{{project.projectnumber}}</td>
+                    <td>{{project.opexprojectnumber}}</td>
                     <td class="sums tooltip">{{ project.finance.devopexprevSum }}
                         <span class="tooltiptext">Budget: {{project.finance.budopexprevSum}}<br/>Posted: {{project.finance.postopexprevSum}}<br/>Deviation: {{project.finance.devopexprevSum}}</span>
                     </td>
@@ -205,6 +210,7 @@
                             Q4: {{project.finance.devq4}}<br/>
                     </td>
                     <td>{{project.projectnumber}}</td>
+                    <td>{{project.opexprojectnumber}}</td>
                     <td class="sums tooltip">{{ project.finance.devExternalprevTotal }}
                         <span class="tooltiptext">Budget: {{project.finance.budExternalprevTotal}}<br/>Posted: {{project.finance.postExternalprevTotal}}<br/>Deviation: {{project.finance.devExternalprevTotal}}</span>
                     </td>
@@ -238,6 +244,7 @@
                             Q4: {{project.finance.devq4}}<br/>
                     </td>
                     <td>{{project.projectnumber}}</td>
+                    <td>{{project.opexprojectnumber}}</td>
                     <td class="sums tooltip">{{ project.finance.devInternalprevTotal }}
                         <span class="tooltiptext">Budget: {{project.finance.budInternalprevTotal}}<br/>Posted: {{project.finance.postInternalprevTotal}}<br/>Deviation: {{project.finance.devInternalprevTotal}}</span>
                     </td>

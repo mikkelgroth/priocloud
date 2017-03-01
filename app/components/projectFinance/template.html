@@ -15,7 +15,22 @@
         <h3>Key project figures</h3>
         <table class="smaller smallinput">
             <tr class="header" ng-if="user.controller || user.admin">
-                <td rowspan="2">
+                <td>To be controlled<input type="checkbox" ng-model="project.isControlled" /></td>
+                <td colspan="2">
+                    Capex proj. num.:
+                </td>
+                <td>
+                    <input type="text" ng-model="project.opexprojectnumber" ng-change="$parent.projecthaschanged=true" id="opexprojectnumber" />
+                </td>
+                <td colspan="2">
+                    Opex proj. num.: 
+                </td>
+                <td colspan="2">
+                    <input type="text" ng-model="project.projectnumber" ng-change="$parent.projecthaschanged=true" id="projectnumber" />
+                </td>
+            </tr>
+            <tr class="header" ng-if="user.controller || user.admin">
+                <td>
                     Controller status: 
                     <select ng-model="project.financeControl">
                         <option value="Green">Finance controlled (Green)</option>
@@ -24,19 +39,17 @@
                         <option value="Red">Budget breached (Red)</option>
                     </select>
                 </td>
-                <td colspan="3">To be controlled<input type="checkbox" ng-model="project.isControlled" /></td>
-                <td colspan="4">
-                    Project number: <input ng-model="project.projectnumber" ng-change="$parent.projecthaschanged=true" id="projectnumber" />
+                <td colspan="2">
+                   Lifetime:
                 </td>
-            </tr>
-            <tr class="header" ng-if="user.controller || user.admin">
-                <td colspan="3">
-                   <div class="field">
-                        Dep. date: <input type="text" id="depriciationdate" datepicker="" ng-model="project.depriciationdate" ng-change="dateChanged(project.depriciationdate)" class="datebox"/>
+                <td>
+                   <input type="text" ng-model="project.depriciation" ng-change="$parent.projecthaschanged=true" id="depriciation" />
+                </td>
+                <td colspan="2">Dep. date:</td>
+                <td colspan="2">
+                    <div class="field">
+                        <input type="text" id="depriciationdate" datepicker="" ng-model="project.depriciationdate" ng-change="dateChanged(project.depriciationdate)" class="datebox"/>
                    </div>
-                </td>
-                <td colspan="4">
-                    Depriciation: <input ng-model="project.depriciation" ng-change="$parent.projecthaschanged=true" id="depriciation" />
                 </td>
             </tr>
 
