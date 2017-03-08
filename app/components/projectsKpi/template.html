@@ -1,24 +1,18 @@
 <div id="projects-kpi">
-    <h2>Project list - KPI</h2>
+    <h2>Project list - KPI <div class="right"><button ng-click="showfilters=true"  ng-show="!showfilters">Show filters</button><button ng-click="showfilters=false"  ng-show="showfilters">Hide filters</button></div></h2>
     <div class="smaller">
-        <div class="filter-order-container">
+        <div class="filter-order-container" ng-show="showfilters">
             <div class="label" style="height:120px;">
                 Filter by:<br/> BU
                 <br/>PO<br/>PM
             </div>
             <div class="field multiple-select">
-                <select multiple="multiple" ng-multiple="true" ng-model="search.buname">
-                    <option ng-repeat="bu in bus" value="{{bu.name}}">{{bu.name}}</option>
-                </select>
-                <select multiple="multiple" ng-multiple="true" ng-model="search.poname">
-                    <option ng-repeat="u in users | filter: {source: true} | orderBy:'name'" value="{{u.name}}">{{u.name}}</option>
-                </select>
-                <select multiple="multiple" ng-multiple="true" ng-model="search.pmname">
-                    <option ng-repeat="u in users | filter: {source: true} | orderBy:'name'" value="{{u.name}}">{{u.name}}</option>
-                </select>
+                <select multiple="multiple" ng-multiple="true" ng-model="search.buname" ng-options="bu.name as bu.name for bu in bus | orderBy: 'name'"></select>
+                <select multiple="multiple" ng-multiple="true" ng-model="search.poname" ng-options="u.name as u.name for u in users | filter: {source: true} | orderBy: 'name'"></select>
+                <select multiple="multiple" ng-multiple="true" ng-model="search.pmname" ng-options="u.name as u.name for u in users | filter: {source: true} | orderBy: 'name'"></select>
             </div>
         </div>
-        <div class="filter-order-container">
+        <div class="filter-order-container" ng-show="showfilters">
             <div class="label" style="height:120px;">
                 Filter by:<br/> State
                 <br/>Audience<br/>Portfolio
@@ -35,12 +29,10 @@
                     <option value="Portfolio">Portfolio</option>
                     <option value="Company">Company</option>
                 </select>
-                <select multiple="multiple" ng-multiple="true" ng-model="search.support">
-                    <option ng-repeat="bu in bus" value="{{bu.name}}">{{bu.name}}</option>
-                </select>
+                <select multiple="multiple" ng-multiple="true" ng-model="search.support" ng-options="bu.name as bu.name for bu in bus | orderBy: 'name'"></select>
             </div>
         </div>
-        <div class="filter-order-container">
+        <div class="filter-order-container" ng-show="showfilters">
             <div class="label">
                 Order by:
             </div>
