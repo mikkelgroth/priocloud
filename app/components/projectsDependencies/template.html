@@ -8,7 +8,7 @@
             </div>
             <div class="field multiple-select">
                 <select multiple="multiple" ng-multiple="true" ng-model="search.buname">
-                    <option ng-repeat="bu in bus" value="{{bu.name}}">{{bu.name}}</option>
+                    <option ng-repeat="bu in bus | orderBy:'name'" value="{{bu.name}}">{{bu.name}}</option>
                 </select>
                 <select multiple="multiple" ng-multiple="true" ng-model="search.poname">
                     <option ng-repeat="u in users | filter: {source: true} | orderBy:'name'" value="{{u.name}}">{{u.name}}</option>

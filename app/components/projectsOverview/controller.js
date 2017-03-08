@@ -14,6 +14,13 @@ angular
             companyService
         ) {
 
+            companyService
+                .company
+                .subscribe(function (company) {
+
+                    $scope.company = company;
+                });
+            
             companyService.projects.subscribe(function (projects) {
 
                 $scope.projectList = setProjectList(projects);
