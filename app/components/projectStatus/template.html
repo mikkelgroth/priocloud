@@ -351,7 +351,7 @@
                     <td>Product feedback</td>
                     <td>Status date<br/>Demo date</td>
                 </tr>
-                <tr ng-repeat="status in project.statuses" ng-click="viewStatus(status)" class="link">
+                <tr ng-repeat="status in project.statuses | orderBy: 'date' : true" ng-click="viewStatus(status)" class="link">
                     <td class="{{status.status}}">
                         &nbsp;{{status.title}}
                         <br/>
