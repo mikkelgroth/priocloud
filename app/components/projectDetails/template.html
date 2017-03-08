@@ -6,15 +6,15 @@
             <h2>
                 Details
                 <div class="right">
-                    <button type="button" 
-                        ng-class="{'Red': projecthaschanged}" 
-                        ng-if="user.email == project.po.email || 
+                   <button type="button"
+                        ng-if="$scope.hasChanged && (user.email == project.po.email || 
                         user.email == project.pm.email || 
                         user.email == project.altpo.email || 
                         user.email == project.altpm.email || 
                         user.isOwner || 
-                        user.admin"
-                        ng-click="saveProject(project)">save project</button>
+                        user.admin)"
+                        ng-click="$scope.hasChanged=false; saveProject(project)"
+                        class="Red">save</button>
                 </div>
             </h2>
             <table class="smaller gutter-top">
@@ -22,7 +22,7 @@
                     <td class="l header">Title</td>
                     <td>
                         <div ng-if="!user.isOwner && !user.admin">{{project.title}}</div>
-                        <input ng-if="user.isOwner || user.admin" ng-model="project.title" ng-change="$parent.projecthaschanged=true" id="title"
+                        <input ng-if="user.isOwner || user.admin" ng-model="project.title" ng-change="$scope.hasChanged=true" id="title"
                         />
                     </td>
                     <td class="l header"></td>
@@ -34,12 +34,11 @@
                     <td class="header">BU</td>
                     <td>
                         <div ng-if="!user.isOwner && !user.admin">{{project.bu.name}}</div>
-                        <select ng-if="user.isOwner || user.admin" ng-model="project.bu" id="probu" ng-options="bu.name for bu in bus track by bu.name"
-                            ng-change="$parent.projecthaschanged=true"></select></td>
+                        <select  ng-change="$scope.hasChanged=true" ng-if="user.isOwner || user.admin" ng-model="project.bu" id="probu" ng-options="bu.name for bu in bus track by bu.name"></select></td>
                     <td class="header">Audience</td>
                     <td>
                         <div ng-if="!user.isOwner && !user.admin">{{project.audience}}</div>
-                        <select ng-if="user.isOwner || user.admin" ng-model="project.audience" ng-change="$parent.projecthaschanged=true">
+                        <select ng-if="user.isOwner || user.admin" ng-model="project.audience" ng-change="$scope.hasChanged=true">
                         <option value="Project">Project</option>
                         <option value="Portfolio">Portfolio</option>
                         <option value="Company">Company</option>
@@ -50,7 +49,7 @@
                     <td class="header">State</td>
                     <td>
                         <div ng-if="!user.isOwner && !user.admin">{{project.state}}</div>
-                        <select ng-if="user.isOwner || user.admin" ng-model="project.state" id="state" ng-change="$parent.projecthaschanged=true">
+                        <select ng-if="user.isOwner || user.admin" ng-model="project.state" id="state" ng-change="$scope.hasChanged=true">
                             <option value="Proposed">Proposed</option>
                             <option value="Progress">Progress</option>
                             <option value="Onhold">On hold</option>
@@ -60,7 +59,7 @@
                     <td class="header">Portfolio</td>
                     <td>
                         <div ng-if="!user.isOwner && !user.admin">{{project.bu.name}}</div>
-                        <select ng-if="user.isOwner || user.admin" ng-model="project.support" ng-change="$parent.projecthaschanged=true">
+                        <select ng-if="user.isOwner || user.admin" ng-model="project.support" ng-change="$scope.hasChanged=true">
                             <option ng-repeat="bu in bus" value="{{bu.name}}">{{bu.name}}</option>
                         </select></td>
                 </tr>
@@ -71,26 +70,28 @@
                     <td class="header">PM</td>
                     <td>
                         <div ng-if="!user.isOwner && !user.admin">{{project.pm.name}}</div>
-                        <select ng-if="user.isOwner || user.admin" ng-model="project.pm" id="propm" ng-change="$parent.projecthaschanged=true" ng-options="u.name for u in users | filter: {source: true} | orderBy:'name' track by u.name"></select>
+                        <select ng-if="user.isOwner || user.admin" ng-model="project.pm" id="propm" ng-options="u.name for u in users | filter: {source: true} | orderBy:'name' track by u.name"
+                            ng-change="$scope.hasChanged=true"></select>
                     </td>
                     <td class="header">PO</td>
                     <td>
                         <div ng-if="!user.isOwner && !user.admin">{{project.po.name}}</div>
                         <select ng-if="user.isOwner || user.admin" ng-model="project.po" id="propo" ng-options="u.name for u in users | filter: {source: true} | orderBy:'name' track by u.name"
-                            ng-change="$parent.projecthaschanged=true"></select></td>
+                            ng-change="$scope.hasChanged=true"></select>
+                    </td>
                 </tr>
                 <tr>
                     <td class="header">Alt. PM</td>
                     <td>
                         <div ng-if="!user.isOwner && !user.admin">{{project.altpm.name}}</div>
-                        <select ng-if="user.isOwner || user.admin" ng-model="project.altpm" id="proaltpm" ng-change="$parent.projecthaschanged=true"
+                        <select ng-if="user.isOwner || user.admin" ng-model="project.altpm" id="proaltpm" ng-change="$scope.hasChanged=true"
                             ng-options="u.name for u in users | filter: {source: true} | orderBy:'name' track by u.name"></select>
                     </td>
                     <td class="header">Alt. PO</td>
                     <td>
                         <div ng-if="!user.isOwner && !user.admin">{{project.altpo.name}}</div>
                         <select ng-if="user.isOwner || user.admin" ng-model="project.altpo" id="proaltpo" ng-options="u.name for u in users | filter: {source: true} | orderBy:'name' track by u.name"
-                            ng-change="$parent.projecthaschanged=true"></select></td>
+                            ng-change="$scope.hasChanged=true"></select></td>
                 </tr>
                 <tr>
                     <td>
@@ -98,7 +99,7 @@
                     </td>
                     <td colspan="3">
                         <div class="field">
-                            <textarea ng-model="project.memberssteering" ng-change="projecthaschanged=true" placeholder="Name the members of your steering commitee."></textarea>
+                            <textarea ng-model="project.memberssteering"  ng-change="$scope.hasChanged=true" placeholder="Name the members of your steering commitee."></textarea>
                         </div>
                     </td>
                 </tr>
@@ -108,7 +109,7 @@
                     </td>
                     <td colspan="3">
                         <div class="field">
-                            <textarea ng-model="project.membersproject" ng-change="projecthaschanged=true" placeholder="Name the members of your project."></textarea>
+                            <textarea ng-model="project.membersproject" ng-change="$scope.hasChanged=true" placeholder="Name the members of your project."></textarea>
                         </div>
                     </td>
                 </tr>
@@ -121,7 +122,7 @@
                     </td>
                     <td colspan="3">
                         <div class="field">
-                            <textarea ng-model="project.outcome" maxlength="300" ng-change="projecthaschanged=true" id="detailoutcome" placeholder="Your Elevator Pitch: What changes are you going to make to your business and customers and what is the overall business benefit."></textarea>
+                            <textarea ng-model="project.outcome" maxlength="300" ng-change="$scope.hasChanged=true" id="detailoutcome" placeholder="Your Elevator Pitch: What changes are you going to make to your business and customers and what is the overall business benefit."></textarea>
                         </div>
                     </td>
                 </tr>
@@ -131,7 +132,7 @@
                     </td>
                     <td colspan="3">
                         <div class="field ">
-                            <textarea ng-model="project.costbenefit" maxlength="300" ng-change="projecthaschanged=true" id="detailbenefit" placeholder="What will you achieve by running this project and what will the business gain by this investment."></textarea>
+                            <textarea ng-model="project.costbenefit" maxlength="300" ng-change="$scope.hasChanged=true" id="detailbenefit" placeholder="What will you achieve by running this project and what will the business gain by this investment."></textarea>
                         </div>
                     </td>
                 </tr>
@@ -141,7 +142,7 @@
                     </td>
                     <td colspan="3">
                         <div class="field">
-                            <textarea ng-model="project.costrisk" maxlength="300" ng-change="projecthaschanged=true" id="detailrisk" placeholder="What will it cost the company to not make this investment."></textarea>
+                            <textarea ng-model="project.costrisk" maxlength="300" ng-change="$scope.hasChanged=true" id="detailrisk" placeholder="What will it cost the company to not make this investment."></textarea>
                         </div>
                     </td>
                 </tr>
@@ -151,7 +152,7 @@
                     </td>
                     <td colspan="3">
                         <div class="field">
-                            <textarea ng-model="project.benefitplan" maxlength="300" ng-change="projecthaschanged=true" id="detailreal" placeholder="When in time will you asses the results of this project and evaluate its bennefits."></textarea>
+                            <textarea ng-model="project.benefitplan" maxlength="300" ng-change="$scope.hasChanged=true" id="detailreal" placeholder="When in time will you asses the results of this project and evaluate its bennefits."></textarea>
                         </div>
                     </td>
                 </tr>

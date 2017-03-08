@@ -32,7 +32,7 @@ angular
                     if ($scope.project.statuses.length > 0) {
 
                         $scope.editstatus = angular.copy($scope.project.statuses[$scope.project.statuses.length - 1]);
-                        $scope.saveStatusEnabled = true;
+                        
                     }
                 });
 
@@ -60,6 +60,7 @@ angular
             $scope.saveProject = function (project) {
 
                 companyService.saveProject(project);
+                
             };
         }
     ]);

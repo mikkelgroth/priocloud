@@ -5,13 +5,13 @@
         <h2 class="{{editmile.status}}">
             ({{editmile.wsjf}}) {{editmile.title}}
             <div class="right">
-                <button type="button" 
-                    ng-click="saveMilestones(editmile)" 
-                    ng-if="user.email==project.po.email || 
+                <button type="button" class="Red"
+                    ng-click="$scope.hasChanged=false; saveMilestones(editmile)" 
+                    ng-if="$scope.hasChanged && (user.email==project.po.email || 
                     user.email==project.pm.email || 
                     user.email==project.altpo.email || 
                     user.email==project.altpm.email || 
-                    user.isOwner || user.admin">save deliverable</button>
+                    user.isOwner || user.admin)">Save</button>
                 <button type="button" ng-click="hideMilestoneForm()">close</button>
             </div>
         </h2>
@@ -20,12 +20,12 @@
                 <td class="header">Title</td>
                 <td>
                     <div class="field">
-                        <input ng-model="editmile.title" />
+                        <input ng-model="editmile.title" ng-change="$scope.hasChanged=true"/>
                     </div>
                 </td>
                 <td class="header">Audience</td>
                 <td>
-                    <select ng-model="editmile.audience">
+                    <select ng-model="editmile.audience" ng-change="$scope.hasChanged=true">
                         <option value="Project">Project</option>
                         <option value="Portfolio">Portfolio</option>
                         <option value="Company">Company</option>
@@ -35,18 +35,18 @@
             <tr>
                 <td class="header">Delivery responsible</td>
                 <td>
-                    <select ng-model="editmile.responsible" ng-change="projecthaschanged=true" ng-options="u.name for u in users | filter: {source: true} | orderBy:'name' track by u.name"></select>
+                    <select ng-model="editmile.responsible"  ng-change="$scope.hasChanged=true" ng-options="u.name for u in users | filter: {source: true} | orderBy:'name' track by u.name"></select>
                 </td>
                 <td class="header">Delivery approver</td>
                 <td>
-                    <select ng-model="editmile.acountable" ng-change="projecthaschanged=true" ng-options="u.name for u in users | filter: {source: true} | orderBy:'name' track by u.name"></select>
+                    <select ng-model="editmile.acountable"  ng-change="$scope.hasChanged=true" ng-options="u.name for u in users | filter: {source: true} | orderBy:'name' track by u.name"></select>
                 </td>
             </tr>
             <tr>
                 <td class="header">Start Date</td>
                 <td>
                     <div class="field">
-                        <input type="text" id="miledate" datepicker="" ng-model="editmile.date" ng-change="dateChanged(editmile.date)"  class="datebox"/>
+                        <input type="text" id="miledate" datepicker="" ng-model="editmile.date" ng-change="$scope.hasChanged=true; dateChanged(editmile.date)"  class="datebox"/>
                         <!-- <input class="time" id="miledate" ng-model="editmile.date" /> -->
                         <!-- TODO: make datepicker directive -->
                         <!--<script type="text/javascript">new datepickr('#miledate');</script>-->
@@ -55,7 +55,7 @@
                 <td class="header">End Date</td>
                 <td>
                     <div class="field">
-                        <input type="text" id="mileenddate" datepicker="" ng-model="editmile.enddate" ng-change="dateChanged(editmile.enddate)"  class="datebox"/>
+                        <input type="text" id="mileenddate" datepicker="" ng-model="editmile.enddate" ng-change="$scope.hasChanged=true; dateChanged(editmile.enddate)"  class="datebox"/>
                         <!-- <input class="time" id="mileenddate" ng-model="editmile.enddate" /> -->
                         <!-- TODO: make datepicker directive -->
                         <!--<script type="text/javascript">new datepickr('#mileenddate');</script>-->
@@ -65,7 +65,7 @@
             <tr>
                 <td class="header">Status</td>
                 <td>
-                    <select ng-model="editmile.status">
+                    <select ng-model="editmile.status" ng-change="$scope.hasChanged=true">
                         <option value="Green">OK (Green)</option>
                         <option value="Yellow">Observe (Yellow)</option>
                         <option value="Orange">Assist (Orange)</option>
@@ -74,7 +74,7 @@
                 </td>
                 <td class="header">State</td>
                 <td>
-                    <select ng-model="editmile.state">
+                    <select ng-model="editmile.state" ng-change="$scope.hasChanged=true">
                         <option value="Target">Target</option>
                         <option value="Qualified">Qualified</option>
                         <option value="Progress">Progress</option>
@@ -92,7 +92,7 @@
             <tr>
                 <td class="header" prio-class prio-value-bar-render="editmile.bena">Business enabler</td>
                 <td>
-                    <select ng-model="editmile.bena">
+                    <select ng-model="editmile.bena" ng-change="$scope.hasChanged=true">
                         <option value="1">1. Minimal value</option>
                         <option value="2">2. Medium value</option>
                         <option value="3">3. Large value</option>
@@ -101,7 +101,7 @@
                 </td>
                 <td class="header" prio-class prio-value-bar-render-neg="editmile.effort">Effort</td>
                 <td>
-                    <select ng-model="editmile.effort">
+                    <select ng-model="editmile.effort" ng-change="$scope.hasChanged=true">
                         <option value="1">1. Minimal effort</option>
                         <option value="2">2. Medium effort</option>
                         <option value="3">3. Large effort</option>
@@ -112,7 +112,7 @@
             <tr>
                 <td class="header" prio-class prio-value-bar-render="editmile.sena">Strategy enabler</td>
                 <td>
-                    <select ng-model="editmile.sena">
+                    <select ng-model="editmile.sena" ng-change="$scope.hasChanged=true">
                         <option value="1">1. Minimal value</option>
                         <option value="2">2. Medium value</option>
                         <option value="3">3. Large value</option>
@@ -121,7 +121,7 @@
                 </td>
                 <td class="header" prio-class prio-value-bar-render-neg="editmile.risklevel">Risk of failure</td>
                 <td>
-                    <select ng-model="editmile.risklevel">
+                    <select ng-model="editmile.risklevel" ng-change="$scope.hasChanged=true">
                         <option value="1">1. Slim risk</option>
                         <option value="2">2. Could happen</option>
                         <option value="3">3. Likely to happen</option>
@@ -136,7 +136,7 @@
                 </td>
                 <td colspan="3">
                     <div class="field">
-                        <textarea ng-model="editmile.delivarables" maxlength="300" id="miledel" placeholder="Describe the key business delivery that this deliverable will produce."></textarea>
+                        <textarea ng-change="$scope.hasChanged=true" ng-model="editmile.delivarables" maxlength="300" id="miledel" placeholder="Describe the key business delivery that this deliverable will produce."></textarea>
                     </div>
                 </td>
             </tr>
@@ -146,7 +146,7 @@
                 </td>
                 <td colspan="3">
                     <div class="field">
-                        <textarea ng-model="editmile.comments" maxlength="300" id="milecom" placeholder="Describe the enablers of creating value both on implementation and if it enables further strategic work in the future"></textarea>
+                        <textarea ng-change="$scope.hasChanged=true" ng-model="editmile.comments" maxlength="300" id="milecom" placeholder="Describe the enablers of creating value both on implementation and if it enables further strategic work in the future"></textarea>
                     </div>
                 </td>
             </tr>
@@ -156,7 +156,7 @@
                 </td>
                 <td colspan="3">
                     <div class="field">
-                        <textarea ng-model="editmile.risks" maxlength="300" id="milerisk" placeholder="Describe the limiters that work against creating value like the amount of work and the assosiated risk of failure"></textarea>
+                        <textarea ng-change="$scope.hasChanged=true" ng-model="editmile.risks" maxlength="300" id="milerisk" placeholder="Describe the limiters that work against creating value like the amount of work and the assosiated risk of failure"></textarea>
                     </div>
                 </td>
             </tr>
@@ -164,10 +164,15 @@
                 <td colspan="4">
                     <div class="right">
                         <button type="button" 
-                            ng-click="removeMilestone(editmile)" 
-                            ng-if="user.email==project.po.email || 
+                            ng-click="$scope.deleteThis=true" 
+                            ng-if="!$scope.deleteThis && (user.email==project.po.email || 
                             user.email==project.pm.email || 
-                            user.isOwner || user.admin">delete deliverable</button>
+                            user.isOwner || user.admin)">delete deliverable</button>
+                        <button type="button" class="Red"
+                            ng-click="$scope.deleteThis=false; removeMilestone(editmile)" 
+                            ng-if="$scope.deleteThis && (user.email==project.po.email || 
+                            user.email==project.pm.email || 
+                            user.isOwner || user.admin)">confirm delete!!!</button>
                     </div>
                 </td>
             </tr>

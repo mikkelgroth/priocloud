@@ -118,9 +118,7 @@ angular
                 }
                 
                 companyService.saveProject($scope.project);
-                $scope.editrisk = {};
-
-                $scope.showRiskForm = false;
+                $scope.deleteThis=false;
             };
 
             function showRisk() {
@@ -137,6 +135,7 @@ angular
 
                         $scope.editrisk = risk[0];
                         $scope.showRiskForm = true;
+                        $scope.deleteThis=false;
                     }
                 }
             }

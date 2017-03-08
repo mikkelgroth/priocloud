@@ -6,15 +6,15 @@
             Status per. {{editstatus.date | date:'yyyy-MM-dd'}}
             <div class="right">
                 <!-- TODO: make directive for ng-if based on user.email == project.something -->
-                <button type="button" 
+                <button type="button" class="Red"
                     ng-show="saveStatusEnabled" 
-                    ng-click="saveStatus(editstatus)"
+                    ng-click="$scope.hasChanged=false; saveStatus(editstatus)"
                     ng-if="(user.email == project.po.email || 
                             user.email == project.pm.email || 
                             user.email == project.altpo.email || 
                             user.email == project.altpm.email || 
                             user.isOwner || 
-                            user.admin) && (editstatus.active == null || editstatus.active)">save status</button>
+                            user.admin) && (editstatus.active == null || editstatus.active) && $scope.hasChanged">Save</button>
                 <button type="button" ng-click="hideStatusForm()">close</button>
                 <button type="button" 
                     ng-click="newCloneStatus(editstatus)" 
@@ -38,7 +38,7 @@
                 <td class="header">Next demo</td>
                 <td>
                     <div class="field">
-                        <input type="text" id="demodate" datepicker="" ng-model="editstatus.demodate" ng-change="dateChanged(editstatus.demodate)"  class="datebox"/>
+                        <input type="text" id="demodate" datepicker="" ng-model="editstatus.demodate" ng-change="$scope.hasChanged=true; dateChanged(editstatus.demodate)"  class="datebox"/>
                         <!-- <input class="time" id="demodate" ng-model="editstatus.demodate" />
                         <!-- TODO: make datepicker directive -->
                         <!--<script type="text/javascript">new datepickr('#demodate');</script>-->
@@ -50,7 +50,7 @@
                     <p>Overall flag <span id="overallstatus_count" class="right"></span></p>
                 </td>
                 <td>
-                    <select ng-model="editstatus.status">
+                    <select ng-model="editstatus.status" ng-change="$scope.hasChanged=true">
                         <option value="Green">OK (Green)</option>
                         <option value="Yellow">Observe (Yellow)</option>
                         <option value="Orange">Assist (Orange)</option>
@@ -62,9 +62,10 @@
                 </td>
                 <td>
                     <div ng-if="editstatus.statusstate != 'Final'">
-                        <select ng-model="editstatus.statusstate">
+                        <select ng-model="editstatus.statusstate" ng-change="$scope.hasChanged=true">
                             <option value="Draft">Draft</option>
-                            <option value="Ready">Ready</option>
+                            <option value="Ready for PM">Ready for PM</option>
+                            <option value="Ready for PO">Ready for PO</option>
                         </select>
                     </div>
                     <div ng-if="editstatus.statusstate == 'Final'">
@@ -76,7 +77,7 @@
                 <td class="header">Overall status</td>
                 <td colspan="3">
                     <div class="field">
-                        <textarea ng-model="editstatus.overallcomments" maxlength="300" id="overallstatus" placeholder="Comments"></textarea>
+                        <textarea ng-change="$scope.hasChanged=true" ng-model="editstatus.overallcomments" maxlength="300" id="overallstatus" placeholder="Comments"></textarea>
                     </div>
                 </td>
             </tr>
@@ -91,7 +92,7 @@
                     <p>Business case <span id="bcstatus_count" class="right"></span></p>
                 </td>
                 <td>
-                    <select ng-model="editstatus.statusbc">
+                    <select ng-model="editstatus.statusbc" ng-change="$scope.hasChanged=true">
                         <option value="Green">OK (Green)</option>
                         <option value="Yellow">Observe (Yellow)</option>
                         <option value="Orange">Assist (Orange)</option>
@@ -100,7 +101,7 @@
                 </td>
                 <td>
                     <div class="field">
-                        <textarea ng-model="editstatus.bccomments" maxlength="300" id="bcstatus" placeholder="Comments"></textarea>
+                        <textarea ng-change="$scope.hasChanged=true" ng-model="editstatus.bccomments" maxlength="300" id="bcstatus" placeholder="Comments"></textarea>
                     </div>
                 </td>
             </tr>
@@ -109,7 +110,7 @@
                     <p>Scope <span id="scstatus_count" class="right"></span></p>
                 </td>
                 <td>
-                    <select ng-model="editstatus.statussc">
+                    <select ng-model="editstatus.statussc" ng-change="$scope.hasChanged=true">
                         <option value="Green">OK (Green)</option>
                         <option value="Yellow">Observe (Yellow)</option>
                         <option value="Orange">Assist (Orange)</option>
@@ -118,7 +119,7 @@
                 </td>
                 <td>
                     <div class="field">
-                        <textarea ng-model="editstatus.sccomments" maxlength="300" id="scstatus" placeholder="Comments"></textarea>
+                        <textarea ng-change="$scope.hasChanged=true" ng-model="editstatus.sccomments" maxlength="300" id="scstatus" placeholder="Comments"></textarea>
                     </div>
                 </td>
             </tr>
@@ -127,7 +128,7 @@
                     <p>Time line <span id="tlstatus_count" class="right"></span></p>
                 </td>
                 <td>
-                    <select ng-model="editstatus.statustl">
+                    <select ng-model="editstatus.statustl" ng-change="$scope.hasChanged=true">
                         <option value="Green">OK (Green)</option>
                         <option value="Yellow">Observe (Yellow)</option>
                         <option value="Orange">Assist (Orange)</option>
@@ -136,7 +137,7 @@
                 </td>
                 <td>
                     <div class="field">
-                        <textarea ng-model="editstatus.tlcomments" maxlength="300" id="tlstatus" placeholder="Comments"></textarea>
+                        <textarea ng-change="$scope.hasChanged=true" ng-model="editstatus.tlcomments" maxlength="300" id="tlstatus" placeholder="Comments"></textarea>
                     </div>
                 </td>
             </tr>
@@ -145,7 +146,7 @@
                     <p>Resources <span id="resstatus_count" class="right"></span></p>
                 </td>
                 <td>
-                    <select ng-model="editstatus.statusres">
+                    <select ng-model="editstatus.statusres" ng-change="$scope.hasChanged=true">
                         <option value="Green">OK (Green)</option>
                         <option value="Yellow">Observe (Yellow)</option>
                         <option value="Orange">Assist (Orange)</option>
@@ -154,7 +155,7 @@
                 </td>
                 <td>
                     <div class="field">
-                        <textarea ng-model="editstatus.rescomments" maxlength="300" id="resstatus" placeholder="Comments"></textarea>
+                        <textarea ng-change="$scope.hasChanged=true" ng-model="editstatus.rescomments" maxlength="300" id="resstatus" placeholder="Comments"></textarea>
                     </div>
                 </td>
             </tr>
@@ -163,7 +164,7 @@
                     <p>Budget <span id="budstatus_count" class="right"></span></p>
                 </td>
                 <td>
-                    <select ng-model="editstatus.statusbud">
+                    <select ng-model="editstatus.statusbud" ng-change="$scope.hasChanged=true">
                         <option value="Green">OK (Green)</option>
                         <option value="Yellow">Observe (Yellow)</option>
                         <option value="Orange">Assist (Orange)</option>
@@ -172,7 +173,7 @@
                 </td>
                 <td>
                     <div class="field">
-                        <textarea ng-model="editstatus.budcomments" maxlength="300" id="budstatus" placeholder="Comments"></textarea>
+                        <textarea ng-change="$scope.hasChanged=true" ng-model="editstatus.budcomments" maxlength="300" id="budstatus" placeholder="Comments"></textarea>
                     </div>
                 </td>
             </tr>
@@ -181,7 +182,7 @@
                     <p>Risks <span id="riskstatus_count" class="right"></span></p>
                 </td>
                 <td>
-                    <select ng-model="editstatus.statusrisk">
+                    <select ng-change="$scope.hasChanged=true" ng-model="editstatus.statusrisk">
                         <option value="Green">OK (Green)</option>
                         <option value="Yellow">Observe (Yellow)</option>
                         <option value="Orange">Assist (Orange)</option>
@@ -190,7 +191,7 @@
                 </td>
                 <td>
                     <div class="field">
-                        <textarea ng-model="editstatus.riskcomments" maxlength="300" id="riskstatus" placeholder="Comments"></textarea>
+                        <textarea ng-change="$scope.hasChanged=true" ng-model="editstatus.riskcomments" maxlength="300" id="riskstatus" placeholder="Comments"></textarea>
                     </div>
                 </td>
             </tr>
@@ -203,7 +204,7 @@
                 </td>
                 <td colspan="2">
                     <div class="field">
-                        <textarea ng-model="editstatus.del" maxlength="300" id="statusdel" placeholder="What have the project delivered compared to last status report."></textarea>
+                        <textarea ng-change="$scope.hasChanged=true" ng-model="editstatus.del" maxlength="300" id="statusdel" placeholder="What have the project delivered compared to last status report."></textarea>
                     </div>
                 </td>
             </tr>
@@ -213,7 +214,7 @@
                 </td>
                 <td colspan="2">
                     <div class="field">
-                        <textarea ng-model="editstatus.next" maxlength="300" id="statusnext" placeholder="What are the project to deliver in the next iteration (until next status report)"></textarea>
+                        <textarea ng-change="$scope.hasChanged=true" ng-model="editstatus.next" maxlength="300" id="statusnext" placeholder="What are the project to deliver in the next iteration (until next status report)"></textarea>
                     </div>
                 </td>
             </tr>
@@ -223,7 +224,7 @@
                 </td>
                 <td colspan="2">
                     <div class="field">
-                        <textarea ng-model="editstatus.concerns" maxlength="300" id="statusconcerns" placeholder="What concerns regarding deliveries, milestones and risks needs highliting?"></textarea>
+                        <textarea ng-change="$scope.hasChanged=true" ng-model="editstatus.concerns" maxlength="300" id="statusconcerns" placeholder="What concerns regarding deliveries, milestones and risks needs highliting?"></textarea>
                     </div>
                 </td>
             </tr>
@@ -233,7 +234,7 @@
                 </td>
                 <td colspan="2">
                     <div class="field">
-                        <textarea ng-model="editstatus.changes" maxlength="300" id="statuschanges" placeholder="Is there changes to economy, deliveries, milestones and risk?"></textarea>
+                        <textarea ng-change="$scope.hasChanged=true" ng-model="editstatus.changes" maxlength="300" id="statuschanges" placeholder="Is there changes to economy, deliveries, milestones and risk?"></textarea>
                     </div>
                 </td>
             </tr>
@@ -244,7 +245,7 @@
                 </td>
                 <td colspan="2">
                     <div class="field">
-                        <textarea ng-model="editstatus.comments" maxlength="300" id="statuscomments"></textarea>
+                        <textarea ng-change="$scope.hasChanged=true" ng-model="editstatus.comments" maxlength="300" id="statuscomments"></textarea>
                     </div>
                 </td>
             </tr>
@@ -259,9 +260,9 @@
                 <td class="header">PO feedback</td>
                 <td>
                     <div ng-if="user.email==project.po.email || user.email==project.altpo.email || user.isOwner || user.admin">
-                        <select ng-model="editstatus.apo">
+                        <select ng-model="editstatus.apo" ng-change="$scope.hasChanged=true">
                             <option value="Not evaluated">Not evaluated</option>
-                            <option value="Amend">Amend</option>
+                            <option value="Please amend">Please amend</option>
                             <option value="Approved">Approved</option>
                         </select>
                     </div>
@@ -272,9 +273,10 @@
                 <td class="header">Status state</td>
                 <td>
                     <div ng-if="user.email==project.po.email || user.email==project.altpo.email || user.isOwner || user.admin">
-                        <select ng-model="editstatus.statusstate">
+                        <select ng-model="editstatus.statusstate" ng-change="$scope.hasChanged=true">
                             <option value="Draft">Draft</option>
-                            <option value="Ready">Ready</option>
+                            <option value="Ready for PM">Ready for PM</option>
+                            <option value="Ready for PO">Ready for PO</option>
                             <option value="Final">Final</option>
                          </select>
                     </div>
@@ -287,7 +289,7 @@
                 <td class="header {{csrender(editstatus.cs)}}">Project feedback</td>
                 <td>
                     <div ng-if="user.email==project.po.email || user.email==project.altpo.email || user.isOwner || user.admin">
-                        <select ng-model="editstatus.cs">
+                        <select ng-model="editstatus.cs" ng-change="$scope.hasChanged=true">
                             <option value="1">1. Total breakdown</option>
                             <option value="2">2. No value</option>
                             <option value="3">3. Lack of trust</option>
@@ -305,7 +307,7 @@
                 <td class="header {{csrender(editstatus.productcs)}}">Product feedback</td>
                 <td>
                     <div ng-if="user.email==project.po.email || user.email==project.altpo.email || user.isOwner || user.admin">
-                        <select ng-model="editstatus.productcs">
+                        <select ng-model="editstatus.productcs" ng-change="$scope.hasChanged=true">
                             <option value="1">1. Total breakdown</option>
                             <option value="2">2. No value</option>
                             <option value="3">3. Lack of trust</option>
@@ -324,7 +326,9 @@
             <tr>
                 <td colspan="4">
                     <div class="right">
-                        <button type="button" ng-show="saveStatusEnabled" ng-click="saveStatus(editstatus)" ng-if="(user.email==project.po.email || user.email==project.altpo.email || user.email==project.altpo.email || user.email==project.altpm.email || user.isOwner || user.admin) && (editstatus.active == null || editstatus.active)">save </button>
+                        <button type="button" ng-show="saveStatusEnabled" ng-click="$scope.hasChanged=false; saveStatus(editstatus)" 
+                        ng-if="(user.email==project.po.email || user.email==project.altpo.email || user.email==project.altpo.email || user.email==project.altpm.email || user.isOwner || user.admin) 
+                        && (editstatus.active == null || editstatus.active) && $scope.hasChanged">save </button>
                     </div>
                 </td>
             </tr>

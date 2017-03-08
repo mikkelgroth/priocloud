@@ -94,6 +94,7 @@ angular
                 parseInt(project.kpi6)
             ) / 6);
             projecthaschanged=false;
+            deleteThis=false;
             // Update project if it exists
             if (project._id) {
 
@@ -103,6 +104,7 @@ angular
 
                         console.log("----- PROJECT UPDATED (" + project._id.$oid + ")");
                         projecthaschanged=false;
+                        deleteThis=false;
 
                         var projectIndex = _this._projects
                             .map(function (p) { return p._id.$oid; })

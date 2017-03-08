@@ -126,7 +126,7 @@ angular
                 }
 
                 // RISK: this can be manipulated with and set even if you are not admin
-                if (($scope.project.altpo.email == $scope.user.email || $scope.project.po.email == $scope.user.email || $scope.user.admin) &&
+                if ((($scope.project.altpo != null && $scope.project.altpo.email == $scope.user.email) || ($scope.project.po != null && $scope.project.po.email == $scope.user.email) || $scope.user.admin) &&
                     (status.statusstate == "Final" || status.apo == "Approved")) {
 
                     status.apo = "Approved";
@@ -148,7 +148,6 @@ angular
 
                 companyService.saveProject($scope.project);
 
-                $scope.showStatusForm = false;
             }
         }
     ]);

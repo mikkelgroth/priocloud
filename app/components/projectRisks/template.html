@@ -5,9 +5,9 @@
         <h2 class="{{editrisk.status}}">
             {{editrisk.type}}
             <div class="right">
-                <button type="button" 
-                    ng-click="saveRisk(editrisk)" 
-                    ng-if="user.email==project.po.email || user.email==project.pm.email || user.email==editrisk.acc.email || user.email==project.altpo.email || user.email==project.altpm.email || user.isOwner || user.admin">save risk</button>
+                <button type="button" class="Red"
+                    ng-click="$scope.hasChanged=false; saveRisk(editrisk)" 
+                    ng-if="$scope.hasChanged && (user.email==project.po.email || user.email==project.pm.email || user.email==editrisk.acc.email || user.email==project.altpo.email || user.email==project.altpm.email || user.isOwner || user.admin)">save risk</button>
                 <button type="button" ng-click="hideRiskForm()">close</button>
             </div>
         </h2>
@@ -16,12 +16,12 @@
                 <td class="header">Title</td>
                 <td>
                     <div class="field">
-                        <input ng-model="editrisk.title" />
+                        <input ng-model="editrisk.title"  ng-change="$scope.hasChanged=true"/>
                     </div>
                 </td>
                 <td class="header">Type</td>
                 <td>
-                    <select ng-model="editrisk.type">
+                    <select ng-model="editrisk.type" ng-change="$scope.hasChanged=true">
                         <option value="Risk">Risk</option>
                         <option value="Issue">Issue</option>
                     </select>
@@ -30,7 +30,7 @@
             <tr>
                 <td class="header">Proximity</td>
                 <td>
-                    <select ng-model="editrisk.proximity">
+                    <select ng-model="editrisk.proximity" ng-change="$scope.hasChanged=true">
                         <option value="Project">Project</option>
                         <option value="Go-live">Go-live</option>
                         <option value="Production">Production</option>
@@ -38,7 +38,7 @@
                 </td>
                 <td class="header">Response</td>
                 <td>
-                    <select ng-model="editrisk.response">
+                    <select ng-model="editrisk.response" ng-change="$scope.hasChanged=true">
                         <option value="Accept">Accept</option>
                         <option value="Mitigation">Mitigation</option>
                         <option value="Contingency">Contingency</option>
@@ -48,11 +48,11 @@
             <tr>
                 <td class="header">Responsible</td>
                 <td>
-                    <select ng-model="editrisk.acc" ng-change="projecthaschanged=true" ng-options="u.name for u in users | filter: {source: true} | orderBy:'name' track by u.name"></select>
+                    <select ng-model="editrisk.acc"  ng-change="$scope.hasChanged=true" ng-options="u.name for u in users | filter: {source: true} | orderBy:'name' track by u.name"></select>
                 </td>
                 <td class="header">Audience</td>
                 <td>
-                    <select ng-model="editrisk.audience">
+                    <select ng-model="editrisk.audience" ng-change="$scope.hasChanged=true">
                         <option value="Confidential">Confidential</option>
                         <option value="Project">Project</option>
                         <option value="Portfolio">Portfolio</option>
@@ -63,7 +63,7 @@
             <tr>
                 <td class="header {{editrisk.status}}">Status</td>
                 <td>
-                    <select ng-model="editrisk.status">
+                    <select ng-model="editrisk.status" ng-change="$scope.hasChanged=true">
                         <option value="Green">OK (Green)</option>
                         <option value="Yellow">Observe (Yellow)</option>
                         <option value="Orange">Assist (Orange)</option>
@@ -72,7 +72,7 @@
                 </td>
                 <td class="header">State</td>
                 <td>
-                    <select ng-model="editrisk.state">
+                    <select ng-model="editrisk.state" ng-change="$scope.hasChanged=true">
                         <option value="New">New</option>
                         <option value="Open">Open</option>
                         <option value="Closed">Closed</option>
@@ -82,7 +82,7 @@
             <tr>
                 <td class="header" prio-class prio-risk-bar-render="editrisk.prob">Probability</td>
                 <td>
-                    <select ng-model="editrisk.prob">
+                    <select ng-model="editrisk.prob" ng-change="$scope.hasChanged=true">
                         <option value="1">1. Slim chance</option>
                         <option value="2">2. Could happen</option>
                         <option value="3">3. Likely to happen</option>
@@ -91,7 +91,7 @@
                 </td>
                 <td class="header" prio-class prio-risk-bar-render="editrisk.impact">Impact</td>
                 <td>
-                    <select ng-model="editrisk.impact">
+                    <select ng-model="editrisk.impact" ng-change="$scope.hasChanged=true">
                         <option value="1">1. Minor Project impact</option>
                         <option value="2">2. Major Project impact</option>
                         <option value="3">3. Business Unit impact</option>
@@ -105,7 +105,7 @@
                 </td>
                 <td colspan="3">
                     <div class="field">
-                        <textarea ng-model="editrisk.desc" maxlength="300" id="riskdesc" placeholder="Describe the risk and the associated loss of brand, time and/or cost."></textarea>
+                        <textarea ng-change="$scope.hasChanged=true" ng-model="editrisk.desc" maxlength="300" id="riskdesc" placeholder="Describe the risk and the associated loss of brand, time and/or cost."></textarea>
                     </div>
                 </td>
             </tr>
@@ -115,7 +115,7 @@
                 </td>
                 <td colspan="3">
                     <div class="field">
-                        <textarea ng-model="editrisk.request" maxlength="300" id="riskrequest" placeholder="Describe the request for action from Steerco or senior management."></textarea>
+                        <textarea ng-change="$scope.hasChanged=true" ng-model="editrisk.request" maxlength="300" id="riskrequest" placeholder="Describe the request for action from Steerco or senior management."></textarea>
                     </div>
                 </td>
             </tr>
@@ -125,7 +125,7 @@
                 </td>
                 <td colspan="3">
                     <div class="field">
-                        <textarea ng-model="editrisk.miti" maxlength="300" id="riskmit" placeholder="Describe actions beside normal work or attention that can decrease or remove the risk and its associatted cost."></textarea>
+                        <textarea ng-change="$scope.hasChanged=true" ng-model="editrisk.miti" maxlength="300" id="riskmit" placeholder="Describe actions beside normal work or attention that can decrease or remove the risk and its associatted cost."></textarea>
                     </div>
                 </td>
             </tr>
@@ -135,7 +135,7 @@
                 </td>
                 <td colspan="3">
                     <div class="field">
-                        <textarea ng-model="editrisk.trigger" maxlength="300" id="risktrig" placeholder="Describe the tippingpoint were a risk turns in to an issue that demands for the contingency plan to come in to effect."></textarea>
+                        <textarea ng-change="$scope.hasChanged=true" ng-model="editrisk.trigger" maxlength="300" id="risktrig" placeholder="Describe the tippingpoint were a risk turns in to an issue that demands for the contingency plan to come in to effect."></textarea>
                     </div>
                 </td>
             </tr>
@@ -145,7 +145,7 @@
                 </td>
                 <td colspan="3">
                     <div class="field">
-                        <textarea ng-model="editrisk.cont" maxlength="300" id="riskplan" placeholder="Describe the plan and associated cost for getting back in control after an risk incident."></textarea>
+                        <textarea ng-change="$scope.hasChanged=true" ng-model="editrisk.cont" maxlength="300" id="riskplan" placeholder="Describe the plan and associated cost for getting back in control after an risk incident."></textarea>
                     </div>
                 </td>
             </tr>
@@ -155,14 +155,27 @@
                 </td>
                 <td colspan="3">
                     <div class="field">
-                        <textarea ng-model="editrisk.comment" maxlength="300" id="riskplan" placeholder="Comments regarding the change of state, probability and impact."></textarea>
+                        <textarea ng-change="$scope.hasChanged=true" ng-model="editrisk.comment" maxlength="300" id="riskplan" placeholder="Comments regarding the change of state, probability and impact."></textarea>
                     </div>
                 </td>
             </tr>
             <tr>
                 <td colspan="4" ng-if="user.email==project.po.email || user.email==project.pm.email || user.email==project.altpo.email || user.email==project.altpm.email || user.isOwner || user.admin">
                     <div class="right">
-                        <button type="button" ng-click="removeRisk(editrisk)">delete risk</button>
+                        <button type="button" 
+                            ng-click="$scope.deleteThis=true" 
+                            ng-if="!$scope.deleteThis && (user.email==project.po.email || 
+                            user.email==project.pm.email || 
+                            user.isOwner || user.admin)">delete</button>
+                        <button type="button" class="Red"
+                            ng-click="$scope.deleteThis=false;removeRisk(editrisk)" 
+                            ng-if="$scope.deleteThis && (user.email==project.po.email || 
+                            user.email==project.pm.email || 
+                            user.isOwner || user.admin)">confirm delete!!!</button>
+
+
+
+                        
                     </div>
                 </td>
             </tr>

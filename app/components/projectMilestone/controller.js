@@ -80,7 +80,7 @@ angular
 
                 companyService.saveProject($scope.project);
 
-                $scope.showMilestoneForm = false;
+                $scope.showMilestoneForm = true;
             };
 
             $scope.newMilestone = function () {
@@ -107,6 +107,7 @@ angular
             $scope.hideMilestoneForm = function () {
 
                 $scope.showMilestoneForm = false;
+                
             };
 
             $scope.removeMilestone = function (milestone) {

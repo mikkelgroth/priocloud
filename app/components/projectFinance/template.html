@@ -8,31 +8,37 @@
     </h2>
     <div class="right">
             
-            <button type="button" ng-class="{'Red': projecthaschanged}" ng-if="user.email==project.po.email || user.email==project.pm.email || user.email==project.altpo.email || user.email==project.altpm.email || user.isOwner || user.admin || user.controller"
-                ng-click="saveProject(project)">save project</button>
+            <button type="button"
+                        ng-if="$scope.hasChanged && (user.email == project.po.email || 
+                        user.email == project.pm.email || 
+                        user.email == project.altpo.email || 
+                        user.email == project.altpm.email || 
+                        user.isOwner || user.admin)"
+                        ng-click="$scope.hasChanged=false; saveProject(project)"
+                        class="Red">save</button>
         </div>
     <div id="finance" ng-show="route == 'finance'">
         <h3>Key project figures</h3>
         <table class="smaller smallinput">
             <tr class="header" ng-if="user.controller || user.admin">
-                <td>To be controlled<input type="checkbox" ng-model="project.isControlled" /></td>
+                <td>To be controlled<input ng-change="$scope.hasChanged=true" type="checkbox" ng-model="project.isControlled" /></td>
                 <td colspan="2">
                     Capex proj. num.:
                 </td>
                 <td>
-                    <input type="text" ng-model="project.projectnumber" ng-change="$parent.projecthaschanged=true" id="projectnumber" />
+                    <div class="field"><input ng-change="$scope.hasChanged=true" ng-model="project.projectnumber" /></div>
                 </td>
                 <td colspan="2">
                     Opex proj. num.: 
                 </td>
                 <td colspan="2">
-                    <input type="text" ng-model="project.opexprojectnumber" ng-change="$parent.projecthaschanged=true" id="opexprojectnumber" />
+                    <input ng-model="project.opexprojectnumber" ng-change="$scope.hasChanged=true" />
                 </td>
             </tr>
             <tr class="header" ng-if="user.controller || user.admin">
                 <td>
                     Controller status: 
-                    <select ng-model="project.financeControl">
+                    <select ng-model="project.financeControl" ng-change="$scope.hasChanged=true">
                         <option value="Green">Finance controlled (Green)</option>
                         <option value="Yellow">Please update (Yellow)</option>
                         <option value="Orange">Deviation unexplained (Orange)</option>
@@ -43,12 +49,12 @@
                    Lifetime:
                 </td>
                 <td>
-                   <input type="text" ng-model="project.depriciation" ng-change="$parent.projecthaschanged=true" id="depriciation" />
+                   <input type="text" ng-model="project.depriciation" ng-change="$scope.hasChanged=true" id="depriciation" />
                 </td>
                 <td colspan="2">Dep. date:</td>
                 <td colspan="2">
                     <div class="field">
-                        <input type="text" id="depriciationdate" datepicker="" ng-model="project.depriciationdate" ng-change="dateChanged(project.depriciationdate)" class="datebox"/>
+                        <input type="text" id="depriciationdate" datepicker="" ng-model="project.depriciationdate" ng-change="$scope.hasChanged=true; dateChanged(project.depriciationdate)" class="datebox"/>
                    </div>
                 </td>
             </tr>
@@ -127,31 +133,31 @@
             </tr>
             <tr>
                 <td>External</td>
-                <td><div class="field"><input ng-model="project.finance.budcapextprev" /></div></td>
-                <td><div class="field"><input ng-model="project.finance.budcapextq1" /></div></td>
-                <td><div class="field"><input ng-model="project.finance.budcapextq2" /></div></td>
-                <td><div class="field"><input ng-model="project.finance.budcapextq3" /></div></td>
-                <td><div class="field"><input ng-model="project.finance.budcapextq4" /></div></td>
+                <td><div class="field"><input ng-change="$scope.hasChanged=true" ng-model="project.finance.budcapextprev" /></div></td>
+                <td><div class="field"><input ng-change="$scope.hasChanged=true" ng-model="project.finance.budcapextq1" /></div></td>
+                <td><div class="field"><input ng-change="$scope.hasChanged=true" ng-model="project.finance.budcapextq2" /></div></td>
+                <td><div class="field"><input ng-change="$scope.hasChanged=true" ng-model="project.finance.budcapextq3" /></div></td>
+                <td><div class="field"><input ng-change="$scope.hasChanged=true" ng-model="project.finance.budcapextq4" /></div></td>
                 <td class="sums">{{ project.finance.budcapexExternal | number:0 }}</td>
                 <td class="sums">{{ project.finance.budcapexExternalgrand | number:0 }}</td>
             </tr>
             <tr>
                 <td>Ext. One-Off</td>
-                <td><div class="field"><input ng-model="project.finance.budcapextoneprev" /></div></td>
-                <td><div class="field"><input ng-model="project.finance.budcapextoneq1" /></div></td>
-                <td><div class="field"><input ng-model="project.finance.budcapextoneq2" /></div></td>
-                <td><div class="field"><input ng-model="project.finance.budcapextoneq3" /></div></td>
-                <td><div class="field"><input ng-model="project.finance.budcapextoneq4" /></div></td>
+                <td><div class="field"><input ng-change="$scope.hasChanged=true" ng-model="project.finance.budcapextoneprev" /></div></td>
+                <td><div class="field"><input ng-change="$scope.hasChanged=true" ng-model="project.finance.budcapextoneq1" /></div></td>
+                <td><div class="field"><input ng-change="$scope.hasChanged=true" ng-model="project.finance.budcapextoneq2" /></div></td>
+                <td><div class="field"><input ng-change="$scope.hasChanged=true" ng-model="project.finance.budcapextoneq3" /></div></td>
+                <td><div class="field"><input ng-change="$scope.hasChanged=true" ng-model="project.finance.budcapextoneq4" /></div></td>
                 <td class="sums">{{ project.finance.budcapexExtOff | number:0 }}</td>
                 <td class="sums">{{ project.finance.budcapexExtOffgrand | number:0 }}</td>
             </tr>
             <tr>
                 <td>Internal</td>
-                <td><div class="field"><input ng-model="project.finance.budcapintprev" /></div></td>
-                <td><div class="field"><input ng-model="project.finance.budcapintq1" /></div></td>
-                <td><div class="field"><input ng-model="project.finance.budcapintq2" /></div></td>
-                <td><div class="field"><input ng-model="project.finance.budcapintq3" /></div></td>
-                <td><div class="field"><input ng-model="project.finance.budcapintq4" /></div></td>
+                <td><div class="field"><input ng-change="$scope.hasChanged=true" ng-model="project.finance.budcapintprev" /></div></td>
+                <td><div class="field"><input ng-change="$scope.hasChanged=true" ng-model="project.finance.budcapintq1" /></div></td>
+                <td><div class="field"><input ng-change="$scope.hasChanged=true" ng-model="project.finance.budcapintq2" /></div></td>
+                <td><div class="field"><input ng-change="$scope.hasChanged=true" ng-model="project.finance.budcapintq3" /></div></td>
+                <td><div class="field"><input ng-change="$scope.hasChanged=true" ng-model="project.finance.budcapintq4" /></div></td>
                 <td class="sums">{{ project.finance.budcapexInternal | number:0 }}</td>
                 <td class="sums">{{ project.finance.budcapexInternalgrand | number:0 }}</td>
             </tr>
@@ -170,31 +176,31 @@
             </tr>
             <tr>
                 <td>External</td>
-                <td><div class="field"><input ng-model="project.finance.budopextprev" /></div></td>
-                <td><div class="field"><input ng-model="project.finance.budopextq1" /></div></td>
-                <td><div class="field"><input ng-model="project.finance.budopextq2" /></div></td>
-                <td><div class="field"><input ng-model="project.finance.budopextq3" /></div></td>
-                <td><div class="field"><input ng-model="project.finance.budopextq4" /></div></td>
+                <td><div class="field"><input ng-change="$scope.hasChanged=true" ng-model="project.finance.budopextprev" /></div></td>
+                <td><div class="field"><input ng-change="$scope.hasChanged=true" ng-model="project.finance.budopextq1" /></div></td>
+                <td><div class="field"><input ng-change="$scope.hasChanged=true" ng-model="project.finance.budopextq2" /></div></td>
+                <td><div class="field"><input ng-change="$scope.hasChanged=true" ng-model="project.finance.budopextq3" /></div></td>
+                <td><div class="field"><input ng-change="$scope.hasChanged=true" ng-model="project.finance.budopextq4" /></div></td>
                 <td class="sums">{{ project.finance.budopexExternal | number:0 }}</td>
                 <td class="sums">{{ project.finance.budopexExternalgrand | number:0 }}</td>
             </tr>
             <tr>
                 <td>Ext. One-Off</td>
-                <td><div class="field"><input ng-model="project.finance.budopextoneprev" /></div></td>
-                <td><div class="field"><input ng-model="project.finance.budopextoneq1" /></div></td>
-                <td><div class="field"><input ng-model="project.finance.budopextoneq2" /></div></td>
-                <td><div class="field"><input ng-model="project.finance.budopextoneq3" /></div></td>
-                <td><div class="field"><input ng-model="project.finance.budopextoneq4" /></div></td>
+                <td><div class="field"><input ng-change="$scope.hasChanged=true" ng-model="project.finance.budopextoneprev" /></div></td>
+                <td><div class="field"><input ng-change="$scope.hasChanged=true" ng-model="project.finance.budopextoneq1" /></div></td>
+                <td><div class="field"><input ng-change="$scope.hasChanged=true" ng-model="project.finance.budopextoneq2" /></div></td>
+                <td><div class="field"><input ng-change="$scope.hasChanged=true" ng-model="project.finance.budopextoneq3" /></div></td>
+                <td><div class="field"><input ng-change="$scope.hasChanged=true" ng-model="project.finance.budopextoneq4" /></div></td>
                 <td class="sums">{{ project.finance.budopexExtOff | number:0 }}</td>
                 <td class="sums">{{ project.finance.budopexExtOffgrand | number:0 }}</td>
             </tr>
             <tr>
                 <td>Internal</td>
-                <td><div class="field"><input ng-model="project.finance.budopintprev" /></div></td>
-                <td><div class="field"><input ng-model="project.finance.budopintq1" /></div></td>
-                <td><div class="field"><input ng-model="project.finance.budopintq2" /></div></td>
-                <td><div class="field"><input ng-model="project.finance.budopintq3" /></div></td>
-                <td><div class="field"><input ng-model="project.finance.budopintq4" /></div></td>
+                <td><div class="field"><input ng-change="$scope.hasChanged=true" ng-model="project.finance.budopintprev" /></div></td>
+                <td><div class="field"><input ng-change="$scope.hasChanged=true" ng-model="project.finance.budopintq1" /></div></td>
+                <td><div class="field"><input ng-change="$scope.hasChanged=true" ng-model="project.finance.budopintq2" /></div></td>
+                <td><div class="field"><input ng-change="$scope.hasChanged=true" ng-model="project.finance.budopintq3" /></div></td>
+                <td><div class="field"><input ng-change="$scope.hasChanged=true" ng-model="project.finance.budopintq4" /></div></td>
                 <td class="sums">{{ project.finance.budopexInternal | number:0 }}</td>
                 <td class="sums">{{ project.finance.budopexInternalgrand | number:0 }}</td>
             </tr>
@@ -271,31 +277,31 @@
             </tr>
             <tr>
                 <td>External</td>
-                <td><div class="field"><input ng-model="project.finance.postcapextprev" /></div></td>
-                <td><div class="field"><input ng-model="project.finance.postcapextq1" /></div></td>
-                <td><div class="field"><input ng-model="project.finance.postcapextq2" /></div></td>
-                <td><div class="field"><input ng-model="project.finance.postcapextq3" /></div></td>
-                <td><div class="field"><input ng-model="project.finance.postcapextq4" /></div></td>
+                <td><div class="field"><input ng-change="$scope.hasChanged=true" ng-model="project.finance.postcapextprev" /></div></td>
+                <td><div class="field"><input ng-change="$scope.hasChanged=true" ng-model="project.finance.postcapextq1" /></div></td>
+                <td><div class="field"><input ng-change="$scope.hasChanged=true" ng-model="project.finance.postcapextq2" /></div></td>
+                <td><div class="field"><input ng-change="$scope.hasChanged=true" ng-model="project.finance.postcapextq3" /></div></td>
+                <td><div class="field"><input ng-change="$scope.hasChanged=true" ng-model="project.finance.postcapextq4" /></div></td>
                 <td class="sums">{{ project.finance.postcapexExternal | number:0 }}</td>
                 <td class="sums">{{ project.finance.postcapexExternalgrand | number:0 }}</td>
             </tr>
             <tr>
                 <td>Ext. One-Off</td>
-                <td><div class="field"><input ng-model="project.finance.postcapextoneprev" /></div></td>
-                <td><div class="field"><input ng-model="project.finance.postcapextoneq1" /></div></td>
-                <td><div class="field"><input ng-model="project.finance.postcapextoneq2" /></div></td>
-                <td><div class="field"><input ng-model="project.finance.postcapextoneq3" /></div></td>
-                <td><div class="field"><input ng-model="project.finance.postcapextoneq4" /></div></td>
+                <td><div class="field"><input ng-change="$scope.hasChanged=true" ng-model="project.finance.postcapextoneprev" /></div></td>
+                <td><div class="field"><input ng-change="$scope.hasChanged=true" ng-model="project.finance.postcapextoneq1" /></div></td>
+                <td><div class="field"><input ng-change="$scope.hasChanged=true" ng-model="project.finance.postcapextoneq2" /></div></td>
+                <td><div class="field"><input ng-change="$scope.hasChanged=true" ng-model="project.finance.postcapextoneq3" /></div></td>
+                <td><div class="field"><input ng-change="$scope.hasChanged=true" ng-model="project.finance.postcapextoneq4" /></div></td>
                 <td class="sums">{{ project.finance.postcapexExtOff | number:0 }}</td>
                 <td class="sums">{{ project.finance.postcapexExtOffgrand | number:0 }}</td>
             </tr>
             <tr>
                 <td>Internal</td>
-                <td><div class="field"><input ng-model="project.finance.postcapintprev" /></div></td>
-                <td><div class="field"><input ng-model="project.finance.postcapintq1" /></div></td>
-                <td><div class="field"><input ng-model="project.finance.postcapintq2" /></div></td>
-                <td><div class="field"><input ng-model="project.finance.postcapintq3" /></div></td>
-                <td><div class="field"><input ng-model="project.finance.postcapintq4" /></div></td>
+                <td><div class="field"><input ng-change="$scope.hasChanged=true" ng-model="project.finance.postcapintprev" /></div></td>
+                <td><div class="field"><input ng-change="$scope.hasChanged=true" ng-model="project.finance.postcapintq1" /></div></td>
+                <td><div class="field"><input ng-change="$scope.hasChanged=true" ng-model="project.finance.postcapintq2" /></div></td>
+                <td><div class="field"><input ng-change="$scope.hasChanged=true" ng-model="project.finance.postcapintq3" /></div></td>
+                <td><div class="field"><input ng-change="$scope.hasChanged=true" ng-model="project.finance.postcapintq4" /></div></td>
                 <td class="sums">{{ project.finance.postcapexInternal | number:0 }}</td>
                 <td class="sums">{{ project.finance.postcapexInternalgrand | number:0 }}</td>
             </tr>
@@ -314,31 +320,31 @@
             </tr>
             <tr>
                 <td>External</td>
-                <td><div class="field"><input ng-model="project.finance.postopextprev" /></div></td>
-                <td><div class="field"><input ng-model="project.finance.postopextq1" /></div></td>
-                <td><div class="field"><input ng-model="project.finance.postopextq2" /></div></td>
-                <td><div class="field"><input ng-model="project.finance.postopextq3" /></div></td>
-                <td><div class="field"><input ng-model="project.finance.postopextq4" /></div></td>
+                <td><div class="field"><input ng-change="$scope.hasChanged=true" ng-model="project.finance.postopextprev" /></div></td>
+                <td><div class="field"><input ng-change="$scope.hasChanged=true" ng-model="project.finance.postopextq1" /></div></td>
+                <td><div class="field"><input ng-change="$scope.hasChanged=true" ng-model="project.finance.postopextq2" /></div></td>
+                <td><div class="field"><input ng-change="$scope.hasChanged=true" ng-model="project.finance.postopextq3" /></div></td>
+                <td><div class="field"><input ng-change="$scope.hasChanged=true" ng-model="project.finance.postopextq4" /></div></td>
                 <td class="sums">{{ project.finance.postopexExternal | number:0 }}</td>
                 <td class="sums">{{ project.finance.postopexExternalgrand | number:0 }}</td>
             </tr>
             <tr>
                 <td>Ext. One-Off</td>
-                <td><div class="field"><input ng-model="project.finance.postopextoneprev" /></div></td>
-                <td><div class="field"><input ng-model="project.finance.postopextoneq1" /></div></td>
-                <td><div class="field"><input ng-model="project.finance.postopextoneq2" /></div></td>
-                <td><div class="field"><input ng-model="project.finance.postopextoneq3" /></div></td>
-                <td><div class="field"><input ng-model="project.finance.postopextoneq4" /></div></td>
+                <td><div class="field"><input ng-change="$scope.hasChanged=true" ng-model="project.finance.postopextoneprev" /></div></td>
+                <td><div class="field"><input ng-change="$scope.hasChanged=true" ng-model="project.finance.postopextoneq1" /></div></td>
+                <td><div class="field"><input ng-change="$scope.hasChanged=true" ng-model="project.finance.postopextoneq2" /></div></td>
+                <td><div class="field"><input ng-change="$scope.hasChanged=true" ng-model="project.finance.postopextoneq3" /></div></td>
+                <td><div class="field"><input ng-change="$scope.hasChanged=true" ng-model="project.finance.postopextoneq4" /></div></td>
                 <td class="sums">{{ project.finance.postopexExtOff | number:0 }}</td>
                 <td class="sums">{{ project.finance.postopexExtOffgrand | number:0 }}</td>
             </tr>
             <tr>
                 <td>Internal</td>
-                <td><div class="field"><input ng-model="project.finance.postopintprev" /></div></td>
-                <td><div class="field"><input ng-model="project.finance.postopintq1" /></div></td>
-                <td><div class="field"><input ng-model="project.finance.postopintq2" /></div></td>
-                <td><div class="field"><input ng-model="project.finance.postopintq3" /></div></td>
-                <td><div class="field"><input ng-model="project.finance.postopintq4" /></div></td>
+                <td><div class="field"><input ng-change="$scope.hasChanged=true" ng-model="project.finance.postopintprev" /></div></td>
+                <td><div class="field"><input ng-change="$scope.hasChanged=true" ng-model="project.finance.postopintq1" /></div></td>
+                <td><div class="field"><input ng-change="$scope.hasChanged=true" ng-model="project.finance.postopintq2" /></div></td>
+                <td><div class="field"><input ng-change="$scope.hasChanged=true" ng-model="project.finance.postopintq3" /></div></td>
+                <td><div class="field"><input ng-change="$scope.hasChanged=true" ng-model="project.finance.postopintq4" /></div></td>
                 <td class="sums">{{ project.finance.postopexInternal | number:0 }}</td>
                 <td class="sums">{{ project.finance.postopexInternalgrand | number:0 }}</td>
             </tr>
@@ -619,31 +625,31 @@
             </tr>
             <tr>
                 <td>External</td>
-                <td><div class="field"><input ng-model="project.finance.nextcapextprev" /></div></td>
-                <td><div class="field"><input ng-model="project.finance.nextcapextq1" /></div></td>
-                <td><div class="field"><input ng-model="project.finance.nextcapextq2" /></div></td>
-                <td><div class="field"><input ng-model="project.finance.nextcapextq3" /></div></td>
-                <td><div class="field"><input ng-model="project.finance.nextcapextq4" /></div></td>
+                <td><div class="field"><input ng-change="$scope.hasChanged=true" ng-model="project.finance.nextcapextprev" /></div></td>
+                <td><div class="field"><input ng-change="$scope.hasChanged=true" ng-model="project.finance.nextcapextq1" /></div></td>
+                <td><div class="field"><input ng-change="$scope.hasChanged=true" ng-model="project.finance.nextcapextq2" /></div></td>
+                <td><div class="field"><input ng-change="$scope.hasChanged=true" ng-model="project.finance.nextcapextq3" /></div></td>
+                <td><div class="field"><input ng-change="$scope.hasChanged=true" ng-model="project.finance.nextcapextq4" /></div></td>
                 <td class="sums">{{ project.finance.nextcapexExternal }}</td>
                 <td class="sums">{{ project.finance.nextcapexExternalgrand }}</td>
             </tr>
             <tr>
                 <td>Ext. One-Off</td>
-                <td><div class="field"><input ng-model="project.finance.nextcapextoneprev" /></div></td>
-                <td><div class="field"><input ng-model="project.finance.nextcapextoneq1" /></div></td>
-                <td><div class="field"><input ng-model="project.finance.nextcapextoneq2" /></div></td>
-                <td><div class="field"><input ng-model="project.finance.nextcapextoneq3" /></div></td>
-                <td><div class="field"><input ng-model="project.finance.nextcapextoneq4" /></div></td>
+                <td><div class="field"><input ng-change="$scope.hasChanged=true" ng-model="project.finance.nextcapextoneprev" /></div></td>
+                <td><div class="field"><input ng-change="$scope.hasChanged=true" ng-model="project.finance.nextcapextoneq1" /></div></td>
+                <td><div class="field"><input ng-change="$scope.hasChanged=true" ng-model="project.finance.nextcapextoneq2" /></div></td>
+                <td><div class="field"><input ng-change="$scope.hasChanged=true" ng-model="project.finance.nextcapextoneq3" /></div></td>
+                <td><div class="field"><input ng-change="$scope.hasChanged=true" ng-model="project.finance.nextcapextoneq4" /></div></td>
                 <td class="sums">{{ project.finance.nextcapexExtOff }}</td>
                 <td class="sums">{{ project.finance.nextcapexExtOffgrand }}</td>
             </tr>
             <tr>
                 <td>Internal</td>
-                <td><div class="field"><input ng-model="project.finance.nextcapintprev" /></div></td>
-                <td><div class="field"><input ng-model="project.finance.nextcapintq1" /></div></td>
-                <td><div class="field"><input ng-model="project.finance.nextcapintq2" /></div></td>
-                <td><div class="field"><input ng-model="project.finance.nextcapintq3" /></div></td>
-                <td><div class="field"><input ng-model="project.finance.nextcapintq4" /></div></td>
+                <td><div class="field"><input ng-change="$scope.hasChanged=true" ng-model="project.finance.nextcapintprev" /></div></td>
+                <td><div class="field"><input ng-change="$scope.hasChanged=true" ng-model="project.finance.nextcapintq1" /></div></td>
+                <td><div class="field"><input ng-change="$scope.hasChanged=true" ng-model="project.finance.nextcapintq2" /></div></td>
+                <td><div class="field"><input ng-change="$scope.hasChanged=true" ng-model="project.finance.nextcapintq3" /></div></td>
+                <td><div class="field"><input ng-change="$scope.hasChanged=true" ng-model="project.finance.nextcapintq4" /></div></td>
                 <td class="sums">{{ project.finance.nextcapexInternal }}</td>
                 <td class="sums">{{ project.finance.nextcapexInternalgrand }}</td>
             </tr>
@@ -662,31 +668,31 @@
             </tr>
             <tr>
                 <td>External</td>
-                <td><div class="field"><input ng-model="project.finance.nextopextprev" /></div></td>
-                <td><div class="field"><input ng-model="project.finance.nextopextq1" /></div></td>
-                <td><div class="field"><input ng-model="project.finance.nextopextq2" /></div></td>
-                <td><div class="field"><input ng-model="project.finance.nextopextq3" /></div></td>
-                <td><div class="field"><input ng-model="project.finance.nextopextq4" /></div></td>
+                <td><div class="field"><input ng-change="$scope.hasChanged=true" ng-model="project.finance.nextopextprev" /></div></td>
+                <td><div class="field"><input ng-change="$scope.hasChanged=true" ng-model="project.finance.nextopextq1" /></div></td>
+                <td><div class="field"><input ng-change="$scope.hasChanged=true" ng-model="project.finance.nextopextq2" /></div></td>
+                <td><div class="field"><input ng-change="$scope.hasChanged=true" ng-model="project.finance.nextopextq3" /></div></td>
+                <td><div class="field"><input ng-change="$scope.hasChanged=true" ng-model="project.finance.nextopextq4" /></div></td>
                 <td class="sums">{{ project.finance.nextopexExternal }}</td>
                 <td class="sums">{{ project.finance.nextopexExternalgrand }}</td>
             </tr>
             <tr>
                 <td>Ext. One-Off</td>
-                <td><div class="field"><input ng-model="project.finance.nextopextoneprev" /></div></td>
-                <td><div class="field"><input ng-model="project.finance.nextopextoneq1" /></div></td>
-                <td><div class="field"><input ng-model="project.finance.nextopextoneq2" /></div></td>
-                <td><div class="field"><input ng-model="project.finance.nextopextoneq3" /></div></td>
-                <td><div class="field"><input ng-model="project.finance.nextopextoneq4" /></div></td>
+                <td><div class="field"><input ng-change="$scope.hasChanged=true" ng-model="project.finance.nextopextoneprev" /></div></td>
+                <td><div class="field"><input ng-change="$scope.hasChanged=true" ng-model="project.finance.nextopextoneq1" /></div></td>
+                <td><div class="field"><input ng-change="$scope.hasChanged=true" ng-model="project.finance.nextopextoneq2" /></div></td>
+                <td><div class="field"><input ng-change="$scope.hasChanged=true" ng-model="project.finance.nextopextoneq3" /></div></td>
+                <td><div class="field"><input ng-change="$scope.hasChanged=true" ng-model="project.finance.nextopextoneq4" /></div></td>
                 <td class="sums">{{ project.finance.nextopexExtOff }}</td>
                 <td class="sums">{{ project.finance.nextopexExtOffgrand }}</td>
             </tr>
             <tr>
                 <td>Internal</td>
-                <td><div class="field"><input ng-model="project.finance.nextopintprev" /></div></td>
-                <td><div class="field"><input ng-model="project.finance.nextopintq1" /></div></td>
-                <td><div class="field"><input ng-model="project.finance.nextopintq2" /></div></td>
-                <td><div class="field"><input ng-model="project.finance.nextopintq3" /></div></td>
-                <td><div class="field"><input ng-model="project.finance.nextopintq4" /></div></td>
+                <td><div class="field"><input ng-change="$scope.hasChanged=true" ng-model="project.finance.nextopintprev" /></div></td>
+                <td><div class="field"><input ng-change="$scope.hasChanged=true" ng-model="project.finance.nextopintq1" /></div></td>
+                <td><div class="field"><input ng-change="$scope.hasChanged=true" ng-model="project.finance.nextopintq2" /></div></td>
+                <td><div class="field"><input ng-change="$scope.hasChanged=true" ng-model="project.finance.nextopintq3" /></div></td>
+                <td><div class="field"><input ng-change="$scope.hasChanged=true" ng-model="project.finance.nextopintq4" /></div></td>
                 <td class="sums">{{ project.finance.nextopexInternal }}</td>
                 <td class="sums">{{ project.finance.nextopexInternalgrand }}</td>
             </tr>

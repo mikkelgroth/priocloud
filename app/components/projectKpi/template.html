@@ -4,17 +4,22 @@
     <h2>
         KPIs  
         <div class="right">
-            <button type="button" 
-                ng-class="{'Red': projecthaschanged}" 
-                ng-if="user.email==project.po.email || user.email==project.pm.email || user.email==project.altpo.email || user.email==project.altpm.email || user.isOwner || user.admin"
-                ng-click="saveProject(project)">save project</button> 
+            <button type="button"
+                        ng-if="$scope.hasChanged && (user.email == project.po.email || 
+                        user.email == project.pm.email || 
+                        user.email == project.altpo.email || 
+                        user.email == project.altpm.email || 
+                        user.isOwner || 
+                        user.admin)"
+                        ng-click="$scope.hasChanged=false; saveProject(project)"
+                        class="Red">save</button> 
         </div>
     </h2>
         <table class="smaller">
             <tr class="header"><td>Project KPI</td><td>Value</td></tr>
         <tr><td>{{company.projkpi1lable}}</td>
             <td>
-                <select ng-model="project.kpi1" ng-change="$parent.projecthaschanged=true">
+                <select ng-model="project.kpi1"  ng-change="$scope.hasChanged=true">
                     <option value="0">No value</option>
                     <option value="10">Small business unit impact</option>
                     <option value="20">Large business unit impact</option>
@@ -28,7 +33,7 @@
         </tr>
         <tr><td>{{company.projkpi2lable}}</td>
             <td>
-                <select ng-model="project.kpi2" ng-change="$parent.projecthaschanged=true">
+                <select ng-model="project.kpi2"  ng-change="$scope.hasChanged=true">
                     <option value="0">No value</option>
                     <option value="10">Small business unit impact</option>
                     <option value="20">Large business unit impact</option>
@@ -42,7 +47,7 @@
         </tr>
         <tr><td>{{company.projkpi3lable}}</td>
             <td>
-                <select ng-model="project.kpi3" ng-change="$parent.projecthaschanged=true">
+                <select ng-model="project.kpi3"  ng-change="$scope.hasChanged=true">
                     <option value="0">No value</option>
                     <option value="10">Small business unit impact</option>
                     <option value="20">Large business unit impact</option>
@@ -56,7 +61,7 @@
         </tr>
         <tr><td>{{company.projkpi4lable}}</td>
             <td>
-                <select ng-model="project.kpi4" ng-change="$parent.projecthaschanged=true">
+                <select ng-model="project.kpi4"  ng-change="$scope.hasChanged=true">
                     <option value="0">No value</option>
                     <option value="10">Small business unit impact</option>
                     <option value="20">Large business unit impact</option>
@@ -70,7 +75,7 @@
         </tr>
         <tr><td>{{company.projkpi5lable}}</td>
             <td>
-                <select ng-model="project.kpi5" ng-change="$parent.projecthaschanged=true">
+                <select ng-model="project.kpi5"  ng-change="$scope.hasChanged=true">
                     <option value="0">No value</option>
                     <option value="10">Small business unit impact</option>
                     <option value="20">Large business unit impact</option>
@@ -84,7 +89,7 @@
         </tr>
         <tr><td>{{company.projkpi6lable}}</td>
             <td>
-                <select ng-model="project.kpi6" ng-change="$parent.projecthaschanged=true">
+                <select ng-model="project.kpi6"  ng-change="$scope.hasChanged=true">
                     <option value="0">No value</option>
                     <option value="10">Small business unit impact</option>
                     <option value="20">Large business unit impact</option>
