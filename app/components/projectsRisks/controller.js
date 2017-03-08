@@ -68,9 +68,7 @@ angular
                         risk['pkpi5'] = project.kpi5;
                         risk['pkpi6'] = project.kpi6;
                         risk['ptotal'] = project.total;
-                        risk['ab'] = project.statuses[project.statuses.length - 1].ab;
-                        risk['EtC'] = project.statuses[project.statuses.length - 1].EtC;
-                        risk['fte'] = project.statuses[project.statuses.length - 1].fte;
+                        
 
                         return risk;
                     });
