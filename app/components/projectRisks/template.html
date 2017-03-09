@@ -168,15 +168,17 @@
                 <td colspan="4" ng-if="user.email==project.po.email || user.email==project.pm.email || user.email==project.altpo.email || user.email==project.altpm.email || user.isOwner || user.admin">
                     <div class="right">
                         <button type="button" 
-                            ng-click="$scope.deleteThis=true" 
-                            ng-if="!$scope.deleteThis && (user.email==project.po.email || 
+                            ng-click="$parent.deleteThis=true" 
+                            ng-show="!$parent.deleteThis"
+                            ng-if="user.email==project.po.email || 
                             user.email==project.pm.email || 
-                            user.isOwner || user.admin)">delete</button>
+                            user.isOwner || user.admin">delete</button>
                         <button type="button" class="Red"
-                            ng-click="$scope.deleteThis=false;removeRisk(editrisk)" 
-                            ng-if="$scope.deleteThis && (user.email==project.po.email || 
+                            ng-click="$parent.deleteThis=false;removeRisk(editrisk)" 
+                            ng-show="$parent.deleteThis"
+                            ng-if="user.email==project.po.email || 
                             user.email==project.pm.email || 
-                            user.isOwner || user.admin)">confirm delete!!!</button>
+                            user.isOwner || user.admin">confirm delete!!!</button>
 
 
 

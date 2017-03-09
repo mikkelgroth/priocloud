@@ -30,15 +30,6 @@ angular
 
             }, true);
 
-            scope.$watch(attrs['saveThis'], function (newVal) {
-                
-                if (newVal) classList['saveThis'] = "Red";
-                else classList['saveThis'] = "Green";
-
-                repaintClasses();
-
-            }, true);
-
             scope.$watch(attrs['prioResRender'], function (newVal) {
                 
                 if (newVal == 'Committed') classList['prioResRender'] = "ResGreen";
@@ -111,7 +102,16 @@ angular
                 repaintClasses();
 
             }, true);
+/*
+            scope.$watch(attrs['saveThis'], function (newVal) {
+                
+                if (newVal) classList['saveThis'] = "Red";
+                else classList['saveThis'] = "Green";
 
+                repaintClasses();
+
+            }, true);
+*/
             function repaintClasses() {
 
                 element.attr('class', '');

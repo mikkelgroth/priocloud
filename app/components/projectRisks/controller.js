@@ -60,10 +60,6 @@ angular
 
                 $scope.editrisk = {};
                 $scope.editrisk._id = Math.random().toString(36).substr(2, 9);
-                $scope.editrisk.freq = {};
-                $scope.editrisk.freq.kpi1 = 0;
-                $scope.editrisk.freq.kpi2 = 0;
-                $scope.editrisk.freq.kpi3 = 0;
                 $scope.editrisk.prob = 1;
                 $scope.editrisk.impact = 1;
                 $scope.editrisk.total = 1;
@@ -72,8 +68,6 @@ angular
                 $scope.editrisk.audience = 'Project';
                 $scope.editrisk.status = 'Green';
                 $scope.editrisk.state = 'New';
-                $scope.editrisk.prob = 1;
-                $scope.editrisk.impact = 1;
 
                 $scope.showRiskForm = true;
             };
