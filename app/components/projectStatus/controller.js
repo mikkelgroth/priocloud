@@ -105,6 +105,11 @@ angular
 
                 $scope.showStatusForm = false;
             };
+            
+            $scope.saveNow = function (project) {
+                
+                $scope.hasChanged=true;               
+            };
 
             $scope.saveStatus = function (status) {
 
@@ -147,6 +152,7 @@ angular
                 //$scope.logProject(true, "Status saved");
 
                 companyService.saveProject($scope.project);
+                $scope.hasChanged=false;
 
             }
         }

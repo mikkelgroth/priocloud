@@ -103,13 +103,6 @@ angular
 
                 risk.total = risk.prob * risk.impact;
 
-                if (!risk.freq) {
-
-                    risk.freq = {};
-                    risk.freq.kpi1 = 0;
-                    risk.freq.kpi2 = 0;
-                    risk.freq.kpi3 = 0;
-                }
                 if($scope.project.risks==null){
                     $scope.project.risks=[];
                 }
@@ -119,6 +112,12 @@ angular
                 
                 companyService.saveProject($scope.project);
                 $scope.deleteThis=false;
+                $scope.hasChanged=false;
+            };
+
+            $scope.saveNow = function (project) {
+                
+                $scope.hasChanged=true;               
             };
 
             function showRisk() {

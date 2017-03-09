@@ -79,8 +79,13 @@ angular
                     (mile.effort * mile.risklevel) * 100 / 16);
 
                 companyService.saveProject($scope.project);
-
+                $scope.hasChanged=false;
                 $scope.showMilestoneForm = true;
+            };
+           
+            $scope.saveNow = function (project) {
+                
+                $scope.hasChanged=true;               
             };
 
             $scope.newMilestone = function () {

@@ -68,6 +68,13 @@ angular
                 if(depd instanceof Date && !isNaN(depd.valueOf())){$scope.project.depriciationdate=depd.toISOString();}
         
                 companyService.saveProject(project);
+                $scope.hasChanged=false;
+            };
+
+            
+            $scope.saveNow = function (project) {
+                
+                $scope.hasChanged=true;               
             };
 
             function listenForViewChanges() {

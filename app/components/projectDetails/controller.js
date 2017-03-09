@@ -28,6 +28,8 @@ angular
                 .subscribe(function (project) {
 
                     $scope.project = project;
+                    
+                    
 
                     if ($scope.project.statuses.length > 0) {
 
@@ -58,9 +60,15 @@ angular
                 });
 
             $scope.saveProject = function (project) {
-
-                companyService.saveProject(project);
                 
+                companyService.saveProject(project);
+                $scope.hasChanged=false;
             };
+
+            $scope.saveNow = function (project) {
+                
+                $scope.hasChanged=true;               
+            };
+            
         }
     ]);

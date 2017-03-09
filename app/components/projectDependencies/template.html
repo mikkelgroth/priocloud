@@ -4,15 +4,14 @@
     <h2>
         Dependencies
         <div class="right">
-            <button type="button"
-                        ng-if="$scope.hasChanged && (user.email == project.po.email || 
+            <button type="button" prio-class save-this="$parent.hasChanged"
+                        ng-if="user.email == project.po.email || 
                         user.email == project.pm.email || 
                         user.email == project.altpo.email || 
                         user.email == project.altpm.email || 
                         user.isOwner || 
-                        user.admin)"
-                        ng-click="$scope.hasChanged=false; saveProject(project)"
-                        class="Red">save</button>
+                        user.admin"
+                        ng-click="saveProject(project)">save</button>
         </div>
     </h2>
     <table class="smaller">
@@ -25,7 +24,7 @@
         <tr class="header">
             <td prio-class prio-skill-render="project.res1skill" prio-size-render="project.res1">{{company.res1lable}}</td>
             <td>
-                <select ng-model="project.res1fte"  ng-change="$scope.hasChanged=true">
+                <select ng-model="project.res1fte"  ng-change="saveNow()">
                     <option value="None">None</option>
                     <option value="Minor tasks">Minor tasks</option>
                     <option value="Major tasks">Major tasks</option>
@@ -36,7 +35,7 @@
                 </select>
             </td>
             <td>
-                <select ng-if="project.res1fte!='None'" ng-model="project.res1"  ng-change="$scope.hasChanged=true">
+                <select ng-if="project.res1fte!='None'" ng-model="project.res1"  ng-change="saveNow()">
                     <option value="No dependency">No dependency</option>
                     <option value="Minor dependency">Minor dependency</option>
                     <option value="Major dependency">Major dependency</option>
@@ -47,7 +46,7 @@
         <tr>
             <td>Project status</td>
             <td>
-                <select ng-if="project.res1fte!='None'" ng-model="project.res1skill"  ng-change="$scope.hasChanged=true">
+                <select ng-if="project.res1fte!='None'" ng-model="project.res1skill"  ng-change="saveNow()">
                     <option value="Ok">Ok</option>
                     <option value="Minor issue">Minor issue</option>
                     <option value="Major issue">Major issue</option>
@@ -56,14 +55,14 @@
             </td>
             <td>
                 <div class="field">
-                <textarea ng-change="$scope.hasChanged=true" ng-if="project.res1fte!='None'" ng-model="project.res1comment" maxlength="300" id="res1comment" placeholder="Describe issues like, unavailability, timing, competence, priority ect."></textarea>
+                <textarea ng-change="saveNow()" ng-if="project.res1fte!='None'" ng-model="project.res1comment" maxlength="300" id="res1comment" placeholder="Describe issues like, unavailability, timing, competence, priority ect."></textarea>
             </div>
             </td>
         </tr>
         <tr>
             <td>Resource owner status</td>
             <td>
-                <select ng-if="project.res1fte!='None'" ng-model="project.res1owner"  ng-change="$scope.hasChanged=true">
+                <select ng-if="project.res1fte!='None'" ng-model="project.res1owner"  ng-change="saveNow()">
                     <option value="Committed">Committed</option>
                     <option value="Backlog">Backlog</option>
                     <option value="Tentative">Tentative</option>
@@ -72,7 +71,7 @@
             </td>
             <td>
                 <div class="field">
-                <textarea ng-change="$scope.hasChanged=true" ng-if="project.res1fte!='None'" ng-model="project.res1ownercomment" maxlength="300" id="res1comment" placeholder="Describe issues like, unavailability, timing, competence, priority ect."></textarea>
+                <textarea ng-change="saveNow()" ng-if="project.res1fte!='None'" ng-model="project.res1ownercomment" maxlength="300" id="res1comment" placeholder="Describe issues like, unavailability, timing, competence, priority ect."></textarea>
             </div>
             </td>
         </tr>
@@ -80,7 +79,7 @@
         <tr class="header">
             <td prio-class prio-skill-render="project.res2skill" prio-size-render="project.res2">{{company.res2lable}}</td>
             <td>
-                <select ng-model="project.res2fte"  ng-change="$scope.hasChanged=true">
+                <select ng-model="project.res2fte"  ng-change="saveNow()">
                     <option value="None">None</option>
                     <option value="Minor tasks">Minor tasks</option>
                     <option value="Major tasks">Major tasks</option>
@@ -91,7 +90,7 @@
                 </select>
             </td>
             <td>
-                <select ng-if="project.res2fte!='None'" ng-model="project.res2"  ng-change="$scope.hasChanged=true">
+                <select ng-if="project.res2fte!='None'" ng-model="project.res2"  ng-change="saveNow()">
                     <option value="No dependency">No dependency</option>
                     <option value="Minor dependency">Minor dependency</option>
                     <option value="Major dependency">Major dependency</option>
@@ -102,7 +101,7 @@
         <tr>
             <td>Project status</td>
             <td>
-                <select ng-if="project.res2fte!='None'" ng-model="project.res2skill"  ng-change="$scope.hasChanged=true">
+                <select ng-if="project.res2fte!='None'" ng-model="project.res2skill"  ng-change="saveNow()">
                     <option value="Ok">Ok</option>
                     <option value="Minor issue">Minor issue</option>
                     <option value="Major issue">Major issue</option>
@@ -118,7 +117,7 @@
         <tr>
             <td>Resource owner status</td>
             <td>
-                <select ng-if="project.res2fte!='None'" ng-model="project.res2owner"  ng-change="$scope.hasChanged=true">
+                <select ng-if="project.res2fte!='None'" ng-model="project.res2owner"  ng-change="saveNow()">
                     <option value="Committed">Committed</option>
                     <option value="Backlog">Backlog</option>
                     <option value="Tentative">Tentative</option>
@@ -127,7 +126,7 @@
             </td>
             <td>
                 <div class="field">
-                <textarea ng-change="$scope.hasChanged=true" ng-if="project.res2fte!='None'" ng-model="project.res2ownercomment" maxlength="300" id="res2comment" placeholder="Describe issues like, unavailability, timing, competence, priority ect."></textarea>
+                <textarea ng-change="saveNow()" ng-if="project.res2fte!='None'" ng-model="project.res2ownercomment" maxlength="300" id="res2comment" placeholder="Describe issues like, unavailability, timing, competence, priority ect."></textarea>
             </div>
             </td>
         </tr>
@@ -135,7 +134,7 @@
         <tr class="header">
             <td prio-class prio-skill-render="project.res3skill" prio-size-render="project.res3">{{company.res3lable}}</td>
             <td>
-                <select ng-model="project.res3fte"  ng-change="$scope.hasChanged=true">
+                <select ng-model="project.res3fte"  ng-change="saveNow()">
                     <option value="None">None</option>
                     <option value="Minor tasks">Minor tasks</option>
                     <option value="Major tasks">Major tasks</option>
@@ -146,7 +145,7 @@
                 </select>
             </td>
             <td>
-                <select ng-if="project.res3fte!='None'" ng-model="project.res3"  ng-change="$scope.hasChanged=true">
+                <select ng-if="project.res3fte!='None'" ng-model="project.res3"  ng-change="saveNow()">
                     <option value="No dependency">No dependency</option>
                     <option value="Minor dependency">Minor dependency</option>
                     <option value="Major dependency">Major dependency</option>
@@ -157,7 +156,7 @@
         <tr>
             <td>Project status</td>
             <td>
-                <select ng-if="project.res3fte!='None'" ng-model="project.res3skill"  ng-change="$scope.hasChanged=true">
+                <select ng-if="project.res3fte!='None'" ng-model="project.res3skill"  ng-change="saveNow()">
                     <option value="Ok">Ok</option>
                     <option value="Minor issue">Minor issue</option>
                     <option value="Major issue">Major issue</option>
@@ -166,14 +165,14 @@
             </td>
             <td>
                 <div class="field">
-                <textarea ng-change="$scope.hasChanged=true" ng-if="project.res3fte!='None'" ng-model="project.res3comment" maxlength="300" id="res3comment" placeholder="Describe issues like, unavailability, timing, competence, priority ect."></textarea>
+                <textarea ng-change="saveNow()" ng-if="project.res3fte!='None'" ng-model="project.res3comment" maxlength="300" id="res3comment" placeholder="Describe issues like, unavailability, timing, competence, priority ect."></textarea>
             </div>
             </td>
         </tr>
         <tr>
             <td>Resource owner status</td>
             <td>
-                <select ng-if="project.res3fte!='None'" ng-model="project.res3owner"  ng-change="$scope.hasChanged=true">
+                <select ng-if="project.res3fte!='None'" ng-model="project.res3owner"  ng-change="saveNow()">
                     <option value="Committed">Committed</option>
                     <option value="Backlog">Backlog</option>
                     <option value="Tentative">Tentative</option>
@@ -182,7 +181,7 @@
             </td>
             <td>
                 <div class="field">
-                <textarea ng-change="$scope.hasChanged=true" ng-if="project.res3fte!='None'" ng-model="project.res3ownercomment" maxlength="300" id="res3comment" placeholder="Describe issues like, unavailability, timing, competence, priority ect."></textarea>
+                <textarea ng-change="saveNow()" ng-if="project.res3fte!='None'" ng-model="project.res3ownercomment" maxlength="300" id="res3comment" placeholder="Describe issues like, unavailability, timing, competence, priority ect."></textarea>
             </div>
             </td>
         </tr>
@@ -190,7 +189,7 @@
         <tr class="header">
             <td prio-class prio-skill-render="project.res4skill" prio-size-render="project.res4">{{company.res4lable}}</td>
             <td>
-                <select ng-model="project.res4fte"  ng-change="$scope.hasChanged=true">
+                <select ng-model="project.res4fte"  ng-change="saveNow()">
                     <option value="None">None</option>
                     <option value="Minor tasks">Minor tasks</option>
                     <option value="Major tasks">Major tasks</option>
@@ -201,7 +200,7 @@
                 </select>
             </td>
             <td>
-                <select ng-if="project.res4fte!='None'" ng-model="project.res4"  ng-change="$scope.hasChanged=true">
+                <select ng-if="project.res4fte!='None'" ng-model="project.res4"  ng-change="saveNow()">
                     <option value="No dependency">No dependency</option>
                     <option value="Minor dependency">Minor dependency</option>
                     <option value="Major dependency">Major dependency</option>
@@ -212,7 +211,7 @@
         <tr>
             <td>Project status</td>
             <td>
-                <select ng-if="project.res4fte!='None'" ng-model="project.res4skill"  ng-change="$scope.hasChanged=true">
+                <select ng-if="project.res4fte!='None'" ng-model="project.res4skill"  ng-change="saveNow()">
                     <option value="Ok">Ok</option>
                     <option value="Minor issue">Minor issue</option>
                     <option value="Major issue">Major issue</option>
@@ -221,14 +220,14 @@
             </td>
             <td>
                 <div class="field">
-                <textarea ng-change="$scope.hasChanged=true" ng-if="project.res4fte!='None'" ng-model="project.res4comment" maxlength="300" id="res4comment" placeholder="Describe issues like, unavailability, timing, competence, priority ect."></textarea>
+                <textarea ng-change="saveNow()" ng-if="project.res4fte!='None'" ng-model="project.res4comment" maxlength="300" id="res4comment" placeholder="Describe issues like, unavailability, timing, competence, priority ect."></textarea>
             </div>
             </td>
         </tr>
         <tr>
             <td>Resource owner status</td>
             <td>
-                <select ng-if="project.res4fte!='None'" ng-model="project.res4owner"  ng-change="$scope.hasChanged=true">
+                <select ng-if="project.res4fte!='None'" ng-model="project.res4owner"  ng-change="saveNow()">
                     <option value="Committed">Committed</option>
                     <option value="Backlog">Backlog</option>
                     <option value="Tentative">Tentative</option>
@@ -237,7 +236,7 @@
             </td>
             <td>
                 <div class="field">
-                <textarea ng-change="$scope.hasChanged=true" ng-if="project.res4fte!='None'" ng-model="project.res4ownercomment" maxlength="300" id="res4comment" placeholder="Describe issues like, unavailability, timing, competence, priority ect."></textarea>
+                <textarea ng-change="saveNow()" ng-if="project.res4fte!='None'" ng-model="project.res4ownercomment" maxlength="300" id="res4comment" placeholder="Describe issues like, unavailability, timing, competence, priority ect."></textarea>
             </div>
             </td>
         </tr>
@@ -245,7 +244,7 @@
         <tr class="header">
             <td prio-class prio-skill-render="project.res5skill" prio-size-render="project.res5">{{company.res5lable}}</td>
             <td>
-                <select ng-model="project.res5fte"  ng-change="$scope.hasChanged=true">
+                <select ng-model="project.res5fte"  ng-change="saveNow()">
                     <option value="None">None</option>
                     <option value="Minor tasks">Minor tasks</option>
                     <option value="Major tasks">Major tasks</option>
@@ -256,7 +255,7 @@
                 </select>
             </td>
             <td>
-                <select ng-if="project.res5fte!='None'" ng-model="project.res5"  ng-change="$scope.hasChanged=true">
+                <select ng-if="project.res5fte!='None'" ng-model="project.res5"  ng-change="saveNow()">
                     <option value="No dependency">No dependency</option>
                     <option value="Minor dependency">Minor dependency</option>
                     <option value="Major dependency">Major dependency</option>
@@ -267,7 +266,7 @@
         <tr>
             <td>Project status</td>
             <td>
-                <select ng-if="project.res5fte!='None'" ng-model="project.res5skill"  ng-change="$scope.hasChanged=true">
+                <select ng-if="project.res5fte!='None'" ng-model="project.res5skill"  ng-change="saveNow()">
                     <option value="Ok">Ok</option>
                     <option value="Minor issue">Minor issue</option>
                     <option value="Major issue">Major issue</option>
@@ -276,14 +275,14 @@
             </td>
             <td>
                 <div class="field">
-                <textarea ng-change="$scope.hasChanged=true" ng-if="project.res5fte!='None'" ng-model="project.res5comment" maxlength="300" id="res5comment" placeholder="Describe issues like, unavailability, timing, competence, priority ect."></textarea>
+                <textarea ng-change="saveNow()" ng-if="project.res5fte!='None'" ng-model="project.res5comment" maxlength="300" id="res5comment" placeholder="Describe issues like, unavailability, timing, competence, priority ect."></textarea>
             </div>
             </td>
         </tr>
         <tr>
             <td>Resource owner status</td>
             <td>
-                <select ng-if="project.res5fte!='None'" ng-model="project.res5owner"  ng-change="$scope.hasChanged=true">
+                <select ng-if="project.res5fte!='None'" ng-model="project.res5owner"  ng-change="saveNow()">
                     <option value="Committed">Committed</option>
                     <option value="Backlog">Backlog</option>
                     <option value="Tentative">Tentative</option>
@@ -292,7 +291,7 @@
             </td>
             <td>
                 <div class="field">
-                <textarea ng-change="$scope.hasChanged=true" ng-if="project.res5fte!='None'" ng-model="project.res5ownercomment" maxlength="300" id="res5comment" placeholder="Describe issues like, unavailability, timing, competence, priority ect."></textarea>
+                <textarea ng-change="saveNow()" ng-if="project.res5fte!='None'" ng-model="project.res5ownercomment" maxlength="300" id="res5comment" placeholder="Describe issues like, unavailability, timing, competence, priority ect."></textarea>
             </div>
             </td>
         </tr>
@@ -300,7 +299,7 @@
         <tr class="header">
             <td prio-class prio-skill-render="project.res6skill" prio-size-render="project.res6">{{company.res6lable}}</td>
             <td>
-                <select ng-model="project.res6fte"  ng-change="$scope.hasChanged=true">
+                <select ng-model="project.res6fte"  ng-change="saveNow()">
                     <option value="None">None</option>
                     <option value="Minor tasks">Minor tasks</option>
                     <option value="Major tasks">Major tasks</option>
@@ -311,7 +310,7 @@
                 </select>
             </td>
             <td>
-                <select ng-if="project.res6fte!='None'" ng-model="project.res6"  ng-change="$scope.hasChanged=true">
+                <select ng-if="project.res6fte!='None'" ng-model="project.res6"  ng-change="saveNow()">
                     <option value="No dependency">No dependency</option>
                     <option value="Minor dependency">Minor dependency</option>
                     <option value="Major dependency">Major dependency</option>
@@ -322,7 +321,7 @@
         <tr>
             <td>Project status</td>
             <td>
-                <select ng-if="project.res6fte!='None'" ng-model="project.res6skill"  ng-change="$scope.hasChanged=true">
+                <select ng-if="project.res6fte!='None'" ng-model="project.res6skill"  ng-change="saveNow()">
                     <option value="Ok">Ok</option>
                     <option value="Minor issue">Minor issue</option>
                     <option value="Major issue">Major issue</option>
@@ -331,14 +330,14 @@
             </td>
             <td>
                 <div class="field">
-                <textarea ng-change="$scope.hasChanged=true" ng-if="project.res6fte!='None'" ng-model="project.res6comment" maxlength="300" id="res6comment" placeholder="Describe issues like, unavailability, timing, competence, priority ect."></textarea>
+                <textarea ng-change="saveNow()" ng-if="project.res6fte!='None'" ng-model="project.res6comment" maxlength="300" id="res6comment" placeholder="Describe issues like, unavailability, timing, competence, priority ect."></textarea>
             </div>
             </td>
         </tr>
         <tr>
             <td>Resource owner status</td>
             <td>
-                <select ng-if="project.res6fte!='None'" ng-model="project.res6owner"  ng-change="$scope.hasChanged=true">
+                <select ng-if="project.res6fte!='None'" ng-model="project.res6owner"  ng-change="saveNow()">
                     <option value="Committed">Committed</option>
                     <option value="Backlog">Backlog</option>
                     <option value="Tentative">Tentative</option>
@@ -347,7 +346,7 @@
             </td>
             <td>
                 <div class="field">
-                <textarea ng-change="$scope.hasChanged=true" ng-if="project.res6fte!='None'" ng-model="project.res6ownercomment" maxlength="300" id="res6comment" placeholder="Describe issues like, unavailability, timing, competence, priority ect."></textarea>
+                <textarea ng-change="saveNow()" ng-if="project.res6fte!='None'" ng-model="project.res6ownercomment" maxlength="300" id="res6comment" placeholder="Describe issues like, unavailability, timing, competence, priority ect."></textarea>
             </div>
             </td>
         </tr>
@@ -355,7 +354,7 @@
         <tr class="header">
             <td prio-class prio-skill-render="project.res7skill" prio-size-render="project.res7">{{company.res7lable}}</td>
             <td>
-                <select ng-model="project.res7fte"  ng-change="$scope.hasChanged=true">
+                <select ng-model="project.res7fte"  ng-change="saveNow()">
                     <option value="None">None</option>
                     <option value="Minor tasks">Minor tasks</option>
                     <option value="Major tasks">Major tasks</option>
@@ -366,7 +365,7 @@
                 </select>
             </td>
             <td>
-                <select ng-if="project.res7fte!='None'" ng-model="project.res7"  ng-change="$scope.hasChanged=true">
+                <select ng-if="project.res7fte!='None'" ng-model="project.res7"  ng-change="saveNow()">
                     <option value="No dependency">No dependency</option>
                     <option value="Minor dependency">Minor dependency</option>
                     <option value="Major dependency">Major dependency</option>
@@ -377,7 +376,7 @@
         <tr>
             <td>Project status</td>
             <td>
-                <select ng-if="project.res7fte!='None'" ng-model="project.res7skill"  ng-change="$scope.hasChanged=true">
+                <select ng-if="project.res7fte!='None'" ng-model="project.res7skill"  ng-change="saveNow()">
                     <option value="Ok">Ok</option>
                     <option value="Minor issue">Minor issue</option>
                     <option value="Major issue">Major issue</option>
@@ -386,14 +385,14 @@
             </td>
             <td>
                 <div class="field">
-                <textarea ng-change="$scope.hasChanged=true" ng-if="project.res7fte!='None'" ng-model="project.res7comment" maxlength="300" id="res7comment" placeholder="Describe issues like, unavailability, timing, competence, priority ect."></textarea>
+                <textarea ng-change="saveNow()" ng-if="project.res7fte!='None'" ng-model="project.res7comment" maxlength="300" id="res7comment" placeholder="Describe issues like, unavailability, timing, competence, priority ect."></textarea>
             </div>
             </td>
         </tr>
         <tr>
             <td>Resource owner status</td>
             <td>
-                <select ng-if="project.res7fte!='None'" ng-model="project.res7owner"  ng-change="$scope.hasChanged=true">
+                <select ng-if="project.res7fte!='None'" ng-model="project.res7owner"  ng-change="saveNow()">
                     <option value="Committed">Committed</option>
                     <option value="Backlog">Backlog</option>
                     <option value="Tentative">Tentative</option>
@@ -402,7 +401,7 @@
             </td>
             <td>
                 <div class="field">
-                <textarea ng-change="$scope.hasChanged=true" ng-if="project.res7fte!='None'" ng-model="project.res7ownercomment" maxlength="300" id="res7comment" placeholder="Describe issues like, unavailability, timing, competence, priority ect."></textarea>
+                <textarea ng-change="saveNow()" ng-if="project.res7fte!='None'" ng-model="project.res7ownercomment" maxlength="300" id="res7comment" placeholder="Describe issues like, unavailability, timing, competence, priority ect."></textarea>
             </div>
             </td>
         </tr>
@@ -410,7 +409,7 @@
         <tr class="header">
             <td prio-class prio-skill-render="project.res8skill" prio-size-render="project.res8">{{company.res8lable}}</td>
             <td>
-                <select ng-model="project.res8fte"  ng-change="$scope.hasChanged=true">
+                <select ng-model="project.res8fte"  ng-change="saveNow()">
                     <option value="None">None</option>
                     <option value="Minor tasks">Minor tasks</option>
                     <option value="Major tasks">Major tasks</option>
@@ -421,7 +420,7 @@
                 </select>
             </td>
             <td>
-                <select ng-if="project.res8fte!='None'" ng-model="project.res8"  ng-change="$scope.hasChanged=true">
+                <select ng-if="project.res8fte!='None'" ng-model="project.res8"  ng-change="saveNow()">
                     <option value="No dependency">No dependency</option>
                     <option value="Minor dependency">Minor dependency</option>
                     <option value="Major dependency">Major dependency</option>
@@ -432,7 +431,7 @@
         <tr>
             <td>Project status</td>
             <td>
-                <select ng-if="project.res8fte!='None'" ng-model="project.res8skill"  ng-change="$scope.hasChanged=true">
+                <select ng-if="project.res8fte!='None'" ng-model="project.res8skill"  ng-change="saveNow()">
                     <option value="Ok">Ok</option>
                     <option value="Minor issue">Minor issue</option>
                     <option value="Major issue">Major issue</option>
@@ -441,14 +440,14 @@
             </td>
             <td>
                 <div class="field">
-                <textarea ng-change="$scope.hasChanged=true" ng-if="project.res8fte!='None'" ng-model="project.res8comment" maxlength="300" id="res8comment" placeholder="Describe issues like, unavailability, timing, competence, priority ect."></textarea>
+                <textarea ng-change="saveNow()" ng-if="project.res8fte!='None'" ng-model="project.res8comment" maxlength="300" id="res8comment" placeholder="Describe issues like, unavailability, timing, competence, priority ect."></textarea>
             </div>
             </td>
         </tr>
         <tr>
             <td>Resource owner status</td>
             <td>
-                <select ng-if="project.res8fte!='None'" ng-model="project.res8owner"  ng-change="$scope.hasChanged=true">
+                <select ng-if="project.res8fte!='None'" ng-model="project.res8owner"  ng-change="saveNow()">
                     <option value="Committed">Committed</option>
                     <option value="Backlog">Backlog</option>
                     <option value="Tentative">Tentative</option>
@@ -457,7 +456,7 @@
             </td>
             <td>
                 <div class="field">
-                <textarea ng-change="$scope.hasChanged=true" ng-if="project.res8fte!='None'" ng-model="project.res8ownercomment" maxlength="300" id="res8comment" placeholder="Describe issues like, unavailability, timing, competence, priority ect."></textarea>
+                <textarea ng-change="saveNow()" ng-if="project.res8fte!='None'" ng-model="project.res8ownercomment" maxlength="300" id="res8comment" placeholder="Describe issues like, unavailability, timing, competence, priority ect."></textarea>
             </div>
             </td>
         </tr>
@@ -465,7 +464,7 @@
         <tr class="header">
             <td prio-class prio-skill-render="project.res9skill" prio-size-render="project.res9">{{company.res9lable}}</td>
             <td>
-                <select ng-model="project.res9fte"  ng-change="$scope.hasChanged=true">
+                <select ng-model="project.res9fte"  ng-change="saveNow()">
                     <option value="None">None</option>
                     <option value="Minor tasks">Minor tasks</option>
                     <option value="Major tasks">Major tasks</option>
@@ -476,7 +475,7 @@
                 </select>
             </td>
             <td>
-                <select ng-if="project.res9fte!='None'" ng-model="project.res9"  ng-change="$scope.hasChanged=true">
+                <select ng-if="project.res9fte!='None'" ng-model="project.res9"  ng-change="saveNow()">
                     <option value="No dependency">No dependency</option>
                     <option value="Minor dependency">Minor dependency</option>
                     <option value="Major dependency">Major dependency</option>
@@ -487,7 +486,7 @@
         <tr>
             <td>Project status</td>
             <td>
-                <select ng-if="project.res9fte!='None'" ng-model="project.res9skill"  ng-change="$scope.hasChanged=true">
+                <select ng-if="project.res9fte!='None'" ng-model="project.res9skill"  ng-change="saveNow()">
                     <option value="Ok">Ok</option>
                     <option value="Minor issue">Minor issue</option>
                     <option value="Major issue">Major issue</option>
@@ -496,14 +495,14 @@
             </td>
             <td>
                 <div class="field">
-                <textarea ng-change="$scope.hasChanged=true" ng-if="project.res9fte!='None'" ng-model="project.res9comment" maxlength="300" id="res9comment" placeholder="Describe issues like, unavailability, timing, competence, priority ect."></textarea>
+                <textarea ng-change="saveNow()" ng-if="project.res9fte!='None'" ng-model="project.res9comment" maxlength="300" id="res9comment" placeholder="Describe issues like, unavailability, timing, competence, priority ect."></textarea>
             </div>
             </td>
         </tr>
         <tr>
             <td>Resource owner status</td>
             <td>
-                <select ng-if="project.res9fte!='None'" ng-model="project.res9owner"  ng-change="$scope.hasChanged=true">
+                <select ng-if="project.res9fte!='None'" ng-model="project.res9owner"  ng-change="saveNow()">
                     <option value="Committed">Committed</option>
                     <option value="Backlog">Backlog</option>
                     <option value="Tentative">Tentative</option>
@@ -512,7 +511,7 @@
             </td>
             <td>
                 <div class="field">
-                <textarea ng-change="$scope.hasChanged=true" ng-if="project.res9fte!='None'" ng-model="project.res9ownercomment" maxlength="300" id="res9comment" placeholder="Describe issues like, unavailability, timing, competence, priority ect."></textarea>
+                <textarea ng-change="saveNow()" ng-if="project.res9fte!='None'" ng-model="project.res9ownercomment" maxlength="300" id="res9comment" placeholder="Describe issues like, unavailability, timing, competence, priority ect."></textarea>
             </div>
             </td>
         </tr>
@@ -520,7 +519,7 @@
         <tr class="header">
             <td prio-class prio-skill-render="project.res10skill" prio-size-render="project.res10">{{company.res10lable}}</td>
             <td>
-                <select ng-model="project.res10fte"  ng-change="$scope.hasChanged=true">
+                <select ng-model="project.res10fte"  ng-change="saveNow()">
                     <option value="None">None</option>
                     <option value="Minor tasks">Minor tasks</option>
                     <option value="Major tasks">Major tasks</option>
@@ -531,7 +530,7 @@
                 </select>
             </td>
             <td>
-                <select ng-if="project.res10fte!='None'" ng-model="project.res10"  ng-change="$scope.hasChanged=true">
+                <select ng-if="project.res10fte!='None'" ng-model="project.res10"  ng-change="saveNow()">
                     <option value="No dependency">No dependency</option>
                     <option value="Minor dependency">Minor dependency</option>
                     <option value="Major dependency">Major dependency</option>
@@ -542,7 +541,7 @@
         <tr>
             <td>Project status</td>
             <td>
-                <select ng-if="project.res10fte!='None'" ng-model="project.res10skill"  ng-change="$scope.hasChanged=true">
+                <select ng-if="project.res10fte!='None'" ng-model="project.res10skill"  ng-change="saveNow()">
                     <option value="Ok">Ok</option>
                     <option value="Minor issue">Minor issue</option>
                     <option value="Major issue">Major issue</option>
@@ -551,14 +550,14 @@
             </td>
             <td>
                 <div class="field">
-                <textarea ng-change="$scope.hasChanged=true" ng-if="project.res10fte!='None'" ng-model="project.res10comment" maxlength="300" id="res10comment" placeholder="Describe issues like, unavailability, timing, competence, priority ect."></textarea>
+                <textarea ng-change="saveNow()" ng-if="project.res10fte!='None'" ng-model="project.res10comment" maxlength="300" id="res10comment" placeholder="Describe issues like, unavailability, timing, competence, priority ect."></textarea>
             </div>
             </td>
         </tr>
         <tr>
             <td>Resource owner status</td>
             <td>
-                <select ng-if="project.res10fte!='None'" ng-model="project.res10owner"  ng-change="$scope.hasChanged=true">
+                <select ng-if="project.res10fte!='None'" ng-model="project.res10owner"  ng-change="saveNow()">
                     <option value="Committed">Committed</option>
                     <option value="Backlog">Backlog</option>
                     <option value="Tentative">Tentative</option>
@@ -567,7 +566,7 @@
             </td>
             <td>
                 <div class="field">
-                <textarea ng-change="$scope.hasChanged=true" ng-if="project.res10fte!='None'" ng-model="project.res10ownercomment" maxlength="300" id="res10comment" placeholder="Describe issues like, unavailability, timing, competence, priority ect."></textarea>
+                <textarea ng-change="saveNow()" ng-if="project.res10fte!='None'" ng-model="project.res10ownercomment" maxlength="300" id="res10comment" placeholder="Describe issues like, unavailability, timing, competence, priority ect."></textarea>
             </div>
             </td>
         </tr>
@@ -575,7 +574,7 @@
         <tr class="header">
             <td prio-class prio-skill-render="project.res11skill" prio-size-render="project.res11">{{company.res11lable}}</td>
             <td>
-                <select ng-model="project.res11fte"  ng-change="$scope.hasChanged=true">
+                <select ng-model="project.res11fte"  ng-change="saveNow()">
                     <option value="None">None</option>
                     <option value="Minor tasks">Minor tasks</option>
                     <option value="Major tasks">Major tasks</option>
@@ -586,7 +585,7 @@
                 </select>
             </td>
             <td>
-                <select ng-if="project.res11fte!='None'" ng-model="project.res11"  ng-change="$scope.hasChanged=true">
+                <select ng-if="project.res11fte!='None'" ng-model="project.res11"  ng-change="saveNow()">
                     <option value="No dependency">No dependency</option>
                     <option value="Minor dependency">Minor dependency</option>
                     <option value="Major dependency">Major dependency</option>
@@ -597,7 +596,7 @@
         <tr>
             <td>Project status</td>
             <td>
-                <select ng-if="project.res11fte!='None'" ng-model="project.res11skill"  ng-change="$scope.hasChanged=true">
+                <select ng-if="project.res11fte!='None'" ng-model="project.res11skill"  ng-change="saveNow()">
                     <option value="Ok">Ok</option>
                     <option value="Minor issue">Minor issue</option>
                     <option value="Major issue">Major issue</option>
@@ -606,14 +605,14 @@
             </td>
             <td>
                 <div class="field">
-                <textarea ng-change="$scope.hasChanged=true" ng-if="project.res11fte!='None'" ng-model="project.res11comment" maxlength="300" id="res11comment" placeholder="Describe issues like, unavailability, timing, competence, priority ect."></textarea>
+                <textarea ng-change="saveNow()" ng-if="project.res11fte!='None'" ng-model="project.res11comment" maxlength="300" id="res11comment" placeholder="Describe issues like, unavailability, timing, competence, priority ect."></textarea>
             </div>
             </td>
         </tr>
         <tr>
             <td>Resource owner status</td>
             <td>
-                <select ng-if="project.res11fte!='None'" ng-model="project.res11owner"  ng-change="$scope.hasChanged=true">
+                <select ng-if="project.res11fte!='None'" ng-model="project.res11owner"  ng-change="saveNow()">
                     <option value="Committed">Committed</option>
                     <option value="Backlog">Backlog</option>
                     <option value="Tentative">Tentative</option>
@@ -622,7 +621,7 @@
             </td>
             <td>
                 <div class="field">
-                <textarea ng-change="$scope.hasChanged=true" ng-if="project.res11fte!='None'" ng-model="project.res11ownercomment" maxlength="300" id="res11comment" placeholder="Describe issues like, unavailability, timing, competence, priority ect."></textarea>
+                <textarea ng-change="saveNow()" ng-if="project.res11fte!='None'" ng-model="project.res11ownercomment" maxlength="300" id="res11comment" placeholder="Describe issues like, unavailability, timing, competence, priority ect."></textarea>
             </div>
             </td>
         </tr>
@@ -630,7 +629,7 @@
         <tr class="header">
             <td prio-class prio-skill-render="project.res12skill" prio-size-render="project.res12">{{company.res12lable}}</td>
             <td>
-                <select ng-model="project.res12fte"  ng-change="$scope.hasChanged=true">
+                <select ng-model="project.res12fte"  ng-change="saveNow()">
                     <option value="None">None</option>
                     <option value="Minor tasks">Minor tasks</option>
                     <option value="Major tasks">Major tasks</option>
@@ -641,7 +640,7 @@
                 </select>
             </td>
             <td>
-                <select ng-if="project.res12fte!='None'" ng-model="project.res12"  ng-change="$scope.hasChanged=true">
+                <select ng-if="project.res12fte!='None'" ng-model="project.res12"  ng-change="saveNow()">
                     <option value="No dependency">No dependency</option>
                     <option value="Minor dependency">Minor dependency</option>
                     <option value="Major dependency">Major dependency</option>
@@ -652,7 +651,7 @@
         <tr>
             <td>Project status</td>
             <td>
-                <select ng-if="project.res12fte!='None'" ng-model="project.res12skill"  ng-change="$scope.hasChanged=true">
+                <select ng-if="project.res12fte!='None'" ng-model="project.res12skill"  ng-change="saveNow()">
                     <option value="Ok">Ok</option>
                     <option value="Minor issue">Minor issue</option>
                     <option value="Major issue">Major issue</option>
@@ -661,14 +660,14 @@
             </td>
             <td>
                 <div class="field">
-                <textarea ng-change="$scope.hasChanged=true" ng-if="project.res12fte!='None'" ng-model="project.res12comment" maxlength="300" id="res12comment" placeholder="Describe issues like, unavailability, timing, competence, priority ect."></textarea>
+                <textarea ng-change="saveNow()" ng-if="project.res12fte!='None'" ng-model="project.res12comment" maxlength="300" id="res12comment" placeholder="Describe issues like, unavailability, timing, competence, priority ect."></textarea>
             </div>
             </td>
         </tr>
         <tr>
             <td>Resource owner status</td>
             <td>
-                <select ng-if="project.res12fte!='None'" ng-model="project.res12owner"  ng-change="$scope.hasChanged=true">
+                <select ng-if="project.res12fte!='None'" ng-model="project.res12owner"  ng-change="saveNow()">
                     <option value="Committed">Committed</option>
                     <option value="Backlog">Backlog</option>
                     <option value="Tentative">Tentative</option>
@@ -677,7 +676,7 @@
             </td>
             <td>
                 <div class="field">
-                <textarea ng-change="$scope.hasChanged=true" ng-if="project.res12fte!='None'" ng-model="project.res12ownercomment" maxlength="300" id="res12comment" placeholder="Describe issues like, unavailability, timing, competence, priority ect."></textarea>
+                <textarea ng-change="saveNow()" ng-if="project.res12fte!='None'" ng-model="project.res12ownercomment" maxlength="300" id="res12comment" placeholder="Describe issues like, unavailability, timing, competence, priority ect."></textarea>
             </div>
             </td>
         </tr>
@@ -685,7 +684,7 @@
         <tr class="header">
             <td prio-class prio-skill-render="project.res13skill" prio-size-render="project.res13">{{company.res13lable}}</td>
             <td>
-                <select ng-model="project.res13fte"  ng-change="$scope.hasChanged=true">
+                <select ng-model="project.res13fte"  ng-change="saveNow()">
                     <option value="None">None</option>
                     <option value="Minor tasks">Minor tasks</option>
                     <option value="Major tasks">Major tasks</option>
@@ -696,7 +695,7 @@
                 </select>
             </td>
             <td>
-                <select ng-if="project.res13fte!='None'" ng-model="project.res13"  ng-change="$scope.hasChanged=true">
+                <select ng-if="project.res13fte!='None'" ng-model="project.res13"  ng-change="saveNow()">
                     <option value="No dependency">No dependency</option>
                     <option value="Minor dependency">Minor dependency</option>
                     <option value="Major dependency">Major dependency</option>
@@ -707,7 +706,7 @@
         <tr>
             <td>Project status</td>
             <td>
-                <select ng-if="project.res13fte!='None'" ng-model="project.res13skill"  ng-change="$scope.hasChanged=true">
+                <select ng-if="project.res13fte!='None'" ng-model="project.res13skill"  ng-change="saveNow()">
                     <option value="Ok">Ok</option>
                     <option value="Minor issue">Minor issue</option>
                     <option value="Major issue">Major issue</option>
@@ -716,14 +715,14 @@
             </td>
             <td>
                 <div class="field">
-                <textarea ng-change="$scope.hasChanged=true" ng-if="project.res13fte!='None'" ng-model="project.res13comment" maxlength="300" id="res13comment" placeholder="Describe issues like, unavailability, timing, competence, priority ect."></textarea>
+                <textarea ng-change="saveNow()" ng-if="project.res13fte!='None'" ng-model="project.res13comment" maxlength="300" id="res13comment" placeholder="Describe issues like, unavailability, timing, competence, priority ect."></textarea>
             </div>
             </td>
         </tr>
         <tr>
             <td>Resource owner status</td>
             <td>
-                <select ng-if="project.res13fte!='None'" ng-model="project.res13owner"  ng-change="$scope.hasChanged=true">
+                <select ng-if="project.res13fte!='None'" ng-model="project.res13owner"  ng-change="saveNow()">
                     <option value="Committed">Committed</option>
                     <option value="Backlog">Backlog</option>
                     <option value="Tentative">Tentative</option>
@@ -732,7 +731,7 @@
             </td>
             <td>
                 <div class="field">
-                <textarea ng-change="$scope.hasChanged=true" ng-if="project.res13fte!='None'" ng-model="project.res13ownercomment" maxlength="300" id="res13comment" placeholder="Describe issues like, unavailability, timing, competence, priority ect."></textarea>
+                <textarea ng-change="saveNow()" ng-if="project.res13fte!='None'" ng-model="project.res13ownercomment" maxlength="300" id="res13comment" placeholder="Describe issues like, unavailability, timing, competence, priority ect."></textarea>
             </div>
             </td>
         </tr>
@@ -740,7 +739,7 @@
         <tr class="header">
             <td prio-class prio-skill-render="project.res14skill" prio-size-render="project.res14">{{company.res14lable}}</td>
             <td>
-                <select ng-model="project.res14fte"  ng-change="$scope.hasChanged=true">
+                <select ng-model="project.res14fte"  ng-change="saveNow()">
                     <option value="None">None</option>
                     <option value="Minor tasks">Minor tasks</option>
                     <option value="Major tasks">Major tasks</option>
@@ -751,7 +750,7 @@
                 </select>
             </td>
             <td>
-                <select ng-if="project.res14fte!='None'" ng-model="project.res14"  ng-change="$scope.hasChanged=true">
+                <select ng-if="project.res14fte!='None'" ng-model="project.res14"  ng-change="saveNow()">
                     <option value="No dependency">No dependency</option>
                     <option value="Minor dependency">Minor dependency</option>
                     <option value="Major dependency">Major dependency</option>
@@ -762,7 +761,7 @@
         <tr>
             <td>Project status</td>
             <td>
-                <select ng-if="project.res14fte!='None'" ng-model="project.res14skill"  ng-change="$scope.hasChanged=true">
+                <select ng-if="project.res14fte!='None'" ng-model="project.res14skill"  ng-change="saveNow()">
                     <option value="Ok">Ok</option>
                     <option value="Minor issue">Minor issue</option>
                     <option value="Major issue">Major issue</option>
@@ -771,14 +770,14 @@
             </td>
             <td>
                 <div class="field">
-                <textarea ng-change="$scope.hasChanged=true" ng-if="project.res14fte!='None'" ng-model="project.res14comment" maxlength="300" id="res14comment" placeholder="Describe issues like, unavailability, timing, competence, priority ect."></textarea>
+                <textarea ng-change="saveNow()" ng-if="project.res14fte!='None'" ng-model="project.res14comment" maxlength="300" id="res14comment" placeholder="Describe issues like, unavailability, timing, competence, priority ect."></textarea>
             </div>
             </td>
         </tr>
         <tr>
             <td>Resource owner status</td>
             <td>
-                <select ng-if="project.res14fte!='None'" ng-model="project.res14owner"  ng-change="$scope.hasChanged=true">
+                <select ng-if="project.res14fte!='None'" ng-model="project.res14owner"  ng-change="saveNow()">
                     <option value="Committed">Committed</option>
                     <option value="Backlog">Backlog</option>
                     <option value="Tentative">Tentative</option>
@@ -787,7 +786,7 @@
             </td>
             <td>
                 <div class="field">
-                <textarea ng-change="$scope.hasChanged=true" ng-if="project.res14fte!='None'" ng-model="project.res14ownercomment" maxlength="300" id="res14comment" placeholder="Describe issues like, unavailability, timing, competence, priority ect."></textarea>
+                <textarea ng-change="saveNow()" ng-if="project.res14fte!='None'" ng-model="project.res14ownercomment" maxlength="300" id="res14comment" placeholder="Describe issues like, unavailability, timing, competence, priority ect."></textarea>
             </div>
             </td>
         </tr>

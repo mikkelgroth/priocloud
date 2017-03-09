@@ -52,8 +52,14 @@ angular
                 });
 
             $scope.saveProject = function (project) {
-
+                
                 companyService.saveProject(project);
+                $scope.hasChanged=false;
+            };
+
+            $scope.saveNow = function (project) {
+                
+                $scope.hasChanged=true;               
             };
         }
     ]);
