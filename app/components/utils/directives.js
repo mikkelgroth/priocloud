@@ -1,5 +1,6 @@
 angular
     .module('riskApp')
+
     .directive('prioClass', [function () {
 
         function linkFunction(scope, element, attrs) {
@@ -7,6 +8,13 @@ angular
             var classList = {
                 base: attrs['class']
             };
+
+            scope.$watch(attrs['saveThis'], function (newVal) {
+                
+                if (newVal) document.getElementById("saveButton").className = "Red";
+                else document.getElementById("saveButton").className = "Green";
+            }, true);
+
 
             scope.$watch(attrs['prioSizeRender'], function (newVal) {
                 
@@ -102,16 +110,8 @@ angular
                 repaintClasses();
 
             }, true);
-/*
-            scope.$watch(attrs['saveThis'], function (newVal) {
-                
-                if (newVal) classList['saveThis'] = "Red";
-                else classList['saveThis'] = "Green";
 
-                repaintClasses();
-
-            }, true);
-*/
+            
             function repaintClasses() {
 
                 element.attr('class', '');
@@ -126,6 +126,10 @@ angular
             link: linkFunction
         };
     }])
+
+
+
+
     .directive('prioMiniPie', [function () {
 
         function linkFunction(scope, element, attrs) {

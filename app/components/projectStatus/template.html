@@ -6,7 +6,7 @@
             Status per. {{editstatus.date | date:'yyyy-MM-dd'}}
             <div class="right">
                 <!-- TODO: make directive for ng-if based on user.email == project.something -->
-                <button type="button" prio-class save-this="$parent.hasChanged"
+                <button type="button" id="saveButton" prio-class save-this="$parent.hasChanged"
                         ng-show="saveStatusEnabled"
                         ng-if="(user.email == project.po.email || 
                             user.email == project.pm.email || 
