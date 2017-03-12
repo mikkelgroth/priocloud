@@ -10,9 +10,10 @@ angular
             };
 
             scope.$watch(attrs['saveThis'], function (newVal) {
-                
-                if (newVal) document.getElementById("saveButton").className = "Red";
-                else document.getElementById("saveButton").className = "Green";
+                if(document.getElementById("saveButton")!=null){
+                    if (newVal) document.getElementById("saveButton").className = "Red";
+                    else document.getElementById("saveButton").className = "Green";
+                }
             }, true);
 
 
