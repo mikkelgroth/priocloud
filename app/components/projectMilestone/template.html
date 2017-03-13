@@ -187,7 +187,7 @@
     <div class="mainbox" id="milestonelist" ng-show="!showMilestoneForm">
         <h2>
             Deliverables
-            <div class="right">
+            <div class="right"> 
                 <select ng-model="orderdate" ng-init="orderdate='enddate'" style="font-size: 12px;">
                     <option value="enddate" selected="selected">Order by end date</option>
                     <option value="date">Order by start date</option>
@@ -205,7 +205,7 @@
         <div class="overview">
             <table class="tablelist smaller" ng-if="project.milestones.length > 0">
                 <tr class="header">
-                    <td>Title</td>
+                    <td>Title <div class="right"><input type="checkbox" ng-model="showDone" ng-init="showDone=false"> show done</div></td>
                     <td>WSJF<br/>State</td>
                     <td>2016</td>
                     <td>2017</td>
@@ -213,7 +213,7 @@
                     <td>Start Date<br/>End Date</td>
                     <td>Responsible<br/>Approver</td>
                 </tr>
-                <tr ng-repeat="mile in project.milestones | orderBy:orderdate" ng-click="beginEditMile(mile)" class="link">
+                <tr ng-repeat="mile in project.milestones | orderBy:orderdate" ng-if="showDone || (!showDone && mile.state!='Done')" ng-click="beginEditMile(mile)" class="link">
                     <td class="{{mile.status}}"><b>{{mile.title}}</b></td>
                     <td><b>{{mile.wsjf}}</b><br/>{{mile.state}}</td>
                     <td class="bar" ng-style="barRender(mile)" colspan="3"></td>

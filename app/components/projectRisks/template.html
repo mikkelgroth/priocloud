@@ -238,7 +238,7 @@
                     </td>
                 </tr>
                 <tr class="header">
-                    <td class="label">Title</td>
+                    <td class="label">Title<div class="right"><input type="checkbox" ng-model="showClosed" ng-init="showClosed=false"> show closed</div></td>
                     <td class="label">Probability</td>
                     <td class="label">Impact</td>
                     <td class="label">Type<br/>Proximity</td>
@@ -248,9 +248,10 @@
                 <tr class="link" 
                     ng-repeat="risk in project.risks | filter:riskpmsearch | orderBy:'-total'"
                     ng-click="beginEditRisk(risk)"
-                    ng-if="risk.audience!='Confidential' ||
+                    ng-if="(showClosed || (!showClosed && risk.state!='Closed')) &&
+                    (risk.audience!='Confidential' ||
                     (risk.audience=='Confidential'&&project.showconfrisk=='true' &&
-                    (user.email==project.po.email || user.email==project.pm.email || user.email==project.altpo.email || user.email==project.altpm.email || user.isOwner || user.admin))">
+                    (user.email==project.po.email || user.email==project.pm.email || user.email==project.altpo.email || user.email==project.altpm.email || user.isOwner || user.admin)))">
                     <td class="texttop {{risk.status}}"><b>{{risk.title}}</b>
                         <div class="right">({{risk.total}})</div>
                     </td>

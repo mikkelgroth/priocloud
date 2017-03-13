@@ -249,16 +249,8 @@
                                 <td class="label">Audience</td>
                             </tr>
                             <tr ng-repeat="risk in project.risks | orderBy:'-total'" ng-click="goToRiskInProject(risk)" class="link" 
-                            ng-if="risk.type=='Issue' &&
-                            risk.state!='Closed' && 
-                            risk.audience!='Confidential' || 
-                            (risk.audience=='Confidential' &&
-                            (user.email==project.po.email || 
-                            user.email==project.pm.email || 
-                            user.isOwner || 
-                            user.admin) &&
-                            risk.state!='Closed' && 
-                            project.showconfrisk=='true')">
+                            ng-if="(risk.type=='Issue' && risk.state!='Closed') && 
+                            (risk.audience!='Confidential' || (risk.audience=='Confidential' && (user.email==project.po.email || user.email==project.pm.email || user.isOwner ||  user.admin) && project.showconfrisk=='true'))">
                                 <td class="{{risk.status}}">{{risk.title}}</td>
                                 <td>&nbsp;{{risk.request}}</td>
                                 <td>&nbsp;{{risk.audience}}</td>
@@ -279,7 +271,8 @@
                                 <td class="label">Audience</td>
                             </tr>
                             <tr ng-repeat="risk in project.risks | orderBy:'-total'" ng-click="goToRiskInProject(risk)" class="link" 
-                            ng-if="risk.type=='Risk' && risk.state!='Closed'&&risk.audience!='Confidential'||(risk.audience=='Confidential'&&(user.email==project.po.email || user.email==project.pm.email || user.isOwner || user.admin)&&risk.state!='Closed'&&project.showconfrisk=='true')">
+                            ng-if="(risk.type=='Risk' && risk.state!='Closed') && 
+                            (risk.audience!='Confidential' || (risk.audience=='Confidential' && (user.email==project.po.email || user.email==project.pm.email || user.isOwner ||  user.admin) && project.showconfrisk=='true'))">
                                 <td class="{{risk.status}}">{{risk.title}}</td>
                                 <td prio-class prio-risk-bar-render="risk.prob"></td>
                                 <td prio-class prio-risk-bar-render="risk.impact"></td>
