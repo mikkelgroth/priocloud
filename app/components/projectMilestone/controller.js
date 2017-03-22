@@ -96,14 +96,22 @@ angular
                 $scope.project.milestones.push({});
                 $scope.editmile=$scope.project.milestones[$scope.project.milestones.length-1];
                 var newdate = (new Date()).toISOString();
-                
+                var end = new Date();
+                end.setFullYear(end.getFullYear()+1);
+
                 $scope.editmile._id = Math.random().toString(36).substr(2, 9);
                 $scope.editmile.date = newdate;
-                $scope.editmile.enddate = newdate;
+                $scope.editmile.enddate = end.toISOString();
                 $scope.editmile.status = 'Green';
                 $scope.editmile.state = 'Target';
                 $scope.editmile.audience = 'Project';
-                $scope.editmile.acountable = 'TBD';
+                $scope.editmile.acountable = $scope.user.name;
+                $scope.editmile.responsible = $scope.user.name;
+                $scope.editmile.bena = '1';
+                $scope.editmile.effort= '1';
+                $scope.editmile.sena= '1';
+                $scope.editmile.risklevel= '1';
+                $scope.editmile.title= 'NEW DELIVERABLE';
 
                 
                 $scope.showMilestoneForm = true;

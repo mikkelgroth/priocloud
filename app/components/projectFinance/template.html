@@ -33,7 +33,7 @@
                     Opex proj. num.: 
                 </td>
                 <td colspan="2">
-                    <input ng-model="project.opexprojectnumber" ng-change="saveNow()" />
+                    <div class="field"><input ng-model="project.opexprojectnumber" ng-change="saveNow()" /></div>
                 </td>
             </tr>
             <tr class="header" ng-if="user.controller || user.admin">
@@ -50,7 +50,9 @@
                    Lifetime:
                 </td>
                 <td>
+                    <div class="field">
                    <input type="text" ng-model="project.depriciation" ng-change="saveNow()" id="depriciation" />
+                    </div>
                 </td>
                 <td colspan="2">Dep. date:</td>
                 <td colspan="2">

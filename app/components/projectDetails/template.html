@@ -57,7 +57,7 @@
                     </td>
                     <td class="header">Portfolio</td>
                     <td>
-                        <div ng-if="!user.isOwner && !user.admin">{{project.bu.name}}</div>
+                        <div ng-if="!user.isOwner && !user.admin">{{project.support}}</div>
                         <select ng-if="user.isOwner || user.admin" ng-model="project.support" ng-change="saveNow()">
                             <option ng-repeat="bu in bus" value="{{bu.name}}">{{bu.name}}</option>
                         </select></td>

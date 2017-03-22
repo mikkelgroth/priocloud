@@ -59,14 +59,28 @@ angular
                 var newdate = (new Date()).toISOString();
 
                 $scope.editstatus = {};
+                $scope.editstatus.date = newdate;
                 $scope.editstatus.demodate = newdate;
-                $scope.editstatus.apo = "Not evaluated";
                 $scope.editstatus.title = "No title";
+
+                $scope.editstatus.status = "Green";
+                $scope.editstatus.overallcomments = "TBD";
+                $scope.editstatus.statusbc = "Green";
+                $scope.editstatus.statussc = "Green";
+                $scope.editstatus.statustl = "Green";
+                $scope.editstatus.statusres = "Green";
+                $scope.editstatus.statusbud = "Green";
+                $scope.editstatus.statusrisk = "Green";
+                
+                $scope.editstatus.apo = "Not evaluated";
                 $scope.editstatus.statusstate = "Draft";
                 $scope.editstatus.active = true;
                 $scope.saveStatusEnabled = true;
                 $scope.showStatusForm = true;
 
+                $scope.editstatus.cs = "4";
+                $scope.editstatus.productcs = "4";
+            
                 $scope.project.statuses.push({});
             };
 

@@ -60,8 +60,14 @@ angular
 
                 $scope.editrisk = {};
                 $scope.editrisk._id = Math.random().toString(36).substr(2, 9);
-                $scope.editrisk.prob = 1;
-                $scope.editrisk.impact = 1;
+
+                $scope.editrisk.title = 'NEW ITEM';
+                $scope.editrisk.type = 'Risk';
+                $scope.editrisk.proximity = 'Project';
+                $scope.editrisk.acc = $scope.user.name;
+
+                $scope.editrisk.prob = '1';
+                $scope.editrisk.impact = '1';
                 $scope.editrisk.total = 1;
                 $scope.editrisk.response = 'Accept';
                 $scope.editrisk.acc = 'TBD';
