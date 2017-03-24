@@ -55,7 +55,7 @@ header .brand {
 	padding: 0 1em 0 0;
 	display: inline-block;
 	text-align: center;
-	width: 25%;
+	width: 20%;
 }
 header .logo {
 	background-color: #0869A1;
@@ -102,7 +102,7 @@ header .user-container .button:hover {
 /* NAVIGATION */
 nav {
 	margin-top: 0;
-	width: 25%;
+	width: 20%;
 	float: left;
 	padding-right: 1em;
 	position: relative;
@@ -153,7 +153,7 @@ nav ul li ul li a:before {
 
 /* CONTENT */
 .content-container {
-	width: 75%;
+	width: 80%;
 	float: right;
 	padding-left: 1em;
 }
