@@ -117,5 +117,16 @@
                 </tr>
             </table>
         </div>
+        <br/>
+        <h3>User names</h3>
+        <div class="overview">
+            <table class="tablelist smaller">
+                <tr>
+                    <td>
+                       <b ng-repeat="subuser in users | orderBy:'name'">{{subuser.name}}{{$last ? '' : '; '}}</b>
+                    </td>
+                </tr>
+            </table>
+        </div>
     </div>
 </div>
