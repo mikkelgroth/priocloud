@@ -120,26 +120,21 @@ angular
                 $scope.showStatusForm = false;
             };
             
-            $scope.saveNow = function (project) {
-                
+            $scope.saveNow = function (status) {
+                var dd = new Date(Date.parse($("#demodate")[0].value));
+                if (dd instanceof Date && !isNaN(dd.valueOf())) {
+                    status.demodate = dd.toISOString();
+                }
                 $scope.hasChanged=true;               
             };
 
             $scope.saveStatus = function (status) {
-
-                //TODO: change datepickr to be integrated with angular objects
-
 
                 var ed = new Date();
                 if (ed instanceof Date && !isNaN(ed.valueOf())) {
                     status.date = ed;
                 }
 
-                
-                var dd = new Date(Date.parse($("#demodate")[0].value));
-                if (dd instanceof Date && !isNaN(dd.valueOf())) {
-                    status.demodate = dd.toISOString();
-                }
                 if ($scope.project.pm.email == $scope.user.email) {
                     status.apo = "Not evaluated";
                 }

@@ -56,9 +56,11 @@
                 </td>
                 <td colspan="2">Dep. date:</td>
                 <td colspan="2">
-                    <div class="field">
-                        <input type="text" id="depriciationdate" datepicker="" ng-model="project.depriciationdate" ng-change="saveNow(); dateChanged(project.depriciationdate)" class="datebox"/>
-                   </div>
+                    
+                        <input class="cal" type="text" id="depriciationdate" datepicker="" ng-model="project.depriciationdate" ng-change="saveNow(); dateChanged(project.depriciationdate)"/>
+                        {{project.depriciationdate | date:'yyyy-MM-dd'}}
+                        
+                   
                 </td>
             </tr>
 

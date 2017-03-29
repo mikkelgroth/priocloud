@@ -64,16 +64,16 @@ angular
 
             $scope.saveProject = function (project) {
                 
-                var depd = new Date($("#depriciationdate")[0].value);
-                if(depd instanceof Date && !isNaN(depd.valueOf())){$scope.project.depriciationdate=depd.toISOString();}
-        
+                
                 companyService.saveProject(project);
                 $scope.hasChanged=false;
             };
 
             
-            $scope.saveNow = function (project) {
-                
+            $scope.saveNow = function () {
+                var depd = new Date($("#depriciationdate")[0].value);
+                if(depd instanceof Date && !isNaN(depd.valueOf())){$scope.project.depriciationdate=depd.toISOString();}
+        
                 $scope.hasChanged=true;               
             };
 

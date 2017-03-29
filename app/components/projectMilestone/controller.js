@@ -63,8 +63,16 @@ angular
                 $scope.showMilestoneForm = true;
             };
 
-            $scope.saveMilestones = function (mile) {
+            $scope.saveMilestones = function () {
 
+                
+
+                companyService.saveProject($scope.project);
+                $scope.hasChanged=false;
+                $scope.showMilestoneForm = true;
+            };
+           
+            $scope.saveNow = function (mile) {
                 var md = new Date($("#miledate")[0].value);
                 if (md instanceof Date && !isNaN(md.valueOf())) { 
                     mile.date = md.toISOString(); 
@@ -77,14 +85,6 @@ angular
 
                 mile.wsjf = Math.floor((mile.bena * mile.sena) /
                     (mile.effort * mile.risklevel) * 100 / 16);
-
-                companyService.saveProject($scope.project);
-                $scope.hasChanged=false;
-                $scope.showMilestoneForm = true;
-            };
-           
-            $scope.saveNow = function (project) {
-                
                 $scope.hasChanged=true;               
             };
 

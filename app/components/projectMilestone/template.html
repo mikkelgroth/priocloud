@@ -12,7 +12,7 @@
                         user.email == project.altpm.email || 
                         user.isOwner || 
                         user.admin"
-                        ng-click="saveMilestones(editmile)">save</button>
+                        ng-click="saveMilestones()">save</button>
                 <button type="button" ng-click="hideMilestoneForm()">close</button>
             </div>
         </h2>
@@ -21,12 +21,12 @@
                 <td class="header">Title</td>
                 <td>
                     <div class="field">
-                        <input ng-model="editmile.title" ng-change="saveNow()"/>
+                        <input ng-model="editmile.title" ng-change="saveNow(editmile)"/>
                     </div>
                 </td>
                 <td class="header">Audience</td>
                 <td>
-                    <select ng-model="editmile.audience" ng-change="saveNow()">
+                    <select ng-model="editmile.audience" ng-change="saveNow(editmile)">
                         <option value="Project">Project</option>
                         <option value="Portfolio">Portfolio</option>
                         <option value="Company">Company</option>
@@ -36,37 +36,33 @@
             <tr>
                 <td class="header">Delivery responsible</td>
                 <td>
-                    <select ng-model="editmile.responsible"  ng-change="saveNow()" ng-options="u.name for u in users | filter: {source: true} | orderBy:'name' track by u.name"></select>
+                    <select ng-model="editmile.responsible"  ng-change="saveNow(editmile)" ng-options="u.name for u in users | filter: {source: true} | orderBy:'name' track by u.name"></select>
                 </td>
                 <td class="header">Delivery approver</td>
                 <td>
-                    <select ng-model="editmile.acountable"  ng-change="saveNow()" ng-options="u.name for u in users | filter: {source: true} | orderBy:'name' track by u.name"></select>
+                    <select ng-model="editmile.acountable"  ng-change="saveNow(editmile)" ng-options="u.name for u in users | filter: {source: true} | orderBy:'name' track by u.name"></select>
                 </td>
             </tr>
             <tr>
                 <td class="header">Start Date</td>
                 <td>
-                    <div class="field">
-                        <input type="text" id="miledate" datepicker="" ng-model="editmile.date" ng-change="saveNow(); dateChanged(editmile.date)"  class="datebox"/>
-                        <!-- <input class="time" id="miledate" ng-model="editmile.date" /> -->
-                        <!-- TODO: make datepicker directive -->
-                        <!--<script type="text/javascript">new datepickr('#miledate');</script>-->
-                    </div>
+                    
+                        <input type="text" id="miledate" datepicker="" ng-model="editmile.date" ng-change="saveNow(editmile); dateChanged(editmile.date)"  class="cal"/>
+                        {{editmile.date | date:'yyyy-MM-dd'}}
+                    
                 </td>
                 <td class="header">End Date</td>
                 <td>
-                    <div class="field">
-                        <input type="text" id="mileenddate" datepicker="" ng-model="editmile.enddate" ng-change="saveNow(); dateChanged(editmile.enddate)"  class="datebox"/>
-                        <!-- <input class="time" id="mileenddate" ng-model="editmile.enddate" /> -->
-                        <!-- TODO: make datepicker directive -->
-                        <!--<script type="text/javascript">new datepickr('#mileenddate');</script>-->
-                    </div>
+                    
+                        <input type="text" id="mileenddate" datepicker="" ng-model="editmile.enddate" ng-change="saveNow(editmile); dateChanged(editmile.enddate)"  class="cal"/>
+                        {{editmile.enddate | date:'yyyy-MM-dd'}}
+                    
                 </td>
             </tr>
             <tr>
                 <td class="header">Status</td>
                 <td>
-                    <select ng-model="editmile.status" ng-change="saveNow()">
+                    <select ng-model="editmile.status" ng-change="saveNow(editmile)">
                         <option value="Green">OK (Green)</option>
                         <option value="Yellow">Observe (Yellow)</option>
                         <option value="Orange">Assist (Orange)</option>
@@ -75,7 +71,7 @@
                 </td>
                 <td class="header">State</td>
                 <td>
-                    <select ng-model="editmile.state" ng-change="saveNow()">
+                    <select ng-model="editmile.state" ng-change="saveNow(editmile)">
                         <option value="Target">Target</option>
                         <option value="Qualified">Qualified</option>
                         <option value="Progress">Progress</option>
@@ -93,7 +89,7 @@
             <tr>
                 <td class="header" prio-class prio-value-bar-render="editmile.bena">Business enabler</td>
                 <td>
-                    <select ng-model="editmile.bena" ng-change="saveNow()">
+                    <select ng-model="editmile.bena" ng-change="saveNow(editmile)">
                         <option value="1">1. Minimal value</option>
                         <option value="2">2. Medium value</option>
                         <option value="3">3. Large value</option>
@@ -102,7 +98,7 @@
                 </td>
                 <td class="header" prio-class prio-value-bar-render-neg="editmile.effort">Effort</td>
                 <td>
-                    <select ng-model="editmile.effort" ng-change="saveNow()">
+                    <select ng-model="editmile.effort" ng-change="saveNow(editmile)">
                         <option value="1">1. Minimal effort</option>
                         <option value="2">2. Medium effort</option>
                         <option value="3">3. Large effort</option>
@@ -113,7 +109,7 @@
             <tr>
                 <td class="header" prio-class prio-value-bar-render="editmile.sena">Strategy enabler</td>
                 <td>
-                    <select ng-model="editmile.sena" ng-change="saveNow()">
+                    <select ng-model="editmile.sena" ng-change="saveNow(editmile)">
                         <option value="1">1. Minimal value</option>
                         <option value="2">2. Medium value</option>
                         <option value="3">3. Large value</option>
@@ -122,7 +118,7 @@
                 </td>
                 <td class="header" prio-class prio-value-bar-render-neg="editmile.risklevel">Risk of failure</td>
                 <td>
-                    <select ng-model="editmile.risklevel" ng-change="saveNow()">
+                    <select ng-model="editmile.risklevel" ng-change="saveNow(editmile)">
                         <option value="1">1. Slim risk</option>
                         <option value="2">2. Could happen</option>
                         <option value="3">3. Likely to happen</option>
@@ -137,7 +133,7 @@
                 </td>
                 <td colspan="3">
                     <div class="field">
-                        <textarea ng-change="saveNow()" ng-model="editmile.delivarables" maxlength="300" id="miledel" placeholder="Describe the key business delivery that this deliverable will produce."></textarea>
+                        <textarea ng-change="saveNow(editmile)" ng-model="editmile.delivarables" maxlength="300" id="miledel" placeholder="Describe the key business delivery that this deliverable will produce."></textarea>
                     </div>
                 </td>
             </tr>
@@ -147,7 +143,7 @@
                 </td>
                 <td colspan="3">
                     <div class="field">
-                        <textarea ng-change="saveNow()" ng-model="editmile.comments" maxlength="300" id="milecom" placeholder="Describe the enablers of creating value both on implementation and if it enables further strategic work in the future"></textarea>
+                        <textarea ng-change="saveNow(editmile)" ng-model="editmile.comments" maxlength="300" id="milecom" placeholder="Describe the enablers of creating value both on implementation and if it enables further strategic work in the future"></textarea>
                     </div>
                 </td>
             </tr>
@@ -157,7 +153,7 @@
                 </td>
                 <td colspan="3">
                     <div class="field">
-                        <textarea ng-change="saveNow()" ng-model="editmile.risks" maxlength="300" id="milerisk" placeholder="Describe the limiters that work against creating value like the amount of work and the assosiated risk of failure"></textarea>
+                        <textarea ng-change="saveNow(editmile)" ng-model="editmile.risks" maxlength="300" id="milerisk" placeholder="Describe the limiters that work against creating value like the amount of work and the assosiated risk of failure"></textarea>
                     </div>
                 </td>
             </tr>
