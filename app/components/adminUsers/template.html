@@ -128,5 +128,18 @@
                 </tr>
             </table>
         </div>
+        <br/>
+        <h3>User emails</h3>
+        <div class="overview">
+            <table class="tablelist smaller">
+                <tr>
+                    <td>
+                       <b ng-repeat="subuser in users | orderBy:'name'">{{subuser.email}}{{$last ? '' : '; '}}</b>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+
     </div>
 </div>
