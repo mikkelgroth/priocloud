@@ -52,41 +52,24 @@
         </div>
         <div class="overview"> 
             <table class="tablelist" ng-if="projectList.length > 0">
-                <tr class="listsubject">
-                    <td colspan="7">
-                        <h3>Projects</h3>
-                    </td>
-                </tr>
                 <tr class="header">
-                    <td>Project, PM<br/>BU, PO</td>
-                    <td>Status state<br/>PO approval</td>
-                    <td colspan="2">Project/Product<br/>User feedback</td>
-                    <td>Status date<br/>Demo date</td>
+                    <td>Project</td>
+                    <td>Project Manager</td>
+                    <td>Business Unit</td>
+                    <td>Project Owner</td>
                 </tr>
                 <tr ng-repeat="project in projectList | multiFilter:search | orderBy:porderparam" ng-click="goToProject(project._id.$oid)" class="link">
                     <td class="{{project.lastStatus.status}}">
-                        <b>{{project.title}}</b>, {{project.pm.name}}
-                        <br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        <b>{{project.bu.name}}</b>, {{project.po.name}}
+                        <b>{{project.title}}<div class="right"><b>{{project.warn}}</b></div></b>
                     </td>
                     <td>
-                        {{project.lastStatus.statusstate}}
-                        <br/>
-                        {{project.lastStatus.apo}}
-                    </td>
-                    <td prio-class prio-cs-render="project.lastStatus.cs">
-                        {{project.lastStatus.cs}}
-                    </td>
-                    <td prio-class prio-cs-render="project.lastStatus.productcs">
-                        {{project.lastStatus.productcs}}
+                        {{project.pm.name}}
                     </td>
                     <td>
-                        <b>{{project.warn}}</b>
-                        <div class="right">
-                            {{project.lastStatus.date | date:'yyyy-MM-dd'}}
-                            <br/>
-                            {{project.lastStatus.demodate | date:'yyyy-MM-dd'}}
-                        </div>
+                        {{project.bu.name}}
+                    </td>
+                    <td>
+                        {{project.po.name}}
                     </td>
                 </tr>
             </table>

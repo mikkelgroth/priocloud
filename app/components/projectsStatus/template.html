@@ -53,7 +53,7 @@
         <div class="overview">
             <table class="tablelist" ng-if="projectList.length > 0">
                 <tr class="listsubject">
-                    <td colspan="8">
+                    <td colspan="10">
                         <h3>Projects</h3>
                     </td>
                 </tr>
@@ -65,7 +65,7 @@
                         PO approval<br/>Status date
                     </td>
                     <td class="verttd">
-                        <div class="vert">Business case</div>
+                        <div class="vert">Bus. case</div>
                     </td>
                     <td class="verttd">
                         <div class="vert">Scope</div>
@@ -74,17 +74,24 @@
                         <div class="vert">Time line</div>
                     </td>
                     <td class="verttd">
-                        <div class="vert">Resources</div>
+                        <div class="vert">Res.</div>
                     </td>
                     <td class="verttd">
-                        <div class="vert">Budget</div>
+                        <div class="vert">Budg.</div>
                     </td>
                     <td class="verttd">
                         <div class="vert">Risks</div>
                     </td>
+                    <td class="verttd">
+                        <div class="vert">Project Eval.</div>
+                    </td>
+                    <td class="verttd">
+                        <div class="vert">Product Eval.</div>
+                    </td>
                 </tr>
                 <tr ng-repeat="project in projectList | multiFilter:search | orderBy:porderparam " ng-click="goToProject(project._id.$oid)" class="link">
-                    <td class="{{project.lastStatus.status}}">{{project.title}}<br/>{{project.bu.name}}</td>
+                    <td class="{{project.lastStatus.status}}">{{project.title}}<br/>{{project.bu.name}}
+                    <div class="right"><b>{{project.warn}}</b></div></td>
                     <td>{{project.lastStatus.apo}}<br/>{{project.lastStatus.date | date:'d MMM, yyyy'}}</td>
                     <td class="{{project.lastStatus.statusbc}}"></td>
                     <td class="{{project.lastStatus.statussc}}"></td>
@@ -92,6 +99,12 @@
                     <td class="{{project.lastStatus.statusres}}"></td>
                     <td class="{{project.lastStatus.statusbud}}"></td>
                     <td class="{{project.lastStatus.statusrisk}}"></td>
+                    <td prio-class prio-cs-render="project.lastStatus.cs">
+                        {{project.lastStatus.cs}}
+                    </td>
+                    <td prio-class prio-cs-render="project.lastStatus.productcs">
+                        {{project.lastStatus.productcs}}
+                    </td>
                 </tr>
             </table>
         </div>
