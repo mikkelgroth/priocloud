@@ -61,7 +61,7 @@ angular
                 else if (newVal == '50') classList['prioKpiSizeRender'] = "rad4";
                 else if (newVal == '70') classList['prioKpiSizeRender'] = "rad5";
                 else if (newVal == '80') classList['prioKpiSizeRender'] = "rad6";
-                else if (newVal == '100') classList['prioKpiSizeRender'] = "rad7";
+                else if (newVal == '99') classList['prioKpiSizeRender'] = "rad7";
                 else if (newVal) classList['prioKpiSizeRender'] = "rad0";
 
                 repaintClasses();
