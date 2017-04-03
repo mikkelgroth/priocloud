@@ -85,6 +85,8 @@ angular
             };
 
             $scope.newCloneStatus = function (status) {
+                status.active = false;
+                status.statusstate = "Final";
 
                 $scope.editstatus = angular.copy(status);
                 $scope.editstatus.apo = "Not evaluated";
@@ -92,17 +94,18 @@ angular
                 $scope.editstatus.statusstate = "Draft";
                 $scope.editstatus.active = true;
                 $scope.saveStatusEnabled = true;
-                $scope.showStatusForm = true;
 
                 $scope.project.statuses.push($scope.editstatus);
+                $scope.showStatusForm = false;
             };
 
             $scope.viewStatus = function (status) {
 
                 var last = $scope.project.statuses.indexOf(status) == $scope.project.statuses.length - 1;
 
-                $scope.saveStatusEnabled = last;
                 $scope.editstatus = status;
+                $scope.editstatus.active = last;
+                $scope.saveStatusEnabled = last && $scope.editstatus.statusstate != "Final";
                 $scope.showStatusForm = true;
             };
 
