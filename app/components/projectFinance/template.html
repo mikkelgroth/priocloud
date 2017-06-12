@@ -14,6 +14,7 @@
                         user.email == project.altpo.email || 
                         user.email == project.altpm.email || 
                         user.isOwner || 
+                        user.controller ||
                         user.admin"
                         ng-click="saveProject(project)">save</button>
         </div>
