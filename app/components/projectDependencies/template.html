@@ -43,10 +43,10 @@
                 </select>
             </td>
         </tr>
-        <tr>
+        <tr ng-if="project.res1fte!='None'">
             <td>Project status</td>
             <td>
-                <select ng-if="project.res1fte!='None'" ng-model="project.res1skill"  ng-change="saveNow()">
+                <select ng-model="project.res1skill"  ng-change="saveNow()">
                     <option value="Ok">Ok</option>
                     <option value="Minor issue">Minor issue</option>
                     <option value="Major issue">Major issue</option>
@@ -55,14 +55,14 @@
             </td>
             <td>
                 <div class="field">
-                <textarea ng-change="saveNow()" ng-if="project.res1fte!='None'" ng-model="project.res1comment" maxlength="300" id="res1comment" placeholder="Describe issues like, unavailability, timing, competence, priority ect."></textarea>
+                <textarea ng-change="saveNow()" ng-model="project.res1comment" maxlength="300" id="res1comment" placeholder="Describe issues like, unavailability, timing, competence, priority ect."></textarea>
             </div>
             </td>
         </tr>
-        <tr>
+        <tr ng-if="project.res1fte!='None'">
             <td>Resource owner status</td>
             <td>
-                <select ng-if="project.res1fte!='None'" ng-model="project.res1owner"  ng-change="saveNow()">
+                <select ng-model="project.res1owner"  ng-change="saveNow()">
                     <option value="Committed">Committed</option>
                     <option value="Backlog">Backlog</option>
                     <option value="Tentative">Tentative</option>
@@ -71,7 +71,7 @@
             </td>
             <td>
                 <div class="field">
-                <textarea ng-change="saveNow()" ng-if="project.res1fte!='None'" ng-model="project.res1ownercomment" maxlength="300" id="res1comment" placeholder="Describe issues like, unavailability, timing, competence, priority ect."></textarea>
+                <textarea ng-change="saveNow()" ng-model="project.res1ownercomment" maxlength="300" id="res1comment" placeholder="Describe issues like, unavailability, timing, competence, priority ect."></textarea>
             </div>
             </td>
         </tr>
