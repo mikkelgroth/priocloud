@@ -138,7 +138,7 @@
                 <td colspan="8">Capex</td>
             </tr>
             <tr>
-                <td>External</td>
+                <td>External cost</td>
                 <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.budcapextprev" /></div></td>
                 <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.budcapextq1" /></div></td>
                 <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.budcapextq2" /></div></td>
@@ -148,17 +148,7 @@
                 <td class="sums">{{ project.finance.budcapexExternalgrand | number:0 }}</td>
             </tr>
             <tr>
-                <td>Ext. One-Off</td>
-                <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.budcapextoneprev" /></div></td>
-                <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.budcapextoneq1" /></div></td>
-                <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.budcapextoneq2" /></div></td>
-                <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.budcapextoneq3" /></div></td>
-                <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.budcapextoneq4" /></div></td>
-                <td class="sums">{{ project.finance.budcapexExtOff | number:0 }}</td>
-                <td class="sums">{{ project.finance.budcapexExtOffgrand | number:0 }}</td>
-            </tr>
-            <tr>
-                <td>Internal</td>
+                <td>Internal people</td>
                 <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.budcapintprev" /></div></td>
                 <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.budcapintq1" /></div></td>
                 <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.budcapintq2" /></div></td>
@@ -181,7 +171,7 @@
                 <td colspan="8">Opex</td>
             </tr>
             <tr>
-                <td>External</td>
+                <td>External cost</td>
                 <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.budopextprev" /></div></td>
                 <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.budopextq1" /></div></td>
                 <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.budopextq2" /></div></td>
@@ -191,17 +181,7 @@
                 <td class="sums">{{ project.finance.budopexExternalgrand | number:0 }}</td>
             </tr>
             <tr>
-                <td>Ext. One-Off</td>
-                <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.budopextoneprev" /></div></td>
-                <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.budopextoneq1" /></div></td>
-                <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.budopextoneq2" /></div></td>
-                <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.budopextoneq3" /></div></td>
-                <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.budopextoneq4" /></div></td>
-                <td class="sums">{{ project.finance.budopexExtOff | number:0 }}</td>
-                <td class="sums">{{ project.finance.budopexExtOffgrand | number:0 }}</td>
-            </tr>
-            <tr>
-                <td>Internal</td>
+                <td>Internal people</td>
                 <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.budopintprev" /></div></td>
                 <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.budopintq1" /></div></td>
                 <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.budopintq2" /></div></td>
@@ -221,10 +201,10 @@
                 <td class="sums">{{ project.finance.budopexTotalgrand | number:0 }}</td>
             </tr>
             <tr class="header">
-                <td colspan="8">External/Internal</td>
+                <td colspan="8">External cost/Internal people</td>
             </tr>
             <tr>
-                <td>External total</td>
+                <td>External cost total</td>
                 <td class="sums">{{ project.finance.budExternalprevTotal | number:0 }}</td>
                 <td class="sums">{{ project.finance.budExternalq1Total | number:0 }}</td>
                 <td class="sums">{{ project.finance.budExternalq2Total | number:0 }}</td>
@@ -234,7 +214,7 @@
                 <td class="sums">{{ project.finance.budExternalTotalgrandSum | number:0 }}</td>
             </tr>
             <tr>
-                <td>Internal total</td>
+                <td>Internal people total</td>
                 <td class="sums">{{ project.finance.budInternalprevTotal | number:0 }}</td>
                 <td class="sums">{{ project.finance.budInternalq1Total | number:0 }}</td>
                 <td class="sums">{{ project.finance.budInternalq2Total | number:0 }}</td>
@@ -282,7 +262,7 @@
                 <td colspan="8">Capex</td>
             </tr>
             <tr>
-                <td>External</td>
+                <td>External cost</td>
                 <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.postcapextprev" /></div></td>
                 <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.postcapextq1" /></div></td>
                 <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.postcapextq2" /></div></td>
@@ -291,18 +271,9 @@
                 <td class="sums">{{ project.finance.postcapexExternal | number:0 }}</td>
                 <td class="sums">{{ project.finance.postcapexExternalgrand | number:0 }}</td>
             </tr>
+            
             <tr>
-                <td>Ext. One-Off</td>
-                <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.postcapextoneprev" /></div></td>
-                <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.postcapextoneq1" /></div></td>
-                <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.postcapextoneq2" /></div></td>
-                <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.postcapextoneq3" /></div></td>
-                <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.postcapextoneq4" /></div></td>
-                <td class="sums">{{ project.finance.postcapexExtOff | number:0 }}</td>
-                <td class="sums">{{ project.finance.postcapexExtOffgrand | number:0 }}</td>
-            </tr>
-            <tr>
-                <td>Internal</td>
+                <td>Internal people</td>
                 <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.postcapintprev" /></div></td>
                 <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.postcapintq1" /></div></td>
                 <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.postcapintq2" /></div></td>
@@ -325,7 +296,7 @@
                 <td colspan="8">Opex</td>
             </tr>
             <tr>
-                <td>External</td>
+                <td>External cost</td>
                 <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.postopextprev" /></div></td>
                 <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.postopextq1" /></div></td>
                 <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.postopextq2" /></div></td>
@@ -334,18 +305,9 @@
                 <td class="sums">{{ project.finance.postopexExternal | number:0 }}</td>
                 <td class="sums">{{ project.finance.postopexExternalgrand | number:0 }}</td>
             </tr>
+            
             <tr>
-                <td>Ext. One-Off</td>
-                <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.postopextoneprev" /></div></td>
-                <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.postopextoneq1" /></div></td>
-                <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.postopextoneq2" /></div></td>
-                <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.postopextoneq3" /></div></td>
-                <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.postopextoneq4" /></div></td>
-                <td class="sums">{{ project.finance.postopexExtOff | number:0 }}</td>
-                <td class="sums">{{ project.finance.postopexExtOffgrand | number:0 }}</td>
-            </tr>
-            <tr>
-                <td>Internal</td>
+                <td>Internal people</td>
                 <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.postopintprev" /></div></td>
                 <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.postopintq1" /></div></td>
                 <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.postopintq2" /></div></td>
@@ -365,10 +327,10 @@
                 <td class="sums">{{ project.finance.postopexTotalgrand  | number:0}}</td>
             </tr>
             <tr class="header">
-                <td colspan="8">External/Internal</td>
+                <td colspan="8">External cost/Internal people</td>
             </tr>
             <tr>
-                <td>External total</td>
+                <td>External cost total</td>
                 <td class="sums">{{ project.finance.postExternalprevTotal | number:0 }}</td>
                 <td class="sums">{{ project.finance.postExternalq1Total | number:0 }}</td>
                 <td class="sums">{{ project.finance.postExternalq2Total | number:0 }}</td>
@@ -378,7 +340,7 @@
                 <td class="sums">{{ project.finance.postExternalTotalgrandSum | number:0 }}</td>
             </tr>
             <tr>
-                <td>Internal total</td>
+                <td>Internal people total</td>
                 <td class="sums">{{ project.finance.postInternalprevTotal | number:0 }}</td>
                 <td class="sums">{{ project.finance.postInternalq1Total | number:0 }}</td>
                 <td class="sums">{{ project.finance.postInternalq2Total | number:0 }}</td>
@@ -426,7 +388,7 @@
                 <td colspan="8">Capex</td>
             </tr>
             <tr>
-                <td>External</td>
+                <td>External cost</td>
                 <td class="sums">{{ project.finance.devcapextprev | number:0 }}</td>
                 <td class="sums">{{ project.finance.devcapextq1 | number:0 }}</td>
                 <td class="sums">{{ project.finance.devcapextq2 | number:0 }}</td>
@@ -435,18 +397,9 @@
                 <td class="sums">{{ project.finance.devcapexExternal | number:0 }}</td>
                 <td class="sums">{{ project.finance.devcapexExternalgrand | number:0 }}</td>
             </tr>
+            
             <tr>
-                <td>Ext. One-Off</td>
-                <td class="sums">{{ project.finance.devcapextoneprev | number:0 }}</td>
-                <td class="sums">{{ project.finance.devcapextoneq1 | number:0 }}</td>
-                <td class="sums">{{ project.finance.devcapextoneq2 | number:0 }}</td>
-                <td class="sums">{{ project.finance.devcapextoneq3 | number:0 }}</td>
-                <td class="sums">{{ project.finance.devcapextoneq4 | number:0 }}</td>
-                <td class="sums">{{ project.finance.devcapexExtOff | number:0 }}</td>
-                <td class="sums">{{ project.finance.devcapexExtOffgrand | number:0 }}</td>
-            </tr>
-            <tr>
-                <td>Internal</td>
+                <td>Internal people</td>
                 <td class="sums">{{ project.finance.devcapintprev | number:0 }}</td>
                 <td class="sums">{{ project.finance.devcapintq1 | number:0 }}</td>
                 <td class="sums">{{ project.finance.devcapintq2 | number:0 }}</td>
@@ -469,7 +422,7 @@
                 <td colspan="8">Opex</td>
             </tr>
             <tr>
-                <td>External</td>
+                <td>External cost</td>
                 <td class="sums">{{ project.finance.devopextprev | number:0 }}</td>
                 <td class="sums">{{ project.finance.devopextq1 | number:0 }}</td>
                 <td class="sums">{{ project.finance.devopextq2 | number:0 }}</td>
@@ -478,18 +431,9 @@
                 <td class="sums">{{ project.finance.devopexExternal | number:0 }}</td>
                 <td class="sums">{{ project.finance.devopexExternalgrand | number:0 }}</td>
             </tr>
+            
             <tr>
-                <td>Ext. One-Off</td>
-                <td class="sums">{{ project.finance.devopextoneprev | number:0 }}</td>
-                <td class="sums">{{ project.finance.devopextoneq1 | number:0 }}</td>
-                <td class="sums">{{ project.finance.devopextoneq2 | number:0 }}</td>
-                <td class="sums">{{ project.finance.devopextoneq3 | number:0 }}</td>
-                <td class="sums">{{ project.finance.devopextoneq4 | number:0 }}</td>
-                <td class="sums">{{ project.finance.devopexExtOff | number:0 }}</td>
-                <td class="sums">{{ project.finance.devopexExtOffgrand | number:0 }}</td>
-            </tr>
-            <tr>
-                <td>Internal</td>
+                <td>Internal people</td>
                 <td class="sums">{{ project.finance.devopintprev | number:0 }}</td>
                 <td class="sums">{{ project.finance.devopintq1 | number:0 }}</td>
                 <td class="sums">{{ project.finance.devopintq2 | number:0 }}</td>
@@ -509,10 +453,10 @@
                 <td class="sums">{{ project.finance.devopexTotalgrand | number:0 }}</td>
             </tr>
             <tr class="header">
-                <td colspan="8">External/Internal</td>
+                <td colspan="8">External cost/Internal people</td>
             </tr>
             <tr>
-                <td>External total</td>
+                <td>External cost total</td>
                 <td class="sums">{{ project.finance.devExternalprevTotal | number:0 }}</td>
                 <td class="sums">{{ project.finance.devExternalq1Total | number:0 }}</td>
                 <td class="sums">{{ project.finance.devExternalq2Total | number:0 }}</td>
@@ -522,7 +466,7 @@
                 <td class="sums">{{ project.finance.devExternalTotalgrandSum | number:0 }}</td>
             </tr>
             <tr>
-                <td>Internal total</td>
+                <td>Internal people total</td>
                 <td class="sums">{{ project.finance.devInternalprevTotal | number:0 }}</td>
                 <td class="sums">{{ project.finance.devInternalq1Total | number:0 }}</td>
                 <td class="sums">{{ project.finance.devInternalq2Total | number:0 }}</td>
@@ -639,16 +583,7 @@
                 <td class="sums">{{ project.finance.nextcapexExternal }}</td>
                 <td class="sums">{{ project.finance.nextcapexExternalgrand }}</td>
             </tr>
-            <tr>
-                <td>Ext. One-Off</td>
-                <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.nextcapextoneprev" /></div></td>
-                <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.nextcapextoneq1" /></div></td>
-                <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.nextcapextoneq2" /></div></td>
-                <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.nextcapextoneq3" /></div></td>
-                <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.nextcapextoneq4" /></div></td>
-                <td class="sums">{{ project.finance.nextcapexExtOff }}</td>
-                <td class="sums">{{ project.finance.nextcapexExtOffgrand }}</td>
-            </tr>
+            
             <tr>
                 <td>Internal</td>
                 <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.nextcapintprev" /></div></td>
@@ -682,16 +617,7 @@
                 <td class="sums">{{ project.finance.nextopexExternal }}</td>
                 <td class="sums">{{ project.finance.nextopexExternalgrand }}</td>
             </tr>
-            <tr>
-                <td>Ext. One-Off</td>
-                <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.nextopextoneprev" /></div></td>
-                <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.nextopextoneq1" /></div></td>
-                <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.nextopextoneq2" /></div></td>
-                <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.nextopextoneq3" /></div></td>
-                <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.nextopextoneq4" /></div></td>
-                <td class="sums">{{ project.finance.nextopexExtOff }}</td>
-                <td class="sums">{{ project.finance.nextopexExtOffgrand }}</td>
-            </tr>
+            
             <tr>
                 <td>Internal</td>
                 <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.nextopintprev" /></div></td>
