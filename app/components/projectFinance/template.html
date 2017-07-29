@@ -389,109 +389,511 @@
             </tr>
             <tr>
                 <td>External cost</td>
-                <td class="sums">{{ project.finance.devcapextprev | number:0 }}</td>
-                <td class="sums">{{ project.finance.devcapextq1 | number:0 }}</td>
-                <td class="sums">{{ project.finance.devcapextq2 | number:0 }}</td>
-                <td class="sums">{{ project.finance.devcapextq3 | number:0 }}</td>
-                <td class="sums">{{ project.finance.devcapextq4 | number:0 }}</td>
-                <td class="sums">{{ project.finance.devcapexExternal | number:0 }}</td>
-                <td class="sums">{{ project.finance.devcapexExternalgrand | number:0 }}</td>
+                <td class="sums tooltip">{{ project.finance.devcapextprev | number:0 }}
+                    <span class="tooltiptext"> 
+                        Budget: {{project.finance.budcapextprev | number:0}}<br/> 
+                        Posted: {{project.finance.postcapextprev | number:0}}<br/> 
+                        Deviation: {{ project.finance.devcapextprev | number:0 }}
+                    </span>
+                </td>
+                <td class="sums tooltip">{{ project.finance.devcapextq1 | number:0 }}
+                    <span class="tooltiptext"> 
+                        Budget: {{project.finance.budcapextq1 | number:0}}<br/> 
+                        Posted: {{project.finance.postcapextq1 | number:0}}<br/> 
+                        Deviation: {{ project.finance.devcapextq1 | number:0 }}
+                    </span>
+                </td>
+                <td class="sums tooltip">{{ project.finance.devcapextq2 | number:0 }}
+                    <span class="tooltiptext"> 
+                        Budget: {{project.finance.budcapextq2 | number:0}}<br/> 
+                        Posted: {{project.finance.postcapextq2 | number:0}}<br/> 
+                        Deviation: {{ project.finance.devcapextq2 | number:0 }}
+                    </span>
+                </td>
+                <td class="sums tooltip">{{ project.finance.devcapextq3 | number:0 }}
+                    <span class="tooltiptext"> 
+                        Budget: {{project.finance.budcapextq3 | number:0}}<br/> 
+                        Posted: {{project.finance.postcapextq3 | number:0}}<br/> 
+                        Deviation: {{ project.finance.devcapextq3 | number:0 }}
+                    </span>
+                </td>
+                <td class="sums tooltip">{{ project.finance.devcapextq4 | number:0 }}
+                    <span class="tooltiptext"> 
+                        Budget: {{project.finance.budcapextq4 | number:0}}<br/> 
+                        Posted: {{project.finance.postcapextq4 | number:0}}<br/> 
+                        Deviation: {{ project.finance.devcapextq4 | number:0 }}
+                    </span>
+                </td>
+                <td class="sums tooltip">{{ project.finance.devcapexExternal | number:0 }}
+                    <span class="tooltiptext"> 
+                        Budget: {{project.finance.budcapexExternal | number:0}}<br/> 
+                        Posted: {{project.finance.postcapexExternal | number:0}}<br/> 
+                        Deviation: {{ project.finance.devcapexExternal | number:0 }}
+                    </span>
+                </td>
+                <td class="sums tooltip">{{ project.finance.devcapexExternalgrand | number:0 }}
+                    <span class="tooltiptext"> 
+                        Budget: {{project.finance.budcapexExternalgrand | number:0}}<br/> 
+                        Posted: {{project.finance.postcapexExternalgrand | number:0}}<br/> 
+                        Deviation: {{ project.finance.devcapexExternalgrand | number:0 }}
+                    </span>
+                </td>
             </tr>
             
             <tr>
                 <td>Internal people</td>
-                <td class="sums">{{ project.finance.devcapintprev | number:0 }}</td>
-                <td class="sums">{{ project.finance.devcapintq1 | number:0 }}</td>
-                <td class="sums">{{ project.finance.devcapintq2 | number:0 }}</td>
-                <td class="sums">{{ project.finance.devcapintq3 | number:0 }}</td>
-                <td class="sums">{{ project.finance.devcapintq4 | number:0 }}</td>
-                <td class="sums">{{ project.finance.devcapexInternal | number:0 }}</td>
-                <td class="sums">{{ project.finance.devcapexInternalgrand | number:0 }}</td>
+                <td class="sums tooltip">{{ project.finance.devcapintprev | number:0 }}
+                    <span class="tooltiptext"> 
+                        Budget: {{project.finance.budcapintprev | number:0}}<br/> 
+                        Posted: {{project.finance.postcapintprev | number:0}}<br/> 
+                        Deviation: {{ project.finance.devcapintprev | number:0 }}
+                    </span>
+                </td>
+                <td class="sums tooltip">{{ project.finance.devcapintq1 | number:0 }}
+                    <span class="tooltiptext"> 
+                        Budget: {{project.finance.budcapintq1 | number:0}}<br/> 
+                        Posted: {{project.finance.postcapintq1 | number:0}}<br/> 
+                        Deviation: {{ project.finance.devcapintq1 | number:0 }}
+                    </span>
+                </td>
+                <td class="sums tooltip">{{ project.finance.devcapintq2 | number:0 }}
+                    <span class="tooltiptext"> 
+                        Budget: {{project.finance.budcapintq2 | number:0}}<br/> 
+                        Posted: {{project.finance.postcapintq2 | number:0}}<br/> 
+                        Deviation: {{ project.finance.devcapintq2 | number:0 }}
+                    </span>
+                </td>
+                <td class="sums tooltip">{{ project.finance.devcapintq3 | number:0 }}
+                    <span class="tooltiptext"> 
+                        Budget: {{project.finance.budcapintq3 | number:0}}<br/> 
+                        Posted: {{project.finance.postcapintq3 | number:0}}<br/> 
+                        Deviation: {{ project.finance.devcapintq3 | number:0 }}
+                    </span>
+                </td>
+                <td class="sums tooltip">{{ project.finance.devcapintq4 | number:0 }}
+                    <span class="tooltiptext"> 
+                        Budget: {{project.finance.budcapintq4 | number:0}}<br/> 
+                        Posted: {{project.finance.postcapintq4 | number:0}}<br/> 
+                        Deviation: {{ project.finance.devcapintq4 | number:0 }}
+                    </span>
+                </td>
+                <td class="sums tooltip">{{ project.finance.devcapexInternal | number:0 }}
+                    <span class="tooltiptext"> 
+                        Budget: {{project.finance.budcapexInternal | number:0}}<br/> 
+                        Posted: {{project.finance.postcapexInternal | number:0}}<br/> 
+                        Deviation: {{ project.finance.devcapexInternal | number:0 }}
+                    </span>
+                </td>
+                <td class="sums tooltip">{{ project.finance.devcapexInternalgrand | number:0 }}
+                    <span class="tooltiptext"> 
+                        Budget: {{project.finance.budcapexInternalgrand | number:0}}<br/> 
+                        Posted: {{project.finance.postcapexInternalgrand | number:0}}<br/> 
+                        Deviation: {{ project.finance.devcapexInternalgrand | number:0 }}
+                    </span>
+                </td>
             </tr>
             <tr>
                 <td>Capex total</td>
-                <td class="sums">{{ project.finance.devcapexprevSum | number:0 }}</td>
-                <td class="sums">{{ project.finance.devcapexq1Sum | number:0 }}</td>
-                <td class="sums">{{ project.finance.devcapexq2Sum | number:0 }}</td>
-                <td class="sums">{{ project.finance.devcapexq3Sum | number:0 }}</td>
-                <td class="sums">{{ project.finance.devcapexq4Sum | number:0 }}</td>
-                <td class="sums">{{ project.finance.devcapexTotal | number:0 }}</td>
-                <td class="sums">{{ project.finance.devcapexTotalgrand | number:0 }}</td>
+                <td class="sums tooltip">{{ project.finance.devcapexprevSum | number:0 }}
+                    <span class="tooltiptext"> 
+                        Budget: {{project.finance.budcapexprevSum | number:0}}<br/> 
+                        Posted: {{project.finance.postcapexprevSum | number:0}}<br/> 
+                        Deviation: {{ project.finance.devcapexprevSum | number:0 }}
+                    </span>
+                </td>
+                <td class="sums tooltip">{{ project.finance.devcapexq1Sum | number:0 }}
+                    <span class="tooltiptext"> 
+                        Budget: {{project.finance.budcapexq1Sum | number:0}}<br/> 
+                        Posted: {{project.finance.postcapexq1Sum | number:0}}<br/> 
+                        Deviation: {{ project.finance.devcapexq1Sum | number:0 }}
+                    </span>
+                </td>
+                <td class="sums tooltip">{{ project.finance.devcapexq2Sum | number:0 }}
+                    <span class="tooltiptext"> 
+                        Budget: {{project.finance.budcapexq2Sum | number:0}}<br/> 
+                        Posted: {{project.finance.postcapexq2Sum | number:0}}<br/> 
+                        Deviation: {{ project.finance.devcapexq2Sum | number:0 }}
+                    </span>
+                </td>
+                <td class="sums tooltip">{{ project.finance.devcapexq3Sum | number:0 }}
+                    <span class="tooltiptext"> 
+                        Budget: {{project.finance.budcapexq3Sum | number:0}}<br/> 
+                        Posted: {{project.finance.postcapexq3Sum | number:0}}<br/> 
+                        Deviation: {{ project.finance.devcapexq3Sum | number:0 }}
+                    </span>
+                </td>
+                <td class="sums tooltip">{{ project.finance.devcapexq4Sum | number:0 }}
+                    <span class="tooltiptext"> 
+                        Budget: {{project.finance.budcapexq4Sum | number:0}}<br/> 
+                        Posted: {{project.finance.postcapexq4Sum | number:0}}<br/> 
+                        Deviation: {{ project.finance.devcapexq4Sum | number:0 }}
+                    </span>
+                </td>
+                <td class="sums tooltip">{{ project.finance.devcapexTotal | number:0 }}
+                    <span class="tooltiptext"> 
+                        Budget: {{project.finance.budcapexTotal | number:0}}<br/> 
+                        Posted: {{project.finance.postcapexTotal | number:0}}<br/> 
+                        Deviation: {{ project.finance.devcapexTotal | number:0 }}
+                    </span>
+                </td>
+                <td class="sums tooltip">{{ project.finance.devcapexTotalgrand | number:0 }}
+                    <span class="tooltiptext"> 
+                        Budget: {{project.finance.budcapexTotalgrand | number:0}}<br/> 
+                        Posted: {{project.finance.postcapexTotalgrand | number:0}}<br/> 
+                        Deviation: {{ project.finance.devcapexTotalgrand | number:0 }}
+                    </span>
+                </td>
             </tr>
             <tr class="header">
                 <td colspan="8">Opex</td>
             </tr>
             <tr>
                 <td>External cost</td>
-                <td class="sums">{{ project.finance.devopextprev | number:0 }}</td>
-                <td class="sums">{{ project.finance.devopextq1 | number:0 }}</td>
-                <td class="sums">{{ project.finance.devopextq2 | number:0 }}</td>
-                <td class="sums">{{ project.finance.devopextq3 | number:0 }}</td>
-                <td class="sums">{{ project.finance.devopextq4 | number:0 }}</td>
-                <td class="sums">{{ project.finance.devopexExternal | number:0 }}</td>
-                <td class="sums">{{ project.finance.devopexExternalgrand | number:0 }}</td>
+                <td class="sums tooltip">{{ project.finance.devopextprev | number:0 }}
+                    <span class="tooltiptext"> 
+                        Budget: {{project.finance.budopextprev | number:0}}<br/> 
+                        Posted: {{project.finance.postopextprev | number:0}}<br/> 
+                        Deviation: {{ project.finance.devopextprev | number:0 }}
+                    </span>
+                </td>
+                <td class="sums tooltip">{{ project.finance.devopextq1 | number:0 }}
+                    <span class="tooltiptext"> 
+                        Budget: {{project.finance.budopextq1 | number:0}}<br/> 
+                        Posted: {{project.finance.postopextq1 | number:0}}<br/> 
+                        Deviation: {{ project.finance.devopextq1 | number:0 }}
+                    </span>
+                </td>
+                <td class="sums tooltip">{{ project.finance.devopextq2 | number:0 }}
+                    <span class="tooltiptext"> 
+                        Budget: {{project.finance.budopextq2 | number:0}}<br/> 
+                        Posted: {{project.finance.postopextq2 | number:0}}<br/> 
+                        Deviation: {{ project.finance.devopextq2 | number:0 }}
+                    </span>
+                </td>
+                <td class="sums tooltip">{{ project.finance.devopextq3 | number:0 }}
+                    <span class="tooltiptext"> 
+                        Budget: {{project.finance.budopextq3 | number:0}}<br/> 
+                        Posted: {{project.finance.postopextq3 | number:0}}<br/> 
+                        Deviation: {{ project.finance.devopextq3 | number:0 }}
+                    </span>
+                </td>
+                <td class="sums tooltip">{{ project.finance.devopextq4 | number:0 }}
+                    <span class="tooltiptext"> 
+                        Budget: {{project.finance.budopextq4 | number:0}}<br/> 
+                        Posted: {{project.finance.postopextq4 | number:0}}<br/> 
+                        Deviation: {{ project.finance.devopextq4 | number:0 }}
+                    </span>
+                </td>
+                <td class="sums tooltip">{{ project.finance.devopexExternal | number:0 }}
+                    <span class="tooltiptext"> 
+                        Budget: {{project.finance.budopexExternal | number:0}}<br/> 
+                        Posted: {{project.finance.postopexExternal | number:0}}<br/> 
+                        Deviation: {{ project.finance.devopexExternal | number:0 }}
+                    </span>
+                </td>
+                <td class="sums tooltip">{{ project.finance.devopexExternalgrand | number:0 }}
+                    <span class="tooltiptext"> 
+                        Budget: {{project.finance.budopexExternalgrand | number:0}}<br/> 
+                        Posted: {{project.finance.postopexExternalgrand | number:0}}<br/> 
+                        Deviation: {{ project.finance.devopexExternalgrand | number:0 }}
+                    </span>
+                </td>
             </tr>
             
             <tr>
                 <td>Internal people</td>
-                <td class="sums">{{ project.finance.devopintprev | number:0 }}</td>
-                <td class="sums">{{ project.finance.devopintq1 | number:0 }}</td>
-                <td class="sums">{{ project.finance.devopintq2 | number:0 }}</td>
-                <td class="sums">{{ project.finance.devopintq3 | number:0 }}</td>
-                <td class="sums">{{ project.finance.devopintq4 | number:0 }}</td>
-                <td class="sums">{{ project.finance.devopexInternal | number:0 }}</td>
-                <td class="sums">{{ project.finance.devopexInternalgrand | number:0 }}</td>
+                <td class="sums tooltip">{{ project.finance.devopintprev | number:0 }}
+                    <span class="tooltiptext"> 
+                        Budget: {{project.finance.budopintprev | number:0}}<br/> 
+                        Posted: {{project.finance.postopintprev | number:0}}<br/> 
+                        Deviation: {{ project.finance.devopintprev | number:0 }}
+                    </span>
+                </td>
+                <td class="sums tooltip">{{ project.finance.devopintq1 | number:0 }}
+                    <span class="tooltiptext"> 
+                        Budget: {{project.finance.budopintq1 | number:0}}<br/> 
+                        Posted: {{project.finance.postopintq1 | number:0}}<br/> 
+                        Deviation: {{ project.finance.devopintq1 | number:0 }}
+                    </span>
+                </td>
+                <td class="sums tooltip">{{ project.finance.devopintq2 | number:0 }}
+                    <span class="tooltiptext"> 
+                        Budget: {{project.finance.budopintq2 | number:0}}<br/> 
+                        Posted: {{project.finance.postopintq2 | number:0}}<br/> 
+                        Deviation: {{ project.finance.devopintq2 | number:0 }}
+                    </span>
+                </td>
+                <td class="sums tooltip">{{ project.finance.devopintq3 | number:0 }}
+                    <span class="tooltiptext"> 
+                        Budget: {{project.finance.budopintq3 | number:0}}<br/> 
+                        Posted: {{project.finance.postopintq3 | number:0}}<br/> 
+                        Deviation: {{ project.finance.devopintq3 | number:0 }}
+                    </span>
+                </td>
+                <td class="sums tooltip">{{ project.finance.devopintq4 | number:0 }}
+                    <span class="tooltiptext"> 
+                        Budget: {{project.finance.budopintq4 | number:0}}<br/> 
+                        Posted: {{project.finance.postopintq4 | number:0}}<br/> 
+                        Deviation: {{ project.finance.devopintq4 | number:0 }}
+                    </span>
+                </td>
+                <td class="sums tooltip">{{ project.finance.devopexInternal | number:0 }}
+                    <span class="tooltiptext"> 
+                        Budget: {{project.finance.budopexInternal | number:0}}<br/> 
+                        Posted: {{project.finance.postopexInternal | number:0}}<br/> 
+                        Deviation: {{ project.finance.devopexInternal | number:0 }}
+                    </span>
+                </td>
+                <td class="sums tooltip">{{ project.finance.devopexInternalgrand | number:0 }}
+                    <span class="tooltiptext"> 
+                        Budget: {{project.finance.budopexInternalgrand | number:0}}<br/> 
+                        Posted: {{project.finance.postopexInternalgrand | number:0}}<br/> 
+                        Deviation: {{ project.finance.devopexInternalgrand | number:0 }}
+                    </span>
+                </td>
             </tr>
             <tr>
                 <td>Opex total</td>
-                <td class="sums">{{ project.finance.devopexprevSum | number:0 }}</td>
-                <td class="sums">{{ project.finance.devopexq1Sum | number:0 }}</td>
-                <td class="sums">{{ project.finance.devopexq2Sum | number:0 }}</td>
-                <td class="sums">{{ project.finance.devopexq3Sum | number:0 }}</td>
-                <td class="sums">{{ project.finance.devopexq4Sum | number:0 }}</td>
-                <td class="sums">{{ project.finance.devopexTotal | number:0 }}</td>
-                <td class="sums">{{ project.finance.devopexTotalgrand | number:0 }}</td>
+                <td class="sums tooltip">{{ project.finance.devopexprevSum | number:0 }}
+                    <span class="tooltiptext"> 
+                        Budget: {{project.finance.budopexprevSum | number:0}}<br/> 
+                        Posted: {{project.finance.postopexprevSum | number:0}}<br/> 
+                        Deviation: {{ project.finance.devopexprevSum | number:0 }}
+                    </span>
+                </td>
+                <td class="sums tooltip">{{ project.finance.devopexq1Sum | number:0 }}
+                    <span class="tooltiptext"> 
+                        Budget: {{project.finance.budopexq1Sum | number:0}}<br/> 
+                        Posted: {{project.finance.postopexq1Sum | number:0}}<br/> 
+                        Deviation: {{ project.finance.devopexq1Sum | number:0 }}
+                    </span>
+                </td>
+                <td class="sums tooltip">{{ project.finance.devopexq2Sum | number:0 }}
+                    <span class="tooltiptext"> 
+                        Budget: {{project.finance.budopexq2Sum | number:0}}<br/> 
+                        Posted: {{project.finance.postopexq2Sum | number:0}}<br/> 
+                        Deviation: {{ project.finance.devopexq2Sum | number:0 }}
+                    </span>
+                </td>
+                <td class="sums tooltip">{{ project.finance.devopexq3Sum | number:0 }}
+                    <span class="tooltiptext"> 
+                        Budget: {{project.finance.budopexq3Sum | number:0}}<br/> 
+                        Posted: {{project.finance.postopexq3Sum | number:0}}<br/> 
+                        Deviation: {{ project.finance.devopexq3Sum | number:0 }}
+                    </span>
+                </td>
+                <td class="sums tooltip">{{ project.finance.devopexq4Sum | number:0 }}
+                    <span class="tooltiptext"> 
+                        Budget: {{project.finance.budopexq4Sum | number:0}}<br/> 
+                        Posted: {{project.finance.postopexq4Sum | number:0}}<br/> 
+                        Deviation: {{ project.finance.devopexq4Sum | number:0 }}
+                    </span>
+                </td>
+                <td class="sums tooltip">{{ project.finance.devopexTotal | number:0 }}
+                    <span class="tooltiptext"> 
+                        Budget: {{project.finance.budopexTotal | number:0}}<br/> 
+                        Posted: {{project.finance.postopexTotal | number:0}}<br/> 
+                        Deviation: {{ project.finance.devopexTotal | number:0 }}
+                    </span>
+                </td>
+                <td class="sums tooltip">{{ project.finance.devopexTotalgrand | number:0 }}
+                    <span class="tooltiptext"> 
+                        Budget: {{project.finance.budopexTotalgrand | number:0}}<br/> 
+                        Posted: {{project.finance.postopexTotalgrand | number:0}}<br/> 
+                        Deviation: {{ project.finance.devopexTotalgrand | number:0 }}
+                    </span>
+                </td>
             </tr>
             <tr class="header">
                 <td colspan="8">External cost/Internal people</td>
             </tr>
             <tr>
                 <td>External cost total</td>
-                <td class="sums">{{ project.finance.devExternalprevTotal | number:0 }}</td>
-                <td class="sums">{{ project.finance.devExternalq1Total | number:0 }}</td>
-                <td class="sums">{{ project.finance.devExternalq2Total | number:0 }}</td>
-                <td class="sums">{{ project.finance.devExternalq3Total | number:0 }}</td>
-                <td class="sums">{{ project.finance.devExternalq4Total | number:0 }}</td>
-                <td class="sums">{{ project.finance.devExternalTotalSum | number:0 }}</td>
-                <td class="sums">{{ project.finance.devExternalTotalgrandSum | number:0 }}</td>
+                <td class="sums tooltip">{{ project.finance.devExternalprevTotal | number:0 }}
+                    <span class="tooltiptext"> 
+                        Budget: {{project.finance.budExternalprevTotal | number:0}}<br/> 
+                        Posted: {{project.finance.postExternalprevTotal | number:0}}<br/> 
+                        Deviation: {{ project.finance.devExternalprevTotal | number:0 }}
+                    </span>
+                </td>
+                <td class="sums tooltip">{{ project.finance.devExternalq1Total | number:0 }}
+                    <span class="tooltiptext"> 
+                        Budget: {{project.finance.budExternalq1Total | number:0}}<br/> 
+                        Posted: {{project.finance.postExternalq1Total | number:0}}<br/> 
+                        Deviation: {{ project.finance.devExternalq1Total | number:0 }}
+                    </span>
+                </td>
+                <td class="sums tooltip">{{ project.finance.devExternalq2Total | number:0 }}
+                    <span class="tooltiptext"> 
+                        Budget: {{project.finance.budExternalq2Total | number:0}}<br/> 
+                        Posted: {{project.finance.postExternalq2Total | number:0}}<br/> 
+                        Deviation: {{ project.finance.devExternalq2Total | number:0 }}
+                    </span>
+                </td>
+                <td class="sums tooltip">{{ project.finance.devExternalq3Total | number:0 }}
+                    <span class="tooltiptext"> 
+                        Budget: {{project.finance.budExternalq3Total | number:0}}<br/> 
+                        Posted: {{project.finance.postExternalq3Total | number:0}}<br/> 
+                        Deviation: {{ project.finance.devExternalq3Total | number:0 }}
+                    </span>
+                </td>
+                <td class="sums tooltip">{{ project.finance.devExternalq4Total | number:0 }}
+                    <span class="tooltiptext"> 
+                        Budget: {{project.finance.budExternalq4Total | number:0}}<br/> 
+                        Posted: {{project.finance.postExternalq4Total | number:0}}<br/> 
+                        Deviation: {{ project.finance.devExternalq4Total | number:0 }}
+                    </span>
+                </td>
+                <td class="sums tooltip">{{ project.finance.devExternalTotalSum | number:0 }}
+                    <span class="tooltiptext"> 
+                        Budget: {{project.finance.budExternalTotalSum | number:0}}<br/> 
+                        Posted: {{project.finance.postExternalTotalSum | number:0}}<br/> 
+                        Deviation: {{ project.finance.devExternalTotalSum | number:0 }}
+                    </span>
+                </td>
+                <td class="sums tooltip">{{ project.finance.devExternalTotalgrandSum | number:0 }}
+                    <span class="tooltiptext"> 
+                        Budget: {{project.finance.budExternalTotalgrandSum | number:0}}<br/> 
+                        Posted: {{project.finance.postExternalTotalgrandSum | number:0}}<br/> 
+                        Deviation: {{ project.finance.devExternalTotalgrandSum | number:0 }}
+                    </span>
+                </td>
             </tr>
             <tr>
                 <td>Internal people total</td>
-                <td class="sums">{{ project.finance.devInternalprevTotal | number:0 }}</td>
-                <td class="sums">{{ project.finance.devInternalq1Total | number:0 }}</td>
-                <td class="sums">{{ project.finance.devInternalq2Total | number:0 }}</td>
-                <td class="sums">{{ project.finance.devInternalq3Total | number:0 }}</td>
-                <td class="sums">{{ project.finance.devInternalq4Total | number:0 }}</td>
-                <td class="sums">{{ project.finance.devInternalTotalSum | number:0 }}</td>
-                <td class="sums">{{ project.finance.devInternalTotalgrandSum | number:0 }}</td>
+                <td class="sums tooltip">{{ project.finance.devInternalprevTotal | number:0 }}
+                    <span class="tooltiptext"> 
+                        Budget: {{project.finance.budInternalprevTotal | number:0}}<br/> 
+                        Posted: {{project.finance.postInternalprevTotal | number:0}}<br/> 
+                        Deviation: {{ project.finance.devInternalprevTotal | number:0 }}
+                    </span>
+                </td>
+                <td class="sums tooltip">{{ project.finance.devInternalq1Total | number:0 }}
+                    <span class="tooltiptext"> 
+                        Budget: {{project.finance.budInternalq1Total | number:0}}<br/> 
+                        Posted: {{project.finance.postInternalq1Total | number:0}}<br/> 
+                        Deviation: {{ project.finance.devInternalq1Total | number:0 }}
+                    </span>
+                </td>
+                <td class="sums tooltip">{{ project.finance.devInternalq2Total | number:0 }}
+                    <span class="tooltiptext"> 
+                        Budget: {{project.finance.budInternalq2Total | number:0}}<br/> 
+                        Posted: {{project.finance.postInternalq2Total | number:0}}<br/> 
+                        Deviation: {{ project.finance.devInternalq2Total | number:0 }}
+                    </span>
+                </td>
+                <td class="sums tooltip">{{ project.finance.devInternalq3Total | number:0 }}
+                    <span class="tooltiptext"> 
+                        Budget: {{project.finance.budInternalq3Total | number:0}}<br/> 
+                        Posted: {{project.finance.postInternalq3Total | number:0}}<br/> 
+                        Deviation: {{ project.finance.devInternalq3Total | number:0 }}
+                    </span>
+                </td>
+                <td class="sums tooltip">{{ project.finance.devInternalq4Total | number:0 }}
+                    <span class="tooltiptext"> 
+                        Budget: {{project.finance.budInternalq4Total | number:0}}<br/> 
+                        Posted: {{project.finance.postInternalq4Total | number:0}}<br/> 
+                        Deviation: {{ project.finance.devInternalq4Total | number:0 }}
+                    </span>
+                </td>
+                <td class="sums tooltip">{{ project.finance.devInternalTotalSum | number:0 }}
+                    <span class="tooltiptext"> 
+                        Budget: {{project.finance.budInternalTotalSum | number:0}}<br/> 
+                        Posted: {{project.finance.postInternalTotalSum | number:0}}<br/> 
+                        Deviation: {{ project.finance.devInternalTotalSum | number:0 }}
+                    </span>
+                </td>
+                <td class="sums tooltip">{{ project.finance.devInternalTotalgrandSum | number:0 }}
+                    <span class="tooltiptext"> 
+                        Budget: {{project.finance.budInternalTotalgrandSum | number:0}}<br/> 
+                        Posted: {{project.finance.postInternalTotalgrandSum | number:0}}<br/> 
+                        Deviation: {{ project.finance.devInternalTotalgrandSum | number:0 }}
+                    </span>
+                </td>
             </tr>
             <tr class="header">
                 <td>Deviation total</td>
-                <td class="sums">{{ project.finance.devTotalprev | number:0 }}</td>
-                <td class="sums">{{ project.finance.devTotalq1 | number:0 }}</td>
-                <td class="sums">{{ project.finance.devTotalq2 | number:0 }}</td>
-                <td class="sums">{{ project.finance.devTotalq3 | number:0 }}</td>
-                <td class="sums">{{ project.finance.devTotalq4 | number:0 }}</td>
-                <td class="sums">{{ project.finance.devTotalSum | number:0 }}</td>
-                <td class="sums">{{ project.finance.devTotalgrandSum | number:0 }}</td>
+                <td class="sums tooltip">{{ project.finance.devTotalprev | number:0 }}
+                    <span class="tooltiptext"> 
+                        Budget: {{project.finance.budTotalprev | number:0}}<br/> 
+                        Posted: {{project.finance.postTotalprev | number:0}}<br/> 
+                        Deviation: {{ project.finance.devTotalprev | number:0 }}
+                    </span>
+                </td>
+                <td class="sums tooltip">{{ project.finance.devTotalq1 | number:0 }}
+                    <span class="tooltiptext"> 
+                        Budget: {{project.finance.budTotalq1 | number:0}}<br/> 
+                        Posted: {{project.finance.postTotalq1 | number:0}}<br/> 
+                        Deviation: {{ project.finance.devTotalq1 | number:0 }}
+                    </span>
+                </td>
+                <td class="sums tooltip">{{ project.finance.devTotalq2 | number:0 }}
+                    <span class="tooltiptext"> 
+                        Budget: {{project.finance.budTotalq2 | number:0}}<br/> 
+                        Posted: {{project.finance.postTotalq2 | number:0}}<br/> 
+                        Deviation: {{ project.finance.devTotalq2 | number:0 }}
+                    </span>
+                </td>
+                <td class="sums tooltip">{{ project.finance.devTotalq3 | number:0 }}
+                    <span class="tooltiptext"> 
+                        Budget: {{project.finance.budTotalq3 | number:0}}<br/> 
+                        Posted: {{project.finance.postTotalq3 | number:0}}<br/> 
+                        Deviation: {{ project.finance.devTotalq3 | number:0 }}
+                    </span>
+                </td>
+                <td class="sums tooltip">{{ project.finance.devTotalq4 | number:0 }}
+                    <span class="tooltiptext"> 
+                        Budget: {{project.finance.budTotalq4 | number:0}}<br/> 
+                        Posted: {{project.finance.postTotalq4 | number:0}}<br/> 
+                        Deviation: {{ project.finance.devTotalq4 | number:0 }}
+                    </span>
+                </td>
+                <td class="sums tooltip">{{ project.finance.devTotalSum | number:0 }}
+                    <span class="tooltiptext"> 
+                        Budget: {{project.finance.budTotalSum | number:0}}<br/> 
+                        Posted: {{project.finance.postTotalSum | number:0}}<br/> 
+                        Deviation: {{ project.finance.devTotalSum | number:0 }}
+                    </span>
+                </td>
+                <td class="sums tooltip">{{ project.finance.devTotalgrandSum | number:0 }}
+                    <span class="tooltiptext"> 
+                        Budget: {{project.finance.budTotalgrandSum | number:0}}<br/> 
+                        Posted: {{project.finance.postTotalgrandSum | number:0}}<br/> 
+                        Deviation: {{ project.finance.devTotalgrandSum | number:0 }}
+                    </span>
+                </td>
             </tr>
             <tr>
                 <td>Year accum.</td>
                 <td></td>
-                <td class="sums">{{ project.finance.devAccq1 | number:0 }}</td>
-                <td class="sums">{{ project.finance.devAccq2 | number:0 }}</td>
-                <td class="sums">{{ project.finance.devAccq3 | number:0 }}</td>
-                <td class="sums">{{ project.finance.devAccq4 | number:0 }}</td>
+                <td class="sums tooltip">{{ project.finance.devAccq1 | number:0 }}
+                    <span class="tooltiptext"> 
+                        Budget: {{project.finance.budAccq1 | number:0}}<br/> 
+                        Posted: {{project.finance.postAccq1 | number:0}}<br/> 
+                        Deviation: {{ project.finance.devAccq1 | number:0 }}
+                    </span>
+                </td>
+                <td class="sums tooltip">{{ project.finance.devAccq2 | number:0 }}
+                    <span class="tooltiptext"> 
+                        Budget: {{project.finance.budAccq2 | number:0}}<br/> 
+                        Posted: {{project.finance.postAccq2 | number:0}}<br/> 
+                        Deviation: {{ project.finance.devAccq2 | number:0 }}
+                    </span>
+                </td>
+                <td class="sums tooltip">{{ project.finance.devAccq3 | number:0 }}
+                    <span class="tooltiptext"> 
+                        Budget: {{project.finance.budAccq3 | number:0}}<br/> 
+                        Posted: {{project.finance.postAccq3 | number:0}}<br/> 
+                        Deviation: {{ project.finance.devAccq3 | number:0 }}
+                    </span>
+                </td>
+                <td class="sums tooltip">{{ project.finance.devAccq4 | number:0 }}
+                    <span class="tooltiptext"> 
+                        Budget: {{project.finance.budAccq4 | number:0}}<br/> 
+                        Posted: {{project.finance.postAccq4 | number:0}}<br/> 
+                        Deviation: {{ project.finance.devAccq4 | number:0 }}
+                    </span>
+                </td>
                 <td></td>
                 <td></td>
             </tr>
