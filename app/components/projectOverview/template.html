@@ -20,24 +20,25 @@
                     <div class="overview">
                         <table class="tablelist">
                             <tr class="header">
-                                <td colspan="2">Business unit: {{project.bu.name}}</td>
+                                <td>Business unit</td>
+                                <td>{{project.bu.name}}</td>
                             </tr>
                             <tr>
-                                <td class="label">PM </td>
+                                <td>PM </td>
                                 <td class="wrap">{{project.pm.name}}</td>
                             </tr>
                             <tr>
-                                <td class="label">PO </td>
+                                <td>PO </td>
                                 <td class="wrap">{{project.po.name}}</td>
                             </tr>
                             <tr>
-                                <td class="label texttop">Steering members</td>
+                                <td class="texttop">Steering members</td>
                                 <td class="wrap">
                                     <pre>{{project.memberssteering}}</pre>
                                 </td>
                             </tr>
                             <tr>
-                                <td class="label texttop">Project members</td>
+                                <td class="texttop">Project members</td>
                                 <td class="wrap">
                                     <pre>{{project.membersproject}}</pre>
                                 </td>
@@ -51,10 +52,28 @@
                     <div class="overview">
                         <table class="tablelist">
                             <tr class="header">
-                                <td>Date: {{editstatus.date | date:'yyyy-MM-dd'}}</td>
-                                <td>Status state: {{editstatus.statusstate}}<br/>PO approval: {{editstatus.apo}}</td>
-                                <td prio-class prio-cs-render="editstatus.cs">Project feedback: {{editstatus.cs}}</td>
-                                <td prio-class prio-cs-render="editstatus.productcs">Product feedback: {{editstatus.productcs}}</td>
+                                <td colspan="4">Project status
+                                    <div class="right"> 
+                                        <input type="checkbox" ng-model="showStatusFlags" ng-init="showStatusFlags=true"> Status flags, 
+                                        <input type="checkbox" ng-model="showStatusElab" ng-init="showStatusElab=false"> Status elaboration
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="header">Project feedback</td>
+                                <td prio-class prio-cs-render="editstatus.cs">{{editstatus.cs}}</td>
+                                <td class="header">Product feedback</td>
+                                <td prio-class prio-cs-render="editstatus.productcs">{{editstatus.productcs}}</td>
+                            </tr>
+                            <tr>
+                                <td class="header">Status date</td>
+                                <td>
+                                    {{editstatus.date | date:'yyyy-MM-dd'}}
+                                </td>
+                                <td class="header">PO approval</td>
+                                <td>
+                                    {{editstatus.apo}}
+                                </td>
                             </tr>
                             <tr>
                                 <td class="{{editstatus.status}} l texttop">Overall status</td>
@@ -68,67 +87,67 @@
                                     <pre>{{editstatus.demodate | date:'yyyy-MM-dd'}}</pre>
                                 </td>
                             </tr>
-                            <tr class="header">
+                            <tr ng-if="showStatusFlags" class="header">
                                 <td colspan="4">Status flags</td>
                             </tr>
-                            <tr>
+                            <tr ng-if="showStatusFlags">
                                 <td class="{{editstatus.statusbc}} l texttop">Business case</td>
                                 <td colspan="3" class="wrap xxxl">
                                     <pre>{{editstatus.bccomments}}</pre>
                                 </td>
                             </tr>
-                            <tr>
+                            <tr ng-if="showStatusFlags">
                                 <td class="{{editstatus.statussc}} l texttop">Scope</td>
                                 <td colspan="3" class="wrap xxxl">
                                     <pre>{{editstatus.sccomments}}</pre>
                                 </td>
                             </tr>
-                            <tr>
+                            <tr ng-if="showStatusFlags">
                                 <td class="{{editstatus.statustl}} l texttop">Time line</td>
                                 <td colspan="3" class="wrap xxxl">
                                     <pre>{{editstatus.tlcomments}}</pre>
                                 </td>
                             </tr>
-                            <tr>
+                            <tr ng-if="showStatusFlags">
                                 <td class="{{editstatus.statusres}} l texttop">Resources</td>
                                 <td colspan="3" class="wrap xxxl">
                                     <pre>{{editstatus.rescomments}}</pre>
                                 </td>
                             </tr>
-                            <tr>
+                            <tr ng-if="showStatusFlags">
                                 <td class="{{editstatus.statusbud}} l texttop">Budget</td>
                                 <td colspan="3" class="wrap xxxl">
                                     <pre>{{editstatus.budcomments}}</pre>
                                 </td>
                             </tr>
-                            <tr>
+                            <tr ng-if="showStatusFlags">
                                 <td class="{{editstatus.statusrisk}} l texttop">Risks</td>
                                 <td colspan="3" class="wrap xxxl">
                                     <pre>{{editstatus.riskcomments}}</pre>
                                 </td>
                             </tr>
-                            <tr>
+                            <tr ng-if="showStatusElab">
                                 <td class="header" colspan="4">Status elaboration </td>
                             </tr>
-                            <tr>
+                            <tr ng-if="showStatusElab">
                                 <td class="label texttop">Delivered </td>
                                 <td colspan="3" class="wrap xxxl">
                                     <pre>{{editstatus.del}}</pre>
                                 </td>
                             </tr>
-                            <tr>
+                            <tr ng-if="showStatusElab">
                                 <td class="label texttop">Next </td>
                                 <td colspan="3" class="wrap xxxl">
                                     <pre>{{editstatus.next}}</pre>
                                 </td>
                             </tr>
-                            <tr>
+                            <tr ng-if="showStatusElab">
                                 <td class="label texttop">Concerns </td>
                                 <td colspan="3" class="wrap xxxl">
                                     <pre>{{editstatus.concerns}}</pre>
                                 </td>
                             </tr>
-                            <tr>
+                            <tr ng-if="showStatusElab">
                                 <td class="label texttop">Changes </td>
                                 <td colspan="3" class="wrap xxxl">
                                     <pre>{{editstatus.changes}}</pre>
@@ -192,46 +211,43 @@
                     <div class="overview">
                         <table class="tablelist">
                             <tr class="header">
-                                <td colspan="7">Brief business case</td>
+                                <td colspan="8">Brief business case</td>
                             </tr>
                             <tr>
-                                <td class="label piecell">Prio total
-                                    <prio-mini-pie prio-val="project.total"></prio-mini-pie>
-                                </td>
-                                <td class="label piecell">{{company.projkpi1lable}}
-                                    <prio-mini-pie prio-val="project.kpi1"></prio-mini-pie>
-                                </td>
-                                <td class="label piecell">{{company.projkpi2lable}}
-                                    <prio-mini-pie prio-val="project.kpi2"></prio-mini-pie>
-                                </td>
-                                <td class="label piecell">{{company.projkpi3lable}}
-                                    <prio-mini-pie prio-val="project.kpi3"></prio-mini-pie>
-                                </td>
-                                <td class="label piecell">{{company.projkpi4lable}}
-                                    <prio-mini-pie prio-val="project.kpi4"></prio-mini-pie>
-                                </td>
-                                <td class="label piecell">{{company.projkpi5lable}}
-                                    <prio-mini-pie prio-val="project.kpi5"></prio-mini-pie>
-                                </td>
-                                <td class="label piecell">{{company.projkpi6lable}}
-                                    <prio-mini-pie prio-val="project.kpi6"></prio-mini-pie>
-                                </td>
+                                <td>Priorities</td>
+                                <td class="label piecell">Prio total</td>
+                                <td class="label piecell">{{company.projkpi1lable}}</td>
+                                <td class="label piecell">{{company.projkpi2lable}}</td>
+                                <td class="label piecell">{{company.projkpi3lable}}</td>
+                                <td class="label piecell">{{company.projkpi4lable}}</td>
+                                <td class="label piecell">{{company.projkpi5lable}}</td>
+                                <td class="label piecell">{{company.projkpi6lable}}</td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td class="label piecell"><prio-mini-pie prio-val="project.total"></prio-mini-pie></td>
+                                <td class="label piecell"><prio-mini-pie prio-val="project.kpi1"></prio-mini-pie></td>
+                                <td class="label piecell"><prio-mini-pie prio-val="project.kpi2"></prio-mini-pie></td>
+                                <td class="label piecell"><prio-mini-pie prio-val="project.kpi3"></prio-mini-pie></td>
+                                <td class="label piecell"><prio-mini-pie prio-val="project.kpi4"></prio-mini-pie></td>
+                                <td class="label piecell"><prio-mini-pie prio-val="project.kpi5"></prio-mini-pie></td>
+                                <td class="label piecell"><prio-mini-pie prio-val="project.kpi6"></prio-mini-pie></td>
                             </tr>
                             <tr>
                                 <td class="label l texttop">Purpose </td>
-                                <td class="wrap" colspan="6">
+                                <td class="wrap" colspan="7">
                                     <pre>{{project.outcome}}</pre>
                                 </td>
                             </tr>
                             <tr>
                                 <td class="label l texttop">Benefits </td>
-                                <td class="wrap" colspan="6">
+                                <td class="wrap" colspan="7">
                                     <pre>{{project.costbenefit}}</pre>
                                 </td>
                             </tr>
                             <tr>
                                 <td class="label l texttop">Don't do impact </td>
-                                <td class="wrap" colspan="6">
+                                <td class="wrap" colspan="7">
                                     <pre>{{project.costrisk}}</pre>
                                 </td>
                             </tr>
@@ -261,38 +277,58 @@
                                 <td ng-if="showIssueRequest" class="label">Request</td>
                                 <td ng-if="showIssueAudience" class="label">Audience</td>
                             </tr>
-                            <tr ng-repeat="risk in project.risks | orderBy:'-total'" ng-click="goToRiskInProject(risk)" class="link" 
+                            <tr ng-repeat="risk in project.risks | orderBy:'-total'" ng-click="goToRiskInProject(risk)" class="link texttop" 
                             ng-if="(risk.type=='Issue' && risk.state!='Closed') && 
                             (risk.audience!='Confidential' || (risk.audience=='Confidential' && (user.email==project.po.email || user.email==project.pm.email || user.isOwner ||  user.admin) && project.showconfrisk=='true'))">
                                 <td class="{{risk.status}}">{{risk.title}}</td>
                                 <td  ng-if="showIssueImpact" prio-class prio-risk-bar-render="risk.impact"></td>
                                 <td ng-if="showIssueState">&nbsp;{{risk.state}}</td>
-                                <td ng-if="showIssueRequest">&nbsp;{{risk.request}}</td>
+                                <td ng-if="showIssueRequest"><pre>{{risk.request}}</pre></td>
                                 <td ng-if="showIssueAudience">&nbsp;{{risk.audience}}</td>
                             </tr>
                         </table>
                     </div>
                 </td>
             </tr>
-            <tr ng-if="showRisks">
+            <tr ng-if="showRisks && project.risks.length > 0">
                 <td colspan="3">
                     <div class="overview">
-                        <table class="tablelist" ng-if="project.risks.length > 0">
+                        <table class="tablelist">
+                            <tr class="header">
+                                <td class="label l" colspan="100%">Risks 
+                                    <div class="right"> 
+                                        <input type="checkbox" ng-model="showRiskResponsible" ng-init="showRiskResponsible=true"> Responsible, 
+                                        <input type="checkbox" ng-model="showRiskResponse" ng-init="showRiskResponse=false"> Response, 
+                                        <input type="checkbox" ng-model="showRiskProx" ng-init="showRiskProx=false"> Proximity, 
+                                        <input type="checkbox" ng-model="showRiskRequest" ng-init="showRiskRequest=false"> Request, 
+                                        <input type="checkbox" ng-model="showRiskDesc" ng-init="showRiskDesc=false"> Description, 
+                                        <input type="checkbox" ng-model="showRiskAudience" ng-init="showRiskAudience=false"> Audience
+                                    </div>
+                                </td>
+                            </tr>
                             <tr class="header">
                                 <td class="label l">Risk</td>
                                 <td class="label">Prob.</td>
                                 <td class="label">Imp.</td>
-                                <td class="label">Response</td>
-                                <td class="label">Audience</td>
+                                <td ng-if="showRiskResponsible" class="label">Responsible</td>
+                                <td ng-if="showRiskResponse" class="label">Response</td>
+                                <td ng-if="showRiskProx" class="label">Proximity</td>
+                                <td ng-if="showRiskRequest" class="label">Request</td>
+                                <td ng-if="showRiskDesc" class="label">Description</td>
+                                <td ng-if="showRiskAudience" class="label">Audience</td>
                             </tr>
-                            <tr ng-repeat="risk in project.risks | orderBy:'-total'" ng-click="goToRiskInProject(risk)" class="link" 
+                            <tr ng-repeat="risk in project.risks | orderBy:'-total'" ng-click="goToRiskInProject(risk)" class="link texttop" 
                             ng-if="(risk.type=='Risk' && risk.state!='Closed') && 
                             (risk.audience!='Confidential' || (risk.audience=='Confidential' && (user.email==project.po.email || user.email==project.pm.email || user.isOwner ||  user.admin) && project.showconfrisk=='true'))">
                                 <td class="{{risk.status}}">{{risk.title}}</td>
                                 <td prio-class prio-risk-bar-render="risk.prob"></td>
                                 <td prio-class prio-risk-bar-render="risk.impact"></td>
-                                <td>&nbsp;{{risk.response}}</td>
-                                <td>&nbsp;{{risk.audience}}</td>
+                                <td ng-if="showRiskResponsible">&nbsp;{{risk.acc.name}}</td>
+                                <td ng-if="showRiskResponse">&nbsp;{{risk.response}}</td>
+                                <td ng-if="showRiskProx">&nbsp;{{risk.proximity}}</td>
+                                <td ng-if="showRiskRequest"><pre>{{risk.request}}</pre></td>
+                                <td ng-if="showRiskDesc"><pre>{{risk.desc}}</pre></td>
+                                <td ng-if="showRiskAudience">&nbsp;{{risk.audience}}</td>
                             </tr>
                         </table>
                     </div>
