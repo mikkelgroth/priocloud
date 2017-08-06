@@ -118,7 +118,7 @@ angular
 
                 $scope.project.statuses.splice($scope.project.statuses.indexOf(status), 1);
 
-                companyService.saveProject($scope.project);
+                companyService.saveProjectName(project, $scope.user.name);
 
                 $scope.showStatusForm = false;
             };
@@ -163,7 +163,7 @@ angular
 
                 //$scope.logProject(true, "Status saved");
 
-                companyService.saveProject($scope.project);
+                companyService.saveProjectName($scope.project, $scope.user.name);
                 $scope.hasChanged=false;
 
             }

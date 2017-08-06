@@ -64,10 +64,7 @@ angular
             };
 
             $scope.saveMilestones = function () {
-
-                
-
-                companyService.saveProject($scope.project);
+                companyService.saveProjectName($scope.project, $scope.user.name);
                 $scope.hasChanged=false;
                 $scope.showMilestoneForm = true;
             };
@@ -127,8 +124,8 @@ angular
 
                 $scope.project.milestones.splice($scope.project.milestones.indexOf(milestone), 1);
 
-                companyService.saveProject($scope.project);
-
+                companyService.saveProjectName($scope.project, $scope.user.name);
+                
                 $scope.showMilestoneForm = false;
             };
 

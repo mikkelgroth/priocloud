@@ -83,7 +83,10 @@ angular
         };
 
         _this.saveProject = function (project) {
-
+            _this.saveProjectName(project,"Unknown")
+        }
+        _this.saveProjectName = function (project, name) {
+            
             // Set total on project 
             project.total = Math.round((
                 parseInt(project.kpi1) +
@@ -95,6 +98,8 @@ angular
             ) / 6);
             projecthaschanged=false;
             deleteThis=false;
+            project.lastchangeddate=new Date();
+            project.lastchangedby=name;
             // Update project if it exists
             if (project._id) {
 

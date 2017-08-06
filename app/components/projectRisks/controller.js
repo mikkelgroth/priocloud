@@ -82,8 +82,8 @@ angular
 
                 $scope.project.risks.splice($scope.project.risks.indexOf(risk), 1);
 
-                companyService.saveProject($scope.project);
-
+                companyService.saveProjectName($scope.project, $scope.user.name);
+                
                 $scope.showRiskForm = false;
             };
 
@@ -110,7 +110,7 @@ angular
                     $scope.project.risks.push(risk);
                 }
                 
-                companyService.saveProject($scope.project);
+                companyService.saveProjectName($scope.project, $scope.user.name);
                 $scope.deleteThis=false;
                 $scope.hasChanged=false;
             };
