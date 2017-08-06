@@ -1,13 +1,18 @@
 <prio-project-menu prio-project-id="{{project._id.$oid}}" prio-project-title="{{project.title}}"></prio-project-menu>
 <div class="disp">
-<b>Show:</b>  <input type="checkbox" ng-model="showDetails" ng-init="showDetails=true"> Details,&nbsp;
-<input type="checkbox" ng-model="showStatus" ng-init="showStatus=true"> Status,&nbsp;
- <input type="checkbox" ng-model="showFinance" ng-init="showFinance=true"> Finance,&nbsp;
- <input type="checkbox" ng-model="showBusinesscase" ng-init="showBusinesscase=true"> Business case,&nbsp;
- <input type="checkbox" ng-model="showIssues" ng-init="showIssues=true"> Issues,&nbsp;
- <input type="checkbox" ng-model="showRisks" ng-init="showRisks=true"> Risks,&nbsp;
- <input type="checkbox" ng-model="showDeliverables" ng-init="showDeliverables=true"> Deliverables,&nbsp;
- <input type="checkbox" ng-model="showDepend" ng-init="showDepend=true"> Dependencies
+<b>Show:</b>  <input type="checkbox" ng-model="project.filters.showDetails" ng-change="saveNow()"> Details,&nbsp;
+<input type="checkbox" ng-model="project.filters.showStatus" ng-change="saveNow()"> Status,&nbsp;
+ <input type="checkbox" ng-model="project.filters.showFinance" ng-change="saveNow()"> Finance,&nbsp;
+ <input type="checkbox" ng-model="project.filters.showBusinesscase" ng-change="saveNow()"> Business case,&nbsp;
+ <input type="checkbox" ng-model="project.filters.showIssues" ng-change="saveNow()"> Issues,&nbsp;
+ <input type="checkbox" ng-model="project.filters.showRisks" ng-change="saveNow()"> Risks,&nbsp;
+ <input type="checkbox" ng-model="project.filters.showDeliverables" ng-change="saveNow()"> Deliverables,&nbsp;
+ <input type="checkbox" ng-model="project.filters.showDepend" ng-change="saveNow()"> Dependencies
+        <div class="right">
+            <button type="button" id="saveButton" prio-class save-this="$parent.hasChanged"
+                ng-if="user.email == project.pm.email || user.email == project.altpm.email || user.admin"
+                        ng-click="saveProject(project)">save view</button>
+        </div>
 </div>
 <div id="project-overview" class="view">
     <div class="mainbox" id="overview">
@@ -15,7 +20,7 @@
             {{project.title}} - {{project.state}}
         </h2>
         <table class="noborder nopadding smaller gutter-top">
-            <tr ng-if="showDetails">
+            <tr ng-if="project.filters.showDetails">
                 <td>
                     <div class="overview">
                         <table class="tablelist">
@@ -47,15 +52,15 @@
                     </div>
                 </td>
             </tr>
-            <tr ng-if="showStatus">
+            <tr ng-if="project.filters.showStatus">
                 <td colspan="3">
                     <div class="overview">
                         <table class="tablelist">
                             <tr class="header">
                                 <td colspan="4">Project status
                                     <div class="right"> 
-                                        <input type="checkbox" ng-model="showStatusFlags" ng-init="showStatusFlags=false"> Status flags, 
-                                        <input type="checkbox" ng-model="showStatusElab" ng-init="showStatusElab=false"> Status elaboration
+                                        <input type="checkbox" ng-model="project.filters.showStatusFlags" ng-change="saveNow()"> Status flags, 
+                                        <input type="checkbox" ng-model="project.filters.showStatusElab" ng-change="saveNow()"> Status elaboration
                                     </div>
                                 </td>
                             </tr>
@@ -87,67 +92,67 @@
                                     <pre>{{editstatus.demodate | date:'yyyy-MM-dd'}}</pre>
                                 </td>
                             </tr>
-                            <tr ng-if="showStatusFlags" class="header">
+                            <tr ng-if="project.filters.showStatusFlags" class="header">
                                 <td colspan="4">Status flags</td>
                             </tr>
-                            <tr ng-if="showStatusFlags">
+                            <tr ng-if="project.filters.showStatusFlags">
                                 <td class="{{editstatus.statusbc}} l texttop">Business case</td>
                                 <td colspan="3" class="wrap xxxl">
                                     <pre>{{editstatus.bccomments}}</pre>
                                 </td>
                             </tr>
-                            <tr ng-if="showStatusFlags">
+                            <tr ng-if="project.filters.showStatusFlags">
                                 <td class="{{editstatus.statussc}} l texttop">Scope</td>
                                 <td colspan="3" class="wrap xxxl">
                                     <pre>{{editstatus.sccomments}}</pre>
                                 </td>
                             </tr>
-                            <tr ng-if="showStatusFlags">
+                            <tr ng-if="project.filters.showStatusFlags">
                                 <td class="{{editstatus.statustl}} l texttop">Time line</td>
                                 <td colspan="3" class="wrap xxxl">
                                     <pre>{{editstatus.tlcomments}}</pre>
                                 </td>
                             </tr>
-                            <tr ng-if="showStatusFlags">
+                            <tr ng-if="project.filters.showStatusFlags">
                                 <td class="{{editstatus.statusres}} l texttop">Resources</td>
                                 <td colspan="3" class="wrap xxxl">
                                     <pre>{{editstatus.rescomments}}</pre>
                                 </td>
                             </tr>
-                            <tr ng-if="showStatusFlags">
+                            <tr ng-if="project.filters.showStatusFlags">
                                 <td class="{{editstatus.statusbud}} l texttop">Budget</td>
                                 <td colspan="3" class="wrap xxxl">
                                     <pre>{{editstatus.budcomments}}</pre>
                                 </td>
                             </tr>
-                            <tr ng-if="showStatusFlags">
+                            <tr ng-if="project.filters.showStatusFlags">
                                 <td class="{{editstatus.statusrisk}} l texttop">Risks</td>
                                 <td colspan="3" class="wrap xxxl">
                                     <pre>{{editstatus.riskcomments}}</pre>
                                 </td>
                             </tr>
-                            <tr ng-if="showStatusElab">
+                            <tr ng-if="project.filters.showStatusElab">
                                 <td class="header" colspan="4">Status elaboration </td>
                             </tr>
-                            <tr ng-if="showStatusElab">
+                            <tr ng-if="project.filters.showStatusElab">
                                 <td class="label texttop">Delivered </td>
                                 <td colspan="3" class="wrap xxxl">
                                     <pre>{{editstatus.del}}</pre>
                                 </td>
                             </tr>
-                            <tr ng-if="showStatusElab">
+                            <tr ng-if="project.filters.showStatusElab">
                                 <td class="label texttop">Next </td>
                                 <td colspan="3" class="wrap xxxl">
                                     <pre>{{editstatus.next}}</pre>
                                 </td>
                             </tr>
-                            <tr ng-if="showStatusElab">
+                            <tr ng-if="project.filters.showStatusElab">
                                 <td class="label texttop">Concerns </td>
                                 <td colspan="3" class="wrap xxxl">
                                     <pre>{{editstatus.concerns}}</pre>
                                 </td>
                             </tr>
-                            <tr ng-if="showStatusElab">
+                            <tr ng-if="project.filters.showStatusElab">
                                 <td class="label texttop">Changes </td>
                                 <td colspan="3" class="wrap xxxl">
                                     <pre>{{editstatus.changes}}</pre>
@@ -157,7 +162,7 @@
                     </div>
                 </td>
             </tr>
-            <tr ng-if="showFinance">
+            <tr ng-if="project.filters.showFinance">
                 <td colspan="3">
                     <div class="overview">
                         <table class="tablelist">
@@ -206,7 +211,7 @@
                 </td>
             </tr>
 
-            <tr ng-if="showBusinesscase">
+            <tr ng-if="project.filters.showBusinesscase">
                 <td colspan="3">
                     <div class="overview">
                         <table class="tablelist">
@@ -256,56 +261,56 @@
                 </td>
             </tr>
             
-            <tr ng-if="showIssues && project.risks.length > 0">
+            <tr ng-if="project.filters.showIssues && project.risks.length > 0">
                 <td colspan="3">
                     <div class="overview">
                         <table class="tablelist">
                             <tr class="header">
                                 <td class="label l" colspan="100%">Issues 
                                     <div class="right"> 
-                                        <input type="checkbox" ng-model="showIssueResponsible" ng-init="showIssueResponsible=true"> Responsible, 
-                                        <input type="checkbox" ng-model="showIssueImpact" ng-init="showIssueImpact=true"> Impact, 
-                                        <input type="checkbox" ng-model="showIssueState" ng-init="showIssueState=false"> State, 
-                                        <input type="checkbox" ng-model="showIssueRequest" ng-init="showIssueRequest=true"> Request, 
-                                        <input type="checkbox" ng-model="showIssueAudience" ng-init="showIssueAudience=false"> Audience
+                                        <input type="checkbox" ng-model="project.filters.showIssueResponsible" ng-change="saveNow()"> Responsible, 
+                                        <input type="checkbox" ng-model="project.filters.showIssueImpact" ng-change="saveNow()"> Impact, 
+                                        <input type="checkbox" ng-model="project.filters.showIssueState" ng-change="saveNow()"> State, 
+                                        <input type="checkbox" ng-model="project.filters.showIssueRequest" ng-change="saveNow()"> Request, 
+                                        <input type="checkbox" ng-model="project.filters.showIssueAudience" ng-change="saveNow()"> Audience
                                     </div>
                                 </td>
                             </tr>
                             <tr class="header">
                                 <td class="label l">Title</td>
-                                <td ng-if="showIssueResponsible" class="label">Responsible</td>
-                                <td ng-if="showIssueImpact" class="label">Impact</td>
-                                <td ng-if="showIssueState" class="label">State</td>
-                                <td ng-if="showIssueRequest" class="label">Request</td>
-                                <td ng-if="showIssueAudience" class="label">Audience</td>
+                                <td ng-if="project.filters.showIssueResponsible" class="label">Responsible</td>
+                                <td ng-if="project.filters.showIssueImpact" class="label">Impact</td>
+                                <td ng-if="project.filters.showIssueState" class="label">State</td>
+                                <td ng-if="project.filters.showIssueRequest" class="label">Request</td>
+                                <td ng-if="project.filters.showIssueAudience" class="label">Audience</td>
                             </tr>
                             <tr ng-repeat="risk in project.risks | orderBy:'-total'" ng-click="goToRiskInProject(risk)" class="link texttop" 
                             ng-if="(risk.type=='Issue' && risk.state!='Closed') && 
                             (risk.audience!='Confidential' || (risk.audience=='Confidential' && (user.email==project.po.email || user.email==project.pm.email || user.isOwner ||  user.admin) && project.showconfrisk=='true'))">
                                 <td class="{{risk.status}}">{{risk.title}}</td>
-                                <td ng-if="showIssueResponsible">{{risk.acc.name}}</td>
-                                <td  ng-if="showIssueImpact" prio-class prio-risk-bar-render="risk.impact"></td>
-                                <td ng-if="showIssueState">&nbsp;{{risk.state}}</td>
-                                <td ng-if="showIssueRequest"><pre>{{risk.request}}</pre></td>
-                                <td ng-if="showIssueAudience">&nbsp;{{risk.audience}}</td>
+                                <td ng-if="project.filters.showIssueResponsible">{{risk.acc.name}}</td>
+                                <td  ng-if="project.filters.showIssueImpact" prio-class prio-risk-bar-render="risk.impact"></td>
+                                <td ng-if="project.filters.showIssueState">&nbsp;{{risk.state}}</td>
+                                <td ng-if="project.filters.showIssueRequest"><pre>{{risk.request}}</pre></td>
+                                <td ng-if="project.filters.showIssueAudience">&nbsp;{{risk.audience}}</td>
                             </tr>
                         </table>
                     </div>
                 </td>
             </tr>
-            <tr ng-if="showRisks && project.risks.length > 0">
+            <tr ng-if="project.filters.showRisks && project.risks.length > 0">
                 <td colspan="3">
                     <div class="overview">
                         <table class="tablelist">
                             <tr class="header">
                                 <td class="label l" colspan="100%">Risks 
                                     <div class="right"> 
-                                        <input type="checkbox" ng-model="showRiskResponsible" ng-init="showRiskResponsible=true"> Responsible, 
-                                        <input type="checkbox" ng-model="showRiskResponse" ng-init="showRiskResponse=true"> Response, 
-                                        <input type="checkbox" ng-model="showRiskProx" ng-init="showRiskProx=true"> Proximity, 
-                                        <input type="checkbox" ng-model="showRiskRequest" ng-init="showRiskRequest=false"> Request, 
-                                        <input type="checkbox" ng-model="showRiskDesc" ng-init="showRiskDesc=false"> Description, 
-                                        <input type="checkbox" ng-model="showRiskAudience" ng-init="showRiskAudience=false"> Audience
+                                        <input type="checkbox" ng-model="project.filters.showRiskResponsible" ng-change="saveNow()"> Responsible, 
+                                        <input type="checkbox" ng-model="project.filters.showRiskResponse" ng-change="saveNow()"> Response, 
+                                        <input type="checkbox" ng-model="project.filters.showRiskProx" ng-change="saveNow()"> Proximity, 
+                                        <input type="checkbox" ng-model="project.filters.showRiskRequest" ng-change="saveNow()"> Request, 
+                                        <input type="checkbox" ng-model="project.filters.showRiskDesc" ng-change="saveNow()"> Description, 
+                                        <input type="checkbox" ng-model="project.filters.showRiskAudience" ng-change="saveNow()"> Audience
                                     </div>
                                 </td>
                             </tr>
@@ -313,12 +318,12 @@
                                 <td class="label l">Title</td>
                                 <td class="label">Prob.</td>
                                 <td class="label">Imp.</td>
-                                <td ng-if="showRiskResponsible" class="label">Responsible</td>
-                                <td ng-if="showRiskResponse" class="label">Response</td>
-                                <td ng-if="showRiskProx" class="label">Proximity</td>
-                                <td ng-if="showRiskRequest" class="label">Request</td>
-                                <td ng-if="showRiskDesc" class="label">Description</td>
-                                <td ng-if="showRiskAudience" class="label">Audience</td>
+                                <td ng-if="project.filters.showRiskResponsible" class="label">Responsible</td>
+                                <td ng-if="project.filters.showRiskResponse" class="label">Response</td>
+                                <td ng-if="project.filters.showRiskProx" class="label">Proximity</td>
+                                <td ng-if="project.filters.showRiskRequest" class="label">Request</td>
+                                <td ng-if="project.filters.showRiskDesc" class="label">Description</td>
+                                <td ng-if="project.filters.showRiskAudience" class="label">Audience</td>
                             </tr>
                             <tr ng-repeat="risk in project.risks | orderBy:'-total'" ng-click="goToRiskInProject(risk)" class="link texttop" 
                             ng-if="(risk.type=='Risk' && risk.state!='Closed') && 
@@ -326,62 +331,62 @@
                                 <td class="{{risk.status}}">{{risk.title}}</td>
                                 <td prio-class prio-risk-bar-render="risk.prob"></td>
                                 <td prio-class prio-risk-bar-render="risk.impact"></td>
-                                <td ng-if="showRiskResponsible">&nbsp;{{risk.acc.name}}</td>
-                                <td ng-if="showRiskResponse">&nbsp;{{risk.response}}</td>
-                                <td ng-if="showRiskProx">&nbsp;{{risk.proximity}}</td>
-                                <td ng-if="showRiskRequest"><pre>{{risk.request}}</pre></td>
-                                <td ng-if="showRiskDesc"><pre>{{risk.desc}}</pre></td>
-                                <td ng-if="showRiskAudience">&nbsp;{{risk.audience}}</td>
+                                <td ng-if="project.filters.showRiskResponsible">&nbsp;{{risk.acc.name}}</td>
+                                <td ng-if="project.filters.showRiskResponse">&nbsp;{{risk.response}}</td>
+                                <td ng-if="project.filters.showRiskProx">&nbsp;{{risk.proximity}}</td>
+                                <td ng-if="project.filters.showRiskRequest"><pre>{{risk.request}}</pre></td>
+                                <td ng-if="project.filters.showRiskDesc"><pre>{{risk.desc}}</pre></td>
+                                <td ng-if="project.filters.showRiskAudience">&nbsp;{{risk.audience}}</td>
                             </tr>
                         </table>
                     </div>
                 </td>
             </tr>
-            <tr ng-if="showDeliverables">
+            <tr ng-if="project.filters.showDeliverables && project.milestones.length > 0">
                 <td colspan="3">
                     <div class="overview">
-                        <table class="tablelist" ng-if="project.milestones.length > 0">
+                        <table class="tablelist">
                             <tr class="header">
                                 <td class="label l" colspan="100%">Project deliverables
                                     <div class="right"> 
-                                        <input type="checkbox" ng-model="showDeliverableGantt" ng-init="showDeliverableGantt=true"> Gantt, 
-                                        <input type="checkbox" ng-model="showDeliverableResp" ng-init="showDeliverableResp=true"> Responsible, 
-                                        <input type="checkbox" ng-model="showDeliverableState" ng-init="showDeliverableState=true"> State, 
-                                        <input type="checkbox" ng-model="showDeliverableStart" ng-init="showDeliverableStart=false"> Start date, 
-                                        <input type="checkbox" ng-model="showDeliverableEnd" ng-init="showDeliverableEnd=false"> End date, 
-                                        <input type="checkbox" ng-model="showDeliverableEffort" ng-init="showDeliverableEffort=true"> Effort, 
-                                        <input type="checkbox" ng-model="showDeliverableDesc" ng-init="showDeliverableDesc=false"> Description
+                                        <input type="checkbox" ng-model="project.filters.showDeliverableGantt" ng-change="saveNow()"> Gantt, 
+                                        <input type="checkbox" ng-model="project.filters.showDeliverableResp" ng-change="saveNow()"> Responsible, 
+                                        <input type="checkbox" ng-model="project.filters.showDeliverableState" ng-change="saveNow()"> State, 
+                                        <input type="checkbox" ng-model="project.filters.showDeliverableStart" ng-change="saveNow()"> Start date, 
+                                        <input type="checkbox" ng-model="project.filters.showDeliverableEnd" ng-change="saveNow()"> End date, 
+                                        <input type="checkbox" ng-model="project.filters.showDeliverableEffort" ng-change="saveNow()"> Effort, 
+                                        <input type="checkbox" ng-model="project.filters.showDeliverableDesc" ng-change="saveNow()"> Description
                                     </div>
                                 </td>
                             </tr>
                             <tr class="header">
                                 <td class="label l">(WSJF) Deliverable</td>
-                                <td ng-if="showDeliverableGantt">2016</td>
-                                <td ng-if="showDeliverableGantt">2017</td>
-                                <td ng-if="showDeliverableGantt">2018</td>
-                                <td ng-if="showDeliverableResp">Responsible</td>
-                                <td ng-if="showDeliverableState">State</td>
-                                <td ng-if="showDeliverableStart">Start date</td>
-                                <td ng-if="showDeliverableEnd">End date</td>
-                                <td ng-if="showDeliverableEffort">Effort</td>
-                                <td ng-if="showDeliverableDesc">Description</td>
+                                <td ng-if="project.filters.showDeliverableGantt">2016</td>
+                                <td ng-if="project.filters.showDeliverableGantt">2017</td>
+                                <td ng-if="project.filters.showDeliverableGantt">2018</td>
+                                <td ng-if="project.filters.showDeliverableResp">Responsible</td>
+                                <td ng-if="project.filters.showDeliverableState">State</td>
+                                <td ng-if="project.filters.showDeliverableStart">Start date</td>
+                                <td ng-if="project.filters.showDeliverableEnd">End date</td>
+                                <td ng-if="project.filters.showDeliverableEffort">Effort</td>
+                                <td ng-if="project.filters.showDeliverableDesc">Description</td>
                             </tr>
                             <tr ng-repeat="mile in project.milestones | orderBy:'enddate'" ng-click="goToMilestoneInProject(mile)" class="link texttop" ng-if="mile.state!='Done' && mile.state!='Canceled'">
                                 <td class="{{mile.status}}">({{mile.wsjf}}) {{mile.title}}</td>
-                                <td ng-if="showDeliverableGantt" class="bar xl" ng-style="barRender(mile)" colspan="3"></td>
-                                <td ng-if="showDeliverableResp">{{mile.responsible.name}}</td>
-                                <td ng-if="showDeliverableState">{{mile.state}}</td>
-                                <td ng-if="showDeliverableStart">{{mile.date | date:'yyyy-MM-dd'}}</td>
-                                <td ng-if="showDeliverableEnd">{{mile.enddate | date:'yyyy-MM-dd'}}</td>
-                                <td ng-if="showDeliverableEffort" prio-class prio-value-bar-render-neg="mile.effort">&nbsp;</td>
-                                <td ng-if="showDeliverableDesc"><pre>{{mile.delivarables}}</pre></td>
+                                <td ng-if="project.filters.showDeliverableGantt" class="bar xl" ng-style="barRender(mile)" colspan="3"></td>
+                                <td ng-if="project.filters.showDeliverableResp">{{mile.responsible.name}}</td>
+                                <td ng-if="project.filters.showDeliverableState">{{mile.state}}</td>
+                                <td ng-if="project.filters.showDeliverableStart">{{mile.date | date:'yyyy-MM-dd'}}</td>
+                                <td ng-if="project.filters.showDeliverableEnd">{{mile.enddate | date:'yyyy-MM-dd'}}</td>
+                                <td ng-if="project.filters.showDeliverableEffort" prio-class prio-value-bar-render-neg="mile.effort">&nbsp;</td>
+                                <td ng-if="project.filters.showDeliverableDesc"><pre>{{mile.delivarables}}</pre></td>
                                 
                             </tr>
                         </table>
                     </div>
                 </td>
             </tr>
-            <tr ng-if="showDepend">
+            <tr ng-if="project.filters.showDepend">
                 <td colspan="3">
                     <div class="overview">
                         <table class="tablelist">

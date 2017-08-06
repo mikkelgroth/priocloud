@@ -36,7 +36,19 @@ angular
                     $scope.company = company;
                 });
 
-            $scope.goToRiskInProject = function (risk) {
+            $scope.saveProject = function (project) {
+                
+                companyService.saveProject(project);
+                $scope.hasChanged=false;
+            };
+
+            $scope.saveNow = function (project) {
+                
+                $scope.hasChanged=true;               
+            };
+            
+            
+                $scope.goToRiskInProject = function (risk) {
 
                 $location.path('/project/' + projectId + '/risks/' + risk._id);
             };

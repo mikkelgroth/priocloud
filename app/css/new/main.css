@@ -241,6 +241,7 @@ table {
 }
 table.tablelist {
 	margin-top: 1.5em;
+	
 }
 .texttop{
 	vertical-align: text-top;
@@ -268,6 +269,9 @@ tr.listsubject td {
 }
 tr.listsubject td h3 {
 	color: inherit;
+}
+table.smaller tr td:first-child, table.tablelist tr td:first-child{
+	 width: 200px;
 }
 
 /* DOTS (STATUS) */
