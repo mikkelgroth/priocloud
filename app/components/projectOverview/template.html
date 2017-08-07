@@ -57,29 +57,14 @@
                     <div class="overview">
                         <table class="tablelist">
                             <tr class="header">
-                                <td colspan="4">Project status
+                                <td colspan="4">Project status - {{editstatus.date | date:'yyyy-MM-dd HH:mm'}}
                                     <div class="right"> 
                                         <input type="checkbox" ng-model="project.filters.showStatusFlags" ng-change="saveNow()"> Status flags, 
                                         <input type="checkbox" ng-model="project.filters.showStatusElab" ng-change="saveNow()"> Status elaboration
                                     </div>
                                 </td>
                             </tr>
-                            <tr>
-                                <td class="header">Project feedback</td>
-                                <td prio-class prio-cs-render="editstatus.cs">{{editstatus.cs}}</td>
-                                <td class="header">Product feedback</td>
-                                <td prio-class prio-cs-render="editstatus.productcs">{{editstatus.productcs}}</td>
-                            </tr>
-                            <tr>
-                                <td class="header">Status date</td>
-                                <td>
-                                    {{editstatus.date | date:'yyyy-MM-dd'}}
-                                </td>
-                                <td class="header">PO approval</td>
-                                <td>
-                                    {{editstatus.apo}}
-                                </td>
-                            </tr>
+                            
                             <tr>
                                 <td class="{{editstatus.status}} l texttop">Overall status</td>
                                 <td colspan="3" class="wrap xxxl">
@@ -159,6 +144,89 @@
                                 </td>
                             </tr>
                         </table>
+                    </div>
+                </td>
+            </tr>
+            <tr ng-if="project.filters.showStatus">
+                <td colspan="3">
+                    <div class="overview">
+                        <table class="tablelist">
+                        <tr>
+                            <td class="header" colspan="3">PO section</td>
+                            <td class="header">Saved final by: {{editstatus.savedfinalby}}</td>
+                        </tr>
+                        <tr>
+                            <td class="header">PO feedback</td>
+                            <td>
+                                <select ng-model="editstatus.apo" ng-change="saveNow(editstatus)" ng-disabled="!editstatus.active || (user.email!=project.po.email && user.email!=project.altpo.email && !user.isOwner && !user.admin)">
+                                        <option value="Not evaluated">Not evaluated</option>
+                                        <option value="Please amend">Please amend</option>
+                                        <option value="Approved">Approved</option>
+                                </select>
+                                
+                            </td>
+                            <td class="header">Status state</td>
+                            <td>
+                                <select ng-model="editstatus.statusstate" ng-change="saveNow(editstatus)"  ng-disabled="!editstatus.active || (user.email!=project.po.email && user.email!=project.altpo.email && !user.isOwner && !user.admin)">
+                                        <option value="Draft">Draft</option>
+                                        <option value="Ready for PM">Ready for PM</option>
+                                        <option value="Ready for PO">Ready for PO</option>
+                                        <option value="Final">Final</option>
+                                </select>
+                                
+                            </td>
+                        </tr>
+                        <tr>
+                            <td prio-class prio-cs-render="editstatus.cs" class="header">Project feedback</td>
+                            <td>
+                                <select ng-model="editstatus.cs" ng-change="saveNow(editstatus)" ng-disabled="!editstatus.active || (user.email!=project.po.email && user.email!=project.altpo.email && !user.isOwner && !user.admin)">
+                                    <option value="1">1. Total breakdown</option>
+                                    <option value="2">2. No value</option>
+                                    <option value="3">3. Lack of trust</option>
+                                    <option value="4">4. Comply</option>
+                                    <option value="5">5. Trust</option>
+                                    <option value="6">6. Real value</option>
+                                    <option value="7">7. Great value</option>
+                                    <option value="8">8. Exeptional</option>
+                                </select>
+                                
+                            </td>
+                            <td prio-class prio-cs-render="editstatus.productcs" class="header">Product feedback</td>
+                            <td>
+                                <select ng-model="editstatus.productcs" ng-change="saveNow(editstatus)" ng-disabled="!editstatus.active || (user.email!=project.po.email && user.email!=project.altpo.email && !user.isOwner && !user.admin)">
+                                    <option value="1">1. Total breakdown</option>
+                                    <option value="2">2. No value</option>
+                                    <option value="3">3. Lack of trust</option>
+                                    <option value="4">4. Comply</option>
+                                    <option value="5">5. Trust</option>
+                                    <option value="6">6. Real value</option>
+                                    <option value="7">7. Great value</option>
+                                    <option value="8">8. Exeptional</option>
+                                </select>
+                                
+                            </td>
+                        </tr>
+                        <tr ng-if="(user.email == project.po.email || 
+                                        user.email == project.altpo.email || 
+                                        user.isOwner || 
+                                        user.admin) && (editstatus.active == null || editstatus.active)">
+                            <td colspan="4">
+                                <div class="right">
+                                    
+                                    <button type="button" prio-class save-this="$parent.hasChanged"
+                                    ng-show="saveStatusEnabled"
+                                    ng-if="(user.email == project.po.email || 
+                                        user.email == project.altpo.email || 
+                                        user.isOwner || 
+                                        user.admin) && (editstatus.active == null || editstatus.active)"
+                                    ng-click="saveStatus(editstatus)">save PO feedback</button>
+
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+
+
                     </div>
                 </td>
             </tr>

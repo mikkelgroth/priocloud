@@ -46,9 +46,50 @@ angular
                 
                 $scope.hasChanged=true;               
             };
+
+            // This code is also in Status controller
+
+            $scope.saveStatus = function (status) {
+
+                var ed = new Date();
+                if (ed instanceof Date && !isNaN(ed.valueOf())) {
+                    status.date = ed;
+                }
+
+                if ($scope.project.pm.email == $scope.user.email) {
+                    status.apo = "Not evaluated";
+                }
+
+                // RISK: this can be manipulated with and set even if you are not admin
+                if ((($scope.project.altpo != null && $scope.project.altpo.email == $scope.user.email) || ($scope.project.po != null && $scope.project.po.email == $scope.user.email) || $scope.user.admin) &&
+                    (status.statusstate == "Final" || status.apo == "Approved")) {
+
+                    status.apo = "Approved";
+                    status.statusstate = "Final";
+                    status.savedfinalby=$scope.user.name;
+                    status.active = false;
+                }
+
+                if ($scope.project.statuses.length == 0) {
+
+                    $scope.project.statuses.push(status);
+
+                } else {
+
+                    $scope.project.statuses[$scope.project.statuses.length - 1] = status;
+                }
+
+                //$scope.logProject(true, "Status saved");
+
+                companyService.saveProjectName($scope.project, $scope.user.name);
+                $scope.hasChanged=false;
+
+            }
+
+
             
             
-                $scope.goToRiskInProject = function (risk) {
+            $scope.goToRiskInProject = function (risk) {
 
                 $location.path('/project/' + projectId + '/risks/' + risk._id);
             };
