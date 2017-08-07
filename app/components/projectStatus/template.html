@@ -85,6 +85,46 @@
         <br/>
         <table class="smaller">
             <tr>
+                <td class="header" colspan="2">Steerco</td>
+            </tr>
+            <tr>
+                <td>
+                    Steerco meeting date
+                </td>
+                <td>
+                    <input ng-show="saveStatusEnabled" type="text" id="steercodate" datepicker="" ng-model="editstatus.steercodate" ng-change="saveNow(editstatus); dateChanged(editstatus.steercodate)"  class="cal"/>
+                    {{editstatus.steercodate | date:'yyyy-MM-dd'}}
+                </td>               
+            </tr>
+            <tr>
+                <td>
+                    Agenda
+                </td>
+                <td>
+                    <div class="field"><textarea ng-disabled="!saveStatusEnabled" ng-change="saveNow(editstatus)" ng-model="editstatus.steercoagenda" maxlength="300" id="steercoagenda" placeholder="Agenda for upcomming meeting"></textarea></div>
+                </td>               
+            </tr>
+            <tr>
+                <td>
+                    Attendees
+                </td>
+                <td>
+                    <div class="field"><textarea ng-disabled="!saveStatusEnabled" ng-change="saveNow(editstatus)" ng-model="editstatus.steercoattendees" maxlength="300" id="steercoattendees" placeholder="Who attends the meeting"></textarea></div>
+                </td>               
+            </tr>
+            <tr>
+                <td>
+                    Minutes
+                </td>
+                <td>
+                    <div class="field"><textarea ng-disabled="!saveStatusEnabled" ng-change="saveNow(editstatus)" ng-model="editstatus.steercominutes" maxlength="300" id="steercominutes" placeholder="Minutes from meeting"></textarea></div>
+                </td>               
+            </tr>
+        </table>
+
+        <br/>
+        <table class="smaller">
+            <tr>
                 <td class="header" colspan="3">Status flags</td>
             </tr>
             <tr>
@@ -381,7 +421,7 @@
                     <td>Status state<br/>PO feedback</td>
                     <td>Project feedback</td>
                     <td>Product feedback</td>
-                    <td>Status date<br/>Demo date</td>
+                    <td>Status date<br/>Steerco date</td>
                 </tr>
                 <tr ng-repeat="status in project.statuses | orderBy: 'date' : true" ng-click="viewStatus(status)" class="link">
                     <td class="{{status.status}}">
@@ -405,7 +445,7 @@
                         <div class="right">
                             &nbsp;{{status.date | date:'yyyy-MM-dd'}}
                             <br/>
-                            &nbsp;{{status.demodate | date:'yyyy-MM-dd'}}
+                            &nbsp;{{status.steercodate | date:'yyyy-MM-dd'}}
                         </div>
                     </td>
                 </tr>

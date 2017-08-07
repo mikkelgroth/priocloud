@@ -128,6 +128,10 @@ angular
                 if (dd instanceof Date && !isNaN(dd.valueOf())) {
                     status.demodate = dd.toISOString();
                 }
+                var sdd = new Date(Date.parse($("#steercodate")[0].value));
+                if (sdd instanceof Date && !isNaN(sdd.valueOf())) {
+                    status.steercodate = sdd.toISOString();
+                }
                 $scope.hasChanged=true;               
             };
 

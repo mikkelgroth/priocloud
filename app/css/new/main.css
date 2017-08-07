@@ -725,3 +725,7 @@ select {
     visibility: visible;
     opacity: 1;
 }
+
+input[type="checkbox"],input[type="radio"]{
+  position: static !important;
+}

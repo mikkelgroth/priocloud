@@ -17,34 +17,41 @@
 <div id="project-overview" class="view">
     <div class="mainbox" id="overview">
         <h2 class="{{editstatus.status}}">
-            {{project.title}} - {{project.state}}
+            {{project.title}}
         </h2>
         <table class="noborder nopadding smaller gutter-top">
             <tr ng-if="project.filters.showDetails">
-                <td>
+                <td colspan="3">
                     <div class="overview">
                         <table class="tablelist">
                             <tr class="header">
-                                <td>Business unit</td>
+                                <td colspan="4">Project details</td>
+                            </tr>
+                            <tr>
+                                <td class="header">Business unit</td>
                                 <td>{{project.bu.name}}</td>
+                                <td class="header">Portfolio</td>
+                                <td>{{project.support}}</td>
                             </tr>
                             <tr>
-                                <td>PM </td>
+                                <td class="header">State</td>
+                                <td>{{project.state}}</td>
+                                <td class="header">Audience</td>
+                                <td>{{project.audience}}</td>
+                            </tr>
+                            <tr>
+                                <td class="header">PM </td>
                                 <td class="wrap">{{project.pm.name}}</td>
-                            </tr>
-                            <tr>
-                                <td>PO </td>
+                                <td class="header">PO </td>
                                 <td class="wrap">{{project.po.name}}</td>
                             </tr>
                             <tr>
-                                <td class="texttop">Steering members</td>
-                                <td class="wrap">
+                                <td class="header texttop">Steering members</td>
+                                <td class="wrap texttop">
                                     <pre>{{project.memberssteering}}</pre>
                                 </td>
-                            </tr>
-                            <tr>
-                                <td class="texttop">Project members</td>
-                                <td class="wrap">
+                                <td class="header texttop">Project members</td>
+                                <td class="wrap texttop">
                                     <pre>{{project.membersproject}}</pre>
                                 </td>
                             </tr>
@@ -60,7 +67,8 @@
                                 <td colspan="4">Project status - {{editstatus.date | date:'yyyy-MM-dd HH:mm'}}
                                     <div class="right"> 
                                         <input type="checkbox" ng-model="project.filters.showStatusFlags" ng-change="saveNow()"> Status flags, 
-                                        <input type="checkbox" ng-model="project.filters.showStatusElab" ng-change="saveNow()"> Status elaboration
+                                        <input type="checkbox" ng-model="project.filters.showStatusElab" ng-change="saveNow()"> Status elaboration,
+                                        <input type="checkbox" ng-model="project.filters.showStatusSteerco" ng-change="saveNow()"> Steerco section
                                     </div>
                                 </td>
                             </tr>
@@ -141,6 +149,33 @@
                                 <td class="label texttop">Changes </td>
                                 <td colspan="3" class="wrap xxxl">
                                     <pre>{{editstatus.changes}}</pre>
+                                </td>
+                            </tr>
+                            <tr ng-if="project.filters.showStatusSteerco">
+                                <td class="header" colspan="4">Steerco section </td>
+                            </tr>
+                            <tr ng-if="project.filters.showStatusSteerco">
+                                <td class="label texttop">Steerco date </td>
+                                <td colspan="3" class="wrap xxxl">
+                                    {{editstatus.steercodate | date:'yyyy-MM-dd'}}
+                                </td>
+                            </tr>
+                            <tr ng-if="project.filters.showStatusSteerco">
+                                <td class="label texttop">Agenda </td>
+                                <td colspan="3" class="wrap xxxl">
+                                    <pre>{{editstatus.steercoagenda}}</pre>
+                                </td>
+                            </tr>
+                            <tr ng-if="project.filters.showStatusSteerco">
+                                <td class="label texttop">Attendees </td>
+                                <td colspan="3" class="wrap xxxl">
+                                    <pre>{{editstatus.steercoattendees}}</pre>
+                                </td>
+                            </tr>
+                            <tr ng-if="project.filters.showStatusSteerco">
+                                <td class="label texttop">Minutes </td>
+                                <td colspan="3" class="wrap xxxl">
+                                    <pre>{{editstatus.steercominutes}}</pre>
                                 </td>
                             </tr>
                         </table>
