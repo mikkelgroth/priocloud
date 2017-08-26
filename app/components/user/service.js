@@ -32,6 +32,8 @@ angular
             //user.admin = true;
             //user.demo = false;
 
+            
+
             _this.user.onNext(user);
             _this.userAuthenticated.onNext(true);
         };

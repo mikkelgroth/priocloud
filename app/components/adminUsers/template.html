@@ -88,6 +88,7 @@
                 <tr class="header">
                     <td class="header">Created</td>
                     <td class="header">Name</td>
+                    <td class="header">Login</td>
                     <td class="header">Email</td>
                     <td class="header">Onetimepassword</td>
                     <td class="header">Remove</td>
@@ -100,6 +101,10 @@
                     <td ng-click="fillUser(subuser)" class="link">
                         {{subuser.name}}
                     </td>
+                    <td>
+                        {{subuser.logindate.$date| date:'d MMM, yyyy'}}
+                    </td>
+                    
                     <td>
                         {{subuser.email}}
                         <br/>
