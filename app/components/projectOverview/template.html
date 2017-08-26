@@ -454,6 +454,7 @@
                                     <div class="right"> 
                                         <input type="checkbox" ng-model="project.filters.showDeliverableGantt" ng-change="saveNow()"> Gantt, 
                                         <input type="checkbox" ng-model="project.filters.showDeliverableResp" ng-change="saveNow()"> Responsible, 
+                                        <input type="checkbox" ng-model="project.filters.showDeliverableAcc" ng-change="saveNow()"> Approver, 
                                         <input type="checkbox" ng-model="project.filters.showDeliverableState" ng-change="saveNow()"> State, 
                                         <input type="checkbox" ng-model="project.filters.showDeliverableStart" ng-change="saveNow()"> Start date, 
                                         <input type="checkbox" ng-model="project.filters.showDeliverableEnd" ng-change="saveNow()"> End date, 
@@ -468,7 +469,7 @@
                                 <td ng-if="project.filters.showDeliverableGantt">2017</td>
                                 <td ng-if="project.filters.showDeliverableGantt">2018</td>
                                 <td ng-if="project.filters.showDeliverableResp">Responsible</td>
-                                <td ng-if="project.filters.showDeliverableState">State</td>
+                                <td ng-if="project.filters.showDeliverableAcc">Approver</td>
                                 <td ng-if="project.filters.showDeliverableStart">Start date</td>
                                 <td ng-if="project.filters.showDeliverableEnd">End date</td>
                                 <td ng-if="project.filters.showDeliverableEffort">Effort</td>
@@ -476,9 +477,9 @@
                             </tr>
                             <tr ng-repeat="mile in project.milestones | orderBy:'enddate'" ng-click="goToMilestoneInProject(mile)" class="link texttop" ng-if="mile.state!='Done' && mile.state!='Canceled'">
                                 <td class="{{mile.status}}">({{mile.wsjf}}) {{mile.title}}</td>
-                                <td ng-if="project.filters.showDeliverableGantt" class="bar xl" ng-style="barRender(mile)" colspan="3"></td>
+                                <td ng-if="project.filters.showDeliverableGantt" class="bar xl" ng-style="barRender(mile)" colspan="3"><div ng-if="project.filters.showDeliverableState">{{mile.state}}</div></td>
                                 <td ng-if="project.filters.showDeliverableResp">{{mile.responsible.name}}</td>
-                                <td ng-if="project.filters.showDeliverableState">{{mile.state}}</td>
+                                <td ng-if="project.filters.showDeliverableAcc">{{mile.acountable.name}}</td>
                                 <td ng-if="project.filters.showDeliverableStart">{{mile.date | date:'yyyy-MM-dd'}}</td>
                                 <td ng-if="project.filters.showDeliverableEnd">{{mile.enddate | date:'yyyy-MM-dd'}}</td>
                                 <td ng-if="project.filters.showDeliverableEffort" prio-class prio-value-bar-render-neg="mile.effort">&nbsp;</td>

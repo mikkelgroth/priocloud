@@ -4,13 +4,13 @@
         <div class="filter-order-container" ng-show="showfilters">
             <div class="label" style="height:120px;">
                 Filter by:<br/> BU
-                <br/>Project<br/>Responsible<br/>Approver
+                <br/>Project<br/>Approver<br/>Responsible
             </div>
             <div class="field multiple-select">
                 <select multiple="multiple" ng-multiple="true" ng-model="milesearch.buname" ng-options="bu.name as bu.name for bu in bus | orderBy: 'name'"></select>
                 <select multiple="multiple" ng-multiple="true" ng-model="milesearch.projecttitle" ng-options="p.title as p.title for p in projects | filter:{state: '!Closed'} | orderBy: 'title'"></select>
                 <select multiple="multiple" ng-multiple="true" ng-model="milesearch.acname" ng-options="u.name as u.name for u in users | filter: {source: true} | orderBy:'name'"></select>
-                <select multiple="multiple" ng-multiple="true" ng-model="milesearch.resname" ng-options="u.name as u.name for u in users | filter: {source: true} | orderBy:'name'"></select>
+                <select multiple="multiple" ng-multiple="true" ng-model="milesearch.resname" ng-options="u.name as u.name for u in users | filter: {source: true} | orderBy:'name'" ></select>
             </div>
         </div>
         <div class="filter-order-container" ng-show="showfilters">
@@ -67,14 +67,14 @@
                     <td>2017</td>
                     <td>2018</td>
                     <td>Start Date<br/>End Date</td>
-                    <td>State<br/>Responsible</td>
+                    <td>Responsible<br/>Approver</td>
                 </tr>
                 <tr ng-repeat="mile in milestoneList | multiFilter:milesearch | orderBy:orderdate" ng-click="goToMilestoneInProject(mile._id, mile.projectid)"
                     class="link" ng-if="mile.state!='Done' && mile.state!='Canceled'">
                     <td class="{{mile.status}}"><b>({{mile.wsjf}}) {{mile.title}}</b><br/>{{mile.projecttitle}}</td>
-                    <td class="bar" ng-style="barRender(mile)" colspan="3"></td>
+                    <td class="bar" ng-style="barRender(mile)" colspan="3"><b>{{mile.state}}</b></td>
                     <td><b>{{mile.date | date:'d MMM, yyyy'}}</b><br/>{{mile.enddate | date:'d MMM, yyyy'}}</td>
-                    <td><b>{{mile.state}}</b><br/>{{mile.acountable.name}}</td>
+                    <td><b>{{mile.responsible.name}}</b><br/>{{mile.acountable.name}}</td>
                 </tr>
             </table>
         </div>

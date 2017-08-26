@@ -12,6 +12,9 @@ angular
             companyService
         ) {
 
+            $scope.milesearch=[];
+            $scope.milesearch.resname=[];
+            
             companyService.projects.subscribe(function (projects) {
 
                 $scope.projects = projects;
@@ -22,10 +25,17 @@ angular
 
                 $scope.bus = units;
             });
+            userService
+            .user
+            .subscribe(function (user) {
+
+                $scope.user = user;
+            });
 
             userService.users.subscribe(function (users) {
 
                 $scope.users = users;
+                $scope.milesearch.resname=[$scope.user.name];
             });
 
             $scope.goToMilestoneInProject = function (milestoneId, projectId) {
