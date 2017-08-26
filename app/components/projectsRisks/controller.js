@@ -11,7 +11,9 @@ angular
             userService,
             companyService
         ) {
-
+            $scope.risksearch=[];
+            $scope.risksearch.acname=[];
+            
             companyService
                 .company
                 .subscribe(function (company) {
@@ -30,9 +32,18 @@ angular
                 $scope.bus = units;
             });
 
+            userService
+            .user
+            .subscribe(function (user) {
+
+                $scope.user = user;
+            });
+
+
             userService.users.subscribe(function (users) {
 
                 $scope.users = users;
+                $scope.risksearch.acname=[$scope.user.name];
             });
 
             $scope.goToRiskInProject = function (riskId, projectId) {
