@@ -1,10 +1,10 @@
 <prio-project-menu prio-project-id="{{project._id.$oid}}" prio-project-title="{{project.title}}"></prio-project-menu>
 <div class="disp">
 <b>Show:</b>  <input type="checkbox" ng-model="project.filters.showDetails" ng-change="saveNow()"> Details,&nbsp;
+<input type="checkbox" ng-model="project.filters.showBusinesscase" ng-change="saveNow()"> Business case,&nbsp;
 <input type="checkbox" ng-model="project.filters.showStatus" ng-change="saveNow()"> Status,&nbsp;
 <input type="checkbox" ng-model="project.filters.showDeliverables" ng-change="saveNow()"> Deliverables,&nbsp;
 <input type="checkbox" ng-model="project.filters.showFinance" ng-change="saveNow()"> Finance,&nbsp;
- <input type="checkbox" ng-model="project.filters.showBusinesscase" ng-change="saveNow()"> Business case,&nbsp;
  <input type="checkbox" ng-model="project.filters.showIssues" ng-change="saveNow()"> Issues,&nbsp;
  <input type="checkbox" ng-model="project.filters.showRisks" ng-change="saveNow()"> Risks,&nbsp;
  
@@ -104,7 +104,7 @@
                     </div>
                 </td>
             </tr>
-                    
+                            
             <tr ng-if="project.filters.showDetails">
                 <td colspan="3">
                     <div class="overview">
@@ -144,6 +144,57 @@
                     </div>
                 </td>
             </tr>
+            
+            <tr ng-if="project.filters.showBusinesscase">
+                    <td colspan="3">
+                        <div class="overview">
+                            <table class="tablelist">
+                                <tr class="header">
+                                    <td colspan="8">Brief business case</td>
+                                </tr>
+                                <tr>
+                                    <td>Priorities</td>
+                                    <td class="label piecell">Prio total</td>
+                                    <td class="label piecell">{{company.projkpi1lable}}</td>
+                                    <td class="label piecell">{{company.projkpi2lable}}</td>
+                                    <td class="label piecell">{{company.projkpi3lable}}</td>
+                                    <td class="label piecell">{{company.projkpi4lable}}</td>
+                                    <td class="label piecell">{{company.projkpi5lable}}</td>
+                                    <td class="label piecell">{{company.projkpi6lable}}</td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td class="label piecell"><prio-mini-pie prio-val="project.total"></prio-mini-pie></td>
+                                    <td class="label piecell"><prio-mini-pie prio-val="project.kpi1"></prio-mini-pie></td>
+                                    <td class="label piecell"><prio-mini-pie prio-val="project.kpi2"></prio-mini-pie></td>
+                                    <td class="label piecell"><prio-mini-pie prio-val="project.kpi3"></prio-mini-pie></td>
+                                    <td class="label piecell"><prio-mini-pie prio-val="project.kpi4"></prio-mini-pie></td>
+                                    <td class="label piecell"><prio-mini-pie prio-val="project.kpi5"></prio-mini-pie></td>
+                                    <td class="label piecell"><prio-mini-pie prio-val="project.kpi6"></prio-mini-pie></td>
+                                </tr>
+                                <tr>
+                                    <td class="label l texttop">Purpose </td>
+                                    <td class="wrap" colspan="7">
+                                        <pre>{{project.outcome}}</pre>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="label l texttop">Benefits </td>
+                                    <td class="wrap" colspan="7">
+                                        <pre>{{project.costbenefit}}</pre>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="label l texttop">Don't do impact </td>
+                                    <td class="wrap" colspan="7">
+                                        <pre>{{project.costrisk}}</pre>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </td>
+                </tr>
+            
             <tr ng-if="project.filters.showStatus">
                 <td colspan="3">
                     <div class="overview">
@@ -329,56 +380,16 @@
                                     </div>
                                 </td>
                             </tr>
-                            <tr ng-if="project.filters.showFinanceCommentsQ1">
-                                <td class="header">Q1 Comments</td>
-                                <td colspan="7">
-                                    <table class="smaller smallinput">
-                                        <tr><td>Budget:</td><td><pre>{{project.finance.budq1}}</pre></td></tr>
-                                        <tr><td>Posted: </td><td><pre>{{project.finance.postq1}}</pre></td></tr>
-                                        <tr><td>Deviation: </td><td><pre>{{project.finance.devq1}}</pre></td></tr>
-                                    </table>
-                                </td>
-                            </tr>
-                            <tr ng-if="project.filters.showFinanceCommentsQ2">
-                                    <td class="header">Q2 Comments</td>
-                                    <td colspan="7">
-                                        <table class="smaller smallinput">
-                                            <tr><td>Budget:</td><td><pre>{{project.finance.budq2}}</pre></td></tr>
-                                            <tr><td>Posted: </td><td><pre>{{project.finance.postq2}}</pre></td></tr>
-                                            <tr><td>Deviation: </td><td><pre>{{project.finance.devq2}}</pre></td></tr>
-                                        </table>
-                                    </td>
-                                </tr>
-                                <tr ng-if="project.filters.showFinanceCommentsQ3">
-                                        <td class="header">Q3 Comments</td>
-                                        <td colspan="7">
-                                            <table class="smaller smallinput">
-                                                <tr><td>Budget:</td><td><pre>{{project.finance.budq3}}</pre></td></tr>
-                                                <tr><td>Posted: </td><td><pre>{{project.finance.postq3}}</pre></td></tr>
-                                                <tr><td>Deviation: </td><td><pre>{{project.finance.devq3}}</pre></td></tr>
-                                            </table>
-                                        </td>
-                                    </tr>
-                                    <tr ng-if="project.filters.showFinanceCommentsQ4">
-                                            <td class="header">Q4 Comments</td>
-                                            <td colspan="7">
-                                                <table class="smaller smallinput">
-                                                    <tr><td>Budget:</td><td><pre>{{project.finance.budq4}}</pre></td></tr>
-                                                    <tr><td>Posted: </td><td><pre>{{project.finance.postq4}}</pre></td></tr>
-                                                    <tr><td>Deviation: </td><td><pre>{{project.finance.devq4}}</pre></td></tr>
-                                                </table>
-                                            </td>
-                                        </tr>
                                                                         
                             <tr class="header">
                                 <td class="{{project.financeControl}}">TDKK</td>
-                                <td>Prev</td>
-                                <td>Q1</td>
-                                <td>Q2</td>
-                                <td>Q3</td>
-                                <td>Q4</td>
-                                <td>Year</td>
-                                <td>Grand</td>
+                                <td class="sums">Prev</td>
+                                <td class="sums">Q1</td>
+                                <td class="sums">Q2</td>
+                                <td class="sums">Q3</td>
+                                <td class="sums">Q4</td>
+                                <td class="sums">Year</td>
+                                <td class="sums">Grand</td>
                             </tr>
                             <tr ng-if="project.filters.showFinanceBig">
                                 <td>Budget External total</td>
@@ -533,60 +544,74 @@
                                 <td class="sums">{{ project.finance.devTotalSum | number:0 }}</td>
                                 <td class="sums">{{ project.finance.devTotalgrandSum | number:0 }}</td>
                             </tr>
+                            <tr ng-if="project.filters.showFinanceCommentsQ1">
+                                    <td class="header" colspan="8">Q1 Comments</td>
+                                    
+                                </tr>
+                                <tr ng-if="project.filters.showFinanceCommentsQ1">
+                                    <td>Budget:</td>
+                                    <td colspan="7"><pre>{{project.finance.budq1}}</pre></td>
+                                </tr>
+                                <tr ng-if="project.filters.showFinanceCommentsQ1">
+                                    <td>Posted:</td>
+                                    <td colspan="7"><pre>{{project.finance.postq1}}</pre></td>
+                                </tr>
+                                <tr ng-if="project.filters.showFinanceCommentsQ1">
+                                    <td>Deviation:</td>
+                                    <td colspan="7"><pre>{{project.finance.devq1}}</pre></td>
+                                </tr>
+                                
+                                <tr ng-if="project.filters.showFinanceCommentsQ2">
+                                    <td class="header" colspan="8">Q2 Comments</td>
+                                </tr>
+                                <tr ng-if="project.filters.showFinanceCommentsQ2">
+                                    <td>Budget:</td>
+                                    <td colspan="7"><pre>{{project.finance.budq2}}</pre></td>
+                                </tr>
+                                <tr ng-if="project.filters.showFinanceCommentsQ2">
+                                    <td>Posted:</td>
+                                    <td colspan="7"><pre>{{project.finance.postq21}}</pre></td>
+                                </tr>
+                                <tr ng-if="project.filters.showFinanceCommentsQ2">
+                                    <td>Deviation:</td>
+                                    <td colspan="7"><pre>{{project.finance.devq2}}</pre></td>
+                                </tr>
+                                <tr ng-if="project.filters.showFinanceCommentsQ3">
+                                    <td class="header" colspan="8">Q3 Comments</td>
+                                </tr>
+                                <tr ng-if="project.filters.showFinanceCommentsQ3">
+                                    <td>Budget:</td>
+                                    <td colspan="7"><pre>{{project.finance.budq3}}</pre></td>
+                                </tr>
+                                <tr ng-if="project.filters.showFinanceCommentsQ3">
+                                    <td>Posted:</td>
+                                    <td colspan="7"><pre>{{project.finance.postq3}}</pre></td>
+                                </tr>
+                                <tr ng-if="project.filters.showFinanceCommentsQ3">
+                                    <td>Deviation:</td>
+                                    <td colspan="7"><pre>{{project.finance.devq3}}</pre></td>
+                                </tr>
+                                <tr ng-if="project.filters.showFinanceCommentsQ4">
+                                    <td class="header" colspan="8">Q4 Comments</td>
+                                </tr>
+                                <tr ng-if="project.filters.showFinanceCommentsQ4">
+                                    <td>Budget:</td>
+                                    <td colspan="7"><pre>{{project.finance.budq4}}</pre></td>
+                                </tr>
+                                <tr ng-if="project.filters.showFinanceCommentsQ4">
+                                    <td>Posted:</td>
+                                    <td colspan="7"><pre>{{project.finance.postq4}}</pre></td>
+                                </tr>
+                                <tr ng-if="project.filters.showFinanceCommentsQ4">
+                                    <td>Deviation:</td>
+                                    <td colspan="7"><pre>{{project.finance.devq4}}</pre></td>
+                                </tr>
+                            
                         </table>
                     </div>
                 </td>
             </tr>
 
-            <tr ng-if="project.filters.showBusinesscase">
-                <td colspan="3">
-                    <div class="overview">
-                        <table class="tablelist">
-                            <tr class="header">
-                                <td colspan="8">Brief business case</td>
-                            </tr>
-                            <tr>
-                                <td>Priorities</td>
-                                <td class="label piecell">Prio total</td>
-                                <td class="label piecell">{{company.projkpi1lable}}</td>
-                                <td class="label piecell">{{company.projkpi2lable}}</td>
-                                <td class="label piecell">{{company.projkpi3lable}}</td>
-                                <td class="label piecell">{{company.projkpi4lable}}</td>
-                                <td class="label piecell">{{company.projkpi5lable}}</td>
-                                <td class="label piecell">{{company.projkpi6lable}}</td>
-                            </tr>
-                            <tr>
-                                <td></td>
-                                <td class="label piecell"><prio-mini-pie prio-val="project.total"></prio-mini-pie></td>
-                                <td class="label piecell"><prio-mini-pie prio-val="project.kpi1"></prio-mini-pie></td>
-                                <td class="label piecell"><prio-mini-pie prio-val="project.kpi2"></prio-mini-pie></td>
-                                <td class="label piecell"><prio-mini-pie prio-val="project.kpi3"></prio-mini-pie></td>
-                                <td class="label piecell"><prio-mini-pie prio-val="project.kpi4"></prio-mini-pie></td>
-                                <td class="label piecell"><prio-mini-pie prio-val="project.kpi5"></prio-mini-pie></td>
-                                <td class="label piecell"><prio-mini-pie prio-val="project.kpi6"></prio-mini-pie></td>
-                            </tr>
-                            <tr>
-                                <td class="label l texttop">Purpose </td>
-                                <td class="wrap" colspan="7">
-                                    <pre>{{project.outcome}}</pre>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="label l texttop">Benefits </td>
-                                <td class="wrap" colspan="7">
-                                    <pre>{{project.costbenefit}}</pre>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="label l texttop">Don't do impact </td>
-                                <td class="wrap" colspan="7">
-                                    <pre>{{project.costrisk}}</pre>
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
-                </td>
-            </tr>
             
             <tr ng-if="project.filters.showIssues && project.risks.length > 0">
                 <td colspan="3">

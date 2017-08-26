@@ -223,11 +223,10 @@ a:hover {
 	font-size: 0.8em;
 }
 table.smallinput input{
-    width: 60px;
     text-align: right;
 }
-table.smallinput .sums{
-    width: 60px;
+table .sums{
+    
     text-align: right;
 }
 .nopadding {

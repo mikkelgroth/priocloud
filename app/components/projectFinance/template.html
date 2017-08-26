@@ -20,64 +20,66 @@
         </div>
         </h2>
     <div id="finance" ng-show="route == 'finance'">
+            <table class="smaller">
+                    <tr class="header">
+                        <td>To be controlled:</td>
+                        <td><input ng-change="saveNow()" type="checkbox" ng-model="project.isControlled" ng-disabled="!user.controller && !user.admin"/></td>
+                        <td>Controller status:</td>
+                        <td>
+                            <select ng-model="project.financeControl" ng-change="saveNow()" ng-disabled="!user.controller && !user.admin">
+                                <option value="Green">Finance controlled (Green)</option>
+                                <option value="Yellow">Please update (Yellow)</option>
+                                <option value="Orange">Deviation unexplained (Orange)</option>
+                                <option value="Red">Budget breached (Red)</option>
+                            </select>
+                        </td>
+                    </tr>    
+                    <tr>    
+                        
+                        <td>
+                            Capex proj. num.:
+                        </td>
+                        <td>
+                            <div class="field"><input ng-change="saveNow()" ng-model="project.projectnumber" ng-disabled="!user.controller && !user.admin" /></div>
+                        </td>
+                        <td>
+                            Opex proj. num.: 
+                        </td>
+                        <td>
+                            <div class="field"><input ng-model="project.opexprojectnumber" ng-change="saveNow()" ng-disabled="!user.controller && !user.admin" /></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        
+                        <td>
+                           Lifetime:
+                        </td>
+                        <td>
+                            
+                            <select ng-model="project.depriciation" ng-change="saveNow()" ng-disabled="!user.controller && !user.admin">
+                                <option value="1">1 year</option>
+                                <option value="3">3 year</option>
+                                <option value="5">5 year</option>
+                                <option value="8">8 year</option>
+                                <option value="10">10 year</option>
+                                <option value="15">15 year</option>
+                                <option value="20">20 year</option>
+                                <option value="25">25 year</option>
+                                <option value="30">30 year</option>
+                            </select>
+                        </td>
+                        <td>Depriciation start date:</td>
+                        <td>
+                            
+                                <input class="cal" type="text" id="depriciationdate" datepicker="" ng-model="project.depriciationdate" ng-change="saveNow(); dateChanged(project.depriciationdate)" ng-disabled="!user.controller && !user.admin"/>
+                                {{project.depriciationdate | date:'yyyy-MM-dd'}}
+                                
+                           
+                        </td>
+                    </tr>
+            </table>        
         <h3>Key project figures</h3>
         <table class="smaller smallinput">
-            <tr class="header" ng-if="user.controller || user.admin">
-                <td>To be controlled<input ng-change="saveNow()" type="checkbox" ng-model="project.isControlled" /></td>
-                <td colspan="2">
-                    Capex proj. num.:
-                </td>
-                <td>
-                    <div class="field"><input ng-change="saveNow()" ng-model="project.projectnumber" /></div>
-                </td>
-                <td colspan="2">
-                    Opex proj. num.: 
-                </td>
-                <td colspan="2">
-                    <div class="field"><input ng-model="project.opexprojectnumber" ng-change="saveNow()" /></div>
-                </td>
-            </tr>
-            <tr class="header" ng-if="user.controller || user.admin">
-                <td>
-                    Controller status: 
-                    <select ng-model="project.financeControl" ng-change="saveNow()">
-                        <option value="Green">Finance controlled (Green)</option>
-                        <option value="Yellow">Please update (Yellow)</option>
-                        <option value="Orange">Deviation unexplained (Orange)</option>
-                        <option value="Red">Budget breached (Red)</option>
-                    </select>
-                </td>
-                <td colspan="2">
-                   Lifetime:
-                </td>
-                <td>
-                    <div class="field">
-                   <input type="text" ng-model="project.depriciation" ng-change="saveNow()" id="depriciation" />
-                    </div>
-                </td>
-                <td colspan="2">Dep. date:</td>
-                <td colspan="2">
-                    
-                        <input class="cal" type="text" id="depriciationdate" datepicker="" ng-model="project.depriciationdate" ng-change="saveNow(); dateChanged(project.depriciationdate)"/>
-                        {{project.depriciationdate | date:'yyyy-MM-dd'}}
-                        
-                   
-                </td>
-            </tr>
-
-
-            <tr class="header" ng-if="!user.controller && !user.admin">
-                <td rowspan="2">Controller status: {{project.financeControl}}</td>
-                <td colspan="3"><div ng-if="project.isControlled">To be controlled, </div></td>
-                <td colspan="4">Project number: {{project.projectnumber}}</td>
-            </tr>
-            <tr class="header" ng-if="!user.controller && !user.admin">
-                
-                <td colspan="3">Dep. date {{project.depriciationdate | date:'yyyy-MM-dd'}}</td>
-                <td colspan="4">Depriciation: {{project.depriciation}}</td>
-            </tr>
-
-
             <tr class="header">
                 <td>TDKK Ex. Vat</td>
                 <td>Prev</td>
