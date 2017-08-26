@@ -55,7 +55,8 @@ angular
                         milestone['support'] = project.support;
                         milestone['pstate'] = project.state;
                         milestone['acname'] = (milestone.acountable != null) ? milestone.acountable.name : 'TBD';
-
+                        milestone['resname'] = (milestone.responsible != null) ? milestone.responsible.name : 'TBD';
+                        
                         return milestone;
                     });
                 }));
