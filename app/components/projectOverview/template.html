@@ -317,7 +317,60 @@
                     <div class="overview">
                         <table class="tablelist">
                             <tr class="header">
-                                <td class="{{project.financeControl}}">Finance, TDKK</td>
+                                <td class="label l" colspan="100%">Project Finance
+                                    <div class="right"> Show: 
+                                        <input type="checkbox" ng-model="project.filters.showFinanceSmall" ng-change="saveNow()"> Cap/Op, 
+                                        <input type="checkbox" ng-model="project.filters.showFinanceBig" ng-change="saveNow()"> Ext/Int, 
+                                        <input type="checkbox" ng-model="project.filters.showFinanceCommentsQ1" ng-change="saveNow()"> Q1 Desc, 
+                                        <input type="checkbox" ng-model="project.filters.showFinanceCommentsQ2" ng-change="saveNow()"> Q2 Desc, 
+                                        <input type="checkbox" ng-model="project.filters.showFinanceCommentsQ3" ng-change="saveNow()"> Q3 Desc, 
+                                        <input type="checkbox" ng-model="project.filters.showFinanceCommentsQ4" ng-change="saveNow()"> Q4 Desc
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr ng-if="project.filters.showFinanceCommentsQ1">
+                                <td class="header">Q1 Comments</td>
+                                <td colspan="7">
+                                    <table class="smaller smallinput">
+                                        <tr><td>Budget:</td><td><pre>{{project.finance.budq1}}</pre></td></tr>
+                                        <tr><td>Posted: </td><td><pre>{{project.finance.postq1}}</pre></td></tr>
+                                        <tr><td>Deviation: </td><td><pre>{{project.finance.devq1}}</pre></td></tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr ng-if="project.filters.showFinanceCommentsQ2">
+                                    <td class="header">Q2 Comments</td>
+                                    <td colspan="7">
+                                        <table class="smaller smallinput">
+                                            <tr><td>Budget:</td><td><pre>{{project.finance.budq2}}</pre></td></tr>
+                                            <tr><td>Posted: </td><td><pre>{{project.finance.postq2}}</pre></td></tr>
+                                            <tr><td>Deviation: </td><td><pre>{{project.finance.devq2}}</pre></td></tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                                <tr ng-if="project.filters.showFinanceCommentsQ3">
+                                        <td class="header">Q3 Comments</td>
+                                        <td colspan="7">
+                                            <table class="smaller smallinput">
+                                                <tr><td>Budget:</td><td><pre>{{project.finance.budq3}}</pre></td></tr>
+                                                <tr><td>Posted: </td><td><pre>{{project.finance.postq3}}</pre></td></tr>
+                                                <tr><td>Deviation: </td><td><pre>{{project.finance.devq3}}</pre></td></tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                    <tr ng-if="project.filters.showFinanceCommentsQ4">
+                                            <td class="header">Q4 Comments</td>
+                                            <td colspan="7">
+                                                <table class="smaller smallinput">
+                                                    <tr><td>Budget:</td><td><pre>{{project.finance.budq4}}</pre></td></tr>
+                                                    <tr><td>Posted: </td><td><pre>{{project.finance.postq4}}</pre></td></tr>
+                                                    <tr><td>Deviation: </td><td><pre>{{project.finance.devq4}}</pre></td></tr>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                                                        
+                            <tr class="header">
+                                <td class="{{project.financeControl}}">TDKK</td>
                                 <td>Prev</td>
                                 <td>Q1</td>
                                 <td>Q2</td>
@@ -326,35 +379,158 @@
                                 <td>Year</td>
                                 <td>Grand</td>
                             </tr>
-                            <tr>
+                            <tr ng-if="project.filters.showFinanceBig">
+                                <td>Budget External total</td>
+                                <td class="sums">{{ project.finance.budExternalprevTotal | number:0 }}</td>
+                                <td class="sums">{{ project.finance.budExternalq1Total | number:0 }}</td>
+                                <td class="sums">{{ project.finance.budExternalq2Total | number:0 }}</td>
+                                <td class="sums">{{ project.finance.budExternalq3Total | number:0 }}</td>
+                                <td class="sums">{{ project.finance.budExternalq4Total | number:0 }}</td>
+                                <td class="sums">{{ project.finance.budExternalTotalSum | number:0 }}</td>
+                                <td class="sums">{{ project.finance.budExternalTotalgrandSum | number:0 }}</td>
+                            </tr>
+                            <tr ng-if="project.filters.showFinanceBig">
+                                <td>Budget Internal total</td>
+                                <td class="sums">{{ project.finance.budInternalprevTotal | number:0 }}</td>
+                                <td class="sums">{{ project.finance.budInternalq1Total | number:0 }}</td>
+                                <td class="sums">{{ project.finance.budInternalq2Total | number:0 }}</td>
+                                <td class="sums">{{ project.finance.budInternalq3Total | number:0 }}</td>
+                                <td class="sums">{{ project.finance.budInternalq4Total | number:0 }}</td>
+                                <td class="sums">{{ project.finance.budInternalTotalSum | number:0 }}</td>
+                                <td class="sums">{{ project.finance.budInternalTotalgrandSum | number:0 }}</td>
+                            </tr>
+                            <tr ng-if="project.filters.showFinanceSmall">
+                                    <td>Budget Capex total</td>
+                                    <td class="sums">{{ project.finance.budcapexprevSum | number:0 }}</td>
+                                    <td class="sums">{{ project.finance.budcapexq1Sum | number:0 }}</td>
+                                    <td class="sums">{{ project.finance.budcapexq2Sum | number:0 }}</td>
+                                    <td class="sums">{{ project.finance.budcapexq3Sum | number:0 }}</td>
+                                    <td class="sums">{{ project.finance.budcapexq4Sum | number:0 }}</td>
+                                    <td class="sums">{{ project.finance.budcapexTotal | number:0 }}</td>
+                                    <td class="sums">{{ project.finance.budcapexTotalgrand | number:0 }}</td>
+                                </tr>
+                                <tr ng-if="project.filters.showFinanceSmall">
+                                        <td>Budget Opex total</td>
+                                        <td class="sums">{{ project.finance.budopexprevSum | number:0 }}</td>
+                                        <td class="sums">{{ project.finance.budopexq1Sum | number:0 }}</td>
+                                        <td class="sums">{{ project.finance.budopexq2Sum | number:0 }}</td>
+                                        <td class="sums">{{ project.finance.budopexq3Sum | number:0 }}</td>
+                                        <td class="sums">{{ project.finance.budopexq4Sum | number:0 }}</td>
+                                        <td class="sums">{{ project.finance.budopexTotal | number:0 }}</td>
+                                        <td class="sums">{{ project.finance.budopexTotalgrand | number:0 }}</td>
+                                    </tr>
+                                        
+                            <tr class="header">
                                 <td>Budget total</td>
-                                <td class="sums">{{ project.finance.budTotalprev }}</td>
-                                <td class="sums">{{ project.finance.budTotalq1 }}</td>
-                                <td class="sums">{{ project.finance.budTotalq2 }}</td>
-                                <td class="sums">{{ project.finance.budTotalq3 }}</td>
-                                <td class="sums">{{ project.finance.budTotalq4 }}</td>
-                                <td class="sums">{{ project.finance.budTotalSum }}</td>
-                                <td class="sums">{{ project.finance.budTotalgrandSum }}</td>
+                                <td class="sums">{{ project.finance.budTotalprev | number:0 }}</td>
+                                <td class="sums">{{ project.finance.budTotalq1 | number:0 }}</td>
+                                <td class="sums">{{ project.finance.budTotalq2 | number:0 }}</td>
+                                <td class="sums">{{ project.finance.budTotalq3 | number:0 }}</td>
+                                <td class="sums">{{ project.finance.budTotalq4 | number:0 }}</td>
+                                <td class="sums">{{ project.finance.budTotalSum | number:0 }}</td>
+                                <td class="sums">{{ project.finance.budTotalgrandSum | number:0 }}</td>
                             </tr>
-                            <tr>
+                            <tr ng-if="project.filters.showFinanceBig">
+                                <td>Posted External total</td>
+                                <td class="sums">{{ project.finance.postExternalprevTotal | number:0 }}</td>
+                                <td class="sums">{{ project.finance.postExternalq1Total | number:0 }}</td>
+                                <td class="sums">{{ project.finance.postExternalq2Total | number:0 }}</td>
+                                <td class="sums">{{ project.finance.postExternalq3Total | number:0 }}</td>
+                                <td class="sums">{{ project.finance.postExternalq4Total | number:0 }}</td>
+                                <td class="sums">{{ project.finance.postExternalTotalSum | number:0 }}</td>
+                                <td class="sums">{{ project.finance.postExternalTotalgrandSum | number:0 }}</td>
+                            </tr>
+                            <tr ng-if="project.filters.showFinanceBig">
+                                <td>Posted Internal total</td>
+                                <td class="sums">{{ project.finance.postInternalprevTotal | number:0 }}</td>
+                                <td class="sums">{{ project.finance.postInternalq1Total | number:0 }}</td>
+                                <td class="sums">{{ project.finance.postInternalq2Total | number:0 }}</td>
+                                <td class="sums">{{ project.finance.postInternalq3Total | number:0 }}</td>
+                                <td class="sums">{{ project.finance.postInternalq4Total | number:0 }}</td>
+                                <td class="sums">{{ project.finance.postInternalTotalSum | number:0 }}</td>
+                                <td class="sums">{{ project.finance.postInternalTotalgrandSum | number:0 }}</td>
+                            </tr>
+                            <tr ng-if="project.filters.showFinanceSmall">
+                                    <td>Posted Capex total</td>
+                                    <td class="sums">{{ project.finance.postcapexprevSum | number:0 }}</td>
+                                    <td class="sums">{{ project.finance.postcapexq1Sum | number:0 }}</td>
+                                    <td class="sums">{{ project.finance.postcapexq2Sum | number:0 }}</td>
+                                    <td class="sums">{{ project.finance.postcapexq3Sum | number:0 }}</td>
+                                    <td class="sums">{{ project.finance.postcapexq4Sum | number:0 }}</td>
+                                    <td class="sums">{{ project.finance.postcapexTotal | number:0 }}</td>
+                                    <td class="sums">{{ project.finance.postcapexTotalgrand | number:0 }}</td>
+                                </tr>
+                                <tr ng-if="project.filters.showFinanceSmall">
+                                        <td>Posted Opex total</td>
+                                        <td class="sums">{{ project.finance.postopexprevSum | number:0 }}</td>
+                                        <td class="sums">{{ project.finance.postopexq1Sum | number:0 }}</td>
+                                        <td class="sums">{{ project.finance.postopexq2Sum | number:0 }}</td>
+                                        <td class="sums">{{ project.finance.postopexq3Sum | number:0 }}</td>
+                                        <td class="sums">{{ project.finance.postopexq4Sum | number:0 }}</td>
+                                        <td class="sums">{{ project.finance.postopexTotal | number:0 }}</td>
+                                        <td class="sums">{{ project.finance.postopexTotalgrand  | number:0}}</td>
+                                    </tr>
+                                       
+                            <tr class="header">
                                 <td>Posted total</td>
-                                <td class="sums">{{ project.finance.postTotalprev }}</td>
-                                <td class="sums">{{ project.finance.postTotalq1 }}</td>
-                                <td class="sums">{{ project.finance.postTotalq2 }}</td>
-                                <td class="sums">{{ project.finance.postTotalq3 }}</td>
-                                <td class="sums">{{ project.finance.postTotalq4 }}</td>
-                                <td class="sums">{{ project.finance.postTotalSum }}</td>
-                                <td class="sums">{{ project.finance.postTotalgrandSum }}</td>
+                                <td class="sums">{{ project.finance.postTotalprev | number:0 }}</td>
+                                <td class="sums">{{ project.finance.postTotalq1 | number:0 }}</td>
+                                <td class="sums">{{ project.finance.postTotalq2 | number:0 }}</td>
+                                <td class="sums">{{ project.finance.postTotalq3 | number:0 }}</td>
+                                <td class="sums">{{ project.finance.postTotalq4 | number:0 }}</td>
+                                <td class="sums">{{ project.finance.postTotalSum | number:0 }}</td>
+                                <td class="sums">{{ project.finance.postTotalgrandSum | number:0 }}</td>
                             </tr>
+                            <tr ng-if="project.filters.showFinanceBig">
+                                    <td>Deviation External total</td>
+                                    <td class="sums">{{ project.finance.devExternalprevTotal | number:0 }}</td>
+                                    <td class="sums">{{ project.finance.devExternalq1Total | number:0 }}</td>
+                                    <td class="sums">{{ project.finance.devExternalq2Total | number:0 }}</td>
+                                    <td class="sums ">{{ project.finance.devExternalq3Total | number:0 }}</td>
+                                    <td class="sums">{{ project.finance.devExternalq4Total | number:0 }}</td>
+                                    <td class="sums">{{ project.finance.devExternalTotalSum | number:0 }}</td>
+                                    <td class="sums">{{ project.finance.devExternalTotalgrandSum | number:0 }}</td>
+                            </tr>
+                            <tr ng-if="project.filters.showFinanceBig">
+                                    <td>Deviation Internal total</td>
+                                    <td class="sums">{{ project.finance.devInternalprevTotal | number:0 }}</td>
+                                    <td class="sums">{{ project.finance.devInternalq1Total | number:0 }}</td>
+                                    <td class="sums">{{ project.finance.devInternalq2Total | number:0 }}</td>
+                                    <td class="sums">{{ project.finance.devInternalq3Total | number:0 }}</td>
+                                    <td class="sums">{{ project.finance.devInternalq4Total | number:0 }}</td>
+                                    <td class="sums">{{ project.finance.devInternalTotalSum | number:0 }}</td>
+                                    <td class="sums">{{ project.finance.devInternalTotalgrandSum | number:0 }}</td>
+                            </tr>
+                            <tr ng-if="project.filters.showFinanceSmall">
+                                    <td>Deviation Capex total</td>
+                                    <td class="sums">{{ project.finance.devcapexprevSum | number:0 }}</td>
+                                    <td class="sums">{{ project.finance.devcapexq1Sum | number:0 }}</td>
+                                    <td class="sums">{{ project.finance.devcapexq2Sum | number:0 }}</td>
+                                    <td class="sums">{{ project.finance.devcapexq3Sum | number:0 }}</td>
+                                    <td class="sums">{{ project.finance.devcapexq4Sum | number:0 }}</td>
+                                    <td class="sums">{{ project.finance.devcapexTotal | number:0 }}</td>
+                                    <td class="sums">{{ project.finance.devcapexTotalgrand | number:0 }}</td>
+                            </tr>
+                            <tr ng-if="project.filters.showFinanceSmall">
+                                        <td>Deviation Opex total</td>
+                                        <td class="sums">{{ project.finance.devopexprevSum | number:0 }}</td>
+                                        <td class="sums">{{ project.finance.devopexq1Sum | number:0 }}</td>
+                                        <td class="sums">{{ project.finance.devopexq2Sum | number:0 }}</td>
+                                        <td class="sums">{{ project.finance.devopexq3Sum | number:0 }}</td>
+                                        <td class="sums">{{ project.finance.devopexq4Sum | number:0 }}</td>
+                                        <td class="sums">{{ project.finance.devopexTotal | number:0 }}</td>
+                                        <td class="sums">{{ project.finance.devopexTotalgrand | number:0 }}</td>
+                            </tr>
+                                          
                             <tr class="header">
                                 <td>Deviation total</td>
-                                <td class="sums">{{ project.finance.devTotalprev }}</td>
-                                <td class="sums">{{ project.finance.devTotalq1 }}</td>
-                                <td class="sums">{{ project.finance.devTotalq2 }}</td>
-                                <td class="sums">{{ project.finance.devTotalq3 }}</td>
-                                <td class="sums">{{ project.finance.devTotalq4 }}</td>
-                                <td class="sums">{{ project.finance.devTotalSum }}</td>
-                                <td class="sums">{{ project.finance.devTotalgrandSum }}</td>
+                                <td class="sums">{{ project.finance.devTotalprev | number:0 }}</td>
+                                <td class="sums">{{ project.finance.devTotalq1 | number:0 }}</td>
+                                <td class="sums">{{ project.finance.devTotalq2 | number:0 }}</td>
+                                <td class="sums">{{ project.finance.devTotalq3 | number:0 }}</td>
+                                <td class="sums">{{ project.finance.devTotalq4 | number:0 }}</td>
+                                <td class="sums">{{ project.finance.devTotalSum | number:0 }}</td>
+                                <td class="sums">{{ project.finance.devTotalgrandSum | number:0 }}</td>
                             </tr>
                         </table>
                     </div>
