@@ -2,11 +2,12 @@
 <div class="disp">
 <b>Show:</b>  <input type="checkbox" ng-model="project.filters.showDetails" ng-change="saveNow()"> Details,&nbsp;
 <input type="checkbox" ng-model="project.filters.showStatus" ng-change="saveNow()"> Status,&nbsp;
- <input type="checkbox" ng-model="project.filters.showFinance" ng-change="saveNow()"> Finance,&nbsp;
+<input type="checkbox" ng-model="project.filters.showDeliverables" ng-change="saveNow()"> Deliverables,&nbsp;
+<input type="checkbox" ng-model="project.filters.showFinance" ng-change="saveNow()"> Finance,&nbsp;
  <input type="checkbox" ng-model="project.filters.showBusinesscase" ng-change="saveNow()"> Business case,&nbsp;
  <input type="checkbox" ng-model="project.filters.showIssues" ng-change="saveNow()"> Issues,&nbsp;
  <input type="checkbox" ng-model="project.filters.showRisks" ng-change="saveNow()"> Risks,&nbsp;
- <input type="checkbox" ng-model="project.filters.showDeliverables" ng-change="saveNow()"> Deliverables,&nbsp;
+ 
  <input type="checkbox" ng-model="project.filters.showDepend" ng-change="saveNow()"> Dependencies
         <div class="right">
             <button type="button" id="saveButton" prio-class save-this="$parent.hasChanged"
@@ -20,6 +21,90 @@
             {{project.title}}
         </h2>
         <table class="noborder nopadding smaller gutter-top">
+            <tr>
+                <td colspan="3">
+                    <div class="overview">
+                        <table class="tablelist">
+                            <tr>
+                                    <td class="header" colspan="3">PO section</td>
+                                    <td class="header">Saved by: {{editstatus.savedfinalby}}</td>
+                                </tr>
+                                <tr>
+                                    <td class="header">PO feedback</td>
+                                    <td>
+                                        <select ng-model="editstatus.apo" ng-change="saveNow(editstatus)" ng-disabled="!editstatus.active || (user.email!=project.po.email && user.email!=project.altpo.email && !user.isOwner && !user.admin)">
+                                                <option value="Not evaluated">Not evaluated</option>
+                                                <option value="Please amend">Please amend</option>
+                                                <option value="Approved">Approved</option>
+                                        </select>
+                                        
+                                    </td>
+                                    <td class="header">Status state</td>
+                                    <td>
+                                        <select ng-model="editstatus.statusstate" ng-change="saveNow(editstatus)"  ng-disabled="!editstatus.active || (user.email!=project.po.email && user.email!=project.altpo.email && !user.isOwner && !user.admin)">
+                                                <option value="Draft">Draft</option>
+                                                <option value="Ready for PM">Ready for PM</option>
+                                                <option value="Ready for PO">Ready for PO</option>
+                                                <option value="Final">Final</option>
+                                        </select>
+                                        
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td prio-class prio-cs-render="editstatus.cs" class="header">Project feedback</td>
+                                    <td>
+                                        <select ng-model="editstatus.cs" ng-change="saveNow(editstatus)" ng-disabled="!editstatus.active || (user.email!=project.po.email && user.email!=project.altpo.email && !user.isOwner && !user.admin)">
+                                            <option value="1">1. Total breakdown</option>
+                                            <option value="2">2. No value</option>
+                                            <option value="3">3. Lack of trust</option>
+                                            <option value="4">4. Comply</option>
+                                            <option value="5">5. Trust</option>
+                                            <option value="6">6. Real value</option>
+                                            <option value="7">7. Great value</option>
+                                            <option value="8">8. Exeptional</option>
+                                        </select>
+                                        
+                                    </td>
+                                    <td prio-class prio-cs-render="editstatus.productcs" class="header">Product feedback</td>
+                                    <td>
+                                        <select ng-model="editstatus.productcs" ng-change="saveNow(editstatus)" ng-disabled="!editstatus.active || (user.email!=project.po.email && user.email!=project.altpo.email && !user.isOwner && !user.admin)">
+                                            <option value="1">1. Total breakdown</option>
+                                            <option value="2">2. No value</option>
+                                            <option value="3">3. Lack of trust</option>
+                                            <option value="4">4. Comply</option>
+                                            <option value="5">5. Trust</option>
+                                            <option value="6">6. Real value</option>
+                                            <option value="7">7. Great value</option>
+                                            <option value="8">8. Exeptional</option>
+                                        </select>
+                                        
+                                    </td>
+                                </tr>
+                                <tr ng-if="(user.email == project.po.email || 
+                                                user.email == project.altpo.email || 
+                                                user.isOwner || 
+                                                user.admin) && (editstatus.active == null || editstatus.active)">
+                                    <td colspan="4">
+                                        <div class="right">
+                                            
+                                            <button type="button" prio-class save-this="$parent.hasChanged"
+                                            ng-show="saveStatusEnabled"
+                                            ng-if="(user.email == project.po.email || 
+                                                user.email == project.altpo.email || 
+                                                user.isOwner || 
+                                                user.admin) && (editstatus.active == null || editstatus.active)"
+                                            ng-click="saveStatus(editstatus)">save PO feedback</button>
+        
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+        
+        
+                    </div>
+                </td>
+            </tr>
+                    
             <tr ng-if="project.filters.showDetails">
                 <td colspan="3">
                     <div class="overview">
@@ -182,86 +267,48 @@
                     </div>
                 </td>
             </tr>
-            <tr ng-if="project.filters.showStatus">
+            <tr ng-if="project.filters.showDeliverables && project.milestones.length > 0">
                 <td colspan="3">
                     <div class="overview">
                         <table class="tablelist">
-                        <tr>
-                            <td class="header" colspan="3">PO section</td>
-                            <td class="header">Saved final by: {{editstatus.savedfinalby}}</td>
-                        </tr>
-                        <tr>
-                            <td class="header">PO feedback</td>
-                            <td>
-                                <select ng-model="editstatus.apo" ng-change="saveNow(editstatus)" ng-disabled="!editstatus.active || (user.email!=project.po.email && user.email!=project.altpo.email && !user.isOwner && !user.admin)">
-                                        <option value="Not evaluated">Not evaluated</option>
-                                        <option value="Please amend">Please amend</option>
-                                        <option value="Approved">Approved</option>
-                                </select>
+                            <tr class="header">
+                                <td class="label l" colspan="100%">Project deliverables
+                                    <div class="right"> 
+                                        <input type="checkbox" ng-model="project.filters.showDeliverableGantt" ng-change="saveNow()"> Gantt, 
+                                        <input type="checkbox" ng-model="project.filters.showDeliverableResp" ng-change="saveNow()"> Responsible, 
+                                        <input type="checkbox" ng-model="project.filters.showDeliverableAcc" ng-change="saveNow()"> Approver, 
+                                        <input type="checkbox" ng-model="project.filters.showDeliverableState" ng-change="saveNow()"> State, 
+                                        <input type="checkbox" ng-model="project.filters.showDeliverableStart" ng-change="saveNow()"> Start date, 
+                                        <input type="checkbox" ng-model="project.filters.showDeliverableEnd" ng-change="saveNow()"> End date, 
+                                        <input type="checkbox" ng-model="project.filters.showDeliverableEffort" ng-change="saveNow()"> Effort, 
+                                        <input type="checkbox" ng-model="project.filters.showDeliverableDesc" ng-change="saveNow()"> Description
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr class="header">
+                                <td class="label l">(WSJF) Deliverable</td>
+                                <td ng-if="project.filters.showDeliverableGantt">2016</td>
+                                <td ng-if="project.filters.showDeliverableGantt">2017</td>
+                                <td ng-if="project.filters.showDeliverableGantt">2018</td>
+                                <td ng-if="project.filters.showDeliverableResp">Responsible</td>
+                                <td ng-if="project.filters.showDeliverableAcc">Approver</td>
+                                <td ng-if="project.filters.showDeliverableStart">Start date</td>
+                                <td ng-if="project.filters.showDeliverableEnd">End date</td>
+                                <td ng-if="project.filters.showDeliverableEffort">Effort</td>
+                                <td ng-if="project.filters.showDeliverableDesc">Description</td>
+                            </tr>
+                            <tr ng-repeat="mile in project.milestones | orderBy:'enddate'" ng-click="goToMilestoneInProject(mile)" class="link texttop" ng-if="mile.state!='Done' && mile.state!='Canceled'">
+                                <td class="{{mile.status}}">({{mile.wsjf}}) {{mile.title}}</td>
+                                <td ng-if="project.filters.showDeliverableGantt" class="bar xl" ng-style="barRender(mile)" colspan="3"><div ng-if="project.filters.showDeliverableState">{{mile.state}}</div></td>
+                                <td ng-if="project.filters.showDeliverableResp">{{mile.responsible.name}}</td>
+                                <td ng-if="project.filters.showDeliverableAcc">{{mile.acountable.name}}</td>
+                                <td ng-if="project.filters.showDeliverableStart">{{mile.date | date:'yyyy-MM-dd'}}</td>
+                                <td ng-if="project.filters.showDeliverableEnd">{{mile.enddate | date:'yyyy-MM-dd'}}</td>
+                                <td ng-if="project.filters.showDeliverableEffort" prio-class prio-value-bar-render-neg="mile.effort">&nbsp;</td>
+                                <td ng-if="project.filters.showDeliverableDesc"><pre>{{mile.delivarables}}</pre></td>
                                 
-                            </td>
-                            <td class="header">Status state</td>
-                            <td>
-                                <select ng-model="editstatus.statusstate" ng-change="saveNow(editstatus)"  ng-disabled="!editstatus.active || (user.email!=project.po.email && user.email!=project.altpo.email && !user.isOwner && !user.admin)">
-                                        <option value="Draft">Draft</option>
-                                        <option value="Ready for PM">Ready for PM</option>
-                                        <option value="Ready for PO">Ready for PO</option>
-                                        <option value="Final">Final</option>
-                                </select>
-                                
-                            </td>
-                        </tr>
-                        <tr>
-                            <td prio-class prio-cs-render="editstatus.cs" class="header">Project feedback</td>
-                            <td>
-                                <select ng-model="editstatus.cs" ng-change="saveNow(editstatus)" ng-disabled="!editstatus.active || (user.email!=project.po.email && user.email!=project.altpo.email && !user.isOwner && !user.admin)">
-                                    <option value="1">1. Total breakdown</option>
-                                    <option value="2">2. No value</option>
-                                    <option value="3">3. Lack of trust</option>
-                                    <option value="4">4. Comply</option>
-                                    <option value="5">5. Trust</option>
-                                    <option value="6">6. Real value</option>
-                                    <option value="7">7. Great value</option>
-                                    <option value="8">8. Exeptional</option>
-                                </select>
-                                
-                            </td>
-                            <td prio-class prio-cs-render="editstatus.productcs" class="header">Product feedback</td>
-                            <td>
-                                <select ng-model="editstatus.productcs" ng-change="saveNow(editstatus)" ng-disabled="!editstatus.active || (user.email!=project.po.email && user.email!=project.altpo.email && !user.isOwner && !user.admin)">
-                                    <option value="1">1. Total breakdown</option>
-                                    <option value="2">2. No value</option>
-                                    <option value="3">3. Lack of trust</option>
-                                    <option value="4">4. Comply</option>
-                                    <option value="5">5. Trust</option>
-                                    <option value="6">6. Real value</option>
-                                    <option value="7">7. Great value</option>
-                                    <option value="8">8. Exeptional</option>
-                                </select>
-                                
-                            </td>
-                        </tr>
-                        <tr ng-if="(user.email == project.po.email || 
-                                        user.email == project.altpo.email || 
-                                        user.isOwner || 
-                                        user.admin) && (editstatus.active == null || editstatus.active)">
-                            <td colspan="4">
-                                <div class="right">
-                                    
-                                    <button type="button" prio-class save-this="$parent.hasChanged"
-                                    ng-show="saveStatusEnabled"
-                                    ng-if="(user.email == project.po.email || 
-                                        user.email == project.altpo.email || 
-                                        user.isOwner || 
-                                        user.admin) && (editstatus.active == null || editstatus.active)"
-                                    ng-click="saveStatus(editstatus)">save PO feedback</button>
-
-                                </div>
-                            </td>
-                        </tr>
-                    </table>
-
-
+                            </tr>
+                        </table>
                     </div>
                 </td>
             </tr>
@@ -445,51 +492,7 @@
                     </div>
                 </td>
             </tr>
-            <tr ng-if="project.filters.showDeliverables && project.milestones.length > 0">
-                <td colspan="3">
-                    <div class="overview">
-                        <table class="tablelist">
-                            <tr class="header">
-                                <td class="label l" colspan="100%">Project deliverables
-                                    <div class="right"> 
-                                        <input type="checkbox" ng-model="project.filters.showDeliverableGantt" ng-change="saveNow()"> Gantt, 
-                                        <input type="checkbox" ng-model="project.filters.showDeliverableResp" ng-change="saveNow()"> Responsible, 
-                                        <input type="checkbox" ng-model="project.filters.showDeliverableAcc" ng-change="saveNow()"> Approver, 
-                                        <input type="checkbox" ng-model="project.filters.showDeliverableState" ng-change="saveNow()"> State, 
-                                        <input type="checkbox" ng-model="project.filters.showDeliverableStart" ng-change="saveNow()"> Start date, 
-                                        <input type="checkbox" ng-model="project.filters.showDeliverableEnd" ng-change="saveNow()"> End date, 
-                                        <input type="checkbox" ng-model="project.filters.showDeliverableEffort" ng-change="saveNow()"> Effort, 
-                                        <input type="checkbox" ng-model="project.filters.showDeliverableDesc" ng-change="saveNow()"> Description
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr class="header">
-                                <td class="label l">(WSJF) Deliverable</td>
-                                <td ng-if="project.filters.showDeliverableGantt">2016</td>
-                                <td ng-if="project.filters.showDeliverableGantt">2017</td>
-                                <td ng-if="project.filters.showDeliverableGantt">2018</td>
-                                <td ng-if="project.filters.showDeliverableResp">Responsible</td>
-                                <td ng-if="project.filters.showDeliverableAcc">Approver</td>
-                                <td ng-if="project.filters.showDeliverableStart">Start date</td>
-                                <td ng-if="project.filters.showDeliverableEnd">End date</td>
-                                <td ng-if="project.filters.showDeliverableEffort">Effort</td>
-                                <td ng-if="project.filters.showDeliverableDesc">Description</td>
-                            </tr>
-                            <tr ng-repeat="mile in project.milestones | orderBy:'enddate'" ng-click="goToMilestoneInProject(mile)" class="link texttop" ng-if="mile.state!='Done' && mile.state!='Canceled'">
-                                <td class="{{mile.status}}">({{mile.wsjf}}) {{mile.title}}</td>
-                                <td ng-if="project.filters.showDeliverableGantt" class="bar xl" ng-style="barRender(mile)" colspan="3"><div ng-if="project.filters.showDeliverableState">{{mile.state}}</div></td>
-                                <td ng-if="project.filters.showDeliverableResp">{{mile.responsible.name}}</td>
-                                <td ng-if="project.filters.showDeliverableAcc">{{mile.acountable.name}}</td>
-                                <td ng-if="project.filters.showDeliverableStart">{{mile.date | date:'yyyy-MM-dd'}}</td>
-                                <td ng-if="project.filters.showDeliverableEnd">{{mile.enddate | date:'yyyy-MM-dd'}}</td>
-                                <td ng-if="project.filters.showDeliverableEffort" prio-class prio-value-bar-render-neg="mile.effort">&nbsp;</td>
-                                <td ng-if="project.filters.showDeliverableDesc"><pre>{{mile.delivarables}}</pre></td>
-                                
-                            </tr>
-                        </table>
-                    </div>
-                </td>
-            </tr>
+            
             <tr ng-if="project.filters.showDepend">
                 <td colspan="3">
                     <div class="overview">
