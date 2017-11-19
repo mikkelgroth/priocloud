@@ -15,7 +15,7 @@
         </div>
     </h2>
         <table class="smaller">
-            <tr class="header"><td>Project KPI</td><td>Value</td></tr>
+            <tr class="header"><td>Project KPI</td><td>Value</td><td>Chart</td></tr>
         <tr><td>{{company.projkpi1lable}}</td>
             <td>
                 <select ng-model="project.kpi1"  ng-change="saveNow()">
@@ -28,6 +28,9 @@
                     <option value="80">Large company impact</option>
                     <option value="99">Game changer</option>
                 </select>
+            </td>
+            <td rowspan="6">
+                <canvas id="radar" height="400" width="400" class="chart chart-radar" chart-data="radarkpidata" chart-options="radarkpioptions" chart-labels="radarkpilabels"></canvas>                 
             </td>
         </tr>
         <tr><td>{{company.projkpi2lable}}</td>
@@ -102,7 +105,5 @@
         </tr>
     </table>
 
-    <canvas id="radar" class="chart chart-radar"
-      chart-data="data" chart-options="options" chart-labels="labels">
-    </canvas> 
+    
 </div>
