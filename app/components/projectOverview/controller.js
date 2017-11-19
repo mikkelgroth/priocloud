@@ -46,78 +46,27 @@ angular
                 
                 $scope.hasChanged=true;               
             };
-            //Finance Chart Bar
-            $scope.overviewFinancedata = {
-                labels: ["match1", "match2", "match3", "match4", "match5"],
-                datasets: [
-                    {
-                        label: "TeamA Score",
-                        data: [10, 50, 25, 70, 40],
-                        backgroundColor: [
-                            "rgba(10,20,30,0.3)",
-                            "rgba(10,20,30,0.3)",
-                            "rgba(10,20,30,0.3)",
-                            "rgba(10,20,30,0.3)",
-                            "rgba(10,20,30,0.3)"
-                        ],
-                        borderColor: [
-                            "rgba(10,20,30,1)",
-                            "rgba(10,20,30,1)",
-                            "rgba(10,20,30,1)",
-                            "rgba(10,20,30,1)",
-                            "rgba(10,20,30,1)"
-                        ],
-                        borderWidth: 1
-                    },
-                    {
-                        label: "TeamB Score",
-                        data: [20, 35, 40, 60, 50],
-                        backgroundColor: [
-                            "rgba(50,150,200,0.3)",
-                            "rgba(50,150,200,0.3)",
-                            "rgba(50,150,200,0.3)",
-                            "rgba(50,150,200,0.3)",
-                            "rgba(50,150,200,0.3)"
-                        ],
-                        borderColor: [
-                            "rgba(50,150,200,1)",
-                            "rgba(50,150,200,1)",
-                            "rgba(50,150,200,1)",
-                            "rgba(50,150,200,1)",
-                            "rgba(50,150,200,1)"
-                        ],
-                        borderWidth: 1
-                    }
-                ]
-            };
-        
-            //options
-            $scope.overviewFinanceoptions = {
-                responsive: true,
-                title: {
-                    display: true,
-                    position: "top",
-                    text: "Bar Graph",
-                    fontSize: 18,
-                    fontColor: "#111"
-                },
-                legend: {
-                    display: true,
-                    position: "bottom",
-                    labels: {
-                        fontColor: "#333",
-                        fontSize: 16
-                    }
-                },
-                scales: {
-                    yAxes: [{
-                        ticks: {
-                            min: 0
-                        }
-                    }]
-                }
-            };
-        
+            //TEST Finance Chart Bar
+            $scope.finlabels = ['Q1', 'Q2', 'Q3', 'Q4'];
+            $scope.finseries = ['Budget', 'Posted', 'Deviation'];
+            
+             
+            if($scope.project.finance!=null){
+                $scope.findata =
+                [
+                [$scope.project.finance.budTotalq1, $scope.project.finance.budTotalq2, $scope.project.finance.budTotalq3, $scope.project.finance.budTotalq4],
+                [$scope.project.finance.postTotalq1, $scope.project.finance.postTotalq2, $scope.project.finance.postTotalq3, $scope.project.finance.postTotalq4],
+                [$scope.project.finance.devTotalq1, $scope.project.finance.devTotalq2, $scope.project.finance.devTotalq3, $scope.project.finance.devTotalq4]
+                ];
+            } else {
+                $scope.findata =
+                [
+                    [0,0,0,0],
+                    [0,0,0,0],
+                    [0,0,0,0]
+                ];
+            }           
+            //TEST END     
             
 
 
