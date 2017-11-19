@@ -3,6 +3,7 @@
 angular
     .module('riskApp', [
         'rx',
+        'chart.js',
         'ngRoute',
         'ngAnimate',
         'ui.sortable'
