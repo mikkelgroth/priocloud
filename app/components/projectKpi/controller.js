@@ -58,7 +58,9 @@ angular
 
             $scope.saveNow = function (project) {
                 
-                $scope.hasChanged=true;               
+                $scope.hasChanged=true;
+                $scope.radarkpidata = [[$scope.project.kpi1, $scope.project.kpi2, $scope.project.kpi3, $scope.project.kpi4, $scope.project.kpi5, $scope.project.kpi6]];
+                
             };
                 
                 //radar stuff

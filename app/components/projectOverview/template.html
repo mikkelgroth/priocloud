@@ -371,6 +371,7 @@
                             <tr class="header">
                                 <td class="label l" colspan="100%">Project Finance
                                     <div class="right"> Show: 
+                                        <input type="checkbox" ng-model="project.filters.showFinanceGraph" ng-change="saveNow()"> Graph, 
                                         <input type="checkbox" ng-model="project.filters.showFinanceSmall" ng-change="saveNow()"> Cap/Op, 
                                         <input type="checkbox" ng-model="project.filters.showFinanceBig" ng-change="saveNow()"> Ext/Int, 
                                         <input type="checkbox" ng-model="project.filters.showFinanceCommentsQ1" ng-change="saveNow()"> Q1 Desc, 
@@ -378,6 +379,12 @@
                                         <input type="checkbox" ng-model="project.filters.showFinanceCommentsQ3" ng-change="saveNow()"> Q3 Desc, 
                                         <input type="checkbox" ng-model="project.filters.showFinanceCommentsQ4" ng-change="saveNow()"> Q4 Desc
                                     </div>
+                                </td>
+                            </tr>
+                            <tr ng-if="project.filters.showFinanceGraph">
+                                <td colspan="8">
+                                    <canvas id="bar" height="300" width="800" class="chart chart-bar" chart-data="overviewFinancedata" chart-options="overviewFinanceoptions"></canvas>                 
+                                    
                                 </td>
                             </tr>
                                                                         
