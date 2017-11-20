@@ -118,7 +118,7 @@ angular
 
                 $scope.project.statuses.splice($scope.project.statuses.indexOf(status), 1);
 
-                companyService.saveProjectName(project, $scope.user.name);
+                companyService.saveProjectName($scope.project, $scope.user.name);
 
                 $scope.showStatusForm = false;
             };

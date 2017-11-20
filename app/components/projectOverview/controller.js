@@ -49,6 +49,15 @@ angular
             //TEST Finance Chart Bar
             $scope.finlabels = ['Q1', 'Q2', 'Q3', 'Q4'];
             $scope.finseries = ['Budget', 'Posted', 'Deviation'];
+            $scope.finoptions = {
+                responsive: false,
+                legend: { 
+                    verticalAlign: "top",  // "top" , "bottom"
+                    horizontalAlign: "right",
+                    display: true
+                    
+                }
+            };
             
              
             if($scope.project.finance!=null){
