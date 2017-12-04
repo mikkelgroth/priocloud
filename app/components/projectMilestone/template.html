@@ -34,6 +34,23 @@
                 </td>
             </tr>
             <tr>
+                <td class="header">Type</td>
+                <td>
+                    <select ng-model="editmile.type" ng-change="saveNow(editmile)">
+                        <option value="Milestone">Milestone</option>
+                        <option value="Phase">Phase</option>
+                        <option value="Task">Task</option>
+                        <option value="Go-live">Go-live</option>
+                        <option value="Valuable">Valuable</option>
+                    </select>
+                    
+                </td>
+                <td class="header">Show in report</td>
+                <td>
+                        <input type="checkbox" ng-model="editmile.showInReport">
+                </td>
+            </tr>
+            <tr>
                 <td class="header">Delivery responsible</td>
                 <td>
                     <select ng-model="editmile.responsible"  ng-change="saveNow(editmile)" ng-options="u.name for u in users | filter: {source: true} | orderBy:'name' track by u.name"></select>
@@ -202,7 +219,7 @@
             <table class="tablelist smaller" ng-if="project.milestones.length > 0">
                 <tr class="header">
                     <td>Title <div class="right"><input type="checkbox" ng-model="showDone" ng-init="showDone=false"> show done</div></td>
-                    <td>WSJF<br/>State</td>
+                    <td>WSJF<br/>Type</td>
                     <td>2016</td>
                     <td>2017</td>
                     <td>2018</td>
@@ -210,9 +227,9 @@
                     <td>Responsible<br/>Approver</td>
                 </tr>
                 <tr ng-repeat="mile in project.milestones | orderBy:orderdate" ng-if="showDone || (!showDone && mile.state!='Done')" ng-click="beginEditMile(mile)" class="link">
-                    <td class="{{mile.status}}"><b>{{mile.title}}</b></td>
-                    <td><b>{{mile.wsjf}}</b><br/>{{mile.state}}</td>
-                    <td class="bar" ng-style="barRender(mile)" colspan="3"></td>
+                    <td class="{{mile.status}}"><b>{{mile.title}}</b><br/><div ng-if="mile.showInReport">Report</div></td>
+                    <td><b>{{mile.wsjf}}</b><br/>{{mile.type}}</td>
+                    <td class="bar" ng-style="barRender(mile)" colspan="3">{{mile.state}}</td>
                     <td><b>{{mile.date | date:'yyyy-MM-dd'}}</b><br/>{{mile.enddate | date:'yyyy-MM-dd'}}</td>
                     <td><b>{{mile.responsible.name }}</b><br/>{{mile.acountable.name }}</td>
                 </tr>

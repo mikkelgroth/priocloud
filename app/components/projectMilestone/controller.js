@@ -101,6 +101,8 @@ angular
                 $scope.editmile.enddate = end.toISOString();
                 $scope.editmile.status = 'Green';
                 $scope.editmile.state = 'Target';
+                $scope.editmile.type = 'Milestone';
+                $scope.editmile.showInReport = true;
                 $scope.editmile.audience = 'Project';
                 $scope.editmile.acountable = $scope.user.name;
                 $scope.editmile.responsible = $scope.user.name;

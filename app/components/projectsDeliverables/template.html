@@ -11,6 +11,13 @@
                 <select multiple="multiple" ng-multiple="true" ng-model="milesearch.projecttitle" ng-options="p.title as p.title for p in projects | filter:{state: '!Closed'} | orderBy: 'title'"></select>
                 <select multiple="multiple" ng-multiple="true" ng-model="milesearch.acname" ng-options="u.name as u.name for u in users | filter: {source: true} | orderBy:'name'"></select>
                 <select multiple="multiple" ng-multiple="true" ng-model="milesearch.resname" ng-options="u.name as u.name for u in users | filter: {source: true} | orderBy:'name'" ></select>
+                <select multiple="multiple" ng-multiple="true" ng-model="milesearch.type">
+                        <option value="Milestone">Milestone</option>
+                        <option value="Phase">Phase</option>
+                        <option value="Task">Task</option>
+                        <option value="Go-live">Go-live</option>
+                        <option value="Valuable">Valuable</option>
+                </select>
             </div>
         </div>
         <div class="filter-order-container" ng-show="showfilters">
@@ -72,7 +79,7 @@
                 <tr ng-repeat="mile in milestoneList | multiFilter:milesearch | orderBy:orderdate" ng-click="goToMilestoneInProject(mile._id, mile.projectid)"
                     class="link" ng-if="mile.state!='Done' && mile.state!='Canceled'">
                     <td class="{{mile.status}}"><b>({{mile.wsjf}}) {{mile.title}}</b><br/>{{mile.projecttitle}}</td>
-                    <td class="bar" ng-style="barRender(mile)" colspan="3"><b>{{mile.state}}</b></td>
+                    <td class="bar" ng-style="barRender(mile)" colspan="3">{{mile.type}}/{{mile.state}}</td>
                     <td><b>{{mile.date | date:'d MMM, yyyy'}}</b><br/>{{mile.enddate | date:'d MMM, yyyy'}}</td>
                     <td><b>{{mile.responsible.name}}</b><br/>{{mile.acountable.name}}</td>
                 </tr>
