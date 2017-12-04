@@ -90,9 +90,9 @@
                         <option value="Red">Intervention (Red)</option>
                     </select>
                 </td>
-                <td class="header">Recovery complexity</td>
+                <td class="header {{editrisk.recComp}}">Recovery complexity</td>
                 <td>
-                    <select ng-model="editrisk.recComp" ng-change="saveNow()">
+                   <select ng-model="editrisk.recComp" ng-change="saveNow()">
                         <option value="Green">Easy fix (Green)</option>
                         <option value="Yellow">Taskforce (Yellow)</option>
                         <option value="Orange">Project (Orange)</option>
