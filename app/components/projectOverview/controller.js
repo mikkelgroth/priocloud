@@ -52,7 +52,7 @@ angular
             $scope.finoptions = {
                 responsive: false,
                 legend: { 
-                    verticalAlign: "top",  // "top" , "bottom"
+                    verticalAlign: "top",
                     horizontalAlign: "right",
                     display: true
                     
@@ -60,7 +60,7 @@ angular
             };
             
              
-            if($scope.project.finance!=null){
+            if($scope.project!=null && $scope.project.finance!=null){
                 $scope.findata =
                 [
                 [$scope.project.finance.budTotalq1, $scope.project.finance.budTotalq2, $scope.project.finance.budTotalq3, $scope.project.finance.budTotalq4],
