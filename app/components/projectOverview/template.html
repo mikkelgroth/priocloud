@@ -629,9 +629,26 @@
                                     <div class="right"> 
                                         <input type="checkbox" ng-model="project.filters.showIssueResponsible" ng-change="saveNow()"> Responsible, 
                                         <input type="checkbox" ng-model="project.filters.showIssueImpact" ng-change="saveNow()"> Impact, 
+                                        <input type="checkbox" ng-model="project.filters.showIssueRecov" ng-change="saveNow()"> Recovery, 
                                         <input type="checkbox" ng-model="project.filters.showIssueState" ng-change="saveNow()"> State, 
                                         <input type="checkbox" ng-model="project.filters.showIssueRequest" ng-change="saveNow()"> Request, 
                                         <input type="checkbox" ng-model="project.filters.showIssueAudience" ng-change="saveNow()"> Audience
+                                    </br>
+                                </div>
+                                <div class="right">
+                                    Order by: 
+                                    <select ng-model="issueorderparam" ng-init="issueorderparam='-statusValue'">
+                                        <option value="-statusValue">Status</option>
+                                        <option value="title">Title</option>
+                                        <option value="-impact">Impact</option>
+                                        <option value="-recComValue">Recovery complexity</option>
+                                    </select>
+                                    <select ng-model="issueorderparam2" ng-init="issueorderparam2='-impact'">
+                                        <option value="-statusValue">Status</option>
+                                        <option value="title">Title</option>
+                                        <option value="-impact">Impact</option>
+                                        <option value="-recComValue">Recovery complexity</option>
+                                    </select>
                                     </div>
                                 </td>
                             </tr>
@@ -639,16 +656,18 @@
                                 <td class="label l">Title</td>
                                 <td ng-if="project.filters.showIssueResponsible" class="label">Responsible</td>
                                 <td ng-if="project.filters.showIssueImpact" class="label">Impact</td>
+                                <td ng-if="project.filters.showIssueRecov" class="label">Recovery</td>
                                 <td ng-if="project.filters.showIssueState" class="label">State</td>
                                 <td ng-if="project.filters.showIssueRequest" class="label">Request</td>
                                 <td ng-if="project.filters.showIssueAudience" class="label">Audience</td>
                             </tr>
-                            <tr ng-repeat="risk in project.risks | orderBy:'-total'" ng-click="goToRiskInProject(risk)" class="link texttop" 
-                            ng-if="(risk.type=='Issue' && risk.state!='Closed') && 
+                            <tr ng-repeat="risk in project.risks | orderBy:[issueorderparam, issueorderparam2]" ng-click="goToRiskInProject(risk)" class="link texttop" 
+                            ng-if="(risk.showInReport && risk.type=='Issue' && risk.state!='Closed') && 
                             (risk.audience!='Confidential' || (risk.audience=='Confidential' && (user.email==project.po.email || user.email==project.pm.email || user.isOwner ||  user.admin) && project.showconfrisk=='true'))">
                                 <td class="{{risk.status}}">{{risk.title}}</td>
                                 <td ng-if="project.filters.showIssueResponsible">{{risk.acc.name}}</td>
-                                <td  ng-if="project.filters.showIssueImpact" prio-class prio-risk-bar-render="risk.impact"></td>
+                                <td ng-if="project.filters.showIssueImpact" prio-class prio-risk-bar-render="risk.impact"></td>
+                                <td ng-if="project.filters.showIssueRecov" prio-class prio-risk-bar-render="risk.recCompValue"></td>
                                 <td ng-if="project.filters.showIssueState">&nbsp;{{risk.state}}</td>
                                 <td ng-if="project.filters.showIssueRequest"><pre>{{risk.request}}</pre></td>
                                 <td ng-if="project.filters.showIssueAudience">&nbsp;{{risk.audience}}</td>
@@ -663,13 +682,34 @@
                         <table class="tablelist">
                             <tr class="header">
                                 <td class="label l" colspan="100%">Risks 
-                                    <div class="right"> 
+                                    
+                                    <div class="right">
+                                        <input type="checkbox" ng-model="project.filters.showRiskRecov" ng-change="saveNow()"> Recovery, 
                                         <input type="checkbox" ng-model="project.filters.showRiskResponsible" ng-change="saveNow()"> Responsible, 
                                         <input type="checkbox" ng-model="project.filters.showRiskResponse" ng-change="saveNow()"> Response, 
                                         <input type="checkbox" ng-model="project.filters.showRiskProx" ng-change="saveNow()"> Proximity, 
                                         <input type="checkbox" ng-model="project.filters.showRiskRequest" ng-change="saveNow()"> Request, 
                                         <input type="checkbox" ng-model="project.filters.showRiskDesc" ng-change="saveNow()"> Description, 
                                         <input type="checkbox" ng-model="project.filters.showRiskAudience" ng-change="saveNow()"> Audience
+                                        </br>
+                                    </div>
+                                    <div class="right">
+                                        Order by: 
+                                        <select ng-model="orderparam" ng-init="orderparam='-statusValue'">
+                                            <option value="-statusValue">Status</option>
+                                            <option value="title">Title</option>
+                                            <option value="-total">Risk Total</option>
+                                            <option value="-prob">Probability</option>
+                                            <option value="-impact">Impact</option>
+                                        </select>
+                                        <select ng-model="orderparam2" ng-init="orderparam2='-total'">
+                                            <option value="-statusValue">Status</option>
+                                            <option value="title">Title</option>
+                                            <option value="-total">Risk Total</option>
+                                            <option value="-prob">Probability</option>
+                                            <option value="-impact">Impact</option>
+                                        </select>
+                                        
                                     </div>
                                 </td>
                             </tr>
@@ -677,6 +717,7 @@
                                 <td class="label l">Title</td>
                                 <td class="label">Prob.</td>
                                 <td class="label">Imp.</td>
+                                <td ng-if="project.filters.showRiskRecov" class="label">Recovery</td>
                                 <td ng-if="project.filters.showRiskResponsible" class="label">Responsible</td>
                                 <td ng-if="project.filters.showRiskResponse" class="label">Response</td>
                                 <td ng-if="project.filters.showRiskProx" class="label">Proximity</td>
@@ -684,13 +725,14 @@
                                 <td ng-if="project.filters.showRiskDesc" class="label">Description</td>
                                 <td ng-if="project.filters.showRiskAudience" class="label">Audience</td>
                             </tr>
-                            <tr ng-repeat="risk in project.risks | orderBy:'-total'" ng-click="goToRiskInProject(risk)" class="link texttop" 
-                            ng-if="(risk.type=='Risk' && risk.state!='Closed') && 
+                            <tr ng-repeat="risk in project.risks | orderBy:[orderparam, orderparam2]" ng-click="goToRiskInProject(risk)" class="link texttop" 
+                            ng-if="(risk.showInReport && risk.type=='Risk' && risk.state!='Closed') && 
                             (risk.audience!='Confidential' || (risk.audience=='Confidential' && (user.email==project.po.email || user.email==project.pm.email || user.isOwner ||  user.admin) && project.showconfrisk=='true'))">
                                 <td class="{{risk.status}}">{{risk.title}}</td>
                                 <td prio-class prio-risk-bar-render="risk.prob"></td>
                                 <td prio-class prio-risk-bar-render="risk.impact"></td>
-                                <td ng-if="project.filters.showRiskResponsible">&nbsp;{{risk.acc.name}}</td>
+                                <td ng-if="project.filters.showRiskRecov" prio-class prio-risk-bar-render="risk.recCompValue"></td>
+                                <td ng-if="project.filters.showRiskResponsible">{{risk.acc.name}}</td>
                                 <td ng-if="project.filters.showRiskResponse">&nbsp;{{risk.response}}</td>
                                 <td ng-if="project.filters.showRiskProx">&nbsp;{{risk.proximity}}</td>
                                 <td ng-if="project.filters.showRiskRequest"><pre>{{risk.request}}</pre></td>

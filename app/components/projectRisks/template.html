@@ -18,7 +18,7 @@
         </h2>
         <table class="smaller">
             <tr>
-                <td class="header">Title</td>
+                <td class="header">Title <div class="right"><input type="checkbox" ng-model="editrisk.showInReport"> Show in report</div></td>
                 <td>
                     <div class="field">
                         <input ng-model="editrisk.title"  ng-change="saveNow()"/>
@@ -32,6 +32,21 @@
                     </select>
                 </td>
             </tr>
+            <tr>
+                <td class="header">Show in report</td>
+                <td>
+                    <input type="checkbox" ng-model="editrisk.showInReport">
+                </td>
+                <td class="header">State</td>
+                <td>
+                    <select ng-model="editrisk.state" ng-change="saveNow()">
+                        <option value="New">New</option>
+                        <option value="Open">Open</option>
+                        <option value="Closed">Closed</option>
+                    </select>
+                </td>
+            </tr>
+                
             <tr>
                 <td class="header">Proximity</td>
                 <td>
@@ -75,12 +90,13 @@
                         <option value="Red">Intervention (Red)</option>
                     </select>
                 </td>
-                <td class="header">State</td>
+                <td class="header">Recovery complexity</td>
                 <td>
-                    <select ng-model="editrisk.state" ng-change="saveNow()">
-                        <option value="New">New</option>
-                        <option value="Open">Open</option>
-                        <option value="Closed">Closed</option>
+                    <select ng-model="editrisk.recComp" ng-change="saveNow()">
+                        <option value="Green">Easy fix (Green)</option>
+                        <option value="Yellow">Taskforce (Yellow)</option>
+                        <option value="Orange">Project (Orange)</option>
+                        <option value="Red">Unknow/Massive (Red)</option>
                     </select>
                 </td>
             </tr>
@@ -200,10 +216,10 @@
         <div class="overview">
             <table class="tablelist smaller" ng-if="project.risks.length > 0">
                 <tr class="header">
-                    <td colspan="6"><span>Filters</span></td>
+                    <td colspan="7"><span>Filters</span></td>
                 </tr>
                 <tr class="header">
-                    <td colspan="6">
+                    <td colspan="7">
                     <select ng-model="riskpmsearch.audience" class="right">
                         <option value="" default>Show all audience</option>
                         <option value="Confidential">Show only Confidential</option>
@@ -250,6 +266,7 @@
                     <td class="label">Risks</td>
                     <td class="label">Impact</td>
                     <td class="label">Probability</td>
+                    <td class="label">Recovery</td>
                     <td class="label">Proximity</td>
                     <td class="label">State<br/>Response</td>
                     <td class="label">Audience<br/>Responsible</td>
@@ -262,10 +279,11 @@
                     (risk.audience=='Confidential'&&project.showconfrisk=='true' && 
                     (user.email==project.po.email || user.email==project.pm.email || user.email==project.altpo.email || user.email==project.altpm.email || user.isOwner || user.admin)))">
                     <td class="texttop {{risk.status}}"><b>{{risk.title}}</b>
-                        <div class="right">({{risk.total}})</div>
+                        <div class="right">({{risk.total}})</div></br><div ng-if="risk.showInReport">Report</div>
                     </td>
                     <td class="texttop" prio-class prio-risk-bar-render="risk.impact">{{risk.impact}}</td>
                     <td class="texttop" prio-class prio-risk-bar-render="risk.prob">{{risk.prob}}</td>
+                    <td class="texttop" prio-class prio-risk-bar-render="risk.recCompValue">{{risk.recCompValue}}</td>
                     <td class="texttop">&nbsp;{{risk.proximity}}</td>
                     <td class="texttop">&nbsp;{{risk.state}}<br/>&nbsp;{{risk.response}}</td>
                     <td class="texttop">&nbsp;{{risk.audience}}<br/>&nbsp;{{risk.acc.name}}</td>
@@ -275,6 +293,7 @@
                 <tr class="header" ng-if="riskpmsearch.type=='' || riskpmsearch.type=='Issue'|| riskpmsearch.type==null">
                     <td class="label">Issues</td>
                     <td class="label">Impact</td>
+                    <td class="label">Recovery</td>
                     <td class="label" colspan="3">Request</td>
                     <td class="label">Audience<br/>Responsible</td>
                 </tr>
@@ -286,10 +305,11 @@
                     (risk.audience=='Confidential'&&project.showconfrisk=='true' &&
                     (user.email==project.po.email || user.email==project.pm.email || user.email==project.altpo.email || user.email==project.altpm.email || user.isOwner || user.admin)))">
                     <td class="texttop {{risk.status}}"><b>{{risk.title}}</b>
-                        <div class="right">({{risk.total}})</div>
+                        <div class="right">({{risk.total}})</div></br><div ng-if="risk.showInReport">Report</div>
                     </td>
                     
                     <td class="texttop" prio-class prio-risk-bar-render="risk.impact">{{risk.impact}}</td>
+                    <td class="texttop" prio-class prio-risk-bar-render="risk.recCompValue">{{risk.recCompValue}}</td>
                     <td class="texttop" colspan="3"><pre>{{risk.request}}</pre></td>
                     
                     <td class="texttop">&nbsp;{{risk.audience}}<br/>&nbsp;{{risk.acc.name}}</td>

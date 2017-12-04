@@ -102,6 +102,16 @@ angular
             $scope.saveRisk = function (risk) {
 
                 risk.total = risk.prob * risk.impact;
+                risk.statusValue = 1;
+                if(risk.status=="Yellow")risk.statusValue = 2;
+                if(risk.status=="Orange")risk.statusValue = 3;
+                if(risk.status=="Red")risk.statusValue = 4;
+                
+                risk.recCompValue = 1;
+                if(risk.recComp=="Yellow")risk.recCompValue = 2;
+                if(risk.recComp=="Orange")risk.recCompValue = 3;
+                if(risk.recComp=="Red")risk.recCompValue = 4;
+                
 
                 if($scope.project.risks==null){
                     $scope.project.risks=[];

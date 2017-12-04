@@ -4,24 +4,7 @@
         <div class="filter-order-container" ng-show="showfilters">
             <div class="label" style="height:120px;">
                 Filter by:<br/>
-                BU<br/>Project<br/>Responsible<br/>Portfolio<br/>Audience
-            </div>
-            <div class="field multiple-select">
-                <select multiple="multiple" ng-multiple="true" ng-model="risksearch.buname" ng-options="bu.name as bu.name for bu in bus | orderBy:'name'"></select> 
-                <select multiple="multiple" ng-multiple="true" ng-model="risksearch.projecttitle" ng-options="p.title as p.title for p in projects | filter:{state: '!Closed'} | orderBy: 'title'"></select>
-                <select multiple="multiple" ng-multiple="true" ng-model="risksearch.acname" ng-options="u.name as u.name for u in users | filter: {source: true} | orderBy:'name'"></select>
-                <select multiple="multiple" ng-multiple="true" ng-model="risksearch.support" ng-options="bu.name as bu.name for bu in bus | orderBy: 'name'"></select>
-                <select multiple="multiple" ng-multiple="true" ng-model="risksearch.audience">
-                    <option value="Project">Project</option>
-                    <option value="Portfolio">Portfolio</option>
-                    <option value="Company">Company</option>
-                </select>
-            </div>
-        </div>
-        <div class="filter-order-container" ng-show="showfilters">
-            <div class="label" style="height:120px;">
-                Filter by:<br/>
-                P. State<br/>Status<br/>Response<br/>Probability<br/>Impact
+                P. State<br/>BU<br/>Project<br/>Portfolio
             </div>
             <div class="field multiple-select">
                 <select multiple="multiple" ng-multiple="true" ng-model="risksearch.projectstate" ng-init="risksearch.projectstate=['Progress']">
@@ -30,45 +13,81 @@
                     <option value="Onhold">On hold</option>
                     <option value="Closed">Closed</option>
                 </select>
-                <select multiple="multiple" ng-multiple="true" ng-model="risksearch.status">
-                    <option value="Green">Accept</option>
-                    <option value="Yellow">Observe</option>
-                    <option value="Orange">Assist</option>
-                    <option value="Red">Intervent</option>
-                </select>
+                <select multiple="multiple" ng-multiple="true" ng-model="risksearch.buname" ng-options="bu.name as bu.name for bu in bus | orderBy:'name'"></select> 
+                <select multiple="multiple" ng-multiple="true" ng-model="risksearch.projecttitle" ng-options="p.title as p.title for p in projects | filter:{state: '!Closed'} | orderBy: 'title'"></select>
+                
+            </div>
+        </div>
+        <div class="filter-order-container" ng-show="showfilters">
+            <div class="label" style="height:120px;">
+                Filter by:<br/>
+                Responsible<br/>Response<br/>Audience<br/>Portfolio
+            </div>
+            <div class="field multiple-select">
+                <select multiple="multiple" ng-multiple="true" ng-model="risksearch.acname" ng-options="u.name as u.name for u in users | filter: {source: true} | orderBy:'name'"></select>
                 <select multiple="multiple" ng-multiple="true" ng-model="risksearch.response">
                     <option value="Accept">Accept</option>
                     <option value="Mitigation">Mitigation</option>
                     <option value="Contingency">Contingency</option>
                 </select>
-                <select multiple="multiple" ng-multiple="true" ng-model="risksearch.prob">
-                    <option value="1">1. Slim chance</option>
-                    <option value="2">2. Could happen</option>
-                    <option value="3">3. Likely to happen</option>
-                    <option value="4">4. Most likely to happen</option>
+                <select multiple="multiple" ng-multiple="true" ng-model="risksearch.audience">
+                    <option value="Project">Project</option>
+                    <option value="Portfolio">Portfolio</option>
+                    <option value="Company">Company</option>
                 </select>
-                <select multiple="multiple" ng-multiple="true" ng-model="risksearch.impact">
-                    <option value="1">1. Minor Project impact</option>
-                    <option value="2">2. Major Project impact</option>
-                    <option value="3">3. Business Unit impact</option>
-                    <option value="4">4. Company impact</option>
-                </select>
+                <select multiple="multiple" ng-multiple="true" ng-model="risksearch.support" ng-options="bu.name as bu.name for bu in bus | orderBy: 'name'"></select>
+                
             </div>
         </div>
         <div class="filter-order-container" ng-show="showfilters">
+                <div class="label" style="height:120px;">
+                    Filter by:<br/>
+                    Status<br/>Probability<br/>Impact<br/>Recovery
+                </div>
+                <div class="field multiple-select">
+                    <select multiple="multiple" ng-multiple="true" ng-model="risksearch.status">
+                        <option value="Green">1. Accept</option>
+                        <option value="Yellow">2. Observe</option>
+                        <option value="Orange">3. Assist</option>
+                        <option value="Red">4. Intervention</option>
+                    </select>
+                    <select multiple="multiple" ng-multiple="true" ng-model="risksearch.prob">
+                        <option value="1">1. Slim chance</option>
+                        <option value="2">2. Could happen</option>
+                        <option value="3">3. Likely to happen</option>
+                        <option value="4">4. Most likely to happen</option>
+                    </select>
+                    <select multiple="multiple" ng-multiple="true" ng-model="risksearch.impact">
+                        <option value="1">1. Minor Project impact</option>
+                        <option value="2">2. Major Project impact</option>
+                        <option value="3">3. Business Unit impact</option>
+                        <option value="4">4. Company impact</option>
+                    </select>
+                    <select multiple="multiple" ng-multiple="true" ng-model="risksearch.recComp">
+                            <option value="Green">1. Easy fix</option>
+                            <option value="Yellow">2. Taskforce</option>
+                            <option value="Orange">3. Project</option>
+                            <option value="Red">4. Unknow/Massive</option>
+                    </select>
+                    
+                </div>
+            </div>
+            <div class="filter-order-container" ng-show="showfilters">
             <div class="label">
                 Order by:
             </div>
             <div class="field">
-                <select ng-model="orderparam" ng-init="orderparam='-wtotal'">
+                <select ng-model="orderparam" ng-init="orderparam='-statusValue'">
                     <option value="-wtotal">Project/Risk Prob./Risk Imp.</option>
                     <option value="-wtotalprob">Project/Risk Prob.</option>
                     <option value="-wtotalimpact">Project/Risk Imp.</option>
                     <option value="title">Risk title</option>
                     <option value="projecttitle">Project title</option>
+                    <option value="-statusValue">Risk: Status</option>
                     <option value="-total">Risk: Total</option>
                     <option value="-prob">Risk: Probability</option>
                     <option value="-impact">Risk: Impact</option>
+                    <option value="-recCompValue">Risk: Recovery complexity</option>
                     <option value="-pkpi1">Project: {{company.projkpi1lable}}</option>
                     <option value="-pkpi2">Project: {{company.projkpi2lable}}</option>
                     <option value="-pkpi3">Project: {{company.projkpi3lable}}</option>
@@ -78,15 +97,17 @@
                     <option value="-ptotal">Project: Total points</option>
                     
                 </select>
-                <select ng-model="orderparam2" ng-init="orderparam='-wtotal'">
+                <select ng-model="orderparam2" ng-init="orderparam2='-wtotal'">
                     <option value="-wtotal">Project/Risk Prob./Risk Imp.</option>
                     <option value="-wtotalprob">Project/Risk Prob.</option>
                     <option value="-wtotalimpact">Project/Risk Imp.</option>
                     <option value="title">Risk title</option>
                     <option value="projecttitle">Project title</option>
+                    <option value="-statusValue">Risk: Status</option>
                     <option value="-total">Risk: Total</option>
                     <option value="-prob">Risk: Probability</option>
                     <option value="-impact">Risk: Impact</option>
+                    <option value="-recCompValue">Risk: Recovery complexity</option>
                     <option value="-pkpi1">Project: {{company.projkpi1lable}}</option>
                     <option value="-pkpi2">Project: {{company.projkpi2lable}}</option>
                     <option value="-pkpi3">Project: {{company.projkpi3lable}}</option>
@@ -102,11 +123,17 @@
             <table class="tablelist" ng-if="riskList.length > 0">
                 <tr class="header">
                     <td>Risk - (Risk prio)<br/>Project (Project prio)</td>
+                    <td>Prob.</td>
+                    <td>Imp.</td>
+                    <td>Reco.</td>
                     <td>Description</td>
                     <td>Response<br/>Responsible</td>
                 </tr>
                 <tr ng-repeat="risk in riskList | multiFilter:risksearch | orderBy:[orderparam, orderparam2]" ng-click="goToRiskInProject(risk._id, risk.projectid)" class="link"  ng-if="risk.state != 'Closed' && risk.audience != 'Confidential'">
                     <td class="{{risk.status}}"><b>{{risk.title}} <div class="right">({{risk.total}})</div></b><br/>{{risk.projecttitle}}<div class="right">({{risk.ptotal}})</div></td>
+                    <td prio-class prio-risk-bar-render="risk.prob">{{risk.prob}}</td>
+                    <td prio-class prio-risk-bar-render="risk.impact">{{risk.impact}}</td>
+                    <td prio-class prio-risk-bar-render="risk.recCompValue">{{risk.recCompValue}}</td>
                     <td class="wrap xl">{{risk.desc.substring(0,80)}} ...</td>
                     <td><b>{{risk.response}}</b><br/>{{risk.acc.name}}</td>
                 </tr>
