@@ -12,7 +12,7 @@
                         user.email == project.altpm.email || 
                         user.isOwner || 
                         user.admin"
-                        ng-click="saveMilestones()">save</button>
+                        ng-click="saveMilestones(true)">save</button>
                 <button type="button" ng-click="hideMilestoneForm()">close</button>
             </div>
         </h2>
@@ -47,7 +47,7 @@
                 </td>
                 <td class="header">Show in report</td>
                 <td>
-                        <input type="checkbox" ng-model="editmile.showInReport">
+                        <input type="checkbox" ng-model="editmile.showInReport" ng-change="saveNow(editmile)">
                 </td>
             </tr>
             <tr>
@@ -213,6 +213,15 @@
                     user.email==project.altpo.email || 
                     user.email==project.altpm.email || 
                     user.isOwner || user.admin">create new deliverable</button>
+
+                <button type="button" id="saveButton" prio-class save-this="$parent.hasChanged"
+                    ng-if="user.email == project.po.email || 
+                    user.email == project.pm.email || 
+                    user.email == project.altpo.email || 
+                    user.email == project.altpm.email || 
+                    user.isOwner || 
+                    user.admin"
+                    ng-click="saveMilestones(false)">save</button>
             </div>
         </h2>
         <div class="overview">
@@ -225,13 +234,16 @@
                     <td>2018</td>
                     <td>Start Date<br/>End Date</td>
                     <td>Responsible<br/>Approver</td>
+                    <td>Show in<br/>Report</td>
                 </tr>
-                <tr ng-repeat="mile in project.milestones | orderBy:orderdate" ng-if="showDone || (!showDone && mile.state!='Done')" ng-click="beginEditMile(mile)" class="link">
-                    <td class="{{mile.status}}"><b>{{mile.title}}</b><br/><div ng-if="mile.showInReport">Report</div></td>
-                    <td><b>{{mile.wsjf}}</b><br/>{{mile.type}}</td>
-                    <td class="bar" ng-style="barRender(mile)" colspan="3">{{mile.state}}</td>
-                    <td><b>{{mile.date | date:'yyyy-MM-dd'}}</b><br/>{{mile.enddate | date:'yyyy-MM-dd'}}</td>
-                    <td><b>{{mile.responsible.name }}</b><br/>{{mile.acountable.name }}</td>
+                <tr ng-repeat="mile in project.milestones | orderBy:orderdate" ng-if="showDone || (!showDone && mile.state!='Done')" class="link">
+                    <td ng-click="beginEditMile(mile)" class="{{mile.status}}"><b>{{mile.title}}</b></td>
+                    <td ng-click="beginEditMile(mile)"><b>{{mile.wsjf}}</b><br/>{{mile.type}}</td>
+                    <td ng-click="beginEditMile(mile)" class="bar" ng-style="barRender(mile)" colspan="3">{{mile.state}}</td>
+                    <td ng-click="beginEditMile(mile)"><b>{{mile.date | date:'yyyy-MM-dd'}}</b><br/>{{mile.enddate | date:'yyyy-MM-dd'}}</td>
+                    <td ng-click="beginEditMile(mile)"><b>{{mile.responsible.name }}</b><br/>{{mile.acountable.name }}</td>
+                    <td><input type="checkbox" ng-model="mile.showInReport" ng-change="saveNowQuick()"></td>
+                    
                 </tr>
             </table>
         </div>

@@ -63,11 +63,18 @@ angular
                 $scope.showMilestoneForm = true;
             };
 
-            $scope.saveMilestones = function () {
+            $scope.saveMilestones = function (open) {
                 companyService.saveProjectName($scope.project, $scope.user.name);
                 $scope.hasChanged=false;
-                $scope.showMilestoneForm = true;
+                if (open) {
+                    $scope.showMilestoneForm = true;
+                }
+                
             };
+            $scope.saveNowQuick = function () {
+                $scope.hasChanged=true;               
+            };
+
            
             $scope.saveNow = function (mile) {
                 var md = new Date($("#miledate")[0].value);

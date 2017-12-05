@@ -332,8 +332,7 @@
                                         <input type="checkbox" ng-model="project.filters.showDeliverableStart" ng-change="saveNow()"> Start date, 
                                         <input type="checkbox" ng-model="project.filters.showDeliverableEnd" ng-change="saveNow()"> End date, 
                                         <input type="checkbox" ng-model="project.filters.showDeliverableEffort" ng-change="saveNow()"> Effort, 
-                                        <input type="checkbox" ng-model="project.filters.showDeliverableDesc" ng-change="saveNow()"> Description,
-                                        <input type="checkbox" ng-model="project.filters.showDeliverableDone" ng-change="saveNow()"> Done
+                                        <input type="checkbox" ng-model="project.filters.showDeliverableDesc" ng-change="saveNow()"> Description
                                     </div>
                                 </td>
                             </tr>
@@ -349,7 +348,7 @@
                                 <td ng-if="project.filters.showDeliverableEffort">Effort</td>
                                 <td ng-if="project.filters.showDeliverableDesc">Description</td>
                             </tr>
-                            <tr ng-repeat="mile in project.milestones | orderBy:'enddate'" ng-click="goToMilestoneInProject(mile)" class="link texttop" ng-if="((project.filters.showDeliverableDone && mile.state=='Done') || mile.state!='Done') && mile.state!='Canceled' && mile.showInReport">
+                            <tr ng-repeat="mile in project.milestones | orderBy:'enddate'" ng-click="goToMilestoneInProject(mile)" class="link texttop" ng-if=" mile.showInReport">
                                 <td class="{{mile.status}}">({{mile.wsjf}}) {{mile.title}}</td>
                                 <td ng-if="project.filters.showDeliverableGantt" class="bar xl" ng-style="barRender(mile)" colspan="3"><div ng-if="project.filters.showDeliverableState">{{mile.type}}/{{mile.state}}</div></td>
                                 <td ng-if="project.filters.showDeliverableResp">{{mile.responsible.name}}</td>
