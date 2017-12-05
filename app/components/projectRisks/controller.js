@@ -128,7 +128,15 @@ angular
                 $scope.deleteThis=false;
                 $scope.hasChanged=false;
             };
-
+            $scope.saveAllRisk = function () {
+                
+                if($scope.project.risks==null){
+                    $scope.project.risks=[];
+                }
+                companyService.saveProjectName($scope.project, $scope.user.name);
+                $scope.hasChanged=false;
+            };
+                
             $scope.saveNow = function (project) {
                 
                 $scope.hasChanged=true;               

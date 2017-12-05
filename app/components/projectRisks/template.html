@@ -211,15 +211,23 @@
                 <button type="button" 
                     ng-click="newRisk()"
                     ng-if="user.email==project.po.email || user.email==project.pm.email || user.email==project.altpo.email || user.email==project.altpm.email || user.isOwner || user.admin">create new risk or issue</button>
+                <button type="button" id="saveButton" prio-class save-this="$parent.hasChanged"
+                    ng-if="user.email == project.po.email || 
+                    user.email == project.pm.email || 
+                    user.email == project.altpo.email || 
+                    user.email == project.altpm.email || 
+                    user.isOwner || 
+                    user.admin"
+                    ng-click="saveAllRisk()">save</button>
             </div>
         </h2>
         <div class="overview">
             <table class="tablelist smaller" ng-if="project.risks.length > 0">
                 <tr class="header">
-                    <td colspan="7"><span>Filters</span></td>
+                    <td colspan="8"><span>Filters</span></td>
                 </tr>
                 <tr class="header">
-                    <td colspan="7">
+                    <td colspan="8">
                     <select ng-model="riskpmsearch.audience" class="right">
                         <option value="" default>Show all audience</option>
                         <option value="Confidential">Show only Confidential</option>
@@ -270,23 +278,24 @@
                     <td class="label">Proximity</td>
                     <td class="label">State<br/>Response</td>
                     <td class="label">Audience<br/>Responsible</td>
+                    <td class="label">Show in<br/>Report</td>
                 </tr>
                 <tr class="link" 
                     ng-repeat="risk in project.risks | filter:riskpmsearch | orderBy:'-total'"
-                    ng-click="beginEditRisk(risk)"
                     ng-if="risk.type=='Risk' &&
                     (risk.audience!='Confidential' ||
                     (risk.audience=='Confidential'&&project.showconfrisk=='true' && 
                     (user.email==project.po.email || user.email==project.pm.email || user.email==project.altpo.email || user.email==project.altpm.email || user.isOwner || user.admin)))">
-                    <td class="texttop {{risk.status}}"><b>{{risk.title}}</b>
+                    <td ng-click="beginEditRisk(risk)" class="texttop {{risk.status}}"><b>{{risk.title}}</b>
                         <div class="right">({{risk.total}})</div></br><div ng-if="risk.showInReport">Report</div>
                     </td>
-                    <td class="texttop" prio-class prio-risk-bar-render="risk.impact">{{risk.impact}}</td>
-                    <td class="texttop" prio-class prio-risk-bar-render="risk.prob">{{risk.prob}}</td>
-                    <td class="texttop" prio-class prio-risk-bar-render="risk.recCompValue">{{risk.recCompValue}}</td>
-                    <td class="texttop">&nbsp;{{risk.proximity}}</td>
-                    <td class="texttop">&nbsp;{{risk.state}}<br/>&nbsp;{{risk.response}}</td>
-                    <td class="texttop">&nbsp;{{risk.audience}}<br/>&nbsp;{{risk.acc.name}}</td>
+                    <td ng-click="beginEditRisk(risk)" class="texttop" prio-class prio-risk-bar-render="risk.impact">{{risk.impact}}</td>
+                    <td ng-click="beginEditRisk(risk)" class="texttop" prio-class prio-risk-bar-render="risk.prob">{{risk.prob}}</td>
+                    <td ng-click="beginEditRisk(risk)" class="texttop" prio-class prio-risk-bar-render="risk.recCompValue">{{risk.recCompValue}}</td>
+                    <td ng-click="beginEditRisk(risk)" class="texttop">&nbsp;{{risk.proximity}}</td>
+                    <td ng-click="beginEditRisk(risk)" class="texttop">&nbsp;{{risk.state}}<br/>&nbsp;{{risk.response}}</td>
+                    <td ng-click="beginEditRisk(risk)" class="texttop">&nbsp;{{risk.audience}}<br/>&nbsp;{{risk.acc.name}}</td>
+                    <td><input type="checkbox" ng-model="risk.showInReport" ng-change="saveNow()"></td>
                 </tr>
 
                 
@@ -296,23 +305,24 @@
                     <td class="label">Recovery</td>
                     <td class="label" colspan="3">Request</td>
                     <td class="label">Audience<br/>Responsible</td>
+                    <td class="label">Show in<br/>Report</td>
                 </tr>
                 <tr class="link" 
                     ng-repeat="risk in project.risks | filter:riskpmsearch | orderBy:'-total'"
-                    ng-click="beginEditRisk(risk)"
                     ng-if="risk.type=='Issue' && 
                     (risk.audience!='Confidential' ||
                     (risk.audience=='Confidential'&&project.showconfrisk=='true' &&
                     (user.email==project.po.email || user.email==project.pm.email || user.email==project.altpo.email || user.email==project.altpm.email || user.isOwner || user.admin)))">
-                    <td class="texttop {{risk.status}}"><b>{{risk.title}}</b>
+                    <td ng-click="beginEditRisk(risk)" class="texttop {{risk.status}}"><b>{{risk.title}}</b>
                         <div class="right">({{risk.total}})</div></br><div ng-if="risk.showInReport">Report</div>
                     </td>
                     
-                    <td class="texttop" prio-class prio-risk-bar-render="risk.impact">{{risk.impact}}</td>
-                    <td class="texttop" prio-class prio-risk-bar-render="risk.recCompValue">{{risk.recCompValue}}</td>
-                    <td class="texttop" colspan="3"><pre>{{risk.request}}</pre></td>
+                    <td ng-click="beginEditRisk(risk)" class="texttop" prio-class prio-risk-bar-render="risk.impact">{{risk.impact}}</td>
+                    <td ng-click="beginEditRisk(risk)" class="texttop" prio-class prio-risk-bar-render="risk.recCompValue">{{risk.recCompValue}}</td>
+                    <td ng-click="beginEditRisk(risk)" class="texttop" colspan="3"><pre>{{risk.request}}</pre></td>
                     
-                    <td class="texttop">&nbsp;{{risk.audience}}<br/>&nbsp;{{risk.acc.name}}</td>
+                    <td ng-click="beginEditRisk(risk)" class="texttop">&nbsp;{{risk.audience}}<br/>&nbsp;{{risk.acc.name}}</td>
+                    <td><input type="checkbox" ng-model="risk.showInReport" ng-change="saveNow()"></td>
                 </tr>
             </table>
         </div>
