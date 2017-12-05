@@ -684,6 +684,7 @@
                                 <td class="label l" colspan="100%">Risks 
                                     
                                     <div class="right">
+                                        <input type="checkbox" ng-model="project.filters.showRiskGraph" ng-change="saveNow()"> Graph, 
                                         <input type="checkbox" ng-model="project.filters.showRiskRecov" ng-change="saveNow()"> Recovery, 
                                         <input type="checkbox" ng-model="project.filters.showRiskResponsible" ng-change="saveNow()"> Responsible, 
                                         <input type="checkbox" ng-model="project.filters.showRiskResponse" ng-change="saveNow()"> Response, 
@@ -713,6 +714,12 @@
                                     </div>
                                 </td>
                             </tr>
+                            <tr ng-if="project.filters.showRiskGraph">
+                                    <td colspan="10">
+                                        <canvas id="bubble" height="250" width="790" class="chart chart-bubble" chart-click="onRiskClick" chart-title="Risk overview" chart-options="riskoptions" chart-data="riskdata" chart-labels="risklabels" chart-series="riskseries"></canvas>                 
+                                        
+                                    </td>
+                                </tr>
                             <tr class="header">
                                 <td class="label l">Title</td>
                                 <td class="label">Prob.</td>

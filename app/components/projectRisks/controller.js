@@ -68,11 +68,15 @@ angular
 
                 $scope.editrisk.prob = '1';
                 $scope.editrisk.impact = '1';
+                $scope.editrisk.recComp = 'Green';
                 $scope.editrisk.total = 1;
                 $scope.editrisk.response = 'Accept';
                 $scope.editrisk.acc = 'TBD';
                 $scope.editrisk.audience = 'Project';
                 $scope.editrisk.status = 'Green';
+                $scope.editrisk.statusValue = '1';
+                $scope.editrisk.recCompValue = '1';
+                $scope.editrisk.showInReport = true;
                 $scope.editrisk.state = 'New';
 
                 $scope.showRiskForm = true;

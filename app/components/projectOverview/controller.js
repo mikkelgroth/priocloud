@@ -77,6 +77,81 @@ angular
             }           
             //TEST END     
             
+//TEST Risk bubble graph
+$scope.risklabels = [];
+$scope.riskoptions = {
+    responsive: false,
+    legend: { 
+        verticalAlign: "top",
+        horizontalAlign: "right",
+        display: true
+        
+    }
+};
+
+ 
+if($scope.project!=null && $scope.project.risks!=null){
+    
+        $scope.riskseries = [];
+        $scope.riskdata = [];
+        $scope.riskoptions = {
+            
+            legend: {
+                display: true,
+                position: 'right'
+            },    
+            tooltips: false,
+            scales: {
+              xAxes: [{
+                scaleLabel: {
+                    display: true,
+                    labelString: 'Probability'
+                },
+                display: true,
+                ticks: {
+                  max: 300,
+                  min: 0,
+                  stepSize: 100
+                }
+              }],
+              yAxes: [{
+                scaleLabel: {
+                    display: true,
+                    labelString: 'Impact'
+                },
+                display: true,
+                ticks: {
+                  max: 300,
+                  min: 0,
+                  stepSize: 100
+                }
+              }]
+            }
+          };
+        var risk;
+        for (var i = 0; i < $scope.project.risks.length; i++) {
+            risk = $scope.project.risks[i];
+            
+            if((risk.showInReport && risk.type=='Risk' && risk.state!='Closed') && 
+                (risk.audience!='Confidential' || (risk.audience=='Confidential' && 
+                (user.email==project.po.email || user.email==project.pm.email || user.isOwner ||  user.admin) && 
+                project.showconfrisk=='true'))){
+                    $scope.riskseries.push(risk.title);
+                    $scope.riskdata.push([{
+                        x: parseInt(risk.prob)*50+parseInt(risk.impact)*10+parseInt(risk.recCompValue),
+                        y: parseInt(risk.impact)*50+parseInt(risk.recCompValue)*10+parseInt(risk.prob),
+                        r: parseInt(risk.recCompValue)*8
+                    }]);
+            }
+        }
+        $scope.onRiskClick = function (points, evt) {
+            console.log(points, evt);
+          };
+      
+} else {
+    $scope.riskdata = [{x: "1", y: "2", r: "30"}];
+}           
+//TEST END     
 
 
 
