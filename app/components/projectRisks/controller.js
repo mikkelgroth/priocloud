@@ -91,6 +91,8 @@ angular
                 companyService.saveProjectName($scope.project, $scope.user.name);
                 
                 $scope.showRiskForm = false;
+                $scope.deleteThis=false;
+                
             };
 
             $scope.beginEditRisk = function (risk) {
@@ -105,6 +107,8 @@ angular
             $scope.hideRiskForm = function () {
 
                 $scope.showRiskForm = false;
+                $scope.deleteThis=false;
+                
             };
 
             $scope.saveRisk = function (risk) {
@@ -147,7 +151,7 @@ angular
             };
 
             function showRisk() {
-
+                $scope.deleteThis=false;
                 // TODO(2): this doesn't work until correct id's for risks has been implemented
 
                 if (riskId) {
