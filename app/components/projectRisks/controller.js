@@ -80,6 +80,8 @@ angular
                 $scope.editrisk.state = 'New';
 
                 $scope.showRiskForm = true;
+                $scope.deleteThis=false;
+                
             };
 
             $scope.removeRisk = function (risk) {
@@ -96,6 +98,8 @@ angular
                 $scope.editrisk = risk;
 
                 $scope.showRiskForm = true;
+                $scope.deleteThis=false;
+                
             };
 
             $scope.hideRiskForm = function () {

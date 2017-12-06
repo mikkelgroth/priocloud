@@ -14,6 +14,10 @@ angular
                     if (newVal) document.getElementById("saveButton").className = "Red";
                     else document.getElementById("saveButton").className = "Green";
                 }
+                if(document.getElementById("saveButtonQ")!=null){
+                    if (newVal) document.getElementById("saveButtonQ").className = "Red";
+                    else document.getElementById("saveButtonQ").className = "Green";
+                }
             }, true);
 
 

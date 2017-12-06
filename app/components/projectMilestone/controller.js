@@ -61,11 +61,15 @@ angular
                 $scope.editmile = mile;
 
                 $scope.showMilestoneForm = true;
+                $scope.deleteThis=false;
+                
             };
 
             $scope.saveMilestones = function (open) {
                 companyService.saveProjectName($scope.project, $scope.user.name);
                 $scope.hasChanged=false;
+                $scope.deleteThis=false;
+                
                 if (open) {
                     $scope.showMilestoneForm = true;
                 }
@@ -121,6 +125,8 @@ angular
 
                 
                 $scope.showMilestoneForm = true;
+                $scope.deleteThis=false;
+                
             };
 
             $scope.hideMilestoneForm = function () {
