@@ -1,20 +1,23 @@
 <prio-project-menu prio-project-id="{{project._id.$oid}}" prio-project-title="{{project.title}}"></prio-project-menu>
-<div class="disp">
-<b>Show:</b>  <input type="checkbox" ng-model="project.filters.showDetails" ng-change="saveNow()"> Details,&nbsp;
+
+<button prio-class ng-click="showfilters=true"  ng-show="!showfilters">Show filters</button><button prio-class ng-click="showfilters=false"  ng-show="showfilters">Hide filters</button>
+<div ng-show="showfilters" class="right">
+<input type="checkbox" ng-model="project.filters.showDetails" ng-change="saveNow()"> Details,&nbsp;
 <input type="checkbox" ng-model="project.filters.showBusinesscase" ng-change="saveNow()"> Business case,&nbsp;
 <input type="checkbox" ng-model="project.filters.showStatus" ng-change="saveNow()"> Status,&nbsp;
-<input type="checkbox" ng-model="project.filters.showDeliverables" ng-change="saveNow()"> Deliverables,&nbsp;
+<input type="checkbox" ng-model="project.filters.showDeliverables" ng-change="saveNow()"> Deliverables,&nbsp;</br>
 <input type="checkbox" ng-model="project.filters.showFinance" ng-change="saveNow()"> Finance,&nbsp;
  <input type="checkbox" ng-model="project.filters.showIssues" ng-change="saveNow()"> Issues,&nbsp;
  <input type="checkbox" ng-model="project.filters.showRisks" ng-change="saveNow()"> Risks,&nbsp;
  
- <input type="checkbox" ng-model="project.filters.showDepend" ng-change="saveNow()"> Dependencies
+ <input type="checkbox" ng-model="project.filters.showDepend" ng-change="saveNow()"> Dependencies</br>
         <div class="right">
             <button type="button" id="saveButton" prio-class save-this="$parent.hasChanged"
                 ng-if="user.email == project.pm.email || user.email == project.altpm.email || user.admin"
                         ng-click="saveProject(project)">save view</button>
         </div>
 </div>
+
 <div id="project-overview" class="view">
     <div class="mainbox" id="overview">
         <h2 class="{{editstatus.status}}">
@@ -201,7 +204,7 @@
                         <table class="tablelist">
                             <tr class="header">
                                 <td colspan="4">Project status - {{editstatus.date | date:'yyyy-MM-dd HH:mm'}}
-                                    <div class="right"> 
+                                    <div class="right" ng-show="showfilters"> 
                                         <input type="checkbox" ng-model="project.filters.showStatusFlags" ng-change="saveNow()"> Status flags, 
                                         <input type="checkbox" ng-model="project.filters.showStatusElab" ng-change="saveNow()"> Status elaboration,
                                         <input type="checkbox" ng-model="project.filters.showStatusSteerco" ng-change="saveNow()"> Steerco section
@@ -324,7 +327,7 @@
                         <table class="tablelist">
                             <tr class="header">
                                 <td class="label l" colspan="100%">Deliverables
-                                    <div class="right"> 
+                                    <div class="right" ng-show="showfilters"> 
                                         <input type="checkbox" ng-model="project.filters.showDeliverableWSJF" ng-change="saveNow()"> WSJF, 
                                         <input type="checkbox" ng-model="project.filters.showDeliverableGantt" ng-change="saveNow()"> Gantt, 
                                         <input type="checkbox" ng-model="project.filters.showDeliverableResp" ng-change="saveNow()"> Responsible, 
@@ -371,7 +374,7 @@
                         <table class="tablelist">
                             <tr class="header">
                                 <td class="label l" colspan="100%">Dependencies
-                                    <div class="right"> 
+                                    <div class="right" ng-show="showfilters"> 
                                         <input type="checkbox" ng-model="project.filters.showDepAgr" ng-change="saveNow()"> Agreement/Source, 
                                         <input type="checkbox" ng-model="project.filters.showDepReq" ng-change="saveNow()"> Requester/Owner, 
                                         <input type="checkbox" ng-model="project.filters.showDepDel" ng-change="saveNow()"> Deliverable 
@@ -406,7 +409,7 @@
                         <table class="tablelist">
                             <tr class="header">
                                 <td class="label l" colspan="100%">Project Finance
-                                    <div class="right"> Show: 
+                                    <div class="right" ng-show="showfilters">
                                         <input type="checkbox" ng-model="project.filters.showFinanceGraph" ng-change="saveNow()"> Graph, 
                                         <input type="checkbox" ng-model="project.filters.showFinanceSmall" ng-change="saveNow()"> Cap/Op, 
                                         <input type="checkbox" ng-model="project.filters.showFinanceBig" ng-change="saveNow()"> Ext/Int, 
@@ -662,7 +665,7 @@
                         <table class="tablelist">
                             <tr class="header">
                                 <td class="label l" colspan="100%">Issues 
-                                    <div class="right"> 
+                                    <div class="right" ng-show="showfilters"> 
                                         <input type="checkbox" ng-model="project.filters.showIssueResponsible" ng-change="saveNow()"> Responsible, 
                                         <input type="checkbox" ng-model="project.filters.showIssueImpact" ng-change="saveNow()"> Impact, 
                                         <input type="checkbox" ng-model="project.filters.showIssueRecov" ng-change="saveNow()"> Recovery, 
@@ -719,7 +722,7 @@
                             <tr class="header">
                                 <td class="label l" colspan="100%">Risks 
                                     
-                                    <div class="right">
+                                    <div class="right" ng-show="showfilters">
                                         <input type="checkbox" ng-model="project.filters.showRiskGraph" ng-change="saveNow()"> Graph, 
                                         <input type="checkbox" ng-model="project.filters.showRiskRecov" ng-change="saveNow()"> Recovery, 
                                         <input type="checkbox" ng-model="project.filters.showRiskResponsible" ng-change="saveNow()"> Responsible, 
