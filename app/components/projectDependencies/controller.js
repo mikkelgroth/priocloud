@@ -15,7 +15,7 @@ angular
         ) {
 
             var projectId = $routeParams.id;
-            var depId = $routeParams.milestoneid;
+            var depId = $routeParams.depid;
 
             $scope.showDepForm = false;
 
@@ -126,17 +126,17 @@ angular
             
             function showDep() {
                 
-                // TODO(2): this doesn't work until correct id's for milestones has been implemented
+                // TODO(2): this doesn't work until correct id's for deps has been implemented
 
                 if (depId) {
 
-                    var milestone = $scope.project.deps.filter(function (dep) {
+                    var dep = $scope.project.deps.filter(function (dep) {
                         return dep._id === depId;
                     });
 
-                    if (deps[0]) {
+                    if (dep[0]) {
 
-                        $scope.editdep = deps[0];
+                        $scope.editdep = dep[0];
                         $scope.showDepForm = true;
                     }
                 }

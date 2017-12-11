@@ -206,7 +206,12 @@ if($scope.project!=null && $scope.project.risks!=null){
 
                 $location.path('/project/' + projectId + '/milestone/' + milestone._id);
             };
-
+            
+            $scope.goToDepInProject = function (dep) {
+                
+                $location.path('/project/' + projectId + '/dependencies/' + dep._id);
+            };
+                
             $scope.barRender = function (mile) {
                 return barRender(mile);
             }

@@ -42,7 +42,8 @@ angular
             $routeProvider.when('/project/:id/milestone/:milestoneid', { controller: 'ProjectMilestoneController', templateUrl: 'components/projectMilestone/template.html' });
             $routeProvider.when('/project/:id/risks', { controller: 'ProjectRisksController', templateUrl: 'components/projectRisks/template.html' });
             $routeProvider.when('/project/:id/risks/:riskid', { controller: 'ProjectRisksController', templateUrl: 'components/projectRisks/template.html' });
-            $routeProvider.when('/project/:id/dependencies', { controller: 'ProjectDependenciesController', templateUrl: 'components/projectDependencies/template.html' });
+            $routeProvider.when('/project/:id/dependencies',        { controller: 'ProjectDependenciesController', templateUrl: 'components/projectDependencies/template.html' });
+            $routeProvider.when('/project/:id/dependencies/:depid', { controller: 'ProjectDependenciesController', templateUrl: 'components/projectDependencies/template.html' });
             $routeProvider.when('/project/:id/kpi', { controller: 'ProjectKpiController', templateUrl: 'components/projectKpi/template.html' });
            
             // finance

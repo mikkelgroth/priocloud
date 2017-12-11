@@ -3,7 +3,7 @@
 <div id="project-dependencies" class="view">
     <div ng-show="showDepForm">
         <h2 class="{{editdep.status}}">
-            {{editmile.title}}
+            {{editdep.title}}
             <div class="right">
                 <button type="button" id="saveButton" prio-class save-this="$parent.hasChanged"
                         ng-if="user.email == project.po.email || 
@@ -37,9 +37,9 @@
                 <td class="header">Agreement</td>
                 <td>
                     <select ng-model="editdep.agreement" ng-change="saveNow()">
-                        <option value="Milestone">None</option>
-                        <option value="Roadmap item">Tentative</option>
-                        <option value="Phase">Agreed</option>
+                        <option value="None">None</option>
+                        <option value="Tentative">Tentative</option>
+                        <option value="Agreed">Agreed</option>
                     </select>
                     
                 </td>
@@ -99,7 +99,22 @@
                 </td>
                 
             </tr>
-                          
+            <tr class="header">
+                <td>
+                    Time span from
+                </td>
+                <td>
+                    {{editdep.delmap.date | date:'yyyy-MM-dd'}}
+                </td>
+                <td>
+                    Time span to   
+                </td>
+                <td>
+                    {{editdep.delmap.enddate | date:'yyyy-MM-dd'}}
+                </td>
+                        
+            </tr>
+            
             <tr>
                 <td>
                     <p>Description<span id="depdec_count" class="right"></span></p>
@@ -110,6 +125,7 @@
                     </div>
                 </td>
             </tr>
+                        
             <tr>
                 <td>
                     <p>Names<span id="depname_count" class="right"></span></p>
@@ -172,21 +188,19 @@
             <table class="tablelist smaller" ng-if="project.milestones.length > 0">
                 <tr class="header">
                     <td>Title</td>
-                    <td>Agreement</td>
-                    <td>Source</td>
-                    <td>Requester</td>
-                    <td>Res. Owner</td>
+                    <td>Agreement</br>Source</td>
+                    <td>Requester</br>Res. Owner</td>
                     <td>Deliverable</td>
+                    <td>Timeframe</td>
                     <td>Show in<br/>Report</td>
                 </tr>
-                <tr ng-repeat="dep in project.deps | orderBy:title" class="link">
+                <tr ng-repeat="dep in project.deps | orderBy:'[delmap.date,delmap.title]'" class="link">
                     <td ng-click="beginEditDep(dep)" class="{{dep.status}}"><b>{{dep.title}}</b></td>
-                    <td ng-click="beginEditDep(dep)">{{dep.agreement}}</td>
-                    <td ng-click="beginEditDep(dep)">{{dep.bu.name}}</td>
-                    <td ng-click="beginEditDep(dep)">{{dep.requester.name}}</td>
-                    <td ng-click="beginEditDep(dep)">{{dep.resowner.name}}</td>
+                    <td ng-click="beginEditDep(dep)">{{dep.agreement}}</br>{{dep.bu.name}}</td>
+                    <td ng-click="beginEditDep(dep)">{{dep.requester.name}}</br>{{dep.resowner.name}}</td>
                     <td ng-click="beginEditDep(dep)">{{dep.delmap.title}}</td>
-                                        
+                    <td ng-click="beginEditDep(dep)">{{dep.delmap.date | date:'yyyy-MM-dd'}}</br>{{dep.delmap.enddate | date:'yyyy-MM-dd'}}</td>
+                    
                     <td><input type="checkbox" ng-model="dep.showInReport" ng-change="saveNow()"></td>
                     
                 </tr>

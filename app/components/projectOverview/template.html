@@ -323,8 +323,9 @@
                     <div class="overview">
                         <table class="tablelist">
                             <tr class="header">
-                                <td class="label l" colspan="100%">Project deliverables
+                                <td class="label l" colspan="100%">Deliverables
                                     <div class="right"> 
+                                        <input type="checkbox" ng-model="project.filters.showDeliverableWSJF" ng-change="saveNow()"> WSJF, 
                                         <input type="checkbox" ng-model="project.filters.showDeliverableGantt" ng-change="saveNow()"> Gantt, 
                                         <input type="checkbox" ng-model="project.filters.showDeliverableResp" ng-change="saveNow()"> Responsible, 
                                         <input type="checkbox" ng-model="project.filters.showDeliverableAcc" ng-change="saveNow()"> Approver, 
@@ -337,7 +338,7 @@
                                 </td>
                             </tr>
                             <tr class="header">
-                                <td class="label l">(WSJF) Deliverable</td>
+                                <td class="label l"><span ng-if="project.filters.showDeliverableWSJF">(WSJF)</span> Deliverable</td>
                                 <td ng-if="project.filters.showDeliverableGantt">2016</td>
                                 <td ng-if="project.filters.showDeliverableGantt">2017</td>
                                 <td ng-if="project.filters.showDeliverableGantt">2018</td>
@@ -349,7 +350,7 @@
                                 <td ng-if="project.filters.showDeliverableDesc">Description</td>
                             </tr>
                             <tr ng-repeat="mile in project.milestones | orderBy:'enddate'" ng-click="goToMilestoneInProject(mile)" class="link texttop" ng-if=" mile.showInReport">
-                                <td class="{{mile.status}}">({{mile.wsjf}}) {{mile.title}}</td>
+                                <td class="{{mile.status}}"><span ng-if="project.filters.showDeliverableWSJF">({{mile.wsjf}})</span> {{mile.title}}</td>
                                 <td ng-if="project.filters.showDeliverableGantt" class="bar xl" ng-style="barRender(mile)" colspan="3"><div ng-if="project.filters.showDeliverableState">{{mile.type}}/{{mile.state}}</div></td>
                                 <td ng-if="project.filters.showDeliverableResp">{{mile.responsible.name}}</td>
                                 <td ng-if="project.filters.showDeliverableAcc">{{mile.acountable.name}}</td>
@@ -363,6 +364,42 @@
                     </div>
                 </td>
             </tr>
+
+            <tr ng-if="project.filters.showDepend">
+                <td colspan="3">
+                    <div class="overview">
+                        <table class="tablelist">
+                            <tr class="header">
+                                <td class="label l" colspan="100%">Dependencies
+                                    <div class="right"> 
+                                        <input type="checkbox" ng-model="project.filters.showDepAgr" ng-change="saveNow()"> Agreement/Source, 
+                                        <input type="checkbox" ng-model="project.filters.showDepReq" ng-change="saveNow()"> Requester/Owner, 
+                                        <input type="checkbox" ng-model="project.filters.showDepDel" ng-change="saveNow()"> Deliverable 
+                                        <input type="checkbox" ng-model="project.filters.showDepDesc" ng-change="saveNow()"> Description 
+                                    </div>
+                                </td>
+                            </tr>
+                                        
+                            <tr class="header">
+                                <td class="label l">Title</td>
+                                <td ng-if="project.filters.showDepAgr">Agreement</br>Source</td>
+                                <td ng-if="project.filters.showDepReq">Requester</br>Resource owner</td>
+                                <td ng-if="project.filters.showDepDel">Deliverable maping</td>
+                                <td ng-if="project.filters.showDepDesc">Description</td>
+                            </tr>
+                            <tr ng-repeat="dep in project.deps | orderBy:'[delmap.date,delmap.title]'" class="link" ng-click="goToDepInProject(dep)"  ng-if=" dep.showInReport">
+                                <td class="{{dep.status}}"><b>{{dep.title}}</b></td>
+                                <td ng-if="project.filters.showDepAgr">{{dep.agreement}}</br>{{dep.bu.name}}</td>
+                                <td ng-if="project.filters.showDepReq">{{dep.requester.name}}</br>{{dep.resowner.name}}</td>
+                                <td ng-if="project.filters.showDepDel">{{dep.delmap.title}}</td>                                
+                                <td ng-if="project.filters.showDepDesc">{{dep.description}}</td>                                
+                            </tr>                            
+                        </table>
+                    </div>
+                </td>
+            </tr>
+
+
             <tr ng-if="project.filters.showFinance">
                 <td colspan="3">
                     <div class="overview">
@@ -750,118 +787,6 @@
                 </td>
             </tr>
             
-            <tr ng-if="project.filters.showDepend">
-                <td colspan="3">
-                    <div class="overview">
-                        <table class="tablelist">
-                            <tr class="header">
-                                <td>Dependencies</td>
-                                <td>Request/Response</td>
-                                <td>Comments</td>
-                            </tr>
-                            <tr ng-if="project.res1fte != 'None'">
-                                <td rowspan="2" class="header" prio-class prio-skill-render="project.res1skill" prio-size-render="project.res1">{{company.res1lable}}</td>
-                                <td>{{project.res1fte}}</td><td>{{project.res1comment}}</td>
-                            </tr>
-                            <tr ng-if="project.res1fte != 'None'">
-                                <td>{{project.res1owner}}</td><td>{{project.res1ownercomment}}</td>
-                            </tr>
-                            <tr ng-if="project.res2fte != 'None'">
-                                <td rowspan="2" class="header" prio-class prio-skill-render="project.res2skill" prio-size-render="project.res2">{{company.res2lable}}</td>
-                                <td>{{project.res2fte}}</td><td>{{project.res2comment}}</td>
-                            </tr>
-                            <tr ng-if="project.res2fte != 'None'">
-                                <td>{{project.res2owner}}</td><td>{{project.res2ownercomment}}</td>
-                            </tr>
-                            <tr ng-if="project.res3fte != 'None'">
-                                <td rowspan="2" class="header" prio-class prio-skill-render="project.res3skill" prio-size-render="project.res3">{{company.res3lable}}</td>
-                                <td>{{project.res3fte}}</td><td>{{project.res3comment}}</td>
-                            </tr>
-                            <tr ng-if="project.res3fte != 'None'">
-                                <td>{{project.res3owner}}</td><td>{{project.res3ownercomment}}</td>
-                            </tr>
-                            <tr ng-if="project.res4fte != 'None'">
-                                <td rowspan="2" class="header" prio-class prio-skill-render="project.res4skill" prio-size-render="project.res4">{{company.res4lable}}</td>
-                                <td>{{project.res4fte}}</td><td>{{project.res4comment}}</td>
-                            </tr>
-                            <tr ng-if="project.res4fte != 'None'">
-                                <td>{{project.res4owner}}</td><td>{{project.res4ownercomment}}</td>
-                            </tr>
-                            <tr ng-if="project.res5fte != 'None'">
-                                <td rowspan="2" class="header" prio-class prio-skill-render="project.res5skill" prio-size-render="project.res5">{{company.res5lable}}</td>
-                                <td>{{project.res5fte}}</td><td>{{project.res5comment}}</td>
-                            </tr>
-                            <tr ng-if="project.res5fte != 'None'">
-                                <td>{{project.res5owner}}</td><td>{{project.res5ownercomment}}</td>
-                            </tr>
-                            <tr ng-if="project.res6fte != 'None'">
-                                <td rowspan="2" class="header" prio-class prio-skill-render="project.res6skill" prio-size-render="project.res6">{{company.res6lable}}</td>
-                                <td>{{project.res6fte}}</td><td>{{project.res6comment}}</td>
-                            </tr>
-                            <tr ng-if="project.res6fte != 'None'">
-                                <td>{{project.res6owner}}</td><td>{{project.res6ownercomment}}</td>
-                            </tr>
-                            <tr ng-if="project.res7fte != 'None'">
-                                <td rowspan="2" class="header" prio-class prio-skill-render="project.res7skill" prio-size-render="project.res7">{{company.res7lable}}</td>
-                                <td>{{project.res7fte}}</td><td>{{project.res7comment}}</td>
-                            </tr>
-                            <tr ng-if="project.res7fte != 'None'">
-                                <td>{{project.res7owner}}</td><td>{{project.res7ownercomment}}</td>
-                            </tr>
-                            <tr ng-if="project.res8fte != 'None'">
-                                <td rowspan="2" class="header" prio-class prio-skill-render="project.res8skill" prio-size-render="project.res8">{{company.res8lable}}</td>
-                                <td>{{project.res8fte}}</td><td>{{project.res8comment}}</td>
-                            </tr>
-                            <tr ng-if="project.res8fte != 'None'">
-                                <td>{{project.res8owner}}</td><td>{{project.res8ownercomment}}</td>
-                            </tr>
-                            <tr ng-if="project.res9fte != 'None'">
-                                <td rowspan="2" class="header" prio-class prio-skill-render="project.res9skill" prio-size-render="project.res9">{{company.res9lable}}</td>
-                                <td>{{project.res9fte}}</td><td>{{project.res9comment}}</td>
-                            </tr>
-                            <tr ng-if="project.res9fte != 'None'">
-                                <td>{{project.res9owner}}</td><td>{{project.res9ownercomment}}</td>
-                            </tr>
-                            <tr ng-if="project.res10fte != 'None'">
-                                <td rowspan="2" class="header" prio-class prio-skill-render="project.res10skill" prio-size-render="project.res10">{{company.res10lable}}</td>
-                                <td>{{project.res10fte}}</td><td>{{project.res10comment}}</td>
-                            </tr>
-                            <tr ng-if="project.res10fte != 'None'">
-                                <td>{{project.res10owner}}</td><td>{{project.res10ownercomment}}</td>
-                            </tr>
-                            <tr ng-if="project.res11fte != 'None'">
-                                <td rowspan="2" class="header" prio-class prio-skill-render="project.res11skill" prio-size-render="project.res11">{{company.res11lable}}</td>
-                                <td>{{project.res11fte}}</td><td>{{project.res11comment}}</td>
-                            </tr>
-                            <tr ng-if="project.res11fte != 'None'">
-                                <td>{{project.res11owner}}</td><td>{{project.res11ownercomment}}</td>
-                            </tr>
-                            <tr ng-if="project.res12fte != 'None'">
-                                <td rowspan="2" class="header" prio-class prio-skill-render="project.res12skill" prio-size-render="project.res12">{{company.res12lable}}</td>
-                                <td>{{project.res12fte}}</td><td>{{project.res12comment}}</td>
-                            </tr>
-                            <tr ng-if="project.res12fte != 'None'">
-                                <td>{{project.res12owner}}</td><td>{{project.res12ownercomment}}</td>
-                            </tr>
-                            <tr ng-if="project.res13fte != 'None'">
-                                <td rowspan="2" class="header" prio-class prio-skill-render="project.res13skill" prio-size-render="project.res13">{{company.res13lable}}</td>
-                                <td>{{project.res13fte}}</td><td>{{project.res13comment}}</td>
-                            </tr>
-                            <tr ng-if="project.res13fte != 'None'">
-                                <td>{{project.res13owner}}</td><td>{{project.res13ownercomment}}</td>
-                            </tr>
-                            <tr ng-if="project.res14fte != 'None'">
-                                <td rowspan="2" class="header" prio-class prio-skill-render="project.res14skill" prio-size-render="project.res14">{{company.res14lable}}</td>
-                                <td>{{project.res14fte}}</td><td>{{project.res14comment}}</td>
-                            </tr>
-                            <tr ng-if="project.res14fte != 'None'">
-                                <td>{{project.res14owner}}</td><td>{{project.res14ownercomment}}</td>
-                            </tr>
-                            
-                        </table>
-                    </div>
-                </td>
-            </tr>
         </table>
     </div>
 </div>
