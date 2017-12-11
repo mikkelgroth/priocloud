@@ -65,6 +65,18 @@ angular
                 
             };
 
+            $scope.beginEditDep = function (dep) {
+                
+                $scope.editdep = dep;
+                
+                $scope.showMilestoneForm = false;
+                $scope.showDepForm = true;
+                $scope.deleteThis=false;
+                                
+            };
+                
+
+
             $scope.saveMilestones = function (open) {
                 companyService.saveProjectName($scope.project, $scope.user.name);
                 $scope.hasChanged=false;
@@ -75,6 +87,7 @@ angular
                 }
                 
             };
+            
             $scope.saveNowQuick = function () {
                 $scope.hasChanged=true;               
             };
@@ -129,19 +142,44 @@ angular
                 
             };
 
-            $scope.hideMilestoneForm = function () {
-
-                $scope.showMilestoneForm = false;
+            $scope.newDep = function () {
                 
+                if($scope.project.deps==null){
+                    $scope.project.deps=[];
+                }
+                $scope.project.deps.push({});
+                $scope.editdep=$scope.project.deps[$scope.project.deps.length-1];
+                
+                $scope.editdep._id = Math.random().toString(36).substr(2, 9);
+                $scope.editdep.status = 'Green';
+                $scope.editdep.agreement = 'None';
+                $scope.editdep.names = 'TBD';
+                $scope.editdep.showInReport = true;
+                $scope.editdep.audience = 'Project';
+                $scope.editdep.requester = $scope.user.name;
+                $scope.editdep.resowner = $scope.user.name;
+                $scope.editdep.quantum = 'Minor task';
+                $scope.editdep.delmap = 'None';
+                
+                $scope.showDepForm = true;
+                $scope.showMilestoneForm = false;
+                $scope.deleteThis=false;
+                                
             };
+                    
 
-            $scope.removeMilestone = function (milestone) {
-
-                $scope.project.milestones.splice($scope.project.milestones.indexOf(milestone), 1);
-
-                companyService.saveProjectName($scope.project, $scope.user.name);
-                
+            $scope.hideMilestoneForm = function () {
                 $scope.showMilestoneForm = false;
+            };
+            
+            $scope.hideDepForm = function () {    
+                $scope.showDepForm = false;                
+            };
+                
+            $scope.removeDeptone = function (dep) {
+                $scope.project.deps.splice($scope.project.deps.indexOf(dep), 1);
+                companyService.saveProjectName($scope.project, $scope.user.name);
+                $scope.showDepForm = false;
             };
 
             $scope.barRender = function (mile) {

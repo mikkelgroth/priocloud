@@ -1,798 +1,196 @@
 <prio-project-menu prio-project-id="{{project._id.$oid}}" prio-project-title="{{project.title}}"></prio-project-menu>
 
 <div id="project-dependencies" class="view">
-    <h2>
-        Dependencies
-        <div class="right">
-            <button type="button" id="saveButton" prio-class save-this="$parent.hasChanged"
+    <div ng-show="showDepForm">
+        <h2 class="{{editdep.status}}">
+            {{editmile.title}}
+            <div class="right">
+                <button type="button" id="saveButton" prio-class save-this="$parent.hasChanged"
                         ng-if="user.email == project.po.email || 
                         user.email == project.pm.email || 
                         user.email == project.altpo.email || 
                         user.email == project.altpm.email || 
                         user.isOwner || 
                         user.admin"
-                        ng-click="saveProject(project)">save</button>
+                        ng-click="saveDeps(true)">save</button>
+                <button type="button" ng-click="hideDepForm()">close</button>
+            </div>
+        </h2>
+        <table class="smaller">
+            <tr>
+                <td class="header">Title</td>
+                <td>
+                    <div class="field">
+                        <input ng-model="editdep.title" ng-change="saveNow()"/>
+                    </div>
+                </td>
+                <td class="header">Audience</td>
+                <td>
+                    <select ng-model="editdep.audience" ng-change="saveNow()">
+                        <option value="Project">Project</option>
+                        <option value="Portfolio">Portfolio</option>
+                        <option value="Company">Company</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td class="header">Agreement</td>
+                <td>
+                    <select ng-model="editdep.agreement" ng-change="saveNow()">
+                        <option value="Milestone">None</option>
+                        <option value="Roadmap item">Tentative</option>
+                        <option value="Phase">Agreed</option>
+                    </select>
+                    
+                </td>
+                <td class="header">Show in report</td>
+                <td>
+                        <input type="checkbox" ng-model="editdep.showInReport" ng-change="saveNow()">
+                </td>
+            </tr>
+            <tr>
+                <td class="header">Dependency requester</td>
+                <td>
+                    <select ng-model="editdep.requester"  ng-change="saveNow()" ng-options="u.name for u in users | filter: {source: true} | orderBy:'name' track by u.name"></select>
+                </td>
+                <td class="header">Dependency resource owner</td>
+                <td>
+                    <select ng-model="editdep.resowner"  ng-change="saveNow()" ng-options="u.name for u in users | filter: {source: true} | orderBy:'name' track by u.name"></select>
+                </td>
+            </tr>
+            <tr>
+                <td class="header">Deliverable mapping</td>
+                <td>
+                    <select ng-model="editdep.delmap"  ng-change="saveNow()" ng-options="m.title for m in project.milestones | orderBy:'title' track by m.title"></select>
+                </td>
+                                
+                <td class="header">Status</td>
+                <td>
+                    <select ng-model="editdep.status" ng-change="saveNow()">
+                        <option value="Green">OK (Green)</option>
+                        <option value="Yellow">Observe (Yellow)</option>
+                        <option value="Orange">Assist (Orange)</option>
+                        <option value="Red">Intervention (Red)</option>
+                    </select>
+                </td>
+                
+            </tr>
+            
+            <tr>
+                <td class="header">Request quantum</td>
+                <td>
+                    <select ng-model="editdep.quantum"  ng-change="saveNow()">
+                        <option value="None">None</option>
+                        <option value="Minor tasks">Minor tasks</option>
+                        <option value="Major tasks">Major tasks</option>
+                        <option value="0.1 FTE">0.1 FTE</option>
+                        <option value="0.2 FTE">0.2 FTE</option>
+                        <option value="0.5 FTE">0.5 FTE</option>
+                        <option value="1 FTE">1 FTE</option>
+                        <option value="2-3 FTE">2-3 FTE</option>
+                        <option value="4-7 FTE">4-7 FTE</option>
+                        <option value=">7 FTE">>7 FTE</option>
+                    </select>
+                </td>
+                
+                <td class="header">Source</td>
+                <td>
+                    <select  ng-change="saveNow()" ng-model="editdep.bu" id="depbu" ng-options="bu.name for bu in bus | orderBy:'name' track by bu.name"></select>
+                </td>
+                
+            </tr>
+                          
+            <tr>
+                <td>
+                    <p>Description<span id="depdec_count" class="right"></span></p>
+                </td>
+                <td colspan="3">
+                    <div class="field">
+                        <textarea ng-change="saveNow()" ng-model="editdep.description" maxlength="300" id="depdec" placeholder="Describe the dependency."></textarea>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <p>Names<span id="depname_count" class="right"></span></p>
+                </td>
+                <td colspan="3">
+                    <div class="field">
+                        <textarea ng-change="saveNow()" ng-model="editdep.names" maxlength="300" id="depname" placeholder="Describe the key persons requested."></textarea>
+                    </div>
+                </td>
+            </tr>
+                
+            <tr>
+                <td colspan="4">
+                    <div class="right">
+
+                        <button type="button" 
+                            ng-click="$parent.deleteThis=true" 
+                            ng-show="!$parent.deleteThis"
+                            ng-if="user.email==project.po.email || 
+                            user.email==project.pm.email || 
+                            user.isOwner || user.admin">delete</button>
+                        <button type="button" class="Red"
+                            ng-click="$parent.deleteThis=false; removeDep(editdep)" 
+                            ng-show="$parent.deleteThis"
+                            ng-if="user.email==project.po.email || 
+                            user.email==project.pm.email || 
+                            user.isOwner || user.admin">confirm delete!!!</button>
+
+
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="mainbox" id="deplist" ng-show="!showDepForm">
+        <h2>
+            Dependencies
+            <div class="right"> 
+                
+                <button type="button"
+                    ng-click="newDep()"
+                    ng-if="user.email==project.po.email || 
+                    user.email==project.pm.email || 
+                    user.email==project.altpo.email || 
+                    user.email==project.altpm.email || 
+                    user.isOwner || user.admin">create new dependency</button>
+
+                <button type="button" id="saveButtonQ" prio-class save-this="$parent.hasChanged"
+                    ng-if="user.email == project.po.email || 
+                    user.email == project.pm.email || 
+                    user.email == project.altpo.email || 
+                    user.email == project.altpm.email || 
+                    user.isOwner || 
+                    user.admin"
+                    ng-click="saveDeps(false)">save</button>
+            </div>
+        </h2>
+        <div class="overview">
+            <table class="tablelist smaller" ng-if="project.milestones.length > 0">
+                <tr class="header">
+                    <td>Title</td>
+                    <td>Agreement</td>
+                    <td>Source</td>
+                    <td>Requester</td>
+                    <td>Res. Owner</td>
+                    <td>Deliverable</td>
+                    <td>Show in<br/>Report</td>
+                </tr>
+                <tr ng-repeat="dep in project.deps | orderBy:title" class="link">
+                    <td ng-click="beginEditDep(dep)" class="{{dep.status}}"><b>{{dep.title}}</b></td>
+                    <td ng-click="beginEditDep(dep)">{{dep.agreement}}</td>
+                    <td ng-click="beginEditDep(dep)">{{dep.bu.name}}</td>
+                    <td ng-click="beginEditDep(dep)">{{dep.requester.name}}</td>
+                    <td ng-click="beginEditDep(dep)">{{dep.resowner.name}}</td>
+                    <td ng-click="beginEditDep(dep)">{{dep.delmap.title}}</td>
+                                        
+                    <td><input type="checkbox" ng-model="dep.showInReport" ng-change="saveNow()"></td>
+                    
+                </tr>
+            </table>
         </div>
-    </h2>
-    <table class="smaller">
-        <tr class="header">
-            <td>Resource type</td>
-            <td>Required</td>
-            <td>Timing criticality</td>
-        </tr>
-
-        <tr class="header">
-            <td prio-class prio-skill-render="project.res1skill" prio-size-render="project.res1">{{company.res1lable}}</td>
-            <td>
-                <select ng-model="project.res1fte"  ng-change="saveNow()">
-                    <option value="None">None</option>
-                    <option value="Minor tasks">Minor tasks</option>
-                    <option value="Major tasks">Major tasks</option>
-                    <option value="1 FTE">1 FTE</option>
-                    <option value="2-3 FTE">2-3 FTE</option>
-                    <option value="4-7 FTE">4-7 FTE</option>
-                    <option value=">7 FTE">>7 FTE</option>
-                </select>
-            </td>
-            <td>
-                <select ng-if="project.res1fte!='None'" ng-model="project.res1"  ng-change="saveNow()">
-                    <option value="No dependency">No dependency</option>
-                    <option value="Minor dependency">Minor dependency</option>
-                    <option value="Major dependency">Major dependency</option>
-                    <option value="Critical dependency">Critical dependency</option>
-                </select>
-            </td>
-        </tr>
-        <tr ng-if="project.res1fte!='None'">
-            <td>Project status</td>
-            <td>
-                <select ng-model="project.res1skill"  ng-change="saveNow()">
-                    <option value="Ok">Ok</option>
-                    <option value="Minor issue">Minor issue</option>
-                    <option value="Major issue">Major issue</option>
-                    <option value="Emergency">Emergency</option>
-                </select>
-            </td>
-            <td>
-                <div class="field">
-                <textarea ng-change="saveNow()" ng-model="project.res1comment" maxlength="300" id="res1comment" placeholder="Describe issues like, unavailability, timing, competence, priority ect."></textarea>
-            </div>
-            </td>
-        </tr>
-        <tr ng-if="project.res1fte!='None'">
-            <td>Resource owner status</td>
-            <td>
-                <select ng-model="project.res1owner"  ng-change="saveNow()">
-                    <option value="Committed">Committed</option>
-                    <option value="Backlog">Backlog</option>
-                    <option value="Tentative">Tentative</option>
-                    <option value="Rejected">Rejected</option>
-                </select>
-            </td>
-            <td>
-                <div class="field">
-                <textarea ng-change="saveNow()" ng-model="project.res1ownercomment" maxlength="300" id="res1comment" placeholder="Describe issues like, unavailability, timing, competence, priority ect."></textarea>
-            </div>
-            </td>
-        </tr>
-
-        <tr class="header">
-            <td prio-class prio-skill-render="project.res2skill" prio-size-render="project.res2">{{company.res2lable}}</td>
-            <td>
-                <select ng-model="project.res2fte"  ng-change="saveNow()">
-                    <option value="None">None</option>
-                    <option value="Minor tasks">Minor tasks</option>
-                    <option value="Major tasks">Major tasks</option>
-                    <option value="1 FTE">1 FTE</option>
-                    <option value="2-3 FTE">2-3 FTE</option>
-                    <option value="4-7 FTE">4-7 FTE</option>
-                    <option value=">7 FTE">>7 FTE</option>
-                </select>
-            </td>
-            <td>
-                <select ng-if="project.res2fte!='None'" ng-model="project.res2"  ng-change="saveNow()">
-                    <option value="No dependency">No dependency</option>
-                    <option value="Minor dependency">Minor dependency</option>
-                    <option value="Major dependency">Major dependency</option>
-                    <option value="Critical dependency">Critical dependency</option>
-                </select>
-            </td>
-        </tr>
-        <tr>
-            <td>Project status</td>
-            <td>
-                <select ng-if="project.res2fte!='None'" ng-model="project.res2skill"  ng-change="saveNow()">
-                    <option value="Ok">Ok</option>
-                    <option value="Minor issue">Minor issue</option>
-                    <option value="Major issue">Major issue</option>
-                    <option value="Emergency">Emergency</option>
-                </select>
-            </td>
-            <td>
-                <div class="field">
-                <textarea ng-if="project.res2fte!='None'" ng-model="project.res2comment" maxlength="300" id="res2comment" placeholder="Describe issues like, unavailability, timing, competence, priority ect."></textarea>
-            </div>
-            </td>
-        </tr>
-        <tr>
-            <td>Resource owner status</td>
-            <td>
-                <select ng-if="project.res2fte!='None'" ng-model="project.res2owner"  ng-change="saveNow()">
-                    <option value="Committed">Committed</option>
-                    <option value="Backlog">Backlog</option>
-                    <option value="Tentative">Tentative</option>
-                    <option value="Rejected">Rejected</option>
-                </select>
-            </td>
-            <td>
-                <div class="field">
-                <textarea ng-change="saveNow()" ng-if="project.res2fte!='None'" ng-model="project.res2ownercomment" maxlength="300" id="res2comment" placeholder="Describe issues like, unavailability, timing, competence, priority ect."></textarea>
-            </div>
-            </td>
-        </tr>
-
-        <tr class="header">
-            <td prio-class prio-skill-render="project.res3skill" prio-size-render="project.res3">{{company.res3lable}}</td>
-            <td>
-                <select ng-model="project.res3fte"  ng-change="saveNow()">
-                    <option value="None">None</option>
-                    <option value="Minor tasks">Minor tasks</option>
-                    <option value="Major tasks">Major tasks</option>
-                    <option value="1 FTE">1 FTE</option>
-                    <option value="2-3 FTE">2-3 FTE</option>
-                    <option value="4-7 FTE">4-7 FTE</option>
-                    <option value=">7 FTE">>7 FTE</option>
-                </select>
-            </td>
-            <td>
-                <select ng-if="project.res3fte!='None'" ng-model="project.res3"  ng-change="saveNow()">
-                    <option value="No dependency">No dependency</option>
-                    <option value="Minor dependency">Minor dependency</option>
-                    <option value="Major dependency">Major dependency</option>
-                    <option value="Critical dependency">Critical dependency</option>
-                </select>
-            </td>
-        </tr>
-        <tr>
-            <td>Project status</td>
-            <td>
-                <select ng-if="project.res3fte!='None'" ng-model="project.res3skill"  ng-change="saveNow()">
-                    <option value="Ok">Ok</option>
-                    <option value="Minor issue">Minor issue</option>
-                    <option value="Major issue">Major issue</option>
-                    <option value="Emergency">Emergency</option>
-                </select>
-            </td>
-            <td>
-                <div class="field">
-                <textarea ng-change="saveNow()" ng-if="project.res3fte!='None'" ng-model="project.res3comment" maxlength="300" id="res3comment" placeholder="Describe issues like, unavailability, timing, competence, priority ect."></textarea>
-            </div>
-            </td>
-        </tr>
-        <tr>
-            <td>Resource owner status</td>
-            <td>
-                <select ng-if="project.res3fte!='None'" ng-model="project.res3owner"  ng-change="saveNow()">
-                    <option value="Committed">Committed</option>
-                    <option value="Backlog">Backlog</option>
-                    <option value="Tentative">Tentative</option>
-                    <option value="Rejected">Rejected</option>
-                </select>
-            </td>
-            <td>
-                <div class="field">
-                <textarea ng-change="saveNow()" ng-if="project.res3fte!='None'" ng-model="project.res3ownercomment" maxlength="300" id="res3comment" placeholder="Describe issues like, unavailability, timing, competence, priority ect."></textarea>
-            </div>
-            </td>
-        </tr>
-
-        <tr class="header">
-            <td prio-class prio-skill-render="project.res4skill" prio-size-render="project.res4">{{company.res4lable}}</td>
-            <td>
-                <select ng-model="project.res4fte"  ng-change="saveNow()">
-                    <option value="None">None</option>
-                    <option value="Minor tasks">Minor tasks</option>
-                    <option value="Major tasks">Major tasks</option>
-                    <option value="1 FTE">1 FTE</option>
-                    <option value="2-3 FTE">2-3 FTE</option>
-                    <option value="4-7 FTE">4-7 FTE</option>
-                    <option value=">7 FTE">>7 FTE</option>
-                </select>
-            </td>
-            <td>
-                <select ng-if="project.res4fte!='None'" ng-model="project.res4"  ng-change="saveNow()">
-                    <option value="No dependency">No dependency</option>
-                    <option value="Minor dependency">Minor dependency</option>
-                    <option value="Major dependency">Major dependency</option>
-                    <option value="Critical dependency">Critical dependency</option>
-                </select>
-            </td>
-        </tr>
-        <tr>
-            <td>Project status</td>
-            <td>
-                <select ng-if="project.res4fte!='None'" ng-model="project.res4skill"  ng-change="saveNow()">
-                    <option value="Ok">Ok</option>
-                    <option value="Minor issue">Minor issue</option>
-                    <option value="Major issue">Major issue</option>
-                    <option value="Emergency">Emergency</option>
-                </select>
-            </td>
-            <td>
-                <div class="field">
-                <textarea ng-change="saveNow()" ng-if="project.res4fte!='None'" ng-model="project.res4comment" maxlength="300" id="res4comment" placeholder="Describe issues like, unavailability, timing, competence, priority ect."></textarea>
-            </div>
-            </td>
-        </tr>
-        <tr>
-            <td>Resource owner status</td>
-            <td>
-                <select ng-if="project.res4fte!='None'" ng-model="project.res4owner"  ng-change="saveNow()">
-                    <option value="Committed">Committed</option>
-                    <option value="Backlog">Backlog</option>
-                    <option value="Tentative">Tentative</option>
-                    <option value="Rejected">Rejected</option>
-                </select>
-            </td>
-            <td>
-                <div class="field">
-                <textarea ng-change="saveNow()" ng-if="project.res4fte!='None'" ng-model="project.res4ownercomment" maxlength="300" id="res4comment" placeholder="Describe issues like, unavailability, timing, competence, priority ect."></textarea>
-            </div>
-            </td>
-        </tr>
-
-        <tr class="header">
-            <td prio-class prio-skill-render="project.res5skill" prio-size-render="project.res5">{{company.res5lable}}</td>
-            <td>
-                <select ng-model="project.res5fte"  ng-change="saveNow()">
-                    <option value="None">None</option>
-                    <option value="Minor tasks">Minor tasks</option>
-                    <option value="Major tasks">Major tasks</option>
-                    <option value="1 FTE">1 FTE</option>
-                    <option value="2-3 FTE">2-3 FTE</option>
-                    <option value="4-7 FTE">4-7 FTE</option>
-                    <option value=">7 FTE">>7 FTE</option>
-                </select>
-            </td>
-            <td>
-                <select ng-if="project.res5fte!='None'" ng-model="project.res5"  ng-change="saveNow()">
-                    <option value="No dependency">No dependency</option>
-                    <option value="Minor dependency">Minor dependency</option>
-                    <option value="Major dependency">Major dependency</option>
-                    <option value="Critical dependency">Critical dependency</option>
-                </select>
-            </td>
-        </tr>
-        <tr>
-            <td>Project status</td>
-            <td>
-                <select ng-if="project.res5fte!='None'" ng-model="project.res5skill"  ng-change="saveNow()">
-                    <option value="Ok">Ok</option>
-                    <option value="Minor issue">Minor issue</option>
-                    <option value="Major issue">Major issue</option>
-                    <option value="Emergency">Emergency</option>
-                </select>
-            </td>
-            <td>
-                <div class="field">
-                <textarea ng-change="saveNow()" ng-if="project.res5fte!='None'" ng-model="project.res5comment" maxlength="300" id="res5comment" placeholder="Describe issues like, unavailability, timing, competence, priority ect."></textarea>
-            </div>
-            </td>
-        </tr>
-        <tr>
-            <td>Resource owner status</td>
-            <td>
-                <select ng-if="project.res5fte!='None'" ng-model="project.res5owner"  ng-change="saveNow()">
-                    <option value="Committed">Committed</option>
-                    <option value="Backlog">Backlog</option>
-                    <option value="Tentative">Tentative</option>
-                    <option value="Rejected">Rejected</option>
-                </select>
-            </td>
-            <td>
-                <div class="field">
-                <textarea ng-change="saveNow()" ng-if="project.res5fte!='None'" ng-model="project.res5ownercomment" maxlength="300" id="res5comment" placeholder="Describe issues like, unavailability, timing, competence, priority ect."></textarea>
-            </div>
-            </td>
-        </tr>
-
-        <tr class="header">
-            <td prio-class prio-skill-render="project.res6skill" prio-size-render="project.res6">{{company.res6lable}}</td>
-            <td>
-                <select ng-model="project.res6fte"  ng-change="saveNow()">
-                    <option value="None">None</option>
-                    <option value="Minor tasks">Minor tasks</option>
-                    <option value="Major tasks">Major tasks</option>
-                    <option value="1 FTE">1 FTE</option>
-                    <option value="2-3 FTE">2-3 FTE</option>
-                    <option value="4-7 FTE">4-7 FTE</option>
-                    <option value=">7 FTE">>7 FTE</option>
-                </select>
-            </td>
-            <td>
-                <select ng-if="project.res6fte!='None'" ng-model="project.res6"  ng-change="saveNow()">
-                    <option value="No dependency">No dependency</option>
-                    <option value="Minor dependency">Minor dependency</option>
-                    <option value="Major dependency">Major dependency</option>
-                    <option value="Critical dependency">Critical dependency</option>
-                </select>
-            </td>
-        </tr>
-        <tr>
-            <td>Project status</td>
-            <td>
-                <select ng-if="project.res6fte!='None'" ng-model="project.res6skill"  ng-change="saveNow()">
-                    <option value="Ok">Ok</option>
-                    <option value="Minor issue">Minor issue</option>
-                    <option value="Major issue">Major issue</option>
-                    <option value="Emergency">Emergency</option>
-                </select>
-            </td>
-            <td>
-                <div class="field">
-                <textarea ng-change="saveNow()" ng-if="project.res6fte!='None'" ng-model="project.res6comment" maxlength="300" id="res6comment" placeholder="Describe issues like, unavailability, timing, competence, priority ect."></textarea>
-            </div>
-            </td>
-        </tr>
-        <tr>
-            <td>Resource owner status</td>
-            <td>
-                <select ng-if="project.res6fte!='None'" ng-model="project.res6owner"  ng-change="saveNow()">
-                    <option value="Committed">Committed</option>
-                    <option value="Backlog">Backlog</option>
-                    <option value="Tentative">Tentative</option>
-                    <option value="Rejected">Rejected</option>
-                </select>
-            </td>
-            <td>
-                <div class="field">
-                <textarea ng-change="saveNow()" ng-if="project.res6fte!='None'" ng-model="project.res6ownercomment" maxlength="300" id="res6comment" placeholder="Describe issues like, unavailability, timing, competence, priority ect."></textarea>
-            </div>
-            </td>
-        </tr>
-
-        <tr class="header">
-            <td prio-class prio-skill-render="project.res7skill" prio-size-render="project.res7">{{company.res7lable}}</td>
-            <td>
-                <select ng-model="project.res7fte"  ng-change="saveNow()">
-                    <option value="None">None</option>
-                    <option value="Minor tasks">Minor tasks</option>
-                    <option value="Major tasks">Major tasks</option>
-                    <option value="1 FTE">1 FTE</option>
-                    <option value="2-3 FTE">2-3 FTE</option>
-                    <option value="4-7 FTE">4-7 FTE</option>
-                    <option value=">7 FTE">>7 FTE</option>
-                </select>
-            </td>
-            <td>
-                <select ng-if="project.res7fte!='None'" ng-model="project.res7"  ng-change="saveNow()">
-                    <option value="No dependency">No dependency</option>
-                    <option value="Minor dependency">Minor dependency</option>
-                    <option value="Major dependency">Major dependency</option>
-                    <option value="Critical dependency">Critical dependency</option>
-                </select>
-            </td>
-        </tr>
-        <tr>
-            <td>Project status</td>
-            <td>
-                <select ng-if="project.res7fte!='None'" ng-model="project.res7skill"  ng-change="saveNow()">
-                    <option value="Ok">Ok</option>
-                    <option value="Minor issue">Minor issue</option>
-                    <option value="Major issue">Major issue</option>
-                    <option value="Emergency">Emergency</option>
-                </select>
-            </td>
-            <td>
-                <div class="field">
-                <textarea ng-change="saveNow()" ng-if="project.res7fte!='None'" ng-model="project.res7comment" maxlength="300" id="res7comment" placeholder="Describe issues like, unavailability, timing, competence, priority ect."></textarea>
-            </div>
-            </td>
-        </tr>
-        <tr>
-            <td>Resource owner status</td>
-            <td>
-                <select ng-if="project.res7fte!='None'" ng-model="project.res7owner"  ng-change="saveNow()">
-                    <option value="Committed">Committed</option>
-                    <option value="Backlog">Backlog</option>
-                    <option value="Tentative">Tentative</option>
-                    <option value="Rejected">Rejected</option>
-                </select>
-            </td>
-            <td>
-                <div class="field">
-                <textarea ng-change="saveNow()" ng-if="project.res7fte!='None'" ng-model="project.res7ownercomment" maxlength="300" id="res7comment" placeholder="Describe issues like, unavailability, timing, competence, priority ect."></textarea>
-            </div>
-            </td>
-        </tr>
-
-        <tr class="header">
-            <td prio-class prio-skill-render="project.res8skill" prio-size-render="project.res8">{{company.res8lable}}</td>
-            <td>
-                <select ng-model="project.res8fte"  ng-change="saveNow()">
-                    <option value="None">None</option>
-                    <option value="Minor tasks">Minor tasks</option>
-                    <option value="Major tasks">Major tasks</option>
-                    <option value="1 FTE">1 FTE</option>
-                    <option value="2-3 FTE">2-3 FTE</option>
-                    <option value="4-7 FTE">4-7 FTE</option>
-                    <option value=">7 FTE">>7 FTE</option>
-                </select>
-            </td>
-            <td>
-                <select ng-if="project.res8fte!='None'" ng-model="project.res8"  ng-change="saveNow()">
-                    <option value="No dependency">No dependency</option>
-                    <option value="Minor dependency">Minor dependency</option>
-                    <option value="Major dependency">Major dependency</option>
-                    <option value="Critical dependency">Critical dependency</option>
-                </select>
-            </td>
-        </tr>
-        <tr>
-            <td>Project status</td>
-            <td>
-                <select ng-if="project.res8fte!='None'" ng-model="project.res8skill"  ng-change="saveNow()">
-                    <option value="Ok">Ok</option>
-                    <option value="Minor issue">Minor issue</option>
-                    <option value="Major issue">Major issue</option>
-                    <option value="Emergency">Emergency</option>
-                </select>
-            </td>
-            <td>
-                <div class="field">
-                <textarea ng-change="saveNow()" ng-if="project.res8fte!='None'" ng-model="project.res8comment" maxlength="300" id="res8comment" placeholder="Describe issues like, unavailability, timing, competence, priority ect."></textarea>
-            </div>
-            </td>
-        </tr>
-        <tr>
-            <td>Resource owner status</td>
-            <td>
-                <select ng-if="project.res8fte!='None'" ng-model="project.res8owner"  ng-change="saveNow()">
-                    <option value="Committed">Committed</option>
-                    <option value="Backlog">Backlog</option>
-                    <option value="Tentative">Tentative</option>
-                    <option value="Rejected">Rejected</option>
-                </select>
-            </td>
-            <td>
-                <div class="field">
-                <textarea ng-change="saveNow()" ng-if="project.res8fte!='None'" ng-model="project.res8ownercomment" maxlength="300" id="res8comment" placeholder="Describe issues like, unavailability, timing, competence, priority ect."></textarea>
-            </div>
-            </td>
-        </tr>
-
-        <tr class="header">
-            <td prio-class prio-skill-render="project.res9skill" prio-size-render="project.res9">{{company.res9lable}}</td>
-            <td>
-                <select ng-model="project.res9fte"  ng-change="saveNow()">
-                    <option value="None">None</option>
-                    <option value="Minor tasks">Minor tasks</option>
-                    <option value="Major tasks">Major tasks</option>
-                    <option value="1 FTE">1 FTE</option>
-                    <option value="2-3 FTE">2-3 FTE</option>
-                    <option value="4-7 FTE">4-7 FTE</option>
-                    <option value=">7 FTE">>7 FTE</option>
-                </select>
-            </td>
-            <td>
-                <select ng-if="project.res9fte!='None'" ng-model="project.res9"  ng-change="saveNow()">
-                    <option value="No dependency">No dependency</option>
-                    <option value="Minor dependency">Minor dependency</option>
-                    <option value="Major dependency">Major dependency</option>
-                    <option value="Critical dependency">Critical dependency</option>
-                </select>
-            </td>
-        </tr>
-        <tr>
-            <td>Project status</td>
-            <td>
-                <select ng-if="project.res9fte!='None'" ng-model="project.res9skill"  ng-change="saveNow()">
-                    <option value="Ok">Ok</option>
-                    <option value="Minor issue">Minor issue</option>
-                    <option value="Major issue">Major issue</option>
-                    <option value="Emergency">Emergency</option>
-                </select>
-            </td>
-            <td>
-                <div class="field">
-                <textarea ng-change="saveNow()" ng-if="project.res9fte!='None'" ng-model="project.res9comment" maxlength="300" id="res9comment" placeholder="Describe issues like, unavailability, timing, competence, priority ect."></textarea>
-            </div>
-            </td>
-        </tr>
-        <tr>
-            <td>Resource owner status</td>
-            <td>
-                <select ng-if="project.res9fte!='None'" ng-model="project.res9owner"  ng-change="saveNow()">
-                    <option value="Committed">Committed</option>
-                    <option value="Backlog">Backlog</option>
-                    <option value="Tentative">Tentative</option>
-                    <option value="Rejected">Rejected</option>
-                </select>
-            </td>
-            <td>
-                <div class="field">
-                <textarea ng-change="saveNow()" ng-if="project.res9fte!='None'" ng-model="project.res9ownercomment" maxlength="300" id="res9comment" placeholder="Describe issues like, unavailability, timing, competence, priority ect."></textarea>
-            </div>
-            </td>
-        </tr>
-
-        <tr class="header">
-            <td prio-class prio-skill-render="project.res10skill" prio-size-render="project.res10">{{company.res10lable}}</td>
-            <td>
-                <select ng-model="project.res10fte"  ng-change="saveNow()">
-                    <option value="None">None</option>
-                    <option value="Minor tasks">Minor tasks</option>
-                    <option value="Major tasks">Major tasks</option>
-                    <option value="1 FTE">1 FTE</option>
-                    <option value="2-3 FTE">2-3 FTE</option>
-                    <option value="4-7 FTE">4-7 FTE</option>
-                    <option value=">7 FTE">>7 FTE</option>
-                </select>
-            </td>
-            <td>
-                <select ng-if="project.res10fte!='None'" ng-model="project.res10"  ng-change="saveNow()">
-                    <option value="No dependency">No dependency</option>
-                    <option value="Minor dependency">Minor dependency</option>
-                    <option value="Major dependency">Major dependency</option>
-                    <option value="Critical dependency">Critical dependency</option>
-                </select>
-            </td>
-        </tr>
-        <tr>
-            <td>Project status</td>
-            <td>
-                <select ng-if="project.res10fte!='None'" ng-model="project.res10skill"  ng-change="saveNow()">
-                    <option value="Ok">Ok</option>
-                    <option value="Minor issue">Minor issue</option>
-                    <option value="Major issue">Major issue</option>
-                    <option value="Emergency">Emergency</option>
-                </select>
-            </td>
-            <td>
-                <div class="field">
-                <textarea ng-change="saveNow()" ng-if="project.res10fte!='None'" ng-model="project.res10comment" maxlength="300" id="res10comment" placeholder="Describe issues like, unavailability, timing, competence, priority ect."></textarea>
-            </div>
-            </td>
-        </tr>
-        <tr>
-            <td>Resource owner status</td>
-            <td>
-                <select ng-if="project.res10fte!='None'" ng-model="project.res10owner"  ng-change="saveNow()">
-                    <option value="Committed">Committed</option>
-                    <option value="Backlog">Backlog</option>
-                    <option value="Tentative">Tentative</option>
-                    <option value="Rejected">Rejected</option>
-                </select>
-            </td>
-            <td>
-                <div class="field">
-                <textarea ng-change="saveNow()" ng-if="project.res10fte!='None'" ng-model="project.res10ownercomment" maxlength="300" id="res10comment" placeholder="Describe issues like, unavailability, timing, competence, priority ect."></textarea>
-            </div>
-            </td>
-        </tr>
-
-        <tr class="header">
-            <td prio-class prio-skill-render="project.res11skill" prio-size-render="project.res11">{{company.res11lable}}</td>
-            <td>
-                <select ng-model="project.res11fte"  ng-change="saveNow()">
-                    <option value="None">None</option>
-                    <option value="Minor tasks">Minor tasks</option>
-                    <option value="Major tasks">Major tasks</option>
-                    <option value="1 FTE">1 FTE</option>
-                    <option value="2-3 FTE">2-3 FTE</option>
-                    <option value="4-7 FTE">4-7 FTE</option>
-                    <option value=">7 FTE">>7 FTE</option>
-                </select>
-            </td>
-            <td>
-                <select ng-if="project.res11fte!='None'" ng-model="project.res11"  ng-change="saveNow()">
-                    <option value="No dependency">No dependency</option>
-                    <option value="Minor dependency">Minor dependency</option>
-                    <option value="Major dependency">Major dependency</option>
-                    <option value="Critical dependency">Critical dependency</option>
-                </select>
-            </td>
-        </tr>
-        <tr>
-            <td>Project status</td>
-            <td>
-                <select ng-if="project.res11fte!='None'" ng-model="project.res11skill"  ng-change="saveNow()">
-                    <option value="Ok">Ok</option>
-                    <option value="Minor issue">Minor issue</option>
-                    <option value="Major issue">Major issue</option>
-                    <option value="Emergency">Emergency</option>
-                </select>
-            </td>
-            <td>
-                <div class="field">
-                <textarea ng-change="saveNow()" ng-if="project.res11fte!='None'" ng-model="project.res11comment" maxlength="300" id="res11comment" placeholder="Describe issues like, unavailability, timing, competence, priority ect."></textarea>
-            </div>
-            </td>
-        </tr>
-        <tr>
-            <td>Resource owner status</td>
-            <td>
-                <select ng-if="project.res11fte!='None'" ng-model="project.res11owner"  ng-change="saveNow()">
-                    <option value="Committed">Committed</option>
-                    <option value="Backlog">Backlog</option>
-                    <option value="Tentative">Tentative</option>
-                    <option value="Rejected">Rejected</option>
-                </select>
-            </td>
-            <td>
-                <div class="field">
-                <textarea ng-change="saveNow()" ng-if="project.res11fte!='None'" ng-model="project.res11ownercomment" maxlength="300" id="res11comment" placeholder="Describe issues like, unavailability, timing, competence, priority ect."></textarea>
-            </div>
-            </td>
-        </tr>
-
-        <tr class="header">
-            <td prio-class prio-skill-render="project.res12skill" prio-size-render="project.res12">{{company.res12lable}}</td>
-            <td>
-                <select ng-model="project.res12fte"  ng-change="saveNow()">
-                    <option value="None">None</option>
-                    <option value="Minor tasks">Minor tasks</option>
-                    <option value="Major tasks">Major tasks</option>
-                    <option value="1 FTE">1 FTE</option>
-                    <option value="2-3 FTE">2-3 FTE</option>
-                    <option value="4-7 FTE">4-7 FTE</option>
-                    <option value=">7 FTE">>7 FTE</option>
-                </select>
-            </td>
-            <td>
-                <select ng-if="project.res12fte!='None'" ng-model="project.res12"  ng-change="saveNow()">
-                    <option value="No dependency">No dependency</option>
-                    <option value="Minor dependency">Minor dependency</option>
-                    <option value="Major dependency">Major dependency</option>
-                    <option value="Critical dependency">Critical dependency</option>
-                </select>
-            </td>
-        </tr>
-        <tr>
-            <td>Project status</td>
-            <td>
-                <select ng-if="project.res12fte!='None'" ng-model="project.res12skill"  ng-change="saveNow()">
-                    <option value="Ok">Ok</option>
-                    <option value="Minor issue">Minor issue</option>
-                    <option value="Major issue">Major issue</option>
-                    <option value="Emergency">Emergency</option>
-                </select>
-            </td>
-            <td>
-                <div class="field">
-                <textarea ng-change="saveNow()" ng-if="project.res12fte!='None'" ng-model="project.res12comment" maxlength="300" id="res12comment" placeholder="Describe issues like, unavailability, timing, competence, priority ect."></textarea>
-            </div>
-            </td>
-        </tr>
-        <tr>
-            <td>Resource owner status</td>
-            <td>
-                <select ng-if="project.res12fte!='None'" ng-model="project.res12owner"  ng-change="saveNow()">
-                    <option value="Committed">Committed</option>
-                    <option value="Backlog">Backlog</option>
-                    <option value="Tentative">Tentative</option>
-                    <option value="Rejected">Rejected</option>
-                </select>
-            </td>
-            <td>
-                <div class="field">
-                <textarea ng-change="saveNow()" ng-if="project.res12fte!='None'" ng-model="project.res12ownercomment" maxlength="300" id="res12comment" placeholder="Describe issues like, unavailability, timing, competence, priority ect."></textarea>
-            </div>
-            </td>
-        </tr>
-
-        <tr class="header">
-            <td prio-class prio-skill-render="project.res13skill" prio-size-render="project.res13">{{company.res13lable}}</td>
-            <td>
-                <select ng-model="project.res13fte"  ng-change="saveNow()">
-                    <option value="None">None</option>
-                    <option value="Minor tasks">Minor tasks</option>
-                    <option value="Major tasks">Major tasks</option>
-                    <option value="1 FTE">1 FTE</option>
-                    <option value="2-3 FTE">2-3 FTE</option>
-                    <option value="4-7 FTE">4-7 FTE</option>
-                    <option value=">7 FTE">>7 FTE</option>
-                </select>
-            </td>
-            <td>
-                <select ng-if="project.res13fte!='None'" ng-model="project.res13"  ng-change="saveNow()">
-                    <option value="No dependency">No dependency</option>
-                    <option value="Minor dependency">Minor dependency</option>
-                    <option value="Major dependency">Major dependency</option>
-                    <option value="Critical dependency">Critical dependency</option>
-                </select>
-            </td>
-        </tr>
-        <tr>
-            <td>Project status</td>
-            <td>
-                <select ng-if="project.res13fte!='None'" ng-model="project.res13skill"  ng-change="saveNow()">
-                    <option value="Ok">Ok</option>
-                    <option value="Minor issue">Minor issue</option>
-                    <option value="Major issue">Major issue</option>
-                    <option value="Emergency">Emergency</option>
-                </select>
-            </td>
-            <td>
-                <div class="field">
-                <textarea ng-change="saveNow()" ng-if="project.res13fte!='None'" ng-model="project.res13comment" maxlength="300" id="res13comment" placeholder="Describe issues like, unavailability, timing, competence, priority ect."></textarea>
-            </div>
-            </td>
-        </tr>
-        <tr>
-            <td>Resource owner status</td>
-            <td>
-                <select ng-if="project.res13fte!='None'" ng-model="project.res13owner"  ng-change="saveNow()">
-                    <option value="Committed">Committed</option>
-                    <option value="Backlog">Backlog</option>
-                    <option value="Tentative">Tentative</option>
-                    <option value="Rejected">Rejected</option>
-                </select>
-            </td>
-            <td>
-                <div class="field">
-                <textarea ng-change="saveNow()" ng-if="project.res13fte!='None'" ng-model="project.res13ownercomment" maxlength="300" id="res13comment" placeholder="Describe issues like, unavailability, timing, competence, priority ect."></textarea>
-            </div>
-            </td>
-        </tr>
-
-        <tr class="header">
-            <td prio-class prio-skill-render="project.res14skill" prio-size-render="project.res14">{{company.res14lable}}</td>
-            <td>
-                <select ng-model="project.res14fte"  ng-change="saveNow()">
-                    <option value="None">None</option>
-                    <option value="Minor tasks">Minor tasks</option>
-                    <option value="Major tasks">Major tasks</option>
-                    <option value="1 FTE">1 FTE</option>
-                    <option value="2-3 FTE">2-3 FTE</option>
-                    <option value="4-7 FTE">4-7 FTE</option>
-                    <option value=">7 FTE">>7 FTE</option>
-                </select>
-            </td>
-            <td>
-                <select ng-if="project.res14fte!='None'" ng-model="project.res14"  ng-change="saveNow()">
-                    <option value="No dependency">No dependency</option>
-                    <option value="Minor dependency">Minor dependency</option>
-                    <option value="Major dependency">Major dependency</option>
-                    <option value="Critical dependency">Critical dependency</option>
-                </select>
-            </td>
-        </tr>
-        <tr>
-            <td>Project status</td>
-            <td>
-                <select ng-if="project.res14fte!='None'" ng-model="project.res14skill"  ng-change="saveNow()">
-                    <option value="Ok">Ok</option>
-                    <option value="Minor issue">Minor issue</option>
-                    <option value="Major issue">Major issue</option>
-                    <option value="Emergency">Emergency</option>
-                </select>
-            </td>
-            <td>
-                <div class="field">
-                <textarea ng-change="saveNow()" ng-if="project.res14fte!='None'" ng-model="project.res14comment" maxlength="300" id="res14comment" placeholder="Describe issues like, unavailability, timing, competence, priority ect."></textarea>
-            </div>
-            </td>
-        </tr>
-        <tr>
-            <td>Resource owner status</td>
-            <td>
-                <select ng-if="project.res14fte!='None'" ng-model="project.res14owner"  ng-change="saveNow()">
-                    <option value="Committed">Committed</option>
-                    <option value="Backlog">Backlog</option>
-                    <option value="Tentative">Tentative</option>
-                    <option value="Rejected">Rejected</option>
-                </select>
-            </td>
-            <td>
-                <div class="field">
-                <textarea ng-change="saveNow()" ng-if="project.res14fte!='None'" ng-model="project.res14ownercomment" maxlength="300" id="res14comment" placeholder="Describe issues like, unavailability, timing, competence, priority ect."></textarea>
-            </div>
-            </td>
-        </tr>
-
-
-
-
-    </table>
+    </div>
 </div>

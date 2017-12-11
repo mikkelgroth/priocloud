@@ -15,6 +15,9 @@ angular
         ) {
 
             var projectId = $routeParams.id;
+            var depId = $routeParams.milestoneid;
+
+            $scope.showDepForm = false;
 
             userService
                 .user
@@ -28,6 +31,8 @@ angular
                 .subscribe(function (project) {
 
                     $scope.project = project;
+
+                    showDep();
                 });
 
             companyService
@@ -51,16 +56,91 @@ angular
                     $scope.users = users;
                 });
 
-            $scope.saveProject = function (project) {
+            
+            $scope.beginEditDep = function (dep) {
                 
-                companyService.saveProjectName(project, $scope.user.name);
-                $scope.hasChanged=false;
+                $scope.editdep = dep;
+                
+                $scope.showMilestoneForm = false;
+                $scope.showDepForm = true;
+                $scope.deleteThis=false;
+                                
             };
-
-            $scope.saveNow = function (project) {
                 
+
+
+            $scope.saveDeps = function (open) {
+                companyService.saveProjectName($scope.project, $scope.user.name);
+                $scope.hasChanged=false;
+                $scope.deleteThis=false;
+                
+                if (open) {
+                    $scope.showDepForm = true;
+                }
+                
+            };
+            
+            $scope.saveNow = function () {
                 $scope.hasChanged=true;               
             };
+
+
+            $scope.newDep = function () {
+                
+                if($scope.project.deps==null){
+                    $scope.project.deps=[];
+                }
+                $scope.project.deps.push({});
+                $scope.editdep=$scope.project.deps[$scope.project.deps.length-1];
+                
+                $scope.editdep._id = Math.random().toString(36).substr(2, 9);
+                $scope.editdep.status = 'Green';
+                $scope.editdep.title = 'NEW DEPENDENCY';
+                $scope.editdep.agreement = 'None';
+                $scope.editdep.names = 'TBD';
+                $scope.editdep.showInReport = true;
+                $scope.editdep.audience = 'Project';
+                $scope.editdep.requester = $scope.user.name;
+                $scope.editdep.resowner = $scope.user.name;
+                $scope.editdep.quantum = 'Minor task';
+                $scope.editdep.delmap = 'None';
+                $scope.editdep.description = 'None';
+                
+                $scope.showDepForm = true;
+                $scope.showMilestoneForm = false;
+                $scope.deleteThis=false;
+                                
+            };
+                    
+         
+            $scope.hideDepForm = function () {    
+                $scope.showDepForm = false;                
+            };
+                
+            $scope.removeDep = function (dep) {
+                $scope.project.deps.splice($scope.project.deps.indexOf(dep), 1);
+                companyService.saveProjectName($scope.project, $scope.user.name);
+                $scope.showDepForm = false;
+            };
+
+            
+            function showDep() {
+                
+                // TODO(2): this doesn't work until correct id's for milestones has been implemented
+
+                if (depId) {
+
+                    var milestone = $scope.project.deps.filter(function (dep) {
+                        return dep._id === depId;
+                    });
+
+                    if (deps[0]) {
+
+                        $scope.editdep = deps[0];
+                        $scope.showDepForm = true;
+                    }
+                }
+            }
 
         }
     ]);
