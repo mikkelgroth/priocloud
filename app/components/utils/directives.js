@@ -194,9 +194,11 @@ angular
     link: function(scope, el, attr, ngModel) {
       $(el).datepicker({
         onSelect: function(dateText) {
-          scope.$apply(function() {
-            ngModel.$setViewValue(Date);
-          });
+            scope.$apply(function() {
+                ngModel.$setViewValue(dateText);
+                // console.log("dateText = " + dateText);
+              
+            });
         }
       });
     }

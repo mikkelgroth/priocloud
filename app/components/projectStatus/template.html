@@ -40,7 +40,7 @@
                 </td>
                 <td class="header">Next demo</td>
                 <td>
-                    <input ng-show="saveStatusEnabled" type="text" id="demodate" datepicker="" ng-model="editstatus.demodate" ng-change="saveNow(editstatus); dateChanged(editstatus.demodate)"  class="cal"/>
+                    <input ng-show="saveStatusEnabled" type="text" id="demodate" datepicker="editstatus.demodate | date:'yyyy-MM-dd'" ng-model="editstatus.demodate" ng-change="saveNow(editstatus); dateChanged(editstatus.demodate)"  class="cal"/>
                     {{editstatus.demodate | date:'yyyy-MM-dd'}}
                 </td>
             </tr>
