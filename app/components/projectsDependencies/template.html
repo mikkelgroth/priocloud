@@ -1,296 +1,86 @@
 <div id="projects-dependencies">
-    <h2>Project list - Dependencies <div class="right"><button ng-click="showfilters=true"  ng-show="!showfilters">Show filters</button><button ng-click="showfilters=false"  ng-show="showfilters">Hide filters</button></div></h2>
-    <div class="smaller">
-        <div class="filter-order-container" ng-show="showfilters">
-            <div class="label" style="height:120px;">
-                Filter by:<br/> BU
-                <br/>PO<br/>PM
+        <h2>Dependencies <div class="right"><button ng-click="showfilters=true"  ng-show="!showfilters">Show filters</button><button ng-click="showfilters=false"  ng-show="showfilters">Hide filters</button></div></h2>
+        <div class="smaller">
+            <div class="filter-order-container" ng-show="showfilters">
+                <div class="label" style="height:120px;">
+                    Filter by:<br/> BU
+                    <br/>Project<br/>Requester<br/>Res. owner<br/>Agreement
+                </div>
+                <div class="field multiple-select">
+                    <select multiple="multiple" ng-multiple="true" ng-model="depsearch.buname" ng-options="bu.name as bu.name for bu in bus | orderBy: 'name'"></select>
+                    <select multiple="multiple" ng-multiple="true" ng-model="depsearch.projecttitle" ng-options="p.title as p.title for p in projects | filter:{state: '!Closed'} | orderBy: 'title'"></select>
+                    <select multiple="multiple" ng-multiple="true" ng-model="depsearch.acname" ng-options="u.name as u.name for u in users | filter: {source: true} | orderBy:'name'"></select>
+                    <select multiple="multiple" ng-multiple="true" ng-model="depsearch.resname" ng-options="u.name as u.name for u in users | filter: {source: true} | orderBy:'name'" ></select>
+                    <select multiple="multiple" ng-multiple="true" ng-model="depsearch.agreement">
+                            <option value="None">None</option>
+                            <option value="Conflict">Conflict</option>
+                            <option value="Tentative">Tentative</option>
+                            <option value="Agreed">Agreed</option>
+                    </select>
+                </div>
             </div>
-            <div class="field multiple-select">
-                <select multiple="multiple" ng-multiple="true" ng-model="search.buname" ng-options="bu.name as bu.name for bu in bus | orderBy: 'name'"></select>
-                <select multiple="multiple" ng-multiple="true" ng-model="search.poname" ng-options="u.name as u.name for u in users | filter: {source: true} | orderBy: 'name'"></select>
-                <select multiple="multiple" ng-multiple="true" ng-model="search.pmname" ng-options="u.name as u.name for u in users | filter: {source: true} | orderBy: 'name'"></select>
-            </div>
-        </div>
-        <div class="filter-order-container" ng-show="showfilters">
-            <div class="label" style="height:120px;">
-                Filter by:<br/> State
-                <br/>Audience<br/>Portfolio
-            </div>
-            <div class="field multiple-select">
-                <select multiple="multiple" ng-multiple="true" ng-model="search.state" ng-init="search.state=['Progress']">
-                    <option value="Proposed">Proposed</option>
-                    <option value="Progress">Progress</option>
-                    <option value="Onhold">On hold</option>
-                    <option value="Closed">Closed</option>
-                </select>
-                <select multiple="multiple" ng-multiple="true" ng-model="search.audience">
-                    <option value="Project">Project</option>
-                    <option value="Portfolio">Portfolio</option>
-                    <option value="Company">Company</option>
-                </select>
-                <select multiple="multiple" ng-multiple="true" ng-model="search.support" ng-options="bu.name as bu.name for bu in bus | orderBy: 'name'"></select>
-            </div>
-        </div>
-        <div class="filter-order-container" ng-show="showfilters">
-            <div class="label">
-                Order by:
-            </div>
-            <div class="field">
-                <select ng-model="porderparam" ng-init="porderparam='-total'">
-                    <option value="-total">KPI: Total points</option>
-                    <option value="-kpi1">KPI: {{company.projkpi1lable}}</option>
-                    <option value="-kpi2">KPI: {{company.projkpi2lable}}</option>
-                    <option value="-kpi3">KPI: {{company.projkpi3lable}}</option>
-                    <option value="-kpi4">KPI: {{company.projkpi4lable}}</option>
-                    <option value="-kpi5">KPI: {{company.projkpi5lable}}</option>
-                    <option value="-kpi6">KPI: {{company.projkpi6lable}}</option>
-                    <option value="title">Title</option>
-                    <option value="bu.name">BU</option>
-                    <option value="res1">Resource: {{company.res1lable}}</option>
-                    <option value="res2">Resource: {{company.res2lable}}</option>
-                    <option value="res3">Resource: {{company.res3lable}}</option>
-                    <option value="res4">Resource: {{company.res4lable}}</option>
-                    <option value="res5">Resource: {{company.res5lable}}</option>
-                    <option value="res6">Resource: {{company.res6lable}}</option>
-                    <option value="res7">Resource: {{company.res7lable}}</option>
-                    <option value="res8">Resource: {{company.res8lable}}</option>
-                    <option value="res9">Resource: {{company.res9lable}}</option>
-                    <option value="res10">Resource: {{company.res10lable}}</option>
-                    <option value="res11">Resource: {{company.res11lable}}</option>
-                    <option value="res12">Resource: {{company.res12lable}}</option>
-                    <option value="res13">Resource: {{company.res13lable}}</option>
-                    <option value="res14">Resource: {{company.res14lable}}</option>
-                </select>
-            </div>
-        </div>
-        <div class="overview">
-            <table class="tablelist" ng-if="projectList.length > 0">
-                <tr class="header">
-                    <td>
-                        Project
-                    </td>
-                    <td>{{company.res1lableshort}}</td>
-                    <td>{{company.res2lableshort}}</td>
-                    <td>{{company.res3lableshort}}</td>
-                    <td>{{company.res4lableshort}}</td>
-                    <td>{{company.res5lableshort}}</td>
-                    <td>{{company.res6lableshort}}</td>
-                    <td>{{company.res7lableshort}}</td>
-                    <td>{{company.res8lableshort}}</td>
-                    <td>{{company.res9lableshort}}</td>
-                    <td>{{company.res10lableshort}}</td>
-                    <td>{{company.res11lableshort}}</td>
-                    <td>{{company.res12lableshort}}</td>
-                    <td>{{company.res13lableshort}}</td>
-                    <td>{{company.res14lableshort}}</td>
+            <div class="filter-order-container" ng-show="showfilters">
+                <div class="label" style="height:120px;">
+                    Filter by:<br/> P. State<br/>Status
+                    <br/>Audience<br/>Portfolio
+                </div>
+                <div class="field multiple-select">
+                    <select multiple="multiple" ng-multiple="true" ng-model="depsearch.pstate" ng-init="depsearch.pstate=['Progress']">
+                        <option value="Proposed">Proposed</option>
+                        <option value="Progress">Progress</option>
+                        <option value="Onhold">On hold</option>
+                        <option value="Closed">Closed</option>
+                    </select>
+                    <select multiple="multiple" ng-multiple="true" ng-model="depsearch.status">
+                        <option value="Green">Accept</option>
+                        <option value="Yellow">Observe</option>
+                        <option value="Orange">Assist</option>
+                        <option value="Red">Intervent</option>
+                    </select>
                     
+                    <select multiple="multiple" ng-multiple="true" ng-model="depsearch.audience">
+                        <option value="Project">Project</option>
+                        <option value="Portfolio">Portfolio</option>
+                        <option value="Company">Company</option>
+                    </select>
+                    <select multiple="multiple" ng-multiple="true" ng-model="depsearch.support" ng-options="bu.name as bu.name for bu in bus | orderBy: 'name'"></select>
                     
-                </tr>
-                <tr ng-repeat="project in projectList | multiFilter:search | orderBy:porderparam" ng-click="goToProject(project._id.$oid)" class="link">
-                    <td class="{{project.lastStatus.status}}">
-                        {{project.title}}
-                    </td>
-                    <td class="tooltip">
-                        <div ng-if="project.res1fte != 'None'">
-                           <div prio-class prio-skill-render="project.res1skill" prio-size-render="project.res1"></div>
-                           <div prio-class prio-res-render="project.res1owner"></div>
-                            <span class="tooltiptext">
-                                <table class="tooltiptext">
-                                    <tr><td><b>Request:</b></td><td>{{project.res1fte}}</td></tr>
-                                    <tr><td><b>Project:</b></td><td>{{project.res1comment}}</td></tr>
-                                    <tr><td><b>Response:</b></td><td>{{project.res1owner}}</td></tr>
-                                    <tr><td><b>Res. Owner:</b></td><td>{{project.res1ownercomment}}</td></tr>
-                                </table>
-                            </span>
-                        </div>
-                    </td>
-                    <td class="tooltip">
-                        <div ng-if="project.res2fte != 'None'">
-                           <div prio-class prio-skill-render="project.res2skill" prio-size-render="project.res2"></div>
-                           <div prio-class prio-res-render="project.res2owner"></div>
-                            <span class="tooltiptext">
-                                <table class="tooltiptext">
-                                    <tr><td><b>Request:</b></td><td>{{project.res2fte}}</td></tr>
-                                    <tr><td><b>Project:</b></td><td>{{project.res2comment}}</td></tr>
-                                    <tr><td><b>Response:</b></td><td>{{project.res2owner}}</td></tr>
-                                    <tr><td><b>Res. Owner:</b></td><td>{{project.res2ownercomment}}</td></tr>
-                                </table>
-                            </span>
-                        </div>
-                    </td>
-                    <td class="tooltip">
-                        <div ng-if="project.res3fte != 'None'">
-                            <div prio-class prio-skill-render="project.res3skill" prio-size-render="project.res3"></div>
-                           <div prio-class prio-res-render="project.res3owner"></div>
-                            <span class="tooltiptext">
-                                <table class="tooltiptext">
-                                    <tr><td><b>Request:</b></td><td>{{project.res3fte}}</td></tr>
-                                    <tr><td><b>Project:</b></td><td>{{project.res3comment}}</td></tr>
-                                    <tr><td><b>Response:</b></td><td>{{project.res3owner}}</td></tr>
-                                    <tr><td><b>Res. Owner:</b></td><td>{{project.res3ownercomment}}</td></tr>
-                                </table>
-                            </span>
-                        </div>
-                    </td>
-<td class="tooltip">
-                        <div ng-if="project.res4fte != 'None'">
-                            <div prio-class prio-skill-render="project.res4skill" prio-size-render="project.res4"></div>
-                           <div prio-class prio-res-render="project.res4owner"></div>
-                            <span class="tooltiptext">
-                                <table class="tooltiptext">
-                                    <tr><td><b>Request:</b></td><td>{{project.res4fte}}</td></tr>
-                                    <tr><td><b>Project:</b></td><td>{{project.res4comment}}</td></tr>
-                                    <tr><td><b>Response:</b></td><td>{{project.res4owner}}</td></tr>
-                                    <tr><td><b>Res. Owner:</b></td><td>{{project.res4ownercomment}}</td></tr>
-                                </table>
-                            </span>
-                        </div>
-                    </td>
-<td class="tooltip">
-                        <div ng-if="project.res5fte != 'None'">
-                            <div prio-class prio-skill-render="project.res5skill" prio-size-render="project.res5"></div>
-                           <div prio-class prio-res-render="project.res5owner"></div>
-                            <span class="tooltiptext">
-                                <table class="tooltiptext">
-                                    <tr><td><b>Request:</b></td><td>{{project.res5fte}}</td></tr>
-                                    <tr><td><b>Project:</b></td><td>{{project.res5comment}}</td></tr>
-                                    <tr><td><b>Response:</b></td><td>{{project.res5owner}}</td></tr>
-                                    <tr><td><b>Res. Owner:</b></td><td>{{project.res5ownercomment}}</td></tr>
-                                </table>
-                            </span>
-                        </div>
-                    </td>
-<td class="tooltip">
-                        <div ng-if="project.res6fte != 'None'">
-                            <div prio-class prio-skill-render="project.res6skill" prio-size-render="project.res6"></div>
-                           <div prio-class prio-res-render="project.res6owner"></div>
-                            <span class="tooltiptext">
-                                <table class="tooltiptext">
-                                    <tr><td><b>Request:</b></td><td>{{project.res6fte}}</td></tr>
-                                    <tr><td><b>Project:</b></td><td>{{project.res6comment}}</td></tr>
-                                    <tr><td><b>Response:</b></td><td>{{project.res6owner}}</td></tr>
-                                    <tr><td><b>Res. Owner:</b></td><td>{{project.res6ownercomment}}</td></tr>
-                                </table>
-                            </span>
-                        </div>
-                    </td>
-<td class="tooltip">
-                        <div ng-if="project.res7fte != 'None'">
-                            <div prio-class prio-skill-render="project.res7skill" prio-size-render="project.res7"></div>
-                           <div prio-class prio-res-render="project.res7owner"></div>
-                            <span class="tooltiptext">
-                                <table class="tooltiptext">
-                                    <tr><td><b>Request:</b></td><td>{{project.res7fte}}</td></tr>
-                                    <tr><td><b>Project:</b></td><td>{{project.res7comment}}</td></tr>
-                                    <tr><td><b>Response:</b></td><td>{{project.res7owner}}</td></tr>
-                                    <tr><td><b>Res. Owner:</b></td><td>{{project.res7ownercomment}}</td></tr>
-                                </table>
-                            </span>
-                        </div>
-                    </td>
-<td class="tooltip">
-                        <div ng-if="project.res8fte != 'None'">
-                            <div prio-class prio-skill-render="project.res8skill" prio-size-render="project.res8"></div>
-                           <div prio-class prio-res-render="project.res8owner"></div>
-                            <span class="tooltiptext">
-                                <table class="tooltiptext">
-                                    <tr><td><b>Request:</b></td><td>{{project.res8fte}}</td></tr>
-                                    <tr><td><b>Project:</b></td><td>{{project.res8comment}}</td></tr>
-                                    <tr><td><b>Response:</b></td><td>{{project.res8owner}}</td></tr>
-                                    <tr><td><b>Res. Owner:</b></td><td>{{project.res8ownercomment}}</td></tr>
-                                </table>
-                            </span>
-                        </div>
-                    </td>
-<td class="tooltip">
-                        <div ng-if="project.res9fte != 'None'">
-                            <div prio-class prio-skill-render="project.res9skill" prio-size-render="project.res9"></div>
-                           <div prio-class prio-res-render="project.res9owner"></div>
-                            <span class="tooltiptext">
-                                <table class="tooltiptext">
-                                    <tr><td><b>Request:</b></td><td>{{project.res9fte}}</td></tr>
-                                    <tr><td><b>Project:</b></td><td>{{project.res9comment}}</td></tr>
-                                    <tr><td><b>Response:</b></td><td>{{project.res9owner}}</td></tr>
-                                    <tr><td><b>Res. Owner:</b></td><td>{{project.res9ownercomment}}</td></tr>
-                                </table>
-                            </span>
-                        </div>
-                    </td>
-<td class="tooltip">
-                        <div ng-if="project.res10fte != 'None'">
-                            <div prio-class prio-skill-render="project.res10skill" prio-size-render="project.res10"></div>
-                           <div prio-class prio-res-render="project.res10owner"></div>
-                            <span class="tooltiptext">
-                                <table class="tooltiptext">
-                                    <tr><td><b>Request:</b></td><td>{{project.res10fte}}</td></tr>
-                                    <tr><td><b>Project:</b></td><td>{{project.res10comment}}</td></tr>
-                                    <tr><td><b>Response:</b></td><td>{{project.res10owner}}</td></tr>
-                                    <tr><td><b>Res. Owner:</b></td><td>{{project.res10ownercomment}}</td></tr>
-                                </table>
-                            </span>
-                        </div>
-                    </td>
-<td class="tooltip">
-                        <div ng-if="project.res11fte != 'None'">
-                            <div prio-class prio-skill-render="project.res11skill" prio-size-render="project.res11"></div>
-                           <div prio-class prio-res-render="project.res11owner"></div>
-                            <span class="tooltiptext">
-                                <table class="tooltiptext">
-                                    <tr><td><b>Request:</b></td><td>{{project.res11fte}}</td></tr>
-                                    <tr><td><b>Project:</b></td><td>{{project.res11comment}}</td></tr>
-                                    <tr><td><b>Response:</b></td><td>{{project.res11owner}}</td></tr>
-                                    <tr><td><b>Res. Owner:</b></td><td>{{project.res11ownercomment}}</td></tr>
-                                </table>
-                            </span>
-                        </div>
-                    </td>
-<td class="tooltip">
-                        <div ng-if="project.res12fte != 'None'">
-                            <div prio-class prio-skill-render="project.res12skill" prio-size-render="project.res12"></div>
-                           <div prio-class prio-res-render="project.res12owner"></div>
-                            <span class="tooltiptext">
-                                <table class="tooltiptext">
-                                    <tr><td><b>Request:</b></td><td>{{project.res12fte}}</td></tr>
-                                    <tr><td><b>Project:</b></td><td>{{project.res12comment}}</td></tr>
-                                    <tr><td><b>Response:</b></td><td>{{project.res12owner}}</td></tr>
-                                    <tr><td><b>Res. Owner:</b></td><td>{{project.res12ownercomment}}</td></tr>
-                                </table>
-                            </span>
-                        </div>
-                    </td>
-<td class="tooltip">
-                        <div ng-if="project.res13fte != 'None'">
-                            <div prio-class prio-skill-render="project.res13skill" prio-size-render="project.res13"></div>
-                           <div prio-class prio-res-render="project.res13owner"></div>
-                            <span class="tooltiptext">
-                                <table class="tooltiptext">
-                                    <tr><td><b>Request:</b></td><td>{{project.res13fte}}</td></tr>
-                                    <tr><td><b>Project:</b></td><td>{{project.res13comment}}</td></tr>
-                                    <tr><td><b>Response:</b></td><td>{{project.res13owner}}</td></tr>
-                                    <tr><td><b>Res. Owner:</b></td><td>{{project.res13ownercomment}}</td></tr>
-                                </table>
-                            </span>
-                        </div>
-                    </td>
-<td class="tooltip">
-                        <div ng-if="project.res14fte != 'None'">
-                            <div prio-class prio-skill-render="project.res14skill" prio-size-render="project.res14"></div>
-                           <div prio-class prio-res-render="project.res14owner"></div>
-                            <span class="tooltiptext">
-                                <table class="tooltiptext">
-                                    <tr><td><b>Request:</b></td><td>{{project.res14fte}}</td></tr>
-                                    <tr><td><b>Project:</b></td><td>{{project.res14comment}}</td></tr>
-                                    <tr><td><b>Response:</b></td><td>{{project.res14owner}}</td></tr>
-                                    <tr><td><b>Res. Owner:</b></td><td>{{project.res14ownercomment}}</td></tr>
-                                </table>
-                            </span>
-                        </div>
-                    </td>
-
-
-                </tr>
-            </table>
+                </div>
+            </div>
+            <div class="filter-order-container" ng-show="showfilters">
+                <div class="label">
+                    Order by:
+                </div>
+                <div class="field">
+                    <select ng-model="orderdate" ng-init="orderdate='delmapend'">
+                        <option value="delmapend" selected="selected">Order by end date</option>
+                        <option value="delmapstart">Order by start date</option>
+                        <option value="depbuname">Order by Source</option>
+                        <option value="delmaptitle">Order by Deliverable</option>
+                        <option value="projecttitle">Order by Project</option>
+                    </select>
+                </div>
+            </div>
+            <div class="overview">
+                <table class="tablelist" ng-if="depList.length > 0">
+                    <tr class="header">
+                        <td>Dependency<br/>Project</td>
+                        <td>Source<br/>Request quantum</td>
+                        <td>Deliverable depending<br/>Agreement</td>
+                        <td>Start Date<br/>End Date</td>
+                        <td>Requester<br/>Res. owner</td>
+                    </tr>
+                    <tr ng-repeat="dep in depList | multiFilter:depsearch | orderBy:orderdate" ng-click="goToDepInProject(dep._id, dep.projectid)"
+                        class="link">
+                        <td class="{{dep.status}}"><b>{{dep.title}}</b><br/>{{dep.projecttitle}}</td>
+                        <td><b>{{dep.depbuname}}</b><br/>{{dep.quantum}}</td>
+                        <td><b>{{dep.delmaptitle}}</b><br/>{{dep.agreement}}</td>
+                        
+                        <td><b>{{dep.delmapstart | date:'d MMM, yyyy'}}</b><br/>{{dep.delmapend | date:'d MMM, yyyy'}}</td>
+                        <td><b>{{dep.acname}}</b><br/>{{dep.resname}}</td>
+                    </tr>
+                </table>
+            </div>
         </div>
     </div>
-</div>
+

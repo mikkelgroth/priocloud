@@ -1,4 +1,4 @@
-angular
+    angular
     .module('riskApp')
     .controller('ProjectsDependenciesController', [
         '$scope',
@@ -12,46 +12,71 @@ angular
             companyService
         ) {
 
+            $scope.depsearch=[];
+            $scope.depsearch.resname=[];
+            
             companyService.projects.subscribe(function (projects) {
 
-                $scope.projectList = setProjectList(projects);
+                $scope.projects = projects;
+                $scope.depList = setDepList(projects);
             });
 
             companyService.businessUnits.subscribe(function (units) {
 
                 $scope.bus = units;
             });
+            userService
+            .user
+            .subscribe(function (user) {
+
+                $scope.user = user;
+            });
 
             userService.users.subscribe(function (users) {
 
                 $scope.users = users;
+                $scope.depsearch.resname=[$scope.user.name];
             });
 
-            companyService
-                .company
-                .subscribe(function (company) {
+            $scope.goToDepInProject = function (depId, projectId) {
 
-                    $scope.company = company;
-                });
-
-            $scope.goToProject = function (projectId) {
-
-		        $location.path('/project/' + projectId);
+                $location.path('/project/' + projectId + '/dependencies/' + depId);
             };
 
-            function setProjectList(projects) {
+            
 
-                return projects.map(function (project) {
+            function setDepList(projects) {
 
-                    project.buname = project.bu.name;
-                    project.poname = project.po.name;
-                    project.pmname = project.pm.name;
+                var deps = [];
+                deps = deps.concat.apply([], projects.map(function (project) {
 
-                    // set last status
-                    project.lastStatus = project.statuses[project.statuses.length - 1];
+                    if (!project.deps) {
+                        return [];
+                    }
 
-                    return project;
-                });
+                    return project.deps.map(function (dep) {
+
+                        dep['projectid'] = project._id.$oid;
+                        dep['projectoid'] = project._id.$oid;
+                        dep['projecttitle'] = project.title;
+                        dep['buname'] = project.bu.name;
+                        dep['depbuname'] = dep.bu.name;
+                        dep['support'] = project.support;
+                        dep['pstate'] = project.state;
+                        dep['acname'] = (dep.requester != null) ? dep.requester.name : 'TBD';
+                        dep['resname'] = (dep.resowner != null) ? dep.resowner.name : 'TBD';
+                        dep['delmaptitle'] = (dep.delmap != null) ? dep.delmap.title : 'TBD';
+                        dep['delmapstart'] = (dep.delmap != null) ? dep.delmap.date : 'TBD';
+                        dep['delmapend'] = (dep.delmap != null) ? dep.delmap.enddate : 'TBD';
+                        
+                        
+                        return dep;
+                    });
+                }));
+
+                return deps;
             }
+
+
         }
     ]);

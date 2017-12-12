@@ -11,18 +11,21 @@
     </li>
     <span prio-user-authenticated="{display: true}">
         <li prio-route-active="projects|project">
-            <a href="#/dashboard">Portfolio</a>
+            <a href="#/dashboard">Project views</a>
             <ul>
                 <li><a href="#/projects">Overview</a></li>
-                <li><a href="#/projects/dependencies">Dependencies</a></li>
                 <li><a href="#/projects/kpi">KPI view</a></li>
                 <li><a href="#/projects/status">Status view</a></li>
                 <li><a href="#/projects/purpose">Purpose view</a></li>
-                <li><a href="#/projects/finance">Finance view</a></li>
-                <li><a href="#/projects/risks">Risk & Issues</a></li> 
-                <li><a href="#/projects/deliverables">Deliverables</a></li>
-                
+                <li><a href="#/projects/finance">Finance view</a></li>                
             </ul>
+            <a href="#/projects/dependencies">Portfolio tools</a>
+            <ul>
+                <li><a href="#/projects/dependencies">Dependencies</a></li>
+                <li><a href="#/projects/deliverables">Deliverables</a></li>
+                <li><a href="#/projects/risks">Risk & Issues</a></li>     
+            </ul>
+            
         </li>
         <li prio-route-active="settings" ng-if="!user.demo">
             <a href="#/settings">Settings</a>
