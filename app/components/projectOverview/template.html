@@ -336,7 +336,8 @@
                                         <input type="checkbox" ng-model="project.filters.showDeliverableStart" ng-change="saveNow()"> Start date, 
                                         <input type="checkbox" ng-model="project.filters.showDeliverableEnd" ng-change="saveNow()"> End date, 
                                         <input type="checkbox" ng-model="project.filters.showDeliverableEffort" ng-change="saveNow()"> Effort, 
-                                        <input type="checkbox" ng-model="project.filters.showDeliverableDesc" ng-change="saveNow()"> Description
+                                        <input type="checkbox" ng-model="project.filters.showDeliverableDesc" ng-change="saveNow()"> Description,
+                                        <input type="checkbox" ng-model="project.filters.showDeliverableDod" ng-change="saveNow()"> Def. of Done
                                     </div>
                                 </td>
                             </tr>
@@ -351,6 +352,7 @@
                                 <td ng-if="project.filters.showDeliverableEnd">End date</td>
                                 <td ng-if="project.filters.showDeliverableEffort">Effort</td>
                                 <td ng-if="project.filters.showDeliverableDesc">Description</td>
+                                <td ng-if="project.filters.showDeliverableDod">Def. of Done</td>
                             </tr>
                             <tr ng-repeat="mile in project.milestones | orderBy:'enddate'" ng-click="goToMilestoneInProject(mile)" class="link texttop" ng-if=" mile.showInReport">
                                 <td class="{{mile.status}}"><span ng-if="project.filters.showDeliverableWSJF">({{mile.wsjf}})</span> {{mile.title}}</td>
@@ -361,6 +363,7 @@
                                 <td ng-if="project.filters.showDeliverableEnd">{{mile.enddate | date:'yyyy-MM-dd'}}</td>
                                 <td ng-if="project.filters.showDeliverableEffort" prio-class prio-value-bar-render-neg="mile.effort">&nbsp;</td>
                                 <td ng-if="project.filters.showDeliverableDesc"><pre>{{mile.delivarables}}</pre></td>
+                                <td ng-if="project.filters.showDeliverableDod"><pre>{{mile.dod}}</pre></td>
                                 
                             </tr>
                         </table>
@@ -375,27 +378,28 @@
                             <tr class="header">
                                 <td class="label l" colspan="100%">Dependencies
                                     <div class="right" ng-show="showfilters"> 
-                                        <input type="checkbox" ng-model="project.filters.showDepAgr" ng-change="saveNow()"> Agreement/Source, 
+                                        <input type="checkbox" ng-model="project.filters.showDepAgr" ng-change="saveNow()"> Quantum/Agreement/Source, 
                                         <input type="checkbox" ng-model="project.filters.showDepReq" ng-change="saveNow()"> Requester/Owner, 
-                                        <input type="checkbox" ng-model="project.filters.showDepDel" ng-change="saveNow()"> Deliverable 
-                                        <input type="checkbox" ng-model="project.filters.showDepDesc" ng-change="saveNow()"> Description 
+                                        <input type="checkbox" ng-model="project.filters.showDepDesc" ng-change="saveNow()"> Description,
+                                        <input type="checkbox" ng-model="project.filters.showDepNames" ng-change="saveNow()"> Names 
+                                        
                                     </div>
                                 </td>
                             </tr>
                                         
                             <tr class="header">
-                                <td class="label l">Title</td>
-                                <td ng-if="project.filters.showDepAgr">Agreement</br>Source</td>
+                                <td class="label l">Title</br>Deliverable</td>
+                                <td ng-if="project.filters.showDepAgr">Quantum</br>Agreement</br>Source</td>
                                 <td ng-if="project.filters.showDepReq">Requester</br>Resource owner</td>
-                                <td ng-if="project.filters.showDepDel">Deliverable maping</td>
                                 <td ng-if="project.filters.showDepDesc">Description</td>
+                                <td ng-if="project.filters.showDepNames">Names</td>
                             </tr>
                             <tr ng-repeat="dep in project.deps | orderBy:'[delmap.date,delmap.title]'" class="link" ng-click="goToDepInProject(dep)"  ng-if=" dep.showInReport">
-                                <td class="{{dep.status}}"><b>{{dep.title}}</b></td>
-                                <td ng-if="project.filters.showDepAgr">{{dep.agreement}}</br>{{dep.bu.name}}</td>
-                                <td ng-if="project.filters.showDepReq">{{dep.requester.name}}</br>{{dep.resowner.name}}</td>
-                                <td ng-if="project.filters.showDepDel">{{dep.delmap.title}}</td>                                
-                                <td ng-if="project.filters.showDepDesc">{{dep.description}}</td>                                
+                                <td class="{{dep.status}}"><b>{{dep.title}}</b></br>{{dep.delmap.title}}</td>
+                                <td ng-if="project.filters.showDepAgr">{{dep.quantum}}</br>{{dep.agreement}}</br>{{dep.bu.name}}</td>
+                                <td ng-if="project.filters.showDepReq">{{dep.requester.name}}</br>{{dep.resowner.name}}</td>                                
+                                <td ng-if="project.filters.showDepDesc">{{dep.description}}</td>
+                                <td ng-if="project.filters.showDepNames">{{dep.names}}</td>                                
                             </tr>                            
                         </table>
                     </div>
