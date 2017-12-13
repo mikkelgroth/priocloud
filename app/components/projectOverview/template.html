@@ -203,7 +203,7 @@
                     <div class="overview">
                         <table class="tablelist">
                             <tr class="header">
-                                <td colspan="4">Project status - {{editstatus.date | date:'yyyy-MM-dd HH:mm'}}
+                                <td colspan="4">Project status - {{editstatus.date | date:'longDate'}}
                                     <div class="right" ng-show="showfilters"> 
                                         <input type="checkbox" ng-model="project.filters.showStatusFlags" ng-change="saveNow()"> Status flags, 
                                         <input type="checkbox" ng-model="project.filters.showStatusElab" ng-change="saveNow()"> Status elaboration,
@@ -221,7 +221,7 @@
                             <tr>
                                 <td>Demo date</td>
                                 <td colspan="3" class="wrap xxxl">
-                                    <pre>{{editstatus.demodate | date:'yyyy-MM-dd'}}</pre>
+                                    <pre>{{editstatus.demodate | date:'longDate'}}</pre>
                                 </td>
                             </tr>
                             <tr ng-if="project.filters.showStatusFlags" class="header">
@@ -296,7 +296,7 @@
                             <tr ng-if="project.filters.showStatusSteerco">
                                 <td class="label texttop">Steerco date </td>
                                 <td colspan="3" class="wrap xxxl">
-                                    {{editstatus.steercodate | date:'yyyy-MM-dd'}}
+                                    {{editstatus.steercodate | date:'longDate'}}
                                 </td>
                             </tr>
                             <tr ng-if="project.filters.showStatusSteerco">
@@ -359,8 +359,8 @@
                                 <td ng-if="project.filters.showDeliverableGantt" class="bar xl" ng-style="barRender(mile)" colspan="3"><div ng-if="project.filters.showDeliverableState">{{mile.type}}/{{mile.state}}</div></td>
                                 <td ng-if="project.filters.showDeliverableResp">{{mile.responsible.name}}</td>
                                 <td ng-if="project.filters.showDeliverableAcc">{{mile.acountable.name}}</td>
-                                <td ng-if="project.filters.showDeliverableStart">{{mile.date | date:'yyyy-MM-dd'}}</td>
-                                <td ng-if="project.filters.showDeliverableEnd">{{mile.enddate | date:'yyyy-MM-dd'}}</td>
+                                <td ng-if="project.filters.showDeliverableStart">{{mile.date | date:'longDate'}}</td>
+                                <td ng-if="project.filters.showDeliverableEnd">{{mile.enddate | date:'longDate'}}</td>
                                 <td ng-if="project.filters.showDeliverableEffort" prio-class prio-value-bar-render-neg="mile.effort">&nbsp;</td>
                                 <td ng-if="project.filters.showDeliverableDesc"><pre>{{mile.delivarables}}</pre></td>
                                 <td ng-if="project.filters.showDeliverableDod"><pre>{{mile.dod}}</pre></td>
@@ -378,7 +378,8 @@
                             <tr class="header">
                                 <td class="label l" colspan="100%">Dependencies
                                     <div class="right" ng-show="showfilters"> 
-                                        <input type="checkbox" ng-model="project.filters.showDepAgr" ng-change="saveNow()"> Quantum/Agreement/Source, 
+                                        <input type="checkbox" ng-model="project.filters.showDepQua" ng-change="saveNow()"> Quantum/Deadline, 
+                                        <input type="checkbox" ng-model="project.filters.showDepAgr" ng-change="saveNow()"> Agreement/Source, 
                                         <input type="checkbox" ng-model="project.filters.showDepReq" ng-change="saveNow()"> Requester/Owner, 
                                         <input type="checkbox" ng-model="project.filters.showDepDesc" ng-change="saveNow()"> Description,
                                         <input type="checkbox" ng-model="project.filters.showDepNames" ng-change="saveNow()"> Names 
@@ -388,15 +389,17 @@
                             </tr>
                                         
                             <tr class="header">
-                                <td class="label l">Title</br>Deliverable</td>
-                                <td ng-if="project.filters.showDepAgr">Quantum</br>Agreement</br>Source</td>
+                                <td class="label l">Title</td>
+                                <td ng-if="project.filters.showDepQua">Quantum</br>Deadline</td>
+                                <td ng-if="project.filters.showDepAgr">Agreement</br>Source</td>
                                 <td ng-if="project.filters.showDepReq">Requester</br>Resource owner</td>
                                 <td ng-if="project.filters.showDepDesc">Description</td>
                                 <td ng-if="project.filters.showDepNames">Names</td>
                             </tr>
-                            <tr ng-repeat="dep in project.deps | orderBy:'[delmap.date,delmap.title]'" class="link" ng-click="goToDepInProject(dep)"  ng-if=" dep.showInReport">
-                                <td class="{{dep.status}}"><b>{{dep.title}}</b></br>{{dep.delmap.title}}</td>
-                                <td ng-if="project.filters.showDepAgr">{{dep.quantum}}</br>{{dep.agreement}}</br>{{dep.bu.name}}</td>
+                            <tr ng-repeat="dep in project.deps | orderBy:'depdate'" class="link" ng-click="goToDepInProject(dep)"  ng-if=" dep.showInReport">
+                                <td class="{{dep.status}}"><b>{{dep.title}}</b></td>
+                                <td ng-if="project.filters.showDepQua">{{dep.quantum}}</br>{{dep.depdate | date:'longDate'}}</td>
+                                <td ng-if="project.filters.showDepAgr">{{dep.agreement}}</br>{{dep.bu.name}}</td>
                                 <td ng-if="project.filters.showDepReq">{{dep.requester.name}}</br>{{dep.resowner.name}}</td>                                
                                 <td ng-if="project.filters.showDepDesc">{{dep.description}}</td>
                                 <td ng-if="project.filters.showDepNames">{{dep.names}}</td>                                
@@ -797,4 +800,4 @@
         </table>
     </div>
 </div>
-{{project.lastchangedby}} - {{project.lastchangeddate | date:'yyyy-MM-dd HH:mm'}}
+{{project.lastchangedby}} - {{project.lastchangeddate | date:'longDate'}}

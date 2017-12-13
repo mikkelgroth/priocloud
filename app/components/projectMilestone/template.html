@@ -66,14 +66,14 @@
                 <td>
                     
                         <input type="text" id="miledate" datepicker="" ng-model="editmile.date" ng-change="saveNow(editmile); dateChanged(editmile.date)"  class="cal"/>
-                        {{editmile.date | date:'yyyy-MM-dd'}}
+                        {{editmile.date | date:'longDate'}}
                     
                 </td>
                 <td class="header">End Date</td>
                 <td>
                     
                         <input type="text" id="mileenddate" datepicker="" ng-model="editmile.enddate" ng-change="saveNow(editmile); dateChanged(editmile.enddate)"  class="cal"/>
-                        {{editmile.enddate | date:'yyyy-MM-dd'}}
+                        {{editmile.enddate | date:'longDate'}}
                     
                 </td>
             </tr>
@@ -253,7 +253,7 @@
                     <td ng-click="beginEditMile(mile)" class="{{mile.status}}"><b>{{mile.title}}</b></td>
                     <td ng-click="beginEditMile(mile)"><b>{{mile.wsjf}}</b><br/>{{mile.type}}</td>
                     <td ng-click="beginEditMile(mile)" class="bar" ng-style="barRender(mile)" colspan="3">{{mile.state}}</td>
-                    <td ng-click="beginEditMile(mile)"><b>{{mile.date | date:'yyyy-MM-dd'}}</b><br/>{{mile.enddate | date:'yyyy-MM-dd'}}</td>
+                    <td ng-click="beginEditMile(mile)"><b>{{mile.date | date:'longDate'}}</b><br/>{{mile.enddate | date:'longDate'}}</td>
                     <td ng-click="beginEditMile(mile)"><b>{{mile.responsible.name }}</b><br/>{{mile.acountable.name }}</td>
                     <td><input type="checkbox" ng-model="mile.showInReport" ng-change="saveNowQuick()"></td>
                     

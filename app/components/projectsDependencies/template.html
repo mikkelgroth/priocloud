@@ -52,11 +52,11 @@
                     Order by:
                 </div>
                 <div class="field">
-                    <select ng-model="orderdate" ng-init="orderdate='delmapend'">
-                        <option value="delmapend" selected="selected">Order by end date</option>
-                        <option value="delmapstart">Order by start date</option>
+                    <select ng-model="orderdate" ng-init="orderdate='depdate'">
+                        <option value="depdate" selected="selected">Order by deadline</option>
+                        
                         <option value="depbuname">Order by Source</option>
-                        <option value="delmaptitle">Order by Deliverable</option>
+                        
                         <option value="projecttitle">Order by Project</option>
                     </select>
                 </div>
@@ -66,17 +66,14 @@
                     <tr class="header">
                         <td>Dependency<br/>Project</td>
                         <td>Source<br/>Request quantum</td>
-                        <td>Deliverable depending<br/>Agreement</td>
-                        <td>Start Date<br/>End Date</td>
+                        <td>Deadline<br/>Agreement</td>
                         <td>Requester<br/>Res. owner</td>
                     </tr>
                     <tr ng-repeat="dep in depList | multiFilter:depsearch | orderBy:orderdate" ng-click="goToDepInProject(dep._id, dep.projectid)"
                         class="link">
                         <td class="{{dep.status}}"><b>{{dep.title}}</b><br/>{{dep.projecttitle}}</td>
                         <td><b>{{dep.depbuname}}</b><br/>{{dep.quantum}}</td>
-                        <td><b>{{dep.delmaptitle}}</b><br/>{{dep.agreement}}</td>
-                        
-                        <td><b>{{dep.delmapstart | date:'d MMM, yyyy'}}</b><br/>{{dep.delmapend | date:'d MMM, yyyy'}}</td>
+                        <td><b>{{dep.depdate | date:'longDate'}}</b><br/>{{dep.agreement}}</td>
                         <td><b>{{dep.acname}}</b><br/>{{dep.resname}}</td>
                     </tr>
                 </table>

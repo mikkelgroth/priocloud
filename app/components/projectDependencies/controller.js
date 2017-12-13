@@ -80,7 +80,16 @@ angular
                 
             };
             
-            $scope.saveNow = function () {
+            $scope.saveNow = function (dep) {
+                var md = new Date($("#depdate")[0].value);
+                if (md instanceof Date && !isNaN(md.valueOf())) { 
+                    dep.date = md.toISOString(); 
+                }
+
+
+                $scope.hasChanged=true;               
+            };
+            $scope.saveNowQuick = function () {
                 $scope.hasChanged=true;               
             };
 
@@ -122,6 +131,8 @@ angular
                 companyService.saveProjectName($scope.project, $scope.user.name);
                 $scope.showDepForm = false;
             };
+
+
 
             
             function showDep() {

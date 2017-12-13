@@ -65,9 +65,7 @@
                         dep['pstate'] = project.state;
                         dep['acname'] = (dep.requester != null) ? dep.requester.name : 'TBD';
                         dep['resname'] = (dep.resowner != null) ? dep.resowner.name : 'TBD';
-                        dep['delmaptitle'] = (dep.delmap != null) ? dep.delmap.title : 'TBD';
-                        dep['delmapstart'] = (dep.delmap != null) ? dep.delmap.date : 'TBD';
-                        dep['delmapend'] = (dep.delmap != null) ? dep.delmap.enddate : 'TBD';
+                       
                         
                         
                         return dep;
