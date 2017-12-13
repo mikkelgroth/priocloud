@@ -83,7 +83,7 @@ angular
             $scope.saveNow = function (dep) {
                 var md = new Date($("#depdate")[0].value);
                 if (md instanceof Date && !isNaN(md.valueOf())) { 
-                    dep.date = md.toISOString(); 
+                    dep.depdate = md.toISOString(); 
                 }
 
 
