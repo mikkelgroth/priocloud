@@ -53,7 +53,7 @@
                 </div>
                 <div class="field">
                     <select ng-model="orderdate" ng-init="orderdate='depdate'">
-                        <option value="depdate" selected="selected">Order by deadline</option>
+                        <option value="depdate" selected="selected">Order by Work start</option>
                         
                         <option value="depbuname">Order by Source</option>
                         
@@ -66,7 +66,7 @@
                     <tr class="header">
                         <td>Dependency<br/>Project</td>
                         <td>Source<br/>Request quantum</td>
-                        <td>Deadline<br/>Agreement</td>
+                        <td>Work start<br/>Agreement</td>
                         <td>Requester<br/>Res. owner</td>
                     </tr>
                     <tr ng-repeat="dep in depList | multiFilter:depsearch | orderBy:orderdate" ng-click="goToDepInProject(dep._id, dep.projectid)"

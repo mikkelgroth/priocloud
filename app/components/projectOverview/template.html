@@ -378,7 +378,7 @@
                             <tr class="header">
                                 <td class="label l" colspan="100%">Dependencies
                                     <div class="right" ng-show="showfilters"> 
-                                        <input type="checkbox" ng-model="project.filters.showDepQua" ng-change="saveNow()"> Quantum/Deadline, 
+                                        <input type="checkbox" ng-model="project.filters.showDepQua" ng-change="saveNow()"> Quantum/Work start, 
                                         <input type="checkbox" ng-model="project.filters.showDepAgr" ng-change="saveNow()"> Agreement/Source, 
                                         <input type="checkbox" ng-model="project.filters.showDepReq" ng-change="saveNow()"> Requester/Owner, 
                                         <input type="checkbox" ng-model="project.filters.showDepDesc" ng-change="saveNow()"> Description,
@@ -390,7 +390,7 @@
                                         
                             <tr class="header">
                                 <td class="label l">Title</td>
-                                <td ng-if="project.filters.showDepQua">Quantum</br>Deadline</td>
+                                <td ng-if="project.filters.showDepQua">Quantum</br>Work start</td>
                                 <td ng-if="project.filters.showDepAgr">Agreement</br>Source</td>
                                 <td ng-if="project.filters.showDepReq">Requester</br>Resource owner</td>
                                 <td ng-if="project.filters.showDepDesc">Description</td>

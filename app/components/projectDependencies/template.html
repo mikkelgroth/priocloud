@@ -60,7 +60,7 @@
                 </td>
             </tr>
             <tr>
-                <td class="header">Deadline</td>
+                <td class="header">Work start</td>
                 <td>
                     <input type="text" id="depdate" datepicker="" ng-model="editdep.depdate" ng-change="saveNow(editdep); dateChanged(editdep.depdate)"  class="cal"/>
                     {{editdep.depdate | date:'longDate'}}
@@ -178,7 +178,7 @@
                     <td>Title</td>
                     <td>Agreement</br>Source</td>
                     <td>Requester</br>Res. Owner</td>
-                    <td>Request quantum</br>Deadline</td>
+                    <td>Request quantum</br>Work start</td>
                     <td>Show in<br/>Report</td>
                 </tr>
                 <tr ng-repeat="dep in project.deps | orderBy:'depdate'" class="link">
