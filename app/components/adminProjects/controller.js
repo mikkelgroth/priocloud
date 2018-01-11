@@ -44,66 +44,6 @@ angular
 
             $scope.newProject = function (project) {
 
-                /** Project Dependencies  */
-                project.res1fte = 'None';
-                project.res2fte = 'None';
-                project.res3fte = 'None';
-                project.res4fte = 'None';
-                project.res5fte = 'None';
-                project.res6fte = 'None';
-                project.res7fte = 'None';
-                project.res8fte = 'None';
-                project.res9fte = 'None';
-                project.res10fte = 'None';
-                project.res11fte = 'None';
-                project.res12fte = 'None';
-                project.res13fte = 'None';
-                project.res14fte = 'None';
-
-                project.res1 = 'No dependency';
-                project.res2 = 'No dependency';
-                project.res3 = 'No dependency';
-                project.res4 = 'No dependency';
-                project.res5 = 'No dependency';
-                project.res6 = 'No dependency';
-                project.res7 = 'No dependency';
-                project.res8 = 'No dependency';
-                project.res9 = 'No dependency';
-                project.res10 = 'No dependency';
-                project.res11 = 'No dependency';
-                project.res12 = 'No dependency';
-                project.res13 = 'No dependency';
-                project.res14 = 'No dependency';
-
-                project.res1skill = 'Ok';
-                project.res2skill = 'Ok';
-                project.res3skill = 'Ok';
-                project.res4skill = 'Ok';
-                project.res5skill = 'Ok';
-                project.res6skill = 'Ok';
-                project.res7skill = 'Ok';
-                project.res8skill = 'Ok';
-                project.res9skill = 'Ok';
-                project.res10skill = 'Ok';
-                project.res11skill = 'Ok';
-                project.res12skill = 'Ok';
-                project.res13skill = 'Ok';
-                project.res14skill = 'Ok';
-
-                project.res1owner = 'Rejected';
-                project.res2owner = 'Rejected';
-                project.res3owner = 'Rejected';
-                project.res4owner = 'Rejected';
-                project.res5owner = 'Rejected';
-                project.res6owner = 'Rejected';
-                project.res7owner = 'Rejected';
-                project.res8owner = 'Rejected';
-                project.res9owner = 'Rejected';
-                project.res10owner = 'Rejected';
-                project.res11owner = 'Rejected';
-                project.res12owner = 'Rejected';
-                project.res13owner = 'Rejected';
-                project.res14owner = 'Rejected';
 
                 /** Project Details  */
                 project.state = 'Proposed';
