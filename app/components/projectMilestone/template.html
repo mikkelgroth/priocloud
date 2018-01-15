@@ -14,6 +14,18 @@
                         user.admin"
                         ng-click="saveMilestones(true)">save</button>
                 <button type="button" ng-click="hideMilestoneForm()">close</button>
+                <button type="button" 
+                ng-click="$parent.deleteThis=true" 
+                ng-show="!$parent.deleteThis"
+                ng-if="user.email==project.po.email || 
+                user.email==project.pm.email || 
+                user.isOwner || user.admin">delete</button>
+            <button type="button" class="Red"
+                ng-click="$parent.deleteThis=false; removeMilestone(editmile)" 
+                ng-show="$parent.deleteThis"
+                ng-if="user.email==project.po.email || 
+                user.email==project.pm.email || 
+                user.isOwner || user.admin">confirm delete!!!</button>
             </div>
         </h2>
         <table class="smaller">
@@ -186,27 +198,7 @@
                     </div>
                 </td>
             </tr>
-            <tr>
-                <td colspan="4">
-                    <div class="right">
-
-                        <button type="button" 
-                            ng-click="$parent.deleteThis=true" 
-                            ng-show="!$parent.deleteThis"
-                            ng-if="user.email==project.po.email || 
-                            user.email==project.pm.email || 
-                            user.isOwner || user.admin">delete</button>
-                        <button type="button" class="Red"
-                            ng-click="$parent.deleteThis=false; removeMilestone(editmile)" 
-                            ng-show="$parent.deleteThis"
-                            ng-if="user.email==project.po.email || 
-                            user.email==project.pm.email || 
-                            user.isOwner || user.admin">confirm delete!!!</button>
-
-
-                    </div>
-                </td>
-            </tr>
+            
         </table>
     </div>
 
