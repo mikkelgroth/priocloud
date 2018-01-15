@@ -26,6 +26,7 @@ angular
 
                         $scope.editstatus = angular.copy($scope.project.statuses[$scope.project.statuses.length - 1]);
                         $scope.saveStatusEnabled = true;
+                        $scope.showfilters = true;
                     }
                 });
 
