@@ -1,10 +1,10 @@
 <div id="projects-risks">
 	<h2>Risk list <div class="right"><button ng-click="showfilters=true"  ng-show="!showfilters">Show filters</button><button ng-click="showfilters=false"  ng-show="showfilters">Hide filters</button></div></h2>
     <div class="smaller">
+        <h3 ng-show="showfilters">Project filters</h3>
         <div class="filter-order-container" ng-show="showfilters">
             <div class="label" style="height:120px;">
-                Filter by:<br/>
-                P. State<br/>BU<br/>Project<br/>Portfolio
+                Filter by:<br/>State<br/>Type<br/>BU<br/>Project<br/>Portfolio
             </div>
             <div class="field multiple-select">
                 <select multiple="multiple" ng-multiple="true" ng-model="risksearch.projectstate" ng-init="risksearch.projectstate=['Progress']">
@@ -13,15 +13,21 @@
                     <option value="Onhold">On hold</option>
                     <option value="Closed">Closed</option>
                 </select>
+                <select multiple="multiple" ng-multiple="true" ng-model="risksearch.projecttype">
+                    <option value="Project">Project</option>
+                    <option value="Program">Program</option>
+                    <option value="Product">Product</option>
+                </select>
                 <select multiple="multiple" ng-multiple="true" ng-model="risksearch.buname" ng-options="bu.name as bu.name for bu in bus | orderBy:'name'"></select> 
                 <select multiple="multiple" ng-multiple="true" ng-model="risksearch.projecttitle" ng-options="p.title as p.title for p in projects | filter:{state: '!Closed'} | orderBy: 'title'"></select>
+                <select multiple="multiple" ng-multiple="true" ng-model="risksearch.support" ng-options="bu.name as bu.name for bu in bus | orderBy: 'name'"></select>
                 
             </div>
         </div>
+        <h3 ng-show="showfilters">Risks filters</h3>
         <div class="filter-order-container" ng-show="showfilters">
             <div class="label" style="height:120px;">
-                Filter by:<br/>
-                Responsible<br/>Response<br/>Audience<br/>Portfolio
+                Filter by:<br/>Responsible<br/>Response<br/>Audience
             </div>
             <div class="field multiple-select">
                 <select multiple="multiple" ng-multiple="true" ng-model="risksearch.acname" ng-options="u.name as u.name for u in users | filter: {source: true} | orderBy:'name'"></select>
@@ -35,7 +41,6 @@
                     <option value="Portfolio">Portfolio</option>
                     <option value="Company">Company</option>
                 </select>
-                <select multiple="multiple" ng-multiple="true" ng-model="risksearch.support" ng-options="bu.name as bu.name for bu in bus | orderBy: 'name'"></select>
                 
             </div>
         </div>

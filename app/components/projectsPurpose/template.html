@@ -14,8 +14,7 @@
         </div>
         <div class="filter-order-container" ng-show="showfilters">
             <div class="label" style="height:120px;">
-                Filter by:<br/> State
-                <br/>Audience<br/>Portfolio
+                Filter by:<br/> State<br/>Type<br/>Audience<br/>Portfolio
             </div>
             <div class="field multiple-select">
                 <select multiple="multiple" ng-multiple="true" ng-model="search.state" ng-init="search.state=['Progress']">
@@ -23,6 +22,11 @@
                     <option value="Progress">Progress</option>
                     <option value="Onhold">On hold</option>
                     <option value="Closed">Closed</option>
+                </select>
+                <select multiple="multiple" ng-multiple="true" ng-model="search.type">
+                    <option value="Project">Project</option>
+                    <option value="Program">Program</option>
+                    <option value="Product">Product</option>
                 </select>
                 <select multiple="multiple" ng-multiple="true" ng-model="search.audience">
                     <option value="Project">Project</option>

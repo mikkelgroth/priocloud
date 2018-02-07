@@ -24,9 +24,14 @@
                         <input ng-if="user.isOwner || user.admin" ng-model="project.title" ng-change="saveNow()" id="title"
                         />
                     </td>
-                    <td class="l header"></td>
+                    <td class="l header">Type</td>
                     <td>
-                        
+                        <div ng-if="!user.isOwner && !user.admin">{{project.type}}</div>
+                        <select ng-if="user.isOwner || user.admin" ng-model="project.type" id="type" ng-change="saveNow()">
+                            <option value="Project">Project</option>
+                            <option value="Program">Program</option>
+                            <option value="Product">Product</option>
+                        </select>
                     </td>
                 </tr>
                 <tr>

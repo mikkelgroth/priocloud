@@ -1,14 +1,37 @@
 <div id="projects-deliverables">
     <h2>Deliverables <div class="right"><button ng-click="showfilters=true"  ng-show="!showfilters">Show filters</button><button ng-click="showfilters=false"  ng-show="showfilters">Hide filters</button></div></h2>
     <div class="smaller">
+        <h3 ng-show="showfilters">Project filters</h3>
         <div class="filter-order-container" ng-show="showfilters">
+            
             <div class="label" style="height:120px;">
-                Filter by:<br/> BU
-                <br/>Project<br/>Approver<br/>Responsible
+                Filter by:<br/>BU<br/>Project<br/>State<br/>Type<br/>Portfolio
             </div>
             <div class="field multiple-select">
                 <select multiple="multiple" ng-multiple="true" ng-model="milesearch.buname" ng-options="bu.name as bu.name for bu in bus | orderBy: 'name'"></select>
                 <select multiple="multiple" ng-multiple="true" ng-model="milesearch.projecttitle" ng-options="p.title as p.title for p in projects | filter:{state: '!Closed'} | orderBy: 'title'"></select>
+                <select multiple="multiple" ng-multiple="true" ng-model="milesearch.pstate" ng-init="milesearch.pstate=['Progress']">
+                    <option value="Proposed">Proposed</option>
+                    <option value="Progress">Progress</option>
+                    <option value="Onhold">On hold</option>
+                    <option value="Closed">Closed</option>
+                </select>
+                <select multiple="multiple" ng-multiple="true" ng-model="milesearch.ptype">
+                    <option value="Project">Project</option>
+                    <option value="Program">Program</option>
+                    <option value="Product">Product</option>
+                </select>
+                <select multiple="multiple" ng-multiple="true" ng-model="milesearch.support" ng-options="bu.name as bu.name for bu in bus | orderBy: 'name'"></select>
+                
+            </div>
+        </div>
+        <h3 ng-show="showfilters">Deliverables filters</h3>
+        <div class="filter-order-container" ng-show="showfilters">
+            
+            <div class="label" style="height:120px;">
+                Filter by:<br/>Approver<br/>Responsible<br/>Type
+            </div>
+            <div class="field multiple-select">
                 <select multiple="multiple" ng-multiple="true" ng-model="milesearch.acname" ng-options="u.name as u.name for u in users | filter: {source: true} | orderBy:'name'"></select>
                 <select multiple="multiple" ng-multiple="true" ng-model="milesearch.resname" ng-options="u.name as u.name for u in users | filter: {source: true} | orderBy:'name'" ></select>
                 <select multiple="multiple" ng-multiple="true" ng-model="milesearch.type">
@@ -22,16 +45,10 @@
         </div>
         <div class="filter-order-container" ng-show="showfilters">
             <div class="label" style="height:120px;">
-                Filter by:<br/> P. State<br/>Status
-                <br/>R. State<br/>Audience<br/>Portfolio
+                Filter by:<br/>Status<br/>State<br/>Audience
             </div>
             <div class="field multiple-select">
-                <select multiple="multiple" ng-multiple="true" ng-model="milesearch.pstate" ng-init="milesearch.pstate=['Progress']">
-                    <option value="Proposed">Proposed</option>
-                    <option value="Progress">Progress</option>
-                    <option value="Onhold">On hold</option>
-                    <option value="Closed">Closed</option>
-                </select>
+                
                 <select multiple="multiple" ng-multiple="true" ng-model="milesearch.status">
                     <option value="Green">Accept</option>
                     <option value="Yellow">Observe</option>
@@ -48,7 +65,6 @@
                     <option value="Portfolio">Portfolio</option>
                     <option value="Company">Company</option>
                 </select>
-                <select multiple="multiple" ng-multiple="true" ng-model="milesearch.support" ng-options="bu.name as bu.name for bu in bus | orderBy: 'name'"></select>
                 
             </div>
         </div>

@@ -63,6 +63,7 @@
                         dep['depbuname'] = (dep != null && dep.bu != null && dep.bu.name != null)?dep.bu.name:"UNKNOWN";
                         dep['support'] = project.support;
                         dep['pstate'] = project.state;
+                        dep['ptype'] = project.type;
                         dep['acname'] = (dep.requester != null) ? dep.requester.name : 'TBD';
                         dep['resname'] = (dep.resowner != null) ? dep.resowner.name : 'TBD';
                        

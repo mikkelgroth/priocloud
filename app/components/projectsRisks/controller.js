@@ -69,6 +69,7 @@ angular
                         risk['wtotalprob'] = Math.round(project.total * risk.prob * 25 / 100);
                         risk['wtotalimpact'] = Math.round(project.total * risk.impact * 25 / 100);
                         risk['projectstate'] = project.state;
+                        risk['projecttype'] = project.type;
                         risk['projectoid'] = project._id.$oid;
                         risk['buname'] = project.bu.name;
                         risk['support'] = project.support;
