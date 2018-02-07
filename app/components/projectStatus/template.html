@@ -6,6 +6,14 @@
             Status per. {{editstatus.date | date:'yyyy-MM-dd'}}
             <div class="right">
                 <!-- TODO: make directive for ng-if based on user.email == project.something -->
+                <button type="button" class="Red"
+                ng-click="$parent.deleteThis=false; removeStatus(editstatus)" 
+                ng-show="$parent.deleteThis"
+                ng-if="user.admin || ((user.email == project.po.email || 
+                user.email == project.pm.email || 
+                user.email == project.altpo.email || 
+                user.email == project.altpm.email) && editstatus.apo != 'Approved')">confirm delete!!!</button>
+                
                 <button type="button" id="saveButton" prio-class save-this="$parent.hasChanged"
                         ng-show="saveStatusEnabled"
                         ng-if="(user.email == project.po.email || 
@@ -26,12 +34,17 @@
                                 user.email == project.altpm.email || 
                                 user.isOwner || 
                                 user.admin">clone status</button>
-                <button type="button" 
-                    ng-click="removeStatus(editstatus)" 
+                
+
+                    <button type="button" 
+                    ng-click="$parent.deleteThis=true" 
+                    ng-show="!$parent.deleteThis"
                     ng-if="user.admin || ((user.email == project.po.email || 
                     user.email == project.pm.email || 
                     user.email == project.altpo.email || 
-                    user.email == project.altpm.email) && editstatus.apo != 'Approved')">delete status</button>
+                    user.email == project.altpm.email) && editstatus.apo != 'Approved')">delete</button>
+                
+
             </div>
         </h2>
         <table class="smaller">

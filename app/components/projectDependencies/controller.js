@@ -111,7 +111,7 @@ angular
                 $scope.editdep.audience = 'Project';
                 $scope.editdep.requester = $scope.user.name;
                 $scope.editdep.resowner = $scope.user.name;
-                $scope.editdep.quantum = 'Minor task';
+                $scope.editdep.quantum = 'Minor tasks';
                 $scope.editdep.delmap = 'None';
                 $scope.editdep.description = 'None';
                 

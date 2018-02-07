@@ -60,7 +60,7 @@
                         dep['projectoid'] = project._id.$oid;
                         dep['projecttitle'] = project.title;
                         dep['buname'] = project.bu.name;
-                        dep['depbuname'] = dep.bu.name;
+                        dep['depbuname'] = (dep != null && dep.bu != null && dep.bu.name != null)?dep.bu.name:"UNKNOWN";
                         dep['support'] = project.support;
                         dep['pstate'] = project.state;
                         dep['acname'] = (dep.requester != null) ? dep.requester.name : 'TBD';
