@@ -56,9 +56,13 @@
                     </select>
                     
                 </td>
-                <td class="header">Show in report</td>
+                <td class="header">State</td>
                 <td>
-                        <input type="checkbox" ng-model="editdep.showInReport" ng-change="saveNow(editdep)">
+                    <select ng-model="editdep.state" ng-change="saveNow(editdep)">
+                        <option value="Open">Open</option>
+                        <option value="On hold">On hold</option>
+                        <option value="Closed">Closed</option>
+                    </select>
                 </td>
             </tr>
             <tr>
@@ -72,24 +76,37 @@
                 </td>
             </tr>
             <tr>
-                <td class="header">Work start</td>
-                <td>
-                    <input type="text" id="depdate" datepicker="" ng-model="editdep.depdate" ng-change="saveNow(editdep); dateChanged(editdep.depdate)"  class="cal"/>
-                    {{editdep.depdate | date:'longDate'}}
-                </td>
-                                
-                <td class="header">Status</td>
-                <td>
-                    <select ng-model="editdep.status" ng-change="saveNow(editdep)">
-                        <option value="Green">OK (Green)</option>
-                        <option value="Yellow">Observe (Yellow)</option>
-                        <option value="Orange">Assist (Orange)</option>
-                        <option value="Red">Intervention (Red)</option>
-                    </select>
-                </td>
-                
-            </tr>
-            
+                    <td class="header">Show in report</td>
+                    <td>
+                            <input type="checkbox" ng-model="editdep.showInReport" ng-change="saveNow(editdep)">
+                    </td>
+                                    
+                    <td class="header">Status</td>
+                    <td>
+                        <select ng-model="editdep.status" ng-change="saveNow(editdep)">
+                            <option value="Green">OK (Green)</option>
+                            <option value="Yellow">Observe (Yellow)</option>
+                            <option value="Orange">Assist (Orange)</option>
+                            <option value="Red">Intervention (Red)</option>
+                        </select>
+                    </td>
+                    
+                </tr>
+                <tr>
+                        <td class="header">Work start</td>
+                        <td>
+                            <input type="text" id="depdate" datepicker="" ng-model="editdep.depdate" ng-change="saveNow(editdep); dateChanged(editdep.depdate)"  class="cal"/>
+                            {{editdep.depdate | date:'longDate'}}
+                        </td>
+                                        
+                        <td class="header">Deadline</td>
+                        <td>
+                                <input type="text" id="depdeaddate" datepicker="" ng-model="editdep.depdeaddate" ng-change="saveNow(editdep); dateChanged(editdep.depdeaddate)"  class="cal"/>
+                                {{editdep.depdeaddate | date:'longDate'}}
+                        </td>
+                        
+                    </tr>
+                        
             <tr>
                 <td class="header">Request quantum</td>
                 <td>
@@ -168,18 +185,21 @@
             <table class="tablelist smaller" ng-if="project.milestones.length > 0">
                 <tr class="header">
                     <td>Title</td>
-                    <td>Agreement</br>Source</td>
-                    <td>Requester</br>Res. Owner</td>
-                    <td>Request quantum</br>Work start</td>
-                    <td>Show in<br/>Report</td>
+                    <td>2017</td>
+                    <td>2018</td>
+                    <td>2019</td>
+                    <td>Source</td>
+                    <td>Owner</td>
+                    <td>State</td>
+                    <td>Report</td>
                 </tr>
                 <tr ng-repeat="dep in project.deps | orderBy:'depdate'" class="link">
-                    <td ng-click="beginEditDep(dep)" class="{{dep.status}}"><b>{{dep.title}}</b></td>
-                    <td ng-click="beginEditDep(dep)">{{dep.agreement}}</br>{{dep.bu.name}}</td>
-                    <td ng-click="beginEditDep(dep)">{{dep.requester.name}}</br>{{dep.resowner.name}}</td>
-                    
-                    <td ng-click="beginEditDep(dep)">{{dep.quantum}}</br>{{dep.depdate | date:'longDate'}}</td>
-                    
+                        <td ng-click="beginEditDep(dep)" class="{{dep.status}}"><b>{{dep.title}}</b></td>
+                        <td ng-click="beginEditDep(dep)" class="bar xl" ng-style="depbarRender(dep)" colspan="3">{{dep.quantum}}</td>
+                        <td ng-click="beginEditDep(dep)">{{dep.bu.name}}</td>
+                        <td ng-click="beginEditDep(dep)">{{dep.resowner.name}}</td>                                
+                        <td ng-click="beginEditDep(dep)">{{dep.state}}</td>                                
+                        
                     <td><input type="checkbox" ng-model="dep.showInReport" ng-change="saveNowQuick()"></td>
                     
                 </tr>

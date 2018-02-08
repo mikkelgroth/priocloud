@@ -355,7 +355,7 @@
                                 <td ng-if="project.filters.showDeliverableDod">Def. of Done</td>
                             </tr>
                             <tr ng-repeat="mile in project.milestones | orderBy:'enddate'" ng-click="goToMilestoneInProject(mile)" class="link texttop" ng-if=" mile.showInReport">
-                                <td class="{{mile.status}}"><span ng-if="project.filters.showDeliverableWSJF">({{mile.wsjf}})</span> {{mile.title}}</td>
+                                <td class="{{mile.status}}"><span ng-if="project.filters.showDeliverableWSJF">({{mile.wsjf}})</span> <b>{{mile.title}}</b></td>
                                 <td ng-if="project.filters.showDeliverableGantt" class="bar xl" ng-style="barRender(mile)" colspan="3"><div ng-if="project.filters.showDeliverableState">{{mile.type}}/{{mile.state}}</div></td>
                                 <td ng-if="project.filters.showDeliverableResp">{{mile.responsible.name}}</td>
                                 <td ng-if="project.filters.showDeliverableAcc">{{mile.acountable.name}}</td>
@@ -377,10 +377,9 @@
                         <table class="tablelist">
                             <tr class="header">
                                 <td class="label l" colspan="100%">Dependencies
-                                    <div class="right" ng-show="showfilters"> 
-                                        <input type="checkbox" ng-model="project.filters.showDepQua" ng-change="saveNow()"> Quantum/Work start, 
-                                        <input type="checkbox" ng-model="project.filters.showDepAgr" ng-change="saveNow()"> Agreement/Source, 
-                                        <input type="checkbox" ng-model="project.filters.showDepReq" ng-change="saveNow()"> Requester/Owner, 
+                                    <div class="right" ng-show="showfilters">  
+                                        <input type="checkbox" ng-model="project.filters.showDepAgr" ng-change="saveNow()"> Source, 
+                                        <input type="checkbox" ng-model="project.filters.showDepReq" ng-change="saveNow()"> Source owner, 
                                         <input type="checkbox" ng-model="project.filters.showDepDesc" ng-change="saveNow()"> Description,
                                         <input type="checkbox" ng-model="project.filters.showDepNames" ng-change="saveNow()"> Names 
                                         
@@ -390,17 +389,19 @@
                                         
                             <tr class="header">
                                 <td class="label l">Title</td>
-                                <td ng-if="project.filters.showDepQua">Quantum</br>Work start</td>
-                                <td ng-if="project.filters.showDepAgr">Agreement</br>Source</td>
-                                <td ng-if="project.filters.showDepReq">Requester</br>Resource owner</td>
+                                <td>2017</td>
+                                <td>2018</td>
+                                <td>2019</td>
+                                <td ng-if="project.filters.showDepAgr">Source</td>
+                                <td ng-if="project.filters.showDepReq">Source owner</td>
                                 <td ng-if="project.filters.showDepDesc">Description</td>
                                 <td ng-if="project.filters.showDepNames">Names</td>
                             </tr>
                             <tr ng-repeat="dep in project.deps | orderBy:'depdate'" class="link" ng-click="goToDepInProject(dep)"  ng-if=" dep.showInReport">
                                 <td class="{{dep.status}}"><b>{{dep.title}}</b></td>
-                                <td ng-if="project.filters.showDepQua">{{dep.quantum}}</br>{{dep.depdate | date:'longDate'}}</td>
-                                <td ng-if="project.filters.showDepAgr">{{dep.agreement}}</br>{{dep.bu.name}}</td>
-                                <td ng-if="project.filters.showDepReq">{{dep.requester.name}}</br>{{dep.resowner.name}}</td>                                
+                                <td class="bar xl" ng-style="depbarRender(dep)" colspan="3">{{dep.quantum}}</td>
+                                <td ng-if="project.filters.showDepAgr">{{dep.bu.name}}</td>
+                                <td ng-if="project.filters.showDepReq">{{dep.resowner.name}}</td>                                
                                 <td ng-if="project.filters.showDepDesc">{{dep.description}}</td>
                                 <td ng-if="project.filters.showDepNames">{{dep.names}}</td>                                
                             </tr>                            
