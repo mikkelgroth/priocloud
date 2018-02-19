@@ -9,13 +9,7 @@
     <div class="right">
             
             <button type="button" id="saveButton" prio-class save-this="$parent.hasChanged"
-                        ng-if="user.email == project.po.email || 
-                        user.email == project.pm.email || 
-                        user.email == project.altpo.email || 
-                        user.email == project.altpm.email || 
-                        user.isOwner || 
-                        user.controller ||
-                        user.admin"
+                        ng-if="user.changeContent"
                         ng-click="saveProject(project)">save</button>
         </div>
         </h2>
@@ -23,10 +17,10 @@
             <table class="smaller">
                     <tr class="header">
                         <td>To be controlled:</td>
-                        <td><input ng-change="saveNow()" type="checkbox" ng-model="project.isControlled" ng-disabled="!user.controller && !user.admin"/></td>
+                        <td><input ng-change="saveNow()" type="checkbox" ng-model="project.isControlled" ng-disabled="!user.changeContent"/></td>
                         <td>Controller status:</td>
                         <td>
-                            <select ng-model="project.financeControl" ng-change="saveNow()" ng-disabled="!user.controller && !user.admin">
+                            <select ng-model="project.financeControl" ng-change="saveNow()" ng-disabled="!user.changeContent">
                                 <option value="Green">Finance controlled (Green)</option>
                                 <option value="Yellow">Please update (Yellow)</option>
                                 <option value="Orange">Deviation unexplained (Orange)</option>
@@ -40,13 +34,13 @@
                             Capex proj. num.:
                         </td>
                         <td>
-                            <div class="field"><input ng-change="saveNow()" ng-model="project.projectnumber" ng-disabled="!user.controller && !user.admin" /></div>
+                            <div class="field"><input ng-change="saveNow()" ng-model="project.projectnumber" ng-disabled="!user.changeContent" /></div>
                         </td>
                         <td>
                             Opex proj. num.: 
                         </td>
                         <td>
-                            <div class="field"><input ng-model="project.opexprojectnumber" ng-change="saveNow()" ng-disabled="!user.controller && !user.admin" /></div>
+                            <div class="field"><input ng-model="project.opexprojectnumber" ng-change="saveNow()" ng-disabled="!user.changeContent" /></div>
                         </td>
                     </tr>
                     <tr>
@@ -56,7 +50,7 @@
                         </td>
                         <td>
                             
-                            <select ng-model="project.depriciation" ng-change="saveNow()" ng-disabled="!user.controller && !user.admin">
+                            <select ng-model="project.depriciation" ng-change="saveNow()" ng-disabled="!user.changeContent">
                                 <option value="1">1 year</option>
                                 <option value="3">3 year</option>
                                 <option value="5">5 year</option>
@@ -71,7 +65,7 @@
                         <td>Depriciation start date:</td>
                         <td>
                             
-                                <input class="cal" type="text" id="depriciationdate" datepicker="" ng-model="project.depriciationdate" ng-change="saveNow(); dateChanged(project.depriciationdate)" ng-disabled="!user.controller && !user.admin"/>
+                                <input class="cal" type="text" id="depriciationdate" datepicker="" ng-model="project.depriciationdate" ng-change="saveNow(); dateChanged(project.depriciationdate)" ng-disabled="!user.changeContent"/>
                                 {{project.depriciationdate | date:'yyyy-MM-dd'}}
                                 
                            
@@ -141,7 +135,7 @@
                     <table class="smaller smallinput">
                         <tr>
                             <td class="header">Q1 Budget:</td>
-                            <td><div class="field"><textarea ng-model="project.finance.budq1" maxlength="300" id="budq1" placeholder="Describe budget decisions on Q1 financing."></textarea></div></td>
+                            <td><div class="field"><textarea ng-model="project.finance.budq1" maxlength="300" id="budq1" placeholder="Describe budget decisions on Q1 financing." ng-disabled="!user.changeContent"></textarea></div></td>
                         </tr>
                         <tr>
                             <td class="header">Q1 Posted: </td>
@@ -159,7 +153,7 @@
                     <table class="smaller smallinput">
                         <tr>
                             <td class="header">Q2 Budget:</td>
-                            <td><div class="field"><textarea ng-model="project.finance.budq2" maxlength="300" id="budq2" placeholder="Describe budget decisions on Q2 financing."></textarea></div></td>
+                            <td><div class="field"><textarea ng-model="project.finance.budq2" maxlength="300" id="budq2" placeholder="Describe budget decisions on Q2 financing." ng-disabled="!user.changeContent"></textarea></div></td>
                         </tr>
                         <tr>
                             <td class="header">Q2 Posted: </td>
@@ -177,7 +171,7 @@
                     <table class="smaller smallinput">
                         <tr>
                             <td class="header">Q3 Budget:</td>
-                            <td><div class="field"><textarea ng-model="project.finance.budq3" maxlength="300" id="budq3" placeholder="Describe budget decisions on Q3 financing."></textarea></div></td>
+                            <td><div class="field"><textarea ng-model="project.finance.budq3" maxlength="300" id="budq3" placeholder="Describe budget decisions on Q3 financing." ng-disabled="!user.changeContent"></textarea></div></td>
                         </tr>
                         <tr>
                             <td class="header">Q3 Posted: </td>
@@ -195,7 +189,7 @@
                     <table class="smaller smallinput">
                         <tr>
                             <td class="header">Q4 Budget:</td>
-                            <td><div class="field"><textarea ng-model="project.finance.budq4" maxlength="300" id="budq4" placeholder="Describe budget decisions on Q4 financing."></textarea></div></td>
+                            <td><div class="field"><textarea ng-model="project.finance.budq4" maxlength="300" id="budq4" placeholder="Describe budget decisions on Q4 financing." ng-disabled="!user.changeContent"></textarea></div></td>
                         </tr>
                         <tr>
                             <td class="header">Q4 Posted: </td>
@@ -224,21 +218,21 @@
             </tr>
             <tr>
                 <td>External cost</td>
-                <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.budcapextprev" /></div></td>
-                <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.budcapextq1" /></div></td>
-                <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.budcapextq2" /></div></td>
-                <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.budcapextq3" /></div></td>
-                <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.budcapextq4" /></div></td>
+                <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.budcapextprev" ng-disabled="!user.changeContent"/></div></td>
+                <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.budcapextq1" ng-disabled="!user.changeContent"/></div></td>
+                <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.budcapextq2" ng-disabled="!user.changeContent"/></div></td>
+                <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.budcapextq3" ng-disabled="!user.changeContent"/></div></td>
+                <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.budcapextq4" ng-disabled="!user.changeContent"/></div></td>
                 <td class="sums">{{ project.finance.budcapexExternal | number:0 }}</td>
                 <td class="sums">{{ project.finance.budcapexExternalgrand | number:0 }}</td>
             </tr>
             <tr>
                 <td>Internal people</td>
-                <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.budcapintprev" /></div></td>
-                <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.budcapintq1" /></div></td>
-                <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.budcapintq2" /></div></td>
-                <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.budcapintq3" /></div></td>
-                <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.budcapintq4" /></div></td>
+                <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.budcapintprev" ng-disabled="!user.changeContent"/></div></td>
+                <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.budcapintq1" ng-disabled="!user.changeContent"/></div></td>
+                <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.budcapintq2" ng-disabled="!user.changeContent"/></div></td>
+                <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.budcapintq3" ng-disabled="!user.changeContent"/></div></td>
+                <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.budcapintq4" ng-disabled="!user.changeContent"/></div></td>
                 <td class="sums">{{ project.finance.budcapexInternal | number:0 }}</td>
                 <td class="sums">{{ project.finance.budcapexInternalgrand | number:0 }}</td>
             </tr>
@@ -257,21 +251,21 @@
             </tr>
             <tr>
                 <td>External cost</td>
-                <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.budopextprev" /></div></td>
-                <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.budopextq1" /></div></td>
-                <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.budopextq2" /></div></td>
-                <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.budopextq3" /></div></td>
-                <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.budopextq4" /></div></td>
+                <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.budopextprev" ng-disabled="!user.changeContent"/></div></td>
+                <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.budopextq1" ng-disabled="!user.changeContent"/></div></td>
+                <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.budopextq2" ng-disabled="!user.changeContent"/></div></td>
+                <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.budopextq3" ng-disabled="!user.changeContent"/></div></td>
+                <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.budopextq4" ng-disabled="!user.changeContent"/></div></td>
                 <td class="sums">{{ project.finance.budopexExternal | number:0 }}</td>
                 <td class="sums">{{ project.finance.budopexExternalgrand | number:0 }}</td>
             </tr>
             <tr>
                 <td>Internal people</td>
-                <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.budopintprev" /></div></td>
-                <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.budopintq1" /></div></td>
-                <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.budopintq2" /></div></td>
-                <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.budopintq3" /></div></td>
-                <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.budopintq4" /></div></td>
+                <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.budopintprev" ng-disabled="!user.changeContent"/></div></td>
+                <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.budopintq1" ng-disabled="!user.changeContent"/></div></td>
+                <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.budopintq2" ng-disabled="!user.changeContent"/></div></td>
+                <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.budopintq3" ng-disabled="!user.changeContent"/></div></td>
+                <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.budopintq4" ng-disabled="!user.changeContent"/></div></td>
                 <td class="sums">{{ project.finance.budopexInternal | number:0 }}</td>
                 <td class="sums">{{ project.finance.budopexInternalgrand | number:0 }}</td>
             </tr>
@@ -352,7 +346,7 @@
                         </tr>
                         <tr>
                             <td class="header">Q1 Posted: </td>
-                            <td><div class="field"><textarea ng-model="project.finance.postq1" maxlength="300" id="postq1" placeholder="Describe posted decisions on Q1 financing."></textarea></div></td>
+                            <td><div class="field"><textarea ng-model="project.finance.postq1" maxlength="300" id="postq1" placeholder="Describe posted decisions on Q1 financing." ng-disabled="!user.changeContent"></textarea></div></td>
                         </tr>
                         <tr>
                             <td class="header">Q1 Deviation:</td>
@@ -370,7 +364,7 @@
                         </tr>
                         <tr>
                             <td class="header">Q2 Posted: </td>
-                            <td><div class="field"><textarea ng-model="project.finance.postq2" maxlength="300" id="postq2" placeholder="Describe posted decisions on Q2 financing."></textarea></div></td>
+                            <td><div class="field"><textarea ng-model="project.finance.postq2" maxlength="300" id="postq2" placeholder="Describe posted decisions on Q2 financing." ng-disabled="!user.changeContent"></textarea></div></td>
                         </tr>
                         <tr>
                             <td class="header">Q2 Deviation:</td>
@@ -388,7 +382,7 @@
                         </tr>
                         <tr>
                             <td class="header">Q3 Posted: </td>
-                            <td><div class="field"><textarea ng-model="project.finance.postq3" maxlength="300" id="postq3" placeholder="Describe posted decisions on Q3 financing."></textarea></div></td>
+                            <td><div class="field"><textarea ng-model="project.finance.postq3" maxlength="300" id="postq3" placeholder="Describe posted decisions on Q3 financing." ng-disabled="!user.changeContent"></textarea></div></td>
                         </tr>
                         <tr>
                             <td class="header">Q3 Deviation:</td>
@@ -406,7 +400,7 @@
                         </tr>
                         <tr>
                             <td class="header">Q4 Posted: </td>
-                            <td><div class="field"><textarea ng-model="project.finance.postq4" maxlength="300" id="postq4" placeholder="Describe posted decisions on Q4 financing."></textarea></div></td>
+                            <td><div class="field"><textarea ng-model="project.finance.postq4" maxlength="300" id="postq4" placeholder="Describe posted decisions on Q4 financing." ng-disabled="!user.changeContent"></textarea></div></td>
                         </tr>
                         <tr>
                             <td class="header">Q4 Deviation:</td>
@@ -431,22 +425,22 @@
             </tr>
             <tr>
                 <td>External cost</td>
-                <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.postcapextprev" /></div></td>
-                <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.postcapextq1" /></div></td>
-                <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.postcapextq2" /></div></td>
-                <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.postcapextq3" /></div></td>
-                <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.postcapextq4" /></div></td>
+                <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.postcapextprev" ng-disabled="!user.changeContent" /></div></td>
+                <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.postcapextq1" ng-disabled="!user.changeContent" /></div></td>
+                <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.postcapextq2" ng-disabled="!user.changeContent" /></div></td>
+                <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.postcapextq3" ng-disabled="!user.changeContent" /></div></td>
+                <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.postcapextq4" ng-disabled="!user.changeContent" /></div></td>
                 <td class="sums">{{ project.finance.postcapexExternal | number:0 }}</td>
                 <td class="sums">{{ project.finance.postcapexExternalgrand | number:0 }}</td>
             </tr>
             
             <tr>
                 <td>Internal people</td>
-                <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.postcapintprev" /></div></td>
-                <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.postcapintq1" /></div></td>
-                <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.postcapintq2" /></div></td>
-                <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.postcapintq3" /></div></td>
-                <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.postcapintq4" /></div></td>
+                <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.postcapintprev" ng-disabled="!user.changeContent" /></div></td>
+                <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.postcapintq1" ng-disabled="!user.changeContent" /></div></td>
+                <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.postcapintq2" ng-disabled="!user.changeContent" /></div></td>
+                <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.postcapintq3" ng-disabled="!user.changeContent" /></div></td>
+                <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.postcapintq4" ng-disabled="!user.changeContent" /></div></td>
                 <td class="sums">{{ project.finance.postcapexInternal | number:0 }}</td>
                 <td class="sums">{{ project.finance.postcapexInternalgrand | number:0 }}</td>
             </tr>
@@ -465,22 +459,22 @@
             </tr>
             <tr>
                 <td>External cost</td>
-                <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.postopextprev" /></div></td>
-                <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.postopextq1" /></div></td>
-                <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.postopextq2" /></div></td>
-                <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.postopextq3" /></div></td>
-                <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.postopextq4" /></div></td>
+                <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.postopextprev" ng-disabled="!user.changeContent" /></div></td>
+                <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.postopextq1" ng-disabled="!user.changeContent" /></div></td>
+                <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.postopextq2" ng-disabled="!user.changeContent" /></div></td>
+                <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.postopextq3" ng-disabled="!user.changeContent" /></div></td>
+                <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.postopextq4" ng-disabled="!user.changeContent" /></div></td>
                 <td class="sums">{{ project.finance.postopexExternal | number:0 }}</td>
                 <td class="sums">{{ project.finance.postopexExternalgrand | number:0 }}</td>
             </tr>
             
             <tr>
                 <td>Internal people</td>
-                <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.postopintprev" /></div></td>
-                <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.postopintq1" /></div></td>
-                <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.postopintq2" /></div></td>
-                <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.postopintq3" /></div></td>
-                <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.postopintq4" /></div></td>
+                <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.postopintprev" ng-disabled="!user.changeContent" /></div></td>
+                <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.postopintq1" ng-disabled="!user.changeContent" /></div></td>
+                <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.postopintq2" ng-disabled="!user.changeContent" /></div></td>
+                <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.postopintq3" ng-disabled="!user.changeContent" /></div></td>
+                <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.postopintq4" ng-disabled="!user.changeContent" /></div></td>
                 <td class="sums">{{ project.finance.postopexInternal | number:0 }}</td>
                 <td class="sums">{{ project.finance.postopexInternalgrand | number:0 }}</td>
             </tr>
@@ -565,7 +559,7 @@
                         </tr>
                         <tr>
                             <td class="header">Q1 Deviation:</td>
-                            <td><div class="field"><textarea ng-model="project.finance.devq1" maxlength="300" id="budq1" placeholder="Describe budget decisions on Q1 financing."></textarea></div></td>
+                            <td><div class="field"><textarea ng-model="project.finance.devq1" maxlength="300" id="budq1" placeholder="Describe budget decisions on Q1 financing." ng-disabled="!user.changeContent"></textarea></div></td>
                         </tr>
                     </table>
                 </td>
@@ -583,7 +577,7 @@
                         </tr>
                         <tr>
                             <td class="header">Q2 Deviation:</td>
-                            <td><div class="field"><textarea ng-model="project.finance.devq2" maxlength="300" id="budq2" placeholder="Describe budget decisions on Q2 financing."></textarea></div></td>
+                            <td><div class="field"><textarea ng-model="project.finance.devq2" maxlength="300" id="budq2" placeholder="Describe budget decisions on Q2 financing." ng-disabled="!user.changeContent"></textarea></div></td>
                         </tr>
                     </table>
                 </td>
@@ -601,7 +595,7 @@
                         </tr>
                         <tr>
                             <td class="header">Q3 Deviation:</td>
-                            <td><div class="field"><textarea ng-model="project.finance.devq3" maxlength="300" id="budq3" placeholder="Describe budget decisions on Q3 financing."></textarea></div></td>
+                            <td><div class="field"><textarea ng-model="project.finance.devq3" maxlength="300" id="budq3" placeholder="Describe budget decisions on Q3 financing." ng-disabled="!user.changeContent"></textarea></div></td>
                         </tr>
                     </table>
                 </td>
@@ -619,7 +613,7 @@
                         </tr>
                         <tr>
                             <td class="header">Q4 Deviation:</td>
-                            <td><div class="field"><textarea ng-model="project.finance.devq4" maxlength="300" id="budq4" placeholder="Describe budget decisions on Q4 financing."></textarea></div></td>
+                            <td><div class="field"><textarea ng-model="project.finance.devq4" maxlength="300" id="budq4" placeholder="Describe budget decisions on Q4 financing." ng-disabled="!user.changeContent"></textarea></div></td>
                         </tr>
                     </table>
                 </td>
@@ -1167,7 +1161,7 @@
                     <table class="smaller smallinput">
                         <tr>
                             <td class="header">Next Q1 Budget:</td>
-                            <td><div class="field"><textarea ng-model="project.finance.nextbudq1" maxlength="300" id="nextbudq1" placeholder="Describe budget decisions on next Q1 financing."></textarea></div></td>
+                            <td><div class="field"><textarea ng-model="project.finance.nextbudq1" maxlength="300" id="nextbudq1" placeholder="Describe budget decisions on next Q1 financing." ng-disabled="!user.changeContent"></textarea></div></td>
                         </tr>                        
                     </table>
                 </td>
@@ -1177,7 +1171,7 @@
                     <table class="smaller smallinput">
                         <tr>
                             <td class="header">Next Q2 Budget:</td>
-                            <td><div class="field"><textarea ng-model="project.finance.nextbudq2" maxlength="300" id="nextbudq2" placeholder="Describe budget decisions on next Q2 financing."></textarea></div></td>
+                            <td><div class="field"><textarea ng-model="project.finance.nextbudq2" maxlength="300" id="nextbudq2" placeholder="Describe budget decisions on next Q2 financing." ng-disabled="!user.changeContent"></textarea></div></td>
                         </tr>
                     </table>
                 </td>
@@ -1187,7 +1181,7 @@
                     <table class="smaller smallinput">
                         <tr>
                             <td class="header">Next Q3 Budget:</td>
-                            <td><div class="field"><textarea ng-model="project.finance.nextbudq3" maxlength="300" id="nextbudq3" placeholder="Describe budget decisions on next Q3 financing."></textarea></div></td>
+                            <td><div class="field"><textarea ng-model="project.finance.nextbudq3" maxlength="300" id="nextbudq3" placeholder="Describe budget decisions on next Q3 financing." ng-disabled="!user.changeContent"></textarea></div></td>
                         </tr>
                     </table>
                 </td>
@@ -1197,7 +1191,7 @@
                     <table class="smaller smallinput">
                         <tr>
                             <td class="header">Next Q4 Budget:</td>
-                            <td><div class="field"><textarea ng-model="project.finance.nextbudq4" maxlength="300" id="nextbudq4" placeholder="Describe budget decisions on next Q4 financing."></textarea></div></td>
+                            <td><div class="field"><textarea ng-model="project.finance.nextbudq4" maxlength="300" id="nextbudq4" placeholder="Describe budget decisions on next Q4 financing." ng-disabled="!user.changeContent"></textarea></div></td>
                         </tr>
                     </table>
                 </td>
@@ -1218,22 +1212,22 @@
             </tr>
             <tr>
                 <td>External</td>
-                <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.nextcapextprev" /></div></td>
-                <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.nextcapextq1" /></div></td>
-                <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.nextcapextq2" /></div></td>
-                <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.nextcapextq3" /></div></td>
-                <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.nextcapextq4" /></div></td>
+                <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.nextcapextprev" ng-disabled="!user.changeContent" /></div></td>
+                <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.nextcapextq1" ng-disabled="!user.changeContent" /></div></td>
+                <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.nextcapextq2" ng-disabled="!user.changeContent" /></div></td>
+                <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.nextcapextq3" ng-disabled="!user.changeContent" /></div></td>
+                <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.nextcapextq4" ng-disabled="!user.changeContent" /></div></td>
                 <td class="sums">{{ project.finance.nextcapexExternal }}</td>
                 <td class="sums">{{ project.finance.nextcapexExternalgrand }}</td>
             </tr>
             
             <tr>
                 <td>Internal</td>
-                <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.nextcapintprev" /></div></td>
-                <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.nextcapintq1" /></div></td>
-                <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.nextcapintq2" /></div></td>
-                <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.nextcapintq3" /></div></td>
-                <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.nextcapintq4" /></div></td>
+                <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.nextcapintprev" ng-disabled="!user.changeContent" /></div></td>
+                <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.nextcapintq1" ng-disabled="!user.changeContent" /></div></td>
+                <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.nextcapintq2" ng-disabled="!user.changeContent" /></div></td>
+                <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.nextcapintq3" ng-disabled="!user.changeContent" /></div></td>
+                <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.nextcapintq4" ng-disabled="!user.changeContent" /></div></td>
                 <td class="sums">{{ project.finance.nextcapexInternal }}</td>
                 <td class="sums">{{ project.finance.nextcapexInternalgrand }}</td>
             </tr>
@@ -1252,22 +1246,22 @@
             </tr>
             <tr>
                 <td>External</td>
-                <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.nextopextprev" /></div></td>
-                <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.nextopextq1" /></div></td>
-                <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.nextopextq2" /></div></td>
-                <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.nextopextq3" /></div></td>
-                <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.nextopextq4" /></div></td>
+                <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.nextopextprev" ng-disabled="!user.changeContent" /></div></td>
+                <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.nextopextq1" ng-disabled="!user.changeContent" /></div></td>
+                <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.nextopextq2" ng-disabled="!user.changeContent" /></div></td>
+                <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.nextopextq3" ng-disabled="!user.changeContent" /></div></td>
+                <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.nextopextq4" ng-disabled="!user.changeContent" /></div></td>
                 <td class="sums">{{ project.finance.nextopexExternal }}</td>
                 <td class="sums">{{ project.finance.nextopexExternalgrand }}</td>
             </tr>
             
             <tr>
                 <td>Internal</td>
-                <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.nextopintprev" /></div></td>
-                <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.nextopintq1" /></div></td>
-                <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.nextopintq2" /></div></td>
-                <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.nextopintq3" /></div></td>
-                <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.nextopintq4" /></div></td>
+                <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.nextopintprev" ng-disabled="!user.changeContent" /></div></td>
+                <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.nextopintq1" ng-disabled="!user.changeContent" /></div></td>
+                <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.nextopintq2" ng-disabled="!user.changeContent" /></div></td>
+                <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.nextopintq3" ng-disabled="!user.changeContent" /></div></td>
+                <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.nextopintq4" ng-disabled="!user.changeContent" /></div></td>
                 <td class="sums">{{ project.finance.nextopexInternal }}</td>
                 <td class="sums">{{ project.finance.nextopexInternalgrand }}</td>
             </tr>

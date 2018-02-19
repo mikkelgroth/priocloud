@@ -6,26 +6,18 @@
             {{editdep.title}}
             <div class="right">
                 <button type="button" id="saveButton" prio-class save-this="$parent.hasChanged"
-                        ng-if="user.email == project.po.email || 
-                        user.email == project.pm.email || 
-                        user.email == project.altpo.email || 
-                        user.email == project.altpm.email || 
-                        user.isOwner || 
-                        user.admin"
+                        ng-if="user.changeContent"
+                        
                         ng-click="saveDeps(true)">save</button>
                 <button type="button" ng-click="hideDepForm()">close</button>
                 <button type="button" 
                 ng-click="$parent.deleteThis=true" 
                 ng-show="!$parent.deleteThis"
-                ng-if="user.email==project.po.email || 
-                user.email==project.pm.email || 
-                user.isOwner || user.admin">delete</button>
+                ng-if="user.changeContent">delete</button>
             <button type="button" class="Red"
                 ng-click="$parent.deleteThis=false; removeDep(editdep)" 
                 ng-show="$parent.deleteThis"
-                ng-if="user.email==project.po.email || 
-                user.email==project.pm.email || 
-                user.isOwner || user.admin">confirm delete!!!</button>
+                ng-if="user.changeContent">confirm delete!!!</button>
             </div>
         </h2>
         <table class="smaller">
@@ -33,12 +25,12 @@
                 <td class="header">Title</td>
                 <td>
                     <div class="field">
-                        <input ng-model="editdep.title" ng-change="saveNow(editdep)"/>
+                        <input ng-model="editdep.title" ng-change="saveNow(editdep)" ng-disabled="!user.changeContent"/>
                     </div>
                 </td>
                 <td class="header">Audience</td>
                 <td>
-                    <select ng-model="editdep.audience" ng-change="saveNow(editdep)">
+                    <select ng-model="editdep.audience" ng-change="saveNow(editdep)" ng-disabled="!user.changeContent">
                         <option value="Project">Project</option>
                         <option value="Portfolio">Portfolio</option>
                         <option value="Company">Company</option>
@@ -48,7 +40,7 @@
             <tr>
                 <td class="header">Agreement</td>
                 <td>
-                    <select ng-model="editdep.agreement" ng-change="saveNow(editdep)">
+                    <select ng-model="editdep.agreement" ng-change="saveNow(editdep)" ng-disabled="!user.changeContent">
                         <option value="None">None</option>
                         <option value="Conflict">Conflict</option>
                         <option value="Tentative">Tentative</option>
@@ -58,7 +50,7 @@
                 </td>
                 <td class="header">State</td>
                 <td>
-                    <select ng-model="editdep.state" ng-change="saveNow(editdep)">
+                    <select ng-model="editdep.state" ng-change="saveNow(editdep)" ng-disabled="!user.changeContent">
                         <option value="Open">Open</option>
                         <option value="On hold">On hold</option>
                         <option value="Closed">Closed</option>
@@ -68,22 +60,22 @@
             <tr>
                 <td class="header">Dependency requester</td>
                 <td>
-                    <select ng-model="editdep.requester"  ng-change="saveNow(editdep)" ng-options="u.name for u in users | filter: {source: true} | orderBy:'name' track by u.name"></select>
+                    <select ng-model="editdep.requester"  ng-change="saveNow(editdep)" ng-options="u.name for u in users | filter: {source: true} | orderBy:'name' track by u.name" ng-disabled="!user.changeContent"></select>
                 </td>
                 <td class="header">Dependency resource owner</td>
                 <td>
-                    <select ng-model="editdep.resowner"  ng-change="saveNow(editdep)" ng-options="u.name for u in users | filter: {source: true} | orderBy:'name' track by u.name"></select>
+                    <select ng-model="editdep.resowner"  ng-change="saveNow(editdep)" ng-options="u.name for u in users | filter: {source: true} | orderBy:'name' track by u.name" ng-disabled="!user.changeContent"></select>
                 </td>
             </tr>
             <tr>
                     <td class="header">Show in report</td>
                     <td>
-                            <input type="checkbox" ng-model="editdep.showInReport" ng-change="saveNow(editdep)">
+                            <input type="checkbox" ng-model="editdep.showInReport" ng-change="saveNow(editdep)" ng-disabled="!user.changeContent">
                     </td>
                                     
                     <td class="header">Status</td>
                     <td>
-                        <select ng-model="editdep.status" ng-change="saveNow(editdep)">
+                        <select ng-model="editdep.status" ng-change="saveNow(editdep)" ng-disabled="!user.changeContent">
                             <option value="Green">OK (Green)</option>
                             <option value="Yellow">Observe (Yellow)</option>
                             <option value="Orange">Assist (Orange)</option>
@@ -95,13 +87,13 @@
                 <tr>
                         <td class="header">Work start</td>
                         <td>
-                            <input type="text" id="depdate" datepicker="" ng-model="editdep.depdate" ng-change="saveNow(editdep); dateChanged(editdep.depdate)"  class="cal"/>
+                            <input type="text" id="depdate" datepicker="" ng-model="editdep.depdate" ng-change="saveNow(editdep); dateChanged(editdep.depdate)"  class="cal" ng-disabled="!user.changeContent"/>
                             {{editdep.depdate | date:'longDate'}}
                         </td>
                                         
                         <td class="header">Deadline</td>
                         <td>
-                                <input type="text" id="depdeaddate" datepicker="" ng-model="editdep.depdeaddate" ng-change="saveNow(editdep); dateChanged(editdep.depdeaddate)"  class="cal"/>
+                                <input type="text" id="depdeaddate" datepicker="" ng-model="editdep.depdeaddate" ng-change="saveNow(editdep); dateChanged(editdep.depdeaddate)"  class="cal" ng-disabled="!user.changeContent"/>
                                 {{editdep.depdeaddate | date:'longDate'}}
                         </td>
                         
@@ -110,7 +102,7 @@
             <tr>
                 <td class="header">Request quantum</td>
                 <td>
-                    <select ng-model="editdep.quantum"  ng-change="saveNow(editdep)">
+                    <select ng-model="editdep.quantum"  ng-change="saveNow(editdep)" ng-disabled="!user.changeContent">
                         <option value="None">None</option>
                         <option value="Minor tasks">Minor tasks</option>
                         <option value="Major tasks">Major tasks</option>
@@ -126,7 +118,7 @@
                 
                 <td class="header">Source</td>
                 <td>
-                    <select ng-change="saveNow(editdep)" ng-model="editdep.bu" id="depbu" ng-options="bu.name for bu in bus | orderBy:'name' track by bu.name"></select>
+                    <select ng-change="saveNow(editdep)" ng-model="editdep.bu" id="depbu" ng-options="bu.name for bu in bus | orderBy:'name' track by bu.name" ng-disabled="!user.changeContent"></select>
                 </td>
                 
             </tr>
@@ -138,7 +130,7 @@
                 </td>
                 <td colspan="3">
                     <div class="field">
-                        <textarea ng-change="saveNow(editdep)" ng-model="editdep.description" maxlength="300" id="depdec" placeholder="Describe the dependency."></textarea>
+                        <textarea ng-change="saveNow(editdep)" ng-model="editdep.description" maxlength="300" id="depdec" placeholder="Describe the dependency." ng-disabled="!user.changeContent"></textarea>
                     </div>
                 </td>
             </tr>
@@ -149,7 +141,7 @@
                 </td>
                 <td colspan="3">
                     <div class="field">
-                        <textarea ng-change="saveNow(editdep)" ng-model="editdep.names" maxlength="300" id="depname" placeholder="Describe the key persons requested."></textarea>
+                        <textarea ng-change="saveNow(editdep)" ng-model="editdep.names" maxlength="300" id="depname" placeholder="Describe the key persons requested." ng-disabled="!user.changeContent"></textarea>
                     </div>
                 </td>
             </tr>
@@ -165,19 +157,10 @@
                 
                 <button type="button"
                     ng-click="newDep()"
-                    ng-if="user.email==project.po.email || 
-                    user.email==project.pm.email || 
-                    user.email==project.altpo.email || 
-                    user.email==project.altpm.email || 
-                    user.isOwner || user.admin">create new dependency</button>
+                    ng-if="user.changeContent">create new dependency</button>
 
                 <button type="button" id="saveButtonQ" prio-class save-this="$parent.hasChanged"
-                    ng-if="user.email == project.po.email || 
-                    user.email == project.pm.email || 
-                    user.email == project.altpo.email || 
-                    user.email == project.altpm.email || 
-                    user.isOwner || 
-                    user.admin"
+                    ng-if="user.changeContent"
                     ng-click="saveDeps(false)">save</button>
             </div>
         </h2>
@@ -200,7 +183,7 @@
                         <td ng-click="beginEditDep(dep)">{{dep.resowner.name}}</td>                                
                         <td ng-click="beginEditDep(dep)">{{dep.state}}</td>                                
                         
-                    <td><input type="checkbox" ng-model="dep.showInReport" ng-change="saveNowQuick()"></td>
+                    <td><input type="checkbox" ng-model="dep.showInReport" ng-change="saveNowQuick()" ng-disabled="!user.changeContent"></td>
                     
                 </tr>
             </table>

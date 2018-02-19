@@ -7,12 +7,7 @@
                 Details
                 <div class="right">
                    <button type="button" id="saveButton" prio-class save-this="$parent.hasChanged"
-                        ng-if="user.email == project.po.email || 
-                        user.email == project.pm.email || 
-                        user.email == project.altpo.email || 
-                        user.email == project.altpm.email || 
-                        user.isOwner || 
-                        user.admin"
+                        ng-if="user.changeContent"
                         ng-click="saveProject(project)">save</button>
                 </div>
             </h2>
@@ -20,14 +15,12 @@
                 <tr>
                     <td class="l header">Title</td>
                     <td>
-                        <div ng-if="!user.isOwner && !user.admin">{{project.title}}</div>
-                        <input ng-if="user.isOwner || user.admin" ng-model="project.title" ng-change="saveNow()" id="title"
-                        />
+                        <input ng-model="project.title" ng-change="saveNow()" id="title"  ng-disabled="!user.changeContent" />
                     </td>
                     <td class="l header">Type</td>
                     <td>
-                        <div ng-if="!user.isOwner && !user.admin">{{project.type}}</div>
-                        <select ng-if="user.isOwner || user.admin" ng-model="project.type" id="type" ng-change="saveNow()">
+                        
+                        <select ng-model="project.type" id="type" ng-change="saveNow()" ng-disabled="!user.changeContent">
                             <option value="Project">Project</option>
                             <option value="Program">Program</option>
                             <option value="Product">Product</option>
@@ -37,12 +30,11 @@
                 <tr>
                     <td class="header">BU</td>
                     <td>
-                        <div ng-if="!user.isOwner && !user.admin">{{project.bu.name}}</div>
-                        <select  ng-change="saveNow()" ng-if="user.isOwner || user.admin" ng-model="project.bu" id="probu" ng-options="bu.name for bu in bus track by bu.name"></select></td>
+                        
+                        <select  ng-change="saveNow()" ng-model="project.bu" id="probu" ng-options="bu.name for bu in bus track by bu.name" ng-disabled="!user.changeContent"></select></td>
                     <td class="header">Audience</td>
                     <td>
-                        <div ng-if="!user.isOwner && !user.admin">{{project.audience}}</div>
-                        <select ng-if="user.isOwner || user.admin" ng-model="project.audience" ng-change="saveNow()">
+                        <select ng-model="project.audience" ng-change="saveNow()" ng-disabled="!user.changeContent">
                         <option value="Project">Project</option>
                         <option value="Portfolio">Portfolio</option>
                         <option value="Company">Company</option>
@@ -52,8 +44,7 @@
                 <tr>
                     <td class="header">State</td>
                     <td>
-                        <div ng-if="!user.isOwner && !user.admin">{{project.state}}</div>
-                        <select ng-if="user.isOwner || user.admin" ng-model="project.state" id="state" ng-change="saveNow()">
+                        <select ng-model="project.state" id="state" ng-change="saveNow()" ng-disabled="!user.changeContent">
                             <option value="Proposed">Proposed</option>
                             <option value="Progress">Progress</option>
                             <option value="Onhold">On hold</option>
@@ -62,8 +53,7 @@
                     </td>
                     <td class="header">Portfolio</td>
                     <td>
-                        <div ng-if="!user.isOwner && !user.admin">{{project.support}}</div>
-                        <select ng-if="user.isOwner || user.admin" ng-model="project.support" ng-change="saveNow()">
+                        <select ng-model="project.support" ng-change="saveNow()" ng-disabled="!user.changeContent">
                             <option ng-repeat="bu in bus" value="{{bu.name}}">{{bu.name}}</option>
                         </select></td>
                 </tr>
@@ -73,29 +63,21 @@
                 <tr>
                     <td class="header">PM</td>
                     <td>
-                        <div ng-if="!user.isOwner && !user.admin">{{project.pm.name}}</div>
-                        <select ng-if="user.isOwner || user.admin" ng-model="project.pm" id="propm" ng-options="u.name for u in users | filter: {source: true} | orderBy:'name' track by u.name"
-                            ng-change="saveNow()"></select>
+                        <select ng-model="project.pm" id="propm" ng-options="u.name for u in users | filter: {source: true} | orderBy:'name' track by u.name" ng-disabled="!user.changeContent" ng-change="saveNow()"></select>
                     </td>
                     <td class="header">PO</td>
                     <td>
-                        <div ng-if="!user.isOwner && !user.admin">{{project.po.name}}</div>
-                        <select ng-if="user.isOwner || user.admin" ng-model="project.po" id="propo" ng-options="u.name for u in users | filter: {source: true} | orderBy:'name' track by u.name"
-                            ng-change="saveNow()"></select>
+                        <select ng-model="project.po" id="propo" ng-options="u.name for u in users | filter: {source: true} | orderBy:'name' track by u.name" ng-disabled="!user.changeContent" ng-change="saveNow()"></select>
                     </td>
                 </tr>
                 <tr>
                     <td class="header">Alt. PM</td>
                     <td>
-                        <div ng-if="!user.isOwner && !user.admin">{{project.altpm.name}}</div>
-                        <select ng-if="user.isOwner || user.admin" ng-model="project.altpm" id="proaltpm" ng-change="saveNow()"
-                            ng-options="u.name for u in users | filter: {source: true} | orderBy:'name' track by u.name"></select>
+                        <select ng-model="project.altpm" id="proaltpm" ng-change="saveNow()" ng-disabled="!user.changeContent" ng-options="u.name for u in users | filter: {source: true} | orderBy:'name' track by u.name"></select>
                     </td>
                     <td class="header">Alt. PO</td>
                     <td>
-                        <div ng-if="!user.isOwner && !user.admin">{{project.altpo.name}}</div>
-                        <select ng-if="user.isOwner || user.admin" ng-model="project.altpo" id="proaltpo" ng-options="u.name for u in users | filter: {source: true} | orderBy:'name' track by u.name"
-                            ng-change="saveNow()"></select></td>
+                        <select ng-model="project.altpo" id="proaltpo" ng-options="u.name for u in users | filter: {source: true} | orderBy:'name' track by u.name" ng-change="saveNow()" ng-disabled="!user.changeContent"></select></td>
                 </tr>
                 <tr>
                     <td>
@@ -103,7 +85,7 @@
                     </td>
                     <td colspan="3">
                         <div class="field">
-                            <textarea ng-model="project.memberssteering"  ng-change="saveNow()" placeholder="Name the members of your steering commitee."></textarea>
+                            <textarea ng-model="project.memberssteering"  ng-change="saveNow()" placeholder="Name the members of your steering commitee." ng-disabled="!user.changeContent"></textarea>
                         </div>
                     </td>
                 </tr>
@@ -113,7 +95,7 @@
                     </td>
                     <td colspan="3">
                         <div class="field">
-                            <textarea ng-model="project.membersproject" ng-change="saveNow()" placeholder="Name the members of your project."></textarea>
+                            <textarea ng-model="project.membersproject" ng-change="saveNow()" placeholder="Name the members of your project." ng-disabled="!user.changeContent"></textarea>
                         </div>
                     </td>
                 </tr>
@@ -126,7 +108,7 @@
                     </td>
                     <td colspan="3">
                         <div class="field">
-                            <textarea ng-model="project.outcome" maxlength="300" ng-change="saveNow()" id="detailoutcome" placeholder="Your Elevator Pitch: What changes are you going to make to your business and customers and what is the overall business benefit."></textarea>
+                            <textarea ng-model="project.outcome" maxlength="300" ng-change="saveNow()" id="detailoutcome" placeholder="Your Elevator Pitch: What changes are you going to make to your business and customers and what is the overall business benefit." ng-disabled="!user.changeContent"></textarea>
                         </div>
                     </td>
                 </tr>
@@ -136,7 +118,7 @@
                     </td>
                     <td colspan="3">
                         <div class="field ">
-                            <textarea ng-model="project.costbenefit" maxlength="300" ng-change="saveNow()" id="detailbenefit" placeholder="What will you achieve by running this project and what will the business gain by this investment."></textarea>
+                            <textarea ng-model="project.costbenefit" maxlength="300" ng-change="saveNow()" id="detailbenefit" placeholder="What will you achieve by running this project and what will the business gain by this investment." ng-disabled="!user.changeContent"></textarea>
                         </div>
                     </td>
                 </tr>
@@ -146,7 +128,7 @@
                     </td>
                     <td colspan="3">
                         <div class="field">
-                            <textarea ng-model="project.costrisk" maxlength="300" ng-change="saveNow()" id="detailrisk" placeholder="What will it cost the company to not make this investment."></textarea>
+                            <textarea ng-model="project.costrisk" maxlength="300" ng-change="saveNow()" id="detailrisk" placeholder="What will it cost the company to not make this investment." ng-disabled="!user.changeContent"></textarea>
                         </div>
                     </td>
                 </tr>
@@ -156,7 +138,7 @@
                     </td>
                     <td colspan="3">
                         <div class="field">
-                            <textarea ng-model="project.benefitplan" maxlength="300" ng-change="saveNow()" id="detailreal" placeholder="When in time will you asses the results of this project and evaluate its bennefits."></textarea>
+                            <textarea ng-model="project.benefitplan" maxlength="300" ng-change="saveNow()" id="detailreal" placeholder="When in time will you asses the results of this project and evaluate its bennefits." ng-disabled="!user.changeContent"></textarea>
                         </div>
                     </td>
                 </tr>

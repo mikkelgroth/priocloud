@@ -13,8 +13,8 @@
  <input type="checkbox" ng-model="project.filters.showDepend" ng-change="saveNow()"> Dependencies</br>
         <div class="right">
             <button type="button" id="saveButton" prio-class save-this="$parent.hasChanged"
-                ng-if="user.email == project.pm.email || user.email == project.altpm.email || user.admin"
-                        ng-click="saveProject(project)">save view</button>
+                ng-if="user.changeContent"
+                ng-click="saveProject(project)">save view</button>
         </div>
 </div>
 

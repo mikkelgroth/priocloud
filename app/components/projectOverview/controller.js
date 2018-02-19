@@ -21,6 +21,18 @@ angular
                 .subscribe(function (project) {
 
                     $scope.project = project;
+                    if( ($scope.project.po !=null && $scope.user.email == $scope.project.po.email) || 
+                        ($scope.project.pm !=null && $scope.user.email == $scope.project.pm.email) || 
+                        ($scope.project.altpo !=null && $scope.user.email == $scope.project.altpo.email) || 
+                        ($scope.project.altpm !=null && $scope.user.email == $scope.project.altpm.email) || 
+                        $scope.user.isOwner || 
+                        
+                        $scope.user.admin)
+                    {
+                        $scope.user.changeContent=true;
+                    }else{
+                        $scope.user.changeContent=false;
+                    }
 
                     if ($scope.project.statuses.length > 0) {
 
@@ -101,7 +113,7 @@ if($scope.project!=null && $scope.project.risks!=null){
                 display: true,
                 position: 'right'
             },    
-            tooltips: false,
+            tooltips: true,
             scales: {
               xAxes: [{
                 scaleLabel: {

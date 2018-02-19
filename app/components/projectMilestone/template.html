@@ -6,26 +6,17 @@
             ({{editmile.wsjf}}) {{editmile.title}}
             <div class="right">
                 <button type="button" id="saveButton" prio-class save-this="$parent.hasChanged"
-                        ng-if="user.email == project.po.email || 
-                        user.email == project.pm.email || 
-                        user.email == project.altpo.email || 
-                        user.email == project.altpm.email || 
-                        user.isOwner || 
-                        user.admin"
-                        ng-click="saveMilestones(true)">save</button>
+                    ng-if="user.changeContent"
+                    ng-click="saveMilestones(true)">save</button>
                 <button type="button" ng-click="hideMilestoneForm()">close</button>
                 <button type="button" 
                 ng-click="$parent.deleteThis=true" 
                 ng-show="!$parent.deleteThis"
-                ng-if="user.email==project.po.email || 
-                user.email==project.pm.email || 
-                user.isOwner || user.admin">delete</button>
+                ng-if="user.changeContent">delete</button>
             <button type="button" class="Red"
                 ng-click="$parent.deleteThis=false; removeMilestone(editmile)" 
                 ng-show="$parent.deleteThis"
-                ng-if="user.email==project.po.email || 
-                user.email==project.pm.email || 
-                user.isOwner || user.admin">confirm delete!!!</button>
+                ng-if="user.changeContent">confirm delete!!!</button>
             </div>
         </h2>
         <table class="smaller">
@@ -33,12 +24,12 @@
                 <td class="header">Title</td>
                 <td>
                     <div class="field">
-                        <input ng-model="editmile.title" ng-change="saveNow(editmile)"/>
+                        <input ng-model="editmile.title" ng-change="saveNow(editmile)" ng-disabled="!user.changeContent"/>
                     </div>
                 </td>
                 <td class="header">Audience</td>
                 <td>
-                    <select ng-model="editmile.audience" ng-change="saveNow(editmile)">
+                    <select ng-model="editmile.audience" ng-change="saveNow(editmile)" ng-disabled="!user.changeContent">
                         <option value="Project">Project</option>
                         <option value="Portfolio">Portfolio</option>
                         <option value="Company">Company</option>
@@ -48,7 +39,7 @@
             <tr>
                 <td class="header">Type</td>
                 <td>
-                    <select ng-model="editmile.type" ng-change="saveNow(editmile)">
+                    <select ng-model="editmile.type" ng-change="saveNow(editmile)" ng-disabled="!user.changeContent">
                         <option value="Milestone">Milestone</option>
                         <option value="Roadmap item">Roadmap item</option>
                         <option value="Phase">Phase</option>
@@ -60,31 +51,31 @@
                 </td>
                 <td class="header">Show in report</td>
                 <td>
-                        <input type="checkbox" ng-model="editmile.showInReport" ng-change="saveNow(editmile)">
+                        <input type="checkbox" ng-model="editmile.showInReport" ng-change="saveNow(editmile)" ng-disabled="!user.changeContent">
                 </td>
             </tr>
             <tr>
                 <td class="header">Delivery responsible</td>
                 <td>
-                    <select ng-model="editmile.responsible"  ng-change="saveNow(editmile)" ng-options="u.name for u in users | filter: {source: true} | orderBy:'name' track by u.name"></select>
+                    <select ng-model="editmile.responsible"  ng-change="saveNow(editmile)" ng-options="u.name for u in users | filter: {source: true} | orderBy:'name' track by u.name" ng-disabled="!user.changeContent"></select>
                 </td>
                 <td class="header">Delivery approver</td>
                 <td>
-                    <select ng-model="editmile.acountable"  ng-change="saveNow(editmile)" ng-options="u.name for u in users | filter: {source: true} | orderBy:'name' track by u.name"></select>
+                    <select ng-model="editmile.acountable"  ng-change="saveNow(editmile)" ng-options="u.name for u in users | filter: {source: true} | orderBy:'name' track by u.name" ng-disabled="!user.changeContent"></select>
                 </td>
             </tr>
             <tr>
                 <td class="header">Start Date</td>
                 <td>
                     
-                        <input type="text" id="miledate" datepicker="" ng-model="editmile.date" ng-change="saveNow(editmile); dateChanged(editmile.date)"  class="cal"/>
+                        <input type="text" id="miledate" datepicker="" ng-model="editmile.date" ng-change="saveNow(editmile); dateChanged(editmile.date)"  class="cal" ng-disabled="!user.changeContent"/>
                         {{editmile.date | date:'longDate'}}
                     
                 </td>
                 <td class="header">End Date</td>
                 <td>
                     
-                        <input type="text" id="mileenddate" datepicker="" ng-model="editmile.enddate" ng-change="saveNow(editmile); dateChanged(editmile.enddate)"  class="cal"/>
+                        <input type="text" id="mileenddate" datepicker="" ng-model="editmile.enddate" ng-change="saveNow(editmile); dateChanged(editmile.enddate)"  class="cal" ng-disabled="!user.changeContent"/>
                         {{editmile.enddate | date:'longDate'}}
                     
                 </td>
@@ -92,7 +83,7 @@
             <tr>
                 <td class="header">Status</td>
                 <td>
-                    <select ng-model="editmile.status" ng-change="saveNow(editmile)">
+                    <select ng-model="editmile.status" ng-change="saveNow(editmile)" ng-disabled="!user.changeContent">
                         <option value="Green">OK (Green)</option>
                         <option value="Yellow">Observe (Yellow)</option>
                         <option value="Orange">Assist (Orange)</option>
@@ -101,7 +92,7 @@
                 </td>
                 <td class="header">State</td>
                 <td>
-                    <select ng-model="editmile.state" ng-change="saveNow(editmile)">
+                    <select ng-model="editmile.state" ng-change="saveNow(editmile)" ng-disabled="!user.changeContent">
                         <option value="Target">Target</option>
                         <option value="Qualified">Qualified</option>
                         <option value="Progress">Progress</option>
@@ -119,7 +110,7 @@
             <tr>
                 <td class="header" prio-class prio-value-bar-render="editmile.bena">Business enabler</td>
                 <td>
-                    <select ng-model="editmile.bena" ng-change="saveNow(editmile)">
+                    <select ng-model="editmile.bena" ng-change="saveNow(editmile)" ng-disabled="!user.changeContent">
                         <option value="1">1. Minimal value</option>
                         <option value="2">2. Medium value</option>
                         <option value="3">3. Large value</option>
@@ -128,7 +119,7 @@
                 </td>
                 <td class="header" prio-class prio-value-bar-render-neg="editmile.effort">Effort</td>
                 <td>
-                    <select ng-model="editmile.effort" ng-change="saveNow(editmile)">
+                    <select ng-model="editmile.effort" ng-change="saveNow(editmile)" ng-disabled="!user.changeContent">
                         <option value="1">1. Minimal effort</option>
                         <option value="2">2. Medium effort</option>
                         <option value="3">3. Large effort</option>
@@ -139,7 +130,7 @@
             <tr>
                 <td class="header" prio-class prio-value-bar-render="editmile.sena">Strategy enabler</td>
                 <td>
-                    <select ng-model="editmile.sena" ng-change="saveNow(editmile)">
+                    <select ng-model="editmile.sena" ng-change="saveNow(editmile)" ng-disabled="!user.changeContent">
                         <option value="1">1. Minimal value</option>
                         <option value="2">2. Medium value</option>
                         <option value="3">3. Large value</option>
@@ -148,7 +139,7 @@
                 </td>
                 <td class="header" prio-class prio-value-bar-render-neg="editmile.risklevel">Risk of failure</td>
                 <td>
-                    <select ng-model="editmile.risklevel" ng-change="saveNow(editmile)">
+                    <select ng-model="editmile.risklevel" ng-change="saveNow(editmile)" ng-disabled="!user.changeContent">
                         <option value="1">1. Slim risk</option>
                         <option value="2">2. Could happen</option>
                         <option value="3">3. Likely to happen</option>
@@ -163,7 +154,7 @@
                 </td>
                 <td colspan="3">
                     <div class="field">
-                        <textarea ng-change="saveNow(editmile)" ng-model="editmile.delivarables" maxlength="300" id="miledel" placeholder="Describe the key business delivery that this deliverable will produce."></textarea>
+                        <textarea ng-change="saveNow(editmile)" ng-model="editmile.delivarables" maxlength="300" id="miledel" placeholder="Describe the key business delivery that this deliverable will produce." ng-disabled="!user.changeContent"></textarea>
                     </div>
                 </td>
             </tr>
@@ -173,7 +164,7 @@
                     </td>
                     <td colspan="3">
                         <div class="field">
-                            <textarea ng-change="saveNow(editmile)" ng-model="editmile.dod" maxlength="300" id="miledel" placeholder="Describe the definition of Done."></textarea>
+                            <textarea ng-change="saveNow(editmile)" ng-model="editmile.dod" maxlength="300" id="miledel" placeholder="Describe the definition of Done." ng-disabled="!user.changeContent"></textarea>
                         </div>
                     </td>
                 </tr>
@@ -184,7 +175,7 @@
                 </td>
                 <td colspan="3">
                     <div class="field">
-                        <textarea ng-change="saveNow(editmile)" ng-model="editmile.comments" maxlength="300" id="milecom" placeholder="Describe the enablers of creating value both on implementation and if it enables further strategic work in the future"></textarea>
+                        <textarea ng-change="saveNow(editmile)" ng-disabled="!user.changeContent" ng-model="editmile.comments" maxlength="300" id="milecom" placeholder="Describe the enablers of creating value both on implementation and if it enables further strategic work in the future"></textarea>
                     </div>
                 </td>
             </tr>
@@ -194,7 +185,7 @@
                 </td>
                 <td colspan="3">
                     <div class="field">
-                        <textarea ng-change="saveNow(editmile)" ng-model="editmile.risks" maxlength="300" id="milerisk" placeholder="Describe the limiters that work against creating value like the amount of work and the assosiated risk of failure"></textarea>
+                        <textarea ng-change="saveNow(editmile)" ng-disabled="!user.changeContent" ng-model="editmile.risks" maxlength="300" id="milerisk" placeholder="Describe the limiters that work against creating value like the amount of work and the assosiated risk of failure"></textarea>
                     </div>
                 </td>
             </tr>
@@ -213,19 +204,10 @@
                 </select>
                 <button type="button"
                     ng-click="newMilestone()"
-                    ng-if="user.email==project.po.email || 
-                    user.email==project.pm.email || 
-                    user.email==project.altpo.email || 
-                    user.email==project.altpm.email || 
-                    user.isOwner || user.admin">create new deliverable</button>
+                    ng-if="user.changeContent">create new deliverable</button>
 
                 <button type="button" id="saveButtonQ" prio-class save-this="$parent.hasChanged"
-                    ng-if="user.email == project.po.email || 
-                    user.email == project.pm.email || 
-                    user.email == project.altpo.email || 
-                    user.email == project.altpm.email || 
-                    user.isOwner || 
-                    user.admin"
+                    ng-if="user.changeContent"
                     ng-click="saveMilestones(false)">save</button>
             </div>
         </h2>
