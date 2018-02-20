@@ -27,31 +27,44 @@
                 <h3 ng-show="showfilters">Dependencies filters</h3>
                 <div class="filter-order-container" ng-show="showfilters">
                         <div class="label" style="height:120px;">
-                            Filter by:<br/>Requester<br/>Res. owner<br/>Agreement<br/>Status<br/>Audience
+                            Filter by:<br/>Requester<br/>Res. owner<br/>Audience
                         </div>
                         <div class="field multiple-select">
                             <select multiple="multiple" ng-multiple="true" ng-model="depsearch.acname" ng-options="u.name as u.name for u in users | filter: {source: true} | orderBy:'name'"></select>
                             <select multiple="multiple" ng-multiple="true" ng-model="depsearch.resname" ng-options="u.name as u.name for u in users | filter: {source: true} | orderBy:'name'" ></select>
-                            <select multiple="multiple" ng-multiple="true" ng-model="depsearch.agreement">
-                                        <option value="None">None</option>
-                                        <option value="Conflict">Conflict</option>
-                                        <option value="Tentative">Tentative</option>
-                                        <option value="Agreed">Agreed</option>
+                            <select multiple="multiple" ng-multiple="true" ng-model="depsearch.audience" ng-init="depsearch.audience=['Company', 'Portfolio']">
+                                <option value="Project">Project</option>
+                                <option value="Portfolio">Portfolio</option>
+                                <option value="Company">Company</option>
                             </select>
-                            <select multiple="multiple" ng-multiple="true" ng-model="depsearch.status">
-                                    <option value="Green">Accept</option>
-                                    <option value="Yellow">Observe</option>
-                                    <option value="Orange">Assist</option>
-                                    <option value="Red">Intervent</option>
-                                </select>
-                                
-                                <select multiple="multiple" ng-multiple="true" ng-model="depsearch.audience">
-                                    <option value="Project">Project</option>
-                                    <option value="Portfolio">Portfolio</option>
-                                    <option value="Company">Company</option>
-                                </select>
+                            
                         </div>
                 </div>
+                <div class="filter-order-container" ng-show="showfilters">
+                    <div class="label" style="height:120px;">
+                        Filter by:<br/>Agreement<br/>Status<br/>State
+                    </div>
+                    <div class="field multiple-select">
+                        <select multiple="multiple" ng-multiple="true" ng-model="depsearch.agreement"  ng-init="depsearch.agreement=['None', 'Conflict']">
+                                    <option value="None">None</option>
+                                    <option value="Conflict">Conflict</option>
+                                    <option value="Tentative">Tentative</option>
+                                    <option value="Agreed">Agreed</option>
+                        </select>
+                        <select multiple="multiple" ng-multiple="true" ng-model="depsearch.status" ng-init="depsearch.status=['Red', 'Orange']">
+                                <option value="Green">Accept</option>
+                                <option value="Yellow">Observe</option>
+                                <option value="Orange">Assist</option>
+                                <option value="Red">Intervent</option>
+                            </select>
+                         
+                        <select multiple="multiple" ng-multiple="true" ng-model="depsearch.state" ng-init="depsearch.state=['Open']">
+                            <option value="Open">Open</option>
+                            <option value="On hold">On hold</option>
+                            <option value="Closed">Closed</option>
+                        </select>
+                    </div>
+            </div>
             
             <div class="filter-order-container" ng-show="showfilters">
                 <div class="label">
@@ -70,23 +83,19 @@
             <div class="overview">
                 <table class="tablelist" ng-if="depList.length > 0">
                     <tr class="header">
-                        <td>Dependency</td>
-                        <td>Project</td>
+                        <td>Dependency<br>Project</td>
                         <td>2017</td>
                         <td>2018</td>
                         <td>2019</td>
                         <td>Source</td>
-                        <td>Source owner</td>
-                        <td>Agreement</td>
+                        <td>Description</td>
                     </tr>
                     <tr ng-repeat="dep in depList | multiFilter:depsearch | orderBy:orderdate" ng-click="goToDepInProject(dep._id, dep.projectid)"
                         class="link">
-                        <td class="{{dep.status}}"><b>{{dep.title}}</b></td>
-                        <td>{{dep.projecttitle}}</td>
-                        <td class="bar xl" ng-style="depbarRender(dep)" colspan="3">{{dep.quantum}}</td>
-                        <td>{{dep.buname}}</td>
-                        <td>{{dep.resname}}</td>
-                        <td>{{dep.agreement}}</td>
+                        <td class="{{dep.status}}"><b>{{dep.title}}</b><br>{{dep.projecttitle}}</td>
+                        <td class="bar xl" ng-style="depbarRender(dep)" colspan="3">{{dep.quantum}} - {{dep.agreement}}</td>
+                        <td>{{dep.buname}}<br>{{dep.resname}}</td>
+                        <td>{{dep.description}}</td>
                     </tr>
                 </table>
             </div>

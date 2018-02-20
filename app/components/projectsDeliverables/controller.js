@@ -35,7 +35,7 @@ angular
             userService.users.subscribe(function (users) {
 
                 $scope.users = users;
-                $scope.milesearch.resname=[$scope.user.name];
+                //$scope.milesearch.resname=[$scope.user.name];
             });
 
             $scope.goToMilestoneInProject = function (milestoneId, projectId) {

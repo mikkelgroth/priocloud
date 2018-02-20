@@ -43,7 +43,7 @@ angular
             userService.users.subscribe(function (users) {
 
                 $scope.users = users;
-                $scope.risksearch.acname=[$scope.user.name];
+                //$scope.risksearch.acname=[$scope.user.name];
             });
 
             $scope.goToRiskInProject = function (riskId, projectId) {

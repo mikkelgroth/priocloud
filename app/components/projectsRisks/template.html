@@ -36,7 +36,7 @@
                     <option value="Mitigation">Mitigation</option>
                     <option value="Contingency">Contingency</option>
                 </select>
-                <select multiple="multiple" ng-multiple="true" ng-model="risksearch.audience">
+                <select multiple="multiple" ng-multiple="true" ng-model="risksearch.audience" ng-init="risksearch.audience=['Portfolio','Company']">
                     <option value="Project">Project</option>
                     <option value="Portfolio">Portfolio</option>
                     <option value="Company">Company</option>
@@ -50,25 +50,25 @@
                     Status<br/>Probability<br/>Impact<br/>Recovery
                 </div>
                 <div class="field multiple-select">
-                    <select multiple="multiple" ng-multiple="true" ng-model="risksearch.status">
+                    <select multiple="multiple" ng-multiple="true" ng-model="risksearch.status" ng-init="risksearch.status=['Red','Orange']">
                         <option value="Green">1. Accept</option>
                         <option value="Yellow">2. Observe</option>
                         <option value="Orange">3. Assist</option>
                         <option value="Red">4. Intervention</option>
                     </select>
-                    <select multiple="multiple" ng-multiple="true" ng-model="risksearch.prob">
+                    <select multiple="multiple" ng-multiple="true" ng-model="risksearch.prob" ng-init="risksearch.prob=['2','3','4']">
                         <option value="1">1. Slim chance</option>
                         <option value="2">2. Could happen</option>
                         <option value="3">3. Likely to happen</option>
                         <option value="4">4. Most likely to happen</option>
                     </select>
-                    <select multiple="multiple" ng-multiple="true" ng-model="risksearch.impact">
+                    <select multiple="multiple" ng-multiple="true" ng-model="risksearch.impact" ng-init="risksearch.impact=['2','3','4']">>
                         <option value="1">1. Minor Project impact</option>
                         <option value="2">2. Major Project impact</option>
                         <option value="3">3. Business Unit impact</option>
                         <option value="4">4. Company impact</option>
                     </select>
-                    <select multiple="multiple" ng-multiple="true" ng-model="risksearch.recComp">
+                    <select multiple="multiple" ng-multiple="true" ng-model="risksearch.recComp" ng-init="risksearch.recComp=['Yellow','Orange','Red']">>
                             <option value="Green">1. Easy fix</option>
                             <option value="Yellow">2. Taskforce</option>
                             <option value="Orange">3. Project</option>
@@ -137,7 +137,7 @@
                     <td prio-class prio-risk-bar-render="risk.prob">{{risk.prob}}</td>
                     <td prio-class prio-risk-bar-render="risk.impact">{{risk.impact}}</td>
                     <td prio-class prio-risk-bar-render="risk.recCompValue">{{risk.recCompValue}}</td>
-                    <td class="wrap xl">{{risk.desc.substring(0,80)}} ...</td>
+                    <td class="wrap xl">{{risk.desc}}</td>
                     <td><b>{{risk.response}}</b><br/>{{risk.acc.name}}</td>
                 </tr>
             </table>

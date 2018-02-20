@@ -34,7 +34,7 @@
             <div class="field multiple-select">
                 <select multiple="multiple" ng-multiple="true" ng-model="milesearch.acname" ng-options="u.name as u.name for u in users | filter: {source: true} | orderBy:'name'"></select>
                 <select multiple="multiple" ng-multiple="true" ng-model="milesearch.resname" ng-options="u.name as u.name for u in users | filter: {source: true} | orderBy:'name'" ></select>
-                <select multiple="multiple" ng-multiple="true" ng-model="milesearch.type">
+                <select multiple="multiple" ng-multiple="true" ng-model="milesearch.type" ng-init="milesearch.type=['Milestone', 'Go-live']">
                         <option value="Milestone">Milestone</option>
                         <option value="Phase">Phase</option>
                         <option value="Task">Task</option>
@@ -49,7 +49,7 @@
             </div>
             <div class="field multiple-select">
                 
-                <select multiple="multiple" ng-multiple="true" ng-model="milesearch.status">
+                <select multiple="multiple" ng-multiple="true" ng-model="milesearch.status" ng-init="milesearch.status=['Red','Orange']">
                     <option value="Green">Accept</option>
                     <option value="Yellow">Observe</option>
                     <option value="Orange">Assist</option>
@@ -60,7 +60,7 @@
                     <option value="Qualified">Qualified</option>
                     <option value="Progress">Progress</option>
                 </select>
-                <select multiple="multiple" ng-multiple="true" ng-model="milesearch.audience">
+                <select multiple="multiple" ng-multiple="true" ng-model="milesearch.audience" ng-init="milesearch.audience=['Company','Portfolio']">
                     <option value="Project">Project</option>
                     <option value="Portfolio">Portfolio</option>
                     <option value="Company">Company</option>

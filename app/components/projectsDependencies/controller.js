@@ -35,7 +35,9 @@
             userService.users.subscribe(function (users) {
 
                 $scope.users = users;
-                $scope.depsearch.resname=[$scope.user.name];
+                //$scope.depsearch.resname=[$scope.user.name];
+                
+
             });
 
             $scope.goToDepInProject = function (depId, projectId) {
