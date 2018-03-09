@@ -71,7 +71,7 @@
                 <td class="header">Overall status</td>
                 <td colspan="3">
                     
-                        <textarea ng-change="saveNow(editstatus)" ng-disabled="!user.changeContent || !saveStatusEnabled" ng-model="editstatus.overallcomments" maxlength="300" id="overallstatus" placeholder="Comments"></textarea>
+                    <div class="field"><textarea ng-change="saveNow(editstatus)" ng-disabled="!user.changeContent || !saveStatusEnabled" ng-model="editstatus.overallcomments" maxlength="300" id="overallstatus" placeholder="Comments"></textarea></div>
                     
                     
                 </td>
@@ -96,7 +96,7 @@
                     Agenda
                 </td>
                 <td>
-                    <div class="field"><textarea  ng-disabled="!user.changeContent || !saveStatusEnabled" ng-change="saveNow(editstatus)" ng-model="editstatus.steercoagenda" maxlength="300" id="steercoagenda" placeholder="Agenda for upcomming meeting"></textarea></div>
+                    <div class="field"><textarea  ng-disabled="!user.changeContent || !saveStatusEnabled" ng-change="saveNow(editstatus)" ng-model="editstatus.steercoagenda" maxlength="800" id="steercoagenda" placeholder="Agenda for upcomming meeting"></textarea></div>
                 </td>               
             </tr>
             <tr>
@@ -112,7 +112,7 @@
                     Minutes
                 </td>
                 <td>
-                    <div class="field"><textarea  ng-disabled="!user.changeContent || !saveStatusEnabled" ng-change="saveNow(editstatus)" ng-model="editstatus.steercominutes" maxlength="300" id="steercominutes" placeholder="Minutes from meeting"></textarea></div>
+                    <div class="field"><textarea  ng-disabled="!user.changeContent || !saveStatusEnabled" ng-change="saveNow(editstatus)" ng-model="editstatus.steercominutes" maxlength="800" id="steercominutes" placeholder="Minutes from meeting"></textarea></div>
                 </td>               
             </tr>
         </table>
@@ -120,11 +120,11 @@
         <br/>
         <table class="smaller">
             <tr>
-                <td class="header" colspan="3">Status flags</td>
+                <td class="header" colspan="2">Status flags</td>
             </tr>
             <tr>
                 <td class="{{editstatus.statusbc}}">
-                    <p>Business case <span id="bcstatus_count" class="right"></span></p>
+                    Business case 
                 </td>
                 <td>
                     <select  ng-disabled="!user.changeContent || !saveStatusEnabled" ng-model="editstatus.statusbc" ng-change="saveNow(editstatus)">
@@ -133,17 +133,16 @@
                         <option value="Orange">Assist (Orange)</option>
                         <option value="Red">Intervention (Red)</option>
                     </select>
-                </td>
-                <td>
-                    
+                
+                    <div class="field">
                         <textarea ng-change="saveNow(editstatus)" ng-disabled="!user.changeContent || !saveStatusEnabled" ng-model="editstatus.bccomments" maxlength="300" id="bcstatus" placeholder="Comments"></textarea>
-                    
+                    </div>
                     
                 </td>
             </tr>
             <tr>
                 <td class="{{editstatus.statussc}}">
-                    <p>Scope <span id="scstatus_count" class="right"></span></p>
+                    Scope 
                 </td>
                 <td>
                     <select ng-disabled="!user.changeContent || !saveStatusEnabled" ng-model="editstatus.statussc" ng-change="saveNow(editstatus)">
@@ -152,14 +151,15 @@
                         <option value="Orange">Assist (Orange)</option>
                         <option value="Red">Intervention (Red)</option>
                     </select>
-                </td>
-                <td>
+                
+                        <div class="field">
                     <textarea ng-change="saveNow(editstatus)"  ng-disabled="!user.changeContent || !saveStatusEnabled" ng-model="editstatus.sccomments" maxlength="300" id="scstatus" placeholder="Comments"></textarea>
+                        </div>
                 </td>
             </tr>
             <tr>
                 <td class="{{editstatus.statustl}}">
-                    <p>Time line <span id="tlstatus_count" class="right"></span></p>
+                    Time line 
                 </td>
                 <td>
                     <select  ng-disabled="!user.changeContent || !saveStatusEnabled" ng-model="editstatus.statustl" ng-change="saveNow(editstatus)">
@@ -168,16 +168,15 @@
                         <option value="Orange">Assist (Orange)</option>
                         <option value="Red">Intervention (Red)</option>
                     </select>
-                </td>
-                <td>
-                    <textarea ng-change="saveNow(editstatus)" ng-disabled="!user.changeContent || !saveStatusEnabled" ng-model="editstatus.tlcomments" maxlength="300" id="tlstatus" placeholder="Comments"></textarea>
-                    
+                
+                        <div class="field"><textarea ng-change="saveNow(editstatus)" ng-disabled="!user.changeContent || !saveStatusEnabled" ng-model="editstatus.tlcomments" maxlength="300" id="tlstatus" placeholder="Comments"></textarea>
+                        </div>
                     
                 </td>
             </tr>
             <tr>
                 <td class="{{editstatus.statusres}}">
-                    <p>Resources <span id="resstatus_count" class="right"></span></p>
+                    Resources 
                 </td>
                 <td>
                     <select  ng-disabled="!user.changeContent || !saveStatusEnabled" ng-model="editstatus.statusres" ng-change="saveNow(editstatus)">
@@ -186,17 +185,16 @@
                         <option value="Orange">Assist (Orange)</option>
                         <option value="Red">Intervention (Red)</option>
                     </select>
-                </td>
-                <td>
-                    
+                
+                        <div class="field">
                         <textarea ng-change="saveNow(editstatus)"  ng-disabled="!user.changeContent || !saveStatusEnabled" ng-model="editstatus.rescomments" maxlength="300" id="resstatus" placeholder="Comments"></textarea>
-                    
+                        </div>
                     
                 </td>
             </tr>
             <tr>
                 <td class="{{editstatus.statusbud}}">
-                    <p>Budget <span id="budstatus_count" class="right"></span></p>
+                    Budget 
                 </td>
                 <td>
                     <select ng-disabled="!user.changeContent || !saveStatusEnabled" ng-model="editstatus.statusbud" ng-change="saveNow(editstatus)">
@@ -205,16 +203,15 @@
                         <option value="Orange">Assist (Orange)</option>
                         <option value="Red">Intervention (Red)</option>
                     </select>
-                </td>
-                <td>
-                    <textarea ng-change="saveNow(editstatus)" ng-disabled="!user.changeContent || !saveStatusEnabled" ng-model="editstatus.budcomments" maxlength="300" id="budstatus" placeholder="Comments"></textarea>
-                    
+                
+                        <div class="field"><textarea ng-change="saveNow(editstatus)" ng-disabled="!user.changeContent || !saveStatusEnabled" ng-model="editstatus.budcomments" maxlength="300" id="budstatus" placeholder="Comments"></textarea>
+                        </div>
                     
                 </td>
             </tr>
             <tr>
                 <td class="{{editstatus.statusrisk}}">
-                    <p>Risks <span id="riskstatus_count" class="right"></span></p>
+                    Risks 
                 </td>
                 <td>
                     <select ng-disabled="!user.changeContent || !saveStatusEnabled" ng-change="saveNow(editstatus)" ng-model="editstatus.statusrisk">
@@ -223,10 +220,9 @@
                         <option value="Orange">Assist (Orange)</option>
                         <option value="Red">Intervention (Red)</option>
                     </select>
-                </td>
-                <td>
-                    <textarea ng-change="saveNow(editstatus)" ng-disabled="!user.changeContent || !saveStatusEnabled" ng-model="editstatus.riskcomments" maxlength="300" id="riskstatus" placeholder="Comments"></textarea>
-                    
+                
+                        <div class="field"><textarea ng-change="saveNow(editstatus)" ng-disabled="!user.changeContent || !saveStatusEnabled" ng-model="editstatus.riskcomments" maxlength="300" id="riskstatus" placeholder="Comments"></textarea>
+                        </div>
                 </td>
             </tr>
             <tr>
@@ -234,48 +230,48 @@
             </tr>
             <tr>
                 <td>
-                    <p>Delivered <span id="statusdel_count" class="right"></span></p>
+                    Delivered 
                 </td>
                 <td colspan="2">
-                    <textarea ng-change="saveNow(editstatus)" ng-disabled="!user.changeContent || !saveStatusEnabled" ng-model="editstatus.del" maxlength="300" id="statusdel" placeholder="What have the project delivered compared to last status report."></textarea>
-                    
+                        <div class="field"><textarea ng-change="saveNow(editstatus)" ng-disabled="!user.changeContent || !saveStatusEnabled" ng-model="editstatus.del" maxlength="300" id="statusdel" placeholder="What have the project delivered compared to last status report."></textarea>
+                        </div>
                 </td>
             </tr>
             <tr>
                 <td>
-                    <p>Next <span id="statusnext_count" class="right"></span></p>
+                    Next 
                 </td>
                 <td colspan="2">
-                    <textarea ng-change="saveNow(editstatus)" ng-disabled="!user.changeContent || !saveStatusEnabled" ng-model="editstatus.next" maxlength="300" id="statusnext" placeholder="What are the project to deliver in the next iteration (until next status report)"></textarea>
-                    
+                        <div class="field"><textarea ng-change="saveNow(editstatus)" ng-disabled="!user.changeContent || !saveStatusEnabled" ng-model="editstatus.next" maxlength="300" id="statusnext" placeholder="What are the project to deliver in the next iteration (until next status report)"></textarea>
+                        </div>
                 </td>
             </tr>
             <tr>
                 <td>
-                    <p>Concerns <span id="statusconcerns_count" class="right"></span></p>
+                    Concerns 
                 </td>
                 <td colspan="2">
-                    <textarea ng-change="saveNow(editstatus)" ng-disabled="!user.changeContent || !saveStatusEnabled" ng-model="editstatus.concerns" maxlength="300" id="statusconcerns" placeholder="What concerns regarding deliveries, milestones and risks needs highliting?"></textarea>
-                    
+                        <div class="field"><textarea ng-change="saveNow(editstatus)" ng-disabled="!user.changeContent || !saveStatusEnabled" ng-model="editstatus.concerns" maxlength="300" id="statusconcerns" placeholder="What concerns regarding deliveries, milestones and risks needs highliting?"></textarea>
+                        </div>
                 </td>
             </tr>
             <tr>
                 <td>
-                    <p>Changes <span id="statuschanges_count" class="right"></span></p>
+                    Changes 
                 </td>
                 <td colspan="2">
-                    <textarea ng-change="saveNow(editstatus)" ng-disabled="!user.changeContent || !saveStatusEnabled" ng-model="editstatus.changes" maxlength="300" id="statuschanges" placeholder="Is there changes to economy, deliveries, milestones and risk?"></textarea>
-                    
+                        <div class="field"><textarea ng-change="saveNow(editstatus)" ng-disabled="!user.changeContent || !saveStatusEnabled" ng-model="editstatus.changes" maxlength="300" id="statuschanges" placeholder="Is there changes to economy, deliveries, milestones and risk?"></textarea>
+                        </div>
                 </td>
             </tr>
             <!-- TODO: use - upper described - directive here -->
             <tr ng-if="user.changeContent">
                 <td>
-                    <p>Comments <span id="statuscomments_count" class="right"></span></p>
+                    Comments 
                 </td>
                 <td colspan="2">
-                    <textarea ng-change="saveNow(editstatus)" ng-disabled="!saveStatusEnabled" ng-model="editstatus.comments" maxlength="300" id="statuscomments"></textarea>
-                    
+                        <div class="field"><textarea ng-change="saveNow(editstatus)" ng-disabled="!saveStatusEnabled" ng-model="editstatus.comments" maxlength="300" id="statuscomments"></textarea>
+                        </div>
                 </td>
             </tr>
         </table>
