@@ -253,6 +253,17 @@ table.nopadding > tbody > tr > td,
 table.nopadding > tbody > th > td {
 	padding: 0;
 }
+tr.topheader td,
+td.topheader {
+	background-color: #0869A1;
+	padding: 0.5rem;
+	color: #FFF;
+	font-size: 1.6em;
+	text-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
+}
+td.markheader {
+	background-color: rgba(8, 105, 161, 0.384) !important;
+}
 tr.header td,
 td.header {
 	background-color: #EEF2F3;
@@ -671,6 +682,9 @@ select {
 		float: none;
 		padding: 0;
 	}
+	
+	footer {page-break-after: always;}
+	
 		
 }
 

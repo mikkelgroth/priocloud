@@ -97,6 +97,10 @@ angular
                 if (md instanceof Date && !isNaN(md.valueOf())) { 
                     dep.depdate = md.toISOString(); 
                 }
+                var dmd = new Date($("#depdeaddate")[0].value);
+                if (dmd instanceof Date && !isNaN(dmd.valueOf())) { 
+                    dep.depdeaddate = dmd.toISOString(); 
+                }
 
 
                 $scope.hasChanged=true;               

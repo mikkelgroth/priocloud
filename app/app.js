@@ -33,6 +33,7 @@ angular
             $routeProvider.when('/projects/risks', { controller: 'ProjectsRisksController', templateUrl: 'components/projectsRisks/template.html' });
             $routeProvider.when('/projects/deliverables', { controller: 'ProjectsDeliverablesController', templateUrl: 'components/projectsDeliverables/template.html' });
             $routeProvider.when('/projects/finance', { controller: 'ProjectsFinanceController', templateUrl: 'components/projectsFinance/template.html' });
+            $routeProvider.when('/projects/reports', { controller: 'ProjectsReportsController', templateUrl: 'components/projectsReports/template.html' });
 
             // project
             $routeProvider.when('/project/:id', { controller: 'ProjectOverviewController', templateUrl: 'components/projectOverview/template.html' });
