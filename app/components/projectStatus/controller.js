@@ -109,6 +109,7 @@ angular
 
                 $scope.project.statuses.push($scope.editstatus);
                 $scope.showStatusForm = false;
+                $scope.deleteThis = false;
             };
 
             $scope.viewStatus = function (status) {
@@ -119,8 +120,10 @@ angular
                 $scope.editstatus.active = last;
                 $scope.saveStatusEnabled = last && $scope.editstatus.statusstate != "Final";
                 $scope.showStatusForm = true;
+                $scope.deleteThis = false;
             };
 
+            
             $scope.hideStatusForm = function () {
 
                 $scope.showStatusForm = false;
@@ -133,8 +136,16 @@ angular
                 companyService.saveProjectName($scope.project, $scope.user.name);
 
                 $scope.showStatusForm = false;
+                $scope.deleteThis = false;
             };
             
+            $scope.delete = function () {
+
+                $scope.deleteThis = true;
+                
+            };
+
+
             $scope.saveNow = function (status) {
                 var dd = new Date(Date.parse($("#demodate")[0].value));
                 if (dd instanceof Date && !isNaN(dd.valueOf())) {
