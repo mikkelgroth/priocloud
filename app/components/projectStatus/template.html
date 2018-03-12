@@ -37,8 +37,8 @@
                 </td>
                 <td class="header">Next demo</td>
                 <td>
-                    <input ng-disabled="!user.changeContent || !saveStatusEnabled" type="text" id="demodate" datepicker="editstatus.demodate | date:'yyyy-MM-dd'" ng-model="editstatus.demodate" ng-change="saveNow(editstatus); dateChanged(editstatus.demodate)"  class="cal"/>
-                    {{editstatus.demodate | date:'yyyy-MM-dd'}}
+                    <input ng-disabled="!user.changeContent || !saveStatusEnabled" type="text" id="demodate" datepicker="" ng-model="editstatus.rawdemodate" ng-change="saveNow(editstatus); dateChanged(editstatus.rawdemodate)"  class="cal"/>
+                    {{editstatus.demodate | date:'longDate'}}
                 </td>
             </tr>
             <tr>
@@ -88,8 +88,8 @@
                     Steerco meeting date
                 </td>
                 <td>
-                    <input  ng-disabled="!user.changeContent || !saveStatusEnabled" type="text" id="steercodate" datepicker="" ng-model="editstatus.steercodate" ng-change="saveNow(editstatus); dateChanged(editstatus.steercodate)"  class="cal"/>
-                    {{editstatus.steercodate | date:'yyyy-MM-dd'}}
+                    <input  ng-disabled="!user.changeContent || !saveStatusEnabled" type="text" id="steercodate" datepicker="" ng-model="editstatus.rawsteercodate" ng-change="saveNow(editstatus); dateChanged(editstatus.rawsteercodate)"  class="cal"/>
+                    {{editstatus.steercodate | date:'longDate'}}
                 </td>               
             </tr>
             <tr>

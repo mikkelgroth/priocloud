@@ -65,8 +65,8 @@
                         <td>Depriciation start date:</td>
                         <td>
                             
-                                <input class="cal" type="text" id="depriciationdate" datepicker="" ng-model="project.depriciationdate" ng-change="saveNow(); dateChanged(project.depriciationdate)" ng-disabled="!user.changeContent"/>
-                                {{project.depriciationdate | date:'yyyy-MM-dd'}}
+                                <input class="cal" type="text" id="depriciationdate" datepicker="" ng-model="project.rawdepriciationdate" ng-change="saveNow(); dateChanged(project.rawdepriciationdate)" ng-disabled="!user.changeContent"/>
+                                {{project.depriciationdate | date:'longDate'}}
                                 
                            
                         </td>

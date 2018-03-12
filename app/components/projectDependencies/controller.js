@@ -94,14 +94,22 @@ angular
             
             $scope.saveNow = function (dep) {
                 var md = new Date($("#depdate")[0].value);
+                var dmd = new Date($("#depdeaddate")[0].value);
+                
                 if (md instanceof Date && !isNaN(md.valueOf())) { 
                     dep.depdate = md.toISOString(); 
+                    
                 }
-                var dmd = new Date($("#depdeaddate")[0].value);
+                
                 if (dmd instanceof Date && !isNaN(dmd.valueOf())) { 
                     dep.depdeaddate = dmd.toISOString(); 
+                    
                 }
-
+                if (md instanceof Date && !isNaN(md.valueOf()) && dmd instanceof Date && !isNaN(dmd.valueOf()) && md.valueOf()>dmd.valueOf()) { 
+                    dep.depdeaddate = md.toISOString();
+                    dep.rawdepdeaddate = $("#depdate")[0].value;
+                    //console.log("depdeaddate: " + dep.depdeaddate + " rawdepdeaddate: " + $("#depdate")[0].value);
+                }
 
                 $scope.hasChanged=true;               
             };

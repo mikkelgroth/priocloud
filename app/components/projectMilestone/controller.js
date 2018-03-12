@@ -114,6 +114,12 @@ angular
                 if (med instanceof Date && !isNaN(med.valueOf())) { 
                     mile.enddate = med.toISOString(); 
                 }
+                if (md instanceof Date && !isNaN(md.valueOf()) && med instanceof Date && !isNaN(med.valueOf()) && md.valueOf()>med.valueOf()) { 
+                    mile.enddate = md.toISOString();
+                    mile.rawenddate = $("#miledate")[0].value;
+                    
+                }
+
 
                 mile.wsjf = Math.floor((mile.bena * mile.sena) /
                     (mile.effort * mile.risklevel) * 100 / 16);

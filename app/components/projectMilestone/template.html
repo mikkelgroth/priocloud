@@ -68,14 +68,14 @@
                 <td class="header">Start Date</td>
                 <td>
                     
-                        <input type="text" id="miledate" datepicker="" ng-model="editmile.date" ng-change="saveNow(editmile); dateChanged(editmile.date)"  class="cal" ng-disabled="!user.changeContent"/>
+                        <input type="text" id="miledate" datepicker="" ng-model="editmile.rawdate" ng-change="saveNow(editmile); dateChanged(editmile.rawdate)"  class="cal" ng-disabled="!user.changeContent"/>
                         {{editmile.date | date:'longDate'}}
                     
                 </td>
                 <td class="header">End Date</td>
                 <td>
                     
-                        <input type="text" id="mileenddate" datepicker="" ng-model="editmile.enddate" ng-change="saveNow(editmile); dateChanged(editmile.enddate)"  class="cal" ng-disabled="!user.changeContent"/>
+                        <input type="text" id="mileenddate" datepicker="" ng-model="editmile.rawenddate" ng-change="saveNow(editmile); dateChanged(editmile.rawenddate)"  class="cal" ng-disabled="!user.changeContent"/>
                         {{editmile.enddate | date:'longDate'}}
                     
                 </td>

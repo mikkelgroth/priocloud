@@ -87,13 +87,13 @@
                 <tr>
                         <td class="header">Work start</td>
                         <td>
-                            <input type="text" id="depdate" datepicker="" ng-model="editdep.depdate" ng-change="saveNow(editdep); dateChanged(editdep.depdate)"  class="cal" ng-disabled="!user.changeContent"/>
+                            <input type="text" id="depdate" datepicker="" ng-model="editdep.rawdepdate" ng-change="saveNow(editdep); dateChanged(editdep.rawdepdate)"  class="cal" ng-disabled="!user.changeContent"/>
                             {{editdep.depdate | date:'longDate'}}
                         </td>
                                         
                         <td class="header">Deadline</td>
                         <td>
-                                <input type="text" id="depdeaddate" datepicker="" ng-model="editdep.depdeaddate" ng-change="saveNow(editdep); dateChanged(editdep.depdeaddate)"  class="cal" ng-disabled="!user.changeContent"/>
+                                <input type="text" id="depdeaddate" datepicker="" ng-model="editdep.rawdepdeaddate" ng-change="saveNow(editdep); dateChanged(editdep.rawdepdeaddate)"  class="cal" ng-disabled="!user.changeContent"/>
                                 {{editdep.depdeaddate | date:'longDate'}}
                         </td>
                         
