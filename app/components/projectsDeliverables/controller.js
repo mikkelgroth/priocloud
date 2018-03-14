@@ -19,6 +19,8 @@ angular
 
                 $scope.projects = projects;
                 $scope.milestoneList = setMilestoneList(projects);
+                $scope.showmepmbutton=true;
+                $scope.showmepobutton=true;
             });
 
             companyService.businessUnits.subscribe(function (units) {
@@ -42,6 +44,32 @@ angular
 
                 $location.path('/project/' + projectId + '/milestone/' + milestoneId);
             };
+
+            $scope.showmepm = function () {
+                $scope.milesearch.audience = [];
+                $scope.milesearch.type = [];
+                $scope.milesearch.status = [];
+                $scope.milesearch.resname = [$scope.user.name];
+                $scope.showmepmbutton=false;
+            };
+            $scope.clearmepm = function () {
+
+                $scope.milesearch.acname = [];
+                $scope.showmepmbutton=true;
+            };
+            $scope.showmepo = function () {
+                $scope.milesearch.audience = [];
+                $scope.milesearch.type = [];
+                $scope.milesearch.status = [];
+                $scope.milesearch.acname = [$scope.user.name];
+                $scope.showmepobutton=false;
+            };
+            $scope.clearmepo = function () {
+
+                $scope.milesearch.resname = [];
+                $scope.showmepobutton=true;
+            };
+
 
             $scope.barRender = function (mile) {
                 return barRender(mile);

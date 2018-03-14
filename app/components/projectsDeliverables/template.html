@@ -1,5 +1,10 @@
 <div id="projects-deliverables">
-    <h2>Deliverables <div class="right"><button ng-click="showfilters=true"  ng-show="!showfilters">Show filters</button><button ng-click="showfilters=false"  ng-show="showfilters">Hide filters</button></div></h2>
+    <h2>Deliverables <div class="right">
+            <button ng-click="showmepm()"  ng-show="showmepmbutton">Show me as Responsible</button>
+            <button ng-click="clearmepm()"  ng-show="!showmepmbutton">Clear me as Responsible</button>
+            <button ng-click="showmepo()"  ng-show="showmepobutton">Show me as Approver</button>
+            <button ng-click="clearmepo()"  ng-show="!showmepobutton">Clear me as Approver</button>
+        <button ng-click="showfilters=true"  ng-show="!showfilters">Show filters</button><button ng-click="showfilters=false"  ng-show="showfilters">Hide filters</button></div></h2>
     <div class="smaller">
         <h3 ng-show="showfilters">Project filters</h3>
         <div class="filter-order-container" ng-show="showfilters">

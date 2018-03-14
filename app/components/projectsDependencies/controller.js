@@ -19,6 +19,8 @@
 
                 $scope.projects = projects;
                 $scope.depList = setDepList(projects);
+                $scope.showmepmbutton=true;
+                $scope.showmepobutton=true;
             });
 
             companyService.businessUnits.subscribe(function (units) {
@@ -44,6 +46,34 @@
 
                 $location.path('/project/' + projectId + '/dependencies/' + depId);
             };
+
+            $scope.showmepm = function () {
+                $scope.depsearch.audience = [];
+                $scope.depsearch.agreement = [];
+                $scope.depsearch.status = [];
+                
+                $scope.depsearch.acname = [$scope.user.name];
+                $scope.showmepmbutton=false;
+            };
+            $scope.clearmepm = function () {
+
+                $scope.depsearch.acname = [];
+                $scope.showmepmbutton=true;
+            };
+            $scope.showmepo = function () {
+                $scope.depsearch.audience = [];
+                $scope.depsearch.agreement = [];
+                $scope.depsearch.status = [];
+                $scope.depsearch.resname = [$scope.user.name];
+                $scope.showmepobutton=false;
+            };
+            $scope.clearmepo = function () {
+
+                $scope.depsearch.resname = [];
+                $scope.showmepobutton=true;
+            };
+
+
 
             $scope.depbarRender = function (dep) {  
                 return depbarRender(dep);

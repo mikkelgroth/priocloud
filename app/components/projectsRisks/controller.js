@@ -25,6 +25,8 @@ angular
 
                 $scope.projects = projects;
                 $scope.riskList = setRiskList(projects);
+                $scope.showmepmbutton=true;
+                
             });
 
             companyService.businessUnits.subscribe(function (units) {
@@ -50,6 +52,24 @@ angular
 
                 $location.path('/project/' + projectId + '/risks/' + riskId);
             };
+
+            $scope.showmepm = function () {
+                $scope.risksearch.audience = [];
+                $scope.risksearch.prob = [];
+                $scope.risksearch.impact = [];
+                $scope.risksearch.recComp = [];
+                $scope.risksearch.status = [];
+                $scope.risksearch.acname = [$scope.user.name];
+                $scope.showmepmbutton=false;
+            };
+            $scope.clearmepm = function () {
+
+                $scope.risksearch.acname = [];
+                $scope.showmepmbutton=true;
+            };
+            
+
+
 
             function setRiskList(projects) {
 

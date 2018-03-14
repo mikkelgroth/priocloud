@@ -1,5 +1,10 @@
 <div id="projects-finance">
-    <h2>Project list - Finance <div class="right"><button ng-click="showfilters=true"  ng-show="!showfilters">Show filters</button><button ng-click="showfilters=false"  ng-show="showfilters">Hide filters</button></div></h2>
+    <h2>Project list - Finance <div class="right">
+            <button ng-click="showmepm()"  ng-show="showmepmbutton">Show me as PM</button>
+            <button ng-click="clearmepm()"  ng-show="!showmepmbutton">Clear me as PM</button>
+            <button ng-click="showmepo()"  ng-show="showmepobutton">Show me as PO</button>
+            <button ng-click="clearmepo()"  ng-show="!showmepobutton">Clear me as PO</button>
+        <button ng-click="showfilters=true"  ng-show="!showfilters">Show filters</button><button ng-click="showfilters=false"  ng-show="showfilters">Hide filters</button></div></h2>
     <div class="smaller">
         <div class="filter-order-container" ng-show="showfilters">
             <div class="label" style="height:120px;">

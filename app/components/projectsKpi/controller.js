@@ -15,6 +15,8 @@ angular
             companyService.projects.subscribe(function (projects) {
 
                 $scope.projectList = setProjectList(projects);
+                $scope.showmepmbutton=true;
+                $scope.showmepobutton=true;
             });
 
             companyService.businessUnits.subscribe(function (units) {
@@ -37,6 +39,27 @@ angular
             $scope.goToProject = function (projectId) {
 
 		        $location.path('/project/' + projectId);
+            };
+
+            $scope.showmepm = function () {
+
+                $scope.search.pmname = [$scope.user.name];
+                $scope.showmepmbutton=false;
+            };
+            $scope.clearmepm = function () {
+
+                $scope.search.pmname = [];
+                $scope.showmepmbutton=true;
+            };
+            $scope.showmepo = function () {
+
+                $scope.search.poname = [$scope.user.name];
+                $scope.showmepobutton=false;
+            };
+            $scope.clearmepo = function () {
+
+                $scope.search.poname = [];
+                $scope.showmepobutton=true;
             };
 
             function setProjectList(projects) {
