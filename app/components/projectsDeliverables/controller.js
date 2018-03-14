@@ -54,7 +54,7 @@ angular
             };
             $scope.clearmepm = function () {
 
-                $scope.milesearch.acname = [];
+                $scope.milesearch.resname = [];
                 $scope.showmepmbutton=true;
             };
             $scope.showmepo = function () {
@@ -66,7 +66,7 @@ angular
             };
             $scope.clearmepo = function () {
 
-                $scope.milesearch.resname = [];
+                $scope.milesearch.acname = [];
                 $scope.showmepobutton=true;
             };
 
