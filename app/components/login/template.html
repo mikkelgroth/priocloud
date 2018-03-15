@@ -5,7 +5,7 @@
         <div prio-user-authenticated="{display: false}" class="login login-container">
             <div id="login" class="column small-6">
                 <div class="login-box">
-                    <b>Log in to PrioCloud</b>
+                    <b>Log in to {{SITENAME}}</b>
                     <form ng-submit="login()">
                         <div class="field">
                             <input placeholder="Email address" type="email" name="email" ng-model="email" autofocus />
@@ -24,7 +24,7 @@
                     </div>
                 </div>
             </div>
-            <div class="column small-6">
+            <div class="column small-6" ng-if="SITENAME=='PrioCloud'">
                 <div class="demo-box">
                     <b>Demo login</b>
                     <div>
