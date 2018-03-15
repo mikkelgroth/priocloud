@@ -12,13 +12,13 @@
                 <br/>
                 &nbsp;
                 <br/>
-                <button ng-click="showCreate = !showCreate">Start creating a new company portfolio now!</button>
+                <button ng-init="$scope.showCreateCompany=true" ng-show="$scope.showCreateCompany" ng-click="$scope.showCreateCompany = !$scope.showCreateCompany">Start creating a new company portfolio now!</button>
                 <br/>
                 &nbsp;
                 <br/>
             </div>
             <div class="login zontop">
-                <div class="fadein fadeout overview" ng-show="showCreate">
+                <div class="fadein fadeout overview" ng-show="!$scope.showCreateCompany">
                     <h3>Company Account sign up:</h3>
                     <form ng-submit="register()">
                         Company name: <input placeholder="Company name" type="text" name="companyname" ng-model="companyname">

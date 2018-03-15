@@ -3,13 +3,15 @@ angular
     .controller('RegisterController', [
         '$scope',
         '$http',
+        'companyService',
         'restService',
-        'stateService',
+        
         function (
             $scope,
             $http,
+            companyService,
             restService,
-            stateService
+            
         ) {
 
             $scope.register = function () {
@@ -27,7 +29,7 @@ angular
                                 })
                                 .success(function (dataResponse) {
 
-                                    stateService.loadCompany();
+                                    companyService.loadCompany();
 
                                     restService
                                         .saveData('bu', angular.fromJson({ name: $scope.companyname }))
