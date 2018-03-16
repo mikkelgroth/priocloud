@@ -144,6 +144,7 @@ if($scope.project!=null && $scope.project.risks!=null){
         var risk;
         for (var i = 0; i < $scope.project.risks.length; i++) {
             risk = $scope.project.risks[i];
+            var statusvalue = (risk.status=='Yellow')?2:(risk.status=='Orange')?4:(risk.status=='Red')?6:0; 
             
             if((risk.showInReport && risk.type=='Risk' && risk.state!='Closed') && 
                 (risk.audience!='Confidential' || (risk.audience=='Confidential' && 
@@ -151,9 +152,9 @@ if($scope.project!=null && $scope.project.risks!=null){
                 project.showconfrisk=='true'))){
                     $scope.riskseries.push(risk.title);
                     $scope.riskdata.push([{
-                        x: parseInt(risk.prob)*50+parseInt(risk.impact)*10+parseInt(risk.recCompValue),
-                        y: parseInt(risk.impact)*50+parseInt(risk.recCompValue)*10+parseInt(risk.prob),
-                        r: parseInt(risk.recCompValue)*8
+                        x: parseInt(risk.prob)*50+parseInt(risk.impact)*10+parseInt(risk.recCompValue)+statusvalue,
+                        y: parseInt(risk.impact)*50+parseInt(risk.recCompValue)*10+parseInt(risk.prob)+statusvalue,
+                        r: parseInt(risk.recCompValue)*8+statusvalue
                     }]);
             }
         }
