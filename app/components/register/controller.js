@@ -5,12 +5,16 @@ angular
         '$http',
         'companyService',
         'restService',
+        'userService',
+        '$location',
         
         function (
             $scope,
             $http,
             companyService,
             restService,
+            userService,
+            $location
             
         ) {
 
@@ -21,7 +25,7 @@ angular
                     .success(function (data, status, headers, config) {
 
                         if (data.authenticated) {
-
+                          userService.authenticate(data);
                             restService
                                 .saveData('company', {
                                     name: $scope.companyname,
@@ -34,7 +38,9 @@ angular
                                     restService
                                         .saveData('bu', angular.fromJson({ name: $scope.companyname }))
                                         .success(function (dataResponse) {
-                                            $scope.bus[0] = dataResponse;
+                                            userService.authenticate(data);
+                                            $location.path('/admin');
+
                                         });
                                 });
 
