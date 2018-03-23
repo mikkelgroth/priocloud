@@ -77,6 +77,19 @@
                     
                 </td>
             </tr>
+            <tr>
+                <td class="header">Link external doc.
+                </td>
+                <td colspan="3">
+                        
+                    <input ng-model="editstatus.link" ng-change="saveNow(editstatus)" ng-disabled="!user.changeContent || !saveStatusEnabled"/>&nbsp;
+                    <input type="checkbox" ng-model="project.filters.showStatusExternalLink" ng-change="saveNow()"> Show in report
+                    <div class="right"><a target="_blank" href="{{editstatus.link}}"><div class="linkicon"></div></a></div>
+                    
+                </td>
+                
+                
+            </tr>
         </table>
         <br/>
         <table class="smaller">

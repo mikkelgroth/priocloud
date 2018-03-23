@@ -220,10 +220,20 @@
                             </tr>
                             <tr>
                                 <td>Demo date</td>
-                                <td colspan="3" class="wrap xxxl">
+                                <td class="wrap xxxl" colspan="3">
                                     <pre>{{editstatus.demodate | date:'longDate'}}</pre>
                                 </td>
+                                
                             </tr>
+                            <tr ng-if="project.filters.showStatusExternalLink">
+                                    
+                                    <td>
+                                        External status document link
+                                    </td>
+                                    <td colspan="3">
+                                            <a target="_blank" href="{{editstatus.link}}"><div class="linkicon"></div></a>
+                                        </td>
+                                </tr>
                             <tr ng-if="project.filters.showStatusFlags" class="header">
                                 <td colspan="4">Status flags</td>
                             </tr>
