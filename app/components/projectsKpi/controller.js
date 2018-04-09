@@ -72,6 +72,7 @@ angular
 
                     // set last status
                     project.lastStatus = project.statuses[project.statuses.length - 1];
+                    project.lastStatusFlag = project.lastStatus.status;
 
                     return project;
                 });

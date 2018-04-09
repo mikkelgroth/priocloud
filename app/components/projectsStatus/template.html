@@ -8,13 +8,19 @@
     <div class="smaller">
         <div class="filter-order-container" ng-show="showfilters">
             <div class="label" style="height:120px;">
-                Filter by:<br/> BU
-                <br/>PO<br/>PM
+                Filter by:<br/>
+                BU<br/>PO<br/>PM<br/>Status
             </div>
             <div class="field multiple-select">
                 <select multiple="multiple" ng-multiple="true" ng-model="search.buname" ng-options="bu.name as bu.name for bu in bus | orderBy: 'name'"></select>
                 <select multiple="multiple" ng-multiple="true" ng-model="search.poname" ng-options="u.name as u.name for u in users | filter: {source: true} | orderBy: 'name'"></select>
                 <select multiple="multiple" ng-multiple="true" ng-model="search.pmname" ng-options="u.name as u.name for u in users | filter: {source: true} | orderBy: 'name'"></select>
+                <select multiple="multiple" ng-multiple="true" ng-model="search.lastStatusFlag">
+                    <option value="Green">OK (Green)</option>
+                    <option value="Yellow">Observe (Yellow)</option>
+                    <option value="Orange">Assist (Orange)</option>
+                    <option value="Red">Intervention (Red)</option>
+                </select>
             </div>
         </div>
         <div class="filter-order-container" ng-show="showfilters">

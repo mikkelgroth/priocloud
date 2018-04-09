@@ -84,6 +84,7 @@ angular
 
                     // set last status
                     project.lastStatus = project.statuses[project.statuses.length - 1];
+                    project.financeFlag = project.financeControl;
 
                     return project;
                 });

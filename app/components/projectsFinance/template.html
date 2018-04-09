@@ -9,12 +9,18 @@
         <div class="filter-order-container" ng-show="showfilters">
             <div class="label" style="height:120px;">
                 Filter by:<br/> BU
-                <br/>PO<br/>PM
+                <br/>PO<br/>PM<br/>Finan. Status
             </div>
             <div class="field multiple-select">
                 <select multiple="multiple" ng-multiple="true" ng-model="search.buname" ng-options="bu.name as bu.name for bu in bus | orderBy: 'name'"></select>
                 <select multiple="multiple" ng-multiple="true" ng-model="search.poname" ng-options="u.name as u.name for u in users | filter: {source: true} | orderBy: 'name'"></select>
                 <select multiple="multiple" ng-multiple="true" ng-model="search.pmname" ng-options="u.name as u.name for u in users | filter: {source: true} | orderBy: 'name'"></select>
+                <select multiple="multiple" ng-multiple="true" ng-model="search.financeFlag">
+                    <option value="Green">Finance controlled (Green)</option>
+                    <option value="Yellow">Please update (Yellow)</option>
+                    <option value="Orange">Deviation unexplained (Orange)</option>
+                    <option value="Red">Budget breached (Red)</option>
+                </select>
             </div>
         </div>
         <div class="filter-order-container" ng-show="showfilters">

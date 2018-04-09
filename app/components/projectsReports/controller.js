@@ -77,6 +77,7 @@ angular
                     project.warn = "";
                     // set last status
                     project.lastStatus = project.statuses[project.statuses.length - 1];
+                    project.lastStatusFlag = project.lastStatus.status;
 
                     var now = new Date();
                     var status = new Date(project.lastStatus.date);
