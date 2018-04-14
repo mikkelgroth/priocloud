@@ -149,6 +149,10 @@
                                     <pre>{{project.membersproject}}</pre>
                                 </td>
                             </tr>
+                            <tr ng-if="project.filters.showOrgExternalLink">
+                                <td>External Org. link</td>
+                                <td colspan="100%"><a target="_blank" href="{{project.orglink}}">{{project.orglinktitle}}<div class="linkicon right"></div></a></td>
+                            </tr>
                         </table>
                     </div>
                 </td>
@@ -199,6 +203,10 @@
                                         <pre>{{project.costrisk}}</pre>
                                     </td>
                                 </tr>
+                                <tr ng-if="project.filters.showBcExternalLink">
+                                    <td>External Bus. Case link</td>
+                                    <td colspan="100%"><a target="_blank" href="{{project.bclink}}">{{project.bclinktitle}}<div class="linkicon right"></div></a></td>
+                                </tr>
                             </table>
                         </div>
                     </td>
@@ -232,14 +240,9 @@
                                 
                             </tr>
                             <tr ng-if="project.filters.showStatusExternalLink">
-                                    
-                                    <td>
-                                        External status document link
-                                    </td>
-                                    <td colspan="3">
-                                            <a target="_blank" href="{{editstatus.link}}">{{editstatus.linktitle}}<div class="linkicon right"></div></a>
-                                        </td>
-                                </tr>
+                                <td>External status document link</td>
+                                <td colspan="3"><a target="_blank" href="{{editstatus.link}}">{{editstatus.linktitle}}<div class="linkicon right"></div></a></td>
+                            </tr>
                             <tr ng-if="project.filters.showStatusFlags" class="header">
                                 <td colspan="4">Status flags</td>
                             </tr>
@@ -357,6 +360,10 @@
                                     </div>
                                 </td>
                             </tr>
+                            <tr ng-if="project.filters.showDelExternalLink">
+                                <td>External deliverable link</td>
+                                <td colspan="100%"><a target="_blank" href="{{project.dellink}}">{{project.dellinktitle}}<div class="linkicon right"></div></a></td>
+                            </tr>
                             <tr class="header">
                                 <td class="label l"><span ng-if="project.filters.showDeliverableWSJF">(WSJF)</span> Deliverable</td>
                                 <td ng-if="project.filters.showDeliverableGantt">2017</td>
@@ -402,6 +409,11 @@
                                     </div>
                                 </td>
                             </tr>
+                            <tr ng-if="project.filters.showDepExternalLink">
+                                <td>External dependency link</td>
+                                <td colspan="100%"><a target="_blank" href="{{project.deplink}}">{{project.deplinktitle}}<div class="linkicon right"></div></a></td>
+                            </tr>
+                                
                                         
                             <tr class="header">
                                 <td class="label l">Title</td>
@@ -449,6 +461,10 @@
                                     <canvas id="bar" height="250" width="790" class="chart chart-bar" chart-title="Ballance 2017" chart-options="finoptions" chart-data="findata" chart-labels="finlabels" chart-series="finseries"></canvas>                 
                                     
                                 </td>
+                            </tr>
+                            <tr ng-if="project.filters.showFinExternalLink">
+                                <td>External finance link</td>
+                                <td colspan="100%"><a target="_blank" href="{{project.finlink}}">{{project.finlinktitle}}<div class="linkicon right"></div></a></td>
                             </tr>
                                                                         
                             <tr class="header">
@@ -715,6 +731,10 @@
                                     </div>
                                 </td>
                             </tr>
+                            <tr ng-if="project.filters.showIsueExternalLink">
+                                <td>External Issues link</td>
+                                <td colspan="100%"><a target="_blank" href="{{project.isuelink}}">{{project.isuelinktitle}}<div class="linkicon right"></div></a></td>
+                            </tr>
                             <tr class="header">
                                 <td class="label l">Title</td>
                                 <td ng-if="project.filters.showIssueResponsible" class="label">Responsible</td>
@@ -776,6 +796,10 @@
                                         
                                     </div>
                                 </td>
+                            </tr>
+                            <tr ng-if="project.filters.showRiskExternalLink">
+                                <td>External Risks link</td>
+                                <td colspan="100%"><a target="_blank" href="{{project.risklink}}">{{project.risklinktitle}}<div class="linkicon right"></div></a></td>
                             </tr>
                             <tr ng-if="project.filters.showRiskGraph">
                                     <td colspan="10">

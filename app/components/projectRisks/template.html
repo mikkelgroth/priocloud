@@ -274,8 +274,14 @@
                     <td ng-click="beginEditRisk(risk)" class="texttop">&nbsp;{{risk.audience}}<br/>&nbsp;{{risk.acc.name}}</td>
                     <td><input type="checkbox" ng-model="risk.showInReport" ng-change="saveNow()"></td>
                 </tr>
-
-                
+                <tr class="header"><td colspan="8">Link Risk external doc.</td></tr>
+                <tr>
+                    <td>Title: <input ng-model="project.risklinktitle" ng-change="saveNow()" ng-disabled="!user.changeContent"/></td>    
+                    <td colspan="2">URL: <input ng-model="project.risklink" ng-change="saveNow()" ng-disabled="!user.changeContent"/></td>
+                    <td colspan="2">Show in report <input type="checkbox" ng-model="project.filters.showRiskExternalLink" ng-change="saveNow()"></td>
+                    <td colspan="3"><a target="_blank" href="{{project.risklink}}">{{project.risklinktitle}}<div class="linkicon right"></div></a></td>
+                </tr>
+       
                 <tr class="header" ng-if="riskpmsearch.type=='' || riskpmsearch.type=='Issue'|| riskpmsearch.type==null">
                     <td class="label">Issues</td>
                     <td class="label">Impact</td>
@@ -301,7 +307,15 @@
                     <td ng-click="beginEditRisk(risk)" class="texttop">&nbsp;{{risk.audience}}<br/>&nbsp;{{risk.acc.name}}</td>
                     <td><input type="checkbox" ng-model="risk.showInReport" ng-change="saveNow()" ng-disabled="!user.changeContent"></td>
                 </tr>
+                <tr class="header"><td colspan="8">Link Issue external doc.</td></tr>
+                <tr>
+                    <td>Title: <input ng-model="project.isuelinktitle" ng-change="saveNow()" ng-disabled="!user.changeContent"/></td>    
+                    <td colspan="2">URL: <input ng-model="project.isuelink" ng-change="saveNow()" ng-disabled="!user.changeContent"/></td>
+                    <td colspan="2">Show in report <input type="checkbox" ng-model="project.filters.showIsueExternalLink" ng-change="saveNow()"></td>
+                    <td colspan="3"><a target="_blank" href="{{project.isuelink}}">{{project.isuelinktitle}}<div class="linkicon right"></div></a></td>
+                </tr>
             </table>
         </div>
+        
     </div>
 </div>

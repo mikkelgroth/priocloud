@@ -234,5 +234,15 @@
                 </tr>
             </table>
         </div>
+        <h3>&nbsp;</h3>
+        <table class="smaller">
+            <tr class="header"><td colspan="4">Link external doc.</td></tr>
+            <tr>
+                <td>Title: <input ng-model="project.dellinktitle" ng-change="saveNowQuick()" ng-disabled="!user.changeContent"/></td>    
+                <td>URL: <input ng-model="project.dellink" ng-change="saveNowQuick()" ng-disabled="!user.changeContent"/></td>
+                <td>Show in report <input type="checkbox" ng-model="project.filters.showDelExternalLink" ng-change="saveNowQuick()"></td>
+                <td><a target="_blank" href="{{project.dellink}}">{{project.dellinktitle}}<div class="linkicon right"></div></a></td>
+            </tr>
+        </table>
     </div>
 </div>

@@ -126,6 +126,15 @@
                         </div>
                     </td>
                 </tr>
+                
+                <tr class="header"><td colspan="4">Link external Organization document</td></tr>
+                <tr>
+                    <td>Title: <input ng-model="project.orglinktitle" ng-change="saveNow()" ng-disabled="!user.changeContent"/></td>    
+                    <td>URL: <input ng-model="project.orglink" ng-change="saveNow()" ng-disabled="!user.changeContent"/></td>
+                    <td>Show in report <input type="checkbox" ng-model="project.filters.showOrgExternalLink" ng-change="saveNow()"></td>
+                    <td><a target="_blank" href="{{project.orglink}}">{{project.orglinktitle}}<div class="linkicon right"></div></a></td>
+                </tr>
+        
                 <tr>
                     <td class="l header" colspan="4">Brief business case</td>
                 </tr>
@@ -168,6 +177,13 @@
                             <textarea ng-model="project.benefitplan" maxlength="300" ng-change="saveNow()" id="detailreal" placeholder="When in time will you asses the results of this project and evaluate its bennefits." ng-disabled="!user.changeContent"></textarea>
                         </div>
                     </td>
+                </tr>
+                <tr class="header"><td colspan="4">Link external Business Case document</td></tr>
+                <tr>
+                    <td>Title: <input ng-model="project.bclinktitle" ng-change="saveNow()" ng-disabled="!user.changeContent"/></td>    
+                    <td>URL: <input ng-model="project.bclink" ng-change="saveNow()" ng-disabled="!user.changeContent"/></td>
+                    <td>Show in report <input type="checkbox" ng-model="project.filters.showBcExternalLink" ng-change="saveNow()"></td>
+                    <td><a target="_blank" href="{{project.bclink}}">{{project.bclinktitle}}<div class="linkicon right"></div></a></td>
                 </tr>
             </table>
             <!--

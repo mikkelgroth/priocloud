@@ -71,6 +71,13 @@
                            
                         </td>
                     </tr>
+                    <tr class="header"><td colspan="4">Link external finance document</td></tr>
+                    <tr>
+                        <td>Title: <input ng-model="project.finlinktitle" ng-change="saveNow()" ng-disabled="!user.changeContent"/></td>    
+                        <td>URL: <input ng-model="project.finlink" ng-change="saveNow()" ng-disabled="!user.changeContent"/></td>
+                        <td>Show in report <input type="checkbox" ng-model="project.filters.showFinExternalLink" ng-change="saveNow()"></td>
+                        <td><a target="_blank" href="{{project.finlink}}">{{project.finlinktitle}}<div class="linkicon right"></div></a></td>
+                    </tr>
             </table>        
         <h3>Key project figures</h3>
         <table class="smaller smallinput">

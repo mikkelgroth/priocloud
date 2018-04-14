@@ -84,11 +84,8 @@
                     Title: <input ng-model="editstatus.linktitle" ng-change="saveNow(editstatus)" ng-disabled="!user.changeContent || !saveStatusEnabled"/>&nbsp;    
                     URL: <input ng-model="editstatus.link" ng-change="saveNow(editstatus)" ng-disabled="!user.changeContent || !saveStatusEnabled"/>&nbsp;
                     <input type="checkbox" ng-model="project.filters.showStatusExternalLink" ng-change="saveNow()"> Show in report
-                    <div class="right"><a target="_blank" href="{{editstatus.link}}">{{editstatus.linktitle}}<div class="linkicon right"></div></a></div>
-                    
+                    <div class="right"><a target="_blank" href="{{editstatus.link}}">{{editstatus.linktitle}}<div class="linkicon right"></div></a></div> 
                 </td>
-                
-                
             </tr>
         </table>
         <br/>

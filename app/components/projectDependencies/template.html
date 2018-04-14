@@ -163,8 +163,10 @@
                     ng-click="saveDeps(false)">save</button>
             </div>
         </h2>
+        
+            
         <div class="overview">
-            <table class="tablelist smaller" ng-if="project.milestones.length > 0">
+            <table class="tablelist smaller" ng-if="project.deps.length > 0">
                 <tr class="header">
                     <td>Title</td>
                     <td>2017</td>
@@ -187,5 +189,17 @@
                 </tr>
             </table>
         </div>
+        <h3>&nbsp;</h3>
+        <table class="smaller">
+            <tr class="header"><td colspan="4">Link external doc.</td></tr>
+            <tr>
+                <td>Title: <input ng-model="project.deplinktitle" ng-change="saveNowQuick()" ng-disabled="!user.changeContent"/></td>    
+                <td>URL: <input ng-model="project.deplink" ng-change="saveNowQuick()" ng-disabled="!user.changeContent"/></td>
+                <td>Show in report <input type="checkbox" ng-model="project.filters.showDepExternalLink" ng-change="saveNowQuick()"></td>
+                <td><a target="_blank" href="{{project.deplink}}">{{project.deplinktitle}}<div class="linkicon right"></div></a></td>
+            </tr>
+        </table>
+        
+    
     </div>
 </div>
