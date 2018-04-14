@@ -1,10 +1,13 @@
 <prio-project-menu prio-project-id="{{project._id.$oid}}" prio-project-title="{{project.title}}"></prio-project-menu>
-<button type="button" id="saveButton" save-this="$parent.hasChanged" class="Green"
+<button type="button" id="editButton" save-this="$parent.hasChanged" class="Green"
                 ng-if="user.changeContent && !project.showRelease"
                 ng-click="editProject(project)">edit project</button>
-<button type="button" id="saveButton" save-this="$parent.hasChanged" class="Red"
+<button type="button" id="releaseButton" save-this="$parent.hasChanged" class="Red"
                 ng-if="user.changeContent && project.showRelease"
                 ng-click="releaseProject(project)">release project</button>
+<button type="button" id="forcereleaseButton" save-this="$parent.hasChanged" class="Red"
+                ng-if="user.admin"
+                ng-click="releaseProject(project)">force release project</button>
 <button prio-class ng-click="showfilters=true"  ng-show="!showfilters">show filters</button><button prio-class ng-click="showfilters=false"  ng-show="showfilters">hide filters</button>
 <div ng-show="showfilters" class="right">
 <input type="checkbox" ng-model="project.filters.showDetails" ng-change="saveNow()"> Details,&nbsp;
