@@ -76,7 +76,7 @@ $scope.newPassword = function() {
                             alert('Login failure:\n\n' + data.message);
 
                         } else {
-movement(); //init when login is done
+                            movement(); //init when login is done
                             userService.authenticate(data);
                             $location.path('/');
                         }

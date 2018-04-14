@@ -14,6 +14,8 @@ angular
 
             $scope.milesearch=[];
             $scope.milesearch.resname=[];
+            companyService.loadCompany();
+            
             
             companyService.projects.subscribe(function (projects) {
 

@@ -77,6 +77,7 @@
                     <td>Project Manager</td>
                     <td>Business Unit</td>
                     <td>Project Owner</td>
+                    <td></td>
                 </tr>
                 <tr ng-repeat="project in projectList | multiFilter:search | orderBy:porderparam" ng-click="goToProject(project._id.$oid)" class="link">
                     <td class="{{project.lastStatus.status}}">
@@ -93,6 +94,10 @@
                     </td>
                     <td>
                         {{project.po.name}}
+                    </td>
+                    <td>
+                        <div ng-if="project.editUser == null" class="Green"></div>
+                        <div ng-if="project.editUser != null" class="Red"></div>
                     </td>
                 </tr>
             </table>

@@ -43,6 +43,22 @@ angular
             });
         };
 
+        _this.reloadCompany = function () {
+
+            loadCompanyBusinessUnitsAndProjects().then(function (data) {
+
+                data.projects.map(function (project) {
+
+                    return project;
+                });
+
+                _this.businessUnits.onNext(data.businessUnits);
+                _this.projects.onNext(data.projects);
+            });
+        };
+
+
+
         /**
          * SOCKET CONN for new project
          */
@@ -83,9 +99,12 @@ angular
         };
 
         _this.saveProject = function (project) {
-            _this.saveProjectName(project,"Unknown")
+            _this.saveProjectName(project,"Unknown", true)
         }
-        _this.saveProjectName = function (project, name) {
+        _this.saveProjectOnLoad = function (project) {
+            _this.saveProjectName(project,"Unknown", false)
+        }
+        _this.saveProjectName = function (project, name, showSaver) {
             
             // Set total on project 
             project.total = Math.round((
@@ -98,8 +117,10 @@ angular
             ) / 6);
             projecthaschanged=false;
             deleteThis=false;
-            project.lastchangeddate=new Date();
-            project.lastchangedby=name;
+            if(showSaver){
+                project.lastchangeddate=new Date();
+                project.lastchangedby=name;
+            }
             // Update project if it exists
             if (project._id) {
 

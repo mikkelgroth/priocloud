@@ -11,7 +11,14 @@ angular
             userService,
             companyService
         ) {
+            companyService.reloadCompany();
+            companyService
+                .company
+                .subscribe(function (company) {
 
+                    $scope.company = company;  
+
+                });
             companyService
                 .company
                 .subscribe(function (company) {

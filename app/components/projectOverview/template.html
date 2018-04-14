@@ -1,6 +1,11 @@
 <prio-project-menu prio-project-id="{{project._id.$oid}}" prio-project-title="{{project.title}}"></prio-project-menu>
-
-<button prio-class ng-click="showfilters=true"  ng-show="!showfilters">Show filters</button><button prio-class ng-click="showfilters=false"  ng-show="showfilters">Hide filters</button>
+<button type="button" id="saveButton" save-this="$parent.hasChanged" class="Green"
+                ng-if="user.changeContent && !project.showRelease"
+                ng-click="editProject(project)">edit project</button>
+<button type="button" id="saveButton" save-this="$parent.hasChanged" class="Red"
+                ng-if="user.changeContent && project.showRelease"
+                ng-click="releaseProject(project)">release project</button>
+<button prio-class ng-click="showfilters=true"  ng-show="!showfilters">show filters</button><button prio-class ng-click="showfilters=false"  ng-show="showfilters">hide filters</button>
 <div ng-show="showfilters" class="right">
 <input type="checkbox" ng-model="project.filters.showDetails" ng-change="saveNow()"> Details,&nbsp;
 <input type="checkbox" ng-model="project.filters.showBusinesscase" ng-change="saveNow()"> Business case,&nbsp;
@@ -9,20 +14,21 @@
 <input type="checkbox" ng-model="project.filters.showFinance" ng-change="saveNow()"> Finance,&nbsp;
  <input type="checkbox" ng-model="project.filters.showIssues" ng-change="saveNow()"> Issues,&nbsp;
  <input type="checkbox" ng-model="project.filters.showRisks" ng-change="saveNow()"> Risks,&nbsp;
- 
  <input type="checkbox" ng-model="project.filters.showDepend" ng-change="saveNow()"> Dependencies</br>
         <div class="right">
             <button type="button" id="saveButton" prio-class save-this="$parent.hasChanged"
-                ng-if="user.changeContent"
+                ng-if="user.changeContent && project.showRelease"
                 ng-click="saveProject(project)">save view</button>
+                
         </div>
 </div>
 
 <div id="project-overview" class="view">
     <div class="mainbox" id="overview">
         <h2 class="{{editstatus.status}}">
-            {{project.type}} {{project.title}}
+            {{project.type}} {{project.title}} 
         </h2>
+        <div ng-if="project.editUser != null">(Is under edit by {{project.editUser.name}})</div>
         <table class="noborder nopadding smaller gutter-top">
             <tr>
                 <td colspan="3">

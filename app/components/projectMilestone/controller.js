@@ -31,18 +31,12 @@ angular
                 .subscribe(function (project) {
 
                     $scope.project = project;
-                    if( ($scope.project.po !=null && $scope.user.email == $scope.project.po.email) || 
-                        ($scope.project.pm !=null && $scope.user.email == $scope.project.pm.email) || 
-                        ($scope.project.altpo !=null && $scope.user.email == $scope.project.altpo.email) || 
-                        ($scope.project.altpm !=null && $scope.user.email == $scope.project.altpm.email) || 
-                        $scope.user.isOwner || 
-                        
-                        $scope.user.admin)
-                    {
+                    if(($scope.project.editUser != null && $scope.project.editUser.email == $scope.user.email) ){                       
                         $scope.user.changeContent=true;
-                    }else{
+                    } else {
                         $scope.user.changeContent=false;
                     }
+
                     showMilestone();
                 });
 

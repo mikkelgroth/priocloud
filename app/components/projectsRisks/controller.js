@@ -13,6 +13,7 @@ angular
         ) {
             $scope.risksearch=[];
             $scope.risksearch.acname=[];
+            companyService.loadCompany();
             
             companyService
                 .company

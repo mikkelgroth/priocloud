@@ -14,6 +14,8 @@
 
             $scope.depsearch=[];
             $scope.depsearch.resname=[];
+            companyService.loadCompany();
+            
             
             companyService.projects.subscribe(function (projects) {
 

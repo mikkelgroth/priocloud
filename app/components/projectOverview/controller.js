@@ -20,19 +20,29 @@ angular
                 .getProject(projectId)
                 .subscribe(function (project) {
 
+                    
                     $scope.project = project;
-                    if( ($scope.project.po !=null && $scope.user.email == $scope.project.po.email) || 
-                        ($scope.project.pm !=null && $scope.user.email == $scope.project.pm.email) || 
-                        ($scope.project.altpo !=null && $scope.user.email == $scope.project.altpo.email) || 
-                        ($scope.project.altpm !=null && $scope.user.email == $scope.project.altpm.email) || 
-                        $scope.user.isOwner || 
+
+                    if(($scope.project.pm !=null && $scope.user.email == $scope.project.pm.email) ||
+                    ($scope.project.po !=null && $scope.user.email == $scope.project.po.email) || 
+                    ($scope.project.altpo !=null && $scope.user.email == $scope.project.altpo.email) || 
+                    ($scope.project.altpm !=null && $scope.user.email == $scope.project.altpm.email) || 
+                    $scope.user.isOwner || $scope.user.admin){ 
                         
-                        $scope.user.admin)
-                    {
-                        $scope.user.changeContent=true;
-                    }else{
+                        if($scope.project.editUser == null){
+                            $scope.project.showRelease = false;
+                            $scope.user.changeContent=true;
+                        }else if($scope.project.editUser != null && $scope.project.editUser.email == $scope.user.email){
+                            $scope.project.showRelease = true;
+                            $scope.user.changeContent=true;
+                        }else{
+                            $scope.project.showRelease = false;
+                            $scope.user.changeContent=false;
+                        }
+                    } else {
                         $scope.user.changeContent=false;
                     }
+                    
 
                     if ($scope.project.statuses.length > 0) {
 
@@ -53,6 +63,18 @@ angular
                 
                 companyService.saveProjectName(project, $scope.user.name);
                 $scope.hasChanged=false;
+            };
+            $scope.editProject = function (project) {
+                project.editUser = $scope.user;
+                $scope.project.showRelease = true;
+                companyService.saveProjectOnLoad(project);
+                $scope.hasChanged=false;
+            };
+            $scope.releaseProject = function (project) {
+                project.editUser = null;
+                $scope.project.showRelease = false;
+                companyService.saveProjectOnLoad(project);
+                //$location.path('/');
             };
 
             $scope.saveNow = function (project) {
