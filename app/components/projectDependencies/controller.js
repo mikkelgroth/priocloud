@@ -77,7 +77,7 @@ angular
 
 
             $scope.saveDeps = function (open) {
-                companyService.saveProjectName($scope.project, $scope.user.name);
+                companyService.saveProjectName($scope.project, $scope.user, true);
                 $scope.hasChanged=false;
                 $scope.deleteThis=false;
                 

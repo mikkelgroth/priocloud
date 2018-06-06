@@ -58,7 +58,8 @@ angular
                 });
 
             $scope.saveProject = function (project) {
-                companyService.saveProjectName(project, $scope.user.name);
+                
+                companyService.saveProjectName(project, $scope.user, true);
                 $scope.hasChanged=false;
             };
 

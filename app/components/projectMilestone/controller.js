@@ -83,7 +83,7 @@ angular
 
 
             $scope.saveMilestones = function (open) {
-                companyService.saveProjectName($scope.project, $scope.user.name);
+                companyService.saveProjectName(project, $scope.user, true);
                 $scope.hasChanged=false;
                 $scope.deleteThis=false;
                 

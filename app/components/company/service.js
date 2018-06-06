@@ -98,13 +98,13 @@ angular
                 });
         };
 
-        _this.saveProject = function (project) {
-            _this.saveProjectName(project,"Unknown", true)
+        _this.saveProject = function (project, user) {
+            _this.saveProjectName(project,user, true)
         }
         _this.saveProjectOnLoad = function (project) {
-            _this.saveProjectName(project,"Unknown", false)
+            _this.saveProjectName(project,null, false)
         }
-        _this.saveProjectName = function (project, name, showSaver) {
+        _this.saveProjectName = function (project, user, showSaver) {
             
             // Set total on project 
             project.total = Math.round((
@@ -118,8 +118,18 @@ angular
             projecthaschanged=false;
             deleteThis=false;
             if(showSaver){
+                if((project.pm !=null && user.email == project.pm.email) || 
+                    (project.altpm !=null && user.email == project.altpm.email)){ 
+                    project.lastchangeddatepm=new Date();
+                    project.lastchangedbypm=user.name;
+                }
+                if((project.po !=null && user.email == project.po.email) || 
+                    (project.altpo !=null && user.email == project.altpo.email)){ 
+                    project.lastchangeddatepo=new Date();
+                    project.lastchangedbypo=user.name;
+                }
                 project.lastchangeddate=new Date();
-                project.lastchangedby=name;
+                project.lastchangedby=user.name;
             }
             // Update project if it exists
             if (project._id) {

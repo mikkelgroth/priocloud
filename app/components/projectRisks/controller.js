@@ -137,7 +137,8 @@ angular
                     $scope.project.risks.push(risk);
                 }
                 
-                companyService.saveProjectName($scope.project, $scope.user.name);
+                
+                companyService.saveProjectName($scope.project, $scope.user, true);
                 $scope.deleteThis=false;
                 $scope.hasChanged=false;
             };
@@ -146,7 +147,8 @@ angular
                 if($scope.project.risks==null){
                     $scope.project.risks=[];
                 }
-                companyService.saveProjectName($scope.project, $scope.user.name);
+                companyService.saveProjectName($scope.project, $scope.user, true);
+                
                 $scope.hasChanged=false;
             };
                 

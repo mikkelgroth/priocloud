@@ -185,6 +185,8 @@ angular
                 //$scope.logProject(true, "Status saved");
 
                 companyService.saveProjectName($scope.project, $scope.user.name);
+                companyService.saveProjectName($scope.project, $scope.user, true);
+                
                 $scope.hasChanged=false;
 
             }
