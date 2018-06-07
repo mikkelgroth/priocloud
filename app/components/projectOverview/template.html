@@ -6,7 +6,7 @@
                 ng-if="user.changeContent && project.showRelease"
                 ng-click="releaseProject(project)">release project</button>
 <button type="button" id="forcereleaseButton" save-this="$parent.hasChanged" class="Red"
-                ng-if="user.admin"
+                ng-if="user.admin || user.subadmin"
                 ng-click="releaseProject(project)">force release project</button>
 <button prio-class ng-click="showfilters=true"  ng-show="!showfilters">show filters</button><button prio-class ng-click="showfilters=false"  ng-show="showfilters">hide filters</button>
 <div ng-show="showfilters" class="right">

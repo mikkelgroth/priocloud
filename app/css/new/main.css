@@ -376,35 +376,36 @@ h2.Green:before {
 }
 .rad0:before{
 	width: 0px;
-	height: 0px;	
+	height: 0px;
+	visibility: hidden;	
 }
 .rad1:before{
+	width: 8px;
+	height: 8px;	
+}
+.rad2:before{
 	width: 10px;
 	height: 10px;	
 }
-.rad2:before{
-	width: 14px;
-	height: 14px;	
-}
 .rad3:before{
-	width: 16px;
-	height: 16px;	
+	width: 15px;
+	height: 15px;	
 }
 .rad4:before{
-	width: 18px;
-	height: 18px;	
-}
-.rad5:before{
 	width: 20px;
 	height: 20px;	
 }
+.rad5:before{
+	width: 30px;
+	height: 30px;	
+}
 .rad6:before{
-	width: 22px;
-	height: 22px;	
+	width: 40px;
+	height: 40px;	
 }
 .rad7:before{
-	width: 24px;
-	height: 24px;	
+	width: 60px;
+	height: 60px;
 }
 
 
