@@ -44,7 +44,7 @@
                                 <tr>
                                     <td class="header">PO feedback</td>
                                     <td>
-                                        <select ng-model="editstatus.apo" ng-change="saveNow(editstatus)" ng-disabled="!editstatus.active || (user.email!=project.po.email && user.email!=project.altpo.email && !user.isOwner && !user.admin)">
+                                        <select ng-model="editstatus.apo" ng-change="saveNow(editstatus)" ng-disabled="!user.changeContent || !project.showRelease || !editstatus.active || (user.email!=project.po.email && user.email!=project.altpo.email && !user.isOwner && !user.admin)">
                                                 <option value="Not evaluated">Not evaluated</option>
                                                 <option value="Please amend">Please amend</option>
                                                 <option value="Approved">Approved</option>
@@ -53,7 +53,7 @@
                                     </td>
                                     <td class="header">Status state</td>
                                     <td>
-                                        <select ng-model="editstatus.statusstate" ng-change="saveNow(editstatus)"  ng-disabled="!editstatus.active || (user.email!=project.po.email && user.email!=project.altpo.email && !user.isOwner && !user.admin)">
+                                        <select ng-model="editstatus.statusstate" ng-change="saveNow(editstatus)"  ng-disabled="!user.changeContent || !project.showRelease || !editstatus.active || (user.email!=project.po.email && user.email!=project.altpo.email && !user.isOwner && !user.admin)">
                                                 <option value="Draft">Draft</option>
                                                 <option value="Ready for PM">Ready for PM</option>
                                                 <option value="Ready for PO">Ready for PO</option>
@@ -65,7 +65,7 @@
                                 <tr>
                                     <td prio-class prio-cs-render="editstatus.cs" class="header">Project feedback</td>
                                     <td>
-                                        <select ng-model="editstatus.cs" ng-change="saveNow(editstatus)" ng-disabled="!editstatus.active || (user.email!=project.po.email && user.email!=project.altpo.email && !user.isOwner && !user.admin)">
+                                        <select ng-model="editstatus.cs" ng-change="saveNow(editstatus)" ng-disabled="!user.changeContent || !project.showRelease || !editstatus.active || (user.email!=project.po.email && user.email!=project.altpo.email && !user.isOwner && !user.admin)">
                                             <option value="1">1. Total breakdown</option>
                                             <option value="2">2. No value</option>
                                             <option value="3">3. Lack of trust</option>
@@ -79,7 +79,7 @@
                                     </td>
                                     <td prio-class prio-cs-render="editstatus.productcs" class="header">Product feedback</td>
                                     <td>
-                                        <select ng-model="editstatus.productcs" ng-change="saveNow(editstatus)" ng-disabled="!editstatus.active || (user.email!=project.po.email && user.email!=project.altpo.email && !user.isOwner && !user.admin)">
+                                        <select ng-model="editstatus.productcs" ng-change="saveNow(editstatus)" ng-disabled="!user.changeContent || !project.showRelease || !editstatus.active || (user.email!=project.po.email && user.email!=project.altpo.email && !user.isOwner && !user.admin)">
                                             <option value="1">1. Total breakdown</option>
                                             <option value="2">2. No value</option>
                                             <option value="3">3. Lack of trust</option>
@@ -95,7 +95,7 @@
                                 <tr ng-if="(user.email == project.po.email || 
                                                 user.email == project.altpo.email || 
                                                 user.isOwner || 
-                                                user.admin) && (editstatus.active == null || editstatus.active)">
+                                                user.admin) && (editstatus.active == null || editstatus.active) && user.changeContent && project.showRelease">
                                     <td colspan="4">
                                         <div class="right">
                                             
@@ -104,7 +104,7 @@
                                             ng-if="(user.email == project.po.email || 
                                                 user.email == project.altpo.email || 
                                                 user.isOwner || 
-                                                user.admin) && (editstatus.active == null || editstatus.active)"
+                                                user.admin) && (editstatus.active == null || editstatus.active && user.changeContent && project.showRelease)"
                                             ng-click="saveStatus(editstatus)">save PO feedback</button>
         
                                         </div>
