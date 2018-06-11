@@ -271,7 +271,7 @@ angular
 
 
 
-                companyService.saveProject(project);
+                companyService.saveProject(project, $scope.user);
             };
 
             $scope.editProject = function (project) {
