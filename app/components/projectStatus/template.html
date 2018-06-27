@@ -386,7 +386,7 @@
         <div class="overview">
             <table class="tablelist smaller" ng-if="project.statuses.length > 0">
                 <tr class="header">
-                    <td>Title<br/>Audience</td>
+                    <td>Title</td>
                     <td>Status state<br/>PO feedback</td>
                     <td>Project feedback</td>
                     <td>Product feedback</td>
@@ -395,8 +395,7 @@
                 <tr ng-repeat="status in project.statuses | orderBy: 'date' : true" ng-click="viewStatus(status)" class="link">
                     <td class="{{status.status}}">
                         &nbsp;{{status.title}}
-                        <br/>
-                        &nbsp;{{status.audience}}
+                        
                     </td>
                     <td ng-if="project.statuses.indexOf(status) == project.statuses.length-1" class="Blue">
                         &nbsp;{{status.statusstate}}

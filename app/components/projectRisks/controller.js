@@ -77,7 +77,7 @@ angular
                 $scope.editrisk.total = 1;
                 $scope.editrisk.response = 'Accept';
                 $scope.editrisk.acc = 'TBD';
-                $scope.editrisk.audience = 'Project';
+                $scope.editrisk.audience = 'Internal';
                 $scope.editrisk.status = 'Green';
                 $scope.editrisk.statusValue = '1';
                 $scope.editrisk.recCompValue = '1';

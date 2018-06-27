@@ -30,7 +30,7 @@
                 <td class="header">Audience</td>
                 <td>
                     <select ng-model="editdep.audience" ng-change="saveNow(editdep)" ng-disabled="!user.changeContent">
-                        <option value="Project">Project</option>
+                        <option value="Internal">Internal</option>
                         <option value="Portfolio">Portfolio</option>
                         <option value="Company">Company</option>
                     </select>
@@ -115,7 +115,7 @@
                     </select>
                 </td>
                 
-                <td class="header">Source</td>
+                <td class="header">BU Source</td>
                 <td>
                     <select ng-change="saveNow(editdep)" ng-model="editdep.bu" id="depbu" ng-options="bu.name for bu in bus | orderBy:'name' track by bu.name" ng-disabled="!user.changeContent"></select>
                 </td>

@@ -47,7 +47,7 @@ angular
 
                 /** Project Details  */
                 project.state = 'Proposed';
-                project.audience = 'Project';
+                project.audience = 'Internal';
                 project.support = project.bu.name;
 
                 /** Project Finance  */
@@ -188,7 +188,7 @@ angular
                 project.milestones[0].enddate = end.toISOString();
                 project.milestones[0].status = 'Green';
                 project.milestones[0].state = 'Target';
-                project.milestones[0].audience = 'Project';
+                project.milestones[0].audience = 'Internal';
                 project.milestones[0].acountable = project.po.name;
                 project.milestones[0].responsible = project.pm.name;
                 project.milestones[0].title = project.title + 'Project';
@@ -212,7 +212,7 @@ angular
                 project.risks[0].total = 1;
                 project.risks[0].response = 'Accept';
                 project.risks[0].acc = 'TBD';
-                project.risks[0].audience = 'Project';
+                project.risks[0].audience = 'Internal';
                 project.risks[0].status = 'Green';
                 project.risks[0].state = 'New';
 
@@ -230,7 +230,7 @@ angular
                 project.risks[1].total = 1;
                 project.risks[1].response = 'Accept';
                 project.risks[1].acc = 'TBD';
-                project.risks[1].audience = 'Project';
+                project.risks[1].audience = 'Internal';
                 project.risks[1].status = 'Green';
                 project.risks[1].state = 'New';
 

@@ -38,7 +38,7 @@
                             <select multiple="multiple" ng-multiple="true" ng-model="depsearch.acname" ng-options="u.name as u.name for u in users | filter: {source: true} | orderBy:'name'"></select>
                             <select multiple="multiple" ng-multiple="true" ng-model="depsearch.resname" ng-options="u.name as u.name for u in users | filter: {source: true} | orderBy:'name'" ></select>
                             <select multiple="multiple" ng-multiple="true" ng-model="depsearch.audience" ng-init="depsearch.audience=['Company', 'Portfolio']">
-                                <option value="Project">Project</option>
+                                <option value="Internal">Internal</option>
                                 <option value="Portfolio">Portfolio</option>
                                 <option value="Company">Company</option>
                             </select>

@@ -138,7 +138,7 @@ angular
                 $scope.editmile.state = 'Target';
                 $scope.editmile.type = 'Milestone';
                 $scope.editmile.showInReport = true;
-                $scope.editmile.audience = 'Project';
+                $scope.editmile.audience = 'Internal';
                 $scope.editmile.acountable = $scope.user.name;
                 $scope.editmile.responsible = $scope.user.name;
                 $scope.editmile.bena = '1';

@@ -127,7 +127,7 @@ angular
                 $scope.editdep.agreement = 'None';
                 $scope.editdep.names = 'TBD';
                 $scope.editdep.showInReport = true;
-                $scope.editdep.audience = 'Project';
+                $scope.editdep.audience = 'Internal';
                 $scope.editdep.requester = $scope.user.name;
                 $scope.editdep.resowner = $scope.user.name;
                 $scope.editdep.quantum = 'Minor tasks';
