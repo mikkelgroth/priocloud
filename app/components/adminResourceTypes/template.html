@@ -2,6 +2,72 @@
 
 <div id="linkdiv5" class="view">
     <div class="mainbox">
+
+            <h2>New resource type</h2>
+            <div class="overview">
+                <table class="smaller gutter-top">
+                    <tr>
+                        <td class="header">Resource type name</td>
+                        <td><input ng-model="newtype.name" /><button ng-click="addType(newtype)" ng-if="user.admin" class="right">create type</button></td>
+                    </tr>
+                    <tr>
+                        <td class="header">Short handle</td>
+                        <td><input ng-model="newtype.short" maxlength="3"/></td>
+                    </tr>
+                    <tr>
+                        <td class="header">BU owner</td>    
+                        <td>
+                            <select ng-model="newtype.bu">
+                                    <select ng-model="newtype.bu"  ng-options="bu.name for bu in bus | orderBy:'name' track by bu.name"></select>
+                            </select>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            
+            <h2>Edit type</h2>
+            <div class="overview">
+                    <table class="smaller gutter-top">
+                        <tr>
+                            <td class="header">Resource type name</td>
+                            <td><input ng-model="edittype.name" /><button ng-click="saveTypes()" ng-if="user.admin" class="right">save type</button></td>
+                        </tr>
+                        <tr>
+                            <td class="header">Short handle</td>
+                            <td><input ng-model="edittype.short" maxlength="3"/></td>
+                        </tr>
+                        <tr>
+                            <td class="header">BU owner</td>    
+                            <td>
+                                    <select ng-model="edittype.bu"  ng-options="bu.name for bu in bus | orderBy:'name' track by bu.name"></select>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+
+            <h2>Resource types</h2>
+            <div class="overview">
+                <table ng-if="company.resourceTypes.length > 0" class="tablelist smaller">
+                    <tr class="header">
+                        <td class="header">Resource types</td>
+                        <td class="header">Short</td>
+                        <td class="header">BU</td>
+                        <td class="header">Edit</td>
+                        <td class="header">Delete</td>
+                    </tr>
+                    <tr ng-repeat="type in company.resourceTypes">
+                        <td >{{type.name}}</td>
+                        <td >{{type.short}}</td>
+                        <td >{{type.bu.name}}</td>
+                        <td><button ng-click="editType(type)" ng-if="user.admin">edit type</button></td>
+                        <td><button ng-click="delType(type)" ng-if="user.admin">delete type</button></td>
+                    </tr>
+                </table>
+            </div>
+
+<!--
+
+
         <h2>
             Ressource types
             <div class="right"><button type="button" ng-click="saveCompany(company)" ng-if="user.admin">Save</button></div>
@@ -83,5 +149,6 @@
             <td><input ng-model="company.res14lableshort" maxlength="3"/></td>
             </tr>
         </table>
+    -->
     </div>
 </div>

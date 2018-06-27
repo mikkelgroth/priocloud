@@ -16,7 +16,13 @@
             $scope.depsearch.resname=[];
             companyService.loadCompany();
             
-            
+            companyService
+                .company
+                .subscribe(function (company) {
+
+                    $scope.company = company;
+                    
+                });
             companyService.projects.subscribe(function (projects) {
 
                 $scope.projects = projects;

@@ -115,9 +115,9 @@
                     </select>
                 </td>
                 
-                <td class="header">BU Source</td>
+                <td class="header">Resource type</td>
                 <td>
-                    <select ng-change="saveNow(editdep)" ng-model="editdep.bu" id="depbu" ng-options="bu.name for bu in bus | orderBy:'name' track by bu.name" ng-disabled="!user.changeContent"></select>
+                    <select ng-change="saveNow(editdep)" ng-model="editdep.bu" id="depbu" ng-options="bu.name for bu in company.resourceTypes | orderBy:'name' track by bu.name" ng-disabled="!user.changeContent"></select>
                 </td>
                 
             </tr>
@@ -172,7 +172,7 @@
                     <td>2017</td>
                     <td>2018</td>
                     <td>2019</td>
-                    <td>Source</td>
+                    <td>Type</td>
                     <td>Owner</td>
                     <td>State</td>
                     <td>Report</td>
