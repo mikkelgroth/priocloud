@@ -87,7 +87,8 @@ angular
                 $scope.editstatus.cs = "4";
                 $scope.editstatus.productcs = "4";
             
-                $scope.project.statuses.push({});
+                $scope.project.statuses.push($scope.editstatus);
+                companyService.saveProjectName($scope.project, $scope.user.name);
             };
 
             $scope.newCloneStatus = function (status) {
@@ -104,6 +105,7 @@ angular
                 $scope.project.statuses.push($scope.editstatus);
                 $scope.showStatusForm = false;
                 $scope.deleteThis = false;
+                companyService.saveProjectName($scope.project, $scope.user.name);
             };
 
             $scope.viewStatus = function (status) {
