@@ -170,8 +170,8 @@ if($scope.project!=null && $scope.project.risks!=null){
             
             if((risk.showInReport && risk.type=='Risk' && risk.state!='Closed') && 
                 (risk.audience!='Confidential' || (risk.audience=='Confidential' && 
-                (user.email==project.po.email || user.email==project.pm.email || user.isOwner ||  user.admin) && 
-                project.showconfrisk=='true'))){
+                ($scope.user.email==$scope.project.po.email || $scope.user.email==$scope.project.pm.email || $scope.user.isOwner ||  $scope.user.admin) && 
+                $scope.project.showconfrisk=='true'))){
                     $scope.riskseries.push(risk.title);
                     $scope.riskdata.push([{
                         x: parseInt(risk.prob)*50+parseInt(risk.impact)*10+parseInt(risk.recCompValue)+statusvalue,
