@@ -168,6 +168,7 @@
                         dep['projecttitle'] = project.title;
                         dep['buname'] = project.bu.name;
                         dep['depbuname'] = (dep != null && dep.bu != null && dep.bu.name != null)?dep.bu.name:"UNKNOWN";
+                        dep['depbuowner'] = (dep != null && dep.bu != null && dep.bu.bu != null && dep.bu.bu.name != null)?dep.bu.bu.name:"UNKNOWN";
                         dep['support'] = project.support;
                         dep['pstate'] = project.state;
                         dep['ptype'] = project.type;

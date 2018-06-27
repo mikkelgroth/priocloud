@@ -32,11 +32,12 @@
                 <h3 ng-show="showfilters">Dependencies filters</h3>
                 <div class="filter-order-container" ng-show="showfilters">
                         <div class="label" style="height:120px;">
-                            Filter by:<br/>Requester<br/>Res. owner<br/>Type<br/>Audience
+                            Filter by:<br/>Requester<br/>Res. owner<br/>BU Area<br/>Type<br/>Audience
                         </div>
                         <div class="field multiple-select">
                             <select multiple="multiple" ng-multiple="true" ng-model="depsearch.acname" ng-options="u.name as u.name for u in users | filter: {source: true} | orderBy:'name'"></select>
                             <select multiple="multiple" ng-multiple="true" ng-model="depsearch.resname" ng-options="u.name as u.name for u in users | filter: {source: true} | orderBy:'name'" ></select>
+                            <select multiple="multiple" ng-multiple="true" ng-model="depsearch.depbuowner" ng-options="bu.name as bu.name for bu in bus | orderBy: 'name'" ></select>
                             <select multiple="multiple" ng-multiple="true" ng-model="depsearch.depbuname" ng-options="t.name as t.name for t in company.resourceTypes | orderBy:'name'" ></select>
                             <select multiple="multiple" ng-multiple="true" ng-model="depsearch.audience" ng-init="depsearch.audience=['Company', 'Portfolio']">
                                 <option value="Internal">Internal</option>
