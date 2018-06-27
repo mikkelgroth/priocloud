@@ -41,6 +41,8 @@ angular
             $scope.saveTypes = function () {
                 
                 companyService.saveCompany($scope.company);
+                $scope.newtype={};
+                $scope.edittype={};
                 
             };
 
@@ -51,17 +53,21 @@ angular
                 $scope.company.resourceTypes.push(newtype);
                 companyService.saveCompany($scope.company);
 
-                $scope.newtype={};   
+                $scope.newtype={}; 
+                $scope.edittype={};  
             };
             
             $scope.editType = function (type) {
                 $scope.edittype=type;
+                $scope.newtype={};
                 
             };
 
             $scope.delType = function (type) {
                 $scope.company.resourceTypes.splice($scope.company.resourceTypes.indexOf(status), 1);
                 companyService.saveCompany($scope.company);
+                $scope.newtype={}; 
+                $scope.edittype={};
                 
             };
         }

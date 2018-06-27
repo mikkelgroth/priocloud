@@ -15,11 +15,9 @@
                         <td><input ng-model="newtype.short" maxlength="3"/></td>
                     </tr>
                     <tr>
-                        <td class="header">BU owner</td>    
+                        <td class="header">BU</td>    
                         <td>
-                            <select ng-model="newtype.bu">
-                                    <select ng-model="newtype.bu"  ng-options="bu.name for bu in bus | orderBy:'name' track by bu.name"></select>
-                            </select>
+                            <select ng-model="newtype.bu"  ng-options="bu.name for bu in bus | orderBy:'name' track by bu.name"></select>
                         </td>
                     </tr>
                 </table>
@@ -37,7 +35,7 @@
                             <td><input ng-model="edittype.short" maxlength="3"/></td>
                         </tr>
                         <tr>
-                            <td class="header">BU owner</td>    
+                            <td class="header">BU</td>    
                             <td>
                                     <select ng-model="edittype.bu"  ng-options="bu.name for bu in bus | orderBy:'name' track by bu.name"></select>
                             </td>
