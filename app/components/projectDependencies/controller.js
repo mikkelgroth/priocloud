@@ -130,6 +130,8 @@ angular
                 $scope.editdep.audience = 'Internal';
                 $scope.editdep.requester = $scope.user.name;
                 $scope.editdep.resowner = $scope.user.name;
+                
+                $scope.editdep.priority = 'TBD';
                 $scope.editdep.quantum = 'Minor tasks';
                 $scope.editdep.delmap = 'None';
                 $scope.editdep.description = 'None';

@@ -95,14 +95,14 @@
                         <td>2018</td>
                         <td>2019</td>
                         <td>Requester<br>Owner</td>
-                        <td>Type<br>Description</td>
+                        <td>Type<br>Area</td>
                     </tr>
                     <tr ng-repeat="dep in depList | multiFilter:depsearch | orderBy:orderdate" ng-click="goToDepInProject(dep._id, dep.projectid)"
                         class="link">
                         <td class="{{dep.status}}"><b>{{dep.title}}</b><br>{{dep.projecttitle}}</td>
                         <td class="bar xl" ng-style="depbarRender(dep)" colspan="3">{{dep.quantum}} - {{dep.agreement}}</td>
                         <td>{{dep.acname}}<br>{{dep.resname}}</td>
-                        <td>{{dep.depbuname}}<br>{{dep.description}}</td>
+                        <td>{{dep.depbuname}}<br>{{dep.depbuowner}}</td>
                     </tr>
                 </table>
             </div>
