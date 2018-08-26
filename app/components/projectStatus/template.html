@@ -8,7 +8,7 @@
                 <!-- TODO: make directive for ng-if based on user.email == project.something -->
                 <button type="button" class="Red"
                 ng-click="removeStatus(editstatus)" 
-                ng-show="$parent.deleteThis"
+                ng-show="$parent.deleteThis && $parent.deleteLast"
                 ng-if="user.admin || (user.changeContent && editstatus.apo != 'Approved')">confirm delete!!!</button>
                 
                 <button type="button" id="saveButton" prio-class save-this="$parent.hasChanged"
@@ -24,7 +24,7 @@
 
                 <button type="button" 
                     ng-click="delete()" 
-                    ng-show="!$parent.deleteThis"
+                    ng-show="!$parent.deleteThis && $parent.deleteLast"
                     ng-if="user.admin || (user.changeContent && editstatus.apo != 'Approved')">delete</button>
 
             </div>

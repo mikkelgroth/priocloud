@@ -117,6 +117,12 @@ angular
                 $scope.saveStatusEnabled = last && $scope.editstatus.statusstate != "Final";
                 $scope.showStatusForm = true;
                 $scope.deleteThis = false;
+
+                $scope.deleteLast = false;
+                if($scope.project.statuses.length > 1){
+                    $scope.deleteLast = true;
+                }
+
             };
 
             
@@ -127,9 +133,12 @@ angular
 
             $scope.removeStatus = function (status) {
 
+                if($scope.project.statuses.length > 1){
+
                 $scope.project.statuses.splice($scope.project.statuses.indexOf(status), 1);
 
                 companyService.saveProjectName($scope.project, $scope.user.name);
+                }
 
                 $scope.showStatusForm = false;
                 $scope.deleteThis = false;
