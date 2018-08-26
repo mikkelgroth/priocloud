@@ -32,7 +32,7 @@
                 <h3 ng-show="showfilters">Dependencies filters</h3>
                 <div class="filter-order-container" ng-show="showfilters">
                         <div class="label" style="height:120px;">
-                            Filter by:<br/>Requester<br/>Res. owner<br/>BU Area<br/>Type<br/>Audience
+                            Filter by:<br/>Requester<br/>Res. owner<br/>Res. area<br/>Type<br/>Audience
                         </div>
                         <div class="field multiple-select">
                             <select multiple="multiple" ng-multiple="true" ng-model="depsearch.acname" ng-options="u.name as u.name for u in users | filter: {source: true} | orderBy:'name'"></select>

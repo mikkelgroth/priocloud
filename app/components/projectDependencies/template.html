@@ -76,11 +76,10 @@
                         <option value="Critical">Critical</option>
                     </select>
                 </td>
-                <td class="header">Resource portfolio</td>
+                <td class="header">Resource area</td>
                     <td>
-                        <select ng-model="editdep.portfolio" ng-change="saveNow()" ng-disabled="!user.changeContent">
-                            <option ng-repeat="bu in bus" value="{{bu.name}}">{{bu.name}}</option>
-                        </select></td>
+                        {{editdep.bu.bu.name}}
+                    </td>
                 
             </tr>
 
