@@ -76,12 +76,16 @@
             <input type="checkbox" ng-init="$scope.reportsShowFinance=true" ng-model="$scope.reportsShowFinance"> Finance,&nbsp;
 
         </div>
+        <div class="filter-order-container" ng-show="showfilters">
+            Show only company broadcast: 
+            <input type="checkbox" ng-init="$scope.broadcast=false" ng-model="$scope.broadcast">
+        </div>
 
         
         <div class="overview"> 
             <table class="noborder" ng-if="projectList.length > 0">
                 
-                <tr ng-repeat="project in projectList | multiFilter:search | orderBy:porderparam" ng-click="goToProject(project._id.$oid)" class="link">
+                <tr ng-repeat="project in projectList | multiFilter:search | orderBy:porderparam" ng-if="$scope.broadcast==false || project.broadcast" ng-click="goToProject(project._id.$oid)" class="link">
                     <td>
                         <table class="tablelist">
                                 
