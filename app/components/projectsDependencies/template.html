@@ -21,9 +21,10 @@
                                     <option value="Closed">Closed</option>
                             </select>
                             <select multiple="multiple" ng-multiple="true" ng-model="depsearch.ptype">
-                                        <option value="Project">Project</option>
-                                        <option value="Program">Program</option>
-                                        <option value="Product">Product</option>
+                                <option value="Initiative">Initiative</option>
+                                <option value="Project">Project</option>
+                                <option value="Program">Program</option>
+                                <option value="Product">Product</option>
                             </select>
                             <select multiple="multiple" ng-multiple="true" ng-model="depsearch.support" ng-options="bu.name as bu.name for bu in bus | orderBy: 'name'"></select>
                                     
