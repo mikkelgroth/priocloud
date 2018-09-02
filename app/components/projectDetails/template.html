@@ -86,8 +86,16 @@
                         </select></td>
                 </tr>
                 <tr>
-                    <td class="header">Company broadcast</td>
-                    <td colspan="3">
+                    <td class="header">Portfolio priority</td>
+                    <td>
+                        <select ng-model="project.priority" ng-change="saveNow()" ng-disabled="!user.changeContent">
+                        <option value="1. Must have">1. Must have</option>
+                        <option value="2. Priority">2. Priority</option>
+                        <option value="3. Valuable">3. Valuable</option>
+                        <option value="4. Experiment">4. Experiment</option>
+                     </select>
+                    </td><td class="header">Company broadcast</td>
+                    <td>
                         <input type="checkbox" ng-model="project.broadcast" ng-change="saveNow()">
                     </td>
                     
@@ -126,7 +134,7 @@
                 </tr>
                 <tr>
                     <td>
-                        <p>Project members</p>
+                        <p>Resource demand</p>
                     </td>
                     <td colspan="3">
                         <div class="field">
