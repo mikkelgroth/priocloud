@@ -70,6 +70,18 @@
                     <option value="title">Title</option>
                     <option value="bu.name">BU</option>
                 </select>
+                <select ng-model="porderparam2" ng-init="porderparam='priority'">
+                        <option value="priority">Portfolio priority</option>
+                        <option value="-total">KPI: Total points</option>
+                        <option value="-kpi1">KPI: {{company.projkpi1lable}}</option>
+                        <option value="-kpi2">KPI: {{company.projkpi2lable}}</option>
+                        <option value="-kpi3">KPI: {{company.projkpi3lable}}</option>
+                        <option value="-kpi4">KPI: {{company.projkpi4lable}}</option>
+                        <option value="-kpi5">KPI: {{company.projkpi5lable}}</option>
+                        <option value="-kpi6">KPI: {{company.projkpi6lable}}</option>
+                        <option value="title">Title</option>
+                        <option value="bu.name">BU</option>
+                </select>
             </div>
         </div>
         <div class="overview">
@@ -85,7 +97,7 @@
                     <td>Overall status</td>
                     
                 </tr>
-                <tr ng-repeat="project in projectList | multiFilter:search | orderBy:porderparam " ng-click="goToProject(project._id.$oid)" class="link">
+                <tr ng-repeat="project in projectList | multiFilter:search | orderBy:[porderparam, porderparam2] " ng-click="goToProject(project._id.$oid)" class="link">
                     <td class="texttop {{project.lastStatus.status}}">&nbsp;{{project.title}}<br/><b>{{project.bu.name}}</b><br/>{{project.priority}}</td>
                     <td class="texttop">{{project.outcome}}<br/><b>Resources</b><br/>{{project.membersproject}}</td>
                     <td class="texttop">{{project.lastStatus.date | date:'d MMM, yyyy'}}<br/>{{project.lastStatus.overallcomments}}</td>
