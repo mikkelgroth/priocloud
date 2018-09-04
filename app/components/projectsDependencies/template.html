@@ -91,17 +91,20 @@
             <div class="overview">
                 <table class="tablelist" ng-if="depList.length > 0">
                     <tr class="header">
-                        <td>Dependency<br>Project</td>
+                        <td>Dependency<br>Priority<br>Project</td>
                         <td>2017</td>
                         <td>2018</td>
                         <td>2019</td>
+                        
+                        <td>Description<br/>Action</td>
                         <td>Requester<br>Owner</td>
                         <td>Type<br>Area</td>
                     </tr>
                     <tr ng-repeat="dep in depList | multiFilter:depsearch | orderBy:orderdate" ng-click="goToDepInProject(dep._id, dep.projectid)"
                         class="link">
-                        <td class="{{dep.status}}"><b>{{dep.title}}</b><br>{{dep.projecttitle}}</td>
+                        <td class="{{dep.status}}"><b>{{dep.title}}</b><br>{{dep.priority}}<br>{{dep.projecttitle}}</td>
                         <td class="bar xl" ng-style="depbarRender(dep)" colspan="3">{{dep.quantum}} - {{dep.agreement}}</td>
+                        <td>{{dep.description}}<br><b>Actions</b><br>{{dep.action}}</td>
                         <td>{{dep.acname}}<br>{{dep.resname}}</td>
                         <td>{{dep.depbuname}}<br>{{dep.depbuowner}}</td>
                     </tr>

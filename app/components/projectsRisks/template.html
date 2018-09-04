@@ -134,16 +134,16 @@
                     <td>Prob.</td>
                     <td>Imp.</td>
                     <td>Reco.</td>
-                    <td>Description</td>
-                    <td>Response<br/>Responsible</td>
+                    <td>Description<br/>Request</td>
+                    
                 </tr>
                 <tr ng-repeat="risk in riskList | multiFilter:risksearch | orderBy:[orderparam, orderparam2]" ng-click="goToRiskInProject(risk._id, risk.projectid)" class="link"  ng-if="risk.state != 'Closed' && risk.audience != 'Confidential'">
-                    <td class="{{risk.status}}"><b>{{risk.title}} <div class="right">({{risk.total}})</div></b><br/>{{risk.projecttitle}}<div class="right">({{risk.ptotal}})</div></td>
+                    <td class="{{risk.status}}"><b>{{risk.title}} <div class="right">({{risk.total}})</div></b><br/><b>{{risk.response}}</b><br/>{{risk.acc.name}}<br/>{{risk.projecttitle}}<div class="right">({{risk.ptotal}})</div></td>
                     <td prio-class prio-risk-bar-render="risk.prob">{{risk.prob}}</td>
                     <td prio-class prio-risk-bar-render="risk.impact">{{risk.impact}}</td>
                     <td prio-class prio-risk-bar-render="risk.recCompValue">{{risk.recCompValue}}</td>
-                    <td class="wrap xl">{{risk.desc}}</td>
-                    <td><b>{{risk.response}}</b><br/>{{risk.acc.name}}</td>
+                    <td class="wrap xl">{{risk.desc}}<br/><b>Request</b><br/>{{risk.request}}</td>
+                
                 </tr>
             </table>
         </div>
