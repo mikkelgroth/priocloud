@@ -93,14 +93,14 @@
                 </tr>
                 <tr class="header">
                     <td>Project<br/>Area</td>
-                    <td>Purpose<br/>Resources</td>
-                    <td>Overall status</td>
+                    <td>Objective<br/>Resources</td>
+                    <td>Priority<br/>Overall status</td>
                     
                 </tr>
                 <tr ng-repeat="project in projectList | multiFilter:search | orderBy:[porderparam, porderparam2] " ng-click="goToProject(project._id.$oid)" class="link">
-                    <td class="texttop {{project.lastStatus.status}}">&nbsp;{{project.title}}<br/><b>{{project.bu.name}}</b><br/>{{project.priority}}</td>
-                    <td class="texttop">{{project.outcome}}<br/><b>Resources</b><br/>{{project.membersproject}}</td>
-                    <td class="texttop">{{project.lastStatus.date | date:'d MMM, yyyy'}}<br/>{{project.lastStatus.overallcomments}}</td>
+                    <td class="texttop {{project.lastStatus.status}}">&nbsp;<b>{{project.title}}</b><br/>{{project.bu.name}}</td>
+                    <td class="texttop"><b>Objective</b><br/>{{project.outcome}}<br/><b>Resources</b><br/>{{project.membersproject}}</td>
+                    <td class="texttop">{{project.priority}}, {{project.lastStatus.date | date:'d MMM, yyyy'}}<br/>{{project.lastStatus.overallcomments}}</td>
                     
                 </tr>
             </table>
