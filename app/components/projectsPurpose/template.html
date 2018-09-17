@@ -1,5 +1,5 @@
 <div id="projects-purpose">
-	<h2>Project list - Purpose <div class="right">
+	<h2>Project list - Objective <div class="right">
             <button ng-click="showmepm()"  ng-show="showmepmbutton">Show me as PM</button>
             <button ng-click="clearmepm()"  ng-show="!showmepmbutton">Clear me as PM</button>
             <button ng-click="showmepo()"  ng-show="showmepobutton">Show me as PO</button>
@@ -99,8 +99,8 @@
                 </tr>
                 <tr ng-repeat="project in projectList | multiFilter:search | orderBy:[porderparam, porderparam2] " ng-click="goToProject(project._id.$oid)" class="link">
                     <td class="texttop {{project.lastStatus.status}}">&nbsp;<b>{{project.title}}</b><br/>{{project.bu.name}}</td>
-                    <td class="texttop"><b>Objective</b><br/>{{project.outcome}}<br/><b>Resources</b><br/>{{project.membersproject}}</td>
-                    <td class="texttop">{{project.priority}}, {{project.lastStatus.date | date:'d MMM, yyyy'}}<br/>{{project.lastStatus.overallcomments}}</td>
+                    <td class="texttop"><b>Objective:</b><br/>{{project.outcome}}<br/><b>Resources:</b><br/>{{project.membersproject}}</td>
+                    <td class="texttop"><b>Priority:</b>{{project.priority}}<br/><b>Date:</b> {{project.lastStatus.date | date:'d MMM, yyyy'}}<br/><b>Last status:</b><br/>{{project.lastStatus.overallcomments}}</td>
                     
                 </tr>
             </table>
