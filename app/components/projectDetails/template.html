@@ -51,6 +51,7 @@
                     <td class="header">State</td>
                     <td>
                         <select ng-model="project.state" id="state" ng-change="saveNow()" ng-disabled="!user.changeContent">
+                            <option value="Template">Template</option>
                             <option value="Proposed">Proposed</option>
                             <option value="Progress">Progress</option>
                             <option value="Onhold">On hold</option>

@@ -46,9 +46,11 @@ angular
 
 
                 /** Project Details  */
-                project.state = 'Proposed';
+                project.state = 'Template';
                 project.audience = 'Internal';
-                project.support = project.bu.name;
+                //project.support = project.bu.name;
+                project.type = 'Initiative';
+                project.priority = '3. Experiment';
 
                 /** Project Finance  */
 /** bud capex */
