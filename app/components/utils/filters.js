@@ -19,14 +19,9 @@ angular
                 for (var j = 0; j < keys.length; j++) {
 
                     if (filterData[keys[j]] != undefined) {
-                        if (keys[j] === "support") {
+                        if (keys[j] === "connect") {
                             
-                            if (filterData[keys[j]].length == 0 || 
-                                doesListContain(filterData[keys[j]], item["support"]) || 
-                                doesListContain(filterData[keys[j]], item["support2"]) ||
-                                doesListContain(filterData[keys[j]], item["support3"]) || 
-                                doesListContain(filterData[keys[j]], item["support4"]) ||
-                                doesListContain(filterData[keys[j]], item["support5"])) {
+                            if (filterData[keys[j]].length == 0 || doesListContain(filterData[keys[j]], item["connect"])) {
 
                                 populate = true;
     

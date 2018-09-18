@@ -40,12 +40,12 @@
                     <option value="Program">Program</option>
                     <option value="Product">Product</option>
                 </select>
-                <select multiple="multiple" ng-multiple="true" ng-model="search.audience">
+                <select multiple="multiple" ng-multiple="true" ng-model="search.audience" ng-init="search.audience=['Portfolio','Company']">
                     <option value="Internal">Internal</option>
                     <option value="Portfolio">Portfolio</option>
                     <option value="Company">Company</option>
                 </select>
-                <select multiple="multiple" ng-multiple="true" ng-model="search.support" ng-options="bu.name as bu.name for bu in bus | orderBy: 'name'"></select>
+                <select ng-disabled="true" multiple="multiple" ng-multiple="true" ng-model="search.connect" ng-options="bu.name as bu.name for bu in bus | orderBy: 'name'"></select>
                 <select multiple="multiple" ng-multiple="true" ng-model="search.priority">
                         <option value="1. Must have">1. Must have</option>
                         <option value="2. Nice to have">2. Nice to have</option>
@@ -58,7 +58,7 @@
                 Order by:
             </div>
             <div class="field">
-                <select ng-model="porderparam" ng-init="porderparam='priority'">
+                <select ng-model="porderparam" ng-init="porderparam='bu.name'">
                     <option value="priority">Portfolio priority</option>
                     <option value="-total">KPI: Total points</option>
                     <option value="-kpi1">KPI: {{company.projkpi1lable}}</option>
@@ -70,7 +70,7 @@
                     <option value="title">Title</option>
                     <option value="bu.name">BU</option>
                 </select>
-                <select ng-model="porderparam2" ng-init="porderparam='priority'">
+                <select ng-model="porderparam2" ng-init="porderparam2='priority'">
                         <option value="priority">Portfolio priority</option>
                         <option value="-total">KPI: Total points</option>
                         <option value="-kpi1">KPI: {{company.projkpi1lable}}</option>

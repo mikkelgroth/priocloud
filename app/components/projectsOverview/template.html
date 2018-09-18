@@ -29,7 +29,7 @@
         <div class="filter-order-container" ng-show="showfilters">
             <div class="label" style="height:120px;">
                 Filter by:<br/>
-                State<br/>Type<br/>Audience<br/>Portfolio
+                State<br/>Type<br/>Audience<br/>Connected
             </div>
             <div class="field multiple-select">
                 <select multiple="multiple" ng-multiple="true" ng-model="search.state" ng-init="search.state=['Progress']">
@@ -49,7 +49,7 @@
                     <option value="Portfolio">Portfolio</option>
                     <option value="Company">Company</option>
                 </select>
-                <select multiple="multiple" ng-multiple="true" ng-model="search.support" ng-options="bu.name as bu.name for bu in bus | orderBy: 'name'"></select>
+                <select ng-disabled="true" multiple="multiple" ng-multiple="true" ng-model="search.connect" ng-options="bu.name as bu.name for bu in bus | orderBy: 'name'"></select>
             </div>
         </div>
         <div class="filter-order-container" ng-show="showfilters">
@@ -57,7 +57,7 @@
                 Order by:
             </div>
             <div class="field">
-                <select ng-model="porderparam" ng-init="porderparam='-total'">
+                <select ng-model="porderparam" ng-init="porderparam='title'">
                     <option value="-total">KPI: Total points</option>
                     <option value="-kpi1">KPI: {{company.projkpi1lable}}</option>
                     <option value="-kpi2">KPI: {{company.projkpi2lable}}</option>
