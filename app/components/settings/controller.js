@@ -15,6 +15,11 @@ angular
                 .subscribe(function (user) {
 
                     $scope.user = user;
+                    $scope.user.bulist = "";
+                   /**  for(var i = 0; i < user.bu.length; i++){ //hvorfor er bu ukendt????
+                            $scope.user.bulist += " " + user.bu[i].name;
+                        }
+                    */
                 });
 
             $scope.updateUser = function (user) {
@@ -22,7 +27,7 @@ angular
                 var data = angular.fromJson(user);
 
                 $http
-                    .post(SERVER + '?action=updateuser&application=priocloud&auid=' + user.auid + '&uuid=' + user.uuid, data)
+                    .post(USERSERVER + '?action=updateuser&application=priocloud&auid=' + user.auid + '&uuid=' + user.uuid, data)
                     .success(function (data, status, headers, config) {
                         
                         userService.authenticate(data);

@@ -46,11 +46,12 @@ angular
 
 
                 /** Project Details  */
+                project.priority ='TBD';
                 project.state = 'Template';
                 project.audience = 'Internal';
                 //project.support = project.bu.name;
                 project.type = 'Initiative';
-                project.priority = '3. Experiment';
+                
 
                 /** Project Finance  */
 /** bud capex */
@@ -238,7 +239,7 @@ angular
 
 
                 /** Project KPI  */
-                project.kpi1 = "0";
+                project.kpi1 = '0';
                 project.kpi2 = '0';
                 project.kpi3 = '0';
                 project.kpi4 = '0';
