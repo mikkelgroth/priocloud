@@ -48,9 +48,8 @@ angular
                 /** Project Details  */
                 project.priority ='TBD';
                 project.state = 'Template';
-                project.audience = 'Internal';
-                //project.support = project.bu.name;
-                project.type = 'Initiative';
+                project.support = 'Internal';
+                project.type = 'Project';
                 
 
                 /** Project Finance  */

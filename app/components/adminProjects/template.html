@@ -39,7 +39,7 @@
                 <tr ng-repeat="project in projects">
                     <td ng-click="editProject(project)">{{project.title}}</td>
                     <td>{{project.bu.name}}</td>
-                    <td>{{project.support}}</td>
+                    <td>{{project.support.name}}</td>
                     <td>{{project.state}}</td>
                     <td><button ng-click="deleteProject(project)" ng-if="user.admin">delete project</button></td>
                 </tr>

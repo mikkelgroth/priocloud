@@ -77,6 +77,8 @@ angular
                     project.buname = project.bu.name;
                     project.poname = project.po.name;
                     project.pmname = project.pm.name;
+                    project.portname = '';
+                    if(project.support != null) project.portname = project.support.name;
 
                     
 

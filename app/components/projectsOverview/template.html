@@ -11,10 +11,11 @@
         <div class="filter-order-container" ng-show="showfilters">
             <div class="label" style="height:120px;">
                 Filter by:<br/>
-                BU<br/>PO<br/>PM<br/>Status
+                BU<br/>Portfolio<br/>PO<br/>PM<br/>Status
             </div>
             <div class="field multiple-select">
                 <select multiple="multiple" ng-multiple="true" ng-model="search.buname" ng-options="bu.name as bu.name for bu in bus | orderBy: 'name'"></select>
+                <select multiple="multiple" ng-multiple="true" ng-model="search.portname" ng-options="port.name as port.name for port in company.portfolios | orderBy: 'level'"></select>
                 <select multiple="multiple" ng-multiple="true" ng-model="search.poname" ng-options="u.name as u.name for u in users | filter: {source: true} | orderBy: 'name'"></select>
                 <select multiple="multiple" ng-multiple="true" ng-model="search.pmname" ng-options="u.name as u.name for u in users | filter: {source: true} | orderBy: 'name'"></select>
                 <select multiple="multiple" ng-multiple="true" ng-model="search.lastStatusFlag">
@@ -29,7 +30,7 @@
         <div class="filter-order-container" ng-show="showfilters">
             <div class="label" style="height:120px;">
                 Filter by:<br/>
-                State<br/>Type<br/>Audience<br/>Connected
+                State<br/>Type<br/>Affected
             </div>
             <div class="field multiple-select">
                 <select multiple="multiple" ng-multiple="true" ng-model="search.state" ng-init="search.state=['Progress']">
@@ -37,19 +38,14 @@
                     <option value="Proposed">Proposed</option>
                     <option value="Progress">Progress</option>
                     <option value="Onhold">On hold</option>
+                    <option value="Rejected">Rejected</option>
                     <option value="Closed">Closed</option>
                 </select>
                 <select multiple="multiple" ng-multiple="true" ng-model="search.type">
-                    <option value="Initiative">Initiative</option>
-                            <option value="Project">Project</option>
-                    <option value="Program">Program</option>
+                    <option value="Project">Project</option>
                     <option value="Product">Product</option>
                 </select>
-                <select multiple="multiple" ng-multiple="true" ng-model="search.audience">
-                    <option value="Internal">Internal</option>
-                    <option value="Portfolio">Portfolio</option>
-                    <option value="Company">Company</option>
-                </select>
+                
                 <select ng-disabled="true" multiple="multiple" ng-multiple="true" ng-model="search.connect" ng-options="bu.name as bu.name for bu in bus | orderBy: 'name'"></select>
             </div>
         </div>
@@ -79,6 +75,7 @@
                     <td>Project Manager</td>
                     <td>Business Unit</td>
                     <td>Project Owner</td>
+                    <td>Portfolio</td>
                     <td></td>
                 </tr>
                 <tr ng-repeat="project in projectList | multiFilter:search | orderBy:porderparam" ng-click="goToProject(project._id.$oid)" class="link">
@@ -96,6 +93,9 @@
                     </td>
                     <td>
                         {{project.po.name}}
+                    </td>
+                    <td>
+                        {{project.support.name}}
                     </td>
                     <td>
                         <div ng-if="project.editUser == null" class="Green"></div>

@@ -1,0 +1,45 @@
+<prio-admin-menu></prio-admin-menu>
+
+<div id="linkdiv5" class="view">
+    <div class="mainbox">
+
+            <h2>New portfolio</h2>
+            <div class="overview">
+                <table class="smaller gutter-top">
+                    <tr>
+                        <td class="header">Portfolio name</td>
+                        <td><input ng-model="newport.name" /><button ng-click="addport(newport)" ng-if="user.admin" class="right">create port</button></td>
+                    </tr>
+                    <tr>
+                        <td class="header">Portfolio level</td>
+                        <td>
+                            <select ng-model="newport.level">
+                                <option value="1">High</option>
+                                <option value="2">Medium</option>
+                                <option value="3">Low</option>
+                                <option value="4">Local</option>
+                            </select>
+
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            
+            <h2>Portfolios</h2>
+            <div class="overview">
+                <table ng-if="company.portfolios.length > 0" class="tablelist smaller">
+                    <tr class="header">
+                        <td class="header">Portfolios</td>
+                        <td class="header">Level</td>
+                        <td class="header">Delete</td>
+                    </tr>
+                    <tr ng-repeat="port in company.portfolios| orderBy:'name'">
+                        <td >{{port.name}}</td>
+                        <td >{{port.level}}</td>
+                        <td><button ng-click="delport(port)" ng-if="user.admin">delete port</button></td>
+                    </tr>
+                </table>
+            </div>
+
+    </div>
+</div>

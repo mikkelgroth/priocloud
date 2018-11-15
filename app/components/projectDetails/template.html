@@ -17,7 +17,7 @@
                     <td>
                         <input style="width: 200px" ng-model="project.title" ng-change="saveNow()" id="title"  ng-disabled="!user.changeContent" />
                     </td>
-                    <td class="header" rowspan="3">Connected to:</td>
+                    <td class="header" rowspan="3">Affected areas:</td>
                     <td rowspan="3">
                         <div class="field multiple-select">
                             <select style="width: 200px" multiple="multiple" ng-multiple="true" ng-model="project.connect" ng-options="bu.name as bu.name for bu in bus | orderBy: 'name'" ng-change="saveNow()" ng-disabled="!user.changeContent"></select>
@@ -31,9 +31,7 @@
                     <td>
                         
                         <select ng-model="project.type" id="type" ng-change="saveNow()" ng-disabled="!user.changeContent">
-                            <option value="Initiative">Initiative</option>
                             <option value="Project">Project</option>
-                            <option value="Program">Program</option>
                             <option value="Product">Product</option>
                         </select>
                     </td>
@@ -55,16 +53,15 @@
                             <option value="Proposed">Proposed</option>
                             <option value="Progress">Progress</option>
                             <option value="Onhold">On hold</option>
+                            <option value="Rejected">Rejected</option>
                             <option value="Closed">Closed</option>
                         </select>
                     </td>
-                    <td class="header">Audience</td>
+                    <td class="header">Portfolio</td>
                     <td>
-                        <select ng-model="project.audience" ng-change="saveNow()" ng-disabled="!user.changeContent">
-                        <option value="Internal">Internal</option>
-                        <option value="Portfolio">Portfolio</option>
-                        <option value="Company">Company</option>
-                     </select>
+                        <select  ng-change="saveNow()" ng-model="project.support" id="prosupport" ng-options="port.name for port in company.portfolios track by port.name" ng-disabled="!user.changeContent"></select>
+                    
+            
                     </td>
                 </tr>
                 <tr>
@@ -72,10 +69,11 @@
                         <td>
                             <select ng-model="project.priority" ng-change="saveNow()" ng-disabled="!user.changeContent">
                                     <option value="TBD">TBD</option>
-                                    <option value="1. Must have">1. Must have</option>
-                            <option value="2. Nice to have">2. Nice to have</option>
-                            <option value="3. Experiment">3. Experiment</option>
-                         </select>
+                                    <option value="1. Must">1. Must</option>
+                                    <option value="2. Should">2. Should</option>
+                                    <option value="3. Could(H1)">3. Could(H1)</option>
+                                    <option value="4. Backlog(H2)">4. Backlog(H2)</option>
+                                </select>
                         </td>
                     
                     <td class="header">Company broadcast</td>
@@ -187,6 +185,96 @@
                     <td><a target="_blank" href="{{project.bclink}}">{{project.bclinktitle}}<div class="linkicon right"></div></a></td>
                 </tr>
             </table>
+            <table class="smaller">
+            <tr class="header"><td>Project KPI</td><td>Value</td><td>Chart</td></tr>
+            <tr><td>{{company.projkpi1lable}}</td>
+                <td>
+                    <select ng-model="project.kpi1"  ng-change="saveNow()" ng-disabled="!user.changeContent">
+                        <option value="0">No value</option>
+                        <option value="10">Small business unit impact</option>
+                        <option value="20">Large business unit impact</option>
+                        <option value="40">Small division impact</option>
+                        <option value="50">Large division impact</option>
+                        <option value="70">Small company impact</option>
+                        <option value="80">Large company impact</option>
+                        <option value="99">Game changer</option>
+                    </select>
+                </td>
+                <td rowspan="6">
+                    <canvas id="radar" height="400" width="400" class="chart chart-radar" chart-data="radarkpidata" chart-options="radarkpioptions" chart-labels="radarkpilabels"></canvas>                 
+                </td>
+            </tr>
+            <tr><td>{{company.projkpi2lable}}</td>
+                <td>
+                    <select ng-model="project.kpi2"  ng-change="saveNow()" ng-disabled="!user.changeContent">
+                        <option value="0">No value</option>
+                        <option value="10">Small business unit impact</option>
+                        <option value="20">Large business unit impact</option>
+                        <option value="40">Small division impact</option>
+                        <option value="50">Large division impact</option>
+                        <option value="70">Small company impact</option>
+                        <option value="80">Large company impact</option>
+                        <option value="99">Game changer</option>
+                    </select>
+                </td>
+            </tr>
+            <tr><td>{{company.projkpi3lable}}</td>
+                <td>
+                    <select ng-model="project.kpi3"  ng-change="saveNow()" ng-disabled="!user.changeContent">
+                        <option value="0">No value</option>
+                        <option value="10">Small business unit impact</option>
+                        <option value="20">Large business unit impact</option>
+                        <option value="40">Small division impact</option>
+                        <option value="50">Large division impact</option>
+                        <option value="70">Small company impact</option>
+                        <option value="80">Large company impact</option>
+                        <option value="99">Game changer</option>
+                    </select>
+                </td>
+            </tr>
+            <tr><td>{{company.projkpi4lable}}</td>
+                <td>
+                    <select ng-model="project.kpi4"  ng-change="saveNow()" ng-disabled="!user.changeContent">
+                        <option value="0">No value</option>
+                        <option value="10">Small business unit impact</option>
+                        <option value="20">Large business unit impact</option>
+                        <option value="40">Small division impact</option>
+                        <option value="50">Large division impact</option>
+                        <option value="70">Small company impact</option>
+                        <option value="80">Large company impact</option>
+                        <option value="99">Game changer</option>
+                    </select>
+                </td>
+            </tr>
+            <tr><td>{{company.projkpi5lable}}</td>
+                <td>
+                    <select ng-model="project.kpi5"  ng-change="saveNow()" ng-disabled="!user.changeContent">
+                        <option value="0">No value</option>
+                        <option value="10">Small business unit impact</option>
+                        <option value="20">Large business unit impact</option>
+                        <option value="40">Small division impact</option>
+                        <option value="50">Large division impact</option>
+                        <option value="70">Small company impact</option>
+                        <option value="80">Large company impact</option>
+                        <option value="99">Game changer</option>
+                    </select>
+                </td>
+            </tr>
+            <tr><td>{{company.projkpi6lable}}</td>
+                <td>
+                    <select ng-model="project.kpi6"  ng-change="saveNow()" ng-disabled="!user.changeContent">
+                        <option value="0">No value</option>
+                        <option value="10">Small business unit impact</option>
+                        <option value="20">Large business unit impact</option>
+                        <option value="40">Small division impact</option>
+                        <option value="50">Large division impact</option>
+                        <option value="70">Small company impact</option>
+                        <option value="80">Large company impact</option>
+                        <option value="99">Game changer</option>
+                    </select>
+                </td>
+            </tr>
+        </table>
             <!--
             <h2>Project logs</h2>
             <h3>Save log</h3>

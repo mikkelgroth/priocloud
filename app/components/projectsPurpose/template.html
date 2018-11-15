@@ -47,10 +47,11 @@
                 </select>
                 <select ng-disabled="true" multiple="multiple" ng-multiple="true" ng-model="search.connect" ng-options="bu.name as bu.name for bu in bus | orderBy: 'name'"></select>
                 <select multiple="multiple" ng-multiple="true" ng-model="search.priority">
-                        <option value="TBD">TBD</option>
-                        <option value="1. Must have">1. Must have</option>
-                        <option value="2. Nice to have">2. Nice to have</option>
-                        <option value="3. Experiment">3. Experiment</option>
+                    <option value="TBD">TBD</option>
+                    <option value="1. Must">1. Must</option>
+                    <option value="2. Should">2. Should</option>
+                    <option value="3. Could(H1)">3. Could(H1)</option>
+                    <option value="4. Backlog(H2)">4. Backlog(H2)</option>
                  </select>
             </div>
         </div>

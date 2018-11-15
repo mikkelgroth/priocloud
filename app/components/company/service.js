@@ -15,6 +15,8 @@ angular
             _this._projects = projects;
         });
 
+        
+
         _this.company.subscribe(function (company) {
             _this._company = company;
         });
@@ -40,6 +42,7 @@ angular
 
                 _this.businessUnits.onNext(data.businessUnits);
                 _this.projects.onNext(data.projects);
+
             });
         };
 
@@ -54,6 +57,7 @@ angular
 
                 _this.businessUnits.onNext(data.businessUnits);
                 _this.projects.onNext(data.projects);
+
             });
         };
 

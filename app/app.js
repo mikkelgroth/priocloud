@@ -61,6 +61,7 @@ angular
             $routeProvider.when('/admin/projects', { controller: 'AdminProjectsController', templateUrl: 'components/adminProjects/template.html' });
             $routeProvider.when('/admin/project-ratings', { controller: 'AdminProjectRatingsController', templateUrl: 'components/adminProjectRatings/template.html' });
             $routeProvider.when('/admin/resource-types', { controller: 'AdminResourceTypesController', templateUrl: 'components/adminResourceTypes/template.html' });
+            $routeProvider.when('/admin/portfolios', { controller: 'AdminPortfoliosController', templateUrl: 'components/adminPortfolios/template.html' });
             $routeProvider.when('/admin/delete', { controller: 'AdminDeleteController', templateUrl: 'components/adminDelete/template.html' });
             
             // other
