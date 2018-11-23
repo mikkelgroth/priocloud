@@ -31,7 +31,7 @@
         <li prio-route-active="settings" ng-if="!user.demo">
             <a href="#/settings">Settings</a>
         </li>
-        <li prio-route-active="admin" ng-if="user.admin">
+        <li prio-route-active="admin" ng-if="user.admin || user.subadmin">
             <a href="#/admin">Administration</a>
             <ul>
             	<li><a href="#/admin">Company and business units</a></li>
