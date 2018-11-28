@@ -82,7 +82,7 @@
                         </select>
                     </td>
                     <td colspan="7">
-                        Show only finance controlled <input type="checkbox" ng-model="showControlled" />
+                        Show only finance controlled <input type="checkbox" ng-model="showControlled"/>
                     </td>
                 </tr>
                 <tr class="listsubject">
@@ -108,7 +108,7 @@
                     <td>Grand</td>
                 </tr>
                 <tr ng-repeat="project in projectList | multiFilter:search | orderBy:porderparam" ng-if="showType=='total' && (!showControlled || (project.isControlled && showControlled))" ng-click="goToProject(project._id.$oid)" class="link">
-                    <td class="{{project.financeControl}} tooltip">{{project.title}}
+                    <td class="{{project.financeControl}} tooltip">{{project.title}}<br/><div ng-if="showControlled"><b>Cont:</b> {{project.controller.name}}</div>
                         <span class="tooltiptext">
                             <b>Deviation comments</b><br/>
                             Q1: {{project.finance.devq1}}<br/>
@@ -142,7 +142,7 @@
                 </tr>
 
                 <tr ng-repeat="project in projectList | multiFilter:search | orderBy:porderparam" ng-if="showType=='capex' && (!showControlled || (project.isControlled && showControlled))" ng-click="goToProject(project._id.$oid)" class="link">
-                    <td class="{{project.financeControl}} tooltip">{{project.title}}
+                    <td class="{{project.financeControl}} tooltip">{{project.title}}<br/><div ng-if="showControlled"><b>Cont:</b> {{project.controller.name}}</div>
                         <span class="tooltiptext">
                             <b>Deviation comments</b><br/>
                             Q1: {{project.finance.devq1}}<br/>
@@ -176,7 +176,7 @@
                 </tr>
             
                 <tr ng-repeat="project in projectList | multiFilter:search | orderBy:porderparam" ng-if="showType=='opex' && (!showControlled || (project.isControlled && showControlled))" ng-click="goToProject(project._id.$oid)" class="link">
-                    <td class="{{project.financeControl}} tooltip">{{project.title}}
+                    <td class="{{project.financeControl}} tooltip">{{project.title}}<br/><div ng-if="showControlled"><b>Cont:</b> {{project.controller.name}}</div>
                         <span class="tooltiptext">
                             <b>Deviation comments</b><br/>
                             Q1: {{project.finance.devq1}}<br/>
@@ -210,7 +210,7 @@
                 </tr>
             
                 <tr ng-repeat="project in projectList | multiFilter:search | orderBy:porderparam" ng-if="showType=='externals' && (!showControlled || (project.isControlled && showControlled))" ng-click="goToProject(project._id.$oid)" class="link">
-                    <td class="{{project.financeControl}} tooltip">{{project.title}}
+                    <td class="{{project.financeControl}} tooltip">{{project.title}}<br/><div ng-if="showControlled"><b>Cont:</b> {{project.controller.name}}</div>
                         <span class="tooltiptext">
                             <b>Deviation comments</b><br/>
                             Q1: {{project.finance.devq1}}<br/>
@@ -244,7 +244,7 @@
                 </tr>
             
                 <tr ng-repeat="project in projectList | multiFilter:search | orderBy:porderparam" ng-if="showType=='internals' && (!showControlled || (project.isControlled && showControlled))" ng-click="goToProject(project._id.$oid)" class="link">
-                    <td class="{{project.financeControl}} tooltip">{{project.title}}
+                    <td class="{{project.financeControl}} tooltip">{{project.title}}<br/><div ng-if="showControlled"><b>Cont:</b> {{project.controller.name}}</div>
                         <span class="tooltiptext">
                             <b>Deviation comments</b><br/>
                             Q1: {{project.finance.devq1}}<br/>

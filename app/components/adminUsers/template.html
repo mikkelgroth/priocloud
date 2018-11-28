@@ -39,7 +39,11 @@
             </tr>
             <tr>
                 <td class="header">Sub Admin</td>
-                <td><input type="checkbox" ng-model="newuser.subadmin" /></td>
+                <td><input type="checkbox"  ng-disabled="!user.admin" ng-model="newuser.subadmin" /></td>
+            </tr>
+            <tr>
+                <td class="header">Admin</td>
+                <td><input type="checkbox" ng-disabled="!user.admin" ng-model="newuser.admin" /></td>
             </tr>
         </table>
         <br/>

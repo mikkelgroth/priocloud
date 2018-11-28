@@ -24,6 +24,7 @@ angular
                 $scope.projectList = setProjectList(projects);
                 $scope.showmepmbutton=true;
                 $scope.showmepobutton=true;
+                $scope.showControlled=true;
             });
 
             companyService.businessUnits.subscribe(function (units) {

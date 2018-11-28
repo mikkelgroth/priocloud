@@ -16,8 +16,11 @@
     <div id="finance" ng-show="route == 'finance'">
             <table class="smaller">
                     <tr class="header">
-                        <td>To be controlled:</td>
-                        <td><input ng-change="saveNow()" type="checkbox" ng-model="project.isControlled" ng-disabled="!user.changeContent"/></td>
+                        <td>To be controlled:<input ng-change="saveNow()" type="checkbox" ng-model="project.isControlled" ng-disabled="!user.changeContent"/></td>
+                        <td>
+                            
+                            <select ng-model="project.controller" id="procontroller" ng-options="u.name for u in users | filter: {controller: true} | orderBy:'name' track by u.name" ng-disabled="!user.changeContent" ng-change="saveNow()"></select>
+                        </td>
                         <td>Controller status:</td>
                         <td>
                             <select ng-model="project.financeControl" ng-change="saveNow()" ng-disabled="!user.changeContent">
