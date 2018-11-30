@@ -143,6 +143,7 @@ angular
                     .success(function (updatedProject) {
 
                         console.log("----- PROJECT UPDATED (" + project._id.$oid + ")");
+                        
                         projecthaschanged=false;
                         deleteThis=false;
 

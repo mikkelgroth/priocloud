@@ -41,7 +41,7 @@
                     <td class="header">BU</td>
                     <td>
                         
-                        <select  ng-change="saveNow()" ng-model="project.bu" id="probu" ng-options="bu.name for bu in bus track by bu.name" ng-disabled="!user.changeContent"></select>
+                        <select  ng-change="saveNow()" ng-model="project.bu" id="probu" ng-options="bu.name for bu in bus | orderBy: 'name' track by bu.name" ng-disabled="!user.changeContent"></select>
                     </td>
                         
                 </tr>
@@ -59,7 +59,7 @@
                     </td>
                     <td class="header">Portfolio</td>
                     <td>
-                        <select  ng-change="saveNow()" ng-model="project.support" id="prosupport" ng-options="port.name for port in company.portfolios track by port.name" ng-disabled="!user.changeContent"></select>
+                        <select  ng-change="saveNow()" ng-model="project.support" id="prosupport" ng-options="port.name for port in company.portfolios | orderBy: 'level' track by port.name" ng-disabled="!user.changeContent"></select>
                     
             
                     </td>

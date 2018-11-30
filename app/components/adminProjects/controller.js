@@ -29,6 +29,14 @@ angular
                 });
 
             companyService
+                .company
+                .subscribe(function (company) {
+
+                    $scope.company = company;
+                });
+
+
+            companyService
                 .businessUnits
                 .subscribe(function (units) {
 
@@ -48,7 +56,6 @@ angular
                 /** Project Details  */
                 project.priority ='TBD';
                 project.state = 'Template';
-                project.support = 'Internal';
                 project.type = 'Project';
                 
 

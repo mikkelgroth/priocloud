@@ -14,10 +14,10 @@
                         <td class="header">Portfolio level</td>
                         <td>
                             <select ng-model="newport.level">
-                                <option value="1">High</option>
-                                <option value="2">Medium</option>
-                                <option value="3">Low</option>
-                                <option value="4">Local</option>
+                                <option value="1">Executive</option>
+                                <option value="2">High</option>
+                                <option value="3">Medium</option>
+                                <option value="4">Low</option>
                             </select>
 
                         </td>
@@ -33,7 +33,7 @@
                         <td class="header">Level</td>
                         <td class="header">Delete</td>
                     </tr>
-                    <tr ng-repeat="port in company.portfolios| orderBy:'name'">
+                    <tr ng-repeat="port in company.portfolios| orderBy:'level'">
                         <td >{{port.name}}</td>
                         <td >{{port.level}}</td>
                         <td><button ng-click="delport(port)" ng-if="user.admin">delete port</button></td>

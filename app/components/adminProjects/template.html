@@ -4,7 +4,7 @@
     <div class="mainbox">
         <h2>
             Projects
-            <div class="right"><button ng-click="newProject(np)">Create new project</button></div>
+            <div class="right"><button ng-click="newProject(np); np={};">Create new project</button></div>
         </h2>
         <table class="smaller">
             <tr>
@@ -23,7 +23,14 @@
                 <td class="header">PO</td>
                 <td><select ng-model="np.po" ng-options="u.name for u in users | filter: {source: true} | orderBy:'name' track by u.name"></select></td>
             </tr>
-
+            <tr>
+                <td class="header">Portfolio</td>
+                <td>
+                    <select  ng-model="np.support" id="projsupport" ng-options="port.name for port in company.portfolios | orderBy: 'level' track by port.name"></select>
+                    
+                </td>
+            </tr>
+    
         </table>
         <br/>
         <h3>Project list</h3>
@@ -36,7 +43,7 @@
                     <td class="header">State</td>
                     <td class="header"></td>
                 </tr>
-                <tr ng-repeat="project in projects">
+                <tr ng-repeat="project in projects | orderBy: 'title'">
                     <td ng-click="editProject(project)">{{project.title}}</td>
                     <td>{{project.bu.name}}</td>
                     <td>{{project.support.name}}</td>

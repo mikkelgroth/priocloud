@@ -58,7 +58,7 @@ angular
             
  
             $scope.delport = function (port) {
-                $scope.company.portfolios.splice($scope.company.portfolios.indexOf(status), 1);
+                $scope.company.portfolios.splice($scope.company.portfolios.indexOf(port), 1);
                 companyService.saveCompany($scope.company);
                 $scope.newport={}; 
                 
