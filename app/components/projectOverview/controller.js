@@ -27,7 +27,7 @@ angular
                     ($scope.project.po !=null && $scope.user.email == $scope.project.po.email) || 
                     ($scope.project.altpo !=null && $scope.user.email == $scope.project.altpo.email) || 
                     ($scope.project.altpm !=null && $scope.user.email == $scope.project.altpm.email) || 
-                    $scope.user.isOwner || ($scope.user.controller && $scope.user.email == $scope.project.controller.email) || $scope.user.subadmin || $scope.user.admin){ 
+                    $scope.user.isOwner || ($scope.user.controller && $scope.project.controller!= null && $scope.user.email == $scope.project.controller.email) || $scope.user.subadmin || $scope.user.admin){ 
                         
                         if($scope.project.editUser == null){
                             $scope.project.showRelease = false;

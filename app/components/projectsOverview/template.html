@@ -1,9 +1,11 @@
 <div id="projects-overview">
     <h2>Project list - Overview <div class="right">
-            <button ng-click="showmepm()"  ng-show="showmepmbutton">Show me as PM</button>
-            <button ng-click="clearmepm()"  ng-show="!showmepmbutton">Clear me as PM</button>
-            <button ng-click="showmepo()"  ng-show="showmepobutton">Show me as PO</button>
-            <button ng-click="clearmepo()"  ng-show="!showmepobutton">Clear me as PO</button>
+        <button ng-click="showmebuowner()"  ng-show="showmeownerbutton">Show me as Owner</button>
+        <button ng-click="clearmebuowner()"  ng-show="!showmeownerbutton">Clear me as Owner</button>
+        <button ng-click="showmepm()"  ng-show="showmepmbutton">Show me as PM</button>
+        <button ng-click="clearmepm()"  ng-show="!showmepmbutton">Clear me as PM</button>
+        <button ng-click="showmepo()"  ng-show="showmepobutton">Show me as PO</button>
+        <button ng-click="clearmepo()"  ng-show="!showmepobutton">Clear me as PO</button>
         <button ng-click="showfilters=true"  ng-show="!showfilters">Show filters</button>
         <button ng-click="showfilters=false"  ng-show="showfilters">Hide filters</button>
     </div></h2>
@@ -30,7 +32,7 @@
         <div class="filter-order-container" ng-show="showfilters">
             <div class="label" style="height:120px;">
                 Filter by:<br/>
-                State<br/>Type<br/>Affected
+                State<br/>Type<br/>Affected<br/>Priority<br/>Portfolio
             </div>
             <div class="field multiple-select">
                 <select multiple="multiple" ng-multiple="true" ng-model="search.state" ng-init="search.state=['Progress']">
@@ -47,6 +49,18 @@
                 </select>
                 
                 <select ng-disabled="true" multiple="multiple" ng-multiple="true" ng-model="search.connect" ng-options="bu.name as bu.name for bu in bus | orderBy: 'name'"></select>
+                
+                <select multiple="multiple" ng-multiple="true" ng-model="search.priority" ng-init="search.priority=['1. Must','2. Should','3. Could(H1)','4. Backlog(H2)']">
+                    <option value="TBD">TBD</option>
+                    <option value="1. Must">1. Must</option>
+                    <option value="2. Should">2. Should</option>
+                    <option value="3. Could(H1)">3. Could(H1)</option>
+                    <option value="4. Backlog(H2)">4. Backlog(H2)</option>
+                </select>
+
+                <select  multiple="multiple" ng-multiple="true" ng-model="project.support" ng-options="port.name for port in company.portfolios | orderBy: 'level' track by port.name"></select>
+                    
+                
             </div>
         </div>
         <div class="filter-order-container" ng-show="showfilters">
@@ -54,7 +68,8 @@
                 Order by:
             </div>
             <div class="field">
-                <select ng-model="porderparam" ng-init="porderparam='title'">
+                <select ng-model="porderparam" ng-init="porderparam='priority'">
+                    <option value="priority">Portfolio priority</option>
                     <option value="-total">KPI: Total points</option>
                     <option value="-kpi1">KPI: {{company.projkpi1lable}}</option>
                     <option value="-kpi2">KPI: {{company.projkpi2lable}}</option>
@@ -64,6 +79,35 @@
                     <option value="-kpi6">KPI: {{company.projkpi6lable}}</option>
                     <option value="title">Title</option>
                     <option value="bu.name">BU</option>
+                    <option value="support.name">Portfolio</option>
+                </select>
+                <select ng-model="porderparam2" ng-init="porderparam2='-total'">
+                    <option value="priority">Portfolio priority</option>
+                    <option value="-total">KPI: Total points</option>
+                    <option value="-kpi1">KPI: {{company.projkpi1lable}}</option>
+                    <option value="-kpi2">KPI: {{company.projkpi2lable}}</option>
+                    <option value="-kpi3">KPI: {{company.projkpi3lable}}</option>
+                    <option value="-kpi4">KPI: {{company.projkpi4lable}}</option>
+                    <option value="-kpi5">KPI: {{company.projkpi5lable}}</option>
+                    <option value="-kpi6">KPI: {{company.projkpi6lable}}</option>
+                    <option value="title">Title</option>
+                    <option value="bu.name">BU</option>
+                    <option value="support.name">Portfolio</option>
+                
+                </select>
+                <select ng-model="porderparam3" ng-init="porderparam3='support.name'">
+                        <option value="priority">Portfolio priority</option>
+                        <option value="-total">KPI: Total points</option>
+                        <option value="-kpi1">KPI: {{company.projkpi1lable}}</option>
+                        <option value="-kpi2">KPI: {{company.projkpi2lable}}</option>
+                        <option value="-kpi3">KPI: {{company.projkpi3lable}}</option>
+                        <option value="-kpi4">KPI: {{company.projkpi4lable}}</option>
+                        <option value="-kpi5">KPI: {{company.projkpi5lable}}</option>
+                        <option value="-kpi6">KPI: {{company.projkpi6lable}}</option>
+                        <option value="title">Title</option>
+                        <option value="bu.name">BU</option>
+                        <option value="support.name">Portfolio</option>
+                
                 </select>
             </div>
         </div>
@@ -71,20 +115,19 @@
             <table class="tablelist" ng-if="projectList.length > 0">
                 <tr class="header">
                     <td>Project</td>
-                    <td>Type</td>
+                    
                     <td>Project Manager</td>
                     <td>Business Unit</td>
                     <td>Project Owner</td>
                     <td>Portfolio</td>
-                    <td></td>
+                    <td>Prio/KPI</td>
+                    <td>Lock</td>
                 </tr>
-                <tr ng-repeat="project in projectList | multiFilter:search | orderBy:porderparam" ng-click="goToProject(project._id.$oid)" class="link">
+                <tr ng-repeat="project in projectList | multiFilter:search | orderBy:[porderparam, porderparam2, porderparam3]" ng-click="goToProject(project._id.$oid)" class="link">
                     <td class="{{project.lastStatus.status}}">
                         <b>{{project.title}}<div class="right"><b>{{project.warn}}</b></div></b>
                     </td>
-                    <td>
-                        {{project.type}}
-                    </td>
+                    
                     <td>
                         {{project.pm.name}}
                     </td>
@@ -98,8 +141,12 @@
                         {{project.support.name}}
                     </td>
                     <td>
-                        <div ng-if="project.editUser == null" class="Green"></div>
-                        <div ng-if="project.editUser != null" class="Red"></div>
+                        {{project.priority}} / {{project.total}}
+                    </td>
+                    <td>
+                        <div ng-if="project.editUser == null" class="Green">{{project.editUser.name}}</div>
+                        <div ng-if="project.editUser != null" class="Red">{{project.editUser.name}}</div>
+                        
                     </td>
                 </tr>
             </table>
