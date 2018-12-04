@@ -18,7 +18,8 @@
                 <li><a href="#/projects/status">Status view</a></li>
                 <li><a href="#/projects/purpose">Objective view</a></li>
                 <li><a href="#/projects/finance">Finance view</a></li>
-                <li><a href="#/projects/reports">Report list</a></li>                
+                <li><a href="#/projects/reports">Report list</a></li>
+                <li ng-show="user.businessowner || user.admin || user.subadmin"><a href="#/projects/create">New Project</a></li>                
             </ul>
             <a href="#/projects/dependencies">Portfolio tools</a>
             <ul>

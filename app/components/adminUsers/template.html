@@ -38,6 +38,10 @@
                 <td><input type="checkbox" ng-model="newuser.resowner" /></td>
             </tr>
             <tr>
+                <td class="header">Business owner</td>
+                <td><input type="checkbox" ng-model="newuser.businessowner" /></td>
+            </tr>
+            <tr>
                 <td class="header">Sub Admin</td>
                 <td><input type="checkbox"  ng-disabled="!user.admin" ng-model="newuser.subadmin" /></td>
             </tr>
@@ -79,6 +83,10 @@
             <tr>
                 <td class="header">Resource owner</td>
                 <td><input type="checkbox" ng-model="edituser.resowner" /></td>
+            </tr>
+            <tr>
+                <td class="header">Business owner</td>
+                <td><input type="checkbox" ng-model="edituser.businessowner" /></td>
             </tr>
             <tr>
                 <td class="header">Sub Admin</td>

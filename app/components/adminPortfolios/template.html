@@ -36,7 +36,7 @@
                     <tr ng-repeat="port in company.portfolios| orderBy:'level'">
                         <td >{{port.name}}</td>
                         <td >{{port.level}}</td>
-                        <td><button ng-click="delport(port)" ng-if="user.admin">delete port</button></td>
+                        <td><button ng-click="delport(port)" ng-if="user.admin" ng-disabled="port.name=='N/A'">delete port</button></td>
                     </tr>
                 </table>
             </div>

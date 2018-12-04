@@ -36,7 +36,7 @@
                         <input id="buname" ng-model="bu.name" value="Logistic" />
                     </td>
                     <td>
-                        <select required ng-model="bu.owner" ng-options="subuser.name for subuser in users | filter: {source: true} | orderBy:'name' track by subuser.name"></select>
+                        <select required ng-model="bu.owner" ng-options="subuser.name for subuser in users | filter: {businessowner: true} | orderBy:'name' track by subuser.name"></select>
                     </td>
                     <td>
                         <div ng-if="$index != 0">

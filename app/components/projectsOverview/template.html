@@ -32,7 +32,7 @@
         <div class="filter-order-container" ng-show="showfilters">
             <div class="label" style="height:120px;">
                 Filter by:<br/>
-                State<br/>Type<br/>Affected<br/>Priority<br/>Portfolio
+                State<br/>Type<br/>Affected<br/>Priority
             </div>
             <div class="field multiple-select">
                 <select multiple="multiple" ng-multiple="true" ng-model="search.state" ng-init="search.state=['Progress']">
@@ -57,9 +57,7 @@
                     <option value="3. Could(H1)">3. Could(H1)</option>
                     <option value="4. Backlog(H2)">4. Backlog(H2)</option>
                 </select>
-
-                <select  multiple="multiple" ng-multiple="true" ng-model="project.support" ng-options="port.name for port in company.portfolios | orderBy: 'level' track by port.name"></select>
-                    
+  
                 
             </div>
         </div>

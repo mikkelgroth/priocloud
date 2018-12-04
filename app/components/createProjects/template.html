@@ -1,0 +1,55 @@
+
+<div id="linkdiv3" class="view">
+    <div class="mainbox">
+        <h2>
+            Projects
+            <div class="right"><button ng-click="newProject(np); np={};">Create new project</button></div>
+        </h2>
+        <table class="smaller">
+            <tr>
+                <td class="header">Project title</td>
+                <td><input type="text" ng-model="np.title" /></td>
+            </tr>
+            <tr>
+                <td class="header">Business unit</td>
+                <td><select ng-model="np.bu" ng-options="bu.name for bu in bus| filter: {owner.email: user.email} | track by bu.name"></select></td>
+            </tr>
+            <tr>
+                <td class="header">PM</td>
+                <td><select ng-model="np.pm" ng-options="u.name for u in users | filter: {source: true} | orderBy:'name' track by u.name"></select></td>
+            </tr>
+            <tr>
+                <td class="header">PO</td>
+                <td><select ng-model="np.po" ng-options="u.name for u in users | filter: {source: true} | orderBy:'name' track by u.name"></select></td>
+            </tr>
+            <tr>
+                <td class="header">Portfolio</td>
+                <td>
+                    <select  ng-model="np.support" id="projsupport" ng-options="port.name for port in company.portfolios | orderBy: 'level' track by port.name"></select>
+                    
+                </td>
+            </tr>
+    
+        </table>
+        <br/>
+        <h3>Project list</h3>
+        <div class="overview">
+            <table ng-if="projects.length > 0" class="tablelist smaller">
+                <tr class="header">
+                    <td class="header">Project</td>
+                    <td class="header">BU</td>
+                    <td class="header">Portfolio</td>
+                    <td class="header">State</td>
+                    
+                </tr>
+                <tr ng-repeat="project in projects | orderBy: 'title'">
+                    <td ng-click="editProject(project)">{{project.title}}</td>
+                    <td>{{project.bu.name}}</td>
+                    <td>{{project.support.name}}</td>
+                    <td>{{project.state}}</td>
+                    
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
