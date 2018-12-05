@@ -13,7 +13,7 @@
             </h2>
             <table class="smaller gutter-top">
                 <tr>
-                    <td class="l header">Title</td>
+                    <td class="l header">Title </td>
                     <td>
                         <input style="width: 200px" ng-model="project.title" ng-change="saveNow()" id="title"  ng-disabled="!user.changeContent" />
                     </td>
@@ -65,10 +65,9 @@
                     </td>
                 </tr>
                 <tr>
-                        <td class="header">Portfolio priority</td>
+                        <td class="header">Priority</td>
                         <td>
                             <select ng-model="project.priority" ng-change="saveNow()" ng-disabled="!user.changeContent">
-                                    <option value="TBD">TBD</option>
                                     <option value="1. Must">1. Must</option>
                                     <option value="2. Should">2. Should</option>
                                     <option value="3. Could(H1)">3. Could(H1)</option>
@@ -81,6 +80,17 @@
                         <input type="checkbox" ng-model="project.broadcast" ng-change="saveNow()">
                     </td>
                         
+                </tr>
+            
+                <tr>
+                    <td>
+                        <b>Decision comment</b><br/>Pending action: <input type="checkbox" ng-model="project.pending" ng-change="saveNow()">
+                    </td>
+                    <td colspan="3">
+                        <div class="field">
+                            <textarea ng-model="project.deccomment"  ng-change="saveNow()" placeholder="Comments for decisions pending or output of decision" ng-disabled="!user.changeContent"></textarea>
+                        </div>
+                    </td>
                 </tr>
                 
                 <tr>

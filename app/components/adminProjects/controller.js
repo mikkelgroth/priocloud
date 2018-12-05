@@ -54,7 +54,7 @@ angular
 
 
                 /** Project Details  */
-                project.priority ='TBD';
+                project.priority ='4. Backlog(H2)';
                 project.state = 'Template';
                 project.type = 'Project';
                 

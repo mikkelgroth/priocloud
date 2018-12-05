@@ -92,6 +92,10 @@
                 <td class="header">Sub Admin</td>
                 <td><input type="checkbox" ng-model="edituser.subadmin" /></td>
             </tr>
+            <tr>
+                <td class="header">Admin</td>
+                <td><input type="checkbox" ng-disabled="!user.admin" ng-model="newuser.admin" /></td>
+            </tr>
         </table>
         <br/>
         <h3>User list</h3>

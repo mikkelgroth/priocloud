@@ -50,8 +50,7 @@
                 
                 <select ng-disabled="true" multiple="multiple" ng-multiple="true" ng-model="search.connect" ng-options="bu.name as bu.name for bu in bus | orderBy: 'name'"></select>
                 
-                <select multiple="multiple" ng-multiple="true" ng-model="search.priority" ng-init="search.priority=['1. Must','2. Should','3. Could(H1)','4. Backlog(H2)']">
-                    <option value="TBD">TBD</option>
+                <select multiple="multiple" ng-multiple="true" ng-model="search.priority">
                     <option value="1. Must">1. Must</option>
                     <option value="2. Should">2. Should</option>
                     <option value="3. Could(H1)">3. Could(H1)</option>
@@ -112,7 +111,7 @@
         <div class="overview"> 
             <table class="tablelist" ng-if="projectList.length > 0">
                 <tr class="header">
-                    <td>Project</td>
+                    <td>Project <div class="right">Pending action: <input type="checkbox" ng-model="showPending"/></div></td>
                     
                     <td>Project Manager</td>
                     <td>Business Unit</td>
@@ -121,7 +120,7 @@
                     <td>Prio/KPI</td>
                     <td>Lock</td>
                 </tr>
-                <tr ng-repeat="project in projectList | multiFilter:search | orderBy:[porderparam, porderparam2, porderparam3]" ng-click="goToProject(project._id.$oid)" class="link">
+                <tr ng-repeat="project in projectList | multiFilter:search | orderBy:[porderparam, porderparam2, porderparam3]" ng-if="!showPending || (project.pending && showPending)" ng-click="goToProject(project._id.$oid)" class="link">
                     <td class="{{project.lastStatus.status}}">
                         <b>{{project.title}}<div class="right"><b>{{project.warn}}</b></div></b>
                     </td>

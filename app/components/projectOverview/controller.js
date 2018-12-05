@@ -22,6 +22,7 @@ angular
 
                     
                     $scope.project = project;
+                    $scope.user.isOwner = ($scope.project.bu.owner!=null && $scope.project.bu.owner.email!=null && $scope.project.bu.owner.email == $scope.user.email)
 
                     if(($scope.project.pm !=null && $scope.user.email == $scope.project.pm.email) ||
                     ($scope.project.po !=null && $scope.user.email == $scope.project.po.email) || 

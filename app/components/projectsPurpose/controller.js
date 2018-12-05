@@ -31,6 +31,7 @@ angular
                 $scope.projectList = setProjectList(projects);
                 $scope.showmepmbutton=true;
                 $scope.showmepobutton=true;
+                $scope.showmeownerbutton=true;
             });
 
             companyService.businessUnits.subscribe(function (units) {
@@ -58,6 +59,16 @@ angular
                 $scope.search.pmname = [];
                 $scope.showmepmbutton=true;
             };
+            $scope.showmebuowner = function () {
+
+                $scope.search.projbuownername = [$scope.user.name];
+                $scope.showmeownerbutton=false;
+            };
+            $scope.clearmebuowner = function () {
+
+                $scope.search.projbuownername = [];
+                $scope.showmeownerbutton=true;
+            };
             $scope.showmepo = function () {
 
                 $scope.search.poname = [$scope.user.name];
@@ -77,6 +88,8 @@ angular
                     project.buname = project.bu.name;
                     project.poname = project.po.name;
                     project.pmname = project.pm.name;
+                    project.projbuownername = "";
+                    if(project.bu != null && project.bu.owner != null) project.projbuownername = project.bu.owner.name;
 
                     // set last status
                     project.lastStatus = project.statuses[project.statuses.length - 1];
