@@ -57,8 +57,17 @@ angular
                 var i = list.length;
 
                 while (i--) {
-                    if (list[i] === obj) {
-                        return true;
+                    if (Array.isArray(obj)){
+                        var j = obj.length;
+                        while (j--) {
+                            if (list[i] === obj[j]) {
+                                return true;
+                            }
+                        }
+                    }else{
+                        if (list[i] === obj) {
+                            return true;
+                        }
                     }
                 }
 

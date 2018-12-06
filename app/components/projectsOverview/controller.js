@@ -2,6 +2,8 @@ angular
     .module('riskApp')
     .controller('ProjectsOverviewController', [
         '$scope',
+        '$rootScope',
+        
         '$routeParams',
         
         '$location',
@@ -10,6 +12,7 @@ angular
         'companyService',
         function (
             $scope,
+            $rootScope,
             $routeParams,
             
             $location,
@@ -33,7 +36,15 @@ angular
                 $scope.showmepmbutton=true;
                 $scope.showmepobutton=true;
                 $scope.showmeownerbutton=true;
+
+                $scope.search=$rootScope.settings;
+
             });
+
+            //use same as onuserchange
+            $scope.saveSearch = function (){
+                $rootScope.settings=$scope.search;
+            }
 
             companyService.businessUnits.subscribe(function (units) {
 

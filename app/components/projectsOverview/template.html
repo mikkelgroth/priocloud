@@ -43,12 +43,12 @@
                     <option value="Rejected">Rejected</option>
                     <option value="Closed">Closed</option>
                 </select>
-                <select multiple="multiple" ng-multiple="true" ng-model="search.type">
+                <select multiple="multiple" ng-multiple="true" ng-change="saveSearch()" ng-model="search.type">
                     <option value="Project">Project</option>
                     <option value="Product">Product</option>
                 </select>
                 
-                <select ng-disabled="true" multiple="multiple" ng-multiple="true" ng-model="search.connect" ng-options="bu.name as bu.name for bu in bus | orderBy: 'name'"></select>
+                <select multiple="multiple" ng-multiple="true" ng-model="search.connect" ng-options="bu.name as bu.name for bu in bus | orderBy: 'name'"></select>
                 
                 <select multiple="multiple" ng-multiple="true" ng-model="search.priority">
                     <option value="1. Must">1. Must</option>
