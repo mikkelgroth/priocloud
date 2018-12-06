@@ -3,21 +3,16 @@ angular
     .controller('ProjectsOverviewController', [
         '$scope',
         '$rootScope',
-        
         '$routeParams',
-        
         '$location',
         'userService',
-        
         'companyService',
         function (
             $scope,
             $rootScope,
             $routeParams,
-            
             $location,
             userService,
-            
             companyService
         ) {
 
@@ -37,13 +32,19 @@ angular
                 $scope.showmepobutton=true;
                 $scope.showmeownerbutton=true;
 
-                $scope.search=$rootScope.settings;
+                $scope.search=$rootScope.filtersProjectsOverview;
 
             });
 
             //use same as onuserchange
             $scope.saveSearch = function (){
-                $rootScope.settings=$scope.search;
+                $rootScope.filtersProjectsOverview=$scope.search;
+            }
+            
+            //Save filters to user
+            $scope.saveFilters = function (){
+                $scope.user.filtersProjectsOverview = $rootScope.filtersProjectsOverview;
+                userService.updateUser($scope.user);
             }
 
             companyService.businessUnits.subscribe(function (units) {
@@ -111,6 +112,7 @@ angular
                     // set last status
                     project.lastStatus = project.statuses[project.statuses.length - 1];
                     project.lastStatusFlag = project.lastStatus.status;
+                    project.financeFlag = project.financeControl;
 
                     var now = new Date();
                     var status = new Date(project.lastStatus.date);

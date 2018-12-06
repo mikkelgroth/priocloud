@@ -19,9 +19,9 @@
                     </td>
                     <td class="header" rowspan="3">Affected areas:</td>
                     <td rowspan="3">
-                        <div class="field multiple-select">
-                            <select style="width: 200px" multiple="multiple" ng-multiple="true" ng-model="project.connect" ng-options="bu.name as bu.name for bu in bus | orderBy: 'name'" ng-change="saveNow()" ng-disabled="!user.changeContent"></select>
-                        </div>
+                        
+                            <select class="multiple-select" style="width: 200px" multiple="multiple" ng-multiple="true" ng-model="project.connect" ng-options="bu.name as bu.name for bu in bus | orderBy: 'name'" ng-change="saveNow()" ng-disabled="!user.changeContent"></select>
+                    
                     </td>
                     
                 </tr>

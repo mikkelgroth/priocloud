@@ -1,6 +1,6 @@
 angular
     .module('riskApp')
-    .service('userService', ['$window', '$q', '$http', 'rx', function ($window, $q, $http, rx) {
+    .service('userService', ['$rootScope', '$window', '$q', '$http', 'rx', function ($rootScope, $window, $q, $http, rx) {
 
         var _this = this;
 
@@ -31,7 +31,7 @@ angular
             //user.isOwner = true;
             //user.admin = true;
             //user.demo = false;
-
+            $rootScope.filtersProjectsOverview = user.filtersProjectsOverview;
             
 
             _this.user.onNext(user);
