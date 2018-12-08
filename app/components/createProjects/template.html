@@ -12,7 +12,7 @@
             </tr>
             <tr>
                 <td class="header">Business unit</td>
-                <td><select ng-model="np.bu" ng-options="bu.name for bu in bus| filter: {owner.email: user.email} | track by bu.name"></select></td>
+                <td><select ng-model="np.bu" ng-options="bu.name for bu in bus track by bu.name"></select></td>
             </tr>
             <tr>
                 <td class="header">PM</td>

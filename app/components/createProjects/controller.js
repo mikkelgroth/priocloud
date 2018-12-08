@@ -39,8 +39,12 @@ angular
             companyService
                 .businessUnits
                 .subscribe(function (units) {
-
-                    $scope.bus = units;
+                    $scope.bus = [];
+                    for(var i = 0; i < units.length; i++){
+                        if(units[i].owner.email==$scope.user.email){
+                            $scope.bus.push(units[i]);
+                        }
+                    }
                 });
 
             companyService
@@ -288,9 +292,6 @@ angular
                 $location.path('/project/' + project._id.$oid + '/details')
             };
 
-            $scope.deleteProject = function (project) {
-
-                companyService.deleteProject(project);
-            };
+            
         }
     ]);
