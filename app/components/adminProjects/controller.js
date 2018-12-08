@@ -234,8 +234,8 @@ angular
                 project.risks[1].proximity = 'Project';
                 project.risks[1].acc = project.pm.name;
 
-                project.risks[1].prob = '1';
-                project.risks[1].impact = '1';
+                project.risks[1].prob = 1;
+                project.risks[1].impact = 1;
                 project.risks[1].total = 1;
                 project.risks[1].response = 'Accept';
                 project.risks[1].acc = 'TBD';
@@ -245,12 +245,12 @@ angular
 
 
                 /** Project KPI  */
-                project.kpi1 = '0';
-                project.kpi2 = '0';
-                project.kpi3 = '0';
-                project.kpi4 = '0';
-                project.kpi5 = '0';
-                project.kpi6 = '0';
+                project.kpi1 = 0;
+                project.kpi2 = 0;
+                project.kpi3 = 0;
+                project.kpi4 = 0;
+                project.kpi5 = 0;
+                project.kpi6 = 0;
                 project.total = 0;
 
 

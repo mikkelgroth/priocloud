@@ -59,13 +59,10 @@ angular
             scope.$watch(attrs['prioKpiSizeRender'], function (newVal) {
                 
                 if (newVal == '0') classList['prioKpiSizeRender'] = "rad0";
-                else if (newVal == '10') classList['prioKpiSizeRender'] = "rad1";
-                else if (newVal == '20') classList['prioKpiSizeRender'] = "rad2";
-                else if (newVal == '40') classList['prioKpiSizeRender'] = "rad3";
-                else if (newVal == '50') classList['prioKpiSizeRender'] = "rad4";
-                else if (newVal == '70') classList['prioKpiSizeRender'] = "rad5";
-                else if (newVal == '80') classList['prioKpiSizeRender'] = "rad6";
-                else if (newVal == '99') classList['prioKpiSizeRender'] = "rad7";
+                else if (newVal == '25') classList['prioKpiSizeRender'] = "rad1";
+                else if (newVal == '50') classList['prioKpiSizeRender'] = "rad2";
+                else if (newVal == '75') classList['prioKpiSizeRender'] = "rad3";
+                else if (newVal == '100') classList['prioKpiSizeRender'] = "rad4";
                 else if (newVal) classList['prioKpiSizeRender'] = "rad0";
 
                 repaintClasses();

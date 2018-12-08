@@ -29,7 +29,7 @@ angular
                 });
 
             $scope.saveCompany = function (company) {
-
+                
                 companyService.saveCompany(company);
             };
         }

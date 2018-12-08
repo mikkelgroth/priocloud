@@ -87,12 +87,12 @@
                 <tr ng-repeat="project in projectList | multiFilter:search | orderBy:porderparam" ng-click="goToProject(project._id.$oid)" class="link">
                     <td class="{{project.lastStatus.status}}">{{project.title}}</td>
                     <td>{{project.total}}</td>
-                    <td class="Blue" prio-class prio-kpi-size-render="project.kpi1"></td>
-                    <td class="Blue" prio-class prio-kpi-size-render="project.kpi2"></td>
-                    <td class="Blue" prio-class prio-kpi-size-render="project.kpi3"></td>
-                    <td class="Blue" prio-class prio-kpi-size-render="project.kpi4"></td>
-                    <td class="Blue" prio-class prio-kpi-size-render="project.kpi5"></td>
-                    <td class="Blue" prio-class prio-kpi-size-render="project.kpi6"></td>
+                    <td class="Blue" prio-class prio-kpi-size-render="project.kpi1Graph"></td>
+                    <td class="Blue" prio-class prio-kpi-size-render="project.kpi2Graph"></td>
+                    <td class="Blue" prio-class prio-kpi-size-render="project.kpi3Graph"></td>
+                    <td class="Blue" prio-class prio-kpi-size-render="project.kpi4Graph"></td>
+                    <td class="Blue" prio-class prio-kpi-size-render="project.kpi5Graph"></td>
+                    <td class="Blue" prio-class prio-kpi-size-render="project.kpi6Graph"></td>
                 </tr>
             </table>
         </div>

@@ -383,32 +383,20 @@ h2.Green:before {
 	visibility: hidden;	
 }
 .rad1:before{
-	width: 8px;
-	height: 8px;	
-}
-.rad2:before{
 	width: 10px;
 	height: 10px;	
 }
-.rad3:before{
-	width: 15px;
-	height: 15px;	
-}
-.rad4:before{
+.rad2:before{
 	width: 20px;
 	height: 20px;	
 }
-.rad5:before{
+.rad3:before{
 	width: 30px;
 	height: 30px;	
 }
-.rad6:before{
+.rad4:before{
 	width: 40px;
 	height: 40px;	
-}
-.rad7:before{
-	width: 60px;
-	height: 60px;
 }
 
 

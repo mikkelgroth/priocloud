@@ -111,14 +111,23 @@ angular
         _this.saveProjectName = function (project, user, showSaver) {
             
             // Set total on project 
-            project.total = Math.round((
-                parseInt(project.kpi1) +
-                parseInt(project.kpi2) +
-                parseInt(project.kpi3) +
-                parseInt(project.kpi4) +
-                parseInt(project.kpi5) +
-                parseInt(project.kpi6)
-            ) / 6);
+
+
+            var t = 
+                parseInt(project.kpi1Graph) +
+                parseInt(project.kpi2Graph) +
+                parseInt(project.kpi3Graph) +
+                parseInt(project.kpi4Graph) +
+                parseInt(project.kpi5Graph) +
+                parseInt(project.kpi6Graph);
+
+            if(t==0){
+                project.total = 0
+                
+            }else{
+                project.total = Math.round(t/6);
+            }
+
             projecthaschanged=false;
             deleteThis=false;
             if(showSaver){

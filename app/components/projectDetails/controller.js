@@ -76,7 +76,7 @@ angular
                 });
 
             $scope.saveProject = function (project) {
-                
+
                 var ed = new Date();
                 if (ed instanceof Date && !isNaN(ed.valueOf())) {
                     $scope.editstatus.date = ed;
@@ -89,8 +89,6 @@ angular
             $scope.saveNow = function (project) {
                 
                 $scope.hasChanged=true; 
-                
-                $scope.radarkpidata = [[$scope.project.kpi1, $scope.project.kpi2, $scope.project.kpi3, $scope.project.kpi4, $scope.project.kpi5, $scope.project.kpi6]];              
                 
                 var md = new Date($("#projdate")[0].value);
                 if (md instanceof Date && !isNaN(md.valueOf())) { 
@@ -107,14 +105,36 @@ angular
                     
                 }
 
+                $scope.project.kpi1Graph = ($scope.company.projkpi1Neg == "High")?Number($scope.project.kpi1):100-Number($scope.project.kpi1);
+                $scope.project.kpi2Graph = ($scope.company.projkpi2Neg == "High")?Number($scope.project.kpi2):100-Number($scope.project.kpi2);
+                $scope.project.kpi3Graph = ($scope.company.projkpi3Neg == "High")?Number($scope.project.kpi3):100-Number($scope.project.kpi3);
+                $scope.project.kpi4Graph = ($scope.company.projkpi4Neg == "High")?Number($scope.project.kpi4):100-Number($scope.project.kpi4);
+                $scope.project.kpi5Graph = ($scope.company.projkpi5Neg == "High")?Number($scope.project.kpi5):100-Number($scope.project.kpi5);
+                $scope.project.kpi6Graph = ($scope.company.projkpi6Neg == "High")?Number($scope.project.kpi6):100-Number($scope.project.kpi6);
 
+                $scope.radarkpidata = [[$scope.project.kpi1Graph, $scope.project.kpi2Graph, $scope.project.kpi3Graph, $scope.project.kpi4Graph, $scope.project.kpi5Graph, $scope.project.kpi6Graph]];
+                
+                var t = 
+                parseInt($scope.project.kpi1Graph) +
+                parseInt($scope.project.kpi2Graph) +
+                parseInt($scope.project.kpi3Graph) +
+                parseInt($scope.project.kpi4Graph) +
+                parseInt($scope.project.kpi5Graph) +
+                parseInt($scope.project.kpi6Graph);
 
+            if(t==0){
+                $scope.project.total = 0
+                
+            }else{
+                $scope.project.total = Math.round(t/6);
+            }
+               
             };
 
             //radar stuff
             $scope.radarkpilabels =[$scope.company.projkpi1lable, $scope.company.projkpi2lable, $scope.company.projkpi3lable, $scope.company.projkpi4lable, $scope.company.projkpi5lable, $scope.company.projkpi6lable];
             
-            $scope.radarkpidata = [[$scope.project.kpi1, $scope.project.kpi2, $scope.project.kpi3, $scope.project.kpi4, $scope.project.kpi5, $scope.project.kpi6]];
+            $scope.radarkpidata = [[$scope.project.kpi1Graph, $scope.project.kpi2Graph, $scope.project.kpi3Graph, $scope.project.kpi4Graph, $scope.project.kpi5Graph, $scope.project.kpi6Graph]];
             
             $scope.radarkpioptions = {
                 responsive: false,

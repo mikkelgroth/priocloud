@@ -94,7 +94,7 @@ angular
             };
             //BarRender START
             $scope.barRender = function (mi) {
-                console.log(mi);
+               
                 var s = new Date(Date.parse(mi.date));
                 var e = new Date(Date.parse(mi.enddate));
                 var start = 0;
