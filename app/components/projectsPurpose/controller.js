@@ -2,11 +2,13 @@ angular
     .module('riskApp')
     .controller('ProjectsPurposeController', [
         '$scope',
+        '$rootScope',
         '$location',
         'userService',
         'companyService',
         function (
             $scope,
+            $rootScope,
             $location,
             userService,
             companyService
@@ -16,7 +18,7 @@ angular
                 .company
                 .subscribe(function (company) {
 
-                    $scope.company = company;  
+                    $scope.company = company;
 
                 });
             companyService
@@ -25,14 +27,28 @@ angular
 
                     $scope.company = company;
                 });
-            
+
             companyService.projects.subscribe(function (projects) {
 
                 $scope.projectList = setProjectList(projects);
-                $scope.showmepmbutton=true;
-                $scope.showmepobutton=true;
-                $scope.showmeownerbutton=true;
+                $scope.showmepmbutton = true;
+                $scope.showmepobutton = true;
+                $scope.showmeownerbutton = true;
+
+                $scope.search = $rootScope.filtersProjectsPurposeOverview;
+
             });
+
+            //use same as onuserchange
+            $scope.saveSearch = function () {
+                $rootScope.filtersProjectsPurposeOverview = $scope.search;
+            }
+
+            //Save filters to user
+            $scope.saveFilters = function () {
+                $scope.user.filtersProjectsPurposeOverview = $rootScope.filtersProjectsPurposeOverview;
+                userService.updateUser($scope.user);
+            }
 
             companyService.businessUnits.subscribe(function (units) {
 
@@ -46,38 +62,48 @@ angular
 
             $scope.goToProject = function (projectId) {
 
-		        $location.path('/project/' + projectId);
+                $location.path('/project/' + projectId);
             };
 
             $scope.showmepm = function () {
 
                 $scope.search.pmname = [$scope.user.name];
-                $scope.showmepmbutton=false;
-            };
-            $scope.clearmepm = function () {
-
-                $scope.search.pmname = [];
-                $scope.showmepmbutton=true;
+                $scope.showmepmbutton = false;
             };
             $scope.showmebuowner = function () {
 
                 $scope.search.projbuownername = [$scope.user.name];
-                $scope.showmeownerbutton=false;
+                $scope.showmeownerbutton = false;
             };
             $scope.clearmebuowner = function () {
 
                 $scope.search.projbuownername = [];
-                $scope.showmeownerbutton=true;
+                $scope.showmeownerbutton = true;
+            };
+            $scope.clearmepm = function () {
+
+                $scope.search.pmname = [];
+                $scope.showmepmbutton = true;
+            };
+            $scope.showmebuowner = function () {
+
+                $scope.search.projbuownername = [$scope.user.name];
+                $scope.showmeownerbutton = false;
+            };
+            $scope.clearmebuowner = function () {
+
+                $scope.search.projbuownername = [];
+                $scope.showmeownerbutton = true;
             };
             $scope.showmepo = function () {
 
                 $scope.search.poname = [$scope.user.name];
-                $scope.showmepobutton=false;
+                $scope.showmepobutton = false;
             };
             $scope.clearmepo = function () {
 
                 $scope.search.poname = [];
-                $scope.showmepobutton=true;
+                $scope.showmepobutton = true;
             };
 
 
@@ -89,11 +115,15 @@ angular
                     project.poname = project.po.name;
                     project.pmname = project.pm.name;
                     project.projbuownername = "";
-                    if(project.bu != null && project.bu.owner != null) project.projbuownername = project.bu.owner.name;
+                    if (project.bu != null && project.bu.owner != null) project.projbuownername = project.bu.owner.name;
+
+                    project.portname = '';
+                    if (project.support != null) project.portname = project.support.name;
 
                     // set last status
                     project.lastStatus = project.statuses[project.statuses.length - 1];
                     project.lastStatusFlag = project.lastStatus.status;
+                    project.financeFlag = project.financeControl;
 
                     return project;
                 });

@@ -17,11 +17,31 @@
                 <td colspan="5">Filters</td>
             </tr>
             <tr class="header">
-                <td class="filter-container">Unit</td>
-                <td class="filter-container">Portfolio</td>
-                <td class="filter-container">Project Owner</td>
-                <td class="filter-container">Project manager</td>
-                <td class="filter-container">Project status</td>
+                <td class="filter-container">Unit
+                    <div class="right">
+                        <button ng-click="search.buname=[]" ng-show="showfilters">clear</button>
+                    </div>
+                </td>
+                <td class="filter-container">Portfolio
+                    <div class="right">
+                        <button ng-click="search.portname=[]" ng-show="showfilters">clear</button>
+                    </div>
+                </td>
+                <td class="filter-container">Project Owner
+                    <div class="right">
+                        <button ng-click="search.poname=[]" ng-show="showfilters">clear</button>
+                    </div>
+                </td>
+                <td class="filter-container">Project manager
+                    <div class="right">
+                        <button ng-click="search.pmname=[]" ng-show="showfilters">clear</button>
+                    </div>
+                </td>
+                <td class="filter-container">Project status
+                    <div class="right">
+                        <button ng-click="search.lastStatusFlag=[]" ng-show="showfilters">clear</button>
+                    </div>
+                </td>
             </tr>
             <tr class="filtertd">
                 <td>
@@ -50,11 +70,31 @@
                 </td>
             </tr>
             <tr class="header">
-                <td>State</td>
-                <td>Type</td>
-                <td>Affected</td>
-                <td>Priority</td>
-                <td>Finance</td>
+                <td>State
+                    <div class="right">
+                        <button ng-click="search.state=[]" ng-show="showfilters">clear</button>
+                    </div>
+                </td>
+                <td>Type
+                    <div class="right">
+                        <button ng-click="search.type=[]" ng-show="showfilters">clear</button>
+                    </div>
+                </td>
+                <td>Affected
+                    <div class="right">
+                        <button ng-click="search.connect=[]" ng-show="showfilters">clear</button>
+                    </div>
+                </td>
+                <td>Priority
+                    <div class="right">
+                        <button ng-click="search.priority=[]" ng-show="showfilters">clear</button>
+                    </div>
+                </td>
+                <td>Finance
+                    <div class="right">
+                        <button ng-click="search.financeFlag=[]" ng-show="showfilters">clear</button>
+                    </div>
+                </td>
             </tr>
             <tr class="filtertd">
                 <td>
@@ -140,38 +180,53 @@
                         <option value="bu.name">BU</option>
                         <option value="support.name">Portfolio</option>
                     </select>
-                    
+
                     <div class="right">
                         <button ng-click="saveFilters()">Save as default</button>
                     </div>
-                    
+
                 </td>
             </tr>
         </table>
 
         <div class="overview">
             <table class="tablelist" ng-if="projectList.length > 0">
-                    <tr class="header">
-                        <td>Project</td>
-                        <td colspan="4" style="text-align: center">2017</td><td colspan="4" style="text-align: center">2018</td><td colspan="4" style="text-align: center">2019</td>
-                        <td ng-if="showPending"></td>
-                    </tr>
-                    <tr class="header">
-                        <td>Pending action: <input type="checkbox" ng-model="showPending" /></td>
-                        <td>Q1</td><td>Q2</td><td>Q3</td><td>Q4</td><td>Q1</td><td>Q2</td><td>Q3</td><td>Q4</td><td>Q1</td><td>Q2</td><td>Q3</td><td>Q4</td>
-                        <td ng-if="showPending">Pending action</td>
-                    </tr>
-                    <tr ng-repeat="project in projectList | multiFilter:search | orderBy:[porderparam, porderparam2, porderparam3]" ng-if="!showPending || (project.pending && showPending)"
+                <tr class="header">
+                    <td>Project</td>
+                    <td colspan="4" style="text-align: center">2017</td>
+                    <td colspan="4" style="text-align: center">2018</td>
+                    <td colspan="4" style="text-align: center">2019</td>
+                    <td ng-if="showPending"></td>
+                </tr>
+                <tr class="header">
+                    <td>Pending action:
+                        <input type="checkbox" ng-model="showPending" />
+                    </td>
+                    <td>Q1</td>
+                    <td>Q2</td>
+                    <td>Q3</td>
+                    <td>Q4</td>
+                    <td>Q1</td>
+                    <td>Q2</td>
+                    <td>Q3</td>
+                    <td>Q4</td>
+                    <td>Q1</td>
+                    <td>Q2</td>
+                    <td>Q3</td>
+                    <td>Q4</td>
+                    <td ng-if="showPending">Pending action</td>
+                </tr>
+                <tr ng-repeat="project in projectList | multiFilter:search | orderBy:[porderparam, porderparam2, porderparam3]" ng-if="!showPending || (project.pending && showPending)"
                     ng-click="goToProject(project._id.$oid)" class="link">
                     <td class="{{project.lastStatus.status}}">
                         <b>{{project.title}}</b>
                     </td>
 
-                    
+
                     <td class="bar" ng-style="barRender(project.milestones[0])" colspan="12">{{project.priority}} - KPI: {{project.total}}</td>
-                    
+
                     <td class="texttop" ng-if="showPending">{{project.deccomment}}</td>
-                    
+
                 </tr>
             </table>
         </div>

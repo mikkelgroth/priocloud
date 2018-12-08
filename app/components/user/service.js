@@ -32,6 +32,12 @@ angular
             //user.admin = true;
             //user.demo = false;
             $rootScope.filtersProjectsOverview = user.filtersProjectsOverview;
+            $rootScope.filtersProjectsFinanceOverview = user.filtersProjectsFinanceOverview;
+            $rootScope.filtersProjectsGanttOverview = user.filtersProjectsGanttOverview;
+            $rootScope.filtersProjectsKPIOverview = user.filtersProjectsKPIOverview;
+            $rootScope.filtersProjectsPurposeOverview = user.filtersProjectsPurposeOverview;
+            $rootScope.filtersProjectsReportOverview = user.filtersProjectsReportOverview;
+            $rootScope.filtersProjectsStatusOverview = user.filtersProjectsStatusOverview;
             
 
             _this.user.onNext(user);

@@ -17,11 +17,11 @@
                 <td colspan="5">Filters</td>
             </tr>
             <tr class="header">
-                <td class="filter-container">Unit</td>
-                <td class="filter-container">Portfolio</td>
-                <td class="filter-container">Project Owner</td>
-                <td class="filter-container">Project manager</td>
-                <td class="filter-container">Project status</td>
+                <td class="filter-container">Unit<div class="right"><button ng-click="search.buname=[]" ng-show="showfilters">clear</button></div></td>
+                <td class="filter-container">Portfolio<div class="right"><button ng-click="search.portname=[]" ng-show="showfilters">clear</button></div></td>
+                <td class="filter-container">Project Owner<div class="right"><button ng-click="search.poname=[]" ng-show="showfilters">clear</button></div></td>
+                <td class="filter-container">Project manager<div class="right"><button ng-click="search.pmname=[]" ng-show="showfilters">clear</button></div></td>
+                <td class="filter-container">Project status<div class="right"><button ng-click="search.lastStatusFlag=[]" ng-show="showfilters">clear</button></div></td>
             </tr>
             <tr class="filtertd">
                 <td>
@@ -50,11 +50,11 @@
                 </td>
             </tr>
             <tr class="header">
-                <td>State</td>
-                <td>Type</td>
-                <td>Affected</td>
-                <td>Priority</td>
-                <td>Finance</td>
+                <td>State<div class="right"><button ng-click="search.state=[]" ng-show="showfilters">clear</button></div></td>
+                <td>Type<div class="right"><button ng-click="search.type=[]" ng-show="showfilters">clear</button></div></td>
+                <td>Affected<div class="right"><button ng-click="search.connect=[]" ng-show="showfilters">clear</button></div></td>
+                <td>Priority<div class="right"><button ng-click="search.priority=[]" ng-show="showfilters">clear</button></div></td>
+                <td>Finance<div class="right"><button ng-click="search.financeFlag=[]" ng-show="showfilters">clear</button></div></td>
             </tr>
             <tr class="filtertd">
                 <td>

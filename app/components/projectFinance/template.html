@@ -19,7 +19,7 @@
                         <td>To be controlled:<input ng-change="saveNow()" type="checkbox" ng-model="project.isControlled" ng-disabled="!user.changeContent"/></td>
                         <td>
                             
-                            <select ng-model="project.controller" id="procontroller" ng-options="u.name for u in users | filter: {controller: true} | orderBy:'name' track by u.name" ng-disabled="!user.changeContent" ng-change="saveNow()"></select>
+                            <select ng-model="project.financecontroller" id="procontroller" ng-options="u.name for u in users | filter: {controller: true} | orderBy:'name' track by u.name" ng-disabled="!user.changeContent" ng-change="saveNow()"></select>
                         </td>
                         <td>Controller status:</td>
                         <td>

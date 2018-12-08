@@ -2,12 +2,14 @@ angular
     .module('riskApp')
     .controller('ProjectsReportsController', [
         '$scope',
+        '$rootScope',
         '$routeParams',
         '$location',
         'userService',
         'companyService',
         function (
             $scope,
+            $rootScope,
             $routeParams,
             $location,
             userService,
@@ -28,12 +30,27 @@ angular
                     $scope.company = company;
                 });
             
-            companyService.projects.subscribe(function (projects) {
+                companyService.projects.subscribe(function (projects) {
 
-                $scope.projectList = setProjectList(projects);
-                $scope.showmepmbutton=true;
-                $scope.showmepobutton=true;
-            });
+                    $scope.projectList = setProjectList(projects);
+                    $scope.showmepmbutton=true;
+                    $scope.showmepobutton=true;
+                    $scope.showmeownerbutton=true;
+    
+                    $scope.search=$rootScope.filtersProjectsReportOverview;
+    
+                });
+    
+                //use same as onuserchange
+                $scope.saveSearch = function (){
+                    $rootScope.filtersProjectsReportOverview=$scope.search;
+                }
+                
+                //Save filters to user
+                $scope.saveFilters = function (){
+                    $scope.user.filtersProjectsReportOverview = $rootScope.filtersProjectsReportOverview;
+                    userService.updateUser($scope.user);
+                }
 
             companyService.businessUnits.subscribe(function (units) {
 
@@ -60,6 +77,16 @@ angular
                 $scope.search.pmname = [];
                 $scope.showmepmbutton=true;
             };
+            $scope.showmebuowner = function () {
+
+                $scope.search.projbuownername = [$scope.user.name];
+                $scope.showmeownerbutton=false;
+            };
+            $scope.clearmebuowner = function () {
+
+                $scope.search.projbuownername = [];
+                $scope.showmeownerbutton=true;
+            };
             $scope.showmepo = function () {
 
                 $scope.search.poname = [$scope.user.name];
@@ -80,22 +107,20 @@ angular
                     project.buname = project.bu.name;
                     project.poname = project.po.name;
                     project.pmname = project.pm.name;
-                    project.lastStatus = project.statuses[project.statuses.length - 1];
-                    project.warn = "";
+                    project.projbuownername = "";
+                    if(project.bu != null && project.bu.owner != null) project.projbuownername = project.bu.owner.name;
+                    
+                    project.portname = '';
+                    if(project.support != null) project.portname = project.support.name;
+
                     // set last status
                     project.lastStatus = project.statuses[project.statuses.length - 1];
                     project.lastStatusFlag = project.lastStatus.status;
-
-                    var now = new Date();
-                    var status = new Date(project.lastStatus.date);
-                    if(Math.round((status.getTime()-now.getTime()) / (1000*60*60*24)) < -14){project.warn = "!";}
-                    if(Math.round((status.getTime()-now.getTime()) / (1000*60*60*24)) < -30){project.warn = "!!";}
-                    if(Math.round((status.getTime()-now.getTime()) / (1000*60*60*24)) < -45){project.warn = "!!!";}
+                    project.financeFlag = project.financeControl;
 
                     return project;
                 });
             }
-
             //TEST projects bubble graph
 $scope.projectslabels = [];
 $scope.projectsoptions = {

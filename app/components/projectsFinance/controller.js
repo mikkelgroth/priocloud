@@ -2,11 +2,13 @@ angular
     .module('riskApp')
     .controller('ProjectsFinanceController', [
         '$scope',
+        '$rootScope',
         '$location',
         'userService',
         'companyService',
         function (
             $scope,
+            $rootScope,
             $location,
             userService,
             companyService
@@ -25,7 +27,20 @@ angular
                 $scope.showmepmbutton=true;
                 $scope.showmepobutton=true;
                 $scope.showControlled=true;
+
+                $scope.search=$rootScope.filtersProjectsFinanceOverview;
             });
+
+            //use same as onuserchange
+            $scope.saveSearch = function (){
+                $rootScope.filtersProjectsFinanceOverview=$scope.search;
+            }
+            
+            //Save filters to user
+            $scope.saveFilters = function (){
+                $scope.user.filtersProjectsFinanceOverview = $rootScope.filtersProjectsFinanceOverview;
+                userService.updateUser($scope.user);
+            }
 
             companyService.businessUnits.subscribe(function (units) {
 
@@ -59,6 +74,17 @@ angular
                 $scope.search.pmname = [];
                 $scope.showmepmbutton=true;
             };
+            $scope.showmebuowner = function () {
+
+                $scope.search.projbuownername = [$scope.user.name];
+                $scope.showmeownerbutton=false;
+            };
+            $scope.clearmebuowner = function () {
+
+                $scope.search.projbuownername = [];
+                $scope.showmeownerbutton=true;
+            };
+
             $scope.showmepo = function () {
 
                 $scope.search.poname = [$scope.user.name];
@@ -78,20 +104,15 @@ angular
                     project.buname = project.bu.name;
                     project.poname = project.po.name;
                     project.pmname = project.pm.name;
-
-                   /* project.devTotalprev = project.finance.devTotalprev;
-                                project.devTotalq1 = project.finance.devTotalq1;
-                                project.finance.devTotalq2
-                                project.finance.devTotalq3
-                                project.finance.devTotalq4
-                                project.finance.devTotalSum 
-                                project.finance.devTotalgrandSum
-
-*/
-
-
+                    project.projbuownername = "";
+                    if(project.bu != null && project.bu.owner != null) project.projbuownername = project.bu.owner.name;
+                    
+                    project.portname = '';
+                    if(project.support != null) project.portname = project.support.name;
+                    
                     // set last status
                     project.lastStatus = project.statuses[project.statuses.length - 1];
+                    project.lastStatusFlag = project.lastStatus.status;
                     project.financeFlag = project.financeControl;
 
                     return project;
