@@ -36,7 +36,7 @@ angular
                     } else {
                         $scope.user.changeContent=false;
                     }
-
+                    
                     showMilestone();
                 });
 
@@ -64,7 +64,6 @@ angular
             $scope.beginEditMile = function (mile) {
 
                 $scope.editmile = mile;
-
                 $scope.showMilestoneForm = true;
                 $scope.deleteThis=false;
                 
@@ -83,10 +82,13 @@ angular
 
 
             $scope.saveMilestones = function (open) {
-                companyService.saveProjectName($scope.project, $scope.user, true);
+                
                 $scope.hasChanged=false;
                 $scope.deleteThis=false;
                 
+                $scope.project.milestones[0].prime = true;
+
+                companyService.saveProjectName($scope.project, $scope.user, true);
                 if (open) {
                     $scope.showMilestoneForm = true;
                 }
@@ -113,8 +115,8 @@ angular
                     mile.rawenddate = $("#miledate")[0].value;
                     
                 }
-
-
+                
+                
                 mile.wsjf = Math.floor((mile.bena * mile.sena) /
                     (mile.effort * mile.risklevel) * 100 / 16);
                 $scope.hasChanged=true;               
@@ -130,7 +132,9 @@ angular
                 var newdate = (new Date()).toISOString();
                 var end = new Date();
                 end.setFullYear(end.getFullYear()+1);
-
+                if($scope.project.milestones.length==1){
+                    $scope.editmile.prime = true;
+                }
                 $scope.editmile._id = Math.random().toString(36).substr(2, 9);
                 $scope.editmile.date = newdate;
                 $scope.editmile.enddate = end.toISOString();

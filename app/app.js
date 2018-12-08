@@ -27,6 +27,7 @@ angular
             // projects menu
             $routeProvider.when('/projects', { controller: 'ProjectsOverviewController', templateUrl: 'components/projectsOverview/template.html' });
             $routeProvider.when('/projects/dependencies', { controller: 'ProjectsDependenciesController', templateUrl: 'components/projectsDependencies/template.html' });
+            $routeProvider.when('/projects/gantt', { controller: 'ProjectsGanttController', templateUrl: 'components/projectsGantt/template.html' });
             $routeProvider.when('/projects/kpi', { controller: 'ProjectsKpiController', templateUrl: 'components/projectsKpi/template.html' });
             $routeProvider.when('/projects/status', { controller: 'ProjectsStatusController', templateUrl: 'components/projectsStatus/template.html' });
             $routeProvider.when('/projects/purpose', { controller: 'ProjectsPurposeController', templateUrl: 'components/projectsPurpose/template.html' });

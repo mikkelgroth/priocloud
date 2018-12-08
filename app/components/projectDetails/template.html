@@ -81,10 +81,31 @@
                     </td>
                         
                 </tr>
-            
+                <tr>
+                        <td class="header" prio-class prio-value-bar-render-neg="project.milestones[0].effort">Effort</td>
+                        <td>
+                                <select ng-model="project.milestones[0].effort" ng-change="saveNow()" ng-disabled="!user.changeContent">
+                                        <option value="1">1. Minimal effort</option>
+                                        <option value="2">2. Medium effort</option>
+                                        <option value="3">3. Large effort</option>
+                                        <option value="4">4. Unknown effort</option>
+                                    </select>
+                        </td>
+                    
+                    <td class="header" prio-class prio-value-bar-render-neg="project.milestones[0].risklevel">Risk of failure</td>
+                    <td>
+                            <select ng-model="project.milestones[0].risklevel" ng-change="saveNow()" ng-disabled="!user.changeContent">
+                                    <option value="1">1. Slim risk</option>
+                                    <option value="2">2. Could happen</option>
+                                    <option value="3">3. Likely to happen</option>
+                                    <option value="4">4. Most likely to happen</option>
+                                </select>
+                    </td>
+                        
+                </tr>
                 <tr>
                     <td>
-                        <b>Decision comment</b><br/>Pending action: <input type="checkbox" ng-model="project.pending" ng-change="saveNow()">
+                        <b>Pending action</b>  <div class="right">Notify: <input type="checkbox" ng-model="project.pending" ng-change="saveNow()"></div>
                     </td>
                     <td colspan="3">
                         <div class="field">
@@ -92,10 +113,71 @@
                         </div>
                     </td>
                 </tr>
-                
+            </table>
+            <h2>Overall status
+                    <div class="right">
+                        <button type="button" id="saveButton" prio-class save-this="$parent.hasChanged"
+                                 ng-if="user.changeContent"
+                                 ng-click="saveProject(project)">save</button>
+                    </div>
+                </h2>
+            <table class="smaller">
+                    <tr>
+                            <td class="header">Start Date</td>
+                            <td>
+                                
+                                    <input type="text" id="projdate" datepicker="" ng-model="project.milestones[0].rawdate" ng-change="saveNow()"  class="cal" ng-disabled="!user.changeContent"/>
+                                    {{project.milestones[0].date | date:'longDate'}}
+                                
+                            </td>
+                            <td class="header">End Date</td>
+                            <td>
+                                
+                                    <input type="text" id="projenddate" datepicker="" ng-model="project.milestones[0].rawenddate" ng-change="saveNow()"  class="cal" ng-disabled="!user.changeContent"/>
+                                    {{project.milestones[0].enddate | date:'longDate'}}
+                                
+                            </td>
+                        </tr>
+                    
                 <tr>
-                    <td class="l header" colspan="4">Organization</td>
-                </tr>
+                        <td class="header {{editstatus.status}}">
+                            <p>Overall flag <span id="overallstatus_count" class="right"></span></p>
+                        </td>
+                        <td>
+                            <select ng-disabled="!user.changeContent || !saveStatusEnabled" ng-model="editstatus.status" ng-change="saveNow()">
+                                <option value="Green">OK (Green)</option>
+                                <option value="Yellow">Observe (Yellow)</option>
+                                <option value="Orange">Assist (Orange)</option>
+                                <option value="Red">Intervention (Red)</option>
+                            </select>
+                        </td>
+                        <td class="header">
+                            <p>Last saved status</p>
+                        </td>
+                        <td>
+                            {{editstatus.date | date:'longDate'}}
+                            
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="header">Overall status</td>
+                        <td colspan="3">
+                            
+                            <div class="field"><textarea ng-change="saveNow()" ng-disabled="!user.changeContent || !saveStatusEnabled" ng-model="editstatus.overallcomments" maxlength="300" id="overallstatus" placeholder="Comments"></textarea></div>
+                            
+                            
+                        </td>
+                    </tr>
+                </table>
+                <h2>Organization
+                        <div class="right">
+                                <button type="button" id="saveButton" prio-class save-this="$parent.hasChanged"
+                                     ng-if="user.changeContent"
+                                     ng-click="saveProject(project)">save</button>
+                             </div></h2>
+                <table class="smaller">
+                
+                
                 <tr>
                     <td class="header">PM</td>
                     <td>
@@ -143,10 +225,15 @@
                     <td>Show in report <input type="checkbox" ng-model="project.filters.showOrgExternalLink" ng-change="saveNow()"></td>
                     <td><a target="_blank" href="{{project.orglink}}">{{project.orglinktitle}}<div class="linkicon right"></div></a></td>
                 </tr>
-        
-                <tr>
-                    <td class="l header" colspan="4">Brief business case</td>
-                </tr>
+            </table>
+            <h2>Brief business case
+                    <div class="right">
+                            <button type="button" id="saveButton" prio-class save-this="$parent.hasChanged"
+                                 ng-if="user.changeContent"
+                                 ng-click="saveProject(project)">save</button>
+                         </div></h2>
+            <table class="smaller">
+                
                 <tr>
                     <td>
                         <p>Objective<span id="detailoutcome_count" class="right"></span></p>
@@ -195,6 +282,12 @@
                     <td><a target="_blank" href="{{project.bclink}}">{{project.bclinktitle}}<div class="linkicon right"></div></a></td>
                 </tr>
             </table>
+            <h2>KPI levels
+                    <div class="right">
+                            <button type="button" id="saveButton" prio-class save-this="$parent.hasChanged"
+                                 ng-if="user.changeContent"
+                                 ng-click="saveProject(project)">save</button>
+                         </div></h2>
             <table class="smaller">
             <tr class="header"><td>Project KPI</td><td>Value</td><td>Chart</td></tr>
             <tr><td>{{company.projkpi1lable}}</td>

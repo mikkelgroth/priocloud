@@ -12,11 +12,11 @@
                 <button type="button" 
                 ng-click="$parent.deleteThis=true" 
                 ng-show="!$parent.deleteThis"
-                ng-if="user.changeContent">delete</button>
+                ng-if="user.changeContent && !editmile.prime">delete</button>
             <button type="button" class="Red"
                 ng-click="$parent.deleteThis=false; removeMilestone(editmile)" 
                 ng-show="$parent.deleteThis"
-                ng-if="user.changeContent">confirm delete!!!</button>
+                ng-if="user.changeContent && !editmile.prime">confirm delete!!!</button>
             </div>
         </h2>
         <table class="smaller">
@@ -68,14 +68,14 @@
                 <td class="header">Start Date</td>
                 <td>
                     
-                        <input type="text" id="miledate" datepicker="" ng-model="editmile.rawdate" ng-change="saveNow(editmile); dateChanged(editmile.rawdate)"  class="cal" ng-disabled="!user.changeContent"/>
+                        <input type="text" id="miledate" datepicker="" ng-model="editmile.rawdate" ng-change="saveNow(editmile)"  class="cal" ng-disabled="!user.changeContent"/>
                         {{editmile.date | date:'longDate'}}
                     
                 </td>
                 <td class="header">End Date</td>
                 <td>
                     
-                        <input type="text" id="mileenddate" datepicker="" ng-model="editmile.rawenddate" ng-change="saveNow(editmile); dateChanged(editmile.rawenddate)"  class="cal" ng-disabled="!user.changeContent"/>
+                        <input type="text" id="mileenddate" datepicker="" ng-model="editmile.rawenddate" ng-change="saveNow(editmile)"  class="cal" ng-disabled="!user.changeContent"/>
                         {{editmile.enddate | date:'longDate'}}
                     
                 </td>
@@ -234,7 +234,7 @@
                 </tr>
             </table>
         </div>
-        <h3>&nbsp;</h3>
+        <h3>&nbsp;</h3>{{$scope.milestones[0].title}}
         <table class="smaller">
             <tr class="header"><td colspan="4">Link external doc.</td></tr>
             <tr>
