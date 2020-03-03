@@ -18,6 +18,13 @@ if (window.location.href.indexOf("priocloudtest") > -1) {
     USERSERVER = "https://priodev.northeurope.cloudapp.azure.com/priouser";
     SSO = "SSO";
 
+    //localhost - docker running locally
+} else if (window.location.href.indexOf("localhost") > -1) {
+    SITENAME = "Docker dev";
+    DBSERVER = "/priorest";
+    USERSERVER = "/priouser";
+    SSO = "NOSSO";
+
     //Dev No SSO 3 dockers on Ubuntu 
 } else if (window.location.href.indexOf("priodev.northeurope") > -1) {
     SITENAME = "Docker%SSO";
