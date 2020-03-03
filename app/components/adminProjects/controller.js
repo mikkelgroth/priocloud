@@ -31,36 +31,43 @@ angular
             companyService
                 .company
                 .subscribe(function (company) {
-
                     $scope.company = company;
                 });
-
 
             companyService
                 .businessUnits
                 .subscribe(function (units) {
-
                     $scope.bus = units;
                 });
 
             companyService
                 .projects
                 .subscribe(function (projects) {
-
                     $scope.projects = projects;
                 });
 
-            $scope.newProject = function (project) {
-
+            $scope.newProject = function () {
+                if ($scope.company!=null && ($scope.company.portfolios == null || $scope.company.portfolios.length == 0)) {
+                    $scope.company.portfolios = [];
+                    naport = {};
+                    naport.name = "N/A";
+                    naport.level = "1";
+                    $scope.company.portfolios.push(naport);
+                    $scope.companyService.saveCompany(company);
+                }
+                var project = {};
+                $scope.showeditproject = true;
 
                 /** Project Details  */
-                project.priority ='4. Backlog(H2)';
+                project.creationdate = (new Date()).toISOString();
+                project.priority = '5. Valued';
                 project.state = 'Template';
                 project.type = 'Project';
-                
+                project.support = $scope.company.portfolios[0];
+
 
                 /** Project Finance  */
-/** bud capex */
+                /** bud capex */
                 project.finance = new Object();
                 project.finance.budcapextprev = 0;
                 project.finance.budcapextoneprev = 0;
@@ -80,7 +87,7 @@ angular
                 project.finance.budcapintq2 = 0;
                 project.finance.budcapintq3 = 0;
                 project.finance.budcapintq4 = 0;
-/** bud opex */
+                /** bud opex */
                 project.finance.budopextprev = 0;
                 project.finance.budopextoneprev = 0;
                 project.finance.budopintprev = 0;
@@ -100,7 +107,7 @@ angular
                 project.finance.budopintq3 = 0;
                 project.finance.budopintq4 = 0;
 
-/** post capex */
+                /** post capex */
                 project.finance.postcapextprev = 0;
                 project.finance.postcapextoneprev = 0;
                 project.finance.postcapintprev = 0;
@@ -119,7 +126,7 @@ angular
                 project.finance.postcapintq2 = 0;
                 project.finance.postcapintq3 = 0;
                 project.finance.postcapintq4 = 0;
-/** post opex */
+                /** post opex */
                 project.finance.postopextprev = 0;
                 project.finance.postopextoneprev = 0;
                 project.finance.postopintprev = 0;
@@ -139,7 +146,7 @@ angular
                 project.finance.postopintq3 = 0;
                 project.finance.postopintq4 = 0;
 
-/** next capex */
+                /** next capex */
                 project.finance.nextcapextprev = 0;
                 project.finance.nextcapextoneprev = 0;
                 project.finance.nextcapintprev = 0;
@@ -158,7 +165,7 @@ angular
                 project.finance.nextcapintq2 = 0;
                 project.finance.nextcapintq3 = 0;
                 project.finance.nextcapintq4 = 0;
-/** next opex */
+                /** next opex */
                 project.finance.nextopextprev = 0;
                 project.finance.nextopextoneprev = 0;
                 project.finance.nextopintprev = 0;
@@ -182,7 +189,7 @@ angular
                 project.depriciation = 'TBD';
                 project.depriciationdate = (new Date()).toISOString();
                 project.opexprojectnumber = 'TBD';
-                project.projectnumber ='TBD';
+                project.projectnumber = 'TBD';
                 project.isControlled = false;
 
 
@@ -190,74 +197,30 @@ angular
                 project.milestones = [];
                 project.milestones.push({});
                 project.milestones[0]._id = Math.random().toString(36).substr(2, 9);
-                
+
                 project.milestones[0].date = (new Date()).toISOString();
                 var end = new Date();
-                end.setFullYear(end.getFullYear()+1);
+                end.setFullYear(end.getFullYear() + 1);
                 project.milestones[0].enddate = end.toISOString();
                 project.milestones[0].status = 'Green';
                 project.milestones[0].state = 'Target';
                 project.milestones[0].audience = 'Internal';
-                project.milestones[0].acountable = project.po.name;
-                project.milestones[0].responsible = project.pm.name;
+                //project.milestones[0].acountable = project.po.name;
+                //project.milestones[0].responsible = project.pm.name;
                 project.milestones[0].title = project.title + 'Project';
                 project.milestones[0].bena = '1';
-                project.milestones[0].effort= '1';
-                project.milestones[0].sena= '1';
-                project.milestones[0].risklevel= '1';
+                project.milestones[0].effort = '1';
+                project.milestones[0].sena = '1';
+                project.milestones[0].risklevel = '1';
 
                 /** Project Risk  */
                 project.risks = [];
-                project.risks.push({});
-                project.risks[0]._id = Math.random().toString(36).substr(2, 9);
                 
-                project.risks[0].title = 'General Project Risk';
-                project.risks[0].type = 'Risk';
-                project.risks[0].proximity = 'Project';
-                project.risks[0].acc = project.pm.name;
-
-                project.risks[0].prob = '1';
-                project.risks[0].impact = '1';
-                project.risks[0].total = 1;
-                project.risks[0].response = 'Accept';
-                project.risks[0].acc = 'TBD';
-                project.risks[0].audience = 'Internal';
-                project.risks[0].status = 'Green';
-                project.risks[0].state = 'New';
-
-                /** Project Issue  */
-                project.risks.push({});
-                project.risks[1]._id = Math.random().toString(36).substr(2, 9);
-                
-                project.risks[1].title = 'General Project Issue';
-                project.risks[1].type = 'Issue';
-                project.risks[1].proximity = 'Project';
-                project.risks[1].acc = project.pm.name;
-
-                project.risks[1].prob = 1;
-                project.risks[1].impact = 1;
-                project.risks[1].total = 1;
-                project.risks[1].response = 'Accept';
-                project.risks[1].acc = 'TBD';
-                project.risks[1].audience = 'Internal';
-                project.risks[1].status = 'Green';
-                project.risks[1].state = 'New';
-
-
-                /** Project KPI  */
-                project.kpi1 = 0;
-                project.kpi2 = 0;
-                project.kpi3 = 0;
-                project.kpi4 = 0;
-                project.kpi5 = 0;
-                project.kpi6 = 0;
-                project.total = 0;
-
 
                 /** Project Status  */
                 project.statuses = [];
                 project.statuses.push({});
-                project.statuses[0].date = (new Date()).toISOString();   
+                project.statuses[0].date = (new Date()).toISOString();
                 project.statuses[0].title = 'Project created';
 
                 project.statuses[0].status = "Green";
@@ -268,29 +231,39 @@ angular
                 project.statuses[0].statusres = "Green";
                 project.statuses[0].statusbud = "Green";
                 project.statuses[0].statusrisk = "Green";
-                
+
                 project.statuses[0].apo = "Not evaluated";
                 project.statuses[0].statusstate = "Draft";
                 project.statuses[0].active = true;
-                
+
                 project.statuses[0].cs = "4";
                 project.statuses[0].productcs = "4";
 
+                $scope.np = project;
 
-
-
-
-                companyService.saveProject(project, $scope.user);
+                //companyService.saveProject(project, $scope.user);
+                $('.popup').addClass('active');
             };
 
             $scope.editProject = function (project) {
-
+                $scope.np = project;
+                $('.popup').addClass('active');
+            };
+            
+            $scope.gotoProject = function (project) {
                 $location.path('/project/' + project._id.$oid + '/details')
             };
 
+            $scope.saveProject = function (project) {
+                companyService.saveProject(project, $scope.user);
+                $('.popup').removeClass('active');
+            };
             $scope.deleteProject = function (project) {
-
                 companyService.deleteProject(project);
+                $('.popup').removeClass('active');
+            };
+            $scope.close = function () {
+                $('.popup').removeClass('active');
             };
         }
     ]);

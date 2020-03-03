@@ -2,78 +2,97 @@ angular
     .module('riskApp')
     .controller('ProjectsRisksController', [
         '$scope',
+        '$rootScope',
         '$location',
         'userService',
         'companyService',
         function (
             $scope,
+            $rootScope,
             $location,
             userService,
             companyService
         ) {
-            $scope.risksearch=[];
-            $scope.risksearch.acname=[];
-            companyService.loadCompany();
-            
-            companyService
-                .company
-                .subscribe(function (company) {
 
-                    $scope.company = company;
-                });
+            companyService.company.subscribe(function (company) {
+                $scope.company = company;
+            });
 
             companyService.projects.subscribe(function (projects) {
-
                 $scope.projects = projects;
                 $scope.riskList = setRiskList(projects);
-                $scope.showmepmbutton=true;
-                
             });
 
             companyService.businessUnits.subscribe(function (units) {
-
                 $scope.bus = units;
             });
 
-            userService
-            .user
-            .subscribe(function (user) {
-
+            userService.user.subscribe(function (user) {
                 $scope.user = user;
             });
 
-
             userService.users.subscribe(function (users) {
-
                 $scope.users = users;
-                //$scope.risksearch.acname=[$scope.user.name];
             });
 
-            $scope.goToRiskInProject = function (riskId, projectId) {
+            // copy objects
+            //const target = qcopy(source);
+            function qcopy(src) {
+                return Object.assign({}, src);
+            }
 
+            $scope.showmepmbutton = true;
+            $scope.showmeresbutton = true;
+            $scope.risksearch = qcopy($rootScope.rootfiltersRisks);
+            if ($scope.risksearch == null) {
+                $scope.risksearch = {};
+            }
+
+            //clear all filters
+            $scope.clearall = function () {
+                $scope.risksearch = {};
+            }
+            //use same as onuserchange
+            $scope.saveSearch = function () {
+                $rootScope.rootfiltersRisks = qcopy($scope.risksearch);
+            }
+
+            //Save filters to user
+            $scope.saveFilters = function () {
+                $scope.user.userfiltersRisks = qcopy($rootScope.rootfiltersRisks);
+                userService.updateUser($scope.user);
+            }
+
+            $scope.showdefault = function () {
+                $scope.risksearch = [];
+                if ($scope.user.userfiltersRisks != null) {
+                    $scope.risksearch = qcopy($scope.user.userfiltersRisks);
+                }
+            };
+
+
+            $scope.goToRiskInProject = function (riskId, projectId) {
                 $location.path('/project/' + projectId + '/risks/' + riskId);
             };
 
             $scope.showmepm = function () {
-                $scope.risksearch.audience = [];
-                $scope.risksearch.prob = [];
-                $scope.risksearch.impact = [];
-                $scope.risksearch.recComp = [];
-                $scope.risksearch.status = [];
-                $scope.risksearch.acname = [$scope.user.name];
-                $scope.showmepmbutton=false;
+                $scope.risksearch.ppm = [$scope.user.name];
+                $scope.showmepmbutton = false;
             };
             $scope.clearmepm = function () {
-
-                $scope.risksearch.acname = [];
-                $scope.showmepmbutton=true;
+                $scope.risksearch.ppm = [];
+                $scope.showmepmbutton = true;
             };
-            
-
-
+            $scope.showmeres = function () {
+                $scope.risksearch.acc = [$scope.user.name];
+                $scope.showmeresbutton = false;
+            };
+            $scope.clearmeres = function () {
+                $scope.risksearch.acc = [];
+                $scope.showmeresbutton = true;
+            };
 
             function setRiskList(projects) {
-
                 var risks = [];
                 risks = risks.concat.apply([], projects.map(function (project) {
 
@@ -82,31 +101,29 @@ angular
 
                     return project.risks.map(function (risk) {
 
+                        project.portname = '';
+                        if (project.support != null) risk['pportname'] = project.support.name;
+
                         risk['projectid'] = project._id.$oid;
                         risk['projecttitle'] = project.title;
-                        risk['acname'] = (risk.acc != null) ? risk.acc.name : 'TBD';
-                        risk['wtotal'] = Math.round(project.total * risk.prob * 25 * risk.impact * 25 / 1000);
+                        risk['wtotal'] = Math.round(project.milestones[0].wsjf * risk.prob * 25 * risk.impact * 25 * risk.recCompValue * 25  / 1000000);
                         risk['pitotal'] = Math.round(risk.prob * 25 * risk.impact * 25 / 100);
-                        risk['wtotalprob'] = Math.round(project.total * risk.prob * 25 / 100);
-                        risk['wtotalimpact'] = Math.round(project.total * risk.impact * 25 / 100);
+                        risk['wtotalprob'] = Math.round(project.milestones[0].wsjf * risk.prob * 25 / 100);
+                        risk['wtotalimpact'] = Math.round(project.milestones[0].wsjf * risk.impact * 25 / 100);
                         risk['projectstate'] = project.state;
                         risk['projecttype'] = project.type;
                         risk['projectoid'] = project._id.$oid;
-                        risk['buname'] = project.bu.name;
+                        risk['pbuname'] = project.bu.name;
                         risk['support'] = project.support;
-                        risk['pkpi1'] = project.kpi1;
-                        risk['pkpi2'] = project.kpi2;
-                        risk['pkpi3'] = project.kpi3;
-                        risk['pkpi4'] = project.kpi4;
-                        risk['pkpi5'] = project.kpi5;
-                        risk['pkpi6'] = project.kpi6;
-                        risk['ptotal'] = project.total;
-                        
+                        risk['pstate'] = project.state;
+                        risk['ppm'] = project.pm;
+                        risk['pconnect'] = project.connect;
+                        risk['ppriority'] = project.priority;
 
                         return risk;
                     });
                 }));
-                
+
                 return risks;
             }
         }

@@ -1,88 +1,141 @@
+<h2 class="center {{project.lastStatusFlag}}">
+    {{project.type}} - {{project.title}} ({{project.projectnumber}})
+</h2>
 <prio-project-menu prio-project-id="{{project._id.$oid}}" prio-project-title="{{project.title}}"></prio-project-menu>
 <prio-project-finance-menu prio-project-id="{{project._id.$oid}}"></prio-project-finance-menu>
 
-<div id="linkdiv8" class="view">
-    <h2>
-        Finance
-        
-    
-    <div class="right">
-            
-            <button type="button" id="saveButton" prio-class save-this="$parent.hasChanged"
-                        ng-if="user.changeContent"
-                        ng-click="saveProject(project)">save</button>
-        </div>
-        </h2>
+
+
+
+<div class="view" ng-if="!project.isFinConf || (project.isFinConf && user.changeContent)">
+    <h3>
+        Finance year:
+        <select ng-model="project.filters.showyear" ng-change="saveNow()" ng-init="2020">
+            <option value="2018">2018</option>
+            <option value="2019">2019</option>
+            <option value="2020">2020</option>
+            <option value="2021">2021</option>
+            <option value="2022">2022</option>
+            <option value="2023">2023</option>
+            <option value="2024">2024</option>
+            <option value="2025">2025</option>
+            <option value="2026">2026</option>
+            <option value="2027">2027</option>
+            <option value="2028">2028</option>
+            <option value="2029">2029</option>
+            <option value="2030">2030</option>
+        </select>
+    </h3>
+
     <div id="finance" ng-show="route == 'finance'">
-            <table class="smaller">
-                    <tr class="header">
-                        <td>To be controlled:<input ng-change="saveNow()" type="checkbox" ng-model="project.isControlled" ng-disabled="!user.changeContent"/></td>
-                        <td>
-                            
-                            <select ng-model="project.financecontroller" id="procontroller" ng-options="u.name for u in users | filter: {controller: true} | orderBy:'name' track by u.name" ng-disabled="!user.changeContent" ng-change="saveNow()"></select>
-                        </td>
-                        <td>Controller status:</td>
-                        <td>
-                            <select ng-model="project.financeControl" ng-change="saveNow()" ng-disabled="!user.changeContent">
-                                <option value="Green">Finance controlled (Green)</option>
-                                <option value="Yellow">Please update (Yellow)</option>
-                                <option value="Orange">Deviation unexplained (Orange)</option>
-                                <option value="Red">Budget breached (Red)</option>
-                            </select>
-                        </td>
-                    </tr>    
-                    <tr>    
-                        
-                        <td>
-                            Capex proj. num.:
-                        </td>
-                        <td>
-                            <div class="field"><input ng-change="saveNow()" ng-model="project.projectnumber" ng-disabled="!user.changeContent" /></div>
-                        </td>
-                        <td>
-                            Opex proj. num.: 
-                        </td>
-                        <td>
-                            <div class="field"><input ng-model="project.opexprojectnumber" ng-change="saveNow()" ng-disabled="!user.changeContent" /></div>
-                        </td>
-                    </tr>
-                    <tr>
-                        
-                        <td>
-                           Lifetime:
-                        </td>
-                        <td>
-                            
-                            <select ng-model="project.depriciation" ng-change="saveNow()" ng-disabled="!user.changeContent">
-                                <option value="1">1 year</option>
-                                <option value="3">3 year</option>
-                                <option value="5">5 year</option>
-                                <option value="8">8 year</option>
-                                <option value="10">10 year</option>
-                                <option value="15">15 year</option>
-                                <option value="20">20 year</option>
-                                <option value="25">25 year</option>
-                                <option value="30">30 year</option>
-                            </select>
-                        </td>
-                        <td>Depriciation start date:</td>
-                        <td>
-                            
-                                <input class="cal" type="text" id="depriciationdate" datepicker="" ng-model="project.rawdepriciationdate" ng-change="saveNow(); dateChanged(project.rawdepriciationdate)" ng-disabled="!user.changeContent"/>
-                                {{project.depriciationdate | date:'longDate'}}
-                                
-                           
-                        </td>
-                    </tr>
-                    <tr class="header"><td colspan="4">Link external finance document</td></tr>
-                    <tr>
-                        <td>Title: <input ng-model="project.finlinktitle" ng-change="saveNow()" ng-disabled="!user.changeContent"/></td>    
-                        <td>URL: <input ng-model="project.finlink" ng-change="saveNow()" ng-disabled="!user.changeContent"/></td>
-                        <td>Show in report <input type="checkbox" ng-model="project.filters.showFinExternalLink" ng-change="saveNow()"></td>
-                        <td><a target="_blank" href="{{project.finlink}}">{{project.finlinktitle}}<div class="linkicon right"></div></a></td>
-                    </tr>
-            </table>        
-        <h3>Key project figures</h3>
+        <div class="right">
+            <input type="checkbox" ng-model="project.filters.showFinControl" ng-change="saveNow()"> Controling,&nbsp;
+            <input type="checkbox" ng-model="project.filters.showFinCostItemlines" ng-change="saveNow()"> Cost
+            items,&nbsp;
+            <input type="checkbox" ng-model="project.filters.showFinPostedItemlines" ng-change="saveNow()"> Posted
+            items,&nbsp;
+            <div ng-if="company.filters.companyshowDepend">
+                <input type="checkbox" ng-model="project.filters.showFinDepItemlines" ng-change="saveNow()"> People
+                dependencies,&nbsp;</div>
+
+            <button type="button" id="saveButton" prio-class save-this="$parent.hasChanged" ng-if="user.changeContent"
+                ng-click="saveProject(project)">save</button>
+
+        </div>
+
+        <table class="smaller" ng-show="project.filters.showFinControl">
+            <tr class="header">
+                <td colspan="2">Controlling</td>
+                <td>Confidential</td>
+                <td>
+                    <input ng-change="saveNow()" type="checkbox" ng-model="project.isFinConf"
+                        ng-disabled="!user.changeContent" />
+                </td>
+            </tr>
+            <tr class="header">
+                <td>Finance controller</td>
+                <td>
+
+                    <select ng-model="project.financecontroller" id="procontroller"
+                        ng-options="u.name for u in sessionsusers | filter: {financecontroller: true} | orderBy:'name' track by u.name"
+                        ng-disabled="!user.changeContent && (user.financecontroller || user.admin)"
+                        ng-change="saveNow()"></select>
+                </td>
+                <td>To be controlled</td>
+                <td>
+                    <input ng-change="saveNow()" type="checkbox" ng-model="project.isControlled"
+                        ng-disabled="!user.changeContent && (user.financecontroller || user.admin)" />
+                </td>
+            </tr>
+            <tr>
+                <td>Controller status</td>
+                <td>
+                    <select ng-model="project.financeControl" ng-change="saveNow()"
+                        ng-disabled="!user.changeContent && (user.financecontroller || user.admin)">
+                        <option value="Green">Finance controlled (Green)</option>
+                        <option value="Yellow">Please update (Yellow)</option>
+                        <option value="Orange">Deviation unexplained (Orange)</option>
+                        <option value="Red">Budget breached (Red)</option>
+                    </select>
+                </td>
+                <td>
+                    Project number
+                </td>
+                <td>
+                    <input ng-model="project.projectnumber" ng-change="saveNow()"
+                        ng-disabled="!user.changeContent && (user.financecontroller || user.admin)" />
+                </td>
+            </tr>
+            <tr>
+                <td>Lifetime</td>
+                <td>
+                    <select ng-model="project.depriciation" ng-change="saveNow()"
+                        ng-disabled="!user.changeContent && (user.financecontroller || user.admin)">
+                        <option value="1">1 year</option>
+                        <option value="3">3 year</option>
+                        <option value="5">5 year</option>
+                        <option value="8">8 year</option>
+                        <option value="10">10 year</option>
+                        <option value="15">15 year</option>
+                        <option value="20">20 year</option>
+                        <option value="25">25 year</option>
+                        <option value="30">30 year</option>
+                    </select>
+                </td>
+                <td>Depriciation start</td>
+                <td>
+                    <input class="cal" type="text" id="depriciationdate" datepicker=""
+                        ng-model="project.rawdepriciationdate"
+                        ng-change="saveNow(); dateChanged(project.rawdepriciationdate)"
+                        ng-disabled="!user.changeContent && (user.financecontroller || user.admin)" />
+                    {{project.depriciationdate | date:'longDate'}}
+                </td>
+            </tr>
+            <tr>
+                <td>Control comment</td>
+                <td colspan="3">
+                    <div class="field">
+                        <textarea ng-change="saveNow()" ng-model="project.financeControlComment" maxlength="500"
+                            id="finCom" placeholder="Describe the actions to solve or assist the controlling"
+                            ng-disabled="!user.changeContent"></textarea>
+                    </div>
+                </td>
+            </tr>
+            <tr class="header">
+                <td colspan="4">Link external finance document</td>
+            </tr>
+            <tr>
+                <td>Title: <input ng-model="project.finlinktitle" ng-change="saveNow()"
+                        ng-disabled="!user.changeContent" /></td>
+                <td>URL: <input ng-model="project.finlink" ng-change="saveNow()" ng-disabled="!user.changeContent" />
+                </td>
+                <td>Show in report <input type="checkbox" ng-model="project.filters.showFinExternalLink"
+                        ng-change="saveNow()"></td>
+                <td><a target="_blank" href="{{project.finlink}}">{{project.finlinktitle}}<div class="linkicon right">
+                        </div></a></td>
+            </tr>
+        </table>
+        <br />
         <table class="smaller smallinput">
             <tr class="header">
                 <td>TDKK Ex. Vat</td>
@@ -92,9 +145,34 @@
                 <td>Q3</td>
                 <td>Q4</td>
                 <td>Year</td>
+                <td>Future</td>
                 <td>Grand</td>
             </tr>
             <tr>
+                <td>People total</td>
+                <td class="sums">{{ project.finance.costdeptotaltotaltprev | number:0 }}</td>
+                <td class="sums">{{ project.finance.costdeptotaltotaltq1 | number:0 }}</td>
+                <td class="sums">{{ project.finance.costdeptotaltotaltq2 | number:0 }}</td>
+                <td class="sums">{{ project.finance.costdeptotaltotaltq3 | number:0 }}</td>
+                <td class="sums">{{ project.finance.costdeptotaltotaltq4 | number:0 }}</td>
+                <td class="sums">{{ project.finance.costdeptotaltotaltyear | number:0 }}</td>
+                <td class="sums">{{ project.finance.costdeptotaltotaltfuture | number:0 }}</td>
+                <td class="sums">{{ project.finance.costdeptotaltotalttotal | number:0 }}</td>
+                </td>
+            </tr>
+            <tr>
+                <td>Cost item total</td>
+                <td class="sums">{{ project.finance.costtotaltprev | number:0 }}</td>
+                <td class="sums">{{ project.finance.costtotaltq1 | number:0 }}</td>
+                <td class="sums">{{ project.finance.costtotaltq2 | number:0 }}</td>
+                <td class="sums">{{ project.finance.costtotaltq3 | number:0 }}</td>
+                <td class="sums">{{ project.finance.costtotaltq4 | number:0 }}</td>
+                <td class="sums">{{ project.finance.costtotaltyear | number:0 }}</td>
+                <td class="sums">{{ project.finance.costtotaltfuture | number:0 }}</td>
+                <td class="sums">{{ project.finance.costtotalttotal | number:0 }}</td>
+                </td>
+            </tr>
+            <tr class="header">
                 <td>Budget total</td>
                 <td class="sums">{{ project.finance.budTotalprev | number:0}}</td>
                 <td class="sums">{{ project.finance.budTotalq1 | number:0 }}</td>
@@ -102,6 +180,7 @@
                 <td class="sums">{{ project.finance.budTotalq3 | number:0 }}</td>
                 <td class="sums">{{ project.finance.budTotalq4 | number:0 }}</td>
                 <td class="sums">{{ project.finance.budTotalSum | number:0 }}</td>
+                <td class="sums">{{ project.finance.budTotalfutureSum | number:0 }}</td>
                 <td class="sums">{{ project.finance.budTotalgrandSum | number:0 }}</td>
             </tr>
             <tr>
@@ -112,9 +191,10 @@
                 <td class="sums">{{ project.finance.postTotalq3 | number:0 }}</td>
                 <td class="sums">{{ project.finance.postTotalq4 | number:0 }}</td>
                 <td class="sums">{{ project.finance.postTotalSum | number:0 }}</td>
+                <td class="sums">{{ project.finance.postTotalfutureSum | number:0 }}</td>
                 <td class="sums">{{ project.finance.postTotalgrandSum | number:0 }}</td>
             </tr>
-            <tr class="header">
+            <tr>
                 <td>Deviation total</td>
                 <td class="sums">{{ project.finance.devTotalprev | number:0 }}</td>
                 <td class="sums">{{ project.finance.devTotalq1 | number:0 }}</td>
@@ -122,97 +202,617 @@
                 <td class="sums">{{ project.finance.devTotalq3 | number:0 }}</td>
                 <td class="sums">{{ project.finance.devTotalq4 | number:0 }}</td>
                 <td class="sums">{{ project.finance.devTotalSum | number:0 }}</td>
+                <td class="sums">{{ project.finance.devTotalfutureSum | number:0 }}</td>
                 <td class="sums">{{ project.finance.devTotalgrandSum | number:0 }}</td>
+                </td>
+            </tr>
+            <tr ng-show="project.filters.showFinDepItemlines">
+                <td colspan="9">&nbsp;</td>
+            </tr>
+            <tr class="header" ng-show="project.filters.showFinDepItemlines">
+                <td>People</td>
+                <td>Prev</td>
+                <td>Q1</td>
+                <td>Q2</td>
+                <td>Q3</td>
+                <td>Q4</td>
+                <td>Year</td>
+                <td>Future</td>
+                <td>Grand</td>
+            </tr>
+
+            <tr ng-show="project.filters.showFinDepItemlines">
+                <td>People capex external</td>
+                <td class="sums">{{ project.finance.costdepcapexexternaltprev | number:0 }}</td>
+                <td class="sums">{{ project.finance.costdepcapexexternaltq1 | number:0 }}</td>
+                <td class="sums">{{ project.finance.costdepcapexexternaltq2 | number:0 }}</td>
+                <td class="sums">{{ project.finance.costdepcapexexternaltq3 | number:0 }}</td>
+                <td class="sums">{{ project.finance.costdepcapexexternaltq4 | number:0 }}</td>
+                <td class="sums">{{ project.finance.costdepcapexexternaltyear | number:0 }}</td>
+                <td class="sums">{{ project.finance.costdepcapexexternaltfuture | number:0 }}</td>
+                <td class="sums">{{ project.finance.costdepcapexexternalttotal | number:0 }}</td>
+                </td>
+            </tr>
+
+            <tr ng-show="project.filters.showFinDepItemlines">
+                <td>People opex external</td>
+                <td class="sums">{{ project.finance.costdepopexexternaltprev | number:0 }}</td>
+                <td class="sums">{{ project.finance.costdepopexexternaltq1 | number:0 }}</td>
+                <td class="sums">{{ project.finance.costdepopexexternaltq2 | number:0 }}</td>
+                <td class="sums">{{ project.finance.costdepopexexternaltq3 | number:0 }}</td>
+                <td class="sums">{{ project.finance.costdepopexexternaltq4 | number:0 }}</td>
+                <td class="sums">{{ project.finance.costdepopexexternaltyear | number:0 }}</td>
+                <td class="sums">{{ project.finance.costdepopexexternaltfuture | number:0 }}</td>
+                <td class="sums">{{ project.finance.costdepopexexternalttotal | number:0 }}</td>
+                </td>
+            </tr>
+
+            <tr ng-show="project.filters.showFinDepItemlines">
+                <td>People capex internal</td>
+                <td class="sums">{{ project.finance.costdepcapexinternaltprev | number:0 }}</td>
+                <td class="sums">{{ project.finance.costdepcapexinternaltq1 | number:0 }}</td>
+                <td class="sums">{{ project.finance.costdepcapexinternaltq2 | number:0 }}</td>
+                <td class="sums">{{ project.finance.costdepcapexinternaltq3 | number:0 }}</td>
+                <td class="sums">{{ project.finance.costdepcapexinternaltq4 | number:0 }}</td>
+                <td class="sums">{{ project.finance.costdepcapexinternaltyear | number:0 }}</td>
+                <td class="sums">{{ project.finance.costdepcapexinternaltfuture | number:0 }}</td>
+                <td class="sums">{{ project.finance.costdepcapexinternalttotal | number:0 }}</td>
+                </td>
+            </tr>
+            <tr ng-show="project.filters.showFinDepItemlines">
+                <td>People opex internal</td>
+                <td class="sums">{{ project.finance.costdepopexinternaltprev | number:0 }}</td>
+                <td class="sums">{{ project.finance.costdepopexinternaltq1 | number:0 }}</td>
+                <td class="sums">{{ project.finance.costdepopexinternaltq2 | number:0 }}</td>
+                <td class="sums">{{ project.finance.costdepopexinternaltq3 | number:0 }}</td>
+                <td class="sums">{{ project.finance.costdepopexinternaltq4 | number:0 }}</td>
+                <td class="sums">{{ project.finance.costdepopexinternaltyear | number:0 }}</td>
+                <td class="sums">{{ project.finance.costdepopexinternaltfuture | number:0 }}</td>
+                <td class="sums">{{ project.finance.costdepopexinternalttotal | number:0 }}</td>
+                </td>
+            </tr>
+            <tr ng-show="project.filters.showFinDepItemlines">
+                <td>People capex total</td>
+                <td class="sums">{{ project.finance.costdepcapextotaltprev | number:0 }}</td>
+                <td class="sums">{{ project.finance.costdepcapextotaltq1 | number:0 }}</td>
+                <td class="sums">{{ project.finance.costdepcapextotaltq2 | number:0 }}</td>
+                <td class="sums">{{ project.finance.costdepcapextotaltq3 | number:0 }}</td>
+                <td class="sums">{{ project.finance.costdepcapextotaltq4 | number:0 }}</td>
+                <td class="sums">{{ project.finance.costdepcapextotaltyear | number:0 }}</td>
+                <td class="sums">{{ project.finance.costdepcapextotaltfuture | number:0 }}</td>
+                <td class="sums">{{ project.finance.costdepcapextotalttotal | number:0 }}</td>
+                </td>
+            </tr>
+
+            <tr ng-show="project.filters.showFinDepItemlines">
+                <td>People opex total</td>
+                <td class="sums">{{ project.finance.costdepopextotaltprev | number:0 }}</td>
+                <td class="sums">{{ project.finance.costdepopextotaltq1 | number:0 }}</td>
+                <td class="sums">{{ project.finance.costdepopextotaltq2 | number:0 }}</td>
+                <td class="sums">{{ project.finance.costdepopextotaltq3 | number:0 }}</td>
+                <td class="sums">{{ project.finance.costdepopextotaltq4 | number:0 }}</td>
+                <td class="sums">{{ project.finance.costdepopextotaltyear | number:0 }}</td>
+                <td class="sums">{{ project.finance.costdepopextotaltfuture | number:0 }}</td>
+                <td class="sums">{{ project.finance.costdepopextotalttotal | number:0 }}</td>
+                </td>
+            </tr>
+
+            <tr ng-show="project.filters.showFinDepItemlines">
+                <td>People internal total</td>
+                <td class="sums">{{ project.finance.costdeptotalinternaltprev | number:0 }}</td>
+                <td class="sums">{{ project.finance.costdeptotalinternaltq1 | number:0 }}</td>
+                <td class="sums">{{ project.finance.costdeptotalinternaltq2 | number:0 }}</td>
+                <td class="sums">{{ project.finance.costdeptotalinternaltq3 | number:0 }}</td>
+                <td class="sums">{{ project.finance.costdeptotalinternaltq4 | number:0 }}</td>
+                <td class="sums">{{ project.finance.costdeptotalinternaltyear | number:0 }}</td>
+                <td class="sums">{{ project.finance.costdeptotalinternaltfuture | number:0 }}</td>
+                <td class="sums">{{ project.finance.costdeptotalinternalttotal | number:0 }}</td>
+                </td>
+            </tr>
+            <tr ng-show="project.filters.showFinDepItemlines">
+                <td>People external total</td>
+                <td class="sums">{{ project.finance.costdeptotalexternaltprev | number:0 }}</td>
+                <td class="sums">{{ project.finance.costdeptotalexternaltq1 | number:0 }}</td>
+                <td class="sums">{{ project.finance.costdeptotalexternaltq2 | number:0 }}</td>
+                <td class="sums">{{ project.finance.costdeptotalexternaltq3 | number:0 }}</td>
+                <td class="sums">{{ project.finance.costdeptotalexternaltq4 | number:0 }}</td>
+                <td class="sums">{{ project.finance.costdeptotalexternaltyear | number:0 }}</td>
+                <td class="sums">{{ project.finance.costdeptotalexternaltfuture | number:0 }}</td>
+                <td class="sums">{{ project.finance.costdeptotalexternalttotal | number:0 }}</td>
+                </td>
+            </tr>
+            <tr class="header" ng-show="project.filters.showFinDepItemlines">
+                <td>People total</td>
+                <td class="sums">{{ project.finance.costdeptotaltotaltprev | number:0 }}</td>
+                <td class="sums">{{ project.finance.costdeptotaltotaltq1 | number:0 }}</td>
+                <td class="sums">{{ project.finance.costdeptotaltotaltq2 | number:0 }}</td>
+                <td class="sums">{{ project.finance.costdeptotaltotaltq3 | number:0 }}</td>
+                <td class="sums">{{ project.finance.costdeptotaltotaltq4 | number:0 }}</td>
+                <td class="sums">{{ project.finance.costdeptotaltotaltyear | number:0 }}</td>
+                <td class="sums">{{ project.finance.costdeptotaltotaltfuture | number:0 }}</td>
+                <td class="sums">{{ project.finance.costdeptotaltotalttotal | number:0 }}</td>
+                </td>
+            </tr>
+            <tr ng-show="project.filters.showFinCostItemlines">
+                <td colspan="9">&nbsp;</td>
+            </tr>
+
+            <tr class="header" ng-show="project.filters.showFinCostItemlines">
+                <td>Cost items</td>
+                <td>Prev</td>
+                <td>Q1</td>
+                <td>Q2</td>
+                <td>Q3</td>
+                <td>Q4</td>
+                <td>Year</td>
+                <td>Future</td>
+                <td>Grand</td>
+            </tr>
+
+            <tr ng-show="project.filters.showFinCostItemlines">
+                <td>Cost item capex</td>
+                <td class="sums">{{ project.finance.costcapextprev | number:0 }}</td>
+                <td class="sums">{{ project.finance.costcapextq1 | number:0 }}</td>
+                <td class="sums">{{ project.finance.costcapextq2 | number:0 }}</td>
+                <td class="sums">{{ project.finance.costcapextq3 | number:0 }}</td>
+                <td class="sums">{{ project.finance.costcapextq4 | number:0 }}</td>
+                <td class="sums">{{ project.finance.costcapextyear | number:0 }}</td>
+                <td class="sums">{{ project.finance.costcapextfuture | number:0 }}</td>
+                <td class="sums">{{ project.finance.costcapexttotal | number:0 }}</td>
+                </td>
+            </tr>
+
+            <tr ng-show="project.filters.showFinCostItemlines">
+                <td>Cost item opex</td>
+                <td class="sums">{{ project.finance.costopextprev | number:0 }}</td>
+                <td class="sums">{{ project.finance.costopextq1 | number:0 }}</td>
+                <td class="sums">{{ project.finance.costopextq2 | number:0 }}</td>
+                <td class="sums">{{ project.finance.costopextq3 | number:0 }}</td>
+                <td class="sums">{{ project.finance.costopextq4 | number:0 }}</td>
+                <td class="sums">{{ project.finance.costopextyear | number:0 }}</td>
+                <td class="sums">{{ project.finance.costopextfuture | number:0 }}</td>
+                <td class="sums">{{ project.finance.costopexttotal | number:0 }}</td>
+                </td>
+            </tr>
+
+            <tr class="header" ng-show="project.filters.showFinCostItemlines">
+                <td>Cost item total</td>
+                <td class="sums">{{ project.finance.costtotaltprev | number:0 }}</td>
+                <td class="sums">{{ project.finance.costtotaltq1 | number:0 }}</td>
+                <td class="sums">{{ project.finance.costtotaltq2 | number:0 }}</td>
+                <td class="sums">{{ project.finance.costtotaltq3 | number:0 }}</td>
+                <td class="sums">{{ project.finance.costtotaltq4 | number:0 }}</td>
+                <td class="sums">{{ project.finance.costtotaltyear | number:0 }}</td>
+                <td class="sums">{{ project.finance.costtotaltfuture | number:0 }}</td>
+                <td class="sums">{{ project.finance.costtotalttotal | number:0 }}</td>
+                </td>
             </tr>
         </table>
+
+
+        <br ng-show="project.filters.showFinCostItemlines" />
+        <h3 ng-show="project.filters.showFinCostItemlines">Cost item list</h3>
+        <table class="smaller smallinput">
+            <tr class="header" ng-show="project.filters.showFinCostItemlines">
+                <td>Cost item</td>
+                <td>Ledger #</td>
+                <td>Depriciation</td>
+                <td>Q1</td>
+                <td>Q2</td>
+                <td>Q3</td>
+                <td>Q4</td>
+                <td>Account</td>
+                <td>Account #</td>
+            </tr>
+            <tr ng-repeat="c in project.costitems | orderBy:'ledgercode'" ng-show="project.filters.showFinCostItemlines"
+                ng-if="c.year == project.filters.showyear">
+                <td>{{c.title}}</td>
+                <td class="sums">{{c.ledgercode}}</td>
+                <td class="sums">{{c.depreciationtype}}</td>
+                <td class="sums">{{ c.budq1 | number:0 }}</td>
+                <td class="sums">{{ c.budq2 | number:0 }}</td>
+                <td class="sums">{{ c.budq3 | number:0 }}</td>
+                <td class="sums">{{ c.budq4 | number:0 }}</td>
+                <td>{{c.account.name}}</td>
+                <td class="sums">{{c.account.number}}</td>
+            </tr>
+        </table>
+        <br ng-show="project.filters.showFinPostedItemlines" />
+        <h3 ng-show="project.filters.showFinPostedItemlines">Posted item list</h3>
+        <table class="smaller smallinput">
+            <tr class="header" ng-show="project.filters.showFinPostedItemlines">
+                <td class="header">Item title</td>
+                <td class="header">Ledger #</td>
+                <td class="header">Depriciation</td>
+                <td class="header">Ext/Int</td>
+                <td class="header">Q1</td>
+                <td class="header">Q2</td>
+                <td class="header">Q3</td>
+                <td class="header">Q4</td>
+                <td class="header">Account</td>
+                <td class="header">Account #</td>
+            </tr>
+            <tr ng-repeat="c in project.posteditems | orderBy:'ledgercode'"
+                ng-show="project.filters.showFinPostedItemlines" ng-if="c.year == project.filters.showyear">
+                <td>{{c.title}}</td>
+                <td class="sums">{{c.ledgercode}}</td>
+                <td>{{c.depreciationtype}}</td>
+                <td>{{c.extint}}</td>
+                <td class="sums">{{c.pricepostq1}}</td>
+                <td class="sums">{{c.pricepostq2}}</td>
+                <td class="sums">{{c.pricepostq3}}</td>
+                <td class="sums">{{c.pricepostq4}}</td>
+                <td>{{c.account.name}}</td>
+                <td class="sums">{{c.account.number}}</td>
+            </tr>
+        </table>
+        <div ng-if="company.filters.companyshowDepend">
+            <br ng-show="project.filters.showFinDepItemlines" />
+            <h3 ng-show="project.filters.showFinDepItemlines">People dependencies list</h3>
+            <table class="smaller smallinput">
+                <tr class="header" ng-show="project.filters.showFinDepItemlines">
+                    <td>Type</td>
+                    <td>Ledger #<br />Depriciation</td>
+                    <td>Prev</td>
+                    <td>Q1</td>
+                    <td>Q2</td>
+                    <td>Q3</td>
+                    <td>Q4</td>
+                    <td>Future</td>
+                    <td>Account</td>
+                    <td>Account #</td>
+                </tr>
+                <tr ng-repeat="d in project.deps | orderBy:'depdate'" ng-show="project.filters.showFinDepItemlines">
+                    <td>{{d.title}}<div class="right">Int.</div><br />
+                        <div class="right">Ext</div>
+                    </td>
+                    <td class="sums">{{ d.ledgercode}}<br />{{d.depreciationtype}}</td>
+                    <td class="sums">{{ d.priceintprev | number:0 }}<br />{{ d.priceextprev | number:0 }}</td>
+                    <td class="sums">{{ d.priceintq1 | number:0 }}<br />{{ d.priceextq1 | number:0 }}</td>
+                    <td class="sums">{{ d.priceintq2 | number:0 }}<br />{{ d.priceextq2 | number:0 }}</td>
+                    <td class="sums">{{ d.priceintq3 | number:0 }}<br />{{ d.priceextq3 | number:0 }}</td>
+                    <td class="sums">{{ d.priceintq4 | number:0 }}<br />{{ d.priceextq4 | number:0 }}</td>
+                    <td class="sums">{{ d.priceintfuture | number:0 }}<br />{{ d.priceextfuture | number:0 }}</td>
+                    <td ng-if="d.depreciationtype == 'Capex'">{{d.rt.accountint.name}}<br />{{d.rt.accountext.name}}
+                    </td>
+                    <td ng-if="d.depreciationtype != 'Capex'">{{d.rt.accountintop.name}}<br />{{d.rt.accountextop.name}}
+                    </td>
+                    <td ng-if="d.depreciationtype == 'Capex'" class="sums">
+                        {{d.rt.accountint.number}}<br />{{d.rt.accountext.number}}</td>
+                    <td ng-if="d.depreciationtype != 'Capex'" class="sums">
+                        {{d.rt.accountintop.number}}<br />{{d.rt.accountextop.number}}</td>
+                </tr>
+            </table>
+        </div>
     </div>
 
+
+
+    <div id="budget" ng-show="route == 'baselines'">
+
+        <div class="view">
+            <div class="popupbaseline">
+                <div class="overview popupcontent">
+                    <div class="actions">
+                        <div class="layout">
+                            <div class="layoutelement">
+                                <button ng-click="savebaseline()" ng-if="user.admin || user.changeContent">save
+                                    baseline</button>
+                            </div>
+                            <div class="layoutelement center">
+                                <button type="button" class="Red" ng-click="delbaseline(editbaseline)"
+                                    ng-show="$parent.deletebaselineThis" ng-if="user.admin || user.changeContent">confirm
+                                    delete!!!</button>
+                                <button type="button" ng-click="deletebaseline()" ng-show="!$parent.deletebaselineThis"
+                                    ng-if="user.admin || user.changeContent">delete</button>
+                            </div>
+                            <div class="layoutelement right">
+                                <button type="button" class="close" ng-click="closebaseline()"></button>
+                            </div>
+                        </div>
+                    </div>
+                    <h3 class="{{editdep.status}}">
+                        {{editdep.title}}
+                    </h3>
+                    <table class="formtable smaller">
+                        <tr>
+                            <td class="formlabel">Baseline date</td>
+                            <td>
+                                {{editbaseline.date | date:'longDate'}}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="formlabel">Baseline description</td>
+                            <td>
+                                <textarea ng-model="editbaseline.description" maxlength="500" ng-change="saveNow()"
+                                    id="baselinedescription"
+                                    placeholder="Your reason for baselining and who have approved the new baseline"
+                                    ng-disabled="!user.admin"></textarea>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="header" colspan="2">Project info</td>
+                        </tr>
+                        <tr>
+                            <td class="formlabel">Status</td>
+                            <td>
+                                {{editbaseline.laststatusflag}}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="formlabel">Status date</td>
+                            <td>
+                                {{editbaseline.laststatusdate | date:'longDate'}}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="formlabel">Status title</td>
+                            <td>
+                                {{editbaseline.laststatustitle}}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="formlabel">Overall comment</td>
+                            <td>
+                                {{editbaseline.laststatusoverallcomments}}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="formlabel">Start date</td>
+                            <td>
+                                {{editbaseline.startdate | date:'longDate'}}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="formlabel">End date</td>
+                            <td>
+                                {{editbaseline.enddate | date:'longDate'}}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="formlabel">Value enabler</td>
+                            <td>
+                                {{editbaseline.enabler}}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="formlabel">Value limiter</td>
+                            <td>
+                                {{editbaseline.limiter}}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="formlabel">BU</td>
+                            <td>
+                                {{editbaseline.bu}}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="formlabel">Portfolio</td>
+                            <td>
+                                {{editbaseline.portfolio}}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="formlabel">State</td>
+                            <td>
+                                {{editbaseline.state}}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="formlabel">Priority</td>
+                            <td>
+                                {{editbaseline.priority}}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="header" colspan="2">Finance figures</td>
+                        </tr>
+                        <tr>
+                            <td class="sums">People internal<br />People external<br /><b>Total</b></td>
+                            <td class="sums">
+                                {{editbaseline.peopleinternal | number:0 }}<br />{{editbaseline.peopleexternal | number:0 }}<br /><b>{{editbaseline.peopletotal | number:0 }}</b>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="sums">People opex<br />People capex<br /><b>Total</b></td>
+                            <td class="sums">
+                                {{editbaseline.peopleopex | number:0 }}<br />{{editbaseline.peoplecapex | number:0 }}<br /><b>{{editbaseline.peopletotal | number:0 }}</b>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="sums">Cost items opex<br />Cost items capex<br /><b>Total</b></td>
+                            <td class="sums">
+                                {{editbaseline.costopex | number:0 }}<br />{{editbaseline.costcapex | number:0 }}<br /><b>{{editbaseline.costtotal | number:0 }}</b>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="sums"><b>People</b><br /><b>Cost items</b><br /><b>Grand total</b></td>
+                            <td class="sums">
+                                <b>{{editbaseline.peopletotal | number:0 }}</b><br /><b>{{editbaseline.costtotal | number:0 }}</b><br /><b>{{editbaseline.grandtotal | number:0 }}</b>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+
+            <div class="mainbox">
+                <h3>
+                    <div class="right">
+                        <button type="button" ng-click="addbaseline()" ng-if="user.changeContent">create new
+                            baseline</button>
+                    </div>
+                </h3>
+                <div class="overview">
+                    <table class="tablelist smaller" ng-if="project.statuses.length > 0">
+                        <tr class="header">
+                            <td>
+                                <table>
+                                    <tr>
+                                        <td>Date</td>
+                                        <td>State</td>
+                                        <td>Priority</td>
+                                        <td>End date</td>
+                                        <td class="sums">People<br />Cost<br />Total</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="5">Description</td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+
+                        <tr ng-repeat="baseline in project.finance.baselines | orderBy:'-date'"
+                            ng-click="editbase(baseline)">
+                            <td>
+                                <table>
+                                    <tr>
+                                        <td>{{baseline.date | date:'longDate'}}</td>
+                                        <td>{{baseline.state}}</td>
+                                        <td>{{baseline.priority}}</td>
+                                        <td>{{baseline.enddate | date:'longDate'}}</td>
+                                        <td class="sums">
+                                            {{baseline.peopletotal | number:0 }}<br />{{baseline.costtotal | number:0 }}<br /><b>{{baseline.grandtotal | number:0 }}</b>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="5">
+                                            <pre>{{baseline.description}}</pre>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
     <div id="budget" ng-show="route == 'budget'">
-        <h3>Budget this year</h3>
+        <div class="right">
+            <input type="checkbox" ng-model="project.filters.showFinEditCostItems" ng-change="saveNow()"> Edit
+            cost
+            items&nbsp;
+        </div>
         <table class="smaller smallinput">
             <tr class="header">
-                <td colspan="8">Show comments:
-                    <div class="right"> 
-                        <input type="checkbox" ng-model="showFinanceComQ1" ng-init="showFinanceComQ1=false">Q1, 
-                        <input type="checkbox" ng-model="showFinanceComQ2" ng-init="showFinanceComQ2=false">Q2, 
-                        <input type="checkbox" ng-model="showFinanceComQ3" ng-init="showFinanceComQ3=false">Q3, 
+                <td colspan="9">Show comments:
+                    <div class="right">
+                        <input type="checkbox" ng-model="showFinanceComQ1" ng-init="showFinanceComQ1=false">Q1,
+                        <input type="checkbox" ng-model="showFinanceComQ2" ng-init="showFinanceComQ2=false">Q2,
+                        <input type="checkbox" ng-model="showFinanceComQ3" ng-init="showFinanceComQ3=false">Q3,
                         <input type="checkbox" ng-model="showFinanceComQ4" ng-init="showFinanceComQ4=false">Q4
                     </div>
                 </td>
             </tr>
             <tr ng-if="showFinanceComQ1">
-                <td class="header" colspan="8">
+                <td class="header" colspan="9">
                     <table class="smaller smallinput">
                         <tr>
                             <td class="header">Q1 Budget:</td>
-                            <td><div class="field"><textarea ng-model="project.finance.budq1" maxlength="300" id="budq1" placeholder="Describe budget decisions on Q1 financing." ng-disabled="!user.changeContent"></textarea></div></td>
+                            <td>
+                                <div class="field"><textarea ng-model="project.finance.budq1" maxlength="500" id="budq1"
+                                        placeholder="Describe budget decisions on Q1 financing."
+                                        ng-disabled="!user.changeContent"></textarea></div>
+                            </td>
                         </tr>
                         <tr>
                             <td class="header">Q1 Posted: </td>
-                            <td><pre>{{project.finance.postq1}}</pre></td>
+                            <td>
+                                <pre>{{project.finance.postq1}}</pre>
+                            </td>
                         </tr>
                         <tr>
                             <td class="header">Q1 Deviation:</td>
-                            <td><pre>{{project.finance.devq1}}</pre></td>
+                            <td>
+                                <pre>{{project.finance.devq1}}</pre>
+                            </td>
                         </tr>
                     </table>
                 </td>
             </tr>
             <tr ng-if="showFinanceComQ2">
-                <td class="header" colspan="8">
+                <td class="header" colspan="9">
                     <table class="smaller smallinput">
                         <tr>
                             <td class="header">Q2 Budget:</td>
-                            <td><div class="field"><textarea ng-model="project.finance.budq2" maxlength="300" id="budq2" placeholder="Describe budget decisions on Q2 financing." ng-disabled="!user.changeContent"></textarea></div></td>
+                            <td>
+                                <div class="field"><textarea ng-model="project.finance.budq2" maxlength="500" id="budq2"
+                                        placeholder="Describe budget decisions on Q2 financing."
+                                        ng-disabled="!user.changeContent"></textarea></div>
+                            </td>
                         </tr>
                         <tr>
                             <td class="header">Q2 Posted: </td>
-                            <td><pre>{{project.finance.postq2}}</pre></td>
+                            <td>
+                                <pre>{{project.finance.postq2}}</pre>
+                            </td>
                         </tr>
                         <tr>
                             <td class="header">Q2 Deviation:</td>
-                            <td><pre>{{project.finance.devq2}}</pre></td>
+                            <td>
+                                <pre>{{project.finance.devq2}}</pre>
+                            </td>
                         </tr>
                     </table>
                 </td>
             </tr>
             <tr ng-if="showFinanceComQ3">
-                <td class="header" colspan="8">
+                <td class="header" colspan="9">
                     <table class="smaller smallinput">
                         <tr>
                             <td class="header">Q3 Budget:</td>
-                            <td><div class="field"><textarea ng-model="project.finance.budq3" maxlength="300" id="budq3" placeholder="Describe budget decisions on Q3 financing." ng-disabled="!user.changeContent"></textarea></div></td>
+                            <td>
+                                <div class="field"><textarea ng-model="project.finance.budq3" maxlength="500" id="budq3"
+                                        placeholder="Describe budget decisions on Q3 financing."
+                                        ng-disabled="!user.changeContent"></textarea></div>
+                            </td>
                         </tr>
                         <tr>
                             <td class="header">Q3 Posted: </td>
-                            <td><pre>{{project.finance.postq3}}</pre></td>
+                            <td>
+                                <pre>{{project.finance.postq3}}</pre>
+                            </td>
                         </tr>
                         <tr>
                             <td class="header">Q3 Deviation:</td>
-                            <td><pre>{{project.finance.devq3}}</pre></td>
+                            <td>
+                                <pre>{{project.finance.devq3}}</pre>
+                            </td>
                         </tr>
                     </table>
                 </td>
             </tr>
             <tr ng-if="showFinanceComQ4">
-                <td class="header" colspan="8">
+                <td class="header" colspan="9">
                     <table class="smaller smallinput">
                         <tr>
                             <td class="header">Q4 Budget:</td>
-                            <td><div class="field"><textarea ng-model="project.finance.budq4" maxlength="300" id="budq4" placeholder="Describe budget decisions on Q4 financing." ng-disabled="!user.changeContent"></textarea></div></td>
+                            <td>
+                                <div class="field"><textarea ng-model="project.finance.budq4" maxlength="500" id="budq4"
+                                        placeholder="Describe budget decisions on Q4 financing."
+                                        ng-disabled="!user.changeContent"></textarea></div>
+                            </td>
                         </tr>
                         <tr>
                             <td class="header">Q4 Posted: </td>
-                            <td><pre>{{project.finance.postq4}}</pre></td>
+                            <td>
+                                <pre>{{project.finance.postq4}}</pre>
+                            </td>
                         </tr>
                         <tr>
                             <td class="header">Q4 Deviation:</td>
-                            <td><pre>{{project.finance.devq4}}</pre></td>
+                            <td>
+                                <pre>{{project.finance.devq4}}</pre>
+                            </td>
                         </tr>
                     </table>
                 </td>
             </tr>
-            
+
             <tr class="header">
                 <td>TDKK Ex. Vat</td>
                 <td>Prev</td>
@@ -221,29 +821,52 @@
                 <td>Q3</td>
                 <td>Q4</td>
                 <td>Year</td>
+                <td>Future</td>
                 <td>Grand</td>
             </tr>
             <tr class="header">
-                <td colspan="8">Capex</td>
+                <td colspan="9">Capex</td>
             </tr>
             <tr>
                 <td>External cost</td>
-                <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.budcapextprev" ng-disabled="!user.changeContent"/></div></td>
-                <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.budcapextq1" ng-disabled="!user.changeContent"/></div></td>
-                <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.budcapextq2" ng-disabled="!user.changeContent"/></div></td>
-                <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.budcapextq3" ng-disabled="!user.changeContent"/></div></td>
-                <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.budcapextq4" ng-disabled="!user.changeContent"/></div></td>
+                <td class="sums">
+                    {{project.finance.budcapextprev | number:0}}
+                </td>
+                <td class="sums">
+                    {{project.finance.budcapextq1 | number:0}}
+                </td>
+                <td class="sums">
+                    {{project.finance.budcapextq2 | number:0}}
+                </td>
+                <td class="sums">
+                    {{project.finance.budcapextq3 | number:0}}
+                </td>
+                <td class="sums">
+                    {{project.finance.budcapextq4 | number:0}}
+                </td>
                 <td class="sums">{{ project.finance.budcapexExternal | number:0 }}</td>
+                <td class="sums">{{ project.finance.budcapextfuture | number:0 }}</td>
                 <td class="sums">{{ project.finance.budcapexExternalgrand | number:0 }}</td>
             </tr>
             <tr>
                 <td>Internal people</td>
-                <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.budcapintprev" ng-disabled="!user.changeContent"/></div></td>
-                <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.budcapintq1" ng-disabled="!user.changeContent"/></div></td>
-                <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.budcapintq2" ng-disabled="!user.changeContent"/></div></td>
-                <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.budcapintq3" ng-disabled="!user.changeContent"/></div></td>
-                <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.budcapintq4" ng-disabled="!user.changeContent"/></div></td>
+                <td class="sums">
+                    {{project.finance.budcapintprev | number:0}}
+                </td>
+                <td class="sums">
+                    {{project.finance.budcapintq1 | number:0}}
+                </td>
+                <td class="sums">
+                    {{project.finance.budcapintq2 | number:0}}
+                </td>
+                <td class="sums">
+                    {{project.finance.budcapintq3 | number:0}}
+                </td>
+                <td class="sums">
+                    {{project.finance.budcapintq4 | number:0}}
+                </td>
                 <td class="sums">{{ project.finance.budcapexInternal | number:0 }}</td>
+                <td class="sums">{{ project.finance.budcapintfuture | number:0 }}</td>
                 <td class="sums">{{ project.finance.budcapexInternalgrand | number:0 }}</td>
             </tr>
             <tr>
@@ -254,29 +877,52 @@
                 <td class="sums">{{ project.finance.budcapexq3Sum | number:0 }}</td>
                 <td class="sums">{{ project.finance.budcapexq4Sum | number:0 }}</td>
                 <td class="sums">{{ project.finance.budcapexTotal | number:0 }}</td>
+                <td class="sums">{{ project.finance.budcapexfutureSum | number:0 }}</td>
                 <td class="sums">{{ project.finance.budcapexTotalgrand | number:0 }}</td>
             </tr>
             <tr class="header">
-                <td colspan="8">Opex</td>
+                <td colspan="9">Opex</td>
             </tr>
             <tr>
                 <td>External cost</td>
-                <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.budopextprev" ng-disabled="!user.changeContent"/></div></td>
-                <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.budopextq1" ng-disabled="!user.changeContent"/></div></td>
-                <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.budopextq2" ng-disabled="!user.changeContent"/></div></td>
-                <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.budopextq3" ng-disabled="!user.changeContent"/></div></td>
-                <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.budopextq4" ng-disabled="!user.changeContent"/></div></td>
+                <td class="sums">
+                    {{project.finance.budopextprev | number:0}}
+                </td>
+                <td class="sums">
+                    {{project.finance.budopextq1 | number:0}}
+                </td>
+                <td class="sums">
+                    {{project.finance.budopextq2 | number:0}}
+                </td>
+                <td class="sums">
+                    {{project.finance.budopextq3 | number:0}}
+                </td>
+                <td class="sums">
+                    {{project.finance.budopextq4 | number:0}}
+                </td>
                 <td class="sums">{{ project.finance.budopexExternal | number:0 }}</td>
+                <td class="sums">{{ project.finance.budopextfuture | number:0 }}</td>
                 <td class="sums">{{ project.finance.budopexExternalgrand | number:0 }}</td>
             </tr>
             <tr>
                 <td>Internal people</td>
-                <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.budopintprev" ng-disabled="!user.changeContent"/></div></td>
-                <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.budopintq1" ng-disabled="!user.changeContent"/></div></td>
-                <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.budopintq2" ng-disabled="!user.changeContent"/></div></td>
-                <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.budopintq3" ng-disabled="!user.changeContent"/></div></td>
-                <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.budopintq4" ng-disabled="!user.changeContent"/></div></td>
+                <td class="sums">
+                    {{project.finance.budopintprev | number:0}}
+                </td>
+                <td class="sums">
+                    {{project.finance.budopintq1 | number:0}}
+                </td>
+                <td class="sums">
+                    {{project.finance.budopintq2 | number:0}}
+                </td>
+                <td class="sums">
+                    {{project.finance.budopintq3 | number:0}}
+                </td>
+                <td class="sums">
+                    {{project.finance.budopintq4 | number:0}}
+                </td>
                 <td class="sums">{{ project.finance.budopexInternal | number:0 }}</td>
+                <td class="sums">{{ project.finance.budopintfuture | number:0 }}</td>
                 <td class="sums">{{ project.finance.budopexInternalgrand | number:0 }}</td>
             </tr>
             <tr>
@@ -287,10 +933,11 @@
                 <td class="sums">{{ project.finance.budopexq3Sum | number:0 }}</td>
                 <td class="sums">{{ project.finance.budopexq4Sum | number:0 }}</td>
                 <td class="sums">{{ project.finance.budopexTotal | number:0 }}</td>
+                <td class="sums">{{ project.finance.budopexfutureSum | number:0 }}</td>
                 <td class="sums">{{ project.finance.budopexTotalgrand | number:0 }}</td>
             </tr>
             <tr class="header">
-                <td colspan="8">External cost/Internal people</td>
+                <td colspan="9">External cost/Internal people</td>
             </tr>
             <tr>
                 <td>External cost total</td>
@@ -300,6 +947,7 @@
                 <td class="sums">{{ project.finance.budExternalq3Total | number:0 }}</td>
                 <td class="sums">{{ project.finance.budExternalq4Total | number:0 }}</td>
                 <td class="sums">{{ project.finance.budExternalTotalSum | number:0 }}</td>
+                <td class="sums">{{ project.finance.budExternalTotalfutureSum | number:0 }}</td>
                 <td class="sums">{{ project.finance.budExternalTotalgrandSum | number:0 }}</td>
             </tr>
             <tr>
@@ -310,6 +958,7 @@
                 <td class="sums">{{ project.finance.budInternalq3Total | number:0 }}</td>
                 <td class="sums">{{ project.finance.budInternalq4Total | number:0 }}</td>
                 <td class="sums">{{ project.finance.budInternalTotalSum | number:0 }}</td>
+                <td class="sums">{{ project.finance.budInternalTotalfutureSum | number:0 }}</td>
                 <td class="sums">{{ project.finance.budInternalTotalgrandSum | number:0 }}</td>
             </tr>
             <tr class="header">
@@ -320,6 +969,7 @@
                 <td class="sums">{{ project.finance.budTotalq3 | number:0 }}</td>
                 <td class="sums">{{ project.finance.budTotalq4 | number:0 }}</td>
                 <td class="sums">{{ project.finance.budTotalSum | number:0 }}</td>
+                <td class="sums">{{ project.finance.budTotalfutureSum | number:0 }}</td>
                 <td class="sums">{{ project.finance.budTotalgrandSum | number:0 }}</td>
             </tr>
             <tr>
@@ -331,95 +981,323 @@
                 <td class="sums">{{ project.finance.budAccq4 | number:0 }}</td>
                 <td></td>
                 <td></td>
+                <td></td>
             </tr>
         </table>
+        <div class="overview" ng-show="project.filters.showFinEditCostItems">
+            <br />
+            <button ng-click="addCostitem()" ng-if="user.changeContent" class="right">create
+                cost item</button>
+            <br />
+        </div>
+        <div class="overview" ng-show="project.filters.showFinEditCostItems">
+            <table class="tablelist smaller">
+                <tr class="header">
+                    <td class="header" colspan="7">Order</td>
+                </tr>
+                <tr>
+                    <td>Parameters</td>
+                    <td colspan="2">
+                        <select ng-model="costparam1" ng-init="costparam1='ledgercode'" class="ordersellect-small">
+                            <option value="title">Title</option>
+                            <option value="ledgercode">Ledger #</option>
+                            <option value="accountnumber">Account #</option>
+                            <option value="depreciationtype">Depriciation</option>
+                            <option value="year">Year</option>
+                        </select>
+                    </td>
+                    <td colspan="2">
+                        <select ng-model="costparam2" ng-init="costparam2='year'" class="ordersellect-small">
+                            <option value="title">Title</option>
+                            <option value="ledgercode">Ledger #</option>
+                            <option value="accountnumber">Account #</option>
+                            <option value="depreciationtype">Depriciation</option>
+                            <option value="year">Year</option>
+                        </select>
+                    </td>
+                    <td colspan="2">
+                        <select ng-model="costparam3" ng-init="costparam3='accountnumber'" class="ordersellect-small">
+                            <option value="title">Title</option>
+                            <option value="ledgercode">Ledger #</option>
+                            <option value="accountnumber">Account #</option>
+                            <option value="depreciationtype">Depriciation</option>
+                            <option value="year">Year</option>
+                        </select>
+                    </td>
+                </tr>
+
+                <tr class="header">
+                    <td class="header">Item title</td>
+                    <td class="header">Ledger #</td>
+                    <td class="header">Account</td>
+                    <td class="header">Account #</td>
+                    <td class="header">Depriciation</td>
+                    <td class="header">Budget</td>
+                    <td class="header">Year</td>
+                </tr>
+                <tr ng-repeat="c in project.costitems | orderBy:[costparam1, costparam2, costparam3]"
+                    ng-click="editCostitem(c)">
+                    <td>{{c.title}}</td>
+                    <td class="sums">{{c.ledgercode}}</td>
+                    <td>{{c.account.name}}</td>
+                    <td class="sums">{{c.account.number}}</td>
+                    <td>{{c.depreciationtype}}</td>
+                    <td class="sums">{{c.budgettotal}}</td>
+                    <td class="sums">{{c.year}}</td>
+
+                </tr>
+            </table>
+        </div>
+
+
+        <div class="popup">
+            <div class="overview popupcontent">
+                <div class="actions">
+                    <div class="layout">
+                        <div class="layoutelement">
+                            <button ng-click="saveCostitem(editcostitem)" ng-if="user.changeContent">save</button>
+                        </div>
+                        <div class="layoutelement center">
+                            <button type="button" ng-click="newCloneCostItem(editcostitem)"
+                                ng-if="user.changeContent">clone</button>
+
+                            <button type="button" class="Red" ng-click="delCostitem(editcostitem)"
+                                ng-show="$parent.deleteThis" ng-if="user.admin || user.changeContent">confirm
+                                delete!!!</button>
+
+                            <button type="button" ng-click="deleteCostitem()" ng-show="!$parent.deleteThis"
+                                ng-if="user.admin || user.changeContent">delete</button>
+                        </div>
+                        <div class="layoutelement right">
+                            <button type="button" class="close" ng-click="closecostitem()"></button>
+                        </div>
+                    </div>
+                </div>
+                <h3>
+                    Cost item
+                </h3>
+                <table class="formtable smaller">
+                    <tr>
+                        <td class="formlabel">Cost title</td>
+                        <td>
+                            <input ng-model="editcostitem.title" ng-disabled="!user.changeContent" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="formlabel">Cost year</td>
+                        <td>
+                            <select ng-model="editcostitem.year" ng-change="saveNow()" ng-disabled="!user.changeContent"
+                                ng-init="2019">
+                                <option value="2018">2018</option>
+                                <option value="2019">2019</option>
+                                <option value="2020">2020</option>
+                                <option value="2021">2021</option>
+                                <option value="2022">2022</option>
+                                <option value="2023">2023</option>
+                                <option value="2024">2024</option>
+                                <option value="2025">2025</option>
+                                <option value="2026">2026</option>
+                                <option value="2027">2027</option>
+                                <option value="2028">2028</option>
+                                <option value="2029">2029</option>
+                                <option value="2030">2030</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="formlabel">Depreciation type</td>
+                        <td>
+                            <select ng-model="editcostitem.depreciationtype" ng-change="saveNow()"
+                                ng-disabled="!user.changeContent">
+                                <option value="Capex">Capex</option>
+                                <option value="Opex">Opex</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="formlabel">Account</td>
+                        <td>
+                            <select ng-model="editcostitem.account" ng-change="saveNow()"
+                                ng-disabled="!user.changeContent"
+                                ng-options="acc.name for acc in company.accounts | orderBy:'name' track by acc.name">
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="formlabel">Ledger code</td>
+                        <td>
+                            <input ng-model="editcostitem.ledgercode" ng-disabled="!user.changeContent" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="header" colspan="2">Budgeted cost</td>
+                    </tr>
+                    <tr>
+                        <td class="formlabel">
+                            Q1
+                        </td>
+                        <td>
+                            <input ng-change="saveNow()" ng-model="editcostitem.budq1"
+                                ng-disabled="!user.changeContent" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="formlabel">
+                            Q2
+                        </td>
+                        <td>
+                            <input ng-change="saveNow()" ng-model="editcostitem.budq2"
+                                ng-disabled="!user.changeContent" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="formlabel">
+                            Q3
+                        </td>
+                        <td>
+                            <input ng-change="saveNow()" ng-model="editcostitem.budq3"
+                                ng-disabled="!user.changeContent" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="formlabel">
+                            Q4
+                        </td>
+                        <td>
+                            <input ng-change="saveNow()" ng-model="editcostitem.budq4"
+                                ng-disabled="!user.changeContent" />
+                        </td>
+                    </tr>
+                </table>
+                </td>
+                </tr>
+                </table>
+            </div>
+        </div>
     </div>
+
     <div id="posted" ng-show="route == 'posted'">
-        <h3>Posted this year</h3>
+        <div class="right">
+            <input type="checkbox" ng-model="project.filters.showFinEditPostedItems" ng-change="saveNow()"> Edit
+            posted
+            items&nbsp;
+        </div>
         <table class="smaller smallinput">
             <tr class="header">
-                <td colspan="8">Show comments:
-                    <div class="right"> 
-                        <input type="checkbox" ng-model="showFinanceComQ1" ng-init="showFinanceComQ1=false">Q1, 
-                        <input type="checkbox" ng-model="showFinanceComQ2" ng-init="showFinanceComQ2=false">Q2, 
-                        <input type="checkbox" ng-model="showFinanceComQ3" ng-init="showFinanceComQ3=false">Q3, 
+                <td colspan="9">Show comments:
+                    <div class="right">
+                        <input type="checkbox" ng-model="showFinanceComQ1" ng-init="showFinanceComQ1=false">Q1,
+                        <input type="checkbox" ng-model="showFinanceComQ2" ng-init="showFinanceComQ2=false">Q2,
+                        <input type="checkbox" ng-model="showFinanceComQ3" ng-init="showFinanceComQ3=false">Q3,
                         <input type="checkbox" ng-model="showFinanceComQ4" ng-init="showFinanceComQ4=false">Q4
                     </div>
                 </td>
             </tr>
             <tr ng-if="showFinanceComQ1">
-                <td class="header" colspan="8">
+                <td class="header" colspan="9">
                     <table class="smaller smallinput">
                         <tr>
                             <td class="header">Q1 Budget:</td>
-                            <td><pre>{{project.finance.budq1}}</pre></td>
+                            <td>
+                                <pre>{{project.finance.budq1}}</pre>
+                            </td>
                         </tr>
                         <tr>
                             <td class="header">Q1 Posted: </td>
-                            <td><div class="field"><textarea ng-model="project.finance.postq1" maxlength="300" id="postq1" placeholder="Describe posted decisions on Q1 financing." ng-disabled="!user.changeContent"></textarea></div></td>
+                            <td>
+                                <div class="field"><textarea ng-model="project.finance.postq1" maxlength="500"
+                                        id="postq1" placeholder="Describe posted decisions on Q1 financing."
+                                        ng-disabled="!user.changeContent"></textarea></div>
+                            </td>
                         </tr>
                         <tr>
                             <td class="header">Q1 Deviation:</td>
-                            <td><pre>{{project.finance.devq1}}</pre></td>
+                            <td>
+                                <pre>{{project.finance.devq1}}</pre>
+                            </td>
                         </tr>
                     </table>
                 </td>
             </tr>
             <tr ng-if="showFinanceComQ2">
-                <td class="header" colspan="8">
+                <td class="header" colspan="9">
                     <table class="smaller smallinput">
                         <tr>
                             <td class="header">Q2 Budget:</td>
-                            <td><pre>{{project.finance.budq2}}</pre></td>
+                            <td>
+                                <pre>{{project.finance.budq2}}</pre>
+                            </td>
                         </tr>
                         <tr>
                             <td class="header">Q2 Posted: </td>
-                            <td><div class="field"><textarea ng-model="project.finance.postq2" maxlength="300" id="postq2" placeholder="Describe posted decisions on Q2 financing." ng-disabled="!user.changeContent"></textarea></div></td>
+                            <td>
+                                <div class="field"><textarea ng-model="project.finance.postq2" maxlength="500"
+                                        id="postq2" placeholder="Describe posted decisions on Q2 financing."
+                                        ng-disabled="!user.changeContent"></textarea></div>
+                            </td>
                         </tr>
                         <tr>
                             <td class="header">Q2 Deviation:</td>
-                            <td><pre>{{project.finance.devq2}}</pre></td>
+                            <td>
+                                <pre>{{project.finance.devq2}}</pre>
+                            </td>
                         </tr>
                     </table>
                 </td>
             </tr>
             <tr ng-if="showFinanceComQ3">
-                <td class="header" colspan="8">
+                <td class="header" colspan="9">
                     <table class="smaller smallinput">
                         <tr>
                             <td class="header">Q3 Budget:</td>
-                            <td><pre>{{project.finance.budq3}}</pre></td>
+                            <td>
+                                <pre>{{project.finance.budq3}}</pre>
+                            </td>
                         </tr>
                         <tr>
                             <td class="header">Q3 Posted: </td>
-                            <td><div class="field"><textarea ng-model="project.finance.postq3" maxlength="300" id="postq3" placeholder="Describe posted decisions on Q3 financing." ng-disabled="!user.changeContent"></textarea></div></td>
+                            <td>
+                                <div class="field"><textarea ng-model="project.finance.postq3" maxlength="500"
+                                        id="postq3" placeholder="Describe posted decisions on Q3 financing."
+                                        ng-disabled="!user.changeContent"></textarea></div>
+                            </td>
                         </tr>
                         <tr>
                             <td class="header">Q3 Deviation:</td>
-                            <td><pre>{{project.finance.devq3}}</pre></td>
+                            <td>
+                                <pre>{{project.finance.devq3}}</pre>
+                            </td>
                         </tr>
                     </table>
                 </td>
             </tr>
             <tr ng-if="showFinanceComQ4">
-                <td class="header" colspan="8">
+                <td class="header" colspan="9">
                     <table class="smaller smallinput">
                         <tr>
                             <td class="header">Q4 Budget:</td>
-                            <td><pre>{{project.finance.budq4}}</pre></td>
+                            <td>
+                                <pre>{{project.finance.budq4}}</pre>
+                            </td>
                         </tr>
                         <tr>
                             <td class="header">Q4 Posted: </td>
-                            <td><div class="field"><textarea ng-model="project.finance.postq4" maxlength="300" id="postq4" placeholder="Describe posted decisions on Q4 financing." ng-disabled="!user.changeContent"></textarea></div></td>
+                            <td>
+                                <div class="field"><textarea ng-model="project.finance.postq4" maxlength="500"
+                                        id="postq4" placeholder="Describe posted decisions on Q4 financing."
+                                        ng-disabled="!user.changeContent"></textarea></div>
+                            </td>
                         </tr>
                         <tr>
                             <td class="header">Q4 Deviation:</td>
-                            <td><pre>{{project.finance.devq4}}</pre></td>
+                            <td>
+                                <pre>{{project.finance.devq4}}</pre>
+                            </td>
                         </tr>
                     </table>
                 </td>
             </tr>
-            
+
             <tr class="header">
                 <td>TDKK Ex. Vat</td>
                 <td>Prev</td>
@@ -428,30 +1306,52 @@
                 <td>Q3</td>
                 <td>Q4</td>
                 <td>Year</td>
+                <td>Future</td>
                 <td>Grand</td>
             </tr>
             <tr class="header">
-                <td colspan="8">Capex</td>
+                <td colspan="9">Capex</td>
             </tr>
             <tr>
                 <td>External cost</td>
-                <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.postcapextprev" ng-disabled="!user.changeContent" /></div></td>
-                <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.postcapextq1" ng-disabled="!user.changeContent" /></div></td>
-                <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.postcapextq2" ng-disabled="!user.changeContent" /></div></td>
-                <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.postcapextq3" ng-disabled="!user.changeContent" /></div></td>
-                <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.postcapextq4" ng-disabled="!user.changeContent" /></div></td>
+                <td class="sums">
+                    {{project.finance.postcapextprev | number:0}}
+                </td>
+                <td class="sums">
+                    {{project.finance.postcapextq1 | number:0}}
+                </td>
+                <td class="sums">
+                    {{project.finance.postcapextq2 | number:0}}
+                </td>
+                <td class="sums">
+                    {{project.finance.postcapextq3 | number:0}}
+                </td>
+                <td class="sums">
+                    {{project.finance.postcapextq4 | number:0}}
+                </td>
                 <td class="sums">{{ project.finance.postcapexExternal | number:0 }}</td>
+                <td class="sums">{{ project.finance.postcapextfuture | number:0 }}</td>
                 <td class="sums">{{ project.finance.postcapexExternalgrand | number:0 }}</td>
             </tr>
-            
             <tr>
                 <td>Internal people</td>
-                <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.postcapintprev" ng-disabled="!user.changeContent" /></div></td>
-                <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.postcapintq1" ng-disabled="!user.changeContent" /></div></td>
-                <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.postcapintq2" ng-disabled="!user.changeContent" /></div></td>
-                <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.postcapintq3" ng-disabled="!user.changeContent" /></div></td>
-                <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.postcapintq4" ng-disabled="!user.changeContent" /></div></td>
+                <td class="sums">
+                    {{project.finance.postcapintprev | number:0}}
+                </td>
+                <td class="sums">
+                    {{project.finance.postcapintq1 | number:0}}
+                </td>
+                <td class="sums">
+                    {{project.finance.postcapintq2 | number:0}}
+                </td>
+                <td class="sums">
+                    {{project.finance.postcapintq3 | number:0}}
+                </td>
+                <td class="sums">
+                    {{project.finance.postcapintq4 | number:0}}
+                </td>
                 <td class="sums">{{ project.finance.postcapexInternal | number:0 }}</td>
+                <td class="sums">{{ project.finance.postcapintfuture | number:0 }}</td>
                 <td class="sums">{{ project.finance.postcapexInternalgrand | number:0 }}</td>
             </tr>
             <tr>
@@ -462,30 +1362,52 @@
                 <td class="sums">{{ project.finance.postcapexq3Sum | number:0 }}</td>
                 <td class="sums">{{ project.finance.postcapexq4Sum | number:0 }}</td>
                 <td class="sums">{{ project.finance.postcapexTotal | number:0 }}</td>
+                <td class="sums">{{ project.finance.postcapexfutureSum | number:0 }}</td>
                 <td class="sums">{{ project.finance.postcapexTotalgrand | number:0 }}</td>
             </tr>
             <tr class="header">
-                <td colspan="8">Opex</td>
+                <td colspan="9">Opex</td>
             </tr>
             <tr>
                 <td>External cost</td>
-                <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.postopextprev" ng-disabled="!user.changeContent" /></div></td>
-                <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.postopextq1" ng-disabled="!user.changeContent" /></div></td>
-                <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.postopextq2" ng-disabled="!user.changeContent" /></div></td>
-                <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.postopextq3" ng-disabled="!user.changeContent" /></div></td>
-                <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.postopextq4" ng-disabled="!user.changeContent" /></div></td>
+                <td class="sums">
+                    {{project.finance.postopextprev | number:0}}
+                </td>
+                <td class="sums">
+                    {{project.finance.postopextq1 | number:0}}
+                </td>
+                <td class="sums">
+                    {{project.finance.postopextq2 | number:0}}
+                </td>
+                <td class="sums">
+                    {{project.finance.postopextq3 | number:0}}
+                </td>
+                <td class="sums">
+                    {{project.finance.postopextq4 | number:0}}
+                </td>
                 <td class="sums">{{ project.finance.postopexExternal | number:0 }}</td>
+                <td class="sums">{{ project.finance.postopextfuture | number:0 }}</td>
                 <td class="sums">{{ project.finance.postopexExternalgrand | number:0 }}</td>
             </tr>
-            
             <tr>
                 <td>Internal people</td>
-                <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.postopintprev" ng-disabled="!user.changeContent" /></div></td>
-                <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.postopintq1" ng-disabled="!user.changeContent" /></div></td>
-                <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.postopintq2" ng-disabled="!user.changeContent" /></div></td>
-                <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.postopintq3" ng-disabled="!user.changeContent" /></div></td>
-                <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.postopintq4" ng-disabled="!user.changeContent" /></div></td>
+                <td class="sums">
+                    {{project.finance.postopintprev | number:0}}
+                </td>
+                <td class="sums">
+                    {{project.finance.postopintq1 | number:0}}
+                </td>
+                <td class="sums">
+                    {{project.finance.postopintq2 | number:0}}
+                </td>
+                <td class="sums">
+                    {{project.finance.postopintq3 | number:0}}
+                </td>
+                <td class="sums">
+                    {{project.finance.postopintq4 | number:0}}
+                </td>
                 <td class="sums">{{ project.finance.postopexInternal | number:0 }}</td>
+                <td class="sums">{{ project.finance.postopintfuture | number:0 }}</td>
                 <td class="sums">{{ project.finance.postopexInternalgrand | number:0 }}</td>
             </tr>
             <tr>
@@ -496,10 +1418,11 @@
                 <td class="sums">{{ project.finance.postopexq3Sum | number:0 }}</td>
                 <td class="sums">{{ project.finance.postopexq4Sum | number:0 }}</td>
                 <td class="sums">{{ project.finance.postopexTotal | number:0 }}</td>
-                <td class="sums">{{ project.finance.postopexTotalgrand  | number:0}}</td>
+                <td class="sums">{{ project.finance.postopexfutureSum | number:0 }}</td>
+                <td class="sums">{{ project.finance.postopexTotalgrand | number:0 }}</td>
             </tr>
             <tr class="header">
-                <td colspan="8">External cost/Internal people</td>
+                <td colspan="9">External cost/Internal people</td>
             </tr>
             <tr>
                 <td>External cost total</td>
@@ -509,6 +1432,7 @@
                 <td class="sums">{{ project.finance.postExternalq3Total | number:0 }}</td>
                 <td class="sums">{{ project.finance.postExternalq4Total | number:0 }}</td>
                 <td class="sums">{{ project.finance.postExternalTotalSum | number:0 }}</td>
+                <td class="sums">{{ project.finance.postExternalTotalfutureSum | number:0 }}</td>
                 <td class="sums">{{ project.finance.postExternalTotalgrandSum | number:0 }}</td>
             </tr>
             <tr>
@@ -519,6 +1443,7 @@
                 <td class="sums">{{ project.finance.postInternalq3Total | number:0 }}</td>
                 <td class="sums">{{ project.finance.postInternalq4Total | number:0 }}</td>
                 <td class="sums">{{ project.finance.postInternalTotalSum | number:0 }}</td>
+                <td class="sums">{{ project.finance.postInternalTotalfutureSum | number:0 }}</td>
                 <td class="sums">{{ project.finance.postInternalTotalgrandSum | number:0 }}</td>
             </tr>
             <tr class="header">
@@ -529,101 +1454,286 @@
                 <td class="sums">{{ project.finance.postTotalq3 | number:0 }}</td>
                 <td class="sums">{{ project.finance.postTotalq4 | number:0 }}</td>
                 <td class="sums">{{ project.finance.postTotalSum | number:0 }}</td>
+                <td class="sums">{{ project.finance.postTotalfutureSum | number:0 }}</td>
                 <td class="sums">{{ project.finance.postTotalgrandSum | number:0 }}</td>
             </tr>
             <tr>
                 <td>Year accum.</td>
                 <td></td>
-                <td class="sums">{{ project.finance.postAccq1 | number:0 }}</td>
-                <td class="sums">{{ project.finance.postAccq2 | number:0 }}</td>
+                <td class="sums">{{ project.finance.postAccq1 | number:0}}</td>
+                <td class="sums">{{ project.finance.postAccq2 | number:0}}</td>
                 <td class="sums">{{ project.finance.postAccq3 | number:0 }}</td>
                 <td class="sums">{{ project.finance.postAccq4 | number:0 }}</td>
                 <td></td>
                 <td></td>
+                <td></td>
             </tr>
         </table>
+        <div class="overview" ng-show="project.filters.showFinEditPostedItems">
+            <br />
+            <button ng-click="addposteditem()" ng-if="user.changeContent" class="right">create
+                posted item</button>
+            <br />
+        </div>
+        <div class="overview" ng-show="project.filters.showFinEditPostedItems">
+            <table class="tablelist smaller">
+                <tr class="header">
+                    <td class="header">Item title</td>
+                    <td class="header">Depriciation</td>
+                    <td class="header">Ext/Int</td>
+                    <td class="header">Q1</td>
+                    <td class="header">Q2</td>
+                    <td class="header">Q3</td>
+                    <td class="header">Q4</td>
+                    <td class="header">Ledger #</td>
+                    <td class="header">Account</td>
+                    <td class="header">Account #</td>
+                    <td class="header">Year</td>
+                </tr>
+                <tr ng-repeat="c in project.posteditems | orderBy:'ledgercode'" ng-click="editPosteditem(c)">
+                    <td>{{c.title}}</td>
+                    <td>{{c.depreciationtype}}</td>
+                    <td>{{c.extint}}</td>
+                    <td class="sums">{{c.pricepostq1}}</td>
+                    <td class="sums">{{c.pricepostq2}}</td>
+                    <td class="sums">{{c.pricepostq3}}</td>
+                    <td class="sums">{{c.pricepostq4}}</td>
+                    <td class="sums">{{c.ledgercode}}</td>
+                    <td>{{c.account.name}}</td>
+                    <td class="sums">{{c.account.number}}</td>
+                    <td class="sums">{{c.year}}</td>
+
+                </tr>
+            </table>
+        </div>
+
+        <div class="overview popup" ng-show="project.filters.showFinEditPostedItems && showeditposted">
+            <table class="smaller gutter-top">
+                <tr>
+                    <td class="header" colspan="2">Edit posted items
+                        <div class="right">
+                            <button ng-click="saveposteditem(editposteditem)" ng-if="user.changeContent">save
+                                posted item</button>
+                            <button type="button" ng-click="closeposted()">cancel</button>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="header">posted title</td>
+                    <td>
+                        <input ng-model="editposteditem.title" ng-disabled="!user.changeContent" />
+                    </td>
+                </tr>
+                <tr>
+                    <td class="header">posted year</td>
+                    <td>
+                        <select ng-model="editposteditem.year" ng-change="saveNow()" ng-disabled="!user.changeContent"
+                            ng-init="2019">
+                            <option value="2018">2018</option>
+                            <option value="2019">2019</option>
+                            <option value="2020">2020</option>
+                            <option value="2021">2021</option>
+                            <option value="2022">2022</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="header">Depreciation type</td>
+                    <td>
+                        <select ng-model="editposteditem.depreciationtype" ng-change="saveNow()"
+                            ng-disabled="!user.changeContent">
+                            <option value="Capex">Capex</option>
+                            <option value="Opex">Opex</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="header">Ext/Int</td>
+                    <td>
+                        <select ng-model="editposteditem.extint" ng-change="saveNow()"
+                            ng-disabled="!user.changeContent">
+                            <option value="External">External</option>
+                            <option value="Internal">Internal</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="header">Account</td>
+                    <td>
+                        <select ng-model="editposteditem.account" ng-change="saveNow()"
+                            ng-disabled="!user.changeContent"
+                            ng-options="acc.name for acc in company.accounts | orderBy:'name' track by acc.name">
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="header">Ledger code</td>
+                    <td>
+                        <input ng-model="editposteditem.ledgercode" ng-disabled="!user.changeContent" />
+                    </td>
+                </tr>
+                <tr>
+                    <td class="header">Posted cost</td>
+                    <td>
+                        <table>
+                            <tr class="header">
+                                <td>
+                                    Q1
+                                </td>
+                                <td>
+                                    Q2
+                                </td>
+                                <td>
+                                    Q3
+                                </td>
+                                <td>
+                                    Q4
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="field"><input ng-change="saveNow()" ng-model="editposteditem.postq1"
+                                            ng-disabled="!user.changeContent" /></div>
+                                </td>
+                                <td>
+                                    <div class="field"><input ng-change="saveNow()" ng-model="editposteditem.postq2"
+                                            ng-disabled="!user.changeContent" /></div>
+                                </td>
+                                <td>
+                                    <div class="field"><input ng-change="saveNow()" ng-model="editposteditem.postq3"
+                                            ng-disabled="!user.changeContent" /></div>
+                                </td>
+                                <td>
+                                    <div class="field"><input ng-change="saveNow()" ng-model="editposteditem.postq4"
+                                            ng-disabled="!user.changeContent" /></div>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td colspan="2"><button ng-click="delposteditem(editposteditem)" ng-if="user.changeContent">delete
+                            posted item</button></td>
+                </tr>
+            </table>
+        </div>
     </div>
+
+
     <div id="deviation" ng-show="route == 'deviation'">
         <h3>Deviation this year</h3>
         <table class="smaller smallinput">
             <tr class="header">
-                <td colspan="8">Show comments:
-                    <div class="right"> 
-                        <input type="checkbox" ng-model="showFinanceComQ1" ng-init="showFinanceComQ1=false">Q1, 
-                        <input type="checkbox" ng-model="showFinanceComQ2" ng-init="showFinanceComQ2=false">Q2, 
-                        <input type="checkbox" ng-model="showFinanceComQ3" ng-init="showFinanceComQ3=false">Q3, 
+                <td colspan="9">Show comments:
+                    <div class="right">
+                        <input type="checkbox" ng-model="showFinanceComQ1" ng-init="showFinanceComQ1=false">Q1,
+                        <input type="checkbox" ng-model="showFinanceComQ2" ng-init="showFinanceComQ2=false">Q2,
+                        <input type="checkbox" ng-model="showFinanceComQ3" ng-init="showFinanceComQ3=false">Q3,
                         <input type="checkbox" ng-model="showFinanceComQ4" ng-init="showFinanceComQ4=false">Q4
                     </div>
                 </td>
             </tr>
             <tr ng-if="showFinanceComQ1">
-                <td class="header" colspan="8">
+                <td class="header" colspan="9">
                     <table class="smaller smallinput">
                         <tr>
                             <td class="header">Q1 Budget:</td>
-                            <td><pre>{{project.finance.budq1}}</pre></td>
+                            <td>
+                                <pre>{{project.finance.budq1}}</pre>
+                            </td>
                         </tr>
                         <tr>
                             <td class="header">Q1 Posted: </td>
-                            <td><pre>{{project.finance.postq1}}</pre></td>
+                            <td>
+                                <pre>{{project.finance.postq1}}</pre>
+                            </td>
                         </tr>
                         <tr>
                             <td class="header">Q1 Deviation:</td>
-                            <td><div class="field"><textarea ng-model="project.finance.devq1" maxlength="300" id="budq1" placeholder="Describe budget decisions on Q1 financing." ng-disabled="!user.changeContent"></textarea></div></td>
+                            <td>
+                                <div class="field"><textarea ng-model="project.finance.devq1" maxlength="500" id="budq1"
+                                        placeholder="Describe budget decisions on Q1 financing."
+                                        ng-disabled="!user.changeContent"></textarea></div>
+                            </td>
                         </tr>
                     </table>
                 </td>
             </tr>
             <tr ng-if="showFinanceComQ2">
-                <td class="header" colspan="8">
+                <td class="header" colspan="9">
                     <table class="smaller smallinput">
                         <tr>
                             <td class="header">Q2 Budget:</td>
-                            <td><pre>{{project.finance.budq2}}</pre></td>
+                            <td>
+                                <pre>{{project.finance.budq2}}</pre>
+                            </td>
                         </tr>
                         <tr>
                             <td class="header">Q2 Posted: </td>
-                            <td><pre>{{project.finance.postq2}}</pre></td>
+                            <td>
+                                <pre>{{project.finance.postq2}}</pre>
+                            </td>
                         </tr>
                         <tr>
                             <td class="header">Q2 Deviation:</td>
-                            <td><div class="field"><textarea ng-model="project.finance.devq2" maxlength="300" id="budq2" placeholder="Describe budget decisions on Q2 financing." ng-disabled="!user.changeContent"></textarea></div></td>
+                            <td>
+                                <div class="field"><textarea ng-model="project.finance.devq2" maxlength="500" id="budq2"
+                                        placeholder="Describe budget decisions on Q2 financing."
+                                        ng-disabled="!user.changeContent"></textarea></div>
+                            </td>
                         </tr>
                     </table>
                 </td>
             </tr>
             <tr ng-if="showFinanceComQ3">
-                <td class="header" colspan="8">
+                <td class="header" colspan="9">
                     <table class="smaller smallinput">
                         <tr>
                             <td class="header">Q3 Budget:</td>
-                            <td><pre>{{project.finance.budq3}}</pre></td>
+                            <td>
+                                <pre>{{project.finance.budq3}}</pre>
+                            </td>
                         </tr>
                         <tr>
                             <td class="header">Q3 Posted: </td>
-                            <td><pre>{{project.finance.postq3}}</pre></td>
+                            <td>
+                                <pre>{{project.finance.postq3}}</pre>
+                            </td>
                         </tr>
                         <tr>
                             <td class="header">Q3 Deviation:</td>
-                            <td><div class="field"><textarea ng-model="project.finance.devq3" maxlength="300" id="budq3" placeholder="Describe budget decisions on Q3 financing." ng-disabled="!user.changeContent"></textarea></div></td>
+                            <td>
+                                <div class="field"><textarea ng-model="project.finance.devq3" maxlength="500" id="budq3"
+                                        placeholder="Describe budget decisions on Q3 financing."
+                                        ng-disabled="!user.changeContent"></textarea></div>
+                            </td>
                         </tr>
                     </table>
                 </td>
             </tr>
             <tr ng-if="showFinanceComQ4">
-                <td class="header" colspan="8">
+                <td class="header" colspan="9">
                     <table class="smaller smallinput">
                         <tr>
                             <td class="header">Q4 Budget:</td>
-                            <td><pre>{{project.finance.budq4}}</pre></td>
+                            <td>
+                                <pre>{{project.finance.budq4}}</pre>
+                            </td>
                         </tr>
                         <tr>
                             <td class="header">Q4 Posted: </td>
-                            <td><pre>{{project.finance.postq4}}</pre></td>
+                            <td>
+                                <pre>{{project.finance.postq4}}</pre>
+                            </td>
                         </tr>
                         <tr>
                             <td class="header">Q4 Deviation:</td>
-                            <td><div class="field"><textarea ng-model="project.finance.devq4" maxlength="300" id="budq4" placeholder="Describe budget decisions on Q4 financing." ng-disabled="!user.changeContent"></textarea></div></td>
+                            <td>
+                                <div class="field"><textarea ng-model="project.finance.devq4" maxlength="500" id="budq4"
+                                        placeholder="Describe budget decisions on Q4 financing."
+                                        ng-disabled="!user.changeContent"></textarea></div>
+                            </td>
                         </tr>
                     </table>
                 </td>
@@ -636,112 +1746,127 @@
                 <td>Q3</td>
                 <td>Q4</td>
                 <td>Year</td>
+                <td>Future</td>
                 <td>Grand</td>
             </tr>
             <tr class="header">
-                <td colspan="8">Capex</td>
+                <td colspan="9">Capex</td>
             </tr>
             <tr>
                 <td>External cost</td>
                 <td class="sums tooltip">{{ project.finance.devcapextprev | number:0 }}
-                    <span class="tooltiptext"> 
-                        Budget: {{project.finance.budcapextprev | number:0}}<br/> 
-                        Posted: {{project.finance.postcapextprev | number:0}}<br/> 
+                    <span class="tooltiptext">
+                        Budget: {{project.finance.budcapextprev | number:0}}<br />
+                        Posted: {{project.finance.postcapextprev | number:0}}<br />
                         Deviation: {{ project.finance.devcapextprev | number:0 }}
                     </span>
                 </td>
                 <td class="sums tooltip">{{ project.finance.devcapextq1 | number:0 }}
-                    <span class="tooltiptext"> 
-                        Budget: {{project.finance.budcapextq1 | number:0}}<br/> 
-                        Posted: {{project.finance.postcapextq1 | number:0}}<br/> 
+                    <span class="tooltiptext">
+                        Budget: {{project.finance.budcapextq1 | number:0}}<br />
+                        Posted: {{project.finance.postcapextq1 | number:0}}<br />
                         Deviation: {{ project.finance.devcapextq1 | number:0 }}
                     </span>
                 </td>
                 <td class="sums tooltip">{{ project.finance.devcapextq2 | number:0 }}
-                    <span class="tooltiptext"> 
-                        Budget: {{project.finance.budcapextq2 | number:0}}<br/> 
-                        Posted: {{project.finance.postcapextq2 | number:0}}<br/> 
+                    <span class="tooltiptext">
+                        Budget: {{project.finance.budcapextq2 | number:0}}<br />
+                        Posted: {{project.finance.postcapextq2 | number:0}}<br />
                         Deviation: {{ project.finance.devcapextq2 | number:0 }}
                     </span>
                 </td>
                 <td class="sums tooltip">{{ project.finance.devcapextq3 | number:0 }}
-                    <span class="tooltiptext"> 
-                        Budget: {{project.finance.budcapextq3 | number:0}}<br/> 
-                        Posted: {{project.finance.postcapextq3 | number:0}}<br/> 
+                    <span class="tooltiptext">
+                        Budget: {{project.finance.budcapextq3 | number:0}}<br />
+                        Posted: {{project.finance.postcapextq3 | number:0}}<br />
                         Deviation: {{ project.finance.devcapextq3 | number:0 }}
                     </span>
                 </td>
                 <td class="sums tooltip">{{ project.finance.devcapextq4 | number:0 }}
-                    <span class="tooltiptext"> 
-                        Budget: {{project.finance.budcapextq4 | number:0}}<br/> 
-                        Posted: {{project.finance.postcapextq4 | number:0}}<br/> 
+                    <span class="tooltiptext">
+                        Budget: {{project.finance.budcapextq4 | number:0}}<br />
+                        Posted: {{project.finance.postcapextq4 | number:0}}<br />
                         Deviation: {{ project.finance.devcapextq4 | number:0 }}
                     </span>
                 </td>
                 <td class="sums tooltip">{{ project.finance.devcapexExternal | number:0 }}
-                    <span class="tooltiptext"> 
-                        Budget: {{project.finance.budcapexExternal | number:0}}<br/> 
-                        Posted: {{project.finance.postcapexExternal | number:0}}<br/> 
+                    <span class="tooltiptext">
+                        Budget: {{project.finance.budcapexExternal | number:0}}<br />
+                        Posted: {{project.finance.postcapexExternal | number:0}}<br />
                         Deviation: {{ project.finance.devcapexExternal | number:0 }}
                     </span>
                 </td>
+                <td class="sums tooltip">{{ project.finance.devcapexExternalfuture | number:0 }}
+                    <span class="tooltiptext">
+                        Budget: {{project.finance.budcapexExternalfuture | number:0}}<br />
+                        Posted: {{project.finance.postcapexExternalfuture | number:0}}<br />
+                        Deviation: {{ project.finance.devcapexExternalfuture | number:0 }}
+                    </span>
+                </td>
                 <td class="sums tooltip">{{ project.finance.devcapexExternalgrand | number:0 }}
-                    <span class="tooltiptext"> 
-                        Budget: {{project.finance.budcapexExternalgrand | number:0}}<br/> 
-                        Posted: {{project.finance.postcapexExternalgrand | number:0}}<br/> 
+                    <span class="tooltiptext">
+                        Budget: {{project.finance.budcapexExternalgrand | number:0}}<br />
+                        Posted: {{project.finance.postcapexExternalgrand | number:0}}<br />
                         Deviation: {{ project.finance.devcapexExternalgrand | number:0 }}
                     </span>
                 </td>
             </tr>
-            
+
             <tr>
                 <td>Internal people</td>
                 <td class="sums tooltip">{{ project.finance.devcapintprev | number:0 }}
-                    <span class="tooltiptext"> 
-                        Budget: {{project.finance.budcapintprev | number:0}}<br/> 
-                        Posted: {{project.finance.postcapintprev | number:0}}<br/> 
+                    <span class="tooltiptext">
+                        Budget: {{project.finance.budcapintprev | number:0}}<br />
+                        Posted: {{project.finance.postcapintprev | number:0}}<br />
                         Deviation: {{ project.finance.devcapintprev | number:0 }}
                     </span>
                 </td>
                 <td class="sums tooltip">{{ project.finance.devcapintq1 | number:0 }}
-                    <span class="tooltiptext"> 
-                        Budget: {{project.finance.budcapintq1 | number:0}}<br/> 
-                        Posted: {{project.finance.postcapintq1 | number:0}}<br/> 
+                    <span class="tooltiptext">
+                        Budget: {{project.finance.budcapintq1 | number:0}}<br />
+                        Posted: {{project.finance.postcapintq1 | number:0}}<br />
                         Deviation: {{ project.finance.devcapintq1 | number:0 }}
                     </span>
                 </td>
                 <td class="sums tooltip">{{ project.finance.devcapintq2 | number:0 }}
-                    <span class="tooltiptext"> 
-                        Budget: {{project.finance.budcapintq2 | number:0}}<br/> 
-                        Posted: {{project.finance.postcapintq2 | number:0}}<br/> 
+                    <span class="tooltiptext">
+                        Budget: {{project.finance.budcapintq2 | number:0}}<br />
+                        Posted: {{project.finance.postcapintq2 | number:0}}<br />
                         Deviation: {{ project.finance.devcapintq2 | number:0 }}
                     </span>
                 </td>
                 <td class="sums tooltip">{{ project.finance.devcapintq3 | number:0 }}
-                    <span class="tooltiptext"> 
-                        Budget: {{project.finance.budcapintq3 | number:0}}<br/> 
-                        Posted: {{project.finance.postcapintq3 | number:0}}<br/> 
+                    <span class="tooltiptext">
+                        Budget: {{project.finance.budcapintq3 | number:0}}<br />
+                        Posted: {{project.finance.postcapintq3 | number:0}}<br />
                         Deviation: {{ project.finance.devcapintq3 | number:0 }}
                     </span>
                 </td>
                 <td class="sums tooltip">{{ project.finance.devcapintq4 | number:0 }}
-                    <span class="tooltiptext"> 
-                        Budget: {{project.finance.budcapintq4 | number:0}}<br/> 
-                        Posted: {{project.finance.postcapintq4 | number:0}}<br/> 
+                    <span class="tooltiptext">
+                        Budget: {{project.finance.budcapintq4 | number:0}}<br />
+                        Posted: {{project.finance.postcapintq4 | number:0}}<br />
                         Deviation: {{ project.finance.devcapintq4 | number:0 }}
                     </span>
                 </td>
                 <td class="sums tooltip">{{ project.finance.devcapexInternal | number:0 }}
-                    <span class="tooltiptext"> 
-                        Budget: {{project.finance.budcapexInternal | number:0}}<br/> 
-                        Posted: {{project.finance.postcapexInternal | number:0}}<br/> 
+                    <span class="tooltiptext">
+                        Budget: {{project.finance.budcapexInternal | number:0}}<br />
+                        Posted: {{project.finance.postcapexInternal | number:0}}<br />
                         Deviation: {{ project.finance.devcapexInternal | number:0 }}
                     </span>
                 </td>
+                <td class="sums tooltip">{{ project.finance.devcapexInternalfuture | number:0 }}
+                    <span class="tooltiptext">
+                        Budget: {{project.finance.budcapexInternalfuture | number:0}}<br />
+                        Posted: {{project.finance.postcapexInternalfuture | number:0}}<br />
+                        Deviation: {{ project.finance.devcapexInternalfuture | number:0 }}
+                    </span>
+                </td>
                 <td class="sums tooltip">{{ project.finance.devcapexInternalgrand | number:0 }}
-                    <span class="tooltiptext"> 
-                        Budget: {{project.finance.budcapexInternalgrand | number:0}}<br/> 
-                        Posted: {{project.finance.postcapexInternalgrand | number:0}}<br/> 
+                    <span class="tooltiptext">
+                        Budget: {{project.finance.budcapexInternalgrand | number:0}}<br />
+                        Posted: {{project.finance.postcapexInternalgrand | number:0}}<br />
                         Deviation: {{ project.finance.devcapexInternalgrand | number:0 }}
                     </span>
                 </td>
@@ -749,159 +1874,180 @@
             <tr>
                 <td>Capex total</td>
                 <td class="sums tooltip">{{ project.finance.devcapexprevSum | number:0 }}
-                    <span class="tooltiptext"> 
-                        Budget: {{project.finance.budcapexprevSum | number:0}}<br/> 
-                        Posted: {{project.finance.postcapexprevSum | number:0}}<br/> 
+                    <span class="tooltiptext">
+                        Budget: {{project.finance.budcapexprevSum | number:0}}<br />
+                        Posted: {{project.finance.postcapexprevSum | number:0}}<br />
                         Deviation: {{ project.finance.devcapexprevSum | number:0 }}
                     </span>
                 </td>
                 <td class="sums tooltip">{{ project.finance.devcapexq1Sum | number:0 }}
-                    <span class="tooltiptext"> 
-                        Budget: {{project.finance.budcapexq1Sum | number:0}}<br/> 
-                        Posted: {{project.finance.postcapexq1Sum | number:0}}<br/> 
+                    <span class="tooltiptext">
+                        Budget: {{project.finance.budcapexq1Sum | number:0}}<br />
+                        Posted: {{project.finance.postcapexq1Sum | number:0}}<br />
                         Deviation: {{ project.finance.devcapexq1Sum | number:0 }}
                     </span>
                 </td>
                 <td class="sums tooltip">{{ project.finance.devcapexq2Sum | number:0 }}
-                    <span class="tooltiptext"> 
-                        Budget: {{project.finance.budcapexq2Sum | number:0}}<br/> 
-                        Posted: {{project.finance.postcapexq2Sum | number:0}}<br/> 
+                    <span class="tooltiptext">
+                        Budget: {{project.finance.budcapexq2Sum | number:0}}<br />
+                        Posted: {{project.finance.postcapexq2Sum | number:0}}<br />
                         Deviation: {{ project.finance.devcapexq2Sum | number:0 }}
                     </span>
                 </td>
                 <td class="sums tooltip">{{ project.finance.devcapexq3Sum | number:0 }}
-                    <span class="tooltiptext"> 
-                        Budget: {{project.finance.budcapexq3Sum | number:0}}<br/> 
-                        Posted: {{project.finance.postcapexq3Sum | number:0}}<br/> 
+                    <span class="tooltiptext">
+                        Budget: {{project.finance.budcapexq3Sum | number:0}}<br />
+                        Posted: {{project.finance.postcapexq3Sum | number:0}}<br />
                         Deviation: {{ project.finance.devcapexq3Sum | number:0 }}
                     </span>
                 </td>
                 <td class="sums tooltip">{{ project.finance.devcapexq4Sum | number:0 }}
-                    <span class="tooltiptext"> 
-                        Budget: {{project.finance.budcapexq4Sum | number:0}}<br/> 
-                        Posted: {{project.finance.postcapexq4Sum | number:0}}<br/> 
+                    <span class="tooltiptext">
+                        Budget: {{project.finance.budcapexq4Sum | number:0}}<br />
+                        Posted: {{project.finance.postcapexq4Sum | number:0}}<br />
                         Deviation: {{ project.finance.devcapexq4Sum | number:0 }}
                     </span>
                 </td>
                 <td class="sums tooltip">{{ project.finance.devcapexTotal | number:0 }}
-                    <span class="tooltiptext"> 
-                        Budget: {{project.finance.budcapexTotal | number:0}}<br/> 
-                        Posted: {{project.finance.postcapexTotal | number:0}}<br/> 
+                    <span class="tooltiptext">
+                        Budget: {{project.finance.budcapexTotal | number:0}}<br />
+                        Posted: {{project.finance.postcapexTotal | number:0}}<br />
                         Deviation: {{ project.finance.devcapexTotal | number:0 }}
                     </span>
                 </td>
+                <td class="sums tooltip">{{ project.finance.devcapexTotalfuture | number:0 }}
+                    <span class="tooltiptext">
+                        Budget: {{project.finance.budcapexTotalfuture | number:0}}<br />
+                        Posted: {{project.finance.postcapexTotalfuture | number:0}}<br />
+                        Deviation: {{ project.finance.devcapexTotalfuture | number:0 }}
+                    </span>
+                </td>
                 <td class="sums tooltip">{{ project.finance.devcapexTotalgrand | number:0 }}
-                    <span class="tooltiptext"> 
-                        Budget: {{project.finance.budcapexTotalgrand | number:0}}<br/> 
-                        Posted: {{project.finance.postcapexTotalgrand | number:0}}<br/> 
+                    <span class="tooltiptext">
+                        Budget: {{project.finance.budcapexTotalgrand | number:0}}<br />
+                        Posted: {{project.finance.postcapexTotalgrand | number:0}}<br />
                         Deviation: {{ project.finance.devcapexTotalgrand | number:0 }}
                     </span>
                 </td>
             </tr>
             <tr class="header">
-                <td colspan="8">Opex</td>
+                <td colspan="9">Opex</td>
             </tr>
             <tr>
                 <td>External cost</td>
                 <td class="sums tooltip">{{ project.finance.devopextprev | number:0 }}
-                    <span class="tooltiptext"> 
-                        Budget: {{project.finance.budopextprev | number:0}}<br/> 
-                        Posted: {{project.finance.postopextprev | number:0}}<br/> 
+                    <span class="tooltiptext">
+                        Budget: {{project.finance.budopextprev | number:0}}<br />
+                        Posted: {{project.finance.postopextprev | number:0}}<br />
                         Deviation: {{ project.finance.devopextprev | number:0 }}
                     </span>
                 </td>
                 <td class="sums tooltip">{{ project.finance.devopextq1 | number:0 }}
-                    <span class="tooltiptext"> 
-                        Budget: {{project.finance.budopextq1 | number:0}}<br/> 
-                        Posted: {{project.finance.postopextq1 | number:0}}<br/> 
+                    <span class="tooltiptext">
+                        Budget: {{project.finance.budopextq1 | number:0}}<br />
+                        Posted: {{project.finance.postopextq1 | number:0}}<br />
                         Deviation: {{ project.finance.devopextq1 | number:0 }}
                     </span>
                 </td>
                 <td class="sums tooltip">{{ project.finance.devopextq2 | number:0 }}
-                    <span class="tooltiptext"> 
-                        Budget: {{project.finance.budopextq2 | number:0}}<br/> 
-                        Posted: {{project.finance.postopextq2 | number:0}}<br/> 
+                    <span class="tooltiptext">
+                        Budget: {{project.finance.budopextq2 | number:0}}<br />
+                        Posted: {{project.finance.postopextq2 | number:0}}<br />
                         Deviation: {{ project.finance.devopextq2 | number:0 }}
                     </span>
                 </td>
                 <td class="sums tooltip">{{ project.finance.devopextq3 | number:0 }}
-                    <span class="tooltiptext"> 
-                        Budget: {{project.finance.budopextq3 | number:0}}<br/> 
-                        Posted: {{project.finance.postopextq3 | number:0}}<br/> 
+                    <span class="tooltiptext">
+                        Budget: {{project.finance.budopextq3 | number:0}}<br />
+                        Posted: {{project.finance.postopextq3 | number:0}}<br />
                         Deviation: {{ project.finance.devopextq3 | number:0 }}
                     </span>
                 </td>
                 <td class="sums tooltip">{{ project.finance.devopextq4 | number:0 }}
-                    <span class="tooltiptext"> 
-                        Budget: {{project.finance.budopextq4 | number:0}}<br/> 
-                        Posted: {{project.finance.postopextq4 | number:0}}<br/> 
+                    <span class="tooltiptext">
+                        Budget: {{project.finance.budopextq4 | number:0}}<br />
+                        Posted: {{project.finance.postopextq4 | number:0}}<br />
                         Deviation: {{ project.finance.devopextq4 | number:0 }}
                     </span>
                 </td>
                 <td class="sums tooltip">{{ project.finance.devopexExternal | number:0 }}
-                    <span class="tooltiptext"> 
-                        Budget: {{project.finance.budopexExternal | number:0}}<br/> 
-                        Posted: {{project.finance.postopexExternal | number:0}}<br/> 
+                    <span class="tooltiptext">
+                        Budget: {{project.finance.budopexExternal | number:0}}<br />
+                        Posted: {{project.finance.postopexExternal | number:0}}<br />
                         Deviation: {{ project.finance.devopexExternal | number:0 }}
                     </span>
                 </td>
+                <td class="sums tooltip">{{ project.finance.devopexExternalfuture | number:0 }}
+                    <span class="tooltiptext">
+                        Budget: {{project.finance.budopexExternalfuture | number:0}}<br />
+                        Posted: {{project.finance.postopexExternalfuture | number:0}}<br />
+                        Deviation: {{ project.finance.devopexExternalfuture | number:0 }}
+                    </span>
+                </td>
                 <td class="sums tooltip">{{ project.finance.devopexExternalgrand | number:0 }}
-                    <span class="tooltiptext"> 
-                        Budget: {{project.finance.budopexExternalgrand | number:0}}<br/> 
-                        Posted: {{project.finance.postopexExternalgrand | number:0}}<br/> 
+                    <span class="tooltiptext">
+                        Budget: {{project.finance.budopexExternalgrand | number:0}}<br />
+                        Posted: {{project.finance.postopexExternalgrand | number:0}}<br />
                         Deviation: {{ project.finance.devopexExternalgrand | number:0 }}
                     </span>
                 </td>
             </tr>
-            
+
             <tr>
                 <td>Internal people</td>
                 <td class="sums tooltip">{{ project.finance.devopintprev | number:0 }}
-                    <span class="tooltiptext"> 
-                        Budget: {{project.finance.budopintprev | number:0}}<br/> 
-                        Posted: {{project.finance.postopintprev | number:0}}<br/> 
+                    <span class="tooltiptext">
+                        Budget: {{project.finance.budopintprev | number:0}}<br />
+                        Posted: {{project.finance.postopintprev | number:0}}<br />
                         Deviation: {{ project.finance.devopintprev | number:0 }}
                     </span>
                 </td>
                 <td class="sums tooltip">{{ project.finance.devopintq1 | number:0 }}
-                    <span class="tooltiptext"> 
-                        Budget: {{project.finance.budopintq1 | number:0}}<br/> 
-                        Posted: {{project.finance.postopintq1 | number:0}}<br/> 
+                    <span class="tooltiptext">
+                        Budget: {{project.finance.budopintq1 | number:0}}<br />
+                        Posted: {{project.finance.postopintq1 | number:0}}<br />
                         Deviation: {{ project.finance.devopintq1 | number:0 }}
                     </span>
                 </td>
                 <td class="sums tooltip">{{ project.finance.devopintq2 | number:0 }}
-                    <span class="tooltiptext"> 
-                        Budget: {{project.finance.budopintq2 | number:0}}<br/> 
-                        Posted: {{project.finance.postopintq2 | number:0}}<br/> 
+                    <span class="tooltiptext">
+                        Budget: {{project.finance.budopintq2 | number:0}}<br />
+                        Posted: {{project.finance.postopintq2 | number:0}}<br />
                         Deviation: {{ project.finance.devopintq2 | number:0 }}
                     </span>
                 </td>
                 <td class="sums tooltip">{{ project.finance.devopintq3 | number:0 }}
-                    <span class="tooltiptext"> 
-                        Budget: {{project.finance.budopintq3 | number:0}}<br/> 
-                        Posted: {{project.finance.postopintq3 | number:0}}<br/> 
+                    <span class="tooltiptext">
+                        Budget: {{project.finance.budopintq3 | number:0}}<br />
+                        Posted: {{project.finance.postopintq3 | number:0}}<br />
                         Deviation: {{ project.finance.devopintq3 | number:0 }}
                     </span>
                 </td>
                 <td class="sums tooltip">{{ project.finance.devopintq4 | number:0 }}
-                    <span class="tooltiptext"> 
-                        Budget: {{project.finance.budopintq4 | number:0}}<br/> 
-                        Posted: {{project.finance.postopintq4 | number:0}}<br/> 
+                    <span class="tooltiptext">
+                        Budget: {{project.finance.budopintq4 | number:0}}<br />
+                        Posted: {{project.finance.postopintq4 | number:0}}<br />
                         Deviation: {{ project.finance.devopintq4 | number:0 }}
                     </span>
                 </td>
                 <td class="sums tooltip">{{ project.finance.devopexInternal | number:0 }}
-                    <span class="tooltiptext"> 
-                        Budget: {{project.finance.budopexInternal | number:0}}<br/> 
-                        Posted: {{project.finance.postopexInternal | number:0}}<br/> 
+                    <span class="tooltiptext">
+                        Budget: {{project.finance.budopexInternal | number:0}}<br />
+                        Posted: {{project.finance.postopexInternal | number:0}}<br />
                         Deviation: {{ project.finance.devopexInternal | number:0 }}
                     </span>
                 </td>
+                <td class="sums tooltip">{{ project.finance.devopexInternalfuture | number:0 }}
+                    <span class="tooltiptext">
+                        Budget: {{project.finance.budopexInternalfuture | number:0}}<br />
+                        Posted: {{project.finance.postopexInternalfuture | number:0}}<br />
+                        Deviation: {{ project.finance.devopexInternalfuture | number:0 }}
+                    </span>
+                </td>
                 <td class="sums tooltip">{{ project.finance.devopexInternalgrand | number:0 }}
-                    <span class="tooltiptext"> 
-                        Budget: {{project.finance.budopexInternalgrand | number:0}}<br/> 
-                        Posted: {{project.finance.postopexInternalgrand | number:0}}<br/> 
+                    <span class="tooltiptext">
+                        Budget: {{project.finance.budopexInternalgrand | number:0}}<br />
+                        Posted: {{project.finance.postopexInternalgrand | number:0}}<br />
                         Deviation: {{ project.finance.devopexInternalgrand | number:0 }}
                     </span>
                 </td>
@@ -909,106 +2055,120 @@
             <tr>
                 <td>Opex total</td>
                 <td class="sums tooltip">{{ project.finance.devopexprevSum | number:0 }}
-                    <span class="tooltiptext"> 
-                        Budget: {{project.finance.budopexprevSum | number:0}}<br/> 
-                        Posted: {{project.finance.postopexprevSum | number:0}}<br/> 
+                    <span class="tooltiptext">
+                        Budget: {{project.finance.budopexprevSum | number:0}}<br />
+                        Posted: {{project.finance.postopexprevSum | number:0}}<br />
                         Deviation: {{ project.finance.devopexprevSum | number:0 }}
                     </span>
                 </td>
                 <td class="sums tooltip">{{ project.finance.devopexq1Sum | number:0 }}
-                    <span class="tooltiptext"> 
-                        Budget: {{project.finance.budopexq1Sum | number:0}}<br/> 
-                        Posted: {{project.finance.postopexq1Sum | number:0}}<br/> 
+                    <span class="tooltiptext">
+                        Budget: {{project.finance.budopexq1Sum | number:0}}<br />
+                        Posted: {{project.finance.postopexq1Sum | number:0}}<br />
                         Deviation: {{ project.finance.devopexq1Sum | number:0 }}
                     </span>
                 </td>
                 <td class="sums tooltip">{{ project.finance.devopexq2Sum | number:0 }}
-                    <span class="tooltiptext"> 
-                        Budget: {{project.finance.budopexq2Sum | number:0}}<br/> 
-                        Posted: {{project.finance.postopexq2Sum | number:0}}<br/> 
+                    <span class="tooltiptext">
+                        Budget: {{project.finance.budopexq2Sum | number:0}}<br />
+                        Posted: {{project.finance.postopexq2Sum | number:0}}<br />
                         Deviation: {{ project.finance.devopexq2Sum | number:0 }}
                     </span>
                 </td>
                 <td class="sums tooltip">{{ project.finance.devopexq3Sum | number:0 }}
-                    <span class="tooltiptext"> 
-                        Budget: {{project.finance.budopexq3Sum | number:0}}<br/> 
-                        Posted: {{project.finance.postopexq3Sum | number:0}}<br/> 
+                    <span class="tooltiptext">
+                        Budget: {{project.finance.budopexq3Sum | number:0}}<br />
+                        Posted: {{project.finance.postopexq3Sum | number:0}}<br />
                         Deviation: {{ project.finance.devopexq3Sum | number:0 }}
                     </span>
                 </td>
                 <td class="sums tooltip">{{ project.finance.devopexq4Sum | number:0 }}
-                    <span class="tooltiptext"> 
-                        Budget: {{project.finance.budopexq4Sum | number:0}}<br/> 
-                        Posted: {{project.finance.postopexq4Sum | number:0}}<br/> 
+                    <span class="tooltiptext">
+                        Budget: {{project.finance.budopexq4Sum | number:0}}<br />
+                        Posted: {{project.finance.postopexq4Sum | number:0}}<br />
                         Deviation: {{ project.finance.devopexq4Sum | number:0 }}
                     </span>
                 </td>
                 <td class="sums tooltip">{{ project.finance.devopexTotal | number:0 }}
-                    <span class="tooltiptext"> 
-                        Budget: {{project.finance.budopexTotal | number:0}}<br/> 
-                        Posted: {{project.finance.postopexTotal | number:0}}<br/> 
+                    <span class="tooltiptext">
+                        Budget: {{project.finance.budopexTotal | number:0}}<br />
+                        Posted: {{project.finance.postopexTotal | number:0}}<br />
                         Deviation: {{ project.finance.devopexTotal | number:0 }}
                     </span>
                 </td>
+                <td class="sums tooltip">{{ project.finance.devopexTotalfuture | number:0 }}
+                    <span class="tooltiptext">
+                        Budget: {{project.finance.budopexTotalfuture | number:0}}<br />
+                        Posted: {{project.finance.postopexTotalfuture | number:0}}<br />
+                        Deviation: {{ project.finance.devopexTotalfuture | number:0 }}
+                    </span>
+                </td>
                 <td class="sums tooltip">{{ project.finance.devopexTotalgrand | number:0 }}
-                    <span class="tooltiptext"> 
-                        Budget: {{project.finance.budopexTotalgrand | number:0}}<br/> 
-                        Posted: {{project.finance.postopexTotalgrand | number:0}}<br/> 
+                    <span class="tooltiptext">
+                        Budget: {{project.finance.budopexTotalgrand | number:0}}<br />
+                        Posted: {{project.finance.postopexTotalgrand | number:0}}<br />
                         Deviation: {{ project.finance.devopexTotalgrand | number:0 }}
                     </span>
                 </td>
             </tr>
             <tr class="header">
-                <td colspan="8">External cost/Internal people</td>
+                <td colspan="9">External cost/Internal people</td>
             </tr>
             <tr>
                 <td>External cost total</td>
                 <td class="sums tooltip">{{ project.finance.devExternalprevTotal | number:0 }}
-                    <span class="tooltiptext"> 
-                        Budget: {{project.finance.budExternalprevTotal | number:0}}<br/> 
-                        Posted: {{project.finance.postExternalprevTotal | number:0}}<br/> 
+                    <span class="tooltiptext">
+                        Budget: {{project.finance.budExternalprevTotal | number:0}}<br />
+                        Posted: {{project.finance.postExternalprevTotal | number:0}}<br />
                         Deviation: {{ project.finance.devExternalprevTotal | number:0 }}
                     </span>
                 </td>
                 <td class="sums tooltip">{{ project.finance.devExternalq1Total | number:0 }}
-                    <span class="tooltiptext"> 
-                        Budget: {{project.finance.budExternalq1Total | number:0}}<br/> 
-                        Posted: {{project.finance.postExternalq1Total | number:0}}<br/> 
+                    <span class="tooltiptext">
+                        Budget: {{project.finance.budExternalq1Total | number:0}}<br />
+                        Posted: {{project.finance.postExternalq1Total | number:0}}<br />
                         Deviation: {{ project.finance.devExternalq1Total | number:0 }}
                     </span>
                 </td>
                 <td class="sums tooltip">{{ project.finance.devExternalq2Total | number:0 }}
-                    <span class="tooltiptext"> 
-                        Budget: {{project.finance.budExternalq2Total | number:0}}<br/> 
-                        Posted: {{project.finance.postExternalq2Total | number:0}}<br/> 
+                    <span class="tooltiptext">
+                        Budget: {{project.finance.budExternalq2Total | number:0}}<br />
+                        Posted: {{project.finance.postExternalq2Total | number:0}}<br />
                         Deviation: {{ project.finance.devExternalq2Total | number:0 }}
                     </span>
                 </td>
                 <td class="sums tooltip">{{ project.finance.devExternalq3Total | number:0 }}
-                    <span class="tooltiptext"> 
-                        Budget: {{project.finance.budExternalq3Total | number:0}}<br/> 
-                        Posted: {{project.finance.postExternalq3Total | number:0}}<br/> 
+                    <span class="tooltiptext">
+                        Budget: {{project.finance.budExternalq3Total | number:0}}<br />
+                        Posted: {{project.finance.postExternalq3Total | number:0}}<br />
                         Deviation: {{ project.finance.devExternalq3Total | number:0 }}
                     </span>
                 </td>
                 <td class="sums tooltip">{{ project.finance.devExternalq4Total | number:0 }}
-                    <span class="tooltiptext"> 
-                        Budget: {{project.finance.budExternalq4Total | number:0}}<br/> 
-                        Posted: {{project.finance.postExternalq4Total | number:0}}<br/> 
+                    <span class="tooltiptext">
+                        Budget: {{project.finance.budExternalq4Total | number:0}}<br />
+                        Posted: {{project.finance.postExternalq4Total | number:0}}<br />
                         Deviation: {{ project.finance.devExternalq4Total | number:0 }}
                     </span>
                 </td>
                 <td class="sums tooltip">{{ project.finance.devExternalTotalSum | number:0 }}
-                    <span class="tooltiptext"> 
-                        Budget: {{project.finance.budExternalTotalSum | number:0}}<br/> 
-                        Posted: {{project.finance.postExternalTotalSum | number:0}}<br/> 
+                    <span class="tooltiptext">
+                        Budget: {{project.finance.budExternalTotalSum | number:0}}<br />
+                        Posted: {{project.finance.postExternalTotalSum | number:0}}<br />
                         Deviation: {{ project.finance.devExternalTotalSum | number:0 }}
                     </span>
                 </td>
+                <td class="sums tooltip">{{ project.finance.devExternalTotalfutureSum | number:0 }}
+                    <span class="tooltiptext">
+                        Budget: {{project.finance.budExternalTotalfutureSum | number:0}}<br />
+                        Posted: {{project.finance.postExternalTotalfutureSum | number:0}}<br />
+                        Deviation: {{ project.finance.devExternalTotalfutureSum | number:0 }}
+                    </span>
+                </td>
                 <td class="sums tooltip">{{ project.finance.devExternalTotalgrandSum | number:0 }}
-                    <span class="tooltiptext"> 
-                        Budget: {{project.finance.budExternalTotalgrandSum | number:0}}<br/> 
-                        Posted: {{project.finance.postExternalTotalgrandSum | number:0}}<br/> 
+                    <span class="tooltiptext">
+                        Budget: {{project.finance.budExternalTotalgrandSum | number:0}}<br />
+                        Posted: {{project.finance.postExternalTotalgrandSum | number:0}}<br />
                         Deviation: {{ project.finance.devExternalTotalgrandSum | number:0 }}
                     </span>
                 </td>
@@ -1016,51 +2176,58 @@
             <tr>
                 <td>Internal people total</td>
                 <td class="sums tooltip">{{ project.finance.devInternalprevTotal | number:0 }}
-                    <span class="tooltiptext"> 
-                        Budget: {{project.finance.budInternalprevTotal | number:0}}<br/> 
-                        Posted: {{project.finance.postInternalprevTotal | number:0}}<br/> 
+                    <span class="tooltiptext">
+                        Budget: {{project.finance.budInternalprevTotal | number:0}}<br />
+                        Posted: {{project.finance.postInternalprevTotal | number:0}}<br />
                         Deviation: {{ project.finance.devInternalprevTotal | number:0 }}
                     </span>
                 </td>
                 <td class="sums tooltip">{{ project.finance.devInternalq1Total | number:0 }}
-                    <span class="tooltiptext"> 
-                        Budget: {{project.finance.budInternalq1Total | number:0}}<br/> 
-                        Posted: {{project.finance.postInternalq1Total | number:0}}<br/> 
+                    <span class="tooltiptext">
+                        Budget: {{project.finance.budInternalq1Total | number:0}}<br />
+                        Posted: {{project.finance.postInternalq1Total | number:0}}<br />
                         Deviation: {{ project.finance.devInternalq1Total | number:0 }}
                     </span>
                 </td>
                 <td class="sums tooltip">{{ project.finance.devInternalq2Total | number:0 }}
-                    <span class="tooltiptext"> 
-                        Budget: {{project.finance.budInternalq2Total | number:0}}<br/> 
-                        Posted: {{project.finance.postInternalq2Total | number:0}}<br/> 
+                    <span class="tooltiptext">
+                        Budget: {{project.finance.budInternalq2Total | number:0}}<br />
+                        Posted: {{project.finance.postInternalq2Total | number:0}}<br />
                         Deviation: {{ project.finance.devInternalq2Total | number:0 }}
                     </span>
                 </td>
                 <td class="sums tooltip">{{ project.finance.devInternalq3Total | number:0 }}
-                    <span class="tooltiptext"> 
-                        Budget: {{project.finance.budInternalq3Total | number:0}}<br/> 
-                        Posted: {{project.finance.postInternalq3Total | number:0}}<br/> 
+                    <span class="tooltiptext">
+                        Budget: {{project.finance.budInternalq3Total | number:0}}<br />
+                        Posted: {{project.finance.postInternalq3Total | number:0}}<br />
                         Deviation: {{ project.finance.devInternalq3Total | number:0 }}
                     </span>
                 </td>
                 <td class="sums tooltip">{{ project.finance.devInternalq4Total | number:0 }}
-                    <span class="tooltiptext"> 
-                        Budget: {{project.finance.budInternalq4Total | number:0}}<br/> 
-                        Posted: {{project.finance.postInternalq4Total | number:0}}<br/> 
+                    <span class="tooltiptext">
+                        Budget: {{project.finance.budInternalq4Total | number:0}}<br />
+                        Posted: {{project.finance.postInternalq4Total | number:0}}<br />
                         Deviation: {{ project.finance.devInternalq4Total | number:0 }}
                     </span>
                 </td>
                 <td class="sums tooltip">{{ project.finance.devInternalTotalSum | number:0 }}
-                    <span class="tooltiptext"> 
-                        Budget: {{project.finance.budInternalTotalSum | number:0}}<br/> 
-                        Posted: {{project.finance.postInternalTotalSum | number:0}}<br/> 
+                    <span class="tooltiptext">
+                        Budget: {{project.finance.budInternalTotalSum | number:0}}<br />
+                        Posted: {{project.finance.postInternalTotalSum | number:0}}<br />
                         Deviation: {{ project.finance.devInternalTotalSum | number:0 }}
                     </span>
                 </td>
+                <td class="sums tooltip">{{ project.finance.devInternalTotalfutureSum | number:0 }}
+                    <span class="tooltiptext">
+                        Budget: {{project.finance.budInternalTotalfutureSum | number:0}}<br />
+                        Posted: {{project.finance.postInternalTotalfutureSum | number:0}}<br />
+                        Deviation: {{ project.finance.devInternalTotalfutureSum | number:0 }}
+                    </span>
+                </td>
                 <td class="sums tooltip">{{ project.finance.devInternalTotalgrandSum | number:0 }}
-                    <span class="tooltiptext"> 
-                        Budget: {{project.finance.budInternalTotalgrandSum | number:0}}<br/> 
-                        Posted: {{project.finance.postInternalTotalgrandSum | number:0}}<br/> 
+                    <span class="tooltiptext">
+                        Budget: {{project.finance.budInternalTotalgrandSum | number:0}}<br />
+                        Posted: {{project.finance.postInternalTotalgrandSum | number:0}}<br />
                         Deviation: {{ project.finance.devInternalTotalgrandSum | number:0 }}
                     </span>
                 </td>
@@ -1068,51 +2235,58 @@
             <tr class="header">
                 <td>Deviation total</td>
                 <td class="sums tooltip">{{ project.finance.devTotalprev | number:0 }}
-                    <span class="tooltiptext"> 
-                        Budget: {{project.finance.budTotalprev | number:0}}<br/> 
-                        Posted: {{project.finance.postTotalprev | number:0}}<br/> 
+                    <span class="tooltiptext">
+                        Budget: {{project.finance.budTotalprev | number:0}}<br />
+                        Posted: {{project.finance.postTotalprev | number:0}}<br />
                         Deviation: {{ project.finance.devTotalprev | number:0 }}
                     </span>
                 </td>
                 <td class="sums tooltip">{{ project.finance.devTotalq1 | number:0 }}
-                    <span class="tooltiptext"> 
-                        Budget: {{project.finance.budTotalq1 | number:0}}<br/> 
-                        Posted: {{project.finance.postTotalq1 | number:0}}<br/> 
+                    <span class="tooltiptext">
+                        Budget: {{project.finance.budTotalq1 | number:0}}<br />
+                        Posted: {{project.finance.postTotalq1 | number:0}}<br />
                         Deviation: {{ project.finance.devTotalq1 | number:0 }}
                     </span>
                 </td>
                 <td class="sums tooltip">{{ project.finance.devTotalq2 | number:0 }}
-                    <span class="tooltiptext"> 
-                        Budget: {{project.finance.budTotalq2 | number:0}}<br/> 
-                        Posted: {{project.finance.postTotalq2 | number:0}}<br/> 
+                    <span class="tooltiptext">
+                        Budget: {{project.finance.budTotalq2 | number:0}}<br />
+                        Posted: {{project.finance.postTotalq2 | number:0}}<br />
                         Deviation: {{ project.finance.devTotalq2 | number:0 }}
                     </span>
                 </td>
                 <td class="sums tooltip">{{ project.finance.devTotalq3 | number:0 }}
-                    <span class="tooltiptext"> 
-                        Budget: {{project.finance.budTotalq3 | number:0}}<br/> 
-                        Posted: {{project.finance.postTotalq3 | number:0}}<br/> 
+                    <span class="tooltiptext">
+                        Budget: {{project.finance.budTotalq3 | number:0}}<br />
+                        Posted: {{project.finance.postTotalq3 | number:0}}<br />
                         Deviation: {{ project.finance.devTotalq3 | number:0 }}
                     </span>
                 </td>
                 <td class="sums tooltip">{{ project.finance.devTotalq4 | number:0 }}
-                    <span class="tooltiptext"> 
-                        Budget: {{project.finance.budTotalq4 | number:0}}<br/> 
-                        Posted: {{project.finance.postTotalq4 | number:0}}<br/> 
+                    <span class="tooltiptext">
+                        Budget: {{project.finance.budTotalq4 | number:0}}<br />
+                        Posted: {{project.finance.postTotalq4 | number:0}}<br />
                         Deviation: {{ project.finance.devTotalq4 | number:0 }}
                     </span>
                 </td>
                 <td class="sums tooltip">{{ project.finance.devTotalSum | number:0 }}
-                    <span class="tooltiptext"> 
-                        Budget: {{project.finance.budTotalSum | number:0}}<br/> 
-                        Posted: {{project.finance.postTotalSum | number:0}}<br/> 
+                    <span class="tooltiptext">
+                        Budget: {{project.finance.budTotalSum | number:0}}<br />
+                        Posted: {{project.finance.postTotalSum | number:0}}<br />
                         Deviation: {{ project.finance.devTotalSum | number:0 }}
                     </span>
                 </td>
+                <td class="sums tooltip">{{ project.finance.devTotalfutureSum | number:0 }}
+                    <span class="tooltiptext">
+                        Budget: {{project.finance.budTotalfutureSum | number:0}}<br />
+                        Posted: {{project.finance.postTotalfutureSum | number:0}}<br />
+                        Deviation: {{ project.finance.devTotalfutureSum | number:0 }}
+                    </span>
+                </td>
                 <td class="sums tooltip">{{ project.finance.devTotalgrandSum | number:0 }}
-                    <span class="tooltiptext"> 
-                        Budget: {{project.finance.budTotalgrandSum | number:0}}<br/> 
-                        Posted: {{project.finance.postTotalgrandSum | number:0}}<br/> 
+                    <span class="tooltiptext">
+                        Budget: {{project.finance.budTotalgrandSum | number:0}}<br />
+                        Posted: {{project.finance.postTotalgrandSum | number:0}}<br />
                         Deviation: {{ project.finance.devTotalgrandSum | number:0 }}
                     </span>
                 </td>
@@ -1121,210 +2295,34 @@
                 <td>Year accum.</td>
                 <td></td>
                 <td class="sums tooltip">{{ project.finance.devAccq1 | number:0 }}
-                    <span class="tooltiptext"> 
-                        Budget: {{project.finance.budAccq1 | number:0}}<br/> 
-                        Posted: {{project.finance.postAccq1 | number:0}}<br/> 
+                    <span class="tooltiptext">
+                        Budget: {{project.finance.budAccq1 | number:0}}<br />
+                        Posted: {{project.finance.postAccq1 | number:0}}<br />
                         Deviation: {{ project.finance.devAccq1 | number:0 }}
                     </span>
                 </td>
                 <td class="sums tooltip">{{ project.finance.devAccq2 | number:0 }}
-                    <span class="tooltiptext"> 
-                        Budget: {{project.finance.budAccq2 | number:0}}<br/> 
-                        Posted: {{project.finance.postAccq2 | number:0}}<br/> 
+                    <span class="tooltiptext">
+                        Budget: {{project.finance.budAccq2 | number:0}}<br />
+                        Posted: {{project.finance.postAccq2 | number:0}}<br />
                         Deviation: {{ project.finance.devAccq2 | number:0 }}
                     </span>
                 </td>
                 <td class="sums tooltip">{{ project.finance.devAccq3 | number:0 }}
-                    <span class="tooltiptext"> 
-                        Budget: {{project.finance.budAccq3 | number:0}}<br/> 
-                        Posted: {{project.finance.postAccq3 | number:0}}<br/> 
+                    <span class="tooltiptext">
+                        Budget: {{project.finance.budAccq3 | number:0}}<br />
+                        Posted: {{project.finance.postAccq3 | number:0}}<br />
                         Deviation: {{ project.finance.devAccq3 | number:0 }}
                     </span>
                 </td>
                 <td class="sums tooltip">{{ project.finance.devAccq4 | number:0 }}
-                    <span class="tooltiptext"> 
-                        Budget: {{project.finance.budAccq4 | number:0}}<br/> 
-                        Posted: {{project.finance.postAccq4 | number:0}}<br/> 
+                    <span class="tooltiptext">
+                        Budget: {{project.finance.budAccq4 | number:0}}<br />
+                        Posted: {{project.finance.postAccq4 | number:0}}<br />
                         Deviation: {{ project.finance.devAccq4 | number:0 }}
                     </span>
                 </td>
                 <td></td>
-                <td></td>
-            </tr>
-        </table>
-    </div>
-    <div id="next-year" ng-show="route == 'next-year'">
-        <h3>Budget next year</h3>
-        <table class="smaller smallinput">
-            <tr class="header">
-                <td colspan="8">Show comments:
-                    <div class="right"> 
-                        <input type="checkbox" ng-model="showFinanceComQ1" ng-init="showFinanceComQ1=false">Q1, 
-                        <input type="checkbox" ng-model="showFinanceComQ2" ng-init="showFinanceComQ2=false">Q2, 
-                        <input type="checkbox" ng-model="showFinanceComQ3" ng-init="showFinanceComQ3=false">Q3, 
-                        <input type="checkbox" ng-model="showFinanceComQ4" ng-init="showFinanceComQ4=false">Q4
-                    </div>
-                </td>
-            </tr>
-            <tr ng-if="showFinanceComQ1">
-                <td class="header" colspan="8">
-                    <table class="smaller smallinput">
-                        <tr>
-                            <td class="header">Next Q1 Budget:</td>
-                            <td><div class="field"><textarea ng-model="project.finance.nextbudq1" maxlength="300" id="nextbudq1" placeholder="Describe budget decisions on next Q1 financing." ng-disabled="!user.changeContent"></textarea></div></td>
-                        </tr>                        
-                    </table>
-                </td>
-            </tr>
-            <tr ng-if="showFinanceComQ2">
-                <td class="header" colspan="8">
-                    <table class="smaller smallinput">
-                        <tr>
-                            <td class="header">Next Q2 Budget:</td>
-                            <td><div class="field"><textarea ng-model="project.finance.nextbudq2" maxlength="300" id="nextbudq2" placeholder="Describe budget decisions on next Q2 financing." ng-disabled="!user.changeContent"></textarea></div></td>
-                        </tr>
-                    </table>
-                </td>
-            </tr>
-            <tr ng-if="showFinanceComQ3">
-                <td class="header" colspan="8">
-                    <table class="smaller smallinput">
-                        <tr>
-                            <td class="header">Next Q3 Budget:</td>
-                            <td><div class="field"><textarea ng-model="project.finance.nextbudq3" maxlength="300" id="nextbudq3" placeholder="Describe budget decisions on next Q3 financing." ng-disabled="!user.changeContent"></textarea></div></td>
-                        </tr>
-                    </table>
-                </td>
-            </tr>
-            <tr ng-if="showFinanceComQ4">
-                <td class="header" colspan="8">
-                    <table class="smaller smallinput">
-                        <tr>
-                            <td class="header">Next Q4 Budget:</td>
-                            <td><div class="field"><textarea ng-model="project.finance.nextbudq4" maxlength="300" id="nextbudq4" placeholder="Describe budget decisions on next Q4 financing." ng-disabled="!user.changeContent"></textarea></div></td>
-                        </tr>
-                    </table>
-                </td>
-            </tr>
-            
-            <tr class="header">
-                <td>TDKK Ex. Vat</td>
-                <td>Prev</td>
-                <td>Q1</td>
-                <td>Q2</td>
-                <td>Q3</td>
-                <td>Q4</td>
-                <td>Year</td>
-                <td>Grand</td>
-            </tr>
-            <tr class="header">
-                <td colspan="8">Capex</td>
-            </tr>
-            <tr>
-                <td>External</td>
-                <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.nextcapextprev" ng-disabled="!user.changeContent" /></div></td>
-                <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.nextcapextq1" ng-disabled="!user.changeContent" /></div></td>
-                <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.nextcapextq2" ng-disabled="!user.changeContent" /></div></td>
-                <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.nextcapextq3" ng-disabled="!user.changeContent" /></div></td>
-                <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.nextcapextq4" ng-disabled="!user.changeContent" /></div></td>
-                <td class="sums">{{ project.finance.nextcapexExternal }}</td>
-                <td class="sums">{{ project.finance.nextcapexExternalgrand }}</td>
-            </tr>
-            
-            <tr>
-                <td>Internal</td>
-                <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.nextcapintprev" ng-disabled="!user.changeContent" /></div></td>
-                <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.nextcapintq1" ng-disabled="!user.changeContent" /></div></td>
-                <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.nextcapintq2" ng-disabled="!user.changeContent" /></div></td>
-                <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.nextcapintq3" ng-disabled="!user.changeContent" /></div></td>
-                <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.nextcapintq4" ng-disabled="!user.changeContent" /></div></td>
-                <td class="sums">{{ project.finance.nextcapexInternal }}</td>
-                <td class="sums">{{ project.finance.nextcapexInternalgrand }}</td>
-            </tr>
-            <tr>
-                <td>Capex total</td>
-                <td class="sums">{{ project.finance.nextcapexprevSum }}</td>
-                <td class="sums">{{ project.finance.nextcapexq1Sum }}</td>
-                <td class="sums">{{ project.finance.nextcapexq2Sum }}</td>
-                <td class="sums">{{ project.finance.nextcapexq3Sum }}</td>
-                <td class="sums">{{ project.finance.nextcapexq4Sum }}</td>
-                <td class="sums">{{ project.finance.nextcapexTotal }}</td>
-                <td class="sums">{{ project.finance.nextcapexTotalgrand }}</td>
-            </tr>
-            <tr class="header">
-                <td colspan="8">Opex</td>
-            </tr>
-            <tr>
-                <td>External</td>
-                <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.nextopextprev" ng-disabled="!user.changeContent" /></div></td>
-                <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.nextopextq1" ng-disabled="!user.changeContent" /></div></td>
-                <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.nextopextq2" ng-disabled="!user.changeContent" /></div></td>
-                <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.nextopextq3" ng-disabled="!user.changeContent" /></div></td>
-                <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.nextopextq4" ng-disabled="!user.changeContent" /></div></td>
-                <td class="sums">{{ project.finance.nextopexExternal }}</td>
-                <td class="sums">{{ project.finance.nextopexExternalgrand }}</td>
-            </tr>
-            
-            <tr>
-                <td>Internal</td>
-                <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.nextopintprev" ng-disabled="!user.changeContent" /></div></td>
-                <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.nextopintq1" ng-disabled="!user.changeContent" /></div></td>
-                <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.nextopintq2" ng-disabled="!user.changeContent" /></div></td>
-                <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.nextopintq3" ng-disabled="!user.changeContent" /></div></td>
-                <td><div class="field"><input ng-change="saveNow()" ng-model="project.finance.nextopintq4" ng-disabled="!user.changeContent" /></div></td>
-                <td class="sums">{{ project.finance.nextopexInternal }}</td>
-                <td class="sums">{{ project.finance.nextopexInternalgrand }}</td>
-            </tr>
-            <tr>
-                <td>Opex total</td>
-                <td class="sums">{{ project.finance.nextopexprevSum }}</td>
-                <td class="sums">{{ project.finance.nextopexq1Sum }}</td>
-                <td class="sums">{{ project.finance.nextopexq2Sum }}</td>
-                <td class="sums">{{ project.finance.nextopexq3Sum }}</td>
-                <td class="sums">{{ project.finance.nextopexq4Sum }}</td>
-                <td class="sums">{{ project.finance.nextopexTotal }}</td>
-                <td class="sums">{{ project.finance.nextopexTotalgrand }}</td>
-            </tr>
-            <tr class="header">
-                <td colspan="8">External/Internal</td>
-            </tr>
-            <tr>
-                <td>External total</td>
-                <td class="sums">{{ project.finance.nextExternalprevTotal }}</td>
-                <td class="sums">{{ project.finance.nextExternalq1Total }}</td>
-                <td class="sums">{{ project.finance.nextExternalq2Total }}</td>
-                <td class="sums">{{ project.finance.nextExternalq3Total }}</td>
-                <td class="sums">{{ project.finance.nextExternalq4Total }}</td>
-                <td class="sums">{{ project.finance.nextExternalTotalSum }}</td>
-                <td class="sums">{{ project.finance.nextExternalTotalgrandSum }}</td>
-            </tr>
-            <tr>
-                <td>Internal total</td>
-                <td class="sums">{{ project.finance.nextInternalprevTotal }}</td>
-                <td class="sums">{{ project.finance.nextInternalq1Total }}</td>
-                <td class="sums">{{ project.finance.nextInternalq2Total }}</td>
-                <td class="sums">{{ project.finance.nextInternalq3Total }}</td>
-                <td class="sums">{{ project.finance.nextInternalq4Total }}</td>
-                <td class="sums">{{ project.finance.nextInternalTotalSum }}</td>
-                <td class="sums">{{ project.finance.nextInternalTotalgrandSum }}</td>
-            </tr>
-            <tr class="header">
-                <td>Budget total</td>
-                <td class="sums">{{ project.finance.nextTotalprev }}</td>
-                <td class="sums">{{ project.finance.nextTotalq1 }}</td>
-                <td class="sums">{{ project.finance.nextTotalq2 }}</td>
-                <td class="sums">{{ project.finance.nextTotalq3 }}</td>
-                <td class="sums">{{ project.finance.nextTotalq4 }}</td>
-                <td class="sums">{{ project.finance.nextTotalSum }}</td>
-                <td class="sums">{{ project.finance.nextTotalgrandSum }}</td>
-            </tr>
-            <tr>
-                <td>Year accum.</td>
-                <td></td>
-                <td class="sums">{{ project.finance.nextAccq1 }}</td>
-                <td class="sums">{{ project.finance.nextAccq2 }}</td>
-                <td class="sums">{{ project.finance.nextAccq3 }}</td>
-                <td class="sums">{{ project.finance.nextAccq4 }}</td>
                 <td></td>
                 <td></td>
             </tr>

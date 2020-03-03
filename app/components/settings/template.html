@@ -2,15 +2,15 @@
     <div class="mainbox">
         <h2>
             Personal info
-            <div class="right"><button type="button" ng-click="updateUser(user)">Save</button></div>
+            <!----><div class="right"><button type="button" ng-click="updateUser(user)">Save</button></div>-->
         </h2>
         <table class="smaller">
-            <tr><td class="header">Name</td><td><div class="field"><input ng-model="user.name"/></div></td></tr>
-            <tr><td class="header">Title</td><td><div class="field"><input ng-model="user.title"/></div></td></tr>
+            <tr><td class="header">Name</td><td>{{user.name}}</td></tr>
+            <tr><td class="header">Email</td><td>{{user.email}}</td></tr>
             <!--<tr><td>Source</td><td><input type="checkbox" ng-model="user.source"/></td></tr>
             <tr><td>Demo</td><td><input type="checkbox" ng-model="user.demo"/></td></tr>
             <tr><td>Prio</td><td><input type="checkbox" ng-model="user.prio"/></td></tr>
-            <tr><td class="header">Email</td><td>{{user.email}}</td></tr>
+            
             <tr><td class="header">Location address</td><td><div class="field"><input ng-model="user.address"/></div></td></tr>
             <tr><td class="header">Phone</td><td><div class="field"><input ng-model="user.phone"/></div></td></tr>
             <tr><td class="header">Mobile</td><td><div class="field"><input ng-model="user.mobile"/></div></td></tr>

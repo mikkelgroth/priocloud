@@ -20,8 +20,9 @@ angular
             $routeParams
         ) {
 
+                
 
-
+/*
      //timeout functions
   //displays a warning after 20 seconds, redirects to logout after another 10
   
@@ -46,7 +47,7 @@ angular
     idleTimer=$timeout(callIdle, 20*60*1000);
   }
   angular.element(document.body).on('keydown DOMMouseScroll mousedown', movement);
-    
+    */
 $scope.newPassword = function() {
 	    //alert("Setting new password for user [" + $scope.email+ "]: " +$scope.newpassword);
 		$http.post(USERSERVER+'?action=updatepassword&application=priocloud&email=' + $scope.email + '&password=' + $scope.newpassword + '&onetimepassword='+$routeParams.otpw).
@@ -57,7 +58,7 @@ $scope.newPassword = function() {
 			if (!$rootScope.user.authenticated) {
 				alert('Reset failure:\n\n' + data.message);
 			}else{
-				movement(); //init when login is done
+				//movement(); //init when login is done
                             userService.authenticate(data);
                             $location.path('/');
 			}
@@ -76,12 +77,17 @@ $scope.newPassword = function() {
                             alert('Login failure:\n\n' + data.message);
 
                         } else {
-                            movement(); //init when login is done
+                            //movement(); //init when login is done
                             userService.authenticate(data);
                             $location.path('/');
                         }
                     });
             };
+
+            $scope.reloadPrio = function () {
+                window.location.reload();
+            };
+
 /*
             $scope.logout = function () {
 console.log("Logout...");

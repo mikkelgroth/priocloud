@@ -11,39 +11,28 @@
     </li>
     <span prio-user-authenticated="{display: true}">
         <li prio-route-active="projects|project">
-            <a href="#/dashboard">Project views</a>
+            <a href="#/dashboard">Portfolio</a>
             <ul>
-                <li><a href="#/projects">Overview</a></li>
-                <li><a href="#/projects/gantt">Gantt view</a></li>
-                <li><a href="#/projects/kpi">KPI view</a></li>
-                <li><a href="#/projects/status">Status view</a></li>
-                <li><a href="#/projects/purpose">Objective view</a></li>
-                <li><a href="#/projects/finance">Finance view</a></li>
-                <li><a href="#/projects/reports">Report list</a></li>
-                <li ng-show="user.businessowner || user.admin || user.subadmin"><a href="#/projects/create">New Project</a></li>                
-            </ul>
-            <a href="#/projects/dependencies">Portfolio tools</a>
-            <ul>
-                <li><a href="#/projects/dependencies">Dependencies</a></li>
-                <li><a href="#/projects/deliverables">Deliverables</a></li>
-                <li><a href="#/projects/risks">Risk & Issues</a></li>     
+                <li><a href="#/projects">Lists</a></li>
+                <li ng-if="user.businessowner"><a href="#/projects/create">New entry</a></li>                               
+                <li ng-if="company.filters.companyshowDepend"><a href="#/projects/dependencies">People</a></li>
+                <li ng-if="company.filters.companyshowDeliverables"><a href="#/projects/deliverables">Deliverables</a></li>
+                <li ng-if="company.filters.companyshowIssues"><a href="#/projects/risks">Risks</a></li>     
             </ul>
             
+        </li>
+        <li prio-route-active="systems|system|processes|process">
+            <a href="#/systems">Continuity</a>
+            <ul>
+                <li><a href="#/systems">Systems</a></li>
+                <li><a href="#/processes">Processes</a></li>                   
+            </ul>
         </li>
         <li prio-route-active="settings" ng-if="!user.demo">
             <a href="#/settings">Settings</a>
         </li>
         <li prio-route-active="admin" ng-if="user.admin || user.subadmin">
             <a href="#/admin">Administration</a>
-            <ul>
-            	<li><a href="#/admin">Company and business units</a></li>
-            	<li><a href="#/admin/users">Users</a></li>
-            	<li><a href="#/admin/projects">Projects</a></li>
-            	<li><a href="#/admin/project-ratings">Project ratings</a></li>
-            	<li><a href="#/admin/resource-types">Resource types</a></li>
-            	<li><a href="#/admin/porfolios">Portfolios</a></li>
-            	<li><a href="#/admin/delete">Delete account</a></li>
-            </ul>
         </li>
     </span>
 </ul>

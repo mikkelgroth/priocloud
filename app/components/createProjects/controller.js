@@ -39,10 +39,11 @@ angular
             companyService
                 .businessUnits
                 .subscribe(function (units) {
-                    $scope.bus = [];
+                    $scope.bus = units;
+                    $scope.ownbus = [];
                     for(var i = 0; i < units.length; i++){
-                        if(units[i].owner.email==$scope.user.email){
-                            $scope.bus.push(units[i]);
+                        if(units[i].owner!=null && units[i].owner.email==$scope.user.email){
+                            $scope.ownbus.push(units[i]);
                         }
                     }
                 });
@@ -52,15 +53,24 @@ angular
                 .subscribe(function (projects) {
 
                     $scope.projects = projects;
+                    $scope.ownprojects = [];
+                    for(var i = 0; i < projects.length; i++){
+                        if(projects[i].bu.owner!=null && projects[i].bu.owner.email==$scope.user.email){
+                            $scope.ownprojects.push(projects[i]);
+                        }
+                    }
                 });
 
             $scope.newProject = function (project) {
 
 
                 /** Project Details  */
-                project.priority ='4. Backlog(H2)';
+                project.creationdate = (new Date()).toISOString();
+                project.priority ='5. Valued';
                 project.state = 'Template';
                 project.type = 'Project';
+                project.support = $scope.company.portfolios[0];
+
                 
 
                 /** Project Finance  */
@@ -212,51 +222,7 @@ angular
 
                 /** Project Risk  */
                 project.risks = [];
-                project.risks.push({});
-                project.risks[0]._id = Math.random().toString(36).substr(2, 9);
-                
-                project.risks[0].title = 'General Project Risk';
-                project.risks[0].type = 'Risk';
-                project.risks[0].proximity = 'Project';
-                project.risks[0].acc = project.pm.name;
-
-                project.risks[0].prob = 1;
-                project.risks[0].impact = 1;
-                project.risks[0].total = 1;
-                project.risks[0].response = 'Accept';
-                project.risks[0].acc = 'TBD';
-                project.risks[0].audience = 'Internal';
-                project.risks[0].status = 'Green';
-                project.risks[0].state = 'New';
-
-                /** Project Issue  */
-                project.risks.push({});
-                project.risks[1]._id = Math.random().toString(36).substr(2, 9);
-                
-                project.risks[1].title = 'General Project Issue';
-                project.risks[1].type = 'Issue';
-                project.risks[1].proximity = 'Project';
-                project.risks[1].acc = project.pm.name;
-
-                project.risks[1].prob = '1';
-                project.risks[1].impact = '1';
-                project.risks[1].total = 1;
-                project.risks[1].response = 'Accept';
-                project.risks[1].acc = 'TBD';
-                project.risks[1].audience = 'Internal';
-                project.risks[1].status = 'Green';
-                project.risks[1].state = 'New';
-
-
-                /** Project KPI  */
-                project.kpi1 = 0;
-                project.kpi2 = 0;
-                project.kpi3 = 0;
-                project.kpi4 = 0;
-                project.kpi5 = 0;
-                project.kpi6 = 0;
-                project.total = 0;
-
+               
 
                 /** Project Status  */
                 project.statuses = [];

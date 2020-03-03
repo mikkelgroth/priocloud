@@ -1,6 +1,6 @@
-
 <div id="linkdiv3" class="view">
-    <div class="mainbox">
+    <div ng-show="ownbus.length==0">You are not owning any Units!</div>
+    <div class="mainbox" ng-show="ownbus.length>0">
         <h2>
             Projects
             <div class="right"><button ng-click="newProject(np); np={};">Create new project</button></div>
@@ -12,26 +12,29 @@
             </tr>
             <tr>
                 <td class="header">Business unit</td>
-                <td><select ng-model="np.bu" ng-options="bu.name for bu in bus track by bu.name"></select></td>
+                <td><select ng-model="np.bu" ng-options="bu.name for bu in ownbus track by bu.name"></select></td>
             </tr>
             <tr>
                 <td class="header">PM</td>
-                <td><select ng-model="np.pm" ng-options="u.name for u in users | filter: {source: true} | orderBy:'name' track by u.name"></select></td>
-            </tr>
-            <tr>
-                <td class="header">PO</td>
-                <td><select ng-model="np.po" ng-options="u.name for u in users | filter: {source: true} | orderBy:'name' track by u.name"></select></td>
-            </tr>
-            <tr>
-                <td class="header">Portfolio</td>
                 <td>
-                    <select  ng-model="np.support" id="projsupport" ng-options="port.name for port in company.portfolios | orderBy: 'level' track by port.name"></select>
+                        <select ng-model="np.pm" 
+                        ng-options="u.name for u in users | filter: {source: true} | orderBy:'name' track by u.name">
+                    </select>
                     
                 </td>
             </tr>
-    
+            <tr>
+                <td class="header">PO</td>
+                <td>
+                        <select ng-model="np.po" 
+                        ng-options="u.name for u in users | filter: {source: true} | orderBy:'name' track by u.name">
+                    </select>
+                </td>
+            </tr>
+
+
         </table>
-        <br/>
+        <br />
         <h3>Project list</h3>
         <div class="overview">
             <table ng-if="projects.length > 0" class="tablelist smaller">
@@ -42,7 +45,7 @@
                     <td class="header">State</td>
                     
                 </tr>
-                <tr ng-repeat="project in projects | orderBy: 'title'">
+                <tr ng-repeat="project in ownprojects | orderBy: 'title'">
                     <td ng-click="editProject(project)">{{project.title}}</td>
                     <td>{{project.bu.name}}</td>
                     <td>{{project.support.name}}</td>

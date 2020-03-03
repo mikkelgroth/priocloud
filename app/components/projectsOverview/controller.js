@@ -15,98 +15,558 @@ angular
             userService,
             companyService
         ) {
-
             companyService.reloadCompany();
-            companyService
-                .company
-                .subscribe(function (company) {
+            companyService.reloadSystems();
+            companyService.reloadProcesses();
 
-                    $scope.company = company;  
-
-                });
-            
-            companyService.projects.subscribe(function (projects) {
-
-                $scope.projectList = setProjectList(projects);
-                $scope.showmepmbutton=true;
-                $scope.showmepobutton=true;
-                $scope.showmeownerbutton=true;
-
-                $scope.search=$rootScope.filtersProjectsOverview;
-
+            companyService.company.subscribe(function (company) {
+                $scope.company = company;
             });
 
-            //use same as onuserchange
-            $scope.saveSearch = function (){
-                $rootScope.filtersProjectsOverview=$scope.search;
-            }
+            companyService.projects.subscribe(function (projects) {
+                $scope.projectList = setProjectList(projects);
+            });
+
+            companyService.businessUnits.subscribe(function (units) {
+                $scope.bus = units;
+            });
             
+            
+
+            userService.users.subscribe(function (users) {
+                $scope.users = users;
+            });
+            // copy objects
+            //const target = qcopy(source);
+            function qcopy(src) {
+                return Object.assign({}, src);
+            }
+
+            $scope.showmepmbutton = true;
+            $scope.showmepobutton = true;
+            $scope.showmeownerbutton = true;
+
+            $scope.quickbuname = ($rootScope.rootfiltersProjectsOverviewQuickbu) ? $rootScope.rootfiltersProjectsOverviewQuickbu : "";
+
+            $scope.porderparam = ($rootScope.rootfiltersOrderporderparam) ? $rootScope.rootfiltersOrderporderparam : "priority";
+            $scope.porderparam2 = ($rootScope.rootfiltersOrderporderparam2) ? $rootScope.rootfiltersOrderporderparam2 : "-enablervalue";
+            $scope.porderparam3 = ($rootScope.rootfiltersOrderporderparam3) ? $rootScope.rootfiltersOrderporderparam3 : "limitervalue";
+
+            if ($scope.searchParams == undefined) {
+                $scope.searchParams = [];
+            }
+
+
+
+            $scope.views = 'overview';
+            $scope.showcon = false;
+            $scope.showconfi = false;
+            if (!$rootScope.firstlogin) {
+                //console.log("$rootScope.firstlogin: " + $rootScope.firstlogin);
+                $rootScope.firstlogin = true;
+                setTimeout(function () {
+                    if ($scope.company.portfolios) {
+                        $scope.showportbutton = false;
+                        //console.log("Onload start!");
+                        resetPort();
+                    }
+                }, 2000);
+                setTimeout(function () {
+                    if ($scope.company.portfolios) {
+                        resetPort();
+                    }
+                }, 4000);
+                resetPort();
+            } else {
+                $scope.showportbutton = $rootScope.rootfiltersProjectsOverviewshowportbutton;
+                if (!$scope.showportbutton) {
+                    resetPort();
+                } else {
+                    $scope.searchParams = qcopy($rootScope.rootfiltersProjectsOverview);
+                }
+            }
+
+            quickbucall();
+            calcfin();
+
+            //clear all filters
+            $scope.clearall = function () {
+                $scope.searchParams = [];
+                $scope.quickbuname = "";
+                calcfin();
+            }
+
+            //Quick BU select
+            function quickbucall() {
+
+                if ($scope.quickbuname == "") {
+                    $scope.searchParams.buname = [];
+                } else {
+                    $scope.searchParams.buname = [$scope.quickbuname];
+                }
+
+                $rootScope.rootfiltersProjectsOverview = qcopy($scope.searchParams);
+                $rootScope.rootfiltersProjectsOverviewQuickbu = $scope.quickbuname;
+                //console.log("quickbuname: " + $scope.quickbuname + " rootfiltersProjectsOverviewQuickbu: " + $rootScope.rootfiltersProjectsOverviewQuickbu);
+                calcfin();
+            }
+
+            $scope.quickbu = function () {
+                quickbucall();
+            }
+
+            $scope.orderchange = function () {
+                $rootScope.rootfiltersOrderporderparam = $scope.porderparam;
+                $rootScope.rootfiltersOrderporderparam2 = $scope.porderparam2;
+                $rootScope.rootfiltersOrderporderparam3 = $scope.porderparam3;
+
+                $rootScope.rootfiltersProjectsOverviewshowportbutton = true;
+                $scope.showportbutton = $rootScope.rootfiltersProjectsOverviewshowportbutton;
+                //console.log("$rootScope.rootfiltersOrderporderparam3: " + $rootScope.rootfiltersOrderporderparam3);
+            }
+
+            //use same as onuserchange
+            $scope.saveSearch = function () {
+                $scope.quickbuname = "";
+                $rootScope.rootfiltersProjectsOverview = qcopy($scope.searchParams);
+                $scope.showportbutton = true;
+                //console.log("saveSearch -> $scope.user.userfiltersProjectsOverview == $rootScope.rootfiltersProjectsOverview -> " + ($scope.user.userfiltersProjectsOverview == $rootScope.rootfiltersProjectsOverview));
+                calcfin();
+            }
+
             //Save filters to user
-            $scope.saveFilters = function (){
-                $scope.user.filtersProjectsOverview = $rootScope.filtersProjectsOverview;
+            $scope.saveFilters = function () {
+                $scope.user.userfiltersProjectsOverview = qcopy($rootScope.rootfiltersProjectsOverview);
+                //console.log("saveFilters -> -> $scope.user.userfiltersProjectsOverview == $rootScope.rootfiltersProjectsOverview -> " + ($scope.user.userfiltersProjectsOverview == $rootScope.rootfiltersProjectsOverview));
                 userService.updateUser($scope.user);
             }
 
-            companyService.businessUnits.subscribe(function (units) {
-
-                $scope.bus = units;
-            });
-
-            userService.users.subscribe(function (users) {
-
-                $scope.users = users;
-            });
+            //on search change recalcfin types
+            $scope.recalcfin = function () {
+                calcfin();
+            }
 
             $scope.goToProject = function (projectId) {
-
-		        $location.path('/project/' + projectId);
+                $location.path('/project/' + projectId);
             };
-            
-            $scope.showmepm = function () {
+            $scope.showdefault = function () {
+                $scope.searchParams = [];
+                if ($scope.user.userfiltersProjectsOverview != null) {
+                    $scope.quickbuname = "";
+                    $scope.searchParams = qcopy($scope.user.userfiltersProjectsOverview);
+                    //console.log("showdefault -> user.filtersProjectsOverview == $rootScope.rootfiltersProjectsOverview -> " + ($scope.user.userfiltersProjectsOverview == $rootScope.rootfiltersProjectsOverview));
+                }
+                calcfin();
+                $scope.showportbutton = true;
+            };
 
-                $scope.search.pmname = [$scope.user.name];
-                $scope.showmepmbutton=false;
+            $scope.showport = function () {
+                $rootScope.rootfiltersProjectsOverviewshowportbutton = false;
+                $scope.quickbuname = "";
+                resetPort();
+            };
+
+            function resetPort() {
+                $scope.searchParams = [];
+                if ($scope.company != undefined && $scope.company.portfolios != undefined) {
+                    var tempports;
+                    tempports = JSON.parse(JSON.stringify($scope.company.portfolios));
+                    tempports.shift();
+                    var tempportnames = [];
+                    for (let i = 0; i < tempports.length; i++) {
+                        tempportnames.push(tempports[i].name);
+                    }
+                    $scope.searchParams.portname = tempportnames;
+                }
+                $scope.searchParams.buname = [];
+                $scope.searchParams.poname = [];
+                $scope.searchParams.pmname = [];
+                $scope.searchParams.lastStatusFlag = [];
+                $scope.searchParams.state = ['Portfolio Approved', 'Company Approved', 'Progress'];
+                $scope.searchParams.type = [];
+                $scope.searchParams.connect = [];
+                $scope.searchParams.priority = [];
+                $scope.searchParams.financeFlag = [];
+                $scope.searchParams.strategies = [];
+                $scope.searchParams.enablerlable = [];
+                $scope.searchParams.limiterlable = [];
+
+                $scope.porderparam = $rootScope.rootfiltersOrderporderparam = "priority";
+                $scope.porderparam2 = $rootScope.rootfiltersOrderporderparam2 = "-enablervalue";
+                $scope.porderparam3 = $rootScope.rootfiltersOrderporderparam3 = "limitervalue";
+
+                $scope.showportbutton = false;
+                calcfin();
+
+            }
+
+            $scope.clearport = function () {
+                $rootScope.rootfiltersProjectsOverviewshowportbutton = true;
+                $scope.quickbuname = "";
+                $scope.searchParams.buname = [];
+                if ($scope.user.userfiltersProjectsOverview != null) {
+                    $scope.searchParams = qcopy($scope.user.userfiltersProjectsOverview);
+                } else if ($rootScope.rootfiltersProjectsOverview != null) {
+                    $scope.searchParams = qcopy($rootScope.rootfiltersProjectsOverview);
+                }
+                else {
+                    $scope.searchParams = [];
+                }
+                $scope.showportbutton = true;
+                calcfin();
+            };
+
+            $scope.showmepm = function () {
+                $scope.quickbuname = "";
+                $scope.searchParams.buname = [];
+                if ($scope.searchParams == null) $scope.searchParams = [];
+                $scope.searchParams.pmname = [$scope.user.name];
+                $scope.showmepmbutton = false;
+                calcfin();
             };
             $scope.clearmepm = function () {
-
-                $scope.search.pmname = [];
-                $scope.showmepmbutton=true;
+                $scope.quickbuname = "";
+                $scope.searchParams.buname = [];
+                $scope.searchParams.pmname = [];
+                $scope.showmepmbutton = true;
+                calcfin();
             };
             $scope.showmebuowner = function () {
-
-                $scope.search.projbuownername = [$scope.user.name];
-                $scope.showmeownerbutton=false;
+                $scope.quickbuname = "";
+                $scope.searchParams.buname = [];
+                if ($scope.searchParams == null) $scope.searchParams = [];
+                $scope.searchParams.projbuownername = [$scope.user.name];
+                $scope.showmeownerbutton = false;
+                calcfin();
             };
             $scope.clearmebuowner = function () {
-
-                $scope.search.projbuownername = [];
-                $scope.showmeownerbutton=true;
+                $scope.quickbuname = "";
+                $scope.searchParams.buname = [];
+                $scope.searchParams.projbuownername = [];
+                $scope.showmeownerbutton = true;
+                calcfin();
             };
             $scope.showmepo = function () {
-
-                $scope.search.poname = [$scope.user.name];
-                $scope.showmepobutton=false;
+                $scope.quickbuname = "";
+                $scope.searchParams.buname = [];
+                if ($scope.searchParams == null) $scope.searchParams = [];
+                $scope.searchParams.poname = [$scope.user.name];
+                $scope.showmepobutton = false;
+                calcfin();
             };
             $scope.clearmepo = function () {
+                $scope.quickbuname = "";
+                $scope.searchParams.buname = [];
+                $scope.searchParams.poname = [];
+                $scope.showmepobutton = true;
+                calcfin();
+            };
+            $scope.setControlled = function () {
+                $scope.showcon = !$scope.showcon;
+                calcfin();
+            };
+            $scope.setConfidential = function () {
+                $scope.showconfi = !$scope.showconfi;
+                calcfin();
+            };
+            $scope.setViewConfidential = function (element) {
+                return setConfView(element);
+            };
+            function setConfView(element) {
+                var viewconfidential = false;
+                viewconfidential =
+                    (element.bu.owner != null && element.bu.owner.email != null && element.bu.owner.email == $scope.user.email) ||
+                    (element.pm != null && $scope.user.email == element.pm.email) ||
+                    (element.po != null && $scope.user.email == element.po.email) ||
+                    (element.altpo != null && $scope.user.email == element.altpo.email) ||
+                    (element.altpm != null && $scope.user.email == element.altpm.email) ||
+                    ($scope.user.financecontroller && element.financecontroller != null && $scope.user.email == element.financecontroller.email) ||
+                    $scope.user.subadmin ||
+                    $scope.user.admin;
+                return viewconfidential;
+            }
 
-                $scope.search.poname = [];
-                $scope.showmepobutton=true;
+            $scope.depbarRender = function (dep) {
+                return depbarRender(dep);
+            }
+            //depBarRender START
+            function depbarRender(dep) {
+
+                var s = new Date(Date.parse(dep.depdate));
+                var e = new Date(Date.parse(dep.depdeaddate));
+                var start = 0;
+                var end = 100;
+
+                var thisyear = new Date();
+                var base = new Date();
+                var startbase = new Date();
+                base.setFullYear(thisyear.getFullYear(), 0, 1);
+                startbase.setFullYear(thisyear.getFullYear() - 1, 0, 1);
+
+                var today = Math.round((((thisyear.getTime() - base.getTime()) / 86400000) * 33 / 365) + 33);
+                var oneday = today + 1;
+
+                //console.log("thisyear-1 = " + (thisyear.getFullYear()-1));
+
+                if ((thisyear.getFullYear() - 1) == s.getFullYear() || thisyear.getFullYear() == s.getFullYear() || (thisyear.getFullYear() + 1) == s.getFullYear()) start = Math.round(((s.getTime() - startbase.getTime()) / 86400000) * 100 / (3 * 365));
+                if ((thisyear.getFullYear() - 1) == e.getFullYear() || thisyear.getFullYear() == e.getFullYear() || (thisyear.getFullYear() + 1) == e.getFullYear()) end = Math.round(((e.getTime() - startbase.getTime()) / 86400000) * 100 / (3 * 365));
+                if (start == end && end != 100) end = end + 1;
+                if (start == 100) start--;
+                //console.log("Start = " + start);
+                //console.log("End = " + end);
+
+                var colorbackground = "#f7f8f9";
+                var color = "rgb(38,38,38)";
+                var colorlevel = "rgb(0,176,240)";
+
+                if (dep.state != undefined && dep.state != "") {
+                    if (dep.state == "On hold") colorlevel = "rgba(243,54,49)";
+                    if (dep.state == "Requested") colorlevel = "rgb(254,236,2)";
+                    if (dep.state == "Allocated") colorlevel = "rgb(95,185,59)";
+                }
+
+                var ret = "#f6f1d3";
+                if (start < end) {
+                    if (today <= start) {
+                        ret = "linear-gradient(to right, " + colorbackground + " " + today + "%, " + color + " " + today + "%, " + color + " " + oneday + "%, " + colorbackground + " " + oneday + "%, " + colorbackground + " " + start + "%, " + colorlevel + " " + start + "%, " + colorlevel + " " + end + "%, " + colorbackground + " " + end + "%)";
+                    }
+                    if (today > start && today <= end) {
+                        ret = "linear-gradient(to right, " + colorbackground + " " + start + "%, " + colorlevel + " " + start + "%, " + colorlevel + " " + today + "%, " + color + " " + today + "%, " + color + " " + oneday + "%, " + colorlevel + " " + oneday + "%," + colorlevel + " " + end + "%, " + colorbackground + " " + end + "%)";
+                    }
+                    if (today > end) {
+                        if (dep.state == "Open") color = "red";
+                        ret = "linear-gradient(to right, " + colorbackground + " " + start + "%, " + colorlevel + " " + start + "%, " + colorlevel + " " + end + "%, " + colorbackground + " " + end + "%, " + colorbackground + " " + today + "%, " + color + " " + today + "%, " + color + " " + oneday + "%, " + colorbackground + " " + oneday + "%)";
+                    }
+                    if ((thisyear.getFullYear() - 1) > s.getFullYear() && (thisyear.getFullYear() - 1) > e.getFullYear()) {
+                        var dist = Math.round(today / 4);
+                        if (dep.state == "Open") color = "red";
+                        ret = "linear-gradient(to right, " + colorlevel + " 0%, " + colorbackground + " " + dist + "%, " + colorbackground + " " + today + "%, " + color + " " + today + "%, " + color + " " + oneday + "%, " + colorbackground + " " + oneday + "%)";
+                    }
+                    if ((thisyear.getFullYear() + 1) < s.getFullYear() && (thisyear.getFullYear() + 1) < e.getFullYear()) {
+                        var dist = 100 - Math.round((100 - today) / 4);
+                        ret = "linear-gradient(to right, " + colorbackground + " " + today + "%, " + color + " " + today + "%, " + color + " " + oneday + "%, " + colorbackground + " " + oneday + "%, " + colorbackground + " " + dist + "%, " + colorlevel + " 100%)";
+                    }
+                }
+
+                return { background: ret }
+            }
+            //depBarRender END
+
+            //BarRender START
+            $scope.barRender = function (mi) {
+                //console.log("barRender");
+                var s = new Date(Date.parse(mi.date));
+                var e = new Date(Date.parse(mi.enddate));
+                var start = 0;
+                var end = 100;
+
+                var thisyear = new Date();
+                var base = new Date();
+                var startbase = new Date();
+                base.setFullYear(thisyear.getFullYear(), 0, 1);
+                startbase.setFullYear(thisyear.getFullYear() - 1, 0, 1);
+
+                var today = Math.round((((thisyear.getTime() - base.getTime()) / 86400000) * 33 / 365) + 33);
+                var oneday = today + 1;
+
+                //console.log("thisyear-1 = " + (thisyear.getFullYear()-1));
+
+                if ((thisyear.getFullYear() - 1) == s.getFullYear() || thisyear.getFullYear() == s.getFullYear() || (thisyear.getFullYear() + 1) == s.getFullYear()) start = Math.round(((s.getTime() - startbase.getTime()) / 86400000) * 100 / (3 * 365));
+                if ((thisyear.getFullYear() - 1) == e.getFullYear() || thisyear.getFullYear() == e.getFullYear() || (thisyear.getFullYear() + 1) == e.getFullYear()) end = Math.round(((e.getTime() - startbase.getTime()) / 86400000) * 100 / (3 * 365));
+                if (start == end && end != 100) end = end + 1;
+                if (start == 100) start--;
+                //console.log("Start = " + start);
+                //console.log("End = " + end);
+
+                var color = "rgb(38,38,38)";
+                var colorlevel = "rgb(127,147,173)";
+                var colorbackground = "#f7f8f9";
+
+                /** 
+                if (mi.risklevel != null && mi.risklevel != "" && mi.effort != null && mi.effort != "") {
+                    var val = mi.risklevel * mi.effort;
+                    if (val <= 12) colorlevel = "Orange";
+                    if (val <= 6) colorlevel = "Yellow";
+                    if (val <= 3) colorlevel = "Green";
+                }
+                */
+                var ret = "#f6f1d3";
+                if (start < end) {
+                    if (today <= start) {
+                        ret = "linear-gradient(to right, " + colorbackground + " " + today + "%, " + color + " " + today + "%, " + color + " " + oneday + "%, " + colorbackground + " " + oneday + "%, " + colorbackground + " " + start + "%, " + colorlevel + " " + start + "%, " + colorlevel + " " + end + "%, " + colorbackground + " " + end + "%)";
+                    }
+                    if (today > start && today <= end) {
+                        ret = "linear-gradient(to right, " + colorbackground + " " + start + "%, " + colorlevel + " " + start + "%, " + colorlevel + " " + today + "%, " + color + " " + today + "%, " + color + " " + oneday + "%, " + colorlevel + " " + oneday + "%," + colorlevel + " " + end + "%, " + colorbackground + " " + end + "%)";
+                    }
+                    if (today > end) {
+                        if ((mi.state == "Progress" || mi.state == "Target" || mi.state == "Qualified")) color = "red";
+                        ret = "linear-gradient(to right, " + colorbackground + " " + start + "%, " + colorlevel + " " + start + "%, " + colorlevel + " " + end + "%, " + colorbackground + " " + end + "%, " + colorbackground + " " + today + "%, " + color + " " + today + "%, " + color + " " + oneday + "%, " + colorbackground + " " + oneday + "%)";
+                    }
+                    if ((thisyear.getFullYear() - 1) > s.getFullYear() && (thisyear.getFullYear() - 1) > e.getFullYear()) {
+                        var dist = Math.round(today / 4);
+                        if ((mi.state == "Progress" || mi.state == "Target" || mi.state == "Qualified")) color = "red";
+                        ret = "linear-gradient(to right, " + colorlevel + " 0%, " + colorbackground + " " + dist + "%, " + colorbackground + " " + today + "%, " + color + " " + today + "%, " + color + " " + oneday + "%, " + colorbackground + " " + oneday + "%)";
+                    }
+                    if ((thisyear.getFullYear() + 1) < s.getFullYear() && (thisyear.getFullYear() + 1) < e.getFullYear()) {
+                        var dist = 100 - Math.round((100 - today) / 4);
+                        ret = "linear-gradient(to right, " + colorbackground + " " + today + "%, " + color + " " + today + "%, " + color + " " + oneday + "%, " + colorbackground + " " + oneday + "%, " + colorbackground + " " + dist + "%, " + colorlevel + " 100%)";
+                    }
+                }
+
+                return { background: ret }
+            }
+            //BarRender END
+
+            function filterlist(items, filterData) {
+                if (filterData == undefined) {
+                    return items;
+                }
+                var keys = Object.keys(filterData);
+                var filtered = [];
+                var populate = true;
+                for (var i = 0; i < items.length; i++) {
+                    var item = items[i];
+                    populate = true;
+                    for (var j = 0; j < keys.length; j++) {
+                        if (filterData[keys[j]] != undefined) {
+                            if (keys[j] === "connect") {
+                                if (filterData[keys[j]].length == 0 || doesListContain(filterData[keys[j]], item["connect"])) {
+                                    populate = true;
+                                } else {
+                                    populate = false;
+                                    break;
+                                }
+                            } else {
+                                if (filterData[keys[j]].length == 0 || doesListContain(filterData[keys[j]], item[keys[j]])) {
+                                    populate = true;
+                                } else {
+                                    populate = false;
+                                    break;
+                                }
+                            }
+
+                        }
+                    }
+                    if (populate) {
+                        filtered.push(item);
+                    }
+                }
+
+                function doesListContain(list, obj) {
+                    var i = list.length;
+                    while (i--) {
+                        if (Array.isArray(obj)) {
+                            var j = obj.length;
+                            while (j--) {
+                                if (list[i] === obj[j]) {
+                                    return true;
+                                }
+                            }
+                        } else {
+                            if (list[i] === obj) {
+                                return true;
+                            }
+                        }
+                    }
+                    return false;
+                }
+                return filtered;
+            };
+
+            function calcfin() {
+                var projfiltered = filterlist($scope.projectList, $scope.searchParams);
+                $scope.finsums = {};
+
+                $scope.finsums.devTotalprev = 0;
+                $scope.finsums.devTotalq1 = 0;
+                $scope.finsums.devTotalq2 = 0;
+                $scope.finsums.devTotalq3 = 0;
+                $scope.finsums.devTotalq4 = 0;
+                $scope.finsums.devTotalSum = 0;
+                $scope.finsums.devTotalgrandSum = 0;
+
+                $scope.finsums.budTotalprev = 0;
+                $scope.finsums.budTotalq1 = 0;
+                $scope.finsums.budTotalq2 = 0;
+                $scope.finsums.budTotalq3 = 0;
+                $scope.finsums.budTotalq4 = 0;
+                $scope.finsums.budTotalSum = 0;
+                $scope.finsums.budTotalgrandSum = 0;
+
+                $scope.finsums.postTotalprev = 0;
+                $scope.finsums.postTotalq1 = 0;
+                $scope.finsums.postTotalq2 = 0;
+                $scope.finsums.postTotalq3 = 0;
+                $scope.finsums.postTotalq4 = 0;
+                $scope.finsums.postTotalSum = 0;
+                $scope.finsums.postTotalgrandSum = 0;
+
+                var viewconfidential = false;
+
+                for (let i = 0; i < projfiltered.length; i++) {
+                    const element = projfiltered[i];
+
+                    viewconfidential = setConfView(element);
+
+                    if ((!$scope.showcon || (element.isControlled && $scope.showcon)) && (!element.isFinConf || (element.isFinConf && $scope.showconfi && viewconfidential))) {
+                        if (element.finance != null && element.finance.devTotalprev != null) { $scope.finsums.devTotalprev += element.finance.devTotalprev; }
+                        if (element.finance != null && element.finance.devTotalq1 != null) { $scope.finsums.devTotalq1 += element.finance.devTotalq1; }
+                        if (element.finance != null && element.finance.devTotalq2 != null) { $scope.finsums.devTotalq2 += element.finance.devTotalq2; }
+                        if (element.finance != null && element.finance.devTotalq3 != null) { $scope.finsums.devTotalq3 += element.finance.devTotalq3; }
+                        if (element.finance != null && element.finance.devTotalq4 != null) { $scope.finsums.devTotalq4 += element.finance.devTotalq4; }
+                        if (element.finance != null && element.finance.devTotalSum != null) { $scope.finsums.devTotalSum += element.finance.devTotalSum; }
+                        if (element.finance != null && element.finance.devTotalfutureSum != null) { $scope.finsums.devTotalfutureSum += element.finance.devTotalfutureSum; }
+                        if (element.finance != null && element.finance.devTotalgrandSum != null) { $scope.finsums.devTotalgrandSum += element.finance.devTotalgrandSum; }
+
+                        if (element.finance != null && element.finance.budTotalprev != null) { $scope.finsums.budTotalprev += element.finance.budTotalprev; }
+                        if (element.finance != null && element.finance.budTotalq1 != null) { $scope.finsums.budTotalq1 += element.finance.budTotalq1; }
+                        if (element.finance != null && element.finance.budTotalq2 != null) { $scope.finsums.budTotalq2 += element.finance.budTotalq2; }
+                        if (element.finance != null && element.finance.budTotalq3 != null) { $scope.finsums.budTotalq3 += element.finance.budTotalq3; }
+                        if (element.finance != null && element.finance.budTotalq4 != null) { $scope.finsums.budTotalq4 += element.finance.budTotalq4; }
+                        if (element.finance != null && element.finance.budTotalSum != null) { $scope.finsums.budTotalSum += element.finance.budTotalSum; }
+                        if (element.finance != null && element.finance.budTotalfutureSum != null) { $scope.finsums.budTotalfutureSum += element.finance.budTotalfutureSum; }
+                        if (element.finance != null && element.finance.budTotalgrandSum != null) { $scope.finsums.budTotalgrandSum += element.finance.budTotalgrandSum; }
+
+                        if (element.finance != null && element.finance.postTotalprev != null) { $scope.finsums.postTotalprev += element.finance.postTotalprev; }
+                        if (element.finance != null && element.finance.postTotalq1 != null) { $scope.finsums.postTotalq1 += element.finance.postTotalq1; }
+                        if (element.finance != null && element.finance.postTotalq2 != null) { $scope.finsums.postTotalq2 += element.finance.postTotalq2; }
+                        if (element.finance != null && element.finance.postTotalq3 != null) { $scope.finsums.postTotalq3 += element.finance.postTotalq3; }
+                        if (element.finance != null && element.finance.postTotalq4 != null) { $scope.finsums.postTotalq4 += element.finance.postTotalq4; }
+                        if (element.finance != null && element.finance.postTotalSum != null) { $scope.finsums.postTotalSum += element.finance.postTotalSum; }
+                        if (element.finance != null && element.finance.postTotalfutureSum != null) { $scope.finsums.postTotalfutureSum += element.finance.postTotalfutureSum; }
+                        if (element.finance != null && element.finance.postTotalgrandSum != null) { $scope.finsums.postTotalgrandSum += element.finance.postTotalgrandSum; }
+                    }
+                }
+
             };
 
             function setProjectList(projects) {
-
                 return projects.map(function (project) {
 
                     project.buname = project.bu.name;
-                    project.poname = project.po.name;
                     project.pmname = project.pm.name;
-                    project.projbuownername = "";
-                    if(project.bu != null && project.bu.owner != null) project.projbuownername = project.bu.owner.name;
-                    
-                    project.portname = '';
-                    if(project.support != null) project.portname = project.support.name;
+                    project.poname = project.po.name;
+                    project.enablerlable = (project.milestones[0] != undefined) ? project.milestones[0].enablerlable : "XS";
+                    project.enablervalue = (project.milestones[0] != undefined) ? project.milestones[0].enablervalue : 0;
+                    project.limiterlable = (project.milestones[0] != undefined) ? project.milestones[0].limiterlable : "XL";
+                    project.limitervalue = (project.milestones[0] != undefined) ? project.milestones[0].limitervalue : 16;
+                    project.wsjf = (project.milestones[0] != undefined) ? project.milestones[0].wsjf : 0;
 
-                    
+                    project.projbuownername = "";
+                    if (project.bu != undefined && project.bu.owner != undefined) project.projbuownername = project.bu.owner.name;
+
+                    project.portname = '';
+                    if (project.support != undefined) project.portname = project.support.name;
+                    project.startdate = project.milestones[0].date;
+                    if (project.creationdate == undefined) {
+                        project.creationdate = project.milestones[0].date;
+                    }
+
+
+
+                    $scope.year = (new Date()).getFullYear();
+
+
 
                     project.warn = "";
                     // set last status
@@ -114,90 +574,75 @@ angular
                     project.lastStatusFlag = project.lastStatus.status;
                     project.financeFlag = project.financeControl;
 
+                    // set baseline values and flags
+                    project.baselinestate = project.state;
+                    project.baselinepriority = project.priority;
+                    project.baselineenddate = project.milestones[0].enddate;
+                    project.baselinepeopleexternal = project.finance.costdeptotalexternalttotal;
+                    project.baselinegrandtotal = project.finance.budTotalgrandSum;
+
+                    if (project.finance.baselines != undefined && project.finance.baselines[project.finance.baselines.length - 1] != undefined) {
+                        project.baselinestate = project.finance.baselines[project.finance.baselines.length - 1].state;
+                        project.baselinepriority = project.finance.baselines[project.finance.baselines.length - 1].priority;
+                        project.baselineenddate = project.finance.baselines[project.finance.baselines.length - 1].enddate;
+                        project.baselinepeopleexternal = project.finance.baselines[project.finance.baselines.length - 1].peopleexternal;
+                        project.baselinegrandtotal = project.finance.baselines[project.finance.baselines.length - 1].grandtotal;
+                    }
+
+                    (project.baselinepriority == project.priority) ? project.baselinepriorityFLAG = "Green" : project.baselinepriorityFLAG = "Yellow";
+                    (project.baselineenddate == project.milestones[0].enddate) ? project.baselineenddateFLAG = "Green" : project.baselineenddateFLAG = "Yellow";
+
+                    project.baselinepeopleexternalDIV = 0;
+                    if (project.baselinepeopleexternal != 0 && project.finance.costdeptotalexternalttotal != undefined) {
+                        project.baselinepeopleexternalDIV = (project.baselinepeopleexternal - project.finance.costdeptotalexternalttotal) * 100 / project.baselinepeopleexternal;
+                    }
+
+                    project.baselinegrandtotalDIV = 0;
+                    if (project.baselinegrandtotal != 0 && project.finance.budTotalgrandSum != undefined) {
+                        project.baselinegrandtotalDIV = (project.baselinegrandtotal - project.finance.budTotalgrandSum) * 100 / project.baselinegrandtotal;
+                    }
+
+                    project.baselinepeopleexternalFLAG = "Green";
+                    if (project.baselinepeopleexternalDIV < -10) project.baselinepeopleexternalFLAG = "Yellow";
+                    if (project.baselinepeopleexternalDIV < -20) project.baselinepeopleexternalFLAG = "Orange";
+                    if (project.baselinepeopleexternalDIV < -50) project.baselinepeopleexternalFLAG = "Red";
+
+                    project.baselinegrandtotalFLAG = "Green";
+                    if (project.baselinegrandtotalDIV < -10) project.baselinegrandtotalFLAG = "Yellow";
+                    if (project.baselinegrandtotalDIV < -20) project.baselinegrandtotalFLAG = "Orange";
+                    if (project.baselinegrandtotalDIV < -50) project.baselinegrandtotalFLAG = "Red";
+
+
                     var now = new Date();
                     var status = new Date(project.lastStatus.date);
-                    if(Math.round((status.getTime()-now.getTime()) / (1000*60*60*24)) < -14){project.warn = "!";}
-                    if(Math.round((status.getTime()-now.getTime()) / (1000*60*60*24)) < -30){project.warn = "!!";}
-                    if(Math.round((status.getTime()-now.getTime()) / (1000*60*60*24)) < -45){project.warn = "!!!";}
+                    if (Math.round((status.getTime() - now.getTime()) / (1000 * 60 * 60 * 24)) < -14) { project.warn = "!"; }
+                    if (Math.round((status.getTime() - now.getTime()) / (1000 * 60 * 60 * 24)) < -30) { project.warn = "!!"; }
+                    if (Math.round((status.getTime() - now.getTime()) / (1000 * 60 * 60 * 24)) < -45) { project.warn = "!!!"; }
 
-                    
+
+                    project.allocatedflag = "Red";
+                    project.allocatedstring = "";
+                    var allocateddeps = 0;
+                    var currentdeps = 0;
+                    var currentdate = new Date();
+                    for (let i = 0; project.deps != undefined && i < project.deps.length; i++) {
+                        const e = project.deps[i];
+                        //console.log("e.depdate " + e.depdate + " cuurentdate " + currentdate);
+                        if (new Date(e.rawdepdate) <= currentdate && currentdate <= new Date(e.rawdepdeaddate)) {
+                            currentdeps += 1;
+                            if (e.state == "Allocated") {
+                                allocateddeps += 1;
+                            }
+                        }
+                    }
+                    if (currentdeps == allocateddeps) {
+                        project.allocatedflag = "Green";
+                    }
+                    project.allocatedstring = "" + allocateddeps + " / " + currentdeps;
 
                     return project;
                 });
             }
-
-            //TEST projects bubble graph
-$scope.projectslabels = [];
-$scope.projectsoptions = {
-    responsive: false,
-    legend: { 
-        verticalAlign: "top",
-        horizontalAlign: "right",
-        display: true
-        
-    }
-};
-
- 
-if($scope.projectList != null){
-    
-        $scope.projectsseries = [];
-        $scope.projectsdata = [];
-        $scope.projectsoptions = {
-            
-            legend: {
-                display: true,
-                position: 'right'
-            },    
-            tooltips: true,
-            scales: {
-              xAxes: [{
-                scaleLabel: {
-                    display: true,
-                    labelString: 'Strategy'
-                },
-                display: true,
-                ticks: {
-                  max: 300,
-                  min: 0,
-                  stepSize: 100
-                }
-              }],
-              yAxes: [{
-                scaleLabel: {
-                    display: true,
-                    labelString: 'Top line benefit'
-                },
-                display: true,
-                ticks: {
-                  max: 300,
-                  min: 0,
-                  stepSize: 100
-                }
-              }]
-            }
-          };
-        var projects;
-        for (var i = 0; i < $scope.projectList.length; i++) {
-            projects = $scope.projectList[i];
-            
-            if(projects.state!='Closed') {
-                    $scope.projectsseries.push(projects.title);
-                    $scope.projectsdata.push([{
-                        x: parseInt(projects.kpi1)*50+parseInt(projects.kpi2)*10+parseInt(projects.kpi3),
-                        y: parseInt(projects.kpi6)*50+parseInt(projects.kpi5)*10+parseInt(projects.kpi4),
-                        r: parseInt(projects.kpi2)*8
-                    }]);
-            }
-        }
-        $scope.onprojectsClick = function (points, evt) {
-            console.log(points, evt);
-          };
-      
-} else {
-    $scope.projectsdata = [{x: "1", y: "2", r: "30"}];
-}           
-//TEST END     
 
         }
     ]);

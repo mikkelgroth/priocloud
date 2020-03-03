@@ -10,11 +10,31 @@ angular
             };
 
             scope.$watch(attrs['saveThis'], function (newVal) {
-                if(document.getElementById("saveButton")!=null){
+                if (document.getElementById("saveButton") != null) {
                     if (newVal) document.getElementById("saveButton").className = "Red";
                     else document.getElementById("saveButton").className = "Green";
                 }
-                if(document.getElementById("saveButtonQ")!=null){
+                if (document.getElementById("saveButton1") != null) {
+                    if (newVal) document.getElementById("saveButton1").className = "Red";
+                    else document.getElementById("saveButton1").className = "Green";
+                }
+                if (document.getElementById("saveButton2") != null) {
+                    if (newVal) document.getElementById("saveButton2").className = "Red";
+                    else document.getElementById("saveButton2").className = "Green";
+                }
+                if (document.getElementById("saveButton3") != null) {
+                    if (newVal) document.getElementById("saveButton3").className = "Red";
+                    else document.getElementById("saveButton3").className = "Green";
+                }
+                if (document.getElementById("saveButton4") != null) {
+                    if (newVal) document.getElementById("saveButton4").className = "Red";
+                    else document.getElementById("saveButton4").className = "Green";
+                }
+                if (document.getElementById("saveButton5") != null) {
+                    if (newVal) document.getElementById("saveButton5").className = "Red";
+                    else document.getElementById("saveButton5").className = "Green";
+                }
+                if (document.getElementById("saveButtonQ") != null) {
                     if (newVal) document.getElementById("saveButtonQ").className = "Red";
                     else document.getElementById("saveButtonQ").className = "Green";
                 }
@@ -22,7 +42,7 @@ angular
 
 
             scope.$watch(attrs['prioSizeRender'], function (newVal) {
-                
+
                 if (newVal == 'No dependency') classList['prioSizeRender'] = "rad1";
                 else if (newVal == 'Minor dependency') classList['prioSizeRender'] = "rad2";
                 else if (newVal == 'Major dependency') classList['prioSizeRender'] = "rad4";
@@ -33,7 +53,7 @@ angular
             }, true);
 
             scope.$watch(attrs['prioSkillRender'], function (newVal) {
-                
+
                 if (newVal == 'Ok') classList['prioSkillRender'] = "Green";
                 else if (newVal == 'Minor issue') classList['prioSkillRender'] = "Yellow";
                 else if (newVal == 'Major issue') classList['prioSkillRender'] = "Orange";
@@ -44,7 +64,7 @@ angular
             }, true);
 
             scope.$watch(attrs['prioResRender'], function (newVal) {
-                
+
                 if (newVal == 'Committed') classList['prioResRender'] = "ResGreen";
                 else if (newVal == 'Backlog') classList['prioResRender'] = "ResYellow";
                 else if (newVal == 'Tentative') classList['prioResRender'] = "ResOrange";
@@ -57,7 +77,7 @@ angular
 
 
             scope.$watch(attrs['prioKpiSizeRender'], function (newVal) {
-                
+
                 if (newVal == '0') classList['prioKpiSizeRender'] = "rad0";
                 else if (newVal == '25') classList['prioKpiSizeRender'] = "rad1";
                 else if (newVal == '50') classList['prioKpiSizeRender'] = "rad2";
@@ -70,7 +90,7 @@ angular
             }, true);
 
             scope.$watch(attrs['prioValueBarRender'], function (newVal) {
-                
+
                 if (newVal == 1) classList['prioValueBarRender'] = "Red";
                 else if (newVal == 2) classList['prioValueBarRender'] = "Orange";
                 else if (newVal == 3) classList['prioValueBarRender'] = "Yellow";
@@ -81,7 +101,7 @@ angular
             }, true);
 
             scope.$watch(attrs['prioValueBarRenderNeg'], function (newVal) {
-                
+
                 if (newVal == 1) classList['prioValueBarRenderNeg'] = "Green";
                 else if (newVal == 2) classList['prioValueBarRenderNeg'] = "Yellow";
                 else if (newVal == 3) classList['prioValueBarRenderNeg'] = "Orange";
@@ -92,7 +112,7 @@ angular
             }, true);
 
             scope.$watch(attrs['prioRiskBarRender'], function (newVal) {
-                
+
                 if (newVal == 1) classList['prioRiskBarRender'] = "Green";
                 else if (newVal == 2) classList['prioRiskBarRender'] = "Yellow";
                 else if (newVal == 3) classList['prioRiskBarRender'] = "Orange";
@@ -103,7 +123,7 @@ angular
             }, true);
 
             scope.$watch(attrs['prioCsRender'], function (newVal) {
-                
+
                 if (newVal == 8 || newVal == 7 || newVal == 6) classList['prioCsRender'] = "Green";
                 else if (newVal == 5 || newVal == 4) classList['prioCsRender'] = "Yellow";
                 else if (newVal == 3 || newVal == 2) classList['prioCsRender'] = "Orange";
@@ -113,7 +133,7 @@ angular
 
             }, true);
 
-            
+
             function repaintClasses() {
 
                 element.attr('class', '');
@@ -131,73 +151,48 @@ angular
 
 
 
-
-    .directive('prioMiniPie', [function () {
-
-        function linkFunction(scope, element, attrs) {
-            
-            scope.$watch(attrs['prioVal'], function (newVal) {
-
-                if (newVal) {
-                    
-                    var uniqueId = '_' + Math.random().toString(36).substr(2, 9);
-
-                    element.attr('id', uniqueId);
-                    element.empty();
-
-                    var le = 100 - newVal;
-                    var dataset = {
-                        priokpiset: [newVal, le],
-                    };
-
-                    var width = 50,
-                        height = 50,
-                        radius = Math.min(width, height) / 2;
-
-                    var color = ['#00f','#ddf'];
-
-                    var pie = d3.layout.pie()
-                        .sort(null);
-
-                    var arc = d3.svg.arc()
-                        .innerRadius(radius - 10)
-                        .outerRadius(radius - 20);
-
-                    var svg = d3.select('#' + uniqueId).append("svg")
-                        .attr("width", width)
-                        .attr("height", height)
-                        .append("g")
-                        .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
-
-                    var path = svg.selectAll("path")
-                        .data(pie(dataset.priokpiset))
-                        .enter()
-                        .append("path")
-                        .attr("fill", function(d, i) { return color[i]; })
-                        .attr("d", arc);
-                }
-
-            }, true);
-        }
-
+    .directive('datepicker', function () {
         return {
-            restrict: 'E',
-            link: linkFunction
+            require: 'ngModel',
+            link: function (scope, el, attr, ngModel) {
+                $(el).datepicker({
+                    onSelect: function (dateText) {
+                        scope.$apply(function () {
+                            ngModel.$setViewValue(dateText);
+                            // console.log("dateText = " + dateText);
+
+                        });
+                    }
+                });
+            }
         };
-    }])
-.directive('datepicker', function() {
-  return {
-    require: 'ngModel',
-    link: function(scope, el, attr, ngModel) {
-      $(el).datepicker({
-        onSelect: function(dateText) {
-            scope.$apply(function() {
-                ngModel.$setViewValue(dateText);
-                // console.log("dateText = " + dateText);
-              
-            });
-        }
-      });
+    });
+
+$(function () {
+
+    function autosize() {
+        var el = this;
+        setTimeout(function () {
+            el.style.cssText = 'height:auto; padding:0';
+            // for box-sizing other than "content-box" use:
+            // el.style.cssText = '-moz-box-sizing:content-box';
+            el.style.cssText = 'height:' + (parseInt(el.scrollHeight) + 20) + 'px';
+        }, 0);
     }
-  };
+
+
+
+$('body').on('keydown', 'textarea', autosize);
+$('body').on('click', function(){
+
+    $('textarea').each(function(){
+        var thetextarea = this;
+            thetextarea.style.cssText = 'height:auto; padding:0; ';
+            // for box-sizing other than "content-box" use:
+            // thetextarea.style.cssText = '-moz-box-sizing:content-box';
+            thetextarea.style.cssText = 'height:' + (parseInt(thetextarea.scrollHeight) + 20) + 'px';
+    });
+});
+
+
 });

@@ -1,6 +1,6 @@
 angular
     .module('riskApp')
-    .service('userService', ['$rootScope', '$window', '$q', '$http', 'rx', function ($rootScope, $window, $q, $http, rx) {
+    .service('userService', ['$rootScope', '$window', '$q', '$http', 'rx', '$location', function ($rootScope, $window, $q, $http, rx, $location) {
 
         var _this = this;
 
@@ -22,8 +22,10 @@ angular
                     $window.sessionStorage["user"] = (user === 'null') ? 'null' : JSON.stringify(user);
 
                     _this._internalUser = user;
-
-                    loadUsers(user.auid, user.uuid);
+                    if (user!=null && user.auid!=null && user.uuid!=null) {
+                        loadUsers(user.auid, user.uuid);
+                    }
+                    
                 });
             }
 
@@ -31,14 +33,16 @@ angular
             //user.isOwner = true;
             //user.admin = true;
             //user.demo = false;
-            $rootScope.filtersProjectsOverview = user.filtersProjectsOverview;
-            $rootScope.filtersProjectsFinanceOverview = user.filtersProjectsFinanceOverview;
-            $rootScope.filtersProjectsGanttOverview = user.filtersProjectsGanttOverview;
-            $rootScope.filtersProjectsKPIOverview = user.filtersProjectsKPIOverview;
-            $rootScope.filtersProjectsPurposeOverview = user.filtersProjectsPurposeOverview;
-            $rootScope.filtersProjectsReportOverview = user.filtersProjectsReportOverview;
-            $rootScope.filtersProjectsStatusOverview = user.filtersProjectsStatusOverview;
-            
+            // copy objects
+            //const target = qcopy(source);
+            function qcopy(src) {
+                return Object.assign({}, src);
+            }
+            $rootScope.rootfiltersProjectsOverview = qcopy(user.userfiltersProjectsOverview);
+            $rootScope.rootfiltersDependencies = qcopy(user.userfiltersDependencies);
+            $rootScope.rootfiltersDeliverables = qcopy(user.userfiltersDeliverables);
+            $rootScope.rootfiltersRisks = qcopy(user.userfiltersRisks);
+
 
             _this.user.onNext(user);
             _this.userAuthenticated.onNext(true);
@@ -60,6 +64,28 @@ angular
             var defer = $q.defer();
             var userData = $window.sessionStorage["user"];
             if (!userData || userData == 'null') {
+                ////////////////////////////////////////////////////                
+                //PERFORM SSO LOGIN ON BACKEND
+                $http.post('/.auth/me').
+                    success(function (data, status, headers, config) {
+                        console.log('Frontend rest sso=' + data);
+                        var email = data[0].user_id;
+                        var token = data[0].id_token;
+                        $http.post(USERSERVER + '?action=ssologin&application=priocloud&email=' + email + '&token=' + token).
+                            success(function (data, status, headers, config) {
+                                console.log(data);
+                                if (!data.authenticated) {
+                                    alert('Login failure:\n\n' + data.message);
+                                } else {
+                                    //movement(); //init when login is done
+                                    _this.authenticate(data);
+                                    $location.path('/');
+                                }
+
+                            });
+                    });
+                ////////////////////////////////////////////////////                
+
                 defer.resolve({ authenticated: false });
                 return defer.promise;
             }
@@ -109,7 +135,7 @@ angular
             var data = angular.fromJson(user);
 
             return $http
-                .post(USERSERVER + '?action=updateuser&application=priocloud&auid=' + _this._internalUser.auid + '&uuid=' + user.uuid, data)
+                .post(USERSERVER + '?action=updateuser&application=priocloud&auid=' + _this._internalUser.auid + '&uuid=' + _this._internalUser.uuid, data)
                 .success(function (data, status, headers, config) {
 
                     return loadUsers(_this._internalUser.auid, _this._internalUser.uuid);
@@ -121,7 +147,7 @@ angular
             $http
                 .post(USERSERVER + '?action=resetpassword&application=priocloud&email=' + user.email)
                 .success(function (data, status, headers, config) {
-                    
+
                     alert('PW reset and mail sent');
                 });
         };

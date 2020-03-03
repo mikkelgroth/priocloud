@@ -1,11 +1,15 @@
 <div id="login">
-    <div class="mainbox editboxon">
+    <div ng-show="SSO=='SSO'">
+        <button ng-click="reloadPrio()">Reload</button>
+    </div>
+    <div class="mainbox editboxon" ng-show="SSO=='NOSSO'">
         <h2>PrioCloud - BETA TESTING</h2>
         <h3>-a free online project portfolio management tool</h3>
         <div prio-user-authenticated="{display: false}" class="login login-container">
             <div id="login" class="column small-6">
                 <div class="login-box">
                     <b>Log in to {{SITENAME}}</b>
+
                     <form ng-submit="login()">
                         <div class="field">
                             <input placeholder="Email address" type="email" name="email" ng-model="email" autofocus />
@@ -19,7 +23,8 @@
                     </form>
                     <div>
                         <i>
-                            <a class="link" ng-click="resetPassword(email)">I forgot my password - send me an email to reset my password</a>
+                            <a class="link" ng-click="resetPassword(email)">I forgot my password - send me an email to
+                                reset my password</a>
                         </i>
                     </div>
                 </div>
@@ -28,8 +33,10 @@
                 <div class="demo-box">
                     <b>Demo login</b>
                     <div>
-                        You can login as the boardmember in "The Bank Company".<br/> This "Boardmember" have access to all
-                        projects and information. But he cannot persist changes to priorities beyond your session.<br/>&nbsp;<br/>
+                        You can login as the boardmember in "The Bank Company".<br /> This "Boardmember" have access to
+                        all
+                        projects and information. But he cannot persist changes to priorities beyond your
+                        session.<br />&nbsp;<br />
                         <table class="smaller">
                             <tr>
                                 <td style="background-color:#fff;"><b>Use email:</b></td>
@@ -46,7 +53,7 @@
         </div>
         <div prio-user-authenticated="{display: true}">
             <div id="login" class="login">
-                <b>Logged in as: </b>{{ user.name }} <br/>
+                <b>Logged in as: </b>{{ user.name }} <br />
                 <button ng-click="logout()">Logout</button>
             </div>
         </div>

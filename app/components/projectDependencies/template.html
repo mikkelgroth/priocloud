@@ -1,232 +1,308 @@
+<h2 class="center {{project.lastStatusFlag}}">
+    {{project.type}} - {{project.title}} ({{project.projectnumber}})
+</h2>
 <prio-project-menu prio-project-id="{{project._id.$oid}}" prio-project-title="{{project.title}}"></prio-project-menu>
-
-<div id="project-dependencies" class="view">
-    <div ng-show="showDepForm">
-        <h2 class="{{editdep.status}}">
-            {{editdep.title}}
-            <div class="right">
-                <button type="button" id="saveButton" prio-class save-this="$parent.hasChanged"
-                        ng-if="user.changeContent"
-                        ng-click="saveDeps(true)">save</button>
-                <button type="button" ng-click="hideDepForm()">close</button>
-                <button type="button" 
-                ng-click="$parent.deleteThis=true" 
-                ng-show="!$parent.deleteThis"
-                ng-if="user.changeContent">delete</button>
-            <button type="button" class="Red"
-                ng-click="$parent.deleteThis=false; removeDep(editdep)" 
-                ng-show="$parent.deleteThis"
-                ng-if="user.changeContent">confirm delete!!!</button>
-            </div>
-        </h2>
-        <table class="smaller">
-            <tr>
-                <td class="header">Title</td>
-                <td>
-                    <div class="field">
-                        <input ng-model="editdep.title" ng-change="saveNow(editdep)" ng-disabled="!user.changeContent"/>
+<div class="view">
+    <div class="popup">
+        <div class="overview popupcontent">
+            <div class="actions">
+                <div class="layout">
+                    <div class="layoutelement">
+                        <button type="button" id="saveButton1" prio-class save-this="$parent.hasChanged"
+                            ng-if="user.changeContent" ng-click="saveDeps()">save</button>
                     </div>
-                </td>
-                <td class="header">Audience</td>
-                <td>
-                    <select ng-model="editdep.audience" ng-change="saveNow(editdep)" ng-disabled="!user.changeContent">
-                        <option value="Internal">Internal</option>
-                        <option value="Portfolio">Portfolio</option>
-                        <option value="Company">Company</option>
-                    </select>
-                </td>
-            </tr>
-            <tr>
-                <td class="header">Requester</td>
-                <td>
-                    <select ng-model="editdep.requester"  ng-change="saveNow(editdep)" ng-options="u.name for u in users | filter: {source: true} | orderBy:'name' track by u.name" ng-disabled="!user.changeContent"></select>
-                </td>
-                <td class="header">Resource owner</td>
-                <td>
-                    <select ng-model="editdep.resowner"  ng-change="saveNow(editdep)" ng-options="u.name for u in users | filter: {source: true} | orderBy:'name' track by u.name" ng-disabled="!user.changeContent"></select>
-                </td>
-            </tr>
-            <tr>
-                <td class="header">Request quantum</td>
-                <td>
-                    <select ng-model="editdep.quantum"  ng-change="saveNow(editdep)" ng-disabled="!user.changeContent">
-                        <option value="None">None</option>
-                        <option value="Minor tasks">Minor tasks</option>
-                        <option value="Major tasks">Major tasks</option>
-                        <option value="Temp allocation">Temp allocation</option>
-                        <option value="Allocation">Allocation</option>
-                        <option value="Transfer employee">Transfer employee</option>
-                        
-                    </select>
-                </td>
-                
-                <td class="header">Resource type</td>
-                <td>
-                    <select ng-change="saveNow(editdep)" ng-model="editdep.bu" id="depbu" ng-options="bu.name for bu in company.resourceTypes | orderBy:'name' track by bu.name" ng-disabled="!user.changeContent"></select>
-                </td>
-                
-            </tr>
-            <tr>
-                <td class="l header">Priority</td>
-                <td>
-                    <select ng-model="editdep.priority"  ng-change="saveNow(editdep)" ng-disabled="!user.changeContent">
-                        <option value="TBD">TBD</option>
-                        <option value="Minor">Minor</option>
-                        <option value="Major">Major</option>
-                        <option value="Critical">Critical</option>
-                    </select>
-                </td>
-                <td class="header">Resource area</td>
+                    <div class="layoutelement center">
+                        <button type="button" ng-if="user.changeContent" ng-click="newCloneDep(editdep)">clone</button>
+                        <button type="button" class="Red" ng-click="removeDep(editdep)" ng-show="$parent.deleteThis"
+                            ng-if="user.changeContent">confirm
+                            delete!!!</button>
+                        <button type="button" ng-click="delete()" ng-show="!$parent.deleteThis"
+                            ng-if="user.changeContent">delete</button>
+                    </div>
+                    <div class="layoutelement right">
+                        <button type="button" class="close" ng-click="close()"></button>
+                    </div>
+                </div>
+            </div>
+            <h3 class="{{editdep.status}}">
+                {{editdep.title}}
+            </h3>
+            <table class="formtable smaller">
+                <tr>
+                    <td class="formlabel">Title</td>
                     <td>
-                        {{editdep.bu.bu.name}}
+                        <input ng-model="editdep.title" ng-change="saveNow(editdep)"
+                            ng-disabled="!user.changeContent" />
                     </td>
+                </tr>
+                <tr>
+
+                    <td class="formlabel">Show in report</td>
+                    <td>
+                        <input type="checkbox" ng-model="editdep.showInReport" ng-change="saveNow(editdep)"
+                            ng-disabled="!user.changeContent">
+                    </td>
+                </tr>
+                <tr>
+
+                    <td class="formlabel">Resource type</td>
+                    <td>
+                        <select ng-change="saveNow(editdep)" ng-model="editdep.rt" id="depbu"
+                            ng-options="rt.name for rt in company.resourceTypes | orderBy:'name' track by rt.name"
+                            ng-disabled="!user.changeContent"></select>
+                    </td>
+
+                </tr>
+                <tr>
+                    <td class="formlabel">Resource owner</td>
+                    <td>
+                        {{editdep.rt.resown}}
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="formlabel">Request FTE</td>
+                    <td>
+                        <select ng-model="editdep.quantum" ng-change="saveNow(editdep)"
+                            ng-disabled="!user.changeContent">
+                            <option value="0">0</option>
+                            <option value="10">0.1</option>
+                            <option value="20">0.2</option>
+                            <option value="30">0.3</option>
+                            <option value="50">0.5</option>
+                            <option value="80">0.8</option>
+                            <option value="100">1</option>
+                            <option value="150">1.5</option>
+                            <option value="200">2</option>
+                            <option value="250">2.5</option>
+                            <option value="300">3</option>
+                            <option value="350">3.5</option>
+                            <option value="400">4</option>
+                            <option value="450">4.5</option>
+                            <option value="500">5</option>
+                            <option value="600">6</option>
+                            <option value="700">7</option>
+                            <option value="800">8</option>
+                            <option value="900">9</option>
+                            <option value="1000">10</option>
+                            <option value="1100">11</option>
+                            <option value="1200">12</option>
+                            <option value="1300">13</option>
+                            <option value="1400">14</option>
+                            <option value="1500">15</option>
+                            <option value="1600">16</option>
+                            <option value="1700">17</option>
+                            <option value="1800">18</option>
+                            <option value="1900">19</option>
+                            <option value="2000">20</option>
+                            <option value="2100">21</option>
+                            <option value="2200">22</option>
+                            <option value="2300">23</option>
+                            <option value="2400">24</option>
+                            <option value="2500">25</option>
+                            <option value="2600">26</option>
+                            <option value="2700">27</option>
+                            <option value="2800">28</option>
+                            <option value="2900">29</option>
+                            <option value="3000">30</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="formlabel">Resource area</td>
+                    <td>
+                        {{editdep.rt.buname}}
+                    </td>
+
+                </tr>
+                <tr>
+
+                    <td class="formlabel">State</td>
+                    <td>
+                        <select ng-model="editdep.state" ng-change="saveNow(editdep)" ng-disabled="!user.changeContent">
+                            <option value="Requested">Requested</option>
+                            <option value="Allocated">Allocated</option>
+                            <option value="On hold">On hold</option>
+                            <option value="Done">Done</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="formlabel">Status</td>
+                    <td>
+                        <select ng-model="editdep.status" ng-change="saveNow(editdep)"
+                            ng-disabled="!user.changeContent">
+                            <option value="Green">OK (Green)</option>
+                            <option value="Yellow">Observe (Yellow)</option>
+                            <option value="Orange">Assist (Orange)</option>
+                            <option value="Red">Intervention (Red)</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="formlabel">Work start</td>
+                    <td>
+                        <input type="text" id="depdate" datepicker="" ng-model="editdep.rawdepdate"
+                            ng-change="saveNow(editdep)" class="cal" ng-disabled="!user.changeContent" />
+                        {{editdep.depdate | date:'longDate'}}
+                    </td>
+                </tr>
+                <tr>
+
+                    <td class="formlabel">Deadline</td>
+                    <td>
+                        <input type="text" id="depdeaddate" datepicker="" ng-model="editdep.rawdepdeaddate"
+                            ng-change="saveNow(editdep)" class="cal" ng-disabled="!user.changeContent" />
+                        {{editdep.depdeaddate | date:'longDate'}}
+                    </td>
+                </tr>
+
+
+
+                <tr ng-show="company.filters.companyshowFinance">
+                    <td colspan="2" class="formlabel">Finance</td>
+                </tr>
+                <tr>
+                    <td class="formlabel">Ledger code</td>
+                    <td>
+                        <div class="field">
+                            <input ng-model="editdep.ledgercode" ng-change="saveNow(editdep)"
+                                ng-disabled="!user.changeContent" />
+                        </div>
+                    </td>
+                </tr>
+                <tr ng-show="company.filters.companyshowFinance">
+                    <td class="formlabel">Depriciation type</td>
+                    <td>
+                        <select ng-model="editdep.depreciationtype" ng-change="saveNow(editdep)"
+                            ng-disabled="!user.changeContent">
+                            <option value="Capex">Capex</option>
+                            <option value="Opex">Opex</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="formlabel">Total price (1.000 DKK)</td>
+                    <td class="sums">
+                        {{editdep.price | number:0}}
+                    </td>
+                </tr>
+                <tr>
+                    <td class="formlabel">Ext. price (1.000 DKK)</td>
+                    <td class="sums">
+                        {{editdep.priceext | number:0}}
+                    </td>
+                </tr>
+                <tr>
+                    <td class="formlabel">Int. price (1.000 DKK)</td>
+                    <td class="sums">
+                        {{editdep.priceint | number:0}}
+                    </td>
+                </tr>
                 
-            </tr>
+
+                <tr ng-show="company.filters.companyshowFinance">
+                    <td class="formlabel">External FTE split</td>
+                    <td class="sums">
+                        {{editdep.quantumext/100 | number:3}}
+                    </td>
+                </tr>
+                <tr ng-show="company.filters.companyshowFinance">
+                    <td class="formlabel">Internal FTE split</td>
+                    <td class="sums">
+                        {{editdep.quantumint/100 | number:3}}
+                    </td>
+                </tr>
 
 
                 <tr>
-                        <td class="header">Work start</td>
-                        <td>
-                            <input type="text" id="depdate" datepicker="" ng-model="editdep.rawdepdate" ng-change="saveNow(editdep); dateChanged(editdep.rawdepdate)"  class="cal" ng-disabled="!user.changeContent"/>
-                            {{editdep.depdate | date:'longDate'}}
-                        </td>
-                                        
-                        <td class="header">Deadline</td>
-                        <td>
-                                <input type="text" id="depdeaddate" datepicker="" ng-model="editdep.rawdepdeaddate" ng-change="saveNow(editdep); dateChanged(editdep.rawdepdeaddate)"  class="cal" ng-disabled="!user.changeContent"/>
-                                {{editdep.depdeaddate | date:'longDate'}}
-                        </td>
-                        
-                    </tr>
-                        
-            
-            
-            
-            <tr>
-                <td>
-                    <p>Description<span id="depdec_count" class="right"></span></p>
-                </td>
-                <td colspan="3">
-                    <div class="field">
-                        <textarea ng-change="saveNow(editdep)" ng-model="editdep.description" maxlength="300" id="depdec" placeholder="Describe the dependency." ng-disabled="!user.changeContent"></textarea>
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td class="header">Agreement</td>
-                <td>
-                    <select ng-model="editdep.agreement" ng-change="saveNow(editdep)" ng-disabled="!user.changeContent">
-                        <option value="None">None</option>
-                        <option value="Conflict">Conflict</option>
-                        <option value="Tentative">Tentative</option>
-                        <option value="Agreed">Agreed</option>
-                    </select>
-                    
-                </td>
-                <td class="header">State</td>
-                <td>
-                    <select ng-model="editdep.state" ng-change="saveNow(editdep)" ng-disabled="!user.changeContent">
-                        <option value="Open">Open</option>
-                        <option value="On hold">On hold</option>
-                        <option value="Closed">Closed</option>
-                    </select>
-                </td>
-            </tr>
-            <tr>
-                        
-                <td class="header">Status</td>
-                <td>
-                    <select ng-model="editdep.status" ng-change="saveNow(editdep)" ng-disabled="!user.changeContent">
-                        <option value="Green">OK (Green)</option>
-                        <option value="Yellow">Observe (Yellow)</option>
-                        <option value="Orange">Assist (Orange)</option>
-                        <option value="Red">Intervention (Red)</option>
-                    </select>
-                </td>
-                <td class="header">Show in report</td>
-                <td>
-                        <input type="checkbox" ng-model="editdep.showInReport" ng-change="saveNow(editdep)" ng-disabled="!user.changeContent">
-                </td>
-                        
-            </tr>
-            
-            <tr>
-                <td>
-                    <p>Action<span id="depac_count" class="right"></span></p>
-                </td>
-                <td colspan="3">
-                    <div class="field">
-                        <textarea ng-change="saveNow(editdep)" ng-model="editdep.action" maxlength="300" id="depac" placeholder="Describe the actions to solve or assist this dependency" ng-disabled="!user.changeContent"></textarea>
-                    </div>
-                </td>
-            </tr>
-                       
-            <tr>
-                <td>
-                    <p>Names<span id="depname_count" class="right"></span></p>
-                </td>
-                <td colspan="3">
-                    <div class="field">
-                        <textarea ng-change="saveNow(editdep)" ng-model="editdep.names" maxlength="300" id="depname" placeholder="Describe the key persons requested." ng-disabled="!user.changeContent"></textarea>
-                    </div>
-                </td>
-            </tr>
-                
-            
-        </table>
+                    <td class="formlabel">
+                        Description
+                    </td>
+                    <td>
+                        <textarea ng-change="saveNow(editdep)" ng-model="editdep.description" maxlength="500"
+                            id="depdec" placeholder="Describe the dependency."
+                            ng-disabled="!user.changeContent"></textarea>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="formlabel">
+                        Action
+                    </td>
+                    <td>
+                        <textarea ng-change="saveNow(editdep)" ng-model="editdep.action" maxlength="500" id="depac"
+                            placeholder="Describe the actions to solve or assist this dependency"
+                            ng-disabled="!user.changeContent"></textarea>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="formlabel">
+                        Names
+                    </td>
+                    <td>
+                        <textarea ng-change="saveNow(editdep)" ng-model="editdep.names" maxlength="500" id="depname"
+                            placeholder="Describe the key persons requested."
+                            ng-disabled="!user.changeContent"></textarea>
+                    </td>
+                </tr>
+            </table>
+        </div>
     </div>
 
-    <div class="mainbox" id="deplist" ng-show="!showDepForm">
-        <h2>
-            Dependencies
-            <div class="right"> 
-                
-                <button type="button"
-                    ng-click="newDep()"
-                    ng-if="user.changeContent">create new dependency</button>
-
-                <button type="button" id="saveButtonQ" prio-class save-this="$parent.hasChanged"
-                    ng-if="user.changeContent"
-                    ng-click="saveDeps(false)">save</button>
+    <div class="mainbox">
+        <h3>
+            <div class="right">
+                <button type="button" ng-click="newDep()" ng-if="user.changeContent">create new dependency</button>
             </div>
-        </h2>
-        
-            
+        </h3>
         <div class="overview">
+
             <table class="tablelist smaller" ng-if="project.deps.length > 0">
                 <tr class="header">
                     <td>Title</td>
-                    <td>2017</td>
-                    <td>2018</td>
-                    <td>2019</td>
+                    <td>{{year-1}}</td>
+                    <td>{{year}}</td>
+                    <td>{{year+1}}</td>
                     <td>Type</td>
-                    <td>Owner</td>
+                    <td>Category</td>
+                    <td>Res. Owner</td>
                     <td>State</td>
                     <td>Report</td>
                 </tr>
                 <tr ng-repeat="dep in project.deps | orderBy:'depdate'" class="link">
-                        <td ng-click="beginEditDep(dep)" class="{{dep.status}}"><b>{{dep.title}}</b></td>
-                        <td ng-click="beginEditDep(dep)" class="bar xl" ng-style="depbarRender(dep)" colspan="3">{{dep.quantum}}</td>
-                        <td ng-click="beginEditDep(dep)">{{dep.bu.name}}</td>
-                        <td ng-click="beginEditDep(dep)">{{dep.resowner.name}}</td>                                
-                        <td ng-click="beginEditDep(dep)">{{dep.state}}</td>                                
-                        
-                    <td><input type="checkbox" ng-model="dep.showInReport" ng-change="saveNowQuick()" ng-disabled="!user.changeContent"></td>
-                    
+                    <td ng-click="beginEditDep(dep)" class="{{dep.status}}"><b>{{dep.title}}</b></td>
+                    <td ng-click="beginEditDep(dep)" class="bar xl" ng-style="depbarRender(dep)" colspan="3">
+                        {{dep.quantum/100}}
+                        ({{dep.rt.capacity/100}}) - {{dep.depreciationtype}}
+                    </td>
+                    <td ng-click="beginEditDep(dep)">{{dep.rt.name}}</td>
+                    <td ng-click="beginEditDep(dep)">{{dep.rt.catagory}}</td>
+                    <td ng-click="beginEditDep(dep)">{{dep.rt.resown}}</td>
+                    <td ng-click="beginEditDep(dep)">{{dep.state}}</td>
+
+                    <td><input type="checkbox" ng-model="dep.showInReport" ng-change="saveDeps()"
+                            ng-disabled="!user.changeContent"></td>
+
                 </tr>
             </table>
         </div>
         <h3>&nbsp;</h3>
         <table class="smaller">
-            <tr class="header"><td colspan="4">Link external doc.</td></tr>
+            <tr class="header">
+                <td colspan="4">Link external doc.</td>
+            </tr>
             <tr>
-                <td>Title: <input ng-model="project.deplinktitle" ng-change="saveNowQuick()" ng-disabled="!user.changeContent"/></td>    
-                <td>URL: <input ng-model="project.deplink" ng-change="saveNowQuick()" ng-disabled="!user.changeContent"/></td>
-                <td>Show in report <input type="checkbox" ng-model="project.filters.showDepExternalLink" ng-change="saveNowQuick()"></td>
-                <td><a target="_blank" href="{{project.deplink}}">{{project.deplinktitle}}<div class="linkicon right"></div></a></td>
+                <td>Title: <input ng-model="project.deplinktitle" ng-change="saveNowQuick()"
+                        ng-disabled="!user.changeContent" /></td>
+                <td>URL: <input ng-model="project.deplink" ng-change="saveNowQuick()"
+                        ng-disabled="!user.changeContent" /></td>
+                <td>Show in report <input type="checkbox" ng-model="project.filters.showDepExternalLink"
+                        ng-change="saveNowQuick()"></td>
+                <td><a target="_blank" href="{{project.deplink}}">{{project.deplinktitle}}<div class="linkicon right">
+                        </div></a></td>
             </tr>
         </table>
-        
-    
     </div>
 </div>

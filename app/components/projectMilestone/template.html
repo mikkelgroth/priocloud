@@ -1,248 +1,304 @@
+<h2 class="center {{project.lastStatusFlag}}">
+    {{project.type}} - {{project.title}} ({{project.projectnumber}})
+</h2>
 <prio-project-menu prio-project-id="{{project._id.$oid}}" prio-project-title="{{project.title}}"></prio-project-menu>
-
-<div id="linkdiv4" class="view">
-    <div id="popdiv4" ng-show="showMilestoneForm">
-        <h2 class="{{editmile.status}}">
-            ({{editmile.wsjf}}) {{editmile.title}}
-            <div class="right">
-                <button type="button" id="saveButton" prio-class save-this="$parent.hasChanged"
-                    ng-if="user.changeContent"
-                    ng-click="saveMilestones(true)">save</button>
-                <button type="button" ng-click="hideMilestoneForm()">close</button>
-                <button type="button" 
-                ng-click="$parent.deleteThis=true" 
-                ng-show="!$parent.deleteThis"
-                ng-if="user.changeContent && !editmile.prime">delete</button>
-            <button type="button" class="Red"
-                ng-click="$parent.deleteThis=false; removeMilestone(editmile)" 
-                ng-show="$parent.deleteThis"
-                ng-if="user.changeContent && !editmile.prime">confirm delete!!!</button>
+<div class="view">
+    <div class="popup">
+        <div class="overview popupcontent">
+            <div class="actions">
+                <div class="layout">
+                    <div class="layoutelement">
+                        <button type="button" id="saveButton" save-this="$parent.hasChanged"
+                        ng-if="user.changeContent" ng-click="saveMilestones(true)">save</button>
+                    </div>
+                    <div class="layoutelement center">
+                        <button type="button" ng-if="user.changeContent" ng-click="newCloneMilestone(editmile)">clone</button>
+                        <button type="button" ng-click="$parent.deleteThis=true" ng-show="!$parent.deleteThis"
+                            ng-if="user.changeContent && !editmile.prime">delete</button>
+                        <button type="button primary" class="Red"
+                            ng-click="$parent.deleteThis=false; removeMilestone(editmile)" ng-show="$parent.deleteThis"
+                            ng-if="user.changeContent && !editmile.prime">confirm
+                            delete!</button>
+                    </div>
+                    <div class="layoutelement right">
+                        <button type="button" class="close" ng-click="close()"></button>
+                    </div>
+                </div>
             </div>
-        </h2>
-        <table class="smaller">
-            <tr>
-                <td class="header">Title</td>
-                <td>
-                    <div class="field">
-                        <input ng-model="editmile.title" ng-change="saveNow(editmile)" ng-disabled="!user.changeContent"/>
-                    </div>
-                </td>
-                <td class="header">Audience</td>
-                <td>
-                    <select ng-model="editmile.audience" ng-change="saveNow(editmile)" ng-disabled="!user.changeContent">
-                        <option value="Internal">Internal</option>
-                        <option value="Portfolio">Portfolio</option>
-                        <option value="Company">Company</option>
-                    </select>
-                </td>
-            </tr>
-            <tr>
-                <td class="header">Type</td>
-                <td>
-                    <select ng-model="editmile.type" ng-change="saveNow(editmile)" ng-disabled="!user.changeContent">
-                        <option value="Milestone">Milestone</option>
-                        <option value="Roadmap item">Roadmap item</option>
-                        <option value="Phase">Phase</option>
-                        <option value="Task">Task</option>
-                        <option value="Go-live">Go-live</option>
-                        <option value="Valuable">Valuable</option>
-                    </select>
-                    
-                </td>
-                <td class="header">Show in report</td>
-                <td>
-                        <input type="checkbox" ng-model="editmile.showInReport" ng-change="saveNow(editmile)" ng-disabled="!user.changeContent">
-                </td>
-            </tr>
-            <tr>
-                <td class="header">Delivery responsible</td>
-                <td>
-                    <select ng-model="editmile.responsible"  ng-change="saveNow(editmile)" ng-options="u.name for u in users | filter: {source: true} | orderBy:'name' track by u.name" ng-disabled="!user.changeContent"></select>
-                </td>
-                <td class="header">Delivery approver</td>
-                <td>
-                    <select ng-model="editmile.acountable"  ng-change="saveNow(editmile)" ng-options="u.name for u in users | filter: {source: true} | orderBy:'name' track by u.name" ng-disabled="!user.changeContent"></select>
-                </td>
-            </tr>
-            <tr>
-                <td class="header">Start Date</td>
-                <td>
-                    
-                        <input type="text" id="miledate" datepicker="" ng-model="editmile.rawdate" ng-change="saveNow(editmile)"  class="cal" ng-disabled="!user.changeContent"/>
-                        {{editmile.date | date:'longDate'}}
-                    
-                </td>
-                <td class="header">End Date</td>
-                <td>
-                    
-                        <input type="text" id="mileenddate" datepicker="" ng-model="editmile.rawenddate" ng-change="saveNow(editmile)"  class="cal" ng-disabled="!user.changeContent"/>
-                        {{editmile.enddate | date:'longDate'}}
-                    
-                </td>
-            </tr>
-            <tr>
-                <td class="header">Status</td>
-                <td>
-                    <select ng-model="editmile.status" ng-change="saveNow(editmile)" ng-disabled="!user.changeContent">
-                        <option value="Green">OK (Green)</option>
-                        <option value="Yellow">Observe (Yellow)</option>
-                        <option value="Orange">Assist (Orange)</option>
-                        <option value="Red">Intervention (Red)</option>
-                    </select>
-                </td>
-                <td class="header">State</td>
-                <td>
-                    <select ng-model="editmile.state" ng-change="saveNow(editmile)" ng-disabled="!user.changeContent">
-                        <option value="Target">Target</option>
-                        <option value="Qualified">Qualified</option>
-                        <option value="Progress">Progress</option>
-                        <option value="Done">Done</option>
-                        <option value="Canceled">Canceled</option>
-                    </select>
-                </td>
-            </tr>
-            <tr>
-                <td class="header">WSJF = {{editmile.wsjf}}</td>
-                <td class="header">Value enabler</td>
-                <td class="header"></td>
-                <td class="header">Value limiter</td>
-            </tr>
-            <tr>
-                <td class="header" prio-class prio-value-bar-render="editmile.bena">Business enabler</td>
-                <td>
-                    <select ng-model="editmile.bena" ng-change="saveNow(editmile)" ng-disabled="!user.changeContent">
-                        <option value="1">1. Minimal value</option>
-                        <option value="2">2. Medium value</option>
-                        <option value="3">3. Large value</option>
-                        <option value="4">4. Game changer</option>
-                    </select>
-                </td>
-                <td class="header" prio-class prio-value-bar-render-neg="editmile.effort">Effort</td>
-                <td>
-                    <select ng-model="editmile.effort" ng-change="saveNow(editmile)" ng-disabled="!user.changeContent">
-                        <option value="1">1. Minimal effort</option>
-                        <option value="2">2. Medium effort</option>
-                        <option value="3">3. Large effort</option>
-                        <option value="4">4. Unknown effort</option>
-                    </select>
-                </td>
-            </tr>
-            <tr>
-                <td class="header" prio-class prio-value-bar-render="editmile.sena">Strategy enabler</td>
-                <td>
-                    <select ng-model="editmile.sena" ng-change="saveNow(editmile)" ng-disabled="!user.changeContent">
-                        <option value="1">1. Minimal value</option>
-                        <option value="2">2. Medium value</option>
-                        <option value="3">3. Large value</option>
-                        <option value="4">4. Game changer</option>
-                    </select>
-                </td>
-                <td class="header" prio-class prio-value-bar-render-neg="editmile.risklevel">Risk of failure</td>
-                <td>
-                    <select ng-model="editmile.risklevel" ng-change="saveNow(editmile)" ng-disabled="!user.changeContent">
-                        <option value="1">1. Slim risk</option>
-                        <option value="2">2. Could happen</option>
-                        <option value="3">3. Likely to happen</option>
-                        <option value="4">4. Most likely to happen</option>
-                    </select>
-                </td>
-            </tr>
-
-            <tr>
-                <td>
-                    <p>Description<span id="miledel_count" class="right"></span></p>
-                </td>
-                <td colspan="3">
-                    <div class="field">
-                        <textarea ng-change="saveNow(editmile)" ng-model="editmile.delivarables" maxlength="300" id="miledel" placeholder="Describe the key business delivery that this deliverable will produce." ng-disabled="!user.changeContent"></textarea>
-                    </div>
-                </td>
-            </tr>
-            <tr>
+            <h3 class="{{editmile.status}}">
+                {{editmile.title}}
+            </h3>
+            <table class="formtable smaller">
+                <tr>
+                    <td class="formlabel">Title</td>
+                    <td><input ng-model="editmile.title" ng-change="saveNow(editmile)"
+                            ng-disabled="!user.changeContent || editmile.prime" /></td>
+                </tr>
+                <tr>
+                    <td class="formlabel">Show in report</td>
+                    <td><input type="checkbox" ng-model="editmile.showInReport" ng-change="saveNow(editmile)"
+                            ng-disabled="!user.changeContent"></td>
+                </tr>
+                <tr>
+                    <td class="formlabel">Audience</td>
                     <td>
-                        <p>Definition of Done<span id="miledel_count" class="right"></span></p>
-                    </td>
-                    <td colspan="3">
-                        <div class="field">
-                            <textarea ng-change="saveNow(editmile)" ng-model="editmile.dod" maxlength="300" id="miledel" placeholder="Describe the definition of Done." ng-disabled="!user.changeContent"></textarea>
-                        </div>
+                        <select ng-model="editmile.audience" ng-change="saveNow(editmile)"
+                            ng-disabled="!user.changeContent">
+                            <option value="Internal">Internal</option>
+                            <option value="Portfolio">Portfolio</option>
+                            <option value="Company">Company</option>
+                        </select>
                     </td>
                 </tr>
-                    
-            <tr>
-                <td>
-                    <p>Value enablers<span id="milecom_count" class="right"></span></p>
-                </td>
-                <td colspan="3">
-                    <div class="field">
-                        <textarea ng-change="saveNow(editmile)" ng-disabled="!user.changeContent" ng-model="editmile.comments" maxlength="300" id="milecom" placeholder="Describe the enablers of creating value both on implementation and if it enables further strategic work in the future"></textarea>
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <p>Value limiters<span id="milerisk_count" class="right"></span></p>
-                </td>
-                <td colspan="3">
-                    <div class="field">
-                        <textarea ng-change="saveNow(editmile)" ng-disabled="!user.changeContent" ng-model="editmile.risks" maxlength="300" id="milerisk" placeholder="Describe the limiters that work against creating value like the amount of work and the assosiated risk of failure"></textarea>
-                    </div>
-                </td>
-            </tr>
-            
-        </table>
-    </div>
+                <tr>
+                    <td class="formlabel">Type</td>
+                    <td>
+                        <select ng-model="editmile.type" ng-change="saveNow(editmile)"
+                            ng-disabled="!user.changeContent">
+                            <option value="Project">Project</option>
+                            <option value="Roadmap item">Roadmap item</option>
+                            <option value="Activity">Activity</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="formlabel">Priority</td>
+                    <td>
 
-    <div class="mainbox" id="milestonelist" ng-show="!showMilestoneForm">
-        <h2>
-            Deliverables
-            <div class="right"> 
-                <select ng-model="orderdate" ng-init="orderdate='enddate'" style="font-size: 12px;">
+                        <select ng-model="editmile.priority" ng-change="saveNow(editmile)"
+                            ng-disabled="!user.changeContent || editmile.prime">
+                            <option value="1. Mandatory">1. Mandatory</option>
+                            <option value="2. Top priority">2. Top priority</option>
+                            <option value="3. Very High priority">3. Very High priority</option>
+                            <option value="4. High priority">4. High priority</option>
+                            <option value="5. Valued">5. Valued</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="formlabel">Delivery responsible</td>
+                    <td>
+                        <select ng-model="editmile.responsible" ng-change="saveNow(editmile)"
+                            ng-disabled="!user.changeContent">
+                            <option ng-repeat="u in users | filter: {source: true} | orderBy:'name'" value="{{u.name}}">
+                                {{u.name}}</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="formlabel">Delivery approver</td>
+                    <td>
+                        <select ng-model="editmile.acountable" ng-change="saveNow(editmile)"
+                            ng-disabled="!user.changeContent">
+                            <option ng-repeat="u in users | filter: {source: true} | orderBy:'name'" value="{{u.name}}">
+                                {{u.name}}</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="formlabel">Start Date</td>
+                    <td>
+
+                        <input type="text" id="miledate" datepicker="" ng-model="editmile.rawdate"
+                            ng-change="saveNow(editmile)" class="cal" ng-disabled="!user.changeContent" />
+                        {{editmile.date | date:'longDate'}}
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="formlabel">End Date</td>
+                    <td>
+
+                        <input type="text" id="mileenddate" datepicker="" ng-model="editmile.rawenddate"
+                            ng-change="saveNow(editmile)" class="cal" ng-disabled="!user.changeContent" />
+                        {{editmile.enddate | date:'longDate'}}
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="formlabel">Status</td>
+                    <td>
+                        <select ng-model="editmile.status" ng-change="saveNow(editmile)"
+                            ng-disabled="!user.changeContent">
+                            <option value="Green">OK (Green)</option>
+                            <option value="Yellow">Observe (Yellow)</option>
+                            <option value="Orange">Assist (Orange)</option>
+                            <option value="Red">Intervention (Red)</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="formlabel">State</td>
+                    <td>
+                        <select ng-model="editmile.state" ng-change="saveNow(editmile)"
+                            ng-disabled="!user.changeContent">
+                            <option value="Target">Target</option>
+                            <option value="Qualified">Qualified</option>
+                            <option value="Progress">Progress</option>
+                            <option value="Done">Done</option>
+                            <option value="Canceled">Canceled</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="formlabel">WSJF</td>
+                    <td>{{editmile.wsjf}}</td>
+                </tr>
+                <tr>
+                    <td class="formlabel">Value enabler</td>
+                    <td>{{editmile.enablerlable}}</td>
+                </tr>
+                <tr>
+                    <td class="formlabel">Value limiter</td>
+                    <td>{{editmile.limiterlable}}</td>
+                </tr>
+                <tr>
+                    <td class="formlabel" prio-class prio-value-bar-render="editmile.bena">Business enabler</td>
+                    <td>
+                        <select ng-model="editmile.bena" ng-change="saveNow(editmile)"
+                            ng-disabled="!user.changeContent">
+                            <option value="1">1. Minimal value</option>
+                            <option value="2">2. Medium value</option>
+                            <option value="3">3. Large value</option>
+                            <option value="4">4. Game changer</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="formlabel" prio-class prio-value-bar-render-neg="editmile.effort">Effort</td>
+                    <td>
+                        <select ng-model="editmile.effort" ng-change="saveNow(editmile)"
+                            ng-disabled="!user.changeContent">
+                            <option value="1">1. Minimal effort</option>
+                            <option value="2">2. Medium effort</option>
+                            <option value="3">3. Large effort</option>
+                            <option value="4">4. Unknown effort</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="formlabel" prio-class prio-value-bar-render="editmile.sena">Strategy enabler</td>
+                    <td>
+                        <select ng-model="editmile.sena" ng-change="saveNow(editmile)"
+                            ng-disabled="!user.changeContent">
+                            <option value="1">1. Minimal value</option>
+                            <option value="2">2. Medium value</option>
+                            <option value="3">3. Large value</option>
+                            <option value="4">4. Game changer</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="formlabel" prio-class prio-value-bar-render-neg="editmile.risklevel">Risk of failure</td>
+                    <td>
+                        <select ng-model="editmile.risklevel" ng-change="saveNow(editmile)"
+                            ng-disabled="!user.changeContent">
+                            <option value="1">1. Slim risk</option>
+                            <option value="2">2. Could happen</option>
+                            <option value="3">3. Likely to happen</option>
+                            <option value="4">4. Most likely to happen</option>
+                        </select>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="formlabel">
+                        Description
+                    </td>
+                    <td>
+                        <textarea ng-change="saveNow(editmile)" ng-model="editmile.delivarables" maxlength="800"
+                            id="miledel"
+                            placeholder="Describe the key business delivery that this deliverable will produce."
+                            ng-disabled="!user.changeContent"></textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="formlabel">
+                        Definition of Done
+                    </td>
+                    <td>
+                        <textarea ng-change="saveNow(editmile)" ng-model="editmile.dod" maxlength="800" id="miledel"
+                            placeholder="Describe the definition of Done." ng-disabled="!user.changeContent"></textarea>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="formlabel">
+                        Value enablers
+                    </td>
+                    <td>
+                        <textarea ng-change="saveNow(editmile)" ng-disabled="!user.changeContent"
+                            ng-model="editmile.comments" maxlength="800" id="milecom"
+                            placeholder="Describe the enablers of creating value both on implementation and if it enables further strategic work in the future"></textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="formlabel">
+                        Value limiters
+                    </td>
+                    <td>
+                        <textarea ng-change="saveNow(editmile)" ng-disabled="!user.changeContent"
+                            ng-model="editmile.risks" maxlength="800" id="milerisk"
+                            placeholder="Describe the limiters that work against creating value like the amount of work and the assosiated risk of failure"></textarea>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <div class="mainbox">
+        <div class="overview">
+            <div class="right">
+                <select ng-model="orderdate" ng-init="orderdate='date'" style="font-size: 12px;">
                     <option value="enddate" selected="selected">Order by end date</option>
                     <option value="date">Order by start date</option>
                     <option value="-wsjf">Order by WSJF</option>
                 </select>
-                <button type="button"
-                    ng-click="newMilestone()"
-                    ng-if="user.changeContent">create new deliverable</button>
-
-                <button type="button" id="saveButtonQ" prio-class save-this="$parent.hasChanged"
-                    ng-if="user.changeContent"
-                    ng-click="saveMilestones(false)">save</button>
+                <button ng-click="newMilestone()" ng-if="user.changeContent">create new
+                    deliverable</button>
             </div>
-        </h2>
-        <div class="overview">
-            <table class="tablelist smaller" ng-if="project.milestones.length > 0">
+            <table class="tablelist smaller">
                 <tr class="header">
-                    <td>Title <div class="right"><input type="checkbox" ng-model="showDone" ng-init="showDone=false"> show done</div></td>
-                    <td>WSJF<br/>Type</td>
-                    <td>2017</td>
-                    <td>2018</td>
-                    <td>2019</td>
-                    <td>Start Date<br/>End Date</td>
-                    <td>Responsible<br/>Approver</td>
-                    <td>Show in<br/>Report</td>
+                    <td>Title <div class="right"><input type="checkbox" ng-model="showDone" ng-init="showDone=false">
+                            show done</div>
+                    </td>
+                    <td>Priority<br />WSJF</td>
+                    <td>{{year-1}}</td>
+                    <td>{{year}}</td>
+                    <td>{{year+1}}</td>
+                    <td>Start Date<br />End Date</td>
+                    <td>Responsible<br />Approver</td>
+                    <td>Show in<br />Report</td>
                 </tr>
-                <tr ng-repeat="mile in project.milestones | orderBy:orderdate" ng-if="showDone || (!showDone && mile.state!='Done')" class="link">
+                <tr ng-repeat="mile in project.milestones | orderBy:orderdate"
+                    ng-if="showDone || (!showDone && mile.state!='Done')" class="link">
                     <td ng-click="beginEditMile(mile)" class="{{mile.status}}"><b>{{mile.title}}</b></td>
-                    <td ng-click="beginEditMile(mile)"><b>{{mile.wsjf}}</b><br/>{{mile.type}}</td>
-                    <td ng-click="beginEditMile(mile)" class="bar" ng-style="barRender(mile)" colspan="3">{{mile.state}}</td>
-                    <td ng-click="beginEditMile(mile)"><b>{{mile.date | date:'longDate'}}</b><br/>{{mile.enddate | date:'longDate'}}</td>
-                    <td ng-click="beginEditMile(mile)"><b>{{mile.responsible.name }}</b><br/>{{mile.acountable.name }}</td>
-                    <td><input type="checkbox" ng-model="mile.showInReport" ng-change="saveNowQuick()"></td>
-                    
+                    <td ng-click="beginEditMile(mile)"><b>{{mile.priority}}</b><br />{{mile.wsjf}}</td>
+                    <td ng-click="beginEditMile(mile)" class="bar" ng-style="barRender(mile)" colspan="3">
+                        {{mile.type}}/{{mile.state}}
+                    </td>
+                    <td ng-click="beginEditMile(mile)"><b>{{mile.date | date:'longDate'}}</b><br />{{mile.enddate |
+                        date:'longDate'}}</td>
+                    <td ng-click="beginEditMile(mile)"><b>{{mile.responsible}}</b><br />{{mile.acountable}}</td>
+                    <td><input type="checkbox" ng-model="mile.showInReport" ng-change="saveMilestones(false)"></td>
+
                 </tr>
             </table>
         </div>
-        <h3>&nbsp;</h3>{{$scope.milestones[0].title}}
-        <table class="smaller">
-            <tr class="header"><td colspan="4">Link external doc.</td></tr>
-            <tr>
-                <td>Title: <input ng-model="project.dellinktitle" ng-change="saveNowQuick()" ng-disabled="!user.changeContent"/></td>    
-                <td>URL: <input ng-model="project.dellink" ng-change="saveNowQuick()" ng-disabled="!user.changeContent"/></td>
-                <td>Show in report <input type="checkbox" ng-model="project.filters.showDelExternalLink" ng-change="saveNowQuick()"></td>
-                <td><a target="_blank" href="{{project.dellink}}">{{project.dellinktitle}}<div class="linkicon right"></div></a></td>
-            </tr>
-        </table>
     </div>
+    <h3>&nbsp;</h3>
+    <table class="smaller">
+        <tr class="header">
+            <td colspan="4">Link external doc.</td>
+        </tr>
+        <tr>
+            <td>Title: <input ng-model="project.dellinktitle" ng-change="saveNowQuick()"
+                    ng-disabled="!user.changeContent" /></td>
+            <td>URL: <input ng-model="project.dellink" ng-change="saveNowQuick()" ng-disabled="!user.changeContent" />
+            </td>
+            <td>Show in report <input type="checkbox" ng-model="project.filters.showDelExternalLink"
+                    ng-change="saveNowQuick()"></td>
+            <td><a target="_blank" href="{{project.dellink}}">{{project.dellinktitle}}<div class="linkicon right">
+                    </div></a></td>
+        </tr>
+    </table>
 </div>

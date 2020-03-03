@@ -1,321 +1,293 @@
+<h2 class="center {{project.lastStatusFlag}}">
+    {{project.type}} - {{project.title}} ({{project.projectnumber}})
+</h2>
 <prio-project-menu prio-project-id="{{project._id.$oid}}" prio-project-title="{{project.title}}"></prio-project-menu>
 
-<div id="linkdiv5" class="view">
-    <div id="popdiv5" ng-show="showRiskForm">
-        <h2 class="{{editrisk.status}}">
-            {{editrisk.type}}
-            <div class="right">
-                <button type="button" id="saveButton" prio-class save-this="$parent.hasChanged"
-                    ng-if="user.changeContent"
-                    ng-click="saveRisk(editrisk)">save</button>
-                <button type="button" ng-click="hideRiskForm(); $parent.deleteThis=false">close</button>
-                <button type="button" 
-                    ng-click="$parent.deleteThis=true" 
-                    ng-show="!$parent.deleteThis"
-                    ng-if="user.changeContent">delete</button>
-                <button type="button" class="Red"
-                    ng-click="$parent.deleteThis=false;removeRisk(editrisk)" 
-                    ng-show="$parent.deleteThis"
-                    ng-if="user.changeContent">confirm delete!!!</button>
+<div class="view">
+    <div class="popup">
+        <div class="overview popupcontent">
+            <div class="actions">
+                <div class="layout">
+                    <div class="layoutelement">
+                        <button type="button" id="saveButton1" prio-class save-this="$parent.hasChanged"
+                            ng-if="user.changeContent" ng-click="saveRisk(editrisk)">save</button>
+                    </div>
+                    <div class="layoutelement center">
+                        <button type="button" class="Red" ng-click="removeRisk(editrisk)" ng-show="$parent.deleteThis"
+                            ng-if="user.changeContent">confirm
+                            delete!!!</button>
+
+                        <button type="button" ng-click="delete()" ng-show="!$parent.deleteThis"
+                            ng-if="user.changeContent">delete</button>
+                    </div>
+                    <div class="layoutelement right">
+                        <button type="button" class="close" ng-click="close()"></button>
+                    </div>
+                </div>
             </div>
-        </h2>
-        <table class="smaller">
-            <tr>
-                <td class="header">Title</td>
-                <td>
-                    <div class="field">
-                        <input ng-model="editrisk.title"  ng-change="saveNow()" ng-disabled="!user.changeContent"/>
-                    </div>
-                </td>
-                <td class="header">Type</td>
-                <td>
-                    <select ng-model="editrisk.type" ng-change="saveNow()" ng-disabled="!user.changeContent">
-                        <option value="Risk">Risk</option>
-                        <option value="Issue">Issue</option>
-                    </select>
-                </td>
-            </tr>
-            <tr>
-                <td class="header">Show in report</td>
-                <td>
-                    <input type="checkbox" ng-model="editrisk.showInReport" ng-disabled="!user.changeContent">
-                </td>
-                <td class="header">State</td>
-                <td>
-                    <select ng-model="editrisk.state" ng-change="saveNow()" ng-disabled="!user.changeContent">
-                        <option value="New">New</option>
-                        <option value="Open">Open</option>
-                        <option value="Closed">Closed</option>
-                    </select>
-                </td>
-            </tr>
-                
-            <tr>
-                <td class="header">Proximity</td>
-                <td>
-                    <select ng-model="editrisk.proximity" ng-change="saveNow()" ng-disabled="!user.changeContent">
-                        <option value="Project">Project</option>
-                        <option value="Go-live">Go-live</option>
-                        <option value="Production">Production</option>
-                    </select>
-                </td>
-                <td class="header">Response</td>
-                <td>
-                    <select ng-model="editrisk.response" ng-change="saveNow()" ng-disabled="!user.changeContent">
-                        <option value="Accept">Accept</option>
-                        <option value="Mitigation">Mitigation</option>
-                        <option value="Contingency">Contingency</option>
-                    </select>
-                </td>
-            </tr>
-            <tr>
-                <td class="header">Responsible</td>
-                <td>
-                    <select ng-model="editrisk.acc"  ng-change="saveNow()" ng-disabled="!user.changeContent" ng-options="u.name for u in users | filter: {source: true} | orderBy:'name' track by u.name"></select>
-                </td>
-                <td class="header">Audience</td>
-                <td>
-                    <select ng-model="editrisk.audience" ng-change="saveNow()" ng-disabled="!user.changeContent">
-                        <option value="Confidential">Confidential</option>
-                        <option value="Internal">Internal</option>
-                        <option value="Portfolio">Portfolio</option>
-                        <option value="Company">Company</option>
-                    </select>
-                </td>
-            </tr>
-            <tr>
-                <td class="header {{editrisk.status}}">Status</td>
-                <td>
-                    <select ng-model="editrisk.status" ng-change="saveNow()" ng-disabled="!user.changeContent">
-                        <option value="Green">OK (Green)</option>
-                        <option value="Yellow">Observe (Yellow)</option>
-                        <option value="Orange">Assist (Orange)</option>
-                        <option value="Red">Intervention (Red)</option>
-                    </select>
-                </td>
-                <td class="header {{editrisk.recComp}}">Recovery complexity</td>
-                <td>
-                   <select ng-model="editrisk.recComp" ng-change="saveNow()" ng-disabled="!user.changeContent">
-                        <option value="Green">Easy fix (Green)</option>
-                        <option value="Yellow">Taskforce (Yellow)</option>
-                        <option value="Orange">Project (Orange)</option>
-                        <option value="Red">Unknow/Massive (Red)</option>
-                    </select>
-                </td>
-            </tr>
-            <tr>
-                <td class="header" prio-class prio-risk-bar-render="editrisk.prob">Probability</td>
-                <td>
-                    <select ng-model="editrisk.prob" ng-change="saveNow()" ng-disabled="!user.changeContent">
-                        <option value="1">1. Slim chance</option>
-                        <option value="2">2. Could happen</option>
-                        <option value="3">3. Likely to happen</option>
-                        <option value="4">4. Most likely to happen</option>
-                    </select>
-                </td>
-                <td class="header" prio-class prio-risk-bar-render="editrisk.impact">Impact</td>
-                <td>
-                    <select ng-model="editrisk.impact" ng-change="saveNow()" ng-disabled="!user.changeContent">
-                        <option value="1">1. Minor Project impact</option>
-                        <option value="2">2. Major Project impact</option>
-                        <option value="3">3. Business Unit impact</option>
-                        <option value="4">4. Company impact</option>
-                    </select>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <p>Description<span id="riskdesc_count" class="right"></span></p>
-                </td>
-                <td colspan="3">
-                    <div class="field">
-                        <textarea ng-change="saveNow()" ng-disabled="!user.changeContent" ng-model="editrisk.desc" maxlength="300" id="riskdesc" placeholder="Describe the risk and the associated loss of brand, time and/or cost."></textarea>
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <p>Request<span id="riskrequest_count" class="right"></span></p>
-                </td>
-                <td colspan="3">
-                    <div class="field">
-                        <textarea ng-change="saveNow()" ng-disabled="!user.changeContent" ng-model="editrisk.request" maxlength="300" id="riskrequest" placeholder="Describe the request for action from Steerco or senior management."></textarea>
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <p>Mitigation<span id="riskmit_count" class="right"></span></p>
-                </td>
-                <td colspan="3">
-                    <div class="field">
-                        <textarea ng-change="saveNow()" ng-disabled="!user.changeContent" ng-model="editrisk.miti" maxlength="300" id="riskmit" placeholder="Describe actions beside normal work or attention that can decrease or remove the risk and its associatted cost."></textarea>
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <p>Contingency trigger<span id="risktrig_count" class="right"></span></p>
-                </td>
-                <td colspan="3">
-                    <div class="field">
-                        <textarea ng-change="saveNow()" ng-disabled="!user.changeContent" ng-model="editrisk.trigger" maxlength="300" id="risktrig" placeholder="Describe the tippingpoint were a risk turns in to an issue that demands for the contingency plan to come in to effect."></textarea>
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <p>Contingency plan<span id="riskplan_count" class="right"></span></p>
-                </td>
-                <td colspan="3">
-                    <div class="field">
-                        <textarea ng-change="saveNow()" ng-disabled="!user.changeContent" ng-model="editrisk.cont" maxlength="300" id="riskplan" placeholder="Describe the plan and associated cost for getting back in control after an risk incident."></textarea>
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <p>Status change comment<span id="riskplan_count" class="right"></span></p>
-                </td>
-                <td colspan="3">
-                    <div class="field">
-                        <textarea ng-change="saveNow()" ng-disabled="!user.changeContent" ng-model="editrisk.comment" maxlength="300" id="riskplan" placeholder="Comments regarding the change of state, probability and impact."></textarea>
-                    </div>
-                </td>
-            </tr>
-            
-        </table>
+            <h3 class="{{editrisk.status}}">
+                {{editrisk.title}}
+            </h3>
+            <table class="formtable smaller">
+                <tr>
+                    <td class="formlabel">Title</td>
+                    <td>
+                        <input ng-model="editrisk.title" ng-change="saveNow()" ng-disabled="!user.changeContent" />
+                    </td>
+                </tr>
+                <tr>
+
+                    <td class="formlabel">Show in report</td>
+                    <td>
+                        <input type="checkbox" ng-model="editrisk.showInReport" ng-disabled="!user.changeContent">
+                    </td>
+                </tr>
+                <tr>
+                    <td class="formlabel">State</td>
+                    <td>
+                        <select ng-model="editrisk.state" ng-change="saveNow()" ng-disabled="!user.changeContent">
+                            <option value="New">New</option>
+                            <option value="Open">Open</option>
+                            <option value="Closed">Closed</option>
+                        </select>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="formlabel">Proximity</td>
+                    <td>
+                        <select ng-model="editrisk.proximity" ng-change="saveNow()" ng-disabled="!user.changeContent">
+                            <option value="Project">Project</option>
+                            <option value="Go-live">Go-live</option>
+                            <option value="Production">Production</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="formlabel">Response</td>
+                    <td>
+                        <select ng-model="editrisk.response" ng-change="saveNow()" ng-disabled="!user.changeContent">
+                            <option value="Accept">Accept</option>
+                            <option value="Mitigation">Mitigation</option>
+                            <option value="Contingency">Contingency</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="formlabel">Responsible</td>
+                    <td>
+                        <select ng-model="editrisk.acc" ng-change="saveNow()" ng-disabled="!user.changeContent">
+                            <option ng-repeat="u in users | filter: {source: true} | orderBy:'name'" value="{{u.name}}">
+                                {{u.name}}</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="formlabel">Audience</td>
+                    <td>
+                        <select ng-model="editrisk.audience" ng-change="saveNow()" ng-disabled="!user.changeContent">
+                            <option value="Confidential">Confidential</option>
+                            <option value="Internal">Internal</option>
+                            <option value="Portfolio">Portfolio</option>
+                            <option value="Company">Company</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="formlabel {{editrisk.status}}">Status</td>
+                    <td>
+                        <select ng-model="editrisk.status" ng-change="saveNow()" ng-disabled="!user.changeContent">
+                            <option value="Green">OK (Green)</option>
+                            <option value="Yellow">Observe (Yellow)</option>
+                            <option value="Orange">Assist (Orange)</option>
+                            <option value="Red">Intervention (Red)</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="formlabel {{editrisk.recComp}}">Recovery complexity</td>
+                    <td>
+                        <select ng-model="editrisk.recComp" ng-change="saveNow()" ng-disabled="!user.changeContent">
+                            <option value="Green">Easy fix (Green)</option>
+                            <option value="Yellow">Taskforce (Yellow)</option>
+                            <option value="Orange">Project (Orange)</option>
+                            <option value="Red">Unknow/Massive (Red)</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="formlabel" prio-class prio-risk-bar-render="editrisk.prob">Probability</td>
+                    <td>
+                        <select ng-model="editrisk.prob" ng-change="saveNow()" ng-disabled="!user.changeContent">
+                            <option value="1">1. Slim chance</option>
+                            <option value="2">2. Could happen</option>
+                            <option value="3">3. Likely to happen</option>
+                            <option value="4">4. Most likely to happen</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="formlabel" prio-class prio-risk-bar-render="editrisk.impact">Impact</td>
+                    <td>
+                        <select ng-model="editrisk.impact" ng-change="saveNow()" ng-disabled="!user.changeContent">
+                            <option value="1">1. Minor Project impact</option>
+                            <option value="2">2. Major Project impact</option>
+                            <option value="3">3. Business Unit impact</option>
+                            <option value="4">4. Company impact</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="formlabel">
+                        Description
+                    </td>
+                    <td>
+                        <textarea ng-change="saveNow()" ng-disabled="!user.changeContent" ng-model="editrisk.desc"
+                            maxlength="800" id="riskdesc"
+                            placeholder="Describe the risk and the associated loss of brand, time and/or cost."></textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="formlabel">
+                        Request
+                    </td>
+                    <td>
+                        <textarea ng-change="saveNow()" ng-disabled="!user.changeContent" ng-model="editrisk.request"
+                            maxlength="800" id="riskrequest"
+                            placeholder="Describe the request for action from Steerco or senior management."></textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="formlabel">
+                        Mitigation
+                    </td>
+                    <td>
+                        <textarea ng-change="saveNow()" ng-disabled="!user.changeContent" ng-model="editrisk.miti"
+                            maxlength="800" id="riskmit"
+                            placeholder="Describe actions beside normal work or attention that can decrease or remove the risk and its associatted cost."></textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="formlabel">
+                        Contingency trigger
+                    </td>
+                    <td>
+                        <textarea ng-change="saveNow()" ng-disabled="!user.changeContent" ng-model="editrisk.trigger"
+                            maxlength="800" id="risktrig"
+                            placeholder="Describe the tippingpoint were a risk turns in to an issue that demands for the contingency plan to come in to effect."></textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="formlabel">
+                        Contingency plan
+                    </td>
+                    <td>
+
+                        <textarea ng-change="saveNow()" ng-disabled="!user.changeContent" ng-model="editrisk.cont"
+                            maxlength="800" id="riskplan"
+                            placeholder="Describe the plan and associated cost for getting back in control after an risk incident."></textarea>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="formlabel">
+                        Status change comment
+                    </td>
+                    <td>
+                        <textarea ng-change="saveNow()" ng-disabled="!user.changeContent" ng-model="editrisk.comment"
+                            maxlength="800" id="riskplan"
+                            placeholder="Comments regarding the change of state, probability and impact."></textarea>
+                    </td>
+                </tr>
+
+            </table>
+        </div>
     </div>
-    <div class="mainbox" id="risklist" ng-show="!showRiskForm">
-        <h2>
-            Risk and issues
+    <div class="mainbox">
+        <h3>
             <div class="right">
-                <button type="button" 
-                    ng-click="newRisk()"
-                    ng-if="user.changeContent">create new risk or issue</button>
-                <button type="button" id="saveButtonQ" prio-class save-this="$parent.hasChanged"
-                    ng-if="user.changeContent"
-                    ng-click="saveAllRisk()">save</button>
+                <button type="button" ng-click="newRisk()" ng-if="user.changeContent">create new risk</button>
             </div>
-        </h2>
+            <div class="righ">
+                <select ng-model="riskpmsearch.audience" class="right">
+                    <option value="" default>Show all audience</option>
+                    <option value="Confidential">Show only Confidential</option>
+                    <option value="Internal">Show only Internal</option>
+                    <option value="Portfolio">Show only Portfolio</option>
+                    <option value="Company">Show only Company</option>
+                </select>
+                <select ng-model="riskpmsearch.state" class="right" ng-init="riskpmsearch.state='!Closed'">
+                    <option value="" default>Show All states</option>
+                    <option value="!Closed">Show New and Open</option>
+                    <option value="New">Show New</option>
+                    <option value="Open">Show Open</option>
+                    <option value="Closed">Show Closed</option>
+                </select>
+                <select ng-model="riskpmsearch.proximity" class="right">
+                    <option value="" default>Show all proximity</option>
+                    <option value="Project">Show only Project proximity</option>
+                    <option value="Go-live">Show only Go-live proximity</option>
+                    <option value="Production">Show only Production proximity</option>
+                </select>
+                <select
+                    ng-if="user.email==project.po.email || user.email==project.pm.email || user.email==project.altpo.email || user.email==project.altpm.email || user.isOwner || user.admin"
+                    ng-model="project.showconfrisk" class="right">
+                    <option value="true" default>Show confidential</option>
+                    <option value="false">Hide confidential</option>
+                </select>
+                <select ng-model="riskpmsearch.acc.name" class="right">
+                    <option value="">Show all responsibles</option>
+                    <option ng-repeat="u in users | filter: {source: true} | orderBy:'name'" value="{{u.name}}">
+                    </option>
+                    {{u.name}}</option>
+                </select>
+            </div>
+        </h3>
         <div class="overview">
             <table class="tablelist smaller" ng-if="project.risks.length > 0">
                 <tr class="header">
-                    <td colspan="8"><span>Filters</span></td>
+                    <td>Risks</td>
+                    <td>Impact</td>
+                    <td>Probability</td>
+                    <td>Recovery</td>
+                    <td>Proximity</td>
+                    <td>State<br />Response</td>
+                    <td>Audience<br />Responsible</td>
+                    <td>Show in<br />Report</td>
                 </tr>
-                <tr class="header">
-                    <td colspan="8">
-                    <select ng-model="riskpmsearch.audience" class="right">
-                        <option value="" default>Show all audience</option>
-                        <option value="Confidential">Show only Confidential</option>
-                        <option value="Internal">Show only Internal</option>
-                        <option value="Portfolio">Show only Portfolio</option>
-                        <option value="Company">Show only Company</option>
-                    </select>
-                    <select ng-model="riskpmsearch.type" class="right">
-                        <option value="" default>Show all risks and issues</option>
-                        <option value="Risk">Show only risks</option>
-                        <option value="Issue">Show only issues</option>
-                    </select>
-                    <select ng-model="riskpmsearch.state" class="right" ng-init="riskpmsearch.state='!Closed'">
-                        <option value="" default>Show All states</option>
-                        <option value="!Closed">Show New and Open</option>
-                        <option value="New">Show New</option>
-                        <option value="Open">Show Open</option>
-                        <option value="Closed">Show Closed</option>
-                    </select>
-                    
-                    <select ng-model="riskpmsearch.proximity" class="right">
-                        <option value="" default>Show all proximity</option>
-                        <option value="Project">Show only Project proximity</option>
-                        <option value="Go-live">Show only Go-live proximity</option>
-                        <option value="Production">Show only Production proximity</option>
-                    </select>
-                    <select ng-if="user.email==project.po.email || user.email==project.pm.email || user.email==project.altpo.email || user.email==project.altpm.email || user.isOwner || user.admin"
-                            ng-model="project.showconfrisk" class="right">
-                        <option value="true" default>Show confidential</option>
-                        <option value="false">Hide confidential</option>
-                    </select>
-                    <select ng-model="riskpmsearch.acc.name" class="right">
-                        <option value="">Show all responsibles</option>
-                        <option ng-repeat="u in users | filter: {source: true} | orderBy:'name'" value="{{u.name}}">{{u.name}}</option>
-                    </select>
-                    </td>
-                </tr>
-
-
-
-
-
-                <tr class="header" ng-if="riskpmsearch.type=='' || riskpmsearch.type=='Risk'|| riskpmsearch.type==null">
-                    <td class="label">Risks</td>
-                    <td class="label">Impact</td>
-                    <td class="label">Probability</td>
-                    <td class="label">Recovery</td>
-                    <td class="label">Proximity</td>
-                    <td class="label">State<br/>Response</td>
-                    <td class="label">Audience<br/>Responsible</td>
-                    <td class="label">Show in<br/>Report</td>
-                </tr>
-                <tr class="link" 
-                    ng-repeat="risk in project.risks | filter:riskpmsearch | orderBy:'-total'"
-                    ng-if="risk.type=='Risk' &&
-                    (risk.audience!='Confidential' ||
+                <tr class="link" ng-repeat="risk in project.risks | filter:riskpmsearch | orderBy:'-total'"
+                    ng-if="(risk.audience!='Confidential' ||
                     (risk.audience=='Confidential'&&project.showconfrisk=='true' && 
                     (user.email==project.po.email || user.email==project.pm.email || user.email==project.altpo.email || user.email==project.altpm.email || user.isOwner || user.admin)))">
-                    <td ng-click="beginEditRisk(risk)" class="texttop {{risk.status}}"><b>{{risk.title}}</b>
-                        <div class="right">({{risk.total}})</div></br><div ng-if="risk.showInReport">Report</div>
+                    <td ng-click="beginEditRisk(risk)" class="texttop {{risk.status}}"><b>{{risk.title}}</b>({{risk.total}})
                     </td>
-                    <td ng-click="beginEditRisk(risk)" class="texttop" prio-class prio-risk-bar-render="risk.impact">{{risk.impact}}</td>
-                    <td ng-click="beginEditRisk(risk)" class="texttop" prio-class prio-risk-bar-render="risk.prob">{{risk.prob}}</td>
-                    <td ng-click="beginEditRisk(risk)" class="texttop" prio-class prio-risk-bar-render="risk.recCompValue">{{risk.recCompValue}}</td>
+                    <td ng-click="beginEditRisk(risk)" class="texttop" prio-class prio-risk-bar-render="risk.impact">
+                        {{risk.impact}}</td>
+                    <td ng-click="beginEditRisk(risk)" class="texttop" prio-class prio-risk-bar-render="risk.prob">
+                        {{risk.prob}}</td>
+                    <td ng-click="beginEditRisk(risk)" class="texttop" prio-class
+                        prio-risk-bar-render="risk.recCompValue">{{risk.recCompValue}}</td>
                     <td ng-click="beginEditRisk(risk)" class="texttop">&nbsp;{{risk.proximity}}</td>
-                    <td ng-click="beginEditRisk(risk)" class="texttop">&nbsp;{{risk.state}}<br/>&nbsp;{{risk.response}}</td>
-                    <td ng-click="beginEditRisk(risk)" class="texttop">&nbsp;{{risk.audience}}<br/>&nbsp;{{risk.acc.name}}</td>
-                    <td><input type="checkbox" ng-model="risk.showInReport" ng-change="saveNow()"></td>
+                    <td ng-click="beginEditRisk(risk)" class="texttop">
+                        &nbsp;{{risk.state}}<br />&nbsp;{{risk.response}}</td>
+                    <td ng-click="beginEditRisk(risk)" class="texttop">
+                        &nbsp;{{risk.audience}}<br />&nbsp;{{risk.acc}}</td>
+                    <td><input type="checkbox" ng-model="risk.showInReport" ng-change="saveAllRisk()"></td>
                 </tr>
-                <tr class="header"><td colspan="8">Link Risk external doc.</td></tr>
+                <tr class="header">
+                    <td colspan="8">Link Risk external doc.</td>
+                </tr>
                 <tr>
-                    <td>Title: <input ng-model="project.risklinktitle" ng-change="saveNow()" ng-disabled="!user.changeContent"/></td>    
-                    <td colspan="2">URL: <input ng-model="project.risklink" ng-change="saveNow()" ng-disabled="!user.changeContent"/></td>
-                    <td colspan="2">Show in report <input type="checkbox" ng-model="project.filters.showRiskExternalLink" ng-change="saveNow()"></td>
-                    <td colspan="3"><a target="_blank" href="{{project.risklink}}">{{project.risklinktitle}}<div class="linkicon right"></div></a></td>
-                </tr>
-       
-                <tr class="header" ng-if="riskpmsearch.type=='' || riskpmsearch.type=='Issue'|| riskpmsearch.type==null">
-                    <td class="label">Issues</td>
-                    <td class="label">Impact</td>
-                    <td class="label">Recovery</td>
-                    <td class="label" colspan="3">Request</td>
-                    <td class="label">Audience<br/>Responsible</td>
-                    <td class="label">Show in<br/>Report</td>
-                </tr>
-                <tr class="link" 
-                    ng-repeat="risk in project.risks | filter:riskpmsearch | orderBy:'-total'"
-                    ng-if="risk.type=='Issue' && 
-                    (risk.audience!='Confidential' ||
-                    (risk.audience=='Confidential'&&project.showconfrisk=='true' &&
-                    (user.email==project.po.email || user.email==project.pm.email || user.email==project.altpo.email || user.email==project.altpm.email || user.isOwner || user.admin)))">
-                    <td ng-click="beginEditRisk(risk)" class="texttop {{risk.status}}"><b>{{risk.title}}</b>
-                        <div class="right">({{risk.total}})</div></br><div ng-if="risk.showInReport">Report</div>
-                    </td>
-                    
-                    <td ng-click="beginEditRisk(risk)" class="texttop" prio-class prio-risk-bar-render="risk.impact">{{risk.impact}}</td>
-                    <td ng-click="beginEditRisk(risk)" class="texttop" prio-class prio-risk-bar-render="risk.recCompValue">{{risk.recCompValue}}</td>
-                    <td ng-click="beginEditRisk(risk)" class="texttop" colspan="3"><pre>{{risk.request}}</pre></td>
-                    
-                    <td ng-click="beginEditRisk(risk)" class="texttop">&nbsp;{{risk.audience}}<br/>&nbsp;{{risk.acc.name}}</td>
-                    <td><input type="checkbox" ng-model="risk.showInReport" ng-change="saveNow()" ng-disabled="!user.changeContent"></td>
-                </tr>
-                <tr class="header"><td colspan="8">Link Issue external doc.</td></tr>
-                <tr>
-                    <td>Title: <input ng-model="project.isuelinktitle" ng-change="saveNow()" ng-disabled="!user.changeContent"/></td>    
-                    <td colspan="2">URL: <input ng-model="project.isuelink" ng-change="saveNow()" ng-disabled="!user.changeContent"/></td>
-                    <td colspan="2">Show in report <input type="checkbox" ng-model="project.filters.showIsueExternalLink" ng-change="saveNow()"></td>
-                    <td colspan="3"><a target="_blank" href="{{project.isuelink}}">{{project.isuelinktitle}}<div class="linkicon right"></div></a></td>
+                    <td>Title: <input ng-model="project.risklinktitle" ng-change="saveNow()"
+                            ng-disabled="!user.changeContent" /></td>
+                    <td colspan="2">URL: <input ng-model="project.risklink" ng-change="saveNow()"
+                            ng-disabled="!user.changeContent" /></td>
+                    <td colspan="2">Show in report <input type="checkbox"
+                            ng-model="project.filters.showRiskExternalLink" ng-change="saveNow()"></td>
+                    <td colspan="3"><a target="_blank" href="{{project.risklink}}">{{project.risklinktitle}}<div
+                                class="linkicon right"></div></a></td>
                 </tr>
             </table>
         </div>
-        
     </div>
 </div>

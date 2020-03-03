@@ -1,47 +1,126 @@
 <div id="projects-overview">
-    <h2>Project list - Overview
-        <div class="right">
-            <button ng-click="showmebuowner()" ng-show="showmeownerbutton">Show me as Owner</button>
-            <button ng-click="clearmebuowner()" ng-show="!showmeownerbutton">Clear me as Owner</button>
-            <button ng-click="showmepm()" ng-show="showmepmbutton">Show me as PM</button>
-            <button ng-click="clearmepm()" ng-show="!showmepmbutton">Clear me as PM</button>
-            <button ng-click="showmepo()" ng-show="showmepobutton">Show me as PO</button>
-            <button ng-click="clearmepo()" ng-show="!showmepobutton">Clear me as PO</button>
-            <button ng-click="showfilters=true" ng-show="!showfilters">Show filters</button>
-            <button ng-click="showfilters=false" ng-show="showfilters">Hide filters</button>
+    <div class="hideOnPrint">
+        <div class="layout">
+            <div class="layoutelement fluid">
+                <h2>
+                    Lists
+                </h2>
+            </div>
+            <div class="layoutelement right">
+                <button ng-click="showport()" ng-show="showportbutton">portfolio</button>
+                <button class="buttonOn" ng-click="clearport()" ng-show="!showportbutton">portfolio</button>
+                <button ng-click="showmebuowner()" ng-show="showmeownerbutton">me as Business Owner</button>
+                <button class="buttonOn" ng-click="clearmebuowner()" ng-show="!showmeownerbutton">me as Business
+                    Owner</button>
+                <button ng-click="showmepm()" ng-show="showmepmbutton">me as PM/PO</button>
+                <button class="buttonOn" ng-click="clearmepm()" ng-show="!showmepmbutton">me as PM/PO</button>
+                <button ng-click="showmepo()" ng-show="showmepobutton">me as Owner</button>
+                <button class="buttonOn" ng-click="clearmepo()" ng-show="!showmepobutton">me as Owner</button>
+                <button ng-click="showfilters=true" ng-show="!showfilters">filters</button>
+                <button class="buttonOn" ng-click="showfilters=false" ng-show="showfilters">filters</button>
+            </div>
         </div>
-    </h2>
+
+        <div class="right">
+            <select ng-model="showPending" ng-change="showpending()" ng-init="">
+                <option value="">Show all pending or not</option>
+                <option value="None">None Pending</option>
+                <option value="Internal">Pending Internal</option>
+                <option value="Portfolio">Pending Portfolio</option>
+                <option value="Company">Pending Company</option>
+            </select>
+
+            <select ng-model="quickbuname" ng-change="quickbu()">
+                <option value="">All business units</option>
+                <option ng-repeat="bu in bus | orderBy:'order'" value="{{bu.name}}">{{bu.indent}}{{bu.name}}
+                </option>
+            </select>
+        </div>
+
+
+
+        <div class="radiotabs">
+
+            <label for="overview"><input type="radio" id="overview" name="views" ng-model="views"
+                    value="overview"><span>
+                    Overview</span> </label>
+            <label for="baselines"><input type="radio" id="baselines" name="views" ng-model="views"
+                    value="baselines"><span>
+                    Baselines</span></label>
+            <label for="gantt"><input type="radio" id="gantt" name="views" ng-model="views" value="gantt"><span>
+                    Priority</span></label>
+            <label for="status" ng-show="company.filters.companyshowStatus"><input type="radio" id="status" name="views"
+                    ng-model="views" value="status"><span>
+                    Status</span></label>
+            <label for="objectives"><input type="radio" id="objectives" name="views" ng-model="views"
+                    value="objectives"><span>
+                    Objectives</span></label>
+            <label for="finance" ng-show="company.filters.companyshowFinance"><input type="radio" id="finance"
+                    name="views" ng-model="views" value="finance"><span>
+                    Finance</span></label>
+            <label for="reports"><input type="radio" id="reports" name="views" ng-model="views" value="reports"><span>
+                    Reports</span></label>
+        </div>
+    </div>
     <div class="smaller">
         <table ng-show="showfilters">
             <tr class="header">
-                <td colspan="5">Filters</td>
+                <td colspan="5">
+                    Filters<div class="right"><button class="clearbtn" ng-click="clearall();saveSearch()"
+                            ng-show="showfilters">clear
+                            all</button></div>
+                </td>
             </tr>
             <tr class="header">
-                <td class="filter-container">Unit<div class="right"><button ng-click="search.buname=[]" ng-show="showfilters">clear</button></div></td>
-                <td class="filter-container">Portfolio<div class="right"><button ng-click="search.portname=[]" ng-show="showfilters">clear</button></div></td>
-                <td class="filter-container">Project Owner<div class="right"><button ng-click="search.poname=[]" ng-show="showfilters">clear</button></div></td>
-                <td class="filter-container">Project manager<div class="right"><button ng-click="search.pmname=[]" ng-show="showfilters">clear</button></div></td>
-                <td class="filter-container">Project status<div class="right"><button ng-click="search.lastStatusFlag=[]" ng-show="showfilters">clear</button></div></td>
+                <td class="filter-container">Unit<div class="right"><button class="clearbtn"
+                            ng-click="searchParams.buname=[];saveSearch()" ng-show="showfilters">clear</button></div>
+                </td>
+                <td class="filter-container">Portfolio<div class="right"><button class="clearbtn"
+                            ng-click="searchParams.portname=[];saveSearch()" ng-show="showfilters">clear</button></div>
+                </td>
+                <td class="filter-container">Owner<div class="right"><button class="clearbtn"
+                            ng-click="searchParams.poname=[];saveSearch()" ng-show="showfilters">clear</button></div>
+                </td>
+                <td class="filter-container">PM/PO<div class="right"><button class="clearbtn"
+                            ng-click="searchParams.pmname=[];saveSearch()" ng-show="showfilters">clear</button></div>
+                </td>
+                <td class="filter-container">Project status<div class="right"><button class="clearbtn"
+                            ng-click="searchParams.lastStatusFlag=[];saveSearch()" ng-show="showfilters">clear</button>
+                    </div>
+                </td>
             </tr>
+
             <tr class="filtertd">
                 <td>
-                    <select class="multiple-select" multiple="multiple" ng-multiple="true" ng-change="saveSearch()" ng-model="search.buname"
-                        ng-options="bu.name as bu.name for bu in bus | orderBy: 'name'"></select>
+                    <select class="multiple-select" multiple="multiple" ng-multiple="true"
+                        ng-model="searchParams.buname" ng-change="saveSearch()">
+                        <option ng-repeat="bu in bus | orderBy:'order'" value="{{bu.name}}">{{bu.indent}}{{bu.name}}
+                        </option>
+                    </select>
                 </td>
                 <td>
-                    <select class="multiple-select" multiple="multiple" ng-multiple="true" ng-change="saveSearch()" ng-model="search.portname"
+                    <select class="multiple-select" multiple="multiple" ng-multiple="true" ng-change="saveSearch()"
+                        ng-model="searchParams.portname"
                         ng-options="port.name as port.name for port in company.portfolios | orderBy: 'level'"></select>
                 </td>
                 <td>
-                    <select class="multiple-select" multiple="multiple" ng-multiple="true" ng-change="saveSearch()" ng-model="search.poname"
-                        ng-options="u.name as u.name for u in users | filter: {source: true} | orderBy: 'name'"></select>
+                    <select class="multiple-select" multiple="multiple" ng-multiple="true" ng-change="saveSearch()"
+                        ng-model="searchParams.poname">
+                        <option ng-repeat="u in users | filter: {source: true} | orderBy:'name' track by u.name"
+                            value="{{u.name}}">{{u.name}}</option>
+                    </select>
                 </td>
                 <td>
-                    <select class="multiple-select" multiple="multiple" ng-multiple="true" ng-change="saveSearch()" ng-model="search.pmname"
-                        ng-options="u.name as u.name for u in users | filter: {source: true} | orderBy: 'name'"></select>
+                    <select class="multiple-select" multiple="multiple" ng-multiple="true" ng-change="saveSearch()"
+                        ng-model="searchParams.pmname">
+                        <option ng-repeat="u in users | filter: {source: true} | orderBy:'name' track by u.name"
+                            value="{{u.name}}">{{u.name}}</option>
+                    </select>
+
                 </td>
                 <td>
-                    <select class="multiple-select" multiple="multiple" ng-multiple="true" ng-change="saveSearch()" ng-model="search.lastStatusFlag">
+                    <select class="multiple-select" multiple="multiple" ng-multiple="true" ng-change="saveSearch()"
+                        ng-model="searchParams.lastStatusFlag">
                         <option value="Green">OK (Green)</option>
                         <option value="Yellow">Observe (Yellow)</option>
                         <option value="Orange">Assist (Orange)</option>
@@ -50,17 +129,31 @@
                 </td>
             </tr>
             <tr class="header">
-                <td>State<div class="right"><button ng-click="search.state=[]" ng-show="showfilters">clear</button></div></td>
-                <td>Type<div class="right"><button ng-click="search.type=[]" ng-show="showfilters">clear</button></div></td>
-                <td>Affected<div class="right"><button ng-click="search.connect=[]" ng-show="showfilters">clear</button></div></td>
-                <td>Priority<div class="right"><button ng-click="search.priority=[]" ng-show="showfilters">clear</button></div></td>
-                <td>Finance<div class="right"><button ng-click="search.financeFlag=[]" ng-show="showfilters">clear</button></div></td>
+                <td>State<div class="right"><button class="clearbtn" ng-click="searchParams.state=[];saveSearch()"
+                            ng-show="showfilters">clear</button></div>
+                </td>
+                <td>Type<div class="right"><button class="clearbtn" ng-click="searchParams.type=[];saveSearch()"
+                            ng-show="showfilters">clear</button></div>
+                </td>
+                <td>Affected<div class="right"><button class="clearbtn" ng-click="searchParams.connect=[];saveSearch()"
+                            ng-show="showfilters">clear</button></div>
+                </td>
+                <td>Priority<div class="right"><button class="clearbtn" ng-click="searchParams.priority=[];saveSearch()"
+                            ng-show="showfilters">clear</button></div>
+                </td>
+                <td>Finance<div class="right"><button class="clearbtn"
+                            ng-click="searchParams.financeFlag=[];saveSearch()" ng-show="showfilters">clear</button>
+                    </div>
+                </td>
             </tr>
             <tr class="filtertd">
                 <td>
-                    <select class="multiple-select" multiple="multiple" ng-multiple="true" ng-model="search.state" ng-change="saveSearch()">
+                    <select class="multiple-select" multiple="multiple" ng-multiple="true" ng-model="searchParams.state"
+                        ng-change="saveSearch()">
                         <option value="Template">Template</option>
-                        <option value="Proposed">Proposed</option>
+                        <option value="Internal Approved">Internal Approved</option>
+                        <option value="Portfolio Approved">Portfolio Approved</option>
+                        <option value="Company Approved">Company Approved</option>
                         <option value="Progress">Progress</option>
                         <option value="Onhold">On hold</option>
                         <option value="Rejected">Rejected</option>
@@ -69,26 +162,33 @@
 
                 </td>
                 <td>
-                    <select class="multiple-select" multiple="multiple" ng-multiple="true" ng-change="saveSearch()" ng-model="search.type">
+                    <select class="multiple-select" multiple="multiple" ng-multiple="true" ng-change="saveSearch()"
+                        ng-model="searchParams.type">
                         <option value="Project">Project</option>
                         <option value="Product">Product</option>
+                        <option value="Portfolio">Portfolio</option>
                     </select>
                 </td>
                 <td>
-                    <select class="multiple-select" multiple="multiple" ng-multiple="true" ng-change="saveSearch()" ng-model="search.connect"
-                        ng-options="bu.name as bu.name for bu in bus | orderBy: 'name'"></select>
-
-                </td>
-                <td>
-                    <select class="multiple-select" multiple="multiple" ng-multiple="true" ng-change="saveSearch()" ng-model="search.priority">
-                        <option value="1. Must">1. Must</option>
-                        <option value="2. Should">2. Should</option>
-                        <option value="3. Could(H1)">3. Could(H1)</option>
-                        <option value="4. Backlog(H2)">4. Backlog(H2)</option>
+                    <select class="multiple-select" multiple="multiple" ng-multiple="true"
+                        ng-model="searchParams.connect" ng-change="saveSearch()">
+                        <option ng-repeat="bu in bus | orderBy:'order'" value="{{bu.name}}">{{bu.indent}}{{bu.name}}
+                        </option>
                     </select>
                 </td>
                 <td>
-                    <select class="multiple-select" multiple="multiple" ng-multiple="true" ng-change="saveSearch()" ng-model="search.financeFlag">
+                    <select class="multiple-select" multiple="multiple" ng-multiple="true" ng-change="saveSearch()"
+                        ng-model="searchParams.priority">
+                        <option value="1. Mandatory">1. Mandatory</option>
+                        <option value="2. Top priority">2. Top priority</option>
+                        <option value="3. Very High priority">3. Very High priority</option>
+                        <option value="4. High priority">4. High priority</option>
+                        <option value="5. Valued">5. Valued</option>
+                    </select>
+                </td>
+                <td>
+                    <select class="multiple-select" multiple="multiple" ng-multiple="true" ng-change="saveSearch()"
+                        ng-model="searchParams.financeFlag">
                         <option value="Green">Finance controlled (Green)</option>
                         <option value="Yellow">Please update (Yellow)</option>
                         <option value="Orange">Deviation unexplained (Orange)</option>
@@ -97,97 +197,1066 @@
                 </td>
             </tr>
             <tr class="header">
-                <td colspan="5">Order by</td>
+                <td>Strategy<div class="right"><button class="clearbtn"
+                            ng-click="searchParams.strategies=[];saveSearch()" ng-show="showfilters">clear</button>
+                    </div>
+                </td>
+                <td>Value<div class="right"><button class="clearbtn"
+                            ng-click="searchParams.enablerlable=[];saveSearch()" ng-show="showfilters">clear</button>
+                    </div>
+                </td>
+                <td>Effort/Risk<div class="right"><button class="clearbtn"
+                            ng-click="searchParams.limiterlable=[];saveSearch()" ng-show="showfilters">clear</button>
+                    </div>
+                </td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr class="filtertd">
+                <td>
+                    <select class="multiple-select" multiple="multiple" ng-multiple="true"
+                        ng-model="searchParams.strategies" ng-change="saveSearch()">
+                        <option ng-repeat="type in company.strategytypes| orderBy:'name'" value="{{type.name}}">
+                            {{type.name}}</option>
+                    </select>
+                </td>
+
+                <td>
+                    <select class="multiple-select" multiple="multiple" ng-multiple="true"
+                        ng-model="searchParams.enablerlable" ng-change="saveSearch()">
+                        <option value="XS">XS</option>
+                        <option value="S">S</option>
+                        <option value="M">M</option>
+                        <option value="L">L</option>
+                        <option value="XL">XL</option>
+                    </select>
+                </td>
+                <td>
+                    <select class="multiple-select" multiple="multiple" ng-multiple="true"
+                        ng-model="searchParams.limiterlable" ng-change="saveSearch()">
+                        <option value="XS">XS</option>
+                        <option value="S">S</option>
+                        <option value="M">M</option>
+                        <option value="L">L</option>
+                        <option value="XL">XL</option>
+                    </select>
+                </td>
+                <td></td>
+                <td></td>
             </tr>
             <tr>
                 <td colspan="5">
-                    <select ng-model="porderparam" ng-init="porderparam='priority'">
-                        <option value="priority">Portfolio priority</option>
-                        <option value="-total">KPI: Total points</option>
-                        <option value="-kpi1">KPI: {{company.projkpi1lable}}</option>
-                        <option value="-kpi2">KPI: {{company.projkpi2lable}}</option>
-                        <option value="-kpi3">KPI: {{company.projkpi3lable}}</option>
-                        <option value="-kpi4">KPI: {{company.projkpi4lable}}</option>
-                        <option value="-kpi5">KPI: {{company.projkpi5lable}}</option>
-                        <option value="-kpi6">KPI: {{company.projkpi6lable}}</option>
-                        <option value="title">Title</option>
-                        <option value="bu.name">BU</option>
-                        <option value="support.name">Portfolio</option>
-                    </select>
-                    <select ng-model="porderparam2" ng-init="porderparam2='-total'">
-                        <option value="priority">Portfolio priority</option>
-                        <option value="-total">KPI: Total points</option>
-                        <option value="-kpi1">KPI: {{company.projkpi1lable}}</option>
-                        <option value="-kpi2">KPI: {{company.projkpi2lable}}</option>
-                        <option value="-kpi3">KPI: {{company.projkpi3lable}}</option>
-                        <option value="-kpi4">KPI: {{company.projkpi4lable}}</option>
-                        <option value="-kpi5">KPI: {{company.projkpi5lable}}</option>
-                        <option value="-kpi6">KPI: {{company.projkpi6lable}}</option>
-                        <option value="title">Title</option>
-                        <option value="bu.name">BU</option>
-                        <option value="support.name">Portfolio</option>
-                    </select>
-                    <select ng-model="porderparam3" ng-init="porderparam3='support.name'">
-                        <option value="priority">Portfolio priority</option>
-                        <option value="-total">KPI: Total points</option>
-                        <option value="-kpi1">KPI: {{company.projkpi1lable}}</option>
-                        <option value="-kpi2">KPI: {{company.projkpi2lable}}</option>
-                        <option value="-kpi3">KPI: {{company.projkpi3lable}}</option>
-                        <option value="-kpi4">KPI: {{company.projkpi4lable}}</option>
-                        <option value="-kpi5">KPI: {{company.projkpi5lable}}</option>
-                        <option value="-kpi6">KPI: {{company.projkpi6lable}}</option>
-                        <option value="title">Title</option>
-                        <option value="bu.name">BU</option>
-                        <option value="support.name">Portfolio</option>
-                    </select>
-                    
                     <div class="right">
+                        <button ng-click="showdefault()">my default</button>
                         <button ng-click="saveFilters()">Save as default</button>
                     </div>
-                    
+
+                </td>
+            </tr>
+            <tr>
+                <td class="header">Order</td>
+                <td colspan="4">
+                    <table>
+                        <tr>
+                            <td> 1.
+                                <select ng-model="porderparam" class="ordersellect" ng-change="orderchange()">
+                                    <option value="priority">Portfolio priority</option>
+                                    <option value="-enablervalue">Value size</option>
+                                    <option value="-limitervalue">Effort/Risk High-Low</option>
+                                    <option value="limitervalue">Effort/Risk Low-High</option>
+                                    <option value="-wsjf">WSJF</option>
+                                    <option value="title">Title</option>
+                                    <option value="bu.name">Unit</option>
+                                    <option value="support.name">Portfolio</option>
+                                    <option value="state">State</option>
+                                    <option value="-creationdate">Creation date - newest</option>
+                                    <option value="creationdate">Creation date - oldest</option>
+                                    <option value="-startdate">Start date - newest</option>
+                                    <option value="startdate">Start date - oldest</option>
+                                </select>
+                            </td>
+                            <td>2.
+                                <select ng-model="porderparam2" class="ordersellect" ng-change="orderchange()">
+                                    <option value="priority">Portfolio priority</option>
+                                    <option value="-enablervalue">Value size</option>
+                                    <option value="-limitervalue">Effort/Risk High-Low</option>
+                                    <option value="limitervalue">Effort/Risk Low-High</option>
+                                    <option value="-wsjf">WSJF</option>
+                                    <option value="title">Title</option>
+                                    <option value="bu.name">Unit</option>
+                                    <option value="support.name">Portfolio</option>
+                                    <option value="state">State</option>
+                                    <option value="-creationdate">Creation date - newest</option>
+                                    <option value="creationdate">Creation date - oldest</option>
+                                    <option value="-startdate">Start date - newest</option>
+                                    <option value="startdate">Start date - oldest</option>
+                                </select>
+                            </td>
+                            <td>3.
+                                <select ng-model="porderparam3" class="ordersellect" ng-change="orderchange()">
+                                    <option value="priority">Portfolio priority</option>
+                                    <option value="-enablervalue">Value size</option>
+                                    <option value="-limitervalue">Effort/Risk High-Low</option>
+                                    <option value="limitervalue">Effort/Risk Low-High</option>
+                                    <option value="-wsjf">WSJF</option>
+                                    <option value="title">Title</option>
+                                    <option value="bu.name">Unit</option>
+                                    <option value="support.name">Portfolio</option>
+                                    <option value="state">State</option>
+                                    <option value="-creationdate">Creation date - newest</option>
+                                    <option value="creationdate">Creation date - oldest</option>
+                                    <option value="-startdate">Start date - newest</option>
+                                    <option value="startdate">Start date - oldest</option>
+                                </select>
+                            </td>
+                        </tr>
+                    </table>
                 </td>
             </tr>
         </table>
-
-        <div class="overview">
+        <div class="overview" ng-show="views=='overview'">
             <table class="tablelist" ng-if="projectList.length > 0">
                 <tr class="header">
-                    <td>Project
-                        <div class="right">Pending action:
-                            <input type="checkbox" ng-model="showPending" />
-                        </div>
-                        <br/>Project Manager
+                    <td>List item
+                        <br />PM/PO
                     </td>
-                    <td>Unit<br/>Project Owner</td>
-                    <td>Portfolio<br/>Prio/KPI</td>
+                    <td>Unit<br />Owner</td>
+                    <td>Portfolio<br />Priority - (Enabler - Limiter)</td>
                     <td ng-if="showPending">Pending action</td>
-                    <td>Lock</td>
+                    <td>Type - ID - State<br />Lock</td>
                 </tr>
-                <tr ng-repeat="project in projectList | multiFilter:search | orderBy:[porderparam, porderparam2, porderparam3]" ng-if="!showPending || (project.pending && showPending)"
+                <tr ng-repeat="project in projectList | multiFilter:searchParams | orderBy:[porderparam, porderparam2, porderparam3]"
+                    ng-if="!showPending || (project.pending && showPending == project.pending)"
                     ng-click="goToProject(project._id.$oid)" class="link">
-                    <td class="{{project.lastStatus.status}}">
-                        <b>{{project.title}}
-                            <div class="right">
-                                <b>{{project.warn}}</b>
+                    <td class="">
+                        <div class="layout vcenter inline">
+                            <div class="layoutelement fluid {{project.lastStatus.status}}">
+
                             </div>
-                        </b>
-                        <br/>{{project.pm.name}}
+                            <div class="layoutelement">
+                                <div class="bigsmall">
+                                    <div class="big">
+                                        {{project.title}}
+                                    </div>
+                                    <div class="small">
+                                        {{project.pm.name}}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layoutelement fluid">
+                                {{project.warn}}
+                            </div>
+                        </div>
+
                     </td>
 
                     <td>
-                        <b>{{project.bu.name}}</b><br/>{{project.po.name}}
+                        <b>{{project.bu.name}}</b><br />{{project.po.name}}
                     </td>
                     <td>
-                        <b>{{project.support.name}}</b><br/>{{project.priority}} / {{project.total}}
+                        <b>{{project.support.name}}</b><br />{{project.priority}} -
+                        ({{project.milestones[0].enablerlable}} - {{project.milestones[0].limiterlable}})
                     </td>
                     <td class="texttop" ng-if="showPending">{{project.deccomment}}</td>
-                    <td>
-                        <div ng-if="project.editUser == null" class="Green">{{project.editUser.name}}</div>
+                    <td><b>{{project.type}} - {{project.projectnumber}} - {{project.state}}</b><br />
+                        <div ng-if="project.editUser == null" class="Green">Open</div>
                         <div ng-if="project.editUser != null" class="Red">{{project.editUser.name}}</div>
 
                     </td>
                 </tr>
             </table>
+        </div>
+
+        <div class="overview" ng-show="views=='gantt'">
+            <table class="tablelist" ng-if="projectList.length > 0">
+                <tr class="header">
+                    <td>Item</td>
+                    <td colspan="4" style="text-align: center">{{year-1}}</td>
+                    <td colspan="4" style="text-align: center">{{year}}</td>
+                    <td colspan="4" style="text-align: center">{{year+1}}</td>
+                    <td ng-if="company.filters.companyshowDepend">Dependency</td>
+                    <td ng-if="showPending"></td>
+                </tr>
+                <tr class="header">
+                    <td></td>
+                    <td>Q1</td>
+                    <td>Q2</td>
+                    <td>Q3</td>
+                    <td>Q4</td>
+                    <td>Q1</td>
+                    <td>Q2</td>
+                    <td>Q3</td>
+                    <td>Q4</td>
+                    <td>Q1</td>
+                    <td>Q2</td>
+                    <td>Q3</td>
+                    <td>Q4</td>
+                    <td ng-if="company.filters.companyshowDepend">Allocation</td>
+                    <td ng-if="showPending">Pending action</td>
+                </tr>
+                <tr ng-repeat="project in projectList | multiFilter:searchParams | orderBy:[porderparam, porderparam2, porderparam3]"
+                    ng-if="!showPending || (project.pending && showPending == project.pending)"
+                    ng-click="goToProject(project._id.$oid)" class="link">
+                    <td class="{{project.lastStatus.status}}">
+                        <b>{{project.title}}</b><br />{{project.bu.name}}
+                    </td>
+                    <td class="bar" ng-style="barRender(project.milestones[0])" colspan="12">
+                        <div class="ganttcontentfirst">State: <b>{{project.state}} </b></div>
+                        <div class="ganttcontentfirst">Priority: <b>{{project.priority}}</b></div>
+                        <div class="ganttcontentsmall">Enabler: <b>{{project.milestones[0].enablerlable}}</b></div>
+                        <div class="ganttcontent">Limiter: <b>{{project.milestones[0].limiterlable}}</b></div>
+                    </td>
+                    <td ng-if="company.filters.companyshowDepend" class="{{project.allocatedflag}}">
+                        {{project.allocatedstring}}
+                    </td>
+                    <td class="texttop" ng-if="showPending">{{project.deccomment}}</td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="overview" ng-show="views=='baselines'">
+            <table class="tablelist" ng-if="projectList.length > 0">
+                <tr class="header">
+                    <td>
+                        <div class="bigsmall">
+                            <div class="big">
+                                Current
+                            </div>
+                            <div class="small">
+                                Baseline
+                            </div>
+                        </div>
+                    </td>
+                    <td>State, Priority</td>
+                    <td>End date</td>
+                    <td class="sums" ng-show="company.filters.companyshowFinance">External</td>
+                    <td class="sums" ng-show="company.filters.companyshowFinance">Total</td>
+                    <td ng-if="showPending"></td>
+                </tr>
+
+                <tr ng-repeat="project in projectList | multiFilter:searchParams | orderBy:[porderparam, porderparam2, porderparam3]"
+                    ng-if="!showPending || (project.pending && showPending == project.pending)"
+                    ng-click="goToProject(project._id.$oid)" class="link">
+
+                    <td>
+                        <div class="layout vcenter inline">
+                            <div class="layoutelement fluid {{project.lastStatus.status}}">
+                            </div>
+                            <div class="layoutelement">
+                                <div class="bigsmall">
+                                    <div class="big">
+                                        {{project.title}}
+                                    </div>
+                                    <div class="small">
+                                        {{project.bu.name}}
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </td>
+                    <td>
+                        <div class="layout vcenter inline">
+                            <div class="layoutelement fluid {{project.baselinepriorityFLAG}}">
+                            </div>
+                            <div class="layoutelement">
+                                <div class="bigsmall">
+                                    <div class="big">
+                                        {{project.state}}-{{project.priority}}
+                                    </div>
+                                    <div class="small">
+                                        {{project.baselinestate}}-{{project.baselinepriority}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="layout vcenter inline">
+                            <div class="layoutelement fluid {{project.baselineenddateFLAG}}">
+                            </div>
+                            <div class="layoutelement">
+                                <div class="bigsmall">
+                                    <div class="big">
+                                        {{project.milestones[0].enddate | date:'longDate'}}
+                                    </div>
+                                    <div class="small">
+                                        {{project.baselineenddate | date:'longDate'}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="layout vcenter inline">
+                            <div class="layoutelement fluid {{project.baselinepeopleexternalFLAG}}">
+                            </div>
+                            <div class="layoutelement">
+                                <div class="bigsmall">
+                                    <div class="big right">
+                                        {{project.finance.costdeptotalexternalttotal | number:0}}
+                                        TDKK
+                                    </div>
+                                    <div class="small right">
+                                        ({{project.baselinepeopleexternalDIV | number:0}}%)
+                                        {{project.baselinepeopleexternal | number:0}} TDKK
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="layout vcenter inline">
+                            <div class="layoutelement fluid  {{project.baselinegrandtotalFLAG}}">
+                            </div>
+                            <div class="layoutelement">
+                                <div class="bigsmall">
+                                    <div class="big right">
+                                        {{project.finance.budTotalgrandSum | number:0}}
+                                        TDKK
+                                    </div>
+                                    <div class="small right">
+                                        ({{project.baselinegrandtotalDIV | number:0}}%)
+                                        {{project.baselinegrandtotal | number:0}} TDKK
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="texttop" ng-if="showPending">{{project.deccomment}}</td>
+                </tr>
+            </table>
+        </div>
+
+
+        <div class="overview" ng-show="views=='status'">
+            <table class="tablelist" ng-if="projectList.length > 0">
+                <tr class="header">
+                    <td>
+                        Overall status
+                        <br />BU
+                    </td>
+                    <td>
+                        Business Owner approval
+                        <br />Status date
+                    </td>
+                    <td class="verttd">
+                        <div class="vert">Bus. case</div>
+                    </td>
+                    <td class="verttd">
+                        <div class="vert">Scope</div>
+                    </td>
+                    <td class="verttd">
+                        <div class="vert">Time line</div>
+                    </td>
+                    <td class="verttd">
+                        <div class="vert">Res.</div>
+                    </td>
+                    <td class="verttd">
+                        <div class="vert">Budg.</div>
+                    </td>
+                    <td class="verttd">
+                        <div class="vert">Risks</div>
+                    </td>
+                    <td class="verttd" ng-if="company.filters.companyshowPOsection">
+                        <div class="vert">Project Eval.</div>
+                    </td>
+                    <td class="verttd" ng-if="company.filters.companyshowPOsection">
+                        <div class="vert">Product Eval.</div>
+                    </td>
+                </tr>
+                <tr ng-repeat="project in projectList | multiFilter:searchParams | orderBy:[porderparam, porderparam2, porderparam3]"
+                    ng-if="!showPending || (project.pending && showPending == project.pending)"
+                    ng-click="goToProject(project._id.$oid)" class="link">
+                    <td class="{{project.lastStatus.status}}">{{project.title}}
+                        <br />{{project.bu.name}}
+                        <div class="right">
+                            <b>{{project.warn}}</b>
+                        </div>
+                    </td>
+                    <td>{{project.lastStatus.apo}}
+                        <br />{{project.lastStatus.date | date:'d MMM, yyyy'}}</td>
+                    <td class="{{project.lastStatus.statusbc}}"></td>
+                    <td class="{{project.lastStatus.statussc}}"></td>
+                    <td class="{{project.lastStatus.statustl}}"></td>
+                    <td class="{{project.lastStatus.statusres}}"></td>
+                    <td class="{{project.lastStatus.statusbud}}"></td>
+                    <td class="{{project.lastStatus.statusrisk}}"></td>
+                    <td prio-class prio-cs-render="project.lastStatus.cs" ng-if="company.filters.companyshowPOsection">
+                        {{project.lastStatus.cs}}
+                    </td>
+                    <td prio-class prio-cs-render="project.lastStatus.productcs"
+                        ng-if="company.filters.companyshowPOsection">
+                        {{project.lastStatus.productcs}}
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="overview" ng-show="views=='objectives'">
+            <table class="tablelist" ng-if="projectList.length > 0">
+                <tr class="header">
+                    <td>Item<br />PM/PO</td>
+                    <td>Objective & Benefit<br />Benefit realisation plan</td>
+                    <td>Priority - Value - Effort/Risk
+                        <br />Overall status</td>
+                    <td ng-if="showPending">Pending action</td>
+                </tr>
+                <tr ng-repeat="project in projectList | multiFilter:searchParams | orderBy:[porderparam, porderparam2, porderparam3]"
+                    ng-if="!showPending || (project.pending && showPending == project.pending)"
+                    ng-click="goToProject(project._id.$oid)" class="link">
+                    <td class="texttop {{project.lastStatus.status}}">&nbsp;
+                        <b>{{project.title}}</b>
+                        <br />{{project.type}}
+                        <br />{{project.pm.name}}</td>
+                    <td class="texttop">
+                        <b>Objective:</b>
+                        <br />{{project.outcome}}
+                        <br />
+                        <b>Benefit:</b>
+                        <br />{{project.costbenefit}}
+                        <br />
+                        <b>Benefit realisation plan:</b>
+                        <br />{{project.benefitplan}}
+                    </td>
+                    <td class="texttop">
+                        <b>Priority:</b>
+                        <div class="right">{{project.priority}} -
+                            {{project.milestones[0].enablerlable}} -
+                            {{project.milestones[0].limiterlable}}
+                        </div>
+                        <br />
+                        <b>Date:</b>
+                        <div class="right">{{project.lastStatus.date | date:'d MMM, yyyy'}}</div>
+                        <br />
+                        <b>Last status:</b>
+                        <br />{{project.lastStatus.overallcomments}}
+                    </td>
+                    <td class="texttop" ng-if="showPending">{{project.deccomment}}</td>
+                </tr>
+            </table>
+        </div>
+        <div class="overview" ng-show="views=='finance'">
+            <table class="tablelist" ng-if="projectList.length > 0">
+                <tr class="header">
+                    <td colspan="3">
+                        <select ng-model="showType" ng-init="showType='budget'">
+                            <option value="budget">Budget</option>
+                            <option value="posted">Posted</option>
+                            <option value="deviation">Deviation</option>
+                        </select>
+                    </td>
+                    <td colspan="3">
+                        Show only finance controlled
+                        <input type="checkbox" ng-model="showControlled" ng-change="setControlled()" />
+                    </td>
+                    <td colspan="3">
+                        Show confidential
+                        <input type="checkbox" ng-model="showConfidential" ng-change="setConfidential()" />
+                    </td>
+                </tr>
+                <tr class="listsubject">
+                    <td colspan="9">
+                        <div ng-if="showType=='budget'">
+                            <h3>Finance - Total budget in TDKK</h3>
+                        </div>
+                        <div ng-if="showType=='posted'">
+                            <h3>Finance - Total posted in TDKK</h3>
+                        </div>
+                        <div ng-if="showType=='deviation'">
+                            <h3>Finance - Total deviation in TDKK</h3>
+                        </div>
+                    </td>
+                </tr>
+                <tr class="header">
+                    <td>Control status</td>
+                    <td>Prev</td>
+                    <td>Q1</td>
+                    <td>Q2</td>
+                    <td>Q3</td>
+                    <td>Q4</td>
+                    <td>Year</td>
+                    <td>Future</td>
+                    <td>Grand</td>
+                </tr>
+                <tr class="header" ng-if="showType=='deviation'">
+                    <td>Total deviations</td>
+                    <td class="sums">{{finsums.devTotalprev | number:0}}</td>
+                    <td class="sums">{{finsums.devTotalq1 | number:0}}</td>
+                    <td class="sums">{{finsums.devTotalq2 | number:0}}</td>
+                    <td class="sums">{{finsums.devTotalq3 | number:0}}</td>
+                    <td class="sums">{{finsums.devTotalq4 | number:0}}</td>
+                    <td class="sums">{{finsums.devTotalSum | number:0}}</td>
+                    <td class="sums">{{finsums.devTotalSum | number:0}}</td>
+                    <td class="sums">{{finsums.devTotalgrandSum | number:0}}</td>
+                </tr>
+                <tr class="header" ng-if="showType=='budget'">
+                    <td>Total budget</td>
+                    <td class="sums">{{finsums.budTotalprev | number:0}}</td>
+                    <td class="sums">{{finsums.budTotalq1 | number:0}}</td>
+                    <td class="sums">{{finsums.budTotalq2 | number:0}}</td>
+                    <td class="sums">{{finsums.budTotalq3 | number:0}}</td>
+                    <td class="sums">{{finsums.budTotalq4 | number:0}}</td>
+                    <td class="sums">{{finsums.budTotalSum | number:0}}</td>
+                    <td class="sums">{{finsums.budTotalSum | number:0}}</td>
+                    <td class="sums">{{finsums.budTotalgrandSum | number:0}}</td>
+                </tr>
+                <tr class="header" ng-if="showType=='posted'">
+                    <td>Total budget</td>
+                    <td class="sums">{{finsums.postTotalprev | number:0}}</td>
+                    <td class="sums">{{finsums.postTotalq1 | number:0}}</td>
+                    <td class="sums">{{finsums.postTotalq2 | number:0}}</td>
+                    <td class="sums">{{finsums.postTotalq3 | number:0}}</td>
+                    <td class="sums">{{finsums.postTotalq4 | number:0}}</td>
+                    <td class="sums">{{finsums.postTotalSum | number:0}}</td>
+                    <td class="sums">{{finsums.postTotalSum | number:0}}</td>
+                    <td class="sums">{{finsums.postTotalgrandSum | number:0}}</td>
+                </tr>
+                <tr ng-repeat="project in projectList | multiFilter:searchParams | orderBy:[porderparam, porderparam2, porderparam3]"
+                    ng-if="(!showPending || (project.pending && showPending == project.pending)) && showType=='deviation' && (!showControlled || (project.isControlled && showControlled)) && (!project.isFinConf || (project.isFinConf && showConfidential  && setViewConfidential(project)))"
+                    ng-click="goToProject(project._id.$oid)" class="link">
+                    <td class="{{project.financeControl}} tooltip">{{project.title}}
+                        <br />
+                        <div ng-if="showControlled">
+                            <b>Cont:</b> {{project.controller.name}}</div>
+                        <span class="tooltiptext">
+                            <b>Deviation comments</b>
+                            <br /> Q1: {{project.finance.devq1}}
+                            <br /> Q2: {{project.finance.devq2}}
+                            <br /> Q3: {{project.finance.devq3}}
+                            <br /> Q4: {{project.finance.devq4}}
+                            <br />
+                    </td>
+
+                    <td class="sums tooltip">{{ project.finance.devTotalprev | number:0 }}
+                        <span class="tooltiptext">Budget: {{project.finance.budTotalprev | number:0}}
+                            <br />Posted: {{project.finance.postTotalprev | number:0}}
+                            <br />Deviation: {{project.finance.devTotalprev | number:0}}</span>
+                    </td>
+                    <td class="sums tooltip">{{ project.finance.devTotalq1 | number:0 }}
+                        <span class="tooltiptext">Budget: {{project.finance.budTotalq1 | number:0}}
+                            <br />Posted: {{project.finance.postTotalq1 | number:0}}
+                            <br />Deviation: {{project.finance.devTotalq1 | number:0}}</span>
+                    </td>
+                    <td class="sums tooltip">{{ project.finance.devTotalq2 | number:0 }}
+                        <span class="tooltiptext">Budget: {{project.finance.budTotalq2 | number:0}}
+                            <br />Posted: {{project.finance.postTotalq2 | number:0}}
+                            <br />Deviation: {{project.finance.devTotalq2 | number:0}}</span>
+                    </td>
+                    <td class="sums tooltip">{{ project.finance.devTotalq3 | number:0 }}
+                        <span class="tooltiptext">Budget: {{project.finance.budTotalq3 | number:0}}
+                            <br />Posted: {{project.finance.postTotalq3 | number:0}}
+                            <br />Deviation: {{project.finance.devTotalq3 | number:0}}</span>
+                    </td>
+                    <td class="sums tooltip">{{ project.finance.devTotalq4 | number:0 }}
+                        <span class="tooltiptext">Budget: {{project.finance.budTotalq4 | number:0}}
+                            <br />Posted: {{project.finance.postTotalq4 | number:0}}
+                            <br />Deviation: {{project.finance.devTotalq4 | number:0}}</span>
+                    </td>
+                    <td class="sums tooltip">{{ project.finance.devTotalSum | number:0 }}
+                        <span class="tooltiptext">Budget: {{project.finance.budTotalSum | number:0}}
+                            <br />Posted: {{project.finance.postTotalSum | number:0}}
+                            <br />Deviation: {{project.finance.devTotalSum | number:0}}</span>
+                    </td>
+                    <td class="sums tooltip">{{ project.finance.devTotalfutureSum | number:0 }}
+                        <span class="tooltiptext">Budget: {{project.finance.budTotalfutureSum | number:0}}
+                            <br />Posted: {{project.finance.postTotalfutureSum | number:0}}
+                            <br />Deviation: {{project.finance.devTotalfutureSum | number:0}}</span>
+                    </td>
+                    <td class="sums tooltip">{{ project.finance.devTotalgrandSum | number:0 }}
+                        <span class="tooltiptext">Budget: {{project.finance.budTotalgrandSum | number:0}}
+                            <br />Posted: {{project.finance.postTotalgrandSum | number:0}}
+                            <br />Deviation: {{project.finance.devTotalgrandSum | number:0}}</span>
+                    </td>
+                </tr>
+
+                <tr ng-repeat="project in projectList | multiFilter:searchParams | orderBy:[porderparam, porderparam2, porderparam3]"
+                    ng-if="(!showPending || (project.pending && showPending == project.pending)) && showType=='budget' && (!showControlled || (project.isControlled && showControlled)) && (!project.isFinConf || (project.isFinConf && showConfidential && setViewConfidential(project)))"
+                    ng-click="goToProject(project._id.$oid)" class="link">
+                    <td class="{{project.financeControl}} tooltip">{{project.title}}
+                        <br />
+                        <div ng-if="showControlled">
+                            <b>Cont:</b> {{project.controller.name}}</div>
+                        <span class="tooltiptext">
+                            <b>Deviation comments</b>
+                            <br /> Q1: {{project.finance.budq1}}
+                            <br /> Q2: {{project.finance.budq2}}
+                            <br /> Q3: {{project.finance.budq3}}
+                            <br /> Q4: {{project.finance.budq4}}
+                            <br />
+                    </td>
+
+                    <td class="sums tooltip">{{ project.finance.budTotalprev | number:0 }}
+                        <span class="tooltiptext">Budget: {{project.finance.budTotalprev | number:0}}
+                            <br />Posted: {{project.finance.postTotalprev | number:0}}
+                            <br />Deviation: {{project.finance.devTotalprev | number:0}}</span>
+                    </td>
+                    <td class="sums tooltip">{{ project.finance.budTotalq1 | number:0 }}
+                        <span class="tooltiptext">Budget: {{project.finance.budTotalq1 | number:0}}
+                            <br />Posted: {{project.finance.postTotalq1 | number:0}}
+                            <br />Deviation: {{project.finance.devTotalq1 | number:0}}</span>
+                    </td>
+                    <td class="sums tooltip">{{ project.finance.budTotalq2 | number:0 }}
+                        <span class="tooltiptext">Budget: {{project.finance.budTotalq2 | number:0}}
+                            <br />Posted: {{project.finance.postTotalq2 | number:0}}
+                            <br />Deviation: {{project.finance.devTotalq2 | number:0}}</span>
+                    </td>
+                    <td class="sums tooltip">{{ project.finance.budTotalq3 | number:0 }}
+                        <span class="tooltiptext">Budget: {{project.finance.budTotalq3 | number:0}}
+                            <br />Posted: {{project.finance.postTotalq3 | number:0}}
+                            <br />Deviation: {{project.finance.devTotalq3 | number:0}}</span>
+                    </td>
+                    <td class="sums tooltip">{{ project.finance.budTotalq4 | number:0 }}
+                        <span class="tooltiptext">Budget: {{project.finance.budTotalq4 | number:0}}
+                            <br />Posted: {{project.finance.postTotalq4 | number:0}}
+                            <br />Deviation: {{project.finance.devTotalq4 | number:0}}</span>
+                    </td>
+                    <td class="sums tooltip">{{ project.finance.budTotalSum | number:0 }}
+                        <span class="tooltiptext">Budget: {{project.finance.budTotalSum | number:0}}
+                            <br />Posted: {{project.finance.postTotalSum | number:0}}
+                            <br />Deviation: {{project.finance.devTotalSum | number:0}}</span>
+                    </td>
+                    <td class="sums tooltip">{{ project.finance.budTotalfutureSum | number:0 }}
+                        <span class="tooltiptext">Budget: {{project.finance.budTotalfutureSum | number:0}}
+                            <br />Posted: {{project.finance.postTotalfutureSum | number:0}}
+                            <br />Deviation: {{project.finance.devTotalfutureSum | number:0}}</span>
+                    </td>
+                    <td class="sums tooltip">{{ project.finance.budTotalgrandSum | number:0 }}
+                        <span class="tooltiptext">Budget: {{project.finance.budTotalgrandSum | number:0}}
+                            <br />Posted: {{project.finance.postTotalgrandSum | number:0}}
+                            <br />Deviation: {{project.finance.devTotalgrandSum | number:0}}</span>
+                    </td>
+                </tr>
+
+                <tr ng-repeat="project in projectList | multiFilter:searchParams | orderBy:[porderparam, porderparam2, porderparam3]"
+                    ng-if="(!showPending || (project.pending && showPending == project.pending)) && showType=='posted' && (!showControlled || (project.isControlled && showControlled)) && (!project.isFinConf || (project.isFinConf && showConfidential  && setViewConfidential(project)))"
+                    ng-click="goToProject(project._id.$oid)" class="link">
+                    <td class="{{project.financeControl}} tooltip">{{project.title}}
+                        <br />
+                        <div ng-if="showControlled">
+                            <b>Cont:</b> {{project.controller.name}}</div>
+                        <span class="tooltiptext">
+                            <b>Deviation comments</b>
+                            <br /> Q1: {{project.finance.postq1}}
+                            <br /> Q2: {{project.finance.postq2}}
+                            <br /> Q3: {{project.finance.postq3}}
+                            <br /> Q4: {{project.finance.postq4}}
+                            <br />
+                    </td>
+
+                    <td class="sums tooltip">{{ project.finance.postTotalprev | number:0 }}
+                        <span class="tooltiptext">Budget: {{project.finance.budTotalprev | number:0}}
+                            <br />Posted: {{project.finance.postTotalprev | number:0}}
+                            <br />Deviation: {{project.finance.devTotalprev | number:0}}</span>
+                    </td>
+                    <td class="sums tooltip">{{ project.finance.postTotalq1 | number:0 }}
+                        <span class="tooltiptext">Budget: {{project.finance.budTotalq1 | number:0}}
+                            <br />Posted: {{project.finance.postTotalq1 | number:0}}
+                            <br />Deviation: {{project.finance.devTotalq1 | number:0}}</span>
+                    </td>
+                    <td class="sums tooltip">{{ project.finance.postTotalq2 | number:0 }}
+                        <span class="tooltiptext">Budget: {{project.finance.budTotalq2 | number:0}}
+                            <br />Posted: {{project.finance.postTotalq2 | number:0}}
+                            <br />Deviation: {{project.finance.devTotalq2 | number:0}}</span>
+                    </td>
+                    <td class="sums tooltip">{{ project.finance.postTotalq3 | number:0 }}
+                        <span class="tooltiptext">Budget: {{project.finance.budTotalq3 | number:0}}
+                            <br />Posted: {{project.finance.postTotalq3 | number:0}}
+                            <br />Deviation: {{project.finance.devTotalq3 | number:0}}</span>
+                    </td>
+                    <td class="sums tooltip">{{ project.finance.postTotalq4 | number:0 }}
+                        <span class="tooltiptext">Budget: {{project.finance.budTotalq4 | number:0}}
+                            <br />Posted: {{project.finance.postTotalq4 | number:0}}
+                            <br />Deviation: {{project.finance.devTotalq4 | number:0}}</span>
+                    </td>
+                    <td class="sums tooltip">{{ project.finance.postTotalSum | number:0 }}
+                        <span class="tooltiptext">Budget: {{project.finance.budTotalSum | number:0}}
+                            <br />Posted: {{project.finance.postTotalSum | number:0}}
+                            <br />Deviation: {{project.finance.devTotalSum | number:0}}</span>
+                    </td>
+                    <td class="sums tooltip">{{ project.finance.postTotalfutureSum | number:0 }}
+                        <span class="tooltiptext">Budget: {{project.finance.budTotalfutureSum | number:0}}
+                            <br />Posted: {{project.finance.postTotalfutureSum | number:0}}
+                            <br />Deviation: {{project.finance.devTotalfutureSum | number:0}}</span>
+                    </td>
+                    <td class="sums tooltip">{{ project.finance.postTotalgrandSum | number:0 }}
+                        <span class="tooltiptext">Budget: {{project.finance.budTotalgrandSum | number:0}}
+                            <br />Posted: {{project.finance.postTotalgrandSum | number:0}}
+                            <br />Deviation: {{project.finance.devTotalgrandSum | number:0}}</span>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+
+        <div class="overview" ng-show="views=='reports'">
+            <div class="filter-order-container" ng-show="showfilters">
+                Show sections:
+                <input type="checkbox" ng-init="$scope.reportsShowStatus=false" ng-model="$scope.reportsShowStatus">
+                Status,&nbsp;
+
+                <div ng-show="company.filters.companyshowDeliverables">
+                    <input type="checkbox" ng-init="$scope.reportsShowDeliverables=false"
+                        ng-model="$scope.reportsShowDeliverables">
+                    Deliverables,&nbsp;
+                </div>
+
+                <div ng-show="company.filters.companyshowDepend">
+                    <input type="checkbox" ng-init="$scope.reportsShowDependencies=true"
+                        ng-model="$scope.reportsShowDependencies">
+                    Dependencies,&nbsp;
+                </div>
+
+                <div ng-show="company.filters.companyshowIssues">
+                    <input type="checkbox" ng-init="$scope.reportsShowRisk=false" ng-model="$scope.reportsShowRisk">
+                    Risk,&nbsp;
+
+
+                    <input type="checkbox" ng-init="$scope.reportsShowIssues=false" ng-model="$scope.reportsShowIssues">
+                    Issues,&nbsp;
+                </div>
+
+                <div ng-show="company.filters.companyshowFinance">
+                    <input type="checkbox" ng-init="$scope.reportsShowFinance=false"
+                        ng-model="$scope.reportsShowFinance">
+                    Finance,&nbsp;
+
+
+                    <input type="checkbox" ng-init="$scope.reportsShowCostlines=true"
+                        ng-model="$scope.reportsShowCostlines">
+                    Cost lines&nbsp;
+                </div>
+
+            </div>
+            <div class="filter-order-container" ng-show="showfilters">
+                Show only company broadcast:
+                <input type="checkbox" ng-init="$scope.broadcast=false" ng-model="$scope.broadcast">
+            </div>
+            <div ng-if="projectList.length > 0">
+
+                <div ng-repeat="project in projectList | multiFilter:searchParams | orderBy:[porderparam, porderparam2, porderparam3]"
+                    ng-if="(!showPending || (project.pending && showPending == project.pending)) && ($scope.broadcast==false || project.broadcast)"
+                    ng-click="goToProject(project._id.$oid)" class="link breaker">
+
+                    <table class="tablelist">
+
+                        <tr class="topheader">
+                            <td colspan="3">
+                                {{project.type}} - {{project.title}} ({{project.projectnumber}})
+                            </td>
+
+                            <td colspan="5">
+                                <b style="font-size: 14px">Connection to strategy: </b>
+                                <i style="font-size: 14px" ng-repeat="st in project.strategies"> &#9675;{{st}} </i>
+                            </td>
+
+
+                        </tr>
+                        <tr>
+                            <td class="header">
+                                Priority
+                            </td>
+
+                            <td colspan="2">
+                                {{project.priority}}
+                            </td>
+                            <td class="header" colspan="2">
+                                WSJF
+                            </td>
+                            <td colspan="3">
+                                {{project.milestones[0].wsjf}}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="header">
+                                Value
+                            </td>
+                            <td colspan="2">
+                                {{project.milestones[0].enablerlable}}
+                            </td>
+                            <td class="header" colspan="2">
+                                Effort/Risk
+                            </td>
+                            <td colspan="3">
+                                {{project.milestones[0].limiterlable}}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="header">
+                                Duration
+                            </td>
+                            <td class="bar" ng-style="barRender(project.milestones[0])" colspan="7">
+                                {{project.milestones[0].date | date:'longDate'}} -
+                                {{project.milestones[0].enddate
+                                | date:'longDate'}}
+                            </td>
+                        </tr>
+                        <tr ng-if="company.filters.companyshowFinance">
+                            <td class="header">
+                                FC {{year}}
+                            </td>
+                            <td colspan="2">
+                                {{ project.finance.budTotalSum | number:0 }} TDKK
+                            </td>
+                            <td class="header" colspan="2">FC {{year}} ext.</td>
+                            <td colspan="3">
+                                {{project.finance.budExternalTotalSum | number:0}} TDKK
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="header">
+                                PM/PO
+                            </td>
+
+                            <td colspan="2">
+                                {{project.pm.name}}
+                            </td>
+                            <td class="header" colspan="2">
+                                Business Owner
+                            </td>
+
+                            <td colspan="3">
+                                {{project.po.name}}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="header">
+                                Area
+                            </td>
+
+                            <td colspan="2">
+                                {{project.bu.name}}
+                            </td>
+                            <td class="header" colspan="2">
+                                Portfolio
+                            </td>
+                            <td colspan="3">
+                                {{project.support.name}}
+                            </td>
+
+                        </tr>
+                        <tr>
+                            <td class="header texttop">Objective </td>
+                            <td class="wrap" colspan="7">
+                                <pre>{{project.outcome}}</pre>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="header texttop">Benefit </td>
+                            <td class="wrap" colspan="7">
+                                <pre>{{project.costbenefit}}</pre>
+                            </td>
+                        </tr>
+
+                        <tr class="header" ng-show="$scope.reportsShowStatus">
+                            <td rowspan="2" class="markheader">Status
+                                <div class="right">{{project.warn}}</div>
+                            </td>
+                            <td ng-if="!company.filters.companyshowPOsection" colspan="7">Date</td>
+                            <td ng-if="company.filters.companyshowPOsection">Date</td>
+                            <td colspan="2" ng-if="company.filters.companyshowPOsection">Saved final by</td>
+                            <td colspan="2" ng-if="company.filters.companyshowPOsection">Project feedback</td>
+                            <td colspan="2" ng-if="company.filters.companyshowPOsection">Product feedback</td>
+
+                        </tr>
+                        <tr ng-show="$scope.reportsShowStatus">
+                            <td ng-if="!company.filters.companyshowPOsection" colspan="7"
+                                class="{{project.lastStatus.status}}">{{project.lastStatus.date | date:'longDate'}}
+                            </td>
+                            <td ng-if="company.filters.companyshowPOsection" class="{{project.lastStatus.status}}">
+                                {{project.lastStatus.date | date:'longDate'}}
+                            </td>
+                            <td colspan="2" ng-if="company.filters.companyshowPOsection">
+                                {{project.lastStatus.savedfinalby}}
+                            </td>
+                            <td colspan="2" prio-class prio-cs-render="project.lastStatus.cs"
+                                ng-if="company.filters.companyshowPOsection">
+                                {{project.lastStatus.cs}}
+                                of 8</td>
+                            <td colspan="2" prio-class prio-cs-render="project.lastStatus.productcs"
+                                ng-if="company.filters.companyshowPOsection">
+                                {{project.lastStatus.productcs}}
+                                of 8</td>
+
+                        </tr>
+                        <tr ng-show="$scope.reportsShowStatus">
+                            <td class="header texttop">Status description</td>
+                            <td colspan="7">
+                                <pre>{{project.lastStatus.overallcomments}}</pre>
+                            </td>
+                        </tr>
+
+                        <tr ng-show="company.filters.companyshowStatus && $scope.reportsShowStatus">
+                            <td class="header texttop">Delivered</td>
+                            <td colspan="7">
+                                <pre>{{project.lastStatus.del}}</pre>
+                            </td>
+                        </tr>
+                        <tr ng-show="company.filters.companyshowStatus && $scope.reportsShowStatus">
+                            <td class="header texttop">Next</td>
+                            <td colspan="7">
+                                <pre>{{project.lastStatus.next}}</pre>
+                            </td>
+                        </tr>
+
+                        <tr ng-if="project.milestones.length > 0"
+                            ng-show="company.filters.companyshowDeliverables && $scope.reportsShowDeliverables"
+                            class="header">
+                            <td class="markheader">Deliverables</td>
+                            <td colspan="4">Definition of Done</td>
+                            <td colspan="2">Deadline</td>
+                            <td>Responsible</td>
+
+
+                        </tr>
+
+                        <tr ng-show="company.filters.companyshowDeliverables && $scope.reportsShowDeliverables"
+                            ng-repeat="mile in project.milestones | orderBy:'enddate'" ng-if=" mile.showInReport">
+                            <td class="{{mile.status}}">
+                                <b>{{mile.title}}</b>
+                            </td>
+                            <td colspan="4">
+                                <pre>{{mile.dod}}</pre>
+                            </td>
+                            <td colspan="2">{{mile.enddate | date:'longDate'}}</td>
+                            <td>{{mile.responsible}}</td>
+
+                        </tr>
+                        <tr ng-if="project.deps.length > 0"
+                            ng-show="$scope.reportsShowDependencies && company.filters.companyshowDepend"
+                            class="header">
+                            <td class="markheader">Dependency</td>
+                            <td>Category</td>
+                            <td>Type</td>
+                            <td>{{year-1}}</td>
+                            <td>{{year}}</td>
+                            <td>{{year+1}}</td>
+                            <td class="sums">Total cost</td>
+                            <td>State</td>
+                        </tr>
+                        <tr ng-show="$scope.reportsShowDependencies && company.filters.companyshowDepend"
+                            ng-repeat="dep in project.deps | orderBy:'depdate'" ng-if=" dep.showInReport">
+                            <td class="{{dep.status}}"><b>{{dep.title}}</b></td>
+                            <td>{{dep.rt.catagory}}</td>
+                            <td>{{dep.rt.name}}</td>
+                            <td class="bar xl" ng-style="depbarRender(dep)" colspan="3">
+                                {{dep.quantum}}%
+                                ({{dep.rt.capacity}}%)
+                            </td>
+                            <td class="sums">{{dep.price | number:0 }}</td>
+                            <td>{{dep.state}}</td>
+                        </tr>
+
+                        <tr class="header" ng-show="company.filters.companyshowFinance && $scope.reportsShowCostlines"
+                            ng-if="project.costitems.length > 0">
+                            <td class="markheader">Cost items TDKK</td>
+                            <td class="sums">Year</td>
+                            <td class="sums">Q1</td>
+                            <td class="sums">Q2</td>
+                            <td class="sums">Q3</td>
+                            <td class="sums">Q4</td>
+                            <td>Code</td>
+                            <td>Account</td>
+                        </tr>
+                        <tr ng-repeat="c in project.costitems | orderBy:'costdate'"
+                            ng-show="company.filters.companyshowFinance && $scope.reportsShowCostlines">
+                            <td>{{c.title}}</td>
+                            <td class="sums">{{ c.year }}</td>
+                            <td class="sums">{{ c.budq1 | number:0 }}</td>
+                            <td class="sums">{{ c.budq2 | number:0 }}</td>
+                            <td class="sums">{{ c.budq3 | number:0 }}</td>
+                            <td class="sums">{{ c.budq4 | number:0 }}</td>
+                            <td>{{c.ledgercode}}</td>
+                            <td>{{c.account.name}}</td>
+                        </tr>
+
+                        <tr ng-if="project.risks.length > 0 && $scope.reportsShowRisk && company.filters.companyshowIssues"
+                            class="header">
+                            <td class="markheader">Risks</td>
+                            <td colspan="2">Prox.</td>
+                            <td>Prob.</td>
+                            <td>Recov.</td>
+                            <td colspan="2">Imp.</td>
+                            <td>Responsible</td>
+                        </tr>
+
+                        <tr ng-show="$scope.reportsShowRisk && company.filters.companyshowIssues"
+                            ng-repeat="risk in project.risks | orderBy:impact"
+                            ng-if="(risk.showInReport && risk.type=='Risk' && risk.state!='Closed') && 
+                                        (risk.audience!='Confidential' || (risk.audience=='Confidential' && (user.email==project.po.email || user.email==project.pm.email || user.isOwner ||  user.admin) && project.showconfrisk=='true'))">
+                            <td class="{{risk.status}}">{{risk.title}}</td>
+                            <td colspan="2">{{risk.proximity}}</td>
+                            <td prio-class prio-risk-bar-render="risk.prob"></td>
+                            <td prio-class prio-risk-bar-render="risk.recCompValue"></td>
+                            <td colspan="2" prio-class prio-risk-bar-render="risk.impact"></td>
+                            <td>{{risk.acc}}</td>
+
+                        </tr>
+                        <tr ng-if="project.risks.length > 0 && $scope.reportsShowIssues && company.filters.companyshowIssues"
+                            class="header">
+                            <td class="markheader">Issues</td>
+                            <td colspan="4">Request</td>
+                            <td colspan="2">Imp.</td>
+                            <td>Responsible</td>
+                        </tr>
+
+                        <tr ng-show="$scope.reportsShowIssues && company.filters.companyshowIssues"
+                            ng-repeat="risk in project.risks | orderBy:impact"
+                            ng-if="(risk.showInReport && risk.type=='Issue' && risk.state!='Closed') && 
+                                        (risk.audience!='Confidential' || (risk.audience=='Confidential' && (user.email==project.po.email || user.email==project.pm.email || user.isOwner ||  user.admin) && project.showconfrisk=='true'))">
+                            <td class="{{risk.status}}">{{risk.title}}</td>
+                            <td colspan="4">
+                                <pre>{{risk.request}}</pre>
+                            </td>
+                            <td colspan="2" prio-class prio-risk-bar-render="risk.impact"></td>
+                            <td>{{risk.acc.name}}</td>
+
+                        </tr>
+                        <tr class="header" ng-show="$scope.reportsShowFinance">
+                            <td class="{{project.financeControl}} markheader">Finance, TDKK</td>
+                            <td class="sums">Prev</td>
+                            <td class="sums">Q1</td>
+                            <td class="sums">Q2</td>
+                            <td class="sums">Q3</td>
+                            <td class="sums">Q4</td>
+                            <td class="sums">Year</td>
+                            <td class="sums">Grand</td>
+                        </tr>
+                        <tr ng-show="$scope.reportsShowFinance">
+                            <td>Budget total</td>
+                            <td class="sums">{{ project.finance.budTotalprev | number:0 }}</td>
+                            <td class="sums">{{ project.finance.budTotalq1 | number:0 }}</td>
+                            <td class="sums">{{ project.finance.budTotalq2 | number:0 }}</td>
+                            <td class="sums">{{ project.finance.budTotalq3 | number:0 }}</td>
+                            <td class="sums">{{ project.finance.budTotalq4 | number:0 }}</td>
+                            <td class="sums">{{ project.finance.budTotalSum | number:0 }}</td>
+                            <td class="sums">{{ project.finance.budTotalgrandSum | number:0 }}</td>
+                        </tr>
+                        <tr ng-show="$scope.reportsShowFinance">
+                            <td>Posted total</td>
+                            <td class="sums">{{ project.finance.postTotalprev | number:0 }}</td>
+                            <td class="sums">{{ project.finance.postTotalq1 | number:0 }}</td>
+                            <td class="sums">{{ project.finance.postTotalq2 | number:0 }}</td>
+                            <td class="sums">{{ project.finance.postTotalq3 | number:0 }}</td>
+                            <td class="sums">{{ project.finance.postTotalq4 | number:0 }}</td>
+                            <td class="sums">{{ project.finance.postTotalSum | number:0 }}</td>
+                            <td class="sums">{{ project.finance.postTotalgrandSum | number:0 }}</td>
+                        </tr>
+                        <tr ng-show="$scope.reportsShowFinance">
+                            <td>Deviation total</td>
+                            <td class="sums">{{ project.finance.devTotalprev | number:0 }}</td>
+                            <td class="sums">{{ project.finance.devTotalq1 | number:0 }}</td>
+                            <td class="sums">{{ project.finance.devTotalq2 | number:0 }}</td>
+                            <td class="sums">{{ project.finance.devTotalq3 | number:0 }}</td>
+                            <td class="sums">{{ project.finance.devTotalq4 | number:0 }}</td>
+                            <td class="sums">{{ project.finance.devTotalSum | number:0 }}</td>
+                            <td class="sums">{{ project.finance.devTotalgrandSum | number:0 }}</td>
+                        </tr>
+                    </table>
+                    <footer class="right">{{project.lastchangedby}} - {{project.lastchangeddate | date:'longDate'}}
+                    </footer>
+
+                </div>
+            </div>
         </div>
     </div>
 </div>

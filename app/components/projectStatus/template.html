@@ -1,423 +1,806 @@
+<h2 class="center {{project.lastStatusFlag}}">
+    {{project.type}} - {{project.title}} ({{project.projectnumber}})
+</h2>
 <prio-project-menu prio-project-id="{{project._id.$oid}}" prio-project-title="{{project.title}}"></prio-project-menu>
+<prio-project-status-menu prio-project-id="{{project._id.$oid}}"
+    ng-if="company.filters.companyshowActionpoints && company.filters.companyshowStatus"></prio-project-status-menu>
 
-<div id="linkdiv3" class="view">
-    <div id="popdiv3" ng-show="showStatusForm">
-        <h2 class="{{editstatus.status}}">
-            Status per. {{editstatus.date | date:'yyyy-MM-dd'}}
-            <div class="right">
-                <!-- TODO: make directive for ng-if based on user.email == project.something -->
-                <button type="button" class="Red"
-                ng-click="removeStatus(editstatus)" 
-                ng-show="$parent.deleteThis && $parent.deleteLast"
-                ng-if="user.admin || (user.changeContent && editstatus.apo != 'Approved')">confirm delete!!!</button>
-                
-                <button type="button" id="saveButton" prio-class save-this="$parent.hasChanged"
-                        ng-if="user.changeContent && (editstatus.active == null || editstatus.active) && saveStatusEnabled"
-                        ng-click="saveStatus(editstatus)">save</button>
+<div class="view">
+    <div id="status" ng-show="route == 'status'">
+        <div class="popup">
+            <div class="overview popupcontent">
+                <div class="actions">
+                    <div class="layout">
+                        <div class="layoutelement">
+                            <button type="button" id="saveButton1" prio-class save-this="$parent.hasChanged"
+                                ng-if="user.changeContent && (editstatus.active == null || editstatus.active) && saveStatusEnabled"
+                                ng-click="saveStatus(editstatus)">save</button>
+                        </div>
+                        <div class="layoutelement center">
+                            <button type="button" ng-click="newCloneStatus(editstatus)" ng-if="user.changeContent">clone
+                                status</button>
 
+                            <button type="button" class="Red" ng-click="removeStatus(editstatus)"
+                                ng-show="$parent.deleteThis && $parent.deleteLast"
+                                ng-if="user.admin || (user.changeContent && editstatus.apo != 'Approved')">confirm
+                                delete!!!</button>
 
-                <button type="button" ng-click="hideStatusForm()">close</button>
-                <button type="button" 
-                    ng-click="newCloneStatus(editstatus)" 
-                    ng-if="user.changeContent">clone status</button>
-                
+                            <button type="button" ng-click="delete()"
+                                ng-show="!$parent.deleteThis && $parent.deleteLast"
+                                ng-if="user.admin || (user.changeContent && editstatus.apo != 'Approved')">delete</button>
+                        </div>
+                        <div class="layoutelement right">
+                            <button type="button" class="close" ng-click="close()"></button>
+                        </div>
+                    </div>
+                </div>
+                <h3 class="{{editstatus.status}}">
+                    Status per. {{editstatus.date | date:'yyyy-MM-dd'}}
+                </h3>
+                <table class="formtable smaller">
+                    <tr>
+                        <td class="formlabel">Title</td>
+                        <td>
+                            <input ng-model="editstatus.title" ng-change="saveNow(editstatus)"
+                                ng-disabled="!user.changeContent || !saveStatusEnabled" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="formlabel">Next demo</td>
+                        <td>
+                            <input ng-disabled="!user.changeContent || !saveStatusEnabled" type="text" id="demodate"
+                                datepicker="" ng-model="editstatus.rawdemodate" ng-change="saveNow(editstatus);"
+                                class="cal" />
+                            {{editstatus.demodate | date:'longDate'}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="formlabel {{editstatus.status}}">
+                            Overall flag <span id="overallstatus_count" class="right"></span>
+                        </td>
+                        <td>
+                            <select ng-disabled="!user.changeContent || !saveStatusEnabled" ng-model="editstatus.status"
+                                ng-change="saveNow(editstatus)">
+                                <option value="Green">OK (Green)</option>
+                                <option value="Yellow">Observe (Yellow)</option>
+                                <option value="Orange">Assist (Orange)</option>
+                                <option value="Red">Intervention (Red)</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="formlabel">
+                            Status state
+                        </td>
+                        <td>
+                            <select ng-disabled="!user.changeContent || !saveStatusEnabled" ng-model="editstatus.apo"
+                                ng-change="saveNow(editstatus)">
+                                <option value="Draft">Draft</option>
+                                <option value="Ready for PM">Ready for PM/PO</option>
+                                <option value="Ready for PO">Ready for Owner</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="formlabel">Overall status</td>
+                        <td>
+                            <div class="field"><textarea ng-change="saveNow(editstatus)"
+                                    ng-disabled="!user.changeContent || !saveStatusEnabled"
+                                    ng-model="editstatus.overallcomments" maxlength="800" id="overallstatus"
+                                    placeholder="Comments"></textarea></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="formlabel">Link external doc.
+                        </td>
+                        <td>
+                            Title: <input ng-model="editstatus.linktitle" ng-change="saveNow(editstatus)"
+                                ng-disabled="!user.changeContent || !saveStatusEnabled" />&nbsp;
+                            URL: <input ng-model="editstatus.link" ng-change="saveNow(editstatus)"
+                                ng-disabled="!user.changeContent || !saveStatusEnabled" />&nbsp;
+                            <input type="checkbox" ng-model="project.filters.showStatusExternalLink"
+                                ng-change="saveNow()">
+                            Show
+                            in report
+                            <div class="right"><a target="_blank" href="{{editstatus.link}}">{{editstatus.linktitle}}
+                                    <div class="linkicon right"></div></a></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="header" colspan="2">Steerco</td>
+                    </tr>
+                    <tr>
+                        <td class="formlabel">
+                            Steerco meeting date
+                        </td>
+                        <td>
+                            {{editstatus.steercodate | date:'longDate'}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="formlabel">
+                            Agenda
+                        </td>
+                        <td>
+                            {{editstatus.steercoagenda}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="formlabel">
+                            Attendees
+                        </td>
+                        <td>
+                            {{editstatus.steercoattendees}}
 
-                <button type="button" 
-                    ng-click="delete()" 
-                    ng-show="!$parent.deleteThis && $parent.deleteLast"
-                    ng-if="user.admin || (user.changeContent && editstatus.apo != 'Approved')">delete</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="formlabel">
+                            Minutes
+                        </td>
+                        <td>
+                            {{editstatus.steercominutes}}
 
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="header" colspan="2">Status flags</td>
+                    </tr>
+                    <tr>
+                        <td class="formlabel {{editstatus.statusbc}}">
+                            Business case
+                        </td>
+                        <td>
+                            <select ng-disabled="!user.changeContent || !saveStatusEnabled"
+                                ng-model="editstatus.statusbc" ng-change="saveNow(editstatus)">
+                                <option value="Green">OK (Green)</option>
+                                <option value="Yellow">Observe (Yellow)</option>
+                                <option value="Orange">Assist (Orange)</option>
+                                <option value="Red">Intervention (Red)</option>
+                            </select>
+
+                            <div class="field">
+                                <textarea ng-change="saveNow(editstatus)"
+                                    ng-disabled="!user.changeContent || !saveStatusEnabled"
+                                    ng-model="editstatus.bccomments" maxlength="800" id="bcstatus"
+                                    placeholder="Comments"></textarea>
+                            </div>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="formlabel {{editstatus.statussc}}">
+                            Scope
+                        </td>
+                        <td>
+                            <select ng-disabled="!user.changeContent || !saveStatusEnabled"
+                                ng-model="editstatus.statussc" ng-change="saveNow(editstatus)">
+                                <option value="Green">OK (Green)</option>
+                                <option value="Yellow">Observe (Yellow)</option>
+                                <option value="Orange">Assist (Orange)</option>
+                                <option value="Red">Intervention (Red)</option>
+                            </select>
+
+                            <div class="field">
+                                <textarea ng-change="saveNow(editstatus)"
+                                    ng-disabled="!user.changeContent || !saveStatusEnabled"
+                                    ng-model="editstatus.sccomments" maxlength="800" id="scstatus"
+                                    placeholder="Comments"></textarea>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="formlabel {{editstatus.statustl}}">
+                            Time line
+                        </td>
+                        <td>
+                            <select ng-disabled="!user.changeContent || !saveStatusEnabled"
+                                ng-model="editstatus.statustl" ng-change="saveNow(editstatus)">
+                                <option value="Green">OK (Green)</option>
+                                <option value="Yellow">Observe (Yellow)</option>
+                                <option value="Orange">Assist (Orange)</option>
+                                <option value="Red">Intervention (Red)</option>
+                            </select>
+
+                            <div class="field"><textarea ng-change="saveNow(editstatus)"
+                                    ng-disabled="!user.changeContent || !saveStatusEnabled"
+                                    ng-model="editstatus.tlcomments" maxlength="800" id="tlstatus"
+                                    placeholder="Comments"></textarea>
+                            </div>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="formlabel {{editstatus.statusres}}">
+                            Resources
+                        </td>
+                        <td>
+                            <select ng-disabled="!user.changeContent || !saveStatusEnabled"
+                                ng-model="editstatus.statusres" ng-change="saveNow(editstatus)">
+                                <option value="Green">OK (Green)</option>
+                                <option value="Yellow">Observe (Yellow)</option>
+                                <option value="Orange">Assist (Orange)</option>
+                                <option value="Red">Intervention (Red)</option>
+                            </select>
+
+                            <div class="field">
+                                <textarea ng-change="saveNow(editstatus)"
+                                    ng-disabled="!user.changeContent || !saveStatusEnabled"
+                                    ng-model="editstatus.rescomments" maxlength="800" id="resstatus"
+                                    placeholder="Comments"></textarea>
+                            </div>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="formlabel {{editstatus.statusbud}}">
+                            Budget
+                        </td>
+                        <td>
+                            <select ng-disabled="!user.changeContent || !saveStatusEnabled"
+                                ng-model="editstatus.statusbud" ng-change="saveNow(editstatus)">
+                                <option value="Green">OK (Green)</option>
+                                <option value="Yellow">Observe (Yellow)</option>
+                                <option value="Orange">Assist (Orange)</option>
+                                <option value="Red">Intervention (Red)</option>
+                            </select>
+
+                            <div class="field"><textarea ng-change="saveNow(editstatus)"
+                                    ng-disabled="!user.changeContent || !saveStatusEnabled"
+                                    ng-model="editstatus.budcomments" maxlength="800" id="budstatus"
+                                    placeholder="Comments"></textarea>
+                            </div>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="formlabel {{editstatus.statusrisk}}">
+                            Risks
+                        </td>
+                        <td>
+                            <select ng-disabled="!user.changeContent || !saveStatusEnabled"
+                                ng-change="saveNow(editstatus)" ng-model="editstatus.statusrisk">
+                                <option value="Green">OK (Green)</option>
+                                <option value="Yellow">Observe (Yellow)</option>
+                                <option value="Orange">Assist (Orange)</option>
+                                <option value="Red">Intervention (Red)</option>
+                            </select>
+
+                            <div class="field"><textarea ng-change="saveNow(editstatus)"
+                                    ng-disabled="!user.changeContent || !saveStatusEnabled"
+                                    ng-model="editstatus.riskcomments" maxlength="800" id="riskstatus"
+                                    placeholder="Comments"></textarea>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="header" colspan="2">Status elaboration</td>
+                    </tr>
+                    <tr>
+                        <td class="formlabel">
+                            Delivered
+                        </td>
+                        <td>
+                            <div class="field"><textarea ng-change="saveNow(editstatus)"
+                                    ng-disabled="!user.changeContent || !saveStatusEnabled" ng-model="editstatus.del"
+                                    maxlength="800" id="statusdel"
+                                    placeholder="What have the project delivered compared to last status report."></textarea>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="formlabel">
+                            Next
+                        </td>
+                        <td>
+                            <div class="field"><textarea ng-change="saveNow(editstatus)"
+                                    ng-disabled="!user.changeContent || !saveStatusEnabled" ng-model="editstatus.next"
+                                    maxlength="800" id="statusnext"
+                                    placeholder="What are the project to deliver in the next iteration (until next status report)"></textarea>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="formlabel">
+                            Concerns
+                        </td>
+                        <td>
+                            <div class="field"><textarea ng-change="saveNow(editstatus)"
+                                    ng-disabled="!user.changeContent || !saveStatusEnabled"
+                                    ng-model="editstatus.concerns" maxlength="800" id="statusconcerns"
+                                    placeholder="What concerns regarding deliveries, milestones and risks needs highliting?"></textarea>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="formlabel">
+                            Changes
+                        </td>
+                        <td>
+                            <div class="field"><textarea ng-change="saveNow(editstatus)"
+                                    ng-disabled="!user.changeContent || !saveStatusEnabled"
+                                    ng-model="editstatus.changes" maxlength="800" id="statuschanges"
+                                    placeholder="Is there changes to economy, deliveries, milestones and risk?"></textarea>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr ng-if="user.changeContent">
+                        <td class="formlabel">
+                            Comments
+                        </td>
+                        <td>
+                            <div class="field"><textarea ng-change="saveNow(editstatus)"
+                                    ng-disabled="!saveStatusEnabled" ng-model="editstatus.comments" maxlength="800"
+                                    id="statuscomments"></textarea>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr ng-if="company.filters.companyshowPOsection">
+                        <td class="header" colspan="2">Owner section</td>
+                    </tr>
+                    <tr ng-if="company.filters.companyshowPOsection">
+                        <td class="formlabel">Approved by</td>
+                        <td>{{editstatus.savedfinalby}}</td>
+                    </tr>
+                    <tr ng-if="company.filters.companyshowPOsection">
+                        <td class="formlabel">Status state</td>
+                        <td>
+                            <div
+                                ng-if="saveStatusEnabled && (user.email==project.po.email || user.email==project.altpo.email || user.isOwner || user.admin)">
+                                <select ng-model="editstatus.apo" ng-change="saveNow(editstatus)">
+                                    <option value="Draft">Draft</option>
+                                    <option value="Ready for PM">Ready for PM/PO</option>
+                                    <option value="Ready for PO">Ready for Owner</option>
+                                    <option value="Approved">Approved</option>
+                                </select>
+                            </div>
+                            <div
+                                ng-if="!saveStatusEnabled || (user.email!=project.po.email && user.email!=project.altpo.email && !user.isOwner && !user.admin)">
+                                {{editstatus.apo}}
+                            </div>
+                        </td>
+                    </tr>
+                    <tr ng-if="company.filters.companyshowPOsection">
+                        <td class="formlabel {{csrender(editstatus.cs)}}">Governance feedback</td>
+                        <td>
+                            <div
+                                ng-if="saveStatusEnabled && (user.email==project.po.email || user.email==project.altpo.email || user.isOwner || user.admin)">
+                                <select ng-model="editstatus.cs" ng-change="saveNow(editstatus)">
+                                    <option value="1">1. Total breakdown</option>
+                                    <option value="2">2. No value</option>
+                                    <option value="3">3. Lack of trust</option>
+                                    <option value="4">4. Comply</option>
+                                    <option value="5">5. Trust</option>
+                                    <option value="6">6. Real value</option>
+                                    <option value="7">7. Great value</option>
+                                    <option value="8">8. Exeptional</option>
+                                </select>
+                            </div>
+                            <div
+                                ng-if="!saveStatusEnabled || (user.email!=project.po.email && user.email!=project.altpo.email && !user.isOwner && !user.admin)">
+                                {{editstatus.cs}}
+                            </div>
+                        </td>
+                    </tr>
+                    <tr ng-if="company.filters.companyshowPOsection">
+                        <td class="formlabel {{csrender(editstatus.productcs)}}">Solution feedback</td>
+                        <td>
+                            <div
+                                ng-if="saveStatusEnabled && (user.email==project.po.email || user.email==project.altpo.email || user.isOwner || user.admin)">
+                                <select ng-model="editstatus.productcs" ng-change="saveNow(editstatus)">
+                                    <option value="1">1. Total breakdown</option>
+                                    <option value="2">2. No value</option>
+                                    <option value="3">3. Lack of trust</option>
+                                    <option value="4">4. Comply</option>
+                                    <option value="5">5. Trust</option>
+                                    <option value="6">6. Real value</option>
+                                    <option value="7">7. Great value</option>
+                                    <option value="8">8. Exeptional</option>
+                                </select>
+                            </div>
+                            <div
+                                ng-if="!saveStatusEnabled || (user.email!=project.po.email && user.email!=project.altpo.email && !user.isOwner && !user.admin)">
+                                {{editstatus.productcs}}
+                            </div>
+                        </td>
+                    </tr>
+                </table>
             </div>
-        </h2>
-        <table class="smaller">
-            <tr>
-                <td class="header">Title</td>
-                <td>
-                    <input ng-model="editstatus.title" ng-change="saveNow(editstatus)" ng-disabled="!user.changeContent || !saveStatusEnabled"/>
-                </td>
-                <td class="header">Next demo</td>
-                <td>
-                    <input ng-disabled="!user.changeContent || !saveStatusEnabled" type="text" id="demodate" datepicker="" ng-model="editstatus.rawdemodate" ng-change="saveNow(editstatus); dateChanged(editstatus.rawdemodate)"  class="cal"/>
-                    {{editstatus.demodate | date:'longDate'}}
-                </td>
-            </tr>
-            <tr>
-                <td class="header {{editstatus.status}}">
-                    <p>Overall flag <span id="overallstatus_count" class="right"></span></p>
-                </td>
-                <td>
-                    <select ng-disabled="!user.changeContent || !saveStatusEnabled" ng-model="editstatus.status" ng-change="saveNow(editstatus)">
-                        <option value="Green">OK (Green)</option>
-                        <option value="Yellow">Observe (Yellow)</option>
-                        <option value="Orange">Assist (Orange)</option>
-                        <option value="Red">Intervention (Red)</option>
-                    </select>
-                </td>
-                <td class="header">
-                    <p>Status state</p>
-                </td>
-                <td>
-                    <div ng-if="editstatus.statusstate != 'Final'">
-                        <select  ng-disabled="!user.changeContent || !saveStatusEnabled" ng-model="editstatus.statusstate" ng-change="saveNow(editstatus)">
-                            <option value="Draft">Draft</option>
-                            <option value="Ready for PM">Ready for PM</option>
-                            <option value="Ready for PO">Ready for PO</option>
-                        </select>
-                    </div>
-                    <div class="field" ng-show="!saveStatusEnabled">{{editstatus.statusstate}}</div>
-                    
-                </td>
-            </tr>
-            <tr>
-                <td class="header">Overall status</td>
-                <td colspan="3">
-                    
-                    <div class="field"><textarea ng-change="saveNow(editstatus)" ng-disabled="!user.changeContent || !saveStatusEnabled" ng-model="editstatus.overallcomments" maxlength="300" id="overallstatus" placeholder="Comments"></textarea></div>
-                    
-                    
-                </td>
-            </tr>
-            <tr>
-                <td class="header">Link external doc.
-                </td>
-                <td colspan="3">
-                    Title: <input ng-model="editstatus.linktitle" ng-change="saveNow(editstatus)" ng-disabled="!user.changeContent || !saveStatusEnabled"/>&nbsp;    
-                    URL: <input ng-model="editstatus.link" ng-change="saveNow(editstatus)" ng-disabled="!user.changeContent || !saveStatusEnabled"/>&nbsp;
-                    <input type="checkbox" ng-model="project.filters.showStatusExternalLink" ng-change="saveNow()"> Show in report
-                    <div class="right"><a target="_blank" href="{{editstatus.link}}">{{editstatus.linktitle}}<div class="linkicon right"></div></a></div> 
-                </td>
-            </tr>
-        </table>
-        <br/>
-        <table class="smaller">
-            <tr>
-                <td class="header" colspan="2">Steerco</td>
-            </tr>
-            <tr>
-                <td>
-                    Steerco meeting date
-                </td>
-                <td>
-                    <input  ng-disabled="!user.changeContent || !saveStatusEnabled" type="text" id="steercodate" datepicker="" ng-model="editstatus.rawsteercodate" ng-change="saveNow(editstatus); dateChanged(editstatus.rawsteercodate)"  class="cal"/>
-                    {{editstatus.steercodate | date:'longDate'}}
-                </td>               
-            </tr>
-            <tr>
-                <td>
-                    Agenda
-                </td>
-                <td>
-                    <div class="field"><textarea  ng-disabled="!user.changeContent || !saveStatusEnabled" ng-change="saveNow(editstatus)" ng-model="editstatus.steercoagenda" maxlength="800" id="steercoagenda" placeholder="Agenda for upcomming meeting"></textarea></div>
-                </td>               
-            </tr>
-            <tr>
-                <td>
-                    Attendees
-                </td>
-                <td>
-                    <div class="field"><textarea  ng-disabled="!user.changeContent || !saveStatusEnabled" ng-change="saveNow(editstatus)" ng-model="editstatus.steercoattendees" maxlength="300" id="steercoattendees" placeholder="Who attends the meeting"></textarea></div>
-                </td>               
-            </tr>
-            <tr>
-                <td>
-                    Minutes
-                </td>
-                <td>
-                    <div class="field"><textarea  ng-disabled="!user.changeContent || !saveStatusEnabled" ng-change="saveNow(editstatus)" ng-model="editstatus.steercominutes" maxlength="800" id="steercominutes" placeholder="Minutes from meeting"></textarea></div>
-                </td>               
-            </tr>
-        </table>
+        </div>
 
-        <br/>
-        <table class="smaller">
-            <tr>
-                <td class="header" colspan="2">Status flags</td>
-            </tr>
-            <tr>
-                <td class="{{editstatus.statusbc}}">
-                    Business case 
-                </td>
-                <td>
-                    <select  ng-disabled="!user.changeContent || !saveStatusEnabled" ng-model="editstatus.statusbc" ng-change="saveNow(editstatus)">
-                        <option value="Green">OK (Green)</option>
-                        <option value="Yellow">Observe (Yellow)</option>
-                        <option value="Orange">Assist (Orange)</option>
-                        <option value="Red">Intervention (Red)</option>
-                    </select>
-                
-                    <div class="field">
-                        <textarea ng-change="saveNow(editstatus)" ng-disabled="!user.changeContent || !saveStatusEnabled" ng-model="editstatus.bccomments" maxlength="300" id="bcstatus" placeholder="Comments"></textarea>
-                    </div>
-                    
-                </td>
-            </tr>
-            <tr>
-                <td class="{{editstatus.statussc}}">
-                    Scope 
-                </td>
-                <td>
-                    <select ng-disabled="!user.changeContent || !saveStatusEnabled" ng-model="editstatus.statussc" ng-change="saveNow(editstatus)">
-                        <option value="Green">OK (Green)</option>
-                        <option value="Yellow">Observe (Yellow)</option>
-                        <option value="Orange">Assist (Orange)</option>
-                        <option value="Red">Intervention (Red)</option>
-                    </select>
-                
-                        <div class="field">
-                    <textarea ng-change="saveNow(editstatus)"  ng-disabled="!user.changeContent || !saveStatusEnabled" ng-model="editstatus.sccomments" maxlength="300" id="scstatus" placeholder="Comments"></textarea>
-                        </div>
-                </td>
-            </tr>
-            <tr>
-                <td class="{{editstatus.statustl}}">
-                    Time line 
-                </td>
-                <td>
-                    <select  ng-disabled="!user.changeContent || !saveStatusEnabled" ng-model="editstatus.statustl" ng-change="saveNow(editstatus)">
-                        <option value="Green">OK (Green)</option>
-                        <option value="Yellow">Observe (Yellow)</option>
-                        <option value="Orange">Assist (Orange)</option>
-                        <option value="Red">Intervention (Red)</option>
-                    </select>
-                
-                        <div class="field"><textarea ng-change="saveNow(editstatus)" ng-disabled="!user.changeContent || !saveStatusEnabled" ng-model="editstatus.tlcomments" maxlength="300" id="tlstatus" placeholder="Comments"></textarea>
-                        </div>
-                    
-                </td>
-            </tr>
-            <tr>
-                <td class="{{editstatus.statusres}}">
-                    Resources 
-                </td>
-                <td>
-                    <select  ng-disabled="!user.changeContent || !saveStatusEnabled" ng-model="editstatus.statusres" ng-change="saveNow(editstatus)">
-                        <option value="Green">OK (Green)</option>
-                        <option value="Yellow">Observe (Yellow)</option>
-                        <option value="Orange">Assist (Orange)</option>
-                        <option value="Red">Intervention (Red)</option>
-                    </select>
-                
-                        <div class="field">
-                        <textarea ng-change="saveNow(editstatus)"  ng-disabled="!user.changeContent || !saveStatusEnabled" ng-model="editstatus.rescomments" maxlength="300" id="resstatus" placeholder="Comments"></textarea>
-                        </div>
-                    
-                </td>
-            </tr>
-            <tr>
-                <td class="{{editstatus.statusbud}}">
-                    Budget 
-                </td>
-                <td>
-                    <select ng-disabled="!user.changeContent || !saveStatusEnabled" ng-model="editstatus.statusbud" ng-change="saveNow(editstatus)">
-                        <option value="Green">OK (Green)</option>
-                        <option value="Yellow">Observe (Yellow)</option>
-                        <option value="Orange">Assist (Orange)</option>
-                        <option value="Red">Intervention (Red)</option>
-                    </select>
-                
-                        <div class="field"><textarea ng-change="saveNow(editstatus)" ng-disabled="!user.changeContent || !saveStatusEnabled" ng-model="editstatus.budcomments" maxlength="300" id="budstatus" placeholder="Comments"></textarea>
-                        </div>
-                    
-                </td>
-            </tr>
-            <tr>
-                <td class="{{editstatus.statusrisk}}">
-                    Risks 
-                </td>
-                <td>
-                    <select ng-disabled="!user.changeContent || !saveStatusEnabled" ng-change="saveNow(editstatus)" ng-model="editstatus.statusrisk">
-                        <option value="Green">OK (Green)</option>
-                        <option value="Yellow">Observe (Yellow)</option>
-                        <option value="Orange">Assist (Orange)</option>
-                        <option value="Red">Intervention (Red)</option>
-                    </select>
-                
-                        <div class="field"><textarea ng-change="saveNow(editstatus)" ng-disabled="!user.changeContent || !saveStatusEnabled" ng-model="editstatus.riskcomments" maxlength="300" id="riskstatus" placeholder="Comments"></textarea>
-                        </div>
-                </td>
-            </tr>
-            <tr>
-                <td class="header" colspan="3">Status elaboration</td>
-            </tr>
-            <tr>
-                <td>
-                    Delivered 
-                </td>
-                <td colspan="2">
-                        <div class="field"><textarea ng-change="saveNow(editstatus)" ng-disabled="!user.changeContent || !saveStatusEnabled" ng-model="editstatus.del" maxlength="300" id="statusdel" placeholder="What have the project delivered compared to last status report."></textarea>
-                        </div>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    Next 
-                </td>
-                <td colspan="2">
-                        <div class="field"><textarea ng-change="saveNow(editstatus)" ng-disabled="!user.changeContent || !saveStatusEnabled" ng-model="editstatus.next" maxlength="300" id="statusnext" placeholder="What are the project to deliver in the next iteration (until next status report)"></textarea>
-                        </div>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    Concerns 
-                </td>
-                <td colspan="2">
-                        <div class="field"><textarea ng-change="saveNow(editstatus)" ng-disabled="!user.changeContent || !saveStatusEnabled" ng-model="editstatus.concerns" maxlength="300" id="statusconcerns" placeholder="What concerns regarding deliveries, milestones and risks needs highliting?"></textarea>
-                        </div>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    Changes 
-                </td>
-                <td colspan="2">
-                        <div class="field"><textarea ng-change="saveNow(editstatus)" ng-disabled="!user.changeContent || !saveStatusEnabled" ng-model="editstatus.changes" maxlength="300" id="statuschanges" placeholder="Is there changes to economy, deliveries, milestones and risk?"></textarea>
-                        </div>
-                </td>
-            </tr>
-            <!-- TODO: use - upper described - directive here -->
-            <tr ng-if="user.changeContent">
-                <td>
-                    Comments 
-                </td>
-                <td colspan="2">
-                        <div class="field"><textarea ng-change="saveNow(editstatus)" ng-disabled="!saveStatusEnabled" ng-model="editstatus.comments" maxlength="300" id="statuscomments"></textarea>
-                        </div>
-                </td>
-            </tr>
-        </table>
-        <br/>
-        <table class="smaller">
-            <tr>
-                <td class="header" colspan="3">PO section</td>
-                <td class="header">Saved final by: {{editstatus.savedfinalby}}</td>
-            </tr>
-            <tr>
-                <td class="header">PO feedback</td>
-                <td>
-                    <div ng-if="saveStatusEnabled && (user.email==project.po.email || user.email==project.altpo.email || user.isOwner || user.admin)">
-                        <select ng-model="editstatus.apo" ng-change="saveNow(editstatus)">
-                            <option value="Not evaluated">Not evaluated</option>
-                            <option value="Please amend">Please amend</option>
-                            <option value="Approved">Approved</option>
-                        </select>
-                    </div>
-                    <div ng-if="!saveStatusEnabled || (user.email!=project.po.email && user.email!=project.altpo.email && !user.isOwner && !user.admin)">
-                        {{editstatus.apo}}
-                    </div>
-                </td>
-                <td class="header">Status state</td>
-                <td>
-                    <div ng-if="saveStatusEnabled && (user.email==project.po.email || user.email==project.altpo.email || user.isOwner || user.admin)">
-                        <select ng-model="editstatus.statusstate" ng-change="saveNow(editstatus)">
-                            <option value="Draft">Draft</option>
-                            <option value="Ready for PM">Ready for PM</option>
-                            <option value="Ready for PO">Ready for PO</option>
-                            <option value="Final">Final</option>
-                         </select>
-                    </div>
-                    <div ng-if="!saveStatusEnabled || (user.email!=project.po.email && user.email!=project.altpo.email && !user.isOwner && !user.admin)">
-                        {{editstatus.statusstate}}
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td class="header {{csrender(editstatus.cs)}}">Project feedback</td>
-                <td>
-                    <div ng-if="saveStatusEnabled && (user.email==project.po.email || user.email==project.altpo.email || user.isOwner || user.admin)">
-                        <select ng-model="editstatus.cs" ng-change="saveNow(editstatus)">
-                            <option value="1">1. Total breakdown</option>
-                            <option value="2">2. No value</option>
-                            <option value="3">3. Lack of trust</option>
-                            <option value="4">4. Comply</option>
-                            <option value="5">5. Trust</option>
-                            <option value="6">6. Real value</option>
-                            <option value="7">7. Great value</option>
-                            <option value="8">8. Exeptional</option>
-                        </select>
-                    </div>
-                    <div ng-if="!saveStatusEnabled || (user.email!=project.po.email && user.email!=project.altpo.email && !user.isOwner && !user.admin)">
-                        {{editstatus.cs}}
-                    </div>
-                </td>
-                <td class="header {{csrender(editstatus.productcs)}}">Product feedback</td>
-                <td>
-                    <div ng-if="saveStatusEnabled && (user.email==project.po.email || user.email==project.altpo.email || user.isOwner || user.admin)">
-                        <select ng-model="editstatus.productcs" ng-change="saveNow(editstatus)">
-                            <option value="1">1. Total breakdown</option>
-                            <option value="2">2. No value</option>
-                            <option value="3">3. Lack of trust</option>
-                            <option value="4">4. Comply</option>
-                            <option value="5">5. Trust</option>
-                            <option value="6">6. Real value</option>
-                            <option value="7">7. Great value</option>
-                            <option value="8">8. Exeptional</option>
-                        </select>
-                    </div>
-                    <div ng-if="!saveStatusEnabled || (user.email!=project.po.email && user.email!=project.altpo.email && !user.isOwner && !user.admin)">
-                        {{editstatus.productcs}}
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td colspan="4">
-                    <div class="right">
-                        
-                        <button type="button" prio-class save-this="$parent.hasChanged"
-                        ng-show="saveStatusEnabled"
-                        ng-if="(user.email == project.po.email || 
-                            user.email == project.altpo.email || 
-                            user.isOwner || 
-                            user.admin) && (editstatus.active == null || editstatus.active)"
-                        ng-click="saveStatus(editstatus)">save</button>
-
-                    </div>
-                </td>
-            </tr>
-        </table>
+        <div class="mainbox" id="statushistory">
+            <h3>
+                <div class="right">
+                    <button type="button" ng-click="newStatus()" ng-if="user.changeContent">create new status</button>
+                </div>
+            </h3>
+            <div class="overview">
+                <table class="tablelist smaller" ng-if="project.statuses.length > 0">
+                    <tr class="header">
+                        <td>Title</td>
+                        <td>State</td>
+                        <td ng-if="company.filters.companyshowPOsection">Governance feedback</td>
+                        <td ng-if="company.filters.companyshowPOsection">Solution feedback</td>
+                        <td>Status date<br />Steerco date</td>
+                    </tr>
+                    <tr ng-repeat="status in project.statuses | orderBy: 'date' : true" ng-click="viewStatus(status)"
+                        class="link">
+                        <td class="{{status.status}}">
+                            {{status.title}}
+                        </td>
+                        <td ng-if="project.statuses.indexOf(status) == project.statuses.length-1" class="Blue">
+                            {{status.apo}}
+                        </td>
+                        <td ng-if="project.statuses.indexOf(status) != project.statuses.length-1">
+                            {{status.apo}}
+                        </td>
+                        <td ng-if="company.filters.companyshowPOsection" prio-class prio-cs-render="status.cs">
+                            {{status.cs}}</td>
+                        <td ng-if="company.filters.companyshowPOsection" prio-class prio-cs-render="status.productcs">
+                            {{status.productcs}}</td>
+                        <td>
+                            {{status.date | date:'yyyy-MM-dd'}}
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
     </div>
-    <div class="mainbox" id="statushistory" ng-show="!showStatusForm">
-        <h2>
-            Status history
-            <div class="right">
-                <button type="button" ng-click="newStatus()" ng-if="user.changeContent">create new status</button>
-            </div>
-        </h2>
-        <div class="overview">
-            <table class="tablelist smaller" ng-if="project.statuses.length > 0">
-                <tr class="header">
-                    <td>Title</td>
-                    <td>Status state<br/>PO feedback</td>
-                    <td>Project feedback</td>
-                    <td>Product feedback</td>
-                    <td>Status date<br/>Steerco date</td>
-                </tr>
-                <tr ng-repeat="status in project.statuses | orderBy: 'date' : true" ng-click="viewStatus(status)" class="link">
-                    <td class="{{status.status}}">
-                        &nbsp;{{status.title}}
-                        
-                    </td>
-                    <td ng-if="project.statuses.indexOf(status) == project.statuses.length-1" class="Blue">
-                        &nbsp;{{status.statusstate}}
-                        <br/>
-                        &nbsp;{{status.apo}}
-                    </td>
-                    <td ng-if="project.statuses.indexOf(status) != project.statuses.length-1">
-                        &nbsp;{{status.statusstate}}
-                        <br/>
-                        &nbsp;{{status.apo}}
-                    </td>
-                    <td prio-class prio-cs-render="status.cs">{{status.cs}}</td>
-                    <td prio-class prio-cs-render="status.productcs">{{status.productcs}}</td>
-                    <td>
-                        <div class="right">
-                            &nbsp;{{status.date | date:'yyyy-MM-dd'}}
-                            <br/>
-                            &nbsp;{{status.steercodate | date:'yyyy-MM-dd'}}
+
+    <div id="action" ng-show="route == 'action' || route == 'decision'">
+        <div class="popupaction">
+            <div class="overview popupcontent">
+                <div class="actions">
+                    <div class="layout">
+                        <div class="layoutelement">
+                            <button type="button" id="saveButton2" ng-if="user.changeContent"
+                                ng-click="saveactions()">save</button>
                         </div>
-                    </td>
-                </tr>
-            </table>
+                        <div class="layoutelement center">
+                            <button type="button primary" ng-click="removeaction(editaction)"
+                                ng-show="!$parent.actiondeleteThis"
+                                ng-if="user.changeContent">delete</button>
+                        </div>
+                        <div class="layoutelement right">
+                            <button type="button" class="close" ng-click="close()"></button>
+                        </div>
+                    </div>
+                </div>
+                <table class="formtable smaller">
+                    <tr>
+                        <td class="formlabel">Title</td>
+                        <td>
+                            <input ng-model="editaction.title" ng-change="saveNow(editaction)"
+                                ng-disabled="!user.changeContent" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="formlabel">Deadline/Decision</td>
+                        <td>
+                            <input ng-disabled="!user.changeContent" type="text" id="actiondate" datepicker=""
+                                ng-model="editaction.rawactiondate" ng-change="actionsaveNow(editaction);"
+                                class="cal" />
+                            {{editaction.actiondate | date:'longDate'}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="formlabel">Created</td>
+                        <td>
+                            <input ng-disabled="!user.changeContent" type="text" id="createdate" datepicker=""
+                                ng-model="editaction.rawcreatedate" ng-change="actionsaveNow(editaction);"
+                                class="cal" />
+                            {{editaction.createdate | date:'longDate'}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="formlabel">Last updated</td>
+                        <td>
+                            {{editaction.updatedate | date:'longDate'}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="formlabel {{editaction.status}}">
+                            Status
+                        </td>
+                        <td>
+                            <select ng-disabled="!user.changeContent" ng-model="editaction.status"
+                                ng-change="actionsaveNow(editaction)">
+                                <option value="Green">OK (Green)</option>
+                                <option value="Yellow">Observe (Yellow)</option>
+                                <option value="Orange">Assist (Orange)</option>
+                                <option value="Red">Intervention (Red)</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="formlabel">
+                            State
+                        </td>
+                        <td>
+                            <select ng-disabled="!user.changeContent" ng-model="editaction.state"
+                                ng-change="actionsaveNow(editaction)">
+                                <option value="Open">Open</option>
+                                <option value="On hold">On hold</option>
+                                <option value="Closed">Closed</option>
+                                <option value="Documented">Documented</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="formlabel">Responsible</td>
+                        <td>
+                            <select ng-model="editaction.responsible" ng-change="actionsaveNow(editaction)"
+                                ng-disabled="!user.changeContent">
+                                <option ng-repeat="u in users | filter: {source: true} | orderBy:'name'"
+                                    value="{{u.name}}">
+                                    {{u.name}}</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="formlabel">Requester</td>
+                        <td>
+                            <select ng-model="editaction.requester" ng-change="actionsaveNow(editaction)"
+                                ng-disabled="!user.changeContent">
+                                <option ng-repeat="u in users | filter: {source: true} | orderBy:'name'"
+                                    value="{{u.name}}">
+                                    {{u.name}}</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="formlabel">Type</td>
+                        <td>
+                            <select ng-model="editaction.type" ng-change="actionsaveNow(editaction)"
+                                ng-disabled="!user.changeContent">
+                                <option value="Action">Action</option>
+                                <option value="Decision">Decision</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="formlabel">Priority</td>
+                        <td>
+                            <select ng-model="editaction.priority" ng-change="actionsaveNow(editaction)"
+                                ng-disabled="!user.changeContent">
+                                <option value="1. Showstopper">1. Showstopper</option>
+                                <option value="2. Urgent">2. Urgent</option>
+                                <option value="3. Soon">3. Soon</option>
+                                <option value="4. Ad hoc">4. Ad hoc</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="formlabel">Show in report</td>
+                        <td>
+                            <input type="checkbox" ng-model="editaction.showInReport"
+                                ng-change="actionsaveNow(editaction)" ng-disabled="!user.changeContent">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="formlabel">Audience</td>
+                        <td>
+                            <select ng-model="editaction.audience" ng-change="actionsaveNow(editaction)"
+                                ng-disabled="!user.changeContent">
+                                <option value="Internal">Internal</option>
+                                <option value="Portfolio">Portfolio</option>
+                                <option value="Company">Company</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="formlabel">
+                            Goal
+                        </td>
+                        <td>
+                            <div class="field"><textarea ng-disabled="!user.changeContent"
+                                    ng-change="actionsaveNow(editaction)" ng-model="editaction.goal" maxlength="800"
+                                    id="goal" placeholder="Describe the goal or purpose with this point!"></textarea>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="formlabel">
+                            Action
+                        </td>
+                        <td>
+                            <div class="field"><textarea ng-disabled="!user.changeContent"
+                                    ng-change="actionsaveNow(editaction)" ng-model="editaction.action" maxlength="800"
+                                    id="action" placeholder="Describe the action to be taken!"></textarea></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="formlabel">
+                            Decision
+                        </td>
+                        <td>
+                            <div class="field"><textarea ng-disabled="!user.changeContent"
+                                    ng-change="actionsaveNow(editaction)" ng-model="editaction.decision" maxlength="800"
+                                    id="decision" placeholder="Describe the decisions taken!"></textarea></div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div class="mainbox" id="actionslist">
+            <div class="overview">
+                <div class="right" ng-if="route == 'action'">
+                    <button type="button" ng-click="newaction('Action')" ng-if="user.changeContent">create
+                        new action</button>
+                </div>
+                <table class="tablelist smaller" ng-if="project.filters.showActions && route == 'action'">
+                    <tr class="header">
+                        <td>Title</td>
+                        <td>Goal</td>
+                        <td>Action</td>
+                        <td>Responsible</td>
+                        <td>Show</td>
+                    </tr>
+                    <tr ng-repeat="action in project.actions | orderBy: 'actiondate' : true" class="link"
+                        ng-if="action.type=='Action'">
+                        <td class="{{action.status}}" ng-click="beginEditaction(action)">
+                            &nbsp;<b>{{action.title}}</b><br />
+                            <i>
+                                Created: {{action.createdate | date:'longDate'}}
+                                <br />
+                                Updated: {{action.updatedate | date:'longDate'}}
+                                <br />
+                                Deadline: {{action.actiondate | date:'longDate'}}
+                            </i>
+                        </td>
+                        <td ng-click="beginEditaction(action)">
+                            &nbsp;{{action.goal}}
+                        </td>
+                        <td ng-click="beginEditaction(action)">
+                            &nbsp;{{action.action}}
+                        </td>
+                        <td ng-click="beginEditaction(action)">
+                            &nbsp;{{action.responsible}}<br />
+                            &nbsp;{{action.priority}}
+                        </td>
+                        <td><input type="checkbox" ng-model="action.showInReport" ng-change="saveactions()"
+                                ng-disabled="!user.changeContent"></td>
+                    </tr>
+                </table>
+            </div>
+            <div class="overview">
+                <div class="right" ng-if="route == 'decision'">
+                    <button type="button" ng-click="newaction('Decision')" ng-if="user.changeContent">create
+                        new decision</button>
+                </div>
+                <table class="tablelist smaller" ng-if="project.filters.showDecisions && route == 'decision'">
+                    <tr class="header">
+                        <td>Title</td>
+                        <td>Goal</td>
+                        <td>Decision</td>
+                        <td>Show</td>
+                    </tr>
+                    <tr ng-repeat="action in project.actions | orderBy: 'actiondate' : true" class="link"
+                        ng-if="action.type=='Decision'">
+                        <td class="{{action.status}}" ng-click="beginEditaction(action)">
+                            &nbsp;<b>{{action.title}}</b><br />
+                            <i>
+                                Created: {{action.createdate | date:'longDate'}}
+                                <br />
+                                Updated: {{action.updatedate | date:'longDate'}}
+                                <br />
+                                Deadline: {{action.actiondate | date:'longDate'}}
+                            </i>
+                        </td>
+                        <td ng-click="beginEditaction(action)">
+                            &nbsp;{{action.goal}}
+                        </td>
+                        <td ng-click="beginEditaction(action)">
+                            &nbsp;{{action.decision}}
+                        </td>
+                        <td><input type="checkbox" ng-model="action.showInReport" ng-change="saveactions()"
+                                ng-disabled="!user.changeContent"></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="steerco" ng-show="route == 'steerco'">
+        <div class="popupsteerco">
+            <div class="overview popupcontent">
+                <div class="actions">
+                    <div class="layout">
+                        <div class="layoutelement">
+                            <button type="button" id="saveButton2" ng-if="user.changeContent"
+                                ng-click="savesteercos()">save</button>
+                        </div>
+                        <div class="layoutelement center">
+                            <button type="button primary" ng-click="removesteerco(editsteerco)"
+                                ng-show="!$parent.steercodeleteThis"
+                                ng-if="user.changeContent">delete</button>
+                        </div>
+                        <div class="layoutelement right">
+                            <button type="button" class="close" ng-click="close()"></button>
+                        </div>
+                    </div>
+                </div>
+                <table class="formtable smaller">
+                    <tr>
+                        <td class="formlabel">
+                            Steerco meeting date
+                        </td>
+                        <td>
+                            <input ng-disabled="!user.changeContent" type="text" id="steercodate" datepicker=""
+                                ng-model="editsteerco.rawsteercodate" ng-change="steercosaveNow(editsteerco);"
+                                class="cal" />
+                            {{editsteerco.steercodate | date:'longDate'}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="formlabel">
+                            Agenda
+                        </td>
+                        <td>
+                            <div class="field"><textarea ng-disabled="!user.changeContent"
+                                    ng-change="saveNow(editsteerco)" ng-model="editsteerco.steercoagenda"
+                                    maxlength="800" id="steercoagenda"
+                                    placeholder="Agenda for upcomming meeting"></textarea></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="formlabel">
+                            Attendees
+                        </td>
+                        <td>
+                            <div class="field"><textarea ng-disabled="!user.changeContent"
+                                    ng-change="saveNow(editsteerco)" ng-model="editsteerco.steercoattendees"
+                                    maxlength="800" id="steercoattendees"
+                                    placeholder="Who attends the meeting"></textarea></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="formlabel">
+                            Minutes
+                        </td>
+                        <td>
+                            <div class="field"><textarea ng-disabled="!user.changeContent"
+                                    ng-change="saveNow(editsteerco)" ng-model="editsteerco.steercominutes"
+                                    maxlength="800" id="steercominutes" placeholder="Minutes from meeting"></textarea>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div class="mainbox" id="steercoslist">
+            <div class="overview">
+                <div class="right" ng-if="route == 'steerco'">
+                    <button type="button" ng-click="newsteerco('steerco')" ng-if="user.changeContent">create
+                        new steerco</button>
+                </div>
+                <table class="tablelist smaller" ng-if="route == 'steerco'">
+                    <tr class="header">
+                        <td>Date</td>
+                        <td>Agenda</td>
+                        <td>Attendees</td>
+                        <td>Minutes</td>
+                        <td>Show</td>
+                    </tr>
+                    <tr ng-repeat="steerco in project.steercos | orderBy: 'steercodate' : true" class="link">
+                        <td ng-click="beginEditsteerco(steerco)">
+                            {{steerco.steercodate | date:'longDate'}}
+                        </td>
+                        <td ng-click="beginEditsteerco(steerco)">
+                            {{steerco.steercoagenda}}
+                        </td>
+                        <td ng-click="beginEditsteerco(steerco)">
+                            {{steerco.steercoattendees}}
+                        </td>
+                        <td ng-click="beginEditsteerco(steerco)">
+                            {{steerco.steercominutes}}
+                        </td>
+                        <td><input type="checkbox" ng-model="steerco.showInReport" ng-change="savesteercos()"
+                                ng-disabled="!user.changeContent"></td>
+                    </tr>
+                </table>
+            </div>
         </div>
     </div>
 </div>
