@@ -87,14 +87,14 @@
             </div>
         </div>
         <div class="right"><button ng-click="addBu()" ng-if="user.admin">create new business unit</button></div>
-        <div class="overview" ng-if="company.accounts.length > 0">
+        <div class="overview">
             <table class="tablelist smaller">
                 <tr class="header">
                     <td>BU</td>
                     <td>Parrent BU</td>
                     <td>Owner</td>
                 </tr>
-                <tr ng-repeat="bu in bus | orderBy: 'order'" ng-click="editBu(bu)" ng-if="$index > 0">
+                <tr ng-repeat="bu in bus | orderBy: 'order'" ng-click="editBu(bu)">
                     <td>{{bu.indent}}{{bu.name}}</td>
                     <td>{{bu.ownerbu.name}}</td>
                     <td>{{bu.owner.name}}</td>
