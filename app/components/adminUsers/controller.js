@@ -30,24 +30,24 @@ angular
                 });
 
             $scope.editUser = function (user) {
-                if (user.bu == null || user.bu.length == 0) {
-                    user.bu = [user.bu];
-                }
                 $scope.edituser = user;
                 $('.popup').addClass('active');
             };
 
             $scope.saveUser = function (user) {
-                userService.updateUser(user);
+                if (user.uuid) {
+                    userService.updateUser(user);
+                } else {
+                    userService.createUser(user);
+                }
                 $('.popup').removeClass('active');
             };
 
-            $scope.addUser = function () {
+            $scope.newUser = function () {
                 $scope.edituser = {};
-                userService.createUser($scope.edituser);
                 $('.popup').addClass('active');
             };
-
+            
             $scope.deleteUser = function (user) {
                 userService.deleteUser(user);
                 $('.popup').removeClass('active');
