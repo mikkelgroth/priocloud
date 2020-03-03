@@ -1,0 +1,50 @@
+<h2 class="center {{system.status}}">
+    {{system.title}}
+</h2>
+
+<prio-system-menu prio-system-id="{{system._id.$oid}}"></prio-system-menu>
+
+<div id="system-overview" class="view">
+    <div class="mainbox" id="overview">
+        <div class="header-with-actions">
+
+            <div class="headeractions hideOnPrint">
+                <button type="button" id="editButton" save-this="$parent.hasChanged" class=" Green"
+                    ng-if="user.changeContent && !system.showRelease" ng-click="editSystem(system)">edit
+                    system</button>
+                <button type="button" id="releaseButton" save-this="$parent.hasChanged" class=" Red"
+                    ng-if="user.changeContent && system.showRelease" ng-click="releaseSystem(system)">release
+                    system</button>
+            </div>
+        </div>
+        
+        <div ng-if="system.editUser != null">(Is under edit by {{system.editUser.name}})</div>
+        <table class="noborder nopadding smaller gutter-top">
+            <tr>
+                <td colspan="3">
+                    <div class="overview">
+                        <table class="tablelist">
+                            <tr class="header">
+                                <td colspan="4">System details</td>
+                            </tr>
+                            <tr>
+                                <td class="header">Business unit</td>
+                                <td>{{system.bu.name}}</td>
+                                <td class="header"></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td class="header">Administrator </td>
+                                <td class="wrap">{{system.pm.name}}</td>
+                                <td class="header">Owner </td>
+                                <td class="wrap">{{system.po.name}}</td>
+                            </tr>
+                        </table>
+                    </div>
+                </td>
+            </tr>
+
+        </table>
+    </div>
+</div>
+{{system.lastchangedby}} - {{system.lastchangeddate | date:'longDate'}}

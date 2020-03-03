@@ -1,0 +1,73 @@
+<prio-admin-menu></prio-admin-menu>
+<div class="view">
+    <h3>Systems</h3>
+    <div class="popup">
+        <div class="overview popupcontent">
+            <div class="actions">
+                <div class="layout">
+                    <div class="layoutelement">
+                        <button type="button" id="saveButton1" ng-if="user.admin"
+                            ng-click="saveSystem(np)">save</button>
+                    </div>
+                    <div class="layoutelement center">
+                        <button type="button primary" class="Red" ng-click="deleteSystem(np)"
+                            ng-if="user.admin">delete</button>
+                    </div>
+                    <div class="layoutelement right">
+                        <button type="button" class="close" ng-click="close()"></button>
+                    </div>
+                </div>
+            </div>
+            <h3>
+                Edit system
+            </h3>
+            <table class="formtable smaller">
+                <tr>
+                    <td class="formlabel">System title</td>
+                    <td><input type="text" ng-model="np.title" /></td>
+                </tr>
+                <tr>
+                    <td class="formlabel">Business unit</td>
+                    <td>
+                        <select ng-model="np.bu" ng-options="bu.name for bu in bus track by bu.name"></select>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="formlabel">System admin</td>
+                    <td>
+                        <select ng-model="np.pm"
+                            ng-options="u.name for u in users | filter: {source: true} | orderBy:'name' track by u.name">
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="formlabel">System Owner</td>
+                    <td>
+                        <select ng-model="np.po"
+                            ng-options="u.name for u in users | filter: {source: true} | orderBy:'name' track by u.name">
+                        </select>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <div class="right"><button ng-click="newSystem()" ng-if="user.admin">create new system</button></div>
+    <div class="mainbox" ng-if="systems.length > 0">
+        <table class="tablelist smaller">
+            <tr class="header">
+                <td>System</td>
+                <td>BU</td>
+                <td>System Admin</td>
+                <td>System Owner</td>
+                <td>Go to system</td>
+            </tr>
+            <tr ng-repeat="system in systems | orderBy: 'title'">
+                <td ng-click="editSystem(system)">{{system.title}}</td>
+                <td ng-click="editSystem(system)">{{system.bu.name}}</td>
+                <td ng-click="editSystem(system)">{{system.pm.name}}</td>
+                <td ng-click="editSystem(system)">{{system.po.name}}</td>
+                <td ng-click="gotoSystem(system)">--></td>
+            </tr>
+        </table>
+    </div>
+</div>
