@@ -18,6 +18,7 @@ angular
             
         ) {
 
+
     $scope.createTemplateProject = function() {
         console.log("create template account");
         $http.post(USERSERVER+'?action=createtemplateproject&application=priocloud')
@@ -26,6 +27,7 @@ angular
                     userService.authenticate(data);
                     companyService.loadCompany();
                     alert('Your username is: ' + data.email + "\nYour password is: t\nThe project will be automatically erased in 1 week");
+                    $location.path('/admin');
                 }
             }).error(function (dataResponse) {
                 alert('failure: ' + dataResponse.message);

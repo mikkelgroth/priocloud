@@ -22,6 +22,16 @@ angular
             $routeParams
         ) {
 
+    $scope.cleanupDemoData = function() {
+        console.log("cleanupDemoData");
+        $http.post(USERSERVER+'?action=cleanupdemodata&application=priocloud')
+            .success(function (data, status, headers, config) {
+                alert('Done');
+            }).error(function (dataResponse) {
+                alert('failure: ' + dataResponse.message);
+            });
+    }
+
     $scope.createTemplateProject = function() {
         console.log("create template account");
         $http.post(USERSERVER+'?action=createtemplateproject&application=priocloud')
