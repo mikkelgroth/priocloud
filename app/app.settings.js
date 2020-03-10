@@ -19,7 +19,7 @@ if (window.location.href.indexOf("priocloudtest") > -1) {
     SSO = "SSO";
 
     //localhost - docker running locally
-} else if (window.location.href.indexOf("localhost/") > -1) {
+} else if (window.location.href.indexOf("localhost/") > -1 || window.location.href.indexOf("priocloud.com") > -1) {
     SITENAME = "Docker dev";
     DBSERVER = "/priorest";
     USERSERVER = "/priouser";
