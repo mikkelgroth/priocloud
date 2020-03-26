@@ -32,6 +32,18 @@ angular
             });
     }
 
+    $scope.sendMail = function(to, subject, message) {
+        var data=$scope.email;
+        console.log("sendMail");
+//        $http.post("/priomail?to="+to+"&subject="+subject+"&message="+message)
+        $http.post("/priomail", data)
+            .success(function (data, status, headers, config) {
+                alert('Done');
+            }).error(function (dataResponse) {
+                alert('failure: ' + dataResponse.message);
+            });
+    }
+
     $scope.createTemplateProject = function() {
         console.log("create template account");
         $http.post(USERSERVER+'?action=createtemplateproject&application=priocloud')

@@ -5,5 +5,10 @@
     <button ng-click="cleanupDemoData()">Cleanup demo data</button>
     <button ng-click="cloneData()">Clone demo data</button>
     <button ng-click="deleteAccount()">Delete account</button>
+    <p></p>
+    <input ng-model="email.to" type="email" placeholder="email"><br>
+    <input ng-model="email.subject" type="text" placeholder="subject"><br>
+    <textarea placeholder="message heere..." ng-model="email.message"></textarea>
+    <button ng-click="sendMail(email.to, email.subject, email.message)">Send mail</button>
 </div>
 
