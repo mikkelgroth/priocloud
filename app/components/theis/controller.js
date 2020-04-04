@@ -33,9 +33,8 @@ angular
     }
 
     $scope.sendMail = function(to, subject, message) {
-        var data=$scope.email;
+        var data={'to':to, 'subject':subject, 'message':message};
         console.log("sendMail");
-//        $http.post("/priomail?to="+to+"&subject="+subject+"&message="+message)
         $http.post("/priomail", data)
             .success(function (data, status, headers, config) {
                 alert('Done');
@@ -43,7 +42,23 @@ angular
                 alert('failure: ' + dataResponse.message);
             });
     }
+    $scope.excelDemo = function() {
+            /* starting from this data */
+            var data = [
+              { name: "Barack Obama", pres: 44 },
+              { name: "Donald Trump", pres: 45 }
+            ];
 
+            /* generate a worksheet */
+            var ws = XLSX.utils.json_to_sheet(data);
+
+            /* add to workbook */
+            var wb = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(wb, ws, "Presidents");
+
+            /* write workbook and force a download */
+            XLSX.write(wb, "sheetjs.xlsx");
+    }
     $scope.createTemplateProject = function() {
         console.log("create template account");
         $http.post(USERSERVER+'?action=createtemplateproject&application=priocloud')
