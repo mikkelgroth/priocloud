@@ -57,7 +57,7 @@ angular
             XLSX.utils.book_append_sheet(wb, ws, "Presidents");
 
             /* write workbook and force a download */
-            XLSX.write(wb, "sheetjs.xlsx");
+            XLSX.writeFile(wb, "sheetjs.xlsx");
     }
     $scope.createTemplateProject = function() {
         console.log("create template account");
