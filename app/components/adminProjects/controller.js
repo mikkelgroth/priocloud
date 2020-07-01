@@ -13,6 +13,7 @@ angular
             companyService,
             restService
         ) {
+            $scope.companyService=companyService;
 
             userService
                 .user
@@ -58,7 +59,7 @@ angular
                     naport.name = "N/A";
                     naport.level = "1";
                     $scope.company.portfolios.push(naport);
-                    $scope.companyService.saveCompany(company);
+                    $scope.companyService.saveCompany($scope.company);
                 }
                 var project = {};
                 $scope.showeditproject = true;
