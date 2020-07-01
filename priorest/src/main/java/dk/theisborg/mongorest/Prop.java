@@ -1,9 +1,8 @@
 package dk.theisborg.mongorest;
 
+import javax.servlet.ServletContext;
 import java.io.IOException;
 import java.util.Properties;
-
-import javax.servlet.ServletContext;
 
 public class Prop {
 

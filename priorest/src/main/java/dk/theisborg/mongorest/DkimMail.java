@@ -1,23 +1,20 @@
 package dk.theisborg.mongorest;
 
+import net.markenwerk.utils.mail.dkim.Canonicalization;
+import net.markenwerk.utils.mail.dkim.DkimMessage;
+import net.markenwerk.utils.mail.dkim.DkimSigner;
+import net.markenwerk.utils.mail.dkim.SigningAlgorithm;
+
+import javax.mail.Message.RecipientType;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 import java.io.File;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.Date;
 import java.util.Properties;
-
-import javax.mail.Message;
-import javax.mail.MessagingException;
-import javax.mail.Session;
-import javax.mail.Transport;
-import javax.mail.Message.RecipientType;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
-
-import net.markenwerk.utils.mail.dkim.Canonicalization;
-import net.markenwerk.utils.mail.dkim.DkimMessage;
-import net.markenwerk.utils.mail.dkim.DkimSigner;
-import net.markenwerk.utils.mail.dkim.SigningAlgorithm;
 
 public class DkimMail {
 

@@ -1,51 +1,32 @@
 package dk.theisborg.mongorest;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
-import java.io.Reader;
-import java.io.UnsupportedEncodingException;
+import com.mongodb.*;
+import org.bson.types.ObjectId;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import javax.servlet.ServletConfig;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.*;
 import java.net.URL;
 import java.net.URLConnection;
 import java.net.UnknownHostException;
 import java.nio.charset.Charset;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.Date;
-import java.util.Formatter;
-import java.util.UUID;
-
-import javax.servlet.ServletConfig;
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import com.mongodb.BasicDBObject;
-import com.mongodb.DB;
-import com.mongodb.DBCollection;
-import com.mongodb.DBCursor;
-import com.mongodb.DBObject;
-import com.mongodb.Mongo;
-import com.mongodb.MongoClient;
-import com.mongodb.MongoClientURI;
-import com.mongodb.MongoException;
-import com.mongodb.WriteResult;
+import java.util.*;
 
 /**
  * This user application has two different kind of users: private users and application users.
- *
+ * 
  * A private user will only get access to content he has created himself.
  * An application user will get access according to the access rights defined for the application
- *
+ * 
  * @author g95511
  *
  */
@@ -53,48 +34,51 @@ import com.mongodb.WriteResult;
 @WebServlet("/user")
 public class UserServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private String DATABASE;
-	private String USER;
+  private String DATABASE;
+  private String USER;
+  private String DATABASE_NAME="priocloud";
 	Mongo m = null;
 	private String SITE;
-	String serverType="";
-
-	public UserServlet() {
-		super();
-	}
-	public void init(ServletConfig config) {
-		try {
-			serverType = System.getenv("SERVER_TYPE");
-			System.out.println("****************************************");
-			System.out.println("serverType="+ serverType);
-			System.out.println("****************************************");
-			if (serverType==null || serverType.equalsIgnoreCase("local") || serverType.equalsIgnoreCase("dev")|| serverType.equalsIgnoreCase("Prod")) {
-				m = new MongoClient("mongo", 27017);
+       
+    public UserServlet() {
+        super();
+    }
+    public void init(ServletConfig config) {
+        try {
+			 String serverType = System.getenv("SERVER_TYPE");
+			 System.out.println("****************************************");
+			 System.out.println("serverType="+ serverType);
+			 System.out.println("****************************************");
+				if (serverType==null || serverType.equalsIgnoreCase("local") || serverType.equalsIgnoreCase("dev")|| serverType.equalsIgnoreCase("Prod")) {
+					m = new MongoClient("mongo", 27017);
 //				} else if(serverType.equalsIgnoreCase("dev")){
 //					m = new MongoClient(new MongoClientURI("mongodb://prioclouddevdb.westeurope.cloudapp.azure.com:27017"));
-			} else if(serverType.equalsIgnoreCase("test")){
-// 					Test env. used for Cosmo re-trial
+				} else if(serverType.equalsIgnoreCase("test")){
+// 					Test env. used for Cosmo re-trial 
 //					m = new MongoClient(new MongoClientURI("mongodb://priocloudtestdb.westeurope.cloudapp.azure.com:27017"));
-				m = new MongoClient(new MongoClientURI("mongodb://priocosmodbtest:DgkDqmlT9O6ZYYVVKRehm40ebrFEsY150FnlD7qh4AE5rLSPc6mnS3D9A4xdvGCX2xgcxIOPbh754Xysu6qzyw%3D%3D@priocosmodbtest.documents.azure.com:10255/?ssl=true"));
-//
+					m = new MongoClient(new MongoClientURI("mongodb://priocosmodbtest:DgkDqmlT9O6ZYYVVKRehm40ebrFEsY150FnlD7qh4AE5rLSPc6mnS3D9A4xdvGCX2xgcxIOPbh754Xysu6qzyw%3D%3D@priocosmodbtest.documents.azure.com:10255/?ssl=true"));     
+//					
 //				} else if(serverType.equalsIgnoreCase("prod")){
 ////					m = new MongoClient(new MongoClientURI("mongodb://priocloudproddb.westeurope.cloudapp.azure.com:27017"));
 //					m = new MongoClient("mongo", 27017);
 //				}else{
 //					System.out.println("UNKNOWN SERVER TYPE: " + serverType);
-			}
-			System.out.println("Connected");
-			SITE=Prop.load(config.getServletContext()).getProperty("sitename");
-			DATABASE=Prop.load(config.getServletContext()).getProperty("database");
-			USER=Prop.load(config.getServletContext()).getProperty("userdatabase");
-		} catch (UnknownHostException e) {
-			e.printStackTrace();
-		} catch (MongoException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
+				}
+				System.out.println("Connected");
+            SITE= Prop.load(config.getServletContext()).getProperty("sitename");
+            DATABASE=DATABASE_NAME;
+            USER=DATABASE_NAME;
+
+//            DATABASE=Prop.load(config.getServletContext()).getProperty("database");
+//            USER=Prop.load(config.getServletContext()).getProperty("userdatabase");
+        } catch (UnknownHostException e) {
+            e.printStackTrace();
+        } catch (MongoException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
 			e.printStackTrace();
 		}
-	}
+    }
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		System.out.println("GET NOT SUPPORTED");
 	}
@@ -117,7 +101,7 @@ public class UserServlet extends HttpServlet {
 			System.out.println("no action param set");
 			return;
 		}
-
+			
 		System.out.println("action ["+action+"]");
 		response.setContentType("application/json;charset=UTF-8");
 		response.addHeader("Access-Control-Allow-Origin", "*"); 	//for now let anyone use this userapplication
@@ -134,7 +118,7 @@ public class UserServlet extends HttpServlet {
 			BasicDBObject whereQuery = new BasicDBObject();
 			whereQuery.put("email", frontendjson.getString("user_id").toLowerCase());
 			whereQuery.put("application", application);
-			DBCursor cursor = collection.find(whereQuery);
+			DBCursor cursor = collection.find(whereQuery);		
 			if(cursor.hasNext()) {
 				DBObject json = cursor.next();
 				uuid=(String) json.get("uuid");
@@ -146,7 +130,7 @@ public class UserServlet extends HttpServlet {
 				//TODO: load the entire user object here and remove salt, password and add isAdmin if needed
 				user=json;
 				DBObject update = new BasicDBObject();
-				update.put("$set", new BasicDBObject("authtoken",UUID.randomUUID().toString()).append("lastlogin", new Date()));
+				update.put("$set", new BasicDBObject("authtoken", UUID.randomUUID().toString()).append("lastlogin", new Date()));
 				System.out.println("updating login user: " + update.toString());
 				collection.update(user, update);
 				System.out.println("updating login user: " + update.toString());
@@ -165,7 +149,7 @@ public class UserServlet extends HttpServlet {
 			BasicDBObject whereQuery = new BasicDBObject();
 			whereQuery.put("email", email);
 			whereQuery.put("application", application);
-			DBCursor cursor = collection.find(whereQuery);
+			DBCursor cursor = collection.find(whereQuery);		
 			if(cursor.hasNext()) {
 				DBObject json = cursor.next();
 				uuid=(String) json.get("uuid");
@@ -181,8 +165,8 @@ public class UserServlet extends HttpServlet {
 					//TODO: load the entire user object here and remove salt, password and add isAdmin if needed
 					user=json;
 					DBObject update = new BasicDBObject();
-					update.put("$set", new BasicDBObject("authtoken",UUID.randomUUID().toString()).append("lastlogin", new Date()));
-
+					update.put("$set", new BasicDBObject("authtoken", UUID.randomUUID().toString()).append("lastlogin", new Date()));
+					
 //					user.put("authtoken", UUID.randomUUID().toString());
 //					user.put("lastlogin", new Date());
 					System.out.println("updating login user: " + update.toString());
@@ -257,15 +241,15 @@ public class UserServlet extends HttpServlet {
 						BasicDBObject whereQuery = new BasicDBObject();
 						whereQuery.put("email", email);
 						whereQuery.put("application", application);
-						DBCursor cursor = collection.find(whereQuery);
+						DBCursor cursor = collection.find(whereQuery);		
 						if(cursor.hasNext()) {
 							response.setStatus(HttpServletResponse.SC_FORBIDDEN);
 							user.put("authenticated", false);
 							user.put("message", "email already in use. Please choose another");
 						}else{
-							uuid=UUID.randomUUID().toString();
-							String salt=UUID.randomUUID().toString();
-							String onetimepassword=UUID.randomUUID().toString();
+							uuid= UUID.randomUUID().toString();
+							String salt= UUID.randomUUID().toString();
+							String onetimepassword= UUID.randomUUID().toString();
 							doc.put("created", new Date());
 							doc.put("application", application);
 							doc.put("auid", auid);
@@ -338,15 +322,16 @@ public class UserServlet extends HttpServlet {
 				user=edit;
 				user.put("authenticated", true);
 			}
+		}else if (action.equals("cleanupdemodata")) {
+			ArrayList<String> oldData=getOldDemoDataAuid(7*24*60*60*1000);	//one week
+			System.out.println("DESTROY COMPANIES: " + oldData.toString());
+			for (String a : oldData) {
+				destroyCompany(a);
+			}
 		}else if (action.equals("destroycompany")) {
 			if(userIsOwner(uuid, auid, application)){
-				System.out.println("DESTROY COMPANY: " + auid);
 				System.out.println(email);
-				removeByAuid(DATABASE, "project", auid);
-				removeByAuid(DATABASE, "bu", auid);
-				removeByAuid(DATABASE, "company", auid);
-				removeByAuid(USER, "user", auid);
-				removeByAuid(USER, "application", auid);
+				destroyCompany(auid);
 			}else{
 				System.out.println("User is not owner and cannot erase");
 			}
@@ -371,7 +356,7 @@ public class UserServlet extends HttpServlet {
 			BasicDBObject whereQuery = new BasicDBObject();
 			whereQuery.put("application", application);
 			whereQuery.put("auid", auid);
-			DBCursor cursor = collection.find(whereQuery);
+			DBCursor cursor = collection.find(whereQuery);		
 			PrintWriter out = response.getWriter();
 			out.print("[");
 			while (cursor.hasNext()) {
@@ -385,7 +370,7 @@ public class UserServlet extends HttpServlet {
 							System.out.println("Is sub admin but not allowed to look at admin - removing OTPW");
 							json.removeField("uuid");
 							json.removeField("onetimepassword");
-						}
+						}						
 					}else {
 						System.out.println("normal user - removing OTPW");
 						json.removeField("uuid");
@@ -400,7 +385,7 @@ public class UserServlet extends HttpServlet {
 			out.println("]");
 			out.flush();
 			out.close();
-			return;
+			return;	
 		}else if (action.equals("masterlogin")) {
 			if(userIsMaster(uuid, auid, application)){
 				String masteruuid=request.getParameter("masteruuid");
@@ -409,7 +394,7 @@ public class UserServlet extends HttpServlet {
 				BasicDBObject whereQuery = new BasicDBObject();
 				whereQuery.put("uuid", masteruuid);
 				whereQuery.put("application", application);
-				DBCursor cursor = collection.find(whereQuery);
+				DBCursor cursor = collection.find(whereQuery);		
 				if(cursor.hasNext()) {
 					DBObject json = cursor.next();
 					user=json;
@@ -421,7 +406,7 @@ public class UserServlet extends HttpServlet {
 			if(userIsMaster(uuid, auid, application)){
 				DB db = m.getDB(USER);
 				DBCollection collection = db.getCollection("application");
-				DBCursor cursor = collection.find();
+				DBCursor cursor = collection.find();		
 				PrintWriter out = response.getWriter();
 				out.print("[");
 				while (cursor.hasNext()) {
@@ -432,8 +417,12 @@ public class UserServlet extends HttpServlet {
 				out.println("]");
 				out.flush();
 				out.close();
-				return;
+				return;	
 			}
+		}else if (action.equals("clone")) {	//sets new pw after one time pw hit
+//			clone(USER, "user", auid, uuid);
+//			HashMap<String, String> buMap = clone(DATABASE, "bu", auid, uuid);
+//			cloneChange(DATABASE, "project", auid, uuid, buMap);
 		}else if (action.equals("updatepassword")) {	//sets new pw after one time pw hit
 			String onetimepassword=request.getParameter("onetimepassword");
 			user=updatePassword(application, email, password, onetimepassword);
@@ -453,7 +442,7 @@ public class UserServlet extends HttpServlet {
 				user.put("message", "Username already in use. Please choose another");
 			}else{
 				//create new application
-				auid=UUID.randomUUID().toString();
+				auid= UUID.randomUUID().toString();
 				uuid=createAdminUser(application, auid, email, password);
 				createApplication(application, auid, email, uuid);
 				user.put("application", application);
@@ -463,10 +452,23 @@ public class UserServlet extends HttpServlet {
 				user.put("authenticated", true);
 				user.put("admin", true);
 				user.put("uuid", uuid);
-				if(serverType.equals("prod")){
-					new DkimMail("noreply@priocloud.com", email, "PrioCloud account created", "We have created your PrioCloud account.").send();
-				}
+				new DkimMail("noreply@priocloud.com", email, "PrioCloud account created", "We have created your PrioCloud account.").send();
 			}
+		}else if (action.equals("createtemplateproject")) {
+			String emailUuid= RandomIdGenerator.get(6);
+			System.out.println("creating template project for email: " + emailUuid);
+			auid= UUID.randomUUID().toString();
+			cloneUser(USER, "user", auid, emailUuid+ ".com");
+			user=getAdminUser(auid);
+			uuid=user.get("uuid").toString();
+			email=user.get("email").toString();
+			System.out.println("Admin user uuid= " + uuid);
+			createTemporaryApplication(application, auid, email, uuid);
+			HashMap<String, String> buMap = clone(DATABASE, "bu", auid, uuid);
+			cloneChange(DATABASE, "project", auid, uuid, buMap);
+			clone(DATABASE, "company", auid, uuid);
+			user.put("authenticated", true);
+//				new DkimMail("noreply@priocloud.com", email, "PrioCloud account created", "We have created your PrioCloud account.").send();
 		}
 		user.removeField("_id");
 		user.removeField("password");
@@ -477,21 +479,133 @@ public class UserServlet extends HttpServlet {
 		out.flush();out.close();
 	}
 
-	private String getAdSsoUrl() {
-		String serverType = System.getenv("SERVER_TYPE");
-		if (serverType==null  || serverType.equalsIgnoreCase("local")) {
-			return null;
-		} else if(serverType.equalsIgnoreCase("dev")){
-			return "https://prioclouddevfrontend.azurewebsites.net/.auth/me";
-		} else if(serverType.equalsIgnoreCase("test")){
-			return "https://priocloudtest.azurewebsites.net/.auth/me";
-		} else if(serverType.equalsIgnoreCase("prod")){
-			return "https://priocloud.azurewebsites.net/.auth/me";
-		}else{
-			System.out.println("UNKNOWN SERVER TYPE CANNOT SET SSO AD: " + serverType);
+	private void destroyCompany(String auid) {
+		System.out.println("DESTROY COMPANY: " + auid);
+		removeByAuid(DATABASE, "project", auid);
+		removeByAuid(DATABASE, "bu", auid);
+		removeByAuid(DATABASE, "company", auid);
+		removeByAuid(USER, "user", auid);
+		removeByAuid(USER, "application", auid);
+
+	}
+
+	private ArrayList<String> getOldDemoDataAuid(int olderThanMillis) {
+    	ArrayList<String> auidList= new ArrayList<>();
+		DB db = m.getDB(USER);
+		DBCollection collection = db.getCollection("application");
+		BasicDBObject whereQuery = new BasicDBObject();
+		whereQuery.put("created", new BasicDBObject("$lte", new Date(System.currentTimeMillis() - olderThanMillis)));
+		whereQuery.put("temporary", true);
+		DBCursor cursor = collection.find(whereQuery);
+		while (cursor.hasNext()) {
+			DBObject json = cursor.next();
+			auidList.add(json.get("auid").toString());
+		}
+		return auidList;
+	}
+
+	private DBObject getAdminUser(String auid) {
+		DB db = m.getDB(USER);
+		DBCollection collection = db.getCollection("user");
+		BasicDBObject whereQuery = new BasicDBObject();
+		whereQuery.put("auid", auid);
+		whereQuery.put("admin", true);
+		DBCursor cursor = collection.find(whereQuery);
+		while (cursor.hasNext()) {
+			DBObject json = cursor.next();
+			return json;
 		}
 		return null;
 	}
+
+	private void cloneChange(String dbname, String collectionname, String auid, String uuid, HashMap<String, String> buMap) {
+		System.out.println("cloning: " + collectionname);
+		String copyFromAuid="17ea331b-4aaa-4498-a9ce-495bc1c4d4b5";
+		DB db = m.getDB(dbname);
+		DBCollection collection = db.getCollection(collectionname);
+		BasicDBObject whereQuery = new BasicDBObject();
+		whereQuery.put("auid", copyFromAuid);
+		DBCursor cursor = collection.find(whereQuery);
+		System.out.println("find ["+dbname+"] ["+collectionname+"]");
+		while (cursor.hasNext()) {
+			DBObject json = cursor.next();
+			json.put("auid", auid);
+			json.put("uuid", uuid);
+			String oldbuid= ((DBObject)json.get( "bu")).get("_id" ).toString();
+			System.out.println("oldBU: " +oldbuid);
+			ObjectId id = new ObjectId(buMap.get(oldbuid));
+			DBObject myDocument = new BasicDBObject();
+			myDocument.put("_id", id);
+			json.put("bu", myDocument);
+			json.removeField("_id");
+			collection.save(json);
+			System.out.println("find ["+oldbuid+"] ["+id+"]");
+		}
+	}
+
+	private HashMap<String, String> clone(String dbname, String collectionname, String auid, String uuid) {
+		HashMap<String, String> oidMapFromTo = new HashMap<>();
+		System.out.println("cloning: " + collectionname);
+		String copyFromAuid="17ea331b-4aaa-4498-a9ce-495bc1c4d4b5";
+		DB db = m.getDB(dbname);
+		DBCollection collection = db.getCollection(collectionname);
+		BasicDBObject whereQuery = new BasicDBObject();
+		whereQuery.put("auid", copyFromAuid);
+		DBCursor cursor = collection.find(whereQuery);
+		System.out.println("find ["+dbname+"] ["+collectionname+"]");
+		while (cursor.hasNext()) {
+			DBObject json = cursor.next();
+//			System.out.println("deleting: " + json.toString());
+			json.put("auid", auid);
+			json.put("uuid", uuid);
+			ObjectId oldid = (ObjectId)json.get( "_id" );
+			json.removeField("_id");
+			collection.save(json);
+			ObjectId id = (ObjectId)json.get( "_id" );
+			System.out.println("find ["+oldid+"] ["+id+"]");
+			oidMapFromTo.put(oldid.toString(), id.toString());
+		}
+		return oidMapFromTo;
+	}
+
+	private void cloneUser(String dbname, String collectionname, String auid, String domain) {
+		System.out.println("cloning: " + collectionname);
+		String copyFromAuid="17ea331b-4aaa-4498-a9ce-495bc1c4d4b5";
+		DB db = m.getDB(dbname);
+		DBCollection collection = db.getCollection(collectionname);
+		BasicDBObject whereQuery = new BasicDBObject();
+		whereQuery.put("auid", copyFromAuid);
+		DBCursor cursor = collection.find(whereQuery);
+		System.out.println("find ["+dbname+"] ["+collectionname+"]");
+		while (cursor.hasNext()) {
+			DBObject json = cursor.next();
+			json.put("auid", auid);
+			json.put("uuid", UUID.randomUUID().toString());
+			String email = json.get( "email" ).toString();
+			String newemail = email.substring(0,email.indexOf("@")+1) + domain;
+			System.out.println("email: " + email + " "+ newemail);
+			json.put("email", newemail);
+			json.removeField("_id");
+			collection.save(json);
+		}
+	}
+
+	private String getAdSsoUrl() {
+		 String serverType = System.getenv("SERVER_TYPE");
+			if (serverType==null  || serverType.equalsIgnoreCase("local")) {
+				return null;
+			} else if(serverType.equalsIgnoreCase("dev")){
+				return "https://prioclouddevfrontend.azurewebsites.net/.auth/me";
+			} else if(serverType.equalsIgnoreCase("test")){
+				return "https://priocloudtest.azurewebsites.net/.auth/me";
+			} else if(serverType.equalsIgnoreCase("prod")){
+				return "https://priocloud.azurewebsites.net/.auth/me";
+			}else{
+				System.out.println("UNKNOWN SERVER TYPE CANNOT SET SSO AD: " + serverType);
+			}
+		return null;
+	}
+
 	private void removeByAuid(String dbname, String collectionname, String auid) {
 		DB db = m.getDB(dbname);
 		DBCollection collection = db.getCollection(collectionname);
@@ -530,7 +644,7 @@ public class UserServlet extends HttpServlet {
 		whereQuery.put("uuid", uuid);
 		whereQuery.put("auid", auid);
 		whereQuery.put("application", application);
-		DBCursor cursor = collection.find(whereQuery);
+		DBCursor cursor = collection.find(whereQuery);		
 		if(cursor.hasNext()) {
 			System.out.println("user is owner");
 			return true;
@@ -547,7 +661,7 @@ public class UserServlet extends HttpServlet {
 		whereQuery.put("uuid", uuid);
 		whereQuery.put("auid", auid);
 		whereQuery.put("application", application);
-		DBCursor cursor = collection.find(whereQuery);
+		DBCursor cursor = collection.find(whereQuery);		
 		if(cursor.hasNext()) {
 			String email=cursor.next().get("email").toString();
 			boolean master=email.equals("theisborg@gDkimMail.com") || email.equals("mikkel.groth.privat@gDkimMail.com");
@@ -564,7 +678,7 @@ public class UserServlet extends HttpServlet {
 		BasicDBObject whereQuery = new BasicDBObject();
 		whereQuery.put("uuid", uuid);
 		whereQuery.put("auid", auid);
-		DBCursor cursor = collection.find(whereQuery);
+		DBCursor cursor = collection.find(whereQuery);		
 		if(cursor.hasNext()) {
 			return cursor.next();
 		}
@@ -579,7 +693,7 @@ public class UserServlet extends HttpServlet {
 
 	private String resetPassword(String application, String email) {
 		System.out.println("Reset PW ["+application+"] ["+email+"]");
-		String onetimepassword=UUID.randomUUID().toString();
+		String onetimepassword= UUID.randomUUID().toString();
 		DB db = m.getDB(USER);
 		DBCollection collection = db.getCollection("user");
 		BasicDBObject whereQuery = new BasicDBObject();
@@ -601,7 +715,7 @@ public class UserServlet extends HttpServlet {
 		BasicDBObject whereQuery = new BasicDBObject();
 		whereQuery.put("email", email);
 		whereQuery.put("application", application);
-		DBCursor cursor = collection.find(whereQuery);
+		DBCursor cursor = collection.find(whereQuery);		
 		if(cursor.hasNext()) {
 			DBObject json = cursor.next();
 			String uuid=(String) json.get("uuid");
@@ -630,8 +744,8 @@ public class UserServlet extends HttpServlet {
 	}
 
 	public String createAdminUser(String application, String auid, String email, String password){
-		String uuid=UUID.randomUUID().toString();
-		String salt=UUID.randomUUID().toString();
+		String uuid= UUID.randomUUID().toString();
+		String salt= UUID.randomUUID().toString();
 		DB db = m.getDB(USER);
 		DBCollection collection = db.getCollection("user");
 		DBObject doc = new BasicDBObject();
@@ -651,7 +765,13 @@ public class UserServlet extends HttpServlet {
 		return uuid;
 	}
 
+	public String createTemporaryApplication(String application, String auid, String email, String uuid){
+		return createApplication(application,auid,email,uuid,true);
+	}
 	public String createApplication(String application, String auid, String email, String uuid){
+		return createApplication(application,auid,email,uuid,false);
+	}
+	public String createApplication(String application, String auid, String email, String uuid, boolean temporary){
 		DB db = m.getDB(USER);
 		DBCollection collection = db.getCollection("application");
 		DBObject doc = new BasicDBObject();
@@ -660,6 +780,9 @@ public class UserServlet extends HttpServlet {
 		doc.put("auid", auid);
 		doc.put("uuid", uuid);
 		doc.put("email", email);
+		if(temporary){
+			doc.put("temporary", true);
+		}
 		WriteResult result = collection.insert(doc);
 		System.out.println(result);
 		return auid;
@@ -689,7 +812,7 @@ public class UserServlet extends HttpServlet {
 		formatter.close();
 		return result;
 	}
-
+	
 	private boolean isAdmin(DBObject dbUser) {
 		return hasTrueKey((BasicDBObject) dbUser, "admin");
 	}
@@ -706,7 +829,7 @@ public class UserServlet extends HttpServlet {
 
 	/**
 	 * This is the place to ensure that requests only comes from a certain domain. For now everyone can write to this database
-	 *
+	 * 
 	 * @param request
 	 * @param response
 	 */
@@ -722,32 +845,49 @@ public class UserServlet extends HttpServlet {
 		response.addHeader("Access-Control-Allow-Methods", "GET,POST,PUT,DELETE,OPTIONS");
 		response.addHeader("Access-Control-Allow-Headers", "Content-Type");
 	}
+	
+
+	  private static String readAll(Reader rd) throws IOException {
+	    StringBuilder sb = new StringBuilder();
+	    int cp;
+	    while ((cp = rd.read()) != -1) {
+	      sb.append((char) cp);
+	    }
+	    return sb.toString();
+	  }
+
+	  public static JSONObject readJsonFromUrl(String urlname, String token) throws IOException, JSONException {
+          URL url = new URL(urlname);
+          URLConnection connection = url.openConnection();
+		  connection.setRequestProperty("Authorization", "Bearer " + token);
+
+	    InputStream is = connection.getInputStream();
+	    try {
+	      BufferedReader rd = new BufferedReader(new InputStreamReader(is, Charset.forName("UTF-8")));
+	      String jsonText = readAll(rd);
+	      System.out.println("got json");
+	      System.out.println(jsonText);
+	      JSONArray json = new JSONArray(jsonText);
+	      return json.getJSONObject(0);
+	    } finally {
+	      is.close();
+	    }
+	  }
 
 
-	private static String readAll(Reader rd) throws IOException {
-		StringBuilder sb = new StringBuilder();
-		int cp;
-		while ((cp = rd.read()) != -1) {
-			sb.append((char) cp);
-		}
-		return sb.toString();
-	}
+	public static class RandomIdGenerator {
+		private static char[] _base62chars =
+				"0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz".toCharArray();
 
-	public static JSONObject readJsonFromUrl(String urlname, String token) throws IOException, JSONException {
-		URL url = new URL(urlname);
-		URLConnection connection = url.openConnection();
-		connection.setRequestProperty("Authorization", "Bearer " + token);
+		private static Random _random = new Random();
 
-		InputStream is = connection.getInputStream();
-		try {
-			BufferedReader rd = new BufferedReader(new InputStreamReader(is, Charset.forName("UTF-8")));
-			String jsonText = readAll(rd);
-			System.out.println("got json");
-			System.out.println(jsonText);
-			JSONArray json = new JSONArray(jsonText);
-			return json.getJSONObject(0);
-		} finally {
-			is.close();
+		public static String get(int length) {
+			StringBuilder sb = new StringBuilder(length);
+
+			for (int i=0; i<length; i++)
+				sb.append(_base62chars[_random.nextInt(62)]);
+
+			return sb.toString();
 		}
 	}
 }

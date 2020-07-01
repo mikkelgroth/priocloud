@@ -1,14 +1,7 @@
 package dk.theisborg.mongorest;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.net.UnknownHostException;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.Enumeration;
-import java.util.LinkedHashSet;
-import java.util.Set;
+import com.mongodb.*;
+import org.bson.types.ObjectId;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -16,19 +9,10 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import org.bson.types.ObjectId;
-
-import com.mongodb.BasicDBList;
-import com.mongodb.BasicDBObject;
-import com.mongodb.DB;
-import com.mongodb.DBCollection;
-import com.mongodb.DBCursor;
-import com.mongodb.DBObject;
-import com.mongodb.Mongo;
-import com.mongodb.MongoClient;
-import com.mongodb.MongoClientURI;
-import com.mongodb.MongoException;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.*;
 
 /**
  * This is a generic REST service.
@@ -55,6 +39,7 @@ public class RestServlet extends HttpServlet {
 	Mongo m = null;
   private String DATABASE;
   private String USER;
+	private String DATABASE_NAME="priocloud";
 
 	public RestServlet() {
 		super();
@@ -81,15 +66,11 @@ public class RestServlet extends HttpServlet {
 //					System.out.println("UNKNOWN SERVER TYPE: " + serverType);
 				}
 				System.out.println("Connected");
-	      DATABASE=Prop.load(config.getServletContext()).getProperty("database");
-	      USER=Prop.load(config.getServletContext()).getProperty("userdatabase");
-		} catch (UnknownHostException e) {
-			e.printStackTrace();
+	      DATABASE=DATABASE_NAME;
+	      USER=DATABASE_NAME;
 		} catch (MongoException e) {
 			e.printStackTrace();
-		} catch (IOException e) {
-      e.printStackTrace();
-    }
+		}
 	}
 
 	@Override

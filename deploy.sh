@@ -1,1 +1,0 @@
-rsync -zvr app root@priocloud.com:/srv/PrioCloud/priocloud
