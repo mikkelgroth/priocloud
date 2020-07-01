@@ -15,9 +15,10 @@ angular
             userService,
             companyService
         ) {
+            companyService.loadCompany();
             companyService.reloadCompany();
             companyService.reloadSystems();
-            companyService.reloadProcesses();
+            companyService.reloadProcesss();
 
             companyService.company.subscribe(function (company) {
                 $scope.company = company;

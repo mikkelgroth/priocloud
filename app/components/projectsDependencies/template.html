@@ -12,7 +12,7 @@
         </div>
     </h2>
 
-    <h3>
+    <h4>
         <div class="right">
             BU:
             <select ng-model="rtfrombu" ng-change="getRTfromBu()" ng-init="">
@@ -20,14 +20,17 @@
                 <option ng-repeat="bu in bus | orderBy:'order'" value="{{bu.name}}">{{bu.indent}}{{bu.name}}
                 </option>
             </select>
-            Projects:
+            Project:
             <select ng-change="getRTfromProject()" ng-model="rtfromproject" ng-init="">
                 <option value="">All Projects</option>
                 <option ng-repeat="p in projects | filter: {hasdeps : true} | orderBy:'title'" value="{{p.title}}">
                     {{p.title}}</option>
             </select>
+            Only:
+            <input type="checkbox" ng-model="onlyfromproject" ng-checked='false' ng-change="onlyProject()">
+
         </div>
-    </h3>
+    </h4>
     <div class="right">
         <input type="radio" name="views" ng-model="views" value="cat" ng-click="clearRT();"> Category overview &nbsp;
         <input type="radio" name="views" ng-model="views" value="res" ng-click="clearRT();"> Resource overview, &nbsp;
@@ -121,7 +124,8 @@
                 <td>Dep. state<div class="right"><button ng-click="depsearch.state=[]; saveSearch()"
                             ng-show="showfilters">clear</button></div>
                 </td>
-                <td>
+                <td class="filter-container">Project<div class="right"><button ng-click="depsearch.projecttitle=[]"
+                            ng-show="showfilters">clear</button></div>
                 </td>
             </tr>
             <tr class="filtertd">
@@ -160,7 +164,9 @@
                     </select>
                 </td>
                 <td>
-
+                    <select class="multiple-select" multiple="multiple" ng-multiple="true" ng-change="saveSearch()"
+                        ng-model="depsearch.projecttitle"
+                        ng-options="p.title as p.title for p in projects | filter:{state: 'Progress'} | orderBy: 'title'"></select>
                 </td>
             </tr>
             <tr class="header">
@@ -333,7 +339,7 @@
                     <td>Resource types</td>
                     <td colspan="4" style="text-align: center">FTE {{year}}</td>
                     <td colspan="2" style="text-align: center">FTE {{year+1}}</td>
-                    <td></td>
+                    <td colspan="2">People</td>
                 </tr>
                 <tr class="header">
                     <td>Type<br />Category<br />Home</td>
@@ -344,6 +350,7 @@
                     <td>Q1</td>
                     <td>Q2</td>
                     <td>Capacity</td>
+                    <td>Names</td>
                 </tr>
                 <tr class="header">
                     <td>Total requested</td>
@@ -354,6 +361,7 @@
                     <td>{{totalreqq1next/100}}</td>
                     <td>{{totalreqq2next/100}}</td>
                     <td>{{totalcap/100}}</td>
+                    <td></td>
                 </tr>
                 <tr ng-repeat="r in ressums | orderBy:'name'" ng-if="r.showtype || showall">
                     <td class="{{r.status}} link" ng-click="sellectRT(true, r, 'Q1', year);">
@@ -380,7 +388,7 @@
                         <b>{{r.requestedq2next/100}}</b><br />({{r.q2nextdiff/100}})
                     </td>
                     <td>{{r.cap/100}}</td>
-
+                    <td>{{r.names}}</td>
                 </tr>
             </table>
         </div>
@@ -462,5 +470,6 @@
                 </tr>
             </table>
         </div>
+
     </div>
 </div>

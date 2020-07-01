@@ -623,12 +623,12 @@
             </div>
         </div>
         <div class="mainbox" id="actionslist">
-            <div class="overview">
-                <div class="right" ng-if="route == 'action'">
+            <div class="overview" ng-if="project.filters.showActionpoints && route == 'action'">
+                <div class="right">
                     <button type="button" ng-click="newaction('Action')" ng-if="user.changeContent">create
                         new action</button>
                 </div>
-                <table class="tablelist smaller" ng-if="project.filters.showActions && route == 'action'">
+                <table class="tablelist smaller">
                     <tr class="header">
                         <td>Title</td>
                         <td>Goal</td>
@@ -663,12 +663,12 @@
                     </tr>
                 </table>
             </div>
-            <div class="overview">
+            <div class="overview" ng-if="project.filters.showDecisionpoints && route == 'decision'">
                 <div class="right" ng-if="route == 'decision'">
                     <button type="button" ng-click="newaction('Decision')" ng-if="user.changeContent">create
                         new decision</button>
                 </div>
-                <table class="tablelist smaller" ng-if="project.filters.showDecisions && route == 'decision'">
+                <table class="tablelist smaller">
                     <tr class="header">
                         <td>Title</td>
                         <td>Goal</td>

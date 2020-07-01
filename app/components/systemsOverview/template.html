@@ -1,15 +1,40 @@
 <div id="systems">
-    <h2>Systems <div class="right">
-            <button ng-click="showdefault()">my default</button>
-            <button ng-click="showmepm()" ng-show="showmepmbutton">me as admin</button>
-            <button ng-click="clearmepm()" ng-show="!showmepmbutton">all admins</button>
-            <button ng-click="showmeres()" ng-show="showmeresbutton">me as owner</button>
-            <button ng-click="clearmeres()" ng-show="!showmeresbutton">all owners</button>
-            <button ng-click="showfilters=true" ng-show="!showfilters">more filters</button>
-            <button ng-click="showfilters=false" ng-show="showfilters">hide filters</button></div>
-    </h2>
-    <div class="smaller">
+    <div class="hideOnPrint">
+        <div class="layout">
+            <div class="layoutelement fluid">
+                <h2>
+                    Systems
+                </h2>
+            </div>
+            <div class="layoutelement right">
+                <button ng-click="showdefault()">my default</button>
+                <button ng-click="showmepm()" ng-show="showmepmbutton">me as admin</button>
+                <button class="buttonOn" ng-click="clearmepm()" ng-show="!showmepmbutton">me as admin</button>
+                <button ng-click="showmeres()" ng-show="showmeresbutton">me as owner</button>
+                <button class="buttonOn" ng-click="clearmeres()" ng-show="!showmeresbutton">me as owner</button>
+                <button ng-click="showfilters=true" ng-show="!showfilters">filters</button>
+                <button class="buttonOn" ng-click="showfilters=false" ng-show="showfilters">filters</button>
+            </div>
+        </div>
+        <div class="radiotabs">
+            <label for="overview"><input type="radio" id="overview" name="views" ng-model="views"
+                    value="overview"><span>
+                    Overview</span> </label>
+            <label for="assessment"><input type="radio" id="assessment" name="views" ng-model="views"
+                    value="assessment"><span>
+                    Assessment</span></label>
+            <label for="level"><input type="radio" id="level" name="views" ng-model="views" value="level"><span>
+                    Priority</span></label>
+            <label for="controls"><input type="radio" id="controls" name="views" ng-model="views"
+                    value="controls"><span>
+                    Controls</span></label>
+        </div>
+    </div>
 
+
+
+
+    <div class="smaller">
         <table ng-show="showfilters">
             <tr class="header">
                 <td colspan="5">Filters<div class="right"><button class="clearbtn" ng-click="clearall()"
@@ -53,33 +78,36 @@
                     </select>
                 </td>
                 <td>
-                    
+
                 </td>
                 <td>
-                    
+
                 </td>
             </tr>
-            
+
 
             <tr class="header">
                 <td colspan="5">Order by</td>
             </tr>
             <tr>
                 <td colspan="5">
-                    <select ng-model="porderparam" ng-init="porderparam='buname'">
+                    <select ng-model="porderparam" ng-init="porderparam='-risklevel'">
                         <option value="buname">Unit</option>
                         <option value="pmname">Admin</option>
-                        <option value="poname">Owner</option>  
+                        <option value="poname">Owner</option>
+                        <option value="-risklevel">Risk level</option>
                     </select>
-                    <select ng-model="porderparam2" ng-init="porderparam2='pmname'">
+                    <select ng-model="porderparam2" ng-init="porderparam2='buname'">
                         <option value="buname">Unit</option>
                         <option value="pmname">Admin</option>
-                        <option value="poname">Owner</option>   
+                        <option value="poname">Owner</option>
+                        <option value="-risklevel">Risk level</option>
                     </select>
-                    <select ng-model="porderparam3" ng-init="porderparam3='poname'">
+                    <select ng-model="porderparam3" ng-init="porderparam3='pmname'">
                         <option value="buname">Unit</option>
                         <option value="pmname">Admin</option>
-                        <option value="poname">Owner</option>   
+                        <option value="poname">Owner</option>
+                        <option value="-risklevel">Risk level</option>
                     </select>
 
                     <div class="right">
@@ -90,23 +118,144 @@
             </tr>
         </table>
 
-        <div class="overview">
+        <div class="overview" ng-show="views=='overview'">
             <table class="tablelist" ng-if="systems.length > 0">
                 <tr class="header">
                     <td>System</td>
                     <td>BU</td>
                     <td>System Admin</td>
                     <td>System Owner</td>
-                </tr>
+                    <td>Pending</td>
+                    <td>Lock</td>
                 </tr>
                 <tr ng-repeat="system in systems | multiFilter:systemsearch | orderBy:[porderparam, porderparam2, porderparam3]"
                     ng-click="goToSystem(system._id.$oid)" class="link">
-                    <td class="{{system.status}}"><b>{{system.title}}</td>
+                    <td class="{{system.statusFlag}}">{{system.title}}</td>
                     <td>{{system.buname}}</td>
                     <td>{{system.pmname}}</td>
-                    <td>{{system.poname}}</td>    
+                    <td>{{system.poname}}</td>
+                    <td>{{system.pending}}</td>
+                    <td>
+                        <div ng-if="system.editUser == null" class="Green">Open</div>
+                        <div ng-if="system.editUser != null" class="Red">{{system.editUser.name}}</div>
+                    </td>
                 </tr>
             </table>
         </div>
+
+        <div class="overview" ng-show="views=='assessment'">
+            <table class="tablelist" ng-if="systems.length > 0">
+                <tr class="header">
+                    <td>System</td>
+                    <td>Continuity</td>
+                    <td>Access</td>
+                    <td>Perimeter</td>
+                    <td>Data</td>
+                    <td>Connections</td>
+                    <td>Controls</td>
+                </tr>
+                <tr ng-repeat="system in systems | multiFilter:systemsearch | orderBy:[porderparam, porderparam2, porderparam3]"
+                    ng-click="goToSystem(system._id.$oid)" class="link">
+                    <td class="{{system.statusFlag}}">{{system.title}}</td>
+                    <td class="{{system.continuity.securityownerfeedback}}"></td>
+                    <td class="{{system.access.securityownerfeedback}}"></td>
+                    <td class="{{system.perimeter.securityownerfeedback}}"></td>
+                    <td class="{{system.data.securityownerfeedback}}"></td>
+                    <td class="{{system.connectionsobj.securityownerfeedback}}"></td>
+                    <td class="{{system.controlsobj.securityownerfeedback}}"></td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="overview" ng-show="views=='level'">
+            <table class="tablelist" ng-if="systems.length > 0">
+                <tr class="header">
+                    <td>System</td>
+                    <td>Risk level</td>
+                    <td>Business priority</td>
+                    <td>Security level</td>
+                    <td>Business enabler</td>
+                    <td>External exposure</td>
+                </tr>
+                <tr ng-repeat="system in systems | multiFilter:systemsearch | orderBy:[porderparam, porderparam2, porderparam3]"
+                    ng-click="goToSystem(system._id.$oid)" class="link">
+                    <td class="{{system.statusFlag}}">{{system.title}}</td>
+                    <td>{{system.risklevel}}</td>
+                    <td>{{system.priority}}</td>
+                    <td>{{system.datasecuritylevel}}</td>
+                    <td>{{system.valuestreammagnitude}}</td>
+                    <td>{{system.externalexposure}}</td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="overview" ng-show="views=='controls'">
+            <table class="tablelist">
+                <tr>
+                    <td colspan="5">
+                        Order by 
+                        <select ng-model="param1" ng-init="param1='result'">
+                            <option value="conresp">Responsible</option>
+                            <option value="conacc">Accountable</option>
+                            <option value="status">System status</option>
+                            <option value="cstatus">Control status</option>
+                            <option value="system">System title</option>
+                            <option value="area">Area</option>
+                            <option value="controltitle">Control title</option>
+                            <option value="datacat">Data category</option>
+                            <option value="nextdate">Next control date</option>
+                            <option value="lastdate">Last control date</option>
+                            <option value="freq">Control frequency</option>
+                            <option value="result">Last control result</option>
+                        </select>
+                        <select ng-model="param2" ng-init="param2='system'">
+                            <option value="conresp">Responsible</option>
+                            <option value="conacc">Accountable</option>
+                            <option value="status">System status</option>
+                            <option value="cstatus">Control status</option>
+                            <option value="system">System title</option>
+                            <option value="area">Area</option>
+                            <option value="controltitle">Control title</option>
+                            <option value="datacat">Data category</option>
+                            <option value="nextdate">Next control date</option>
+                            <option value="lastdate">Last control date</option>
+                            <option value="freq">Control frequency</option>
+                            <option value="result">Last control result</option>
+                        </select>
+                        <select ng-model="param3" ng-init="param3='area'">
+                            <option value="conresp">Responsible</option>
+                            <option value="conacc">Accountable</option>
+                            <option value="status">System status</option>
+                            <option value="cstatus">Control status</option>
+                            <option value="system">System title</option>
+                            <option value="area">Area</option>
+                            <option value="controltitle">Control title</option>
+                            <option value="datacat">Data category</option>
+                            <option value="nextdate">Next control date</option>
+                            <option value="lastdate">Last control date</option>
+                            <option value="freq">Control frequency</option>
+                            <option value="result">Last control result</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr class="header">
+                    <td>Control title<br/>(Purpose) Data category</td>
+                    <td>System<br/>Area</td>
+                    <td>Frequency<br/>Next control</td>
+                    <td>Last control<br/>Result</td>
+                    <td>Responsible<br/>Accountable</td>
+                </tr>
+                <tr ng-repeat="control in controllist | orderBy:[param1, param2, param3]"
+                    ng-click="goToSystem(control.id)" class="link">
+                    <td class="{{control.cstatus}}">{{control.controltitle}}<br /><input type="checkbox" ng-model="control.purposerequired"
+                        ng-disabled="true">{{control.datacat}}</td>
+                        <td class="{{control.status}}">{{control.system}}<br />{{control.area}}</td>
+                        <td>{{control.freq}}<br />{{control.nextdate | date:'longDate'}}</td>
+                    <td>{{control.lastdate | date:'longDate'}}<br />{{control.result}}</td>
+                    <td>{{control.conresp}}<br />{{control.conacc}}</td>
+                </tr>
+            </table>
+        </div>
+        
     </div>
 </div>

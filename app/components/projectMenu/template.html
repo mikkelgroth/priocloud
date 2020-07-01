@@ -1,11 +1,21 @@
 <div class="fanes">
     <a class="fane project-menu-home" href="#/project/{{project._id.$oid}}">Overview</a>
     <a class="fane project-menu-details" href="#/project/{{project._id.$oid}}/details">Details</a>
-    <a class="fane project-menu-status" ng-show="company.filters.companyshowActionpoints && company.filters.companyshowStatus"  href="#/project/{{project._id.$oid}}/status">Governance</a>
-    <a class="fane project-menu-status" ng-show="!company.filters.companyshowActionpoints && company.filters.companyshowStatus"  href="#/project/{{project._id.$oid}}/status">Status</a>
-    <a class="fane project-menu-status" ng-show="company.filters.companyshowActionpoints && !company.filters.companyshowStatus"  href="#/project/{{project._id.$oid}}/status/action">Actions</a>
-    <a class="fane project-menu-deliverables" ng-if="company.filters.companyshowDeliverables"  href="#/project/{{project._id.$oid}}/milestone">Deliverables</a>
-    <a class="fane project-menu-risks" ng-show="company.filters.companyshowIssues"  href="#/project/{{project._id.$oid}}/risks">Risks</a>
-    <a class="fane project-menu-dependencies" ng-show="company.filters.companyshowDepend"  href="#/project/{{project._id.$oid}}/dependencies">People</a>
-    <a class="fane project-menu-finance" ng-show="company.filters.companyshowFinance"  href="#/project/{{project._id.$oid}}/finance">Finance</a>
+    <a class="fane project-menu-status"
+        ng-show="company.filters.companyshowActionpoints && company.filters.companyshowStatus"
+        href="#/project/{{project._id.$oid}}/status">Governance</a>
+    <a class="fane project-menu-status"
+        ng-show="!company.filters.companyshowActionpoints && company.filters.companyshowStatus"
+        href="#/project/{{project._id.$oid}}/status">Status</a>
+    <a class="fane project-menu-status"
+        ng-show="company.filters.companyshowActionpoints && !company.filters.companyshowStatus"
+        href="#/project/{{project._id.$oid}}/status/action">Actions</a>
+    <a class="fane project-menu-deliverables" ng-if="company.filters.companyshowDeliverables"
+        href="#/project/{{project._id.$oid}}/milestone">Deliverables</a>
+    <a class="fane project-menu-risks" ng-show="company.filters.companyshowIssues"
+        href="#/project/{{project._id.$oid}}/risks">Risks</a>
+    <a class="fane project-menu-dependencies" ng-show="company.filters.companyshowDepend"
+        href="#/project/{{project._id.$oid}}/dependencies">People</a>
+    <a class="fane project-menu-finance" ng-show="company.filters.companyshowFinance"
+        href="#/project/{{project._id.$oid}}/finance">Finance</a>
 </div>

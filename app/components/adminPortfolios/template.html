@@ -30,7 +30,7 @@
             <i> People & dependencies</br></i></label>
 
         <div class="right">
-            <button type="button" id="saveButton" prio-class ng-if="user.admin" ng-click="saveCompanyFilters()"><b>save
+            <button type="button" id="saveButton" prio-class ng-if="user.admin && companyedit" ng-click="saveCompanyFilters()"><b>save
                 settings</b></button>
 
         </div>
@@ -44,11 +44,11 @@
             <div class="actions">
                 <div class="layout">
                     <div class="layoutelement">
-                        <button type="button" id="saveButton1" ng-if="user.admin" ng-click="saveport()">save</button>
+                        <button type="button" id="saveButton1" ng-if="user.admin && companyedit" ng-click="saveport()">save</button>
                     </div>
                     <div class="layoutelement center">
                         <button type="button primary" class="Red" ng-click="delport(editport)"
-                            ng-if="user.admin">delete</button>
+                            ng-if="user.admin && companyedit">delete</button>
                     </div>
                     <div class="layoutelement right">
                         <button type="button" class="close" ng-click="closeport()"></button>
@@ -78,7 +78,7 @@
         </div>
     </div>
     <div class="right">
-        <button ng-if="user.admin && (company.portfolios == null || company.portfolios.length == 0)"
+        <button ng-if="user.admin && companyedit && (company.portfolios == null || company.portfolios.length == 0)"
             ng-click="addport()">create portfolio</button>
     </div>
     <div class="overview" ng-if="company.portfolios.length > 0">
@@ -86,7 +86,7 @@
             <tr class="header">
                 <td>
                     <div class="right">
-                        <button ng-click="addport()" ng-if="user.admin">create portfolio</button>
+                        <button ng-click="addport()" ng-if="user.admin && companyedit">create portfolio</button>
                     </div>
                 </td>
             </tr>
@@ -104,11 +104,11 @@
             <div class="actions">
                 <div class="layout">
                     <div class="layoutelement">
-                        <button type="button" id="saveButton2" ng-if="user.admin" ng-click="saveStrat()">save</button>
+                        <button type="button" id="saveButton2" ng-if="user.admin && companyedit" ng-click="saveStrat()">save</button>
                     </div>
                     <div class="layoutelement center">
                         <button type="button primary" class="Red" ng-click="delStrat(editstrat)"
-                            ng-if="user.admin">delete</button>
+                            ng-if="user.admin && companyedit">delete</button>
                     </div>
                     <div class="layoutelement right">
                         <button type="button" class="close" ng-click="closestrat()"></button>
@@ -127,7 +127,7 @@
         </div>
     </div>
     <div class="right">
-        <button ng-if="user.admin && (company.strategytypes == null || company.strategytypes.length == 0)"
+        <button ng-if="user.admin && companyedit && (company.strategytypes == null || company.strategytypes.length == 0)"
             ng-click="addStrat()">create strategy</button>
     </div>
     <div class="overview" ng-if="company.strategytypes.length > 0">
@@ -135,7 +135,7 @@
             <tr class="header">
                 <td>
                     <div class="right">
-                        <button ng-click="addStrat()" ng-if="user.admin">create
+                        <button ng-click="addStrat()" ng-if="user.admin && companyedit">create
                             strategy</button>
                     </div>
                 </td>

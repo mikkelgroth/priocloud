@@ -11,6 +11,11 @@ angular
             companyService,
             restService
         ) {
+            companyService.loadCompany();
+            companyService.reloadCompany();
+            companyService.reloadSystems();
+            companyService.reloadProcesss();
+            
             userService
                 .user
                 .subscribe(function (user) {
@@ -40,12 +45,73 @@ angular
                 });
 
             $scope.saveCompany = function (company) {
+                company.lastsaved = new Date();
+                company.lastsavedby = $scope.user.name;
                 companyService.saveCompany(company);
             };
-            
+
             $scope.close = function () {
                 $('.popup').removeClass('active');
             };
+            // LOCK
+            $scope.companylock = {};
+            $scope.companylock.lockbox = true;
+            $scope.companyedit = false;
+            $scope.companylock.showtakelock = false;
+            $scope.companylock.showreleaselock = false;
+            $scope.companylock.showforcedreleaselock = false;
+            if ($scope.company.locked) {
+                if ($scope.company.lockedby != undefined && $scope.company.lockedby != {} && $scope.company.lockedby.name == $scope.user.name) {
+                    $scope.companyedit = true;
+                    $scope.companylock.showreleaselock = true;
+                    //console.log("You user lockedby: " + $scope.company.lockedby);
+                } else {
+                    $scope.companylock.showforcedreleaselock = true;
+                }
+            } else {
+                $scope.companylock.showtakelock = true;
+            }
+
+
+
+            $scope.closelockbox = function () {
+                $scope.companylock.lockbox = false;
+            };
+
+            $scope.takelock = function () {
+                $scope.company.locked = true;
+                $scope.company.lockedby = $scope.user;
+                $scope.companyedit = true;
+                $scope.company.lockeddate = new Date();
+                companyService.saveCompany($scope.company);
+                $scope.companylock.showtakelock = false;
+                $scope.companylock.showreleaselock = true;
+                $scope.companylock.showforcedreleaselock = false;
+            };
+
+            $scope.releaselock = function () {
+                $scope.company.locked = false;
+                $scope.company.lockedby = {};
+                $scope.company.lockeddate = {};
+                companyService.saveCompany($scope.company);
+                $scope.companylock.showtakelock = true;
+                $scope.companylock.showreleaselock = false;
+                $scope.companylock.showforcedreleaselock = false;
+            };
+
+            $scope.forcereleaselock = function () {
+                $scope.company.locked = false;
+                $scope.company.forcedlockedby = $scope.user;
+                $scope.company.forcedlockeddate = new Date();
+                $scope.company.lockedby = {};
+                $scope.company.lockeddate = {};
+                companyService.saveCompany($scope.company);
+                $scope.companylock.showtakelock = true;
+                $scope.companylock.showreleaselock = false;
+                $scope.companylock.showforcedreleaselock = false;
+            };
+
+            // LOCK
 
             $scope.saveBu = function (bu) {
                 if (bu.ownerbu == null) {

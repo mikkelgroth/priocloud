@@ -14,7 +14,7 @@ angular
             restService
         ) {
             companyService.reloadSystems();
-            
+
             userService
                 .user
                 .subscribe(function (user) {
@@ -25,8 +25,10 @@ angular
             userService
                 .users
                 .subscribe(function (users) {
-
-                    $scope.users = users;
+                    $scope.tempusers = JSON.parse(JSON.stringify(users));
+                    for (let i = 0; i < $scope.tempusers.length; i++) {
+                        $scope.tempusers[i].bu = {};
+                    }
                 });
 
             companyService
@@ -47,7 +49,122 @@ angular
                     $scope.systems = systems;
                 });
 
+            $scope.views = 'systemsview';
             
+            $scope.saveNow = function (control) {
+            };
+            // LOCK
+            $scope.companyedit = false;
+            if ($scope.company.locked && $scope.company.lockedby != undefined && $scope.company.lockedby != {} && $scope.company.lockedby.name == $scope.user.name) {
+                $scope.companyedit = true;
+            }
+            // GUID factory
+            //guid = newguid();
+            function newguid() {
+                let u = Date.now().toString(16) + Math.random().toString(16) + '0'.repeat(16);
+                return [u.substr(0, 8), u.substr(8, 4), '4000-8' + u.substr(13, 3), u.substr(16, 12)].join('-');
+            }
+
+            $scope.close = function () {
+                $('.popup').removeClass('active');
+                $('.popupcontent').removeClass('active');
+                $('.popupcat').removeClass('active');
+                $('.popupperimeter').removeClass('active');
+                $('.popupcontrol').removeClass('active');
+                $('.popupcatsub').removeClass('active');
+            };
+
+
+            //Perimeters START
+
+            function editPerimeter(perimeter) {
+                $scope.editperimeter = perimeter;
+                $('.popup').addClass('active');
+            }
+
+            $scope.beginEditPerimeter = function (perimeter) {
+                editPerimeter(perimeter);
+            };
+
+            $scope.savePerimeters = function () {
+                if ($scope.companyedit) {
+                    companyService.saveCompany($scope.company);
+                    $('.popup').removeClass('active');
+                }
+            };
+
+
+            $scope.newPerimeter = function () {
+                if ($scope.companyedit) {
+                    if ($scope.company.standardperimeters == null) {
+                        $scope.company.standardperimeters = [];
+                    }
+                    $scope.company.standardperimeters.push({});
+                    $scope.editperimeter = $scope.company.standardperimeters[$scope.company.standardperimeters.length - 1];
+                    $scope.editperimeter._id = Math.random().toString(36).substr(2, 9);
+                    $scope.editperimeter.title = 'NEW PERIMETER';
+                    $('.popup').addClass('active');
+                }
+            };
+
+            $scope.deletePerimeter = function (perimeter) {
+                if ($scope.companyedit) {
+                    $scope.company.standardperimeters.splice($scope.company.standardperimeters.indexOf(perimeter), 1);
+                    companyService.saveCompany($scope.company);
+                    $('.popup').removeClass('active');
+                }
+            };
+
+
+            //Perimeter END
+
+
+            //Controls START
+
+            function editcontrol(control) {
+                $scope.editcontrol = control;
+                $('.popup').addClass('active');
+            }
+
+            $scope.beginEditControl = function (control) {
+                editcontrol(control);
+            };
+
+            $scope.saveControls = function () {
+                if ($scope.companyedit) {
+                    companyService.saveCompany($scope.company);
+                    $('.popup').removeClass('active');
+                }
+            };
+
+            $scope.newstandardcontrol = function () {
+                if ($scope.companyedit) {
+                    if ($scope.company.standardcontrols == null) {
+                        $scope.company.standardcontrols = [];
+                    }
+                    $scope.company.standardcontrols.push({});
+                    $scope.editcontrol = $scope.company.standardcontrols[$scope.company.standardcontrols.length - 1];
+                    $scope.editcontrol._id = Math.random().toString(36).substr(2, 9);
+                    $scope.editcontrol.title = 'NEW control';
+                    $('.popup').addClass('active');
+                }
+            };
+
+            $scope.deleteControl = function (control) {
+                if ($scope.companyedit) {
+                    $scope.company.standardcontrols.splice($scope.company.standardcontrols.indexOf(control), 1);
+                    companyService.saveCompany($scope.company);
+                    $('.popup').removeClass('active');
+                }
+            };
+
+
+            //controls END
+
+
+
+
+
 
             $scope.newSystem = function () {
 
@@ -55,24 +172,25 @@ angular
 
                 /** System Details  */
                 system.creationdate = (new Date()).toISOString();
-                system.datasecuritylevel = '5. Public';
+                system.datasecuritylevel = '1. Public';
+                system.priority = '1. Valued';
+                system.valuestreammagnitude = '1. Minimal value';
+                system.externalexposure = '1. No exposure';
                 system.title = "NEW SYSTEM";
+                system.bu = $scope.bus[0];
+                system.continuity = {};
+                system.access = {};
+                system.perimeter = {};
+                system.data = {};
+                system.connectionsobj = {};
+                system.controlsobj = {};
+                system.continuity.securityownerfeedback = "Orange";
+                system.access.securityownerfeedback = "Orange";
+                system.perimeter.securityownerfeedback = "Orange";
+                system.data.securityownerfeedback = "Orange";
+                system.connectionsobj.securityownerfeedback = "Orange";
+                system.controlsobj.securityownerfeedback = "Orange";
 
-
-                /** System audits  */
-                system.audits = [];
-                system.audits.push({});
-                system.audits[0].date = (new Date()).toISOString();
-                system.audits[0].title = 'System created';
-
-                system.audits[0].status = "Green";
-                system.audits[0].overallcomments = "TBD";
-                system.audits[0].dataintegrity = "Green";
-                system.audits[0].accessintegrity = "Green";
-                system.audits[0].perimetersecurity = "Green";
-                system.audits[0].itcontingencyplan = "Green";
-
-                system.audits[0].active = true;
                 $scope.np = system;
 
                 $('.popup').addClass('active');
@@ -95,8 +213,90 @@ angular
                 companyService.deleteSystem(system);
                 $('.popup').removeClass('active');
             };
-            $scope.close = function () {
-                $('.popup').removeClass('active');
+
+
+
+
+            // Datacategories
+
+            $scope.saveCat = function () {
+                companyService.saveCompany($scope.company);
+                $scope.editcat = {};
+                $('.popupcat').removeClass('active');
+            };
+
+            $scope.saveNowDatacat = function (cat) {
+                if(cat.sensitivedata == "no") cat.type = [];
+            };
+
+            $scope.addCat = function () {
+                if ($scope.company.datacategories == null) $scope.company.datacategories = [];
+                var n = {};
+                n.catuid = newguid();
+                n.name = "NEW Category";
+
+                $scope.company.datacategories.push(n);
+                companyService.saveCompany($scope.company);
+
+                $scope.editcat = n;
+                $('.popupcat').addClass('active');
+            };
+
+            $scope.editCat = function (c) {
+                if (c.catuid == undefined) {
+                    c.catuid = newguid();
+                }
+                $scope.editcat = c;
+                $('.popupcat').addClass('active');
+
+            };
+
+            $scope.delCat = function (c) {
+                $scope.company.datacategories.splice($scope.company.datacategories.indexOf(c), 1);
+                companyService.saveCompany($scope.company);
+                $scope.editcat = {};
+                $('.popupcat').removeClass('active');
+
+            };
+
+            // Datacategory Subjects
+
+            $scope.saveCatsub = function () {
+                companyService.saveCompany($scope.company);
+                $scope.editcatsub = {};
+                $('.popupcatsub').removeClass('active');
+            };
+
+
+
+            $scope.addCatsub = function () {
+                if ($scope.company.datacatsubs == null) $scope.company.datacatsubs = [];
+                var n = {};
+                n.catsubuid = newguid();
+                n.name = "NEW Category subject";
+
+                $scope.company.datacatsubs.push(n);
+                companyService.saveCompany($scope.company);
+
+                $scope.editcatsub = n;
+                $('.popupcatsub').addClass('active');
+            };
+
+            $scope.editthisCatsub = function (c) {
+                if (c.catsubuid == undefined) {
+                    c.catsubuid = newguid();
+                }
+                $scope.editcatsub = c;
+                $('.popupcatsub').addClass('active');
+
+            };
+
+            $scope.delCatsub = function (c) {
+                $scope.company.datacatsubs.splice($scope.company.datacatsubs.indexOf(c), 1);
+                companyService.saveCompany($scope.company);
+                $scope.editcatsub = {};
+                $('.popupcatsub').removeClass('active');
+
             };
         }
     ]);

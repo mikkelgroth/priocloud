@@ -1,7 +1,7 @@
 <h2 class="center {{project.lastStatusFlag}}">
     {{project.type}} - {{project.title}} ({{project.projectnumber}})
 </h2>
-<prio-project-menu prio-project-id="{{project._id.$oid}}" prio-project-title="{{project.title}}"></prio-project-menu>
+<prio-project-menu prio-project-id="{{project._id.$oid}}"></prio-project-menu>
 <form ng-submit="saveProject()">
     <div class="view">
         <div class="mainbox editboxon" id="details">
@@ -101,18 +101,6 @@
                         <input style="width: 200px" ng-model="project.title" ng-change="saveNow()" id="title"
                             ng-disabled="!user.changeContent" maxlength="25" />
                     </td>
-                    <td class="header" rowspan="3">Affected units</td>
-                    <td rowspan="3">
-                        <select class="multiple-select" style="width: 200px" multiple="multiple" ng-multiple="true"
-                            ng-model="project.connect" ng-change="saveNow()" ng-disabled="!user.changeContent">
-                            <option ng-repeat="bu in bus | orderBy:'order'" value="{{bu.name}}">{{bu.indent}}{{bu.name}}
-                            </option>
-                        </select>
-                    </td>
-
-                </tr>
-                <tr>
-
                     <td class="l header">Type</td>
                     <td>
 
@@ -123,7 +111,6 @@
                             <option value="Portfolio">Portfolio</option>
                         </select>
                     </td>
-
                 </tr>
                 <tr>
                     <td class="header">Unit</td>
@@ -133,32 +120,6 @@
                             ng-options="bu.name for bu in bus | orderBy: 'order' track by bu.name"
                             ng-disabled="!(user.changeContent && (user.admin || user.subadmin))"></select>
                     </td>
-
-                </tr>
-                <tr>
-                    <td class="header">Portfolio</td>
-                    <td>
-                        <select ng-change="saveNow()" ng-model="project.support" id="prosupport"
-                            ng-options="port.name for port in company.portfolios | orderBy: 'level' track by port.name"
-                            ng-disabled="!user.changeContent"></select>
-                    </td>
-                    <td class="header" rowspan="3">Affected strategies</td>
-                    <td rowspan="3">
-                        <select class="multiple-select" style="width: 200px" multiple="multiple" ng-multiple="true"
-                            ng-model="project.strategies" ng-change="saveNow()" ng-disabled="!user.changeContent">
-                            <option ng-repeat="type in company.strategytypes| orderBy:'name'" value="{{type.name}}">
-                                {{type.name}}</option>
-                        </select>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="header">ID</td>
-                    <td>
-                        <input ng-model="project.projectnumber" ng-change="saveNow()"
-                            ng-disabled="!user.changeContent && (user.financecontroller || user.admin || user.subadmin)" />
-                    </td>
-                </tr>
-                <tr>
                     <td class="header">State</td>
                     <td>
                         <select ng-model="project.state" id="state" ng-change="statechange();saveNow()"
@@ -174,6 +135,56 @@
                         </select>
                     </td>
                 </tr>
+                <tr>
+                    <td class="header">Portfolio</td>
+                    <td>
+                        <select ng-change="saveNow()" ng-model="project.support" id="prosupport"
+                            ng-options="port.name for port in company.portfolios | orderBy: 'level' track by port.name"
+                            ng-disabled="!user.changeContent"></select>
+                    </td>
+                    <td class="header">ID</td>
+                    <td>
+                        <input ng-model="project.projectnumber" ng-change="saveNow()"
+                            ng-disabled="!user.changeContent && (user.financecontroller || user.admin || user.subadmin)" />
+                    </td>
+                </tr>
+                <tr>
+                    <td class="header">Affected units</td>
+                    <td>
+                        <select class="multiple-select" style="width: 200px" multiple="multiple" ng-multiple="true"
+                            ng-model="project.connect" ng-change="saveNow()" ng-disabled="!user.changeContent">
+                            <option ng-repeat="bu in bus | orderBy:'order'" value="{{bu.name}}">{{bu.indent}}{{bu.name}}
+                            </option>
+                        </select>
+                    </td>
+                    <td class="header">Affected strategies</td>
+                    <td>
+                        <select class="multiple-select" style="width: 200px" multiple="multiple" ng-multiple="true"
+                            ng-model="project.strategies" ng-change="saveNow()" ng-disabled="!user.changeContent">
+                            <option ng-repeat="type in company.strategytypes| orderBy:'name'" value="{{type.name}}">
+                                {{type.name}}</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="header">Affected systems</td>
+                    <td>
+                        <select class="multiple-select" style="width: 200px" multiple="multiple" ng-multiple="true"
+                            ng-model="project.systems" ng-change="saveNow()" ng-disabled="!user.changeContent">
+                            <option ng-repeat="system in systems | orderBy: 'title'" value="{{system.title}}">{{system.title}}
+                            </option>
+                        </select>
+                    </td>
+                    <td class="header">Affected processes</td>
+                    <td>
+                        <select class="multiple-select" style="width: 200px" multiple="multiple" ng-multiple="true"
+                            ng-model="project.processes" ng-change="saveNow()" ng-disabled="!user.changeContent">
+                            <option ng-repeat="process in processs | orderBy:'title'" value="{{process.title}}">
+                                {{process.title}}</option>
+                        </select>
+                    </td>
+                </tr>
+                
                 <tr>
                     <td class="header">State log</td>
                     <td colspan="3">
@@ -445,7 +456,7 @@
               
                 <tr class="header">
                     <td colspan="4">Link external Business Case document
-                        <button ng-if="user.changeContent" ng-click="addlink('busylink')" ng-if="user.changeContent"
+                        <button ng-if="user.changeContent" ng-click="addlink('Details')" ng-if="user.changeContent"
                             class="right">create link</button>
                     </td>
                 </tr>
@@ -455,7 +466,7 @@
                     <td>Show in report</td>
                     <td>Follow link</td>
                 </tr>
-                <tr ng-repeat="link in project.linklist" ng-if="link.lable=='busylink'">
+                <tr ng-repeat="link in project.linklist" ng-if="link.lable=='Details'">
                     <td ng-click="editlinkitem(link)">
                         {{link.title}}
                     </td>

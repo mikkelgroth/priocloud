@@ -46,8 +46,13 @@ angular
                     $scope.projects = projects;
                 });
 
+            $scope.companyedit = false;
+            if ($scope.company.locked && $scope.company.lockedby != undefined && $scope.company.lockedby != {} && $scope.company.lockedby.name == $scope.user.name) {
+                $scope.companyedit = true;
+            }
+
             $scope.newProject = function () {
-                if ($scope.company!=null && ($scope.company.portfolios == null || $scope.company.portfolios.length == 0)) {
+                if ($scope.company != null && ($scope.company.portfolios == null || $scope.company.portfolios.length == 0)) {
                     $scope.company.portfolios = [];
                     naport = {};
                     naport.name = "N/A";
@@ -215,7 +220,7 @@ angular
 
                 /** Project Risk  */
                 project.risks = [];
-                
+
 
                 /** Project Status  */
                 project.statuses = [];
@@ -249,7 +254,7 @@ angular
                 $scope.np = project;
                 $('.popup').addClass('active');
             };
-            
+
             $scope.gotoProject = function (project) {
                 $location.path('/project/' + project._id.$oid + '/details')
             };

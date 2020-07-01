@@ -6,12 +6,12 @@
             <div class="actions">
                 <div class="layout">
                     <div class="layoutelement">
-                        <button type="button" id="saveButton1" ng-if="user.admin"
+                        <button type="button" id="saveButton1" ng-if="user.admin && companyedit"
                             ng-click="saveProject(np)">save</button>
                     </div>
                     <div class="layoutelement center">
                         <button type="button primary" class="Red" ng-click="deleteProject(np)"
-                            ng-if="user.admin">delete</button>
+                            ng-if="user.admin && companyedit">delete</button>
                     </div>
                     <div class="layoutelement right">
                         <button type="button" class="close" ng-click="close()"></button>
@@ -51,7 +51,7 @@
             </table>
         </div>
     </div>
-    <div class="right"><button ng-click="newProject()" ng-if="user.admin">create new project</button></div>
+    <div class="right"><button ng-click="newProject()" ng-if="user.admin && companyedit">create new project</button></div>
     <div class="mainbox" ng-if="company.accounts.length > 0">
         <table class="tablelist smaller">
             <tr class="header">

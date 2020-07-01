@@ -13,7 +13,11 @@ angular
             userService,
             companyService
         ) {
+            companyService.loadCompany();
+            companyService.reloadCompany();
             companyService.reloadSystems();
+            companyService.reloadProcesss();
+
 
             companyService.company.subscribe(function (company) {
                 $scope.company = company;
@@ -44,13 +48,14 @@ angular
             function qcopy(src) {
                 return Object.assign({}, src);
             }
-
+            $scope.views = 'overview';
             $scope.showmepmbutton = true;
             $scope.showmeresbutton = true;
             $scope.systemsearch = qcopy($rootScope.rootfiltersSystems);
             if ($scope.systemsearch == null) {
                 $scope.systemsearch = {};
             }
+            $scope.controllist = setControlList($scope.systems);
 
             //clear all filters
             $scope.clearall = function () {
@@ -85,8 +90,110 @@ angular
                 return returnlist;
             }
 
+            function setControlList(systems) {
+                var clist = [];
+                for (let i = 0; systems != undefined && i < systems.length; i++) {
+                    const e = systems[i];
+                    for (let a = 0; e.datas != undefined && a < e.datas.length; a++) {
+                        const d = e.datas[a];
+                        var control = {};
+                        control.system = e.title;
+                        control.status = e.statusFlag;
+                        control.id = e._id.$oid;
+                        control.area = "Data";
+                        control.controltitle = d.title;
+                        control.conresp = d.conresp;
+                        control.conacc = d.conacc;
+                        control.cstatus = d.status;
+                        control.datacat = d.datacat.name;
+                        control.freq = d.freq;
+                        control.nextdate = d.nextdate;
+                        control.lastdate = d.lastdate;
+                        control.result = d.result;
+                        control.purposerequired = d.datacat.purposerequired;
+                        clist.push(control);
+                    }
+                    for (let a = 0; e.accesss != undefined && a < e.accesss.length; a++) {
+                        const d = e.accesss[a];
+                        var control = {};
+                        control.system = e.title;
+                        control.status = e.statusFlag;
+                        control.id = e._id.$oid;
+                        control.area = "Access";
+                        control.controltitle = d.title;
+                        control.conresp = d.conresp;
+                        control.conacc = d.conacc;
+                        control.cstatus = d.status;
+                        control.datacat = d.datacat.name;
+                        control.freq = d.freq;
+                        control.nextdate = d.nextdate;
+                        control.lastdate = d.lastdate;
+                        control.result = d.result;
+                        control.purposerequired = d.datacat.purposerequired;
+                        clist.push(control);
+                    }
+                    for (let a = 0; e.connections != undefined && a < e.connections.length; a++) {
+                        const d = e.connections[a];
+                        var control = {};
+                        control.system = e.title;
+                        control.status = e.statusFlag;
+                        control.id = e._id.$oid;
+                        control.area = "Connection";
+                        control.controltitle = d.title;
+                        control.conresp = d.conresp;
+                        control.conacc = d.conacc;
+                        control.cstatus = d.status;
+                        control.datacat = d.datacat.name;
+                        control.freq = d.freq;
+                        control.nextdate = d.nextdate;
+                        control.lastdate = d.lastdate;
+                        control.result = d.result;
+                        control.purposerequired = d.datacat.purposerequired;
+                        clist.push(control);
+                    }
+                    for (let a = 0; e.continuitys != undefined && a < e.continuitys.length; a++) {
+                        const d = e.continuitys[a];
+                        var control = {};
+                        control.system = e.title;
+                        control.status = e.statusFlag;
+                        control.id = e._id.$oid;
+                        control.area = "Continuity";
+                        control.controltitle = d.title;
+                        control.conresp = d.conresp;
+                        control.conacc = d.conacc;
+                        control.cstatus = d.status;
+                        control.datacat = d.datacat.name;
+                        control.freq = d.freq;
+                        control.nextdate = d.nextdate;
+                        control.lastdate = d.lastdate;
+                        control.result = d.result;
+                        control.purposerequired = d.datacat.purposerequired;
+                        clist.push(control);
+                    }
+                    for (let a = 0; e.perimeters != undefined && a < e.perimeters.length; a++) {
+                        const d = e.perimeters[a];
+                        var control = {};
+                        control.system = e.title;
+                        control.status = e.statusFlag;
+                        control.id = e._id.$oid;
+                        control.area = "Perimeter";
+                        control.controltitle = d.title;
+                        control.conresp = d.conresp;
+                        control.conacc = d.conacc;
+                        control.cstatus = d.status;
+                        control.datacat = "None";
+                        control.freq = d.freq;
+                        control.nextdate = d.nextdate;
+                        control.lastdate = d.lastdate;
+                        control.result = d.result;
+                        control.purposerequired = "None";
+                        clist.push(control);
+                    }
+                }
+                return clist;
+            }
+
             $scope.goToSystem = function (systemId) {
-                console.log(systemId);
                 $location.path('/system/' + systemId);
             };
 

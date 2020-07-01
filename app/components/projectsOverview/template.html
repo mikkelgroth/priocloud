@@ -366,7 +366,6 @@
                 </tr>
             </table>
         </div>
-
         <div class="overview" ng-show="views=='gantt'">
             <table class="tablelist" ng-if="projectList.length > 0">
                 <tr class="header">
@@ -413,7 +412,6 @@
                 </tr>
             </table>
         </div>
-
         <div class="overview" ng-show="views=='baselines'">
             <table class="tablelist" ng-if="projectList.length > 0">
                 <tr class="header">
@@ -527,8 +525,6 @@
                 </tr>
             </table>
         </div>
-
-
         <div class="overview" ng-show="views=='status'">
             <table class="tablelist" ng-if="projectList.length > 0">
                 <tr class="header">
@@ -886,8 +882,6 @@
                 </tr>
             </table>
         </div>
-
-
         <div class="overview" ng-show="views=='reports'">
             <div class="filter-order-container" ng-show="showfilters">
                 Show sections:
@@ -932,7 +926,6 @@
                 <input type="checkbox" ng-init="$scope.broadcast=false" ng-model="$scope.broadcast">
             </div>
             <div ng-if="projectList.length > 0">
-
                 <div ng-repeat="project in projectList | multiFilter:searchParams | orderBy:[porderparam, porderparam2, porderparam3]"
                     ng-if="(!showPending || (project.pending && showPending == project.pending)) && ($scope.broadcast==false || project.broadcast)"
                     ng-click="goToProject(project._id.$oid)" class="link breaker">

@@ -35,13 +35,20 @@ angular
 
 
             $scope.saveCompany = function (company) {
-
+                company.lastsaved = new Date();
+                company.lastsavedby = $scope.user.name;
                 companyService.saveCompany(company);
             };
 
             $scope.saveCompanyFilters = function () {
                 companyService.saveCompany($scope.company);
             };
+
+            // LOCK
+            $scope.companyedit = false;
+            if ($scope.company.locked && $scope.company.lockedby != undefined && $scope.company.lockedby != {} && $scope.company.lockedby.name == $scope.user.name) {
+                $scope.companyedit = true;
+            }
 
             // GUID factory
             //guid = newguid();

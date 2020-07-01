@@ -9,7 +9,7 @@ angular
         return {
             restrict: 'E',
             replace: true,
-           
+
             templateUrl: 'components/projectMenu/template.html',
             link: linkFunction
 
@@ -18,19 +18,13 @@ angular
 
 
 
-$(window).bind('hashchange', function () {
-    setMenu();
-});
+$(window).on('hashchange', function () {
+    if (window.location.href.indexOf('project') > 0) {
+        setProjectMenu();
+    }
+}).trigger('hashchange');
 
-$(document).ready(function () {
-    setInterval(function () {
-        setMenu();
-
-    }, 200)
-});
-
-function setMenu() {
-
+function setProjectMenu() {
     if (window.location.href.indexOf('/') > 0) {
         $('.menuactive').removeClass('menuactive');
         $('.project-menu-home').addClass('menuactive');

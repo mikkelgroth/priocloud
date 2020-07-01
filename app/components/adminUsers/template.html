@@ -6,15 +6,15 @@
             <div class="actions">
                 <div class="layout">
                     <div class="layoutelement">
-                        <button type="button" id="saveButton1" ng-if="user.admin"
+                        <button type="button" id="saveButton1" ng-if="user.admin && companyedit"
                             ng-click="saveUser(edituser)">save</button>
                     </div>
                     <div class="layoutelement center">
                         <button type="button primary" class="Red" ng-click="deleteUser(edituser)"
-                            ng-if="user.admin && edituser.email != user.email">delete</button>
+                            ng-if="user.admin && companyedit && edituser.email != user.email">delete</button>
                     </div>
                     <div class="layoutelement center">
-                        <button type="button primary" ng-click="resetPassword(edituser)" ng-if="user.admin">reset
+                        <button type="button primary" ng-click="resetPassword(edituser)" ng-if="user.admin && companyedit">reset
                             password by mail</button>
                     </div>
                     <div class="layoutelement right">
@@ -63,6 +63,10 @@
                     <td><input type="checkbox" ng-model="edituser.businessowner" /></td>
                 </tr>
                 <tr>
+                    <td class="formlabel">Security owner</td>
+                    <td><input type="checkbox" ng-model="edituser.securityowner" /></td>
+                </tr>
+                <tr>
                     <td class="formlabel">Sub Admin</td>
                     <td><input type="checkbox" ng-disabled="!user.admin" ng-model="edituser.subadmin" /></td>
                 </tr>
@@ -77,7 +81,7 @@
             </table>
         </div>
     </div>
-    <div class="right"><button ng-click="newUser()" ng-if="user.admin">create new user</button></div>
+    <div class="right"><button ng-click="newUser()" ng-if="user.admin && companyedit">create new user</button></div>
     <div class="overview">
         <table class="tablelist smaller">
             <tr class="header">

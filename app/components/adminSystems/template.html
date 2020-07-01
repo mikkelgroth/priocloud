@@ -1,73 +1,512 @@
 <prio-admin-menu></prio-admin-menu>
 <div class="view">
-    <h3>Systems</h3>
-    <div class="popup">
-        <div class="overview popupcontent">
-            <div class="actions">
-                <div class="layout">
-                    <div class="layoutelement">
-                        <button type="button" id="saveButton1" ng-if="user.admin"
-                            ng-click="saveSystem(np)">save</button>
-                    </div>
-                    <div class="layoutelement center">
-                        <button type="button primary" class="Red" ng-click="deleteSystem(np)"
-                            ng-if="user.admin">delete</button>
-                    </div>
-                    <div class="layoutelement right">
-                        <button type="button" class="close" ng-click="close()"></button>
+    <div class="radiotabs">
+        <label for="systemsview"><input type="radio" id="systemsview" name="views" ng-model="views"
+                value="systemsview"><span>
+                Systems</span></label>
+        <label for="datacategoriesview"><input type="radio" id="datacategoriesview" name="views" ng-model="views"
+                value="datacategoriesview"><span>
+                Data categories</span></label>
+        <label for="datasubjectsview"><input type="radio" id="datasubjectsview" name="views" ng-model="views"
+                value="datasubjectsview"><span>
+                Data subjects</span></label>
+        <label for="controlsview"><input type="radio" id="controlsview" name="views" ng-model="views"
+                value="controlsview"><span>
+                Controls</span></label>
+        <label for="perimeterviews"><input type="radio" id="perimeterviews" name="views" ng-model="views"
+                value="perimeterviews"><span>
+                Perimeters</span></label>
+    </div>
+    <div class="overview" ng-show="views=='controlsview'">
+        <div class="popup">
+            <div class="overview popupcontent">
+                <div class="actions">
+                    <div class="layout">
+                        <div class="layoutelement">
+                            <button type="button" id="saveButton4" ng-if="user.admin && companyedit"
+                                ng-click="saveControls()">save</button>
+                        </div>
+                        <div class="layoutelement center">
+                            <button type="button primary" class="Red" ng-click="deleteControl(editcontrol)"
+                                ng-if="user.admin && companyedit">delete</button>
+                        </div>
+                        <div class="layoutelement right">
+                            <button type="button" class="close" ng-click="close()"></button>
+                        </div>
                     </div>
                 </div>
+                <h3>Control</h3>
+                <table class="formtable smaller">
+                    <tr>
+                        <td class="formlabel">Title</td>
+                        <td>
+                            <input ng-model="editcontrol.title" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="formlabel">Control target</td>
+                        <td>
+                            <select ng-model="editcontrol.target">
+                                <option value="Perimeter">Perimeter</option>
+                                <option value="Access">Access</option>
+                                <option value="Continuity">Continuity</option>
+                                <option value="Data">Data</option>
+                                <option value="Connections">Connections</option>
+                                <option value="DPA">DPA</option>
+                                <option value="DPIA">DPIA</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="formlabel">Control accountable</td>
+                        <td>
+                            <select ng-model="editcontrol.conacc">
+                                <option ng-repeat="u in tempusers | filter: {source: true} | orderBy:'name'"
+                                    value="{{u.name}}">{{u.name}}</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="formlabel">Control description</td>
+                        <td>
+                            <textarea ng-model="editcontrol.controldescription" maxlength="800"
+                                placeholder="Describe the control."></textarea>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="formlabel">Control level</td>
+                        <td>
+                            <select ng-model="editcontrol.level">
+                                <option value="Ad hoc Internal">Ad hoc Internal</option>
+                                <option value="Ad hoc External">Ad hoc External</option>
+                                <option value="Mandatory Internal">Mandatory Internal</option>
+                                <option value="Mandatory External">Mandatory External</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="formlabel">Control frequency</td>
+                        <td>
+                            <select ng-model="editcontrol.freq">
+                                <option value="Weekly">Weekly</option>
+                                <option value="Bi-weekly">Bi-weekly</option>
+                                <option value="Monthly">Monthly</option>
+                                <option value="Quarterly">Quarterly</option>
+                                <option value="Half yearly">Half yearly</option>
+                                <option value="Yearly">Yearly</option>
+                                <option value="On request">On request</option>
+                            </select>
+                        </td>
+                    </tr>
+                </table>
             </div>
+        </div>
+        <div class="mainbox">
             <h3>
-                Edit system
+                Standard controls
             </h3>
-            <table class="formtable smaller">
-                <tr>
-                    <td class="formlabel">System title</td>
-                    <td><input type="text" ng-model="np.title" /></td>
+            <div class="right">
+                <button type="button" ng-click="newstandardcontrol()" ng-if="user.admin && companyedit">create new standard control</button>
+            </div>
+            <div class="overview">
+                <table class="tablelist smaller" ng-if="company.standardcontrols.length > 0">
+                    <tr class="header">
+                        <td>Control title</td>
+                        <td>Target</td>
+                        <td>Accountable</td>
+                        <td>Level</td>
+                        <td>Frequency</td>
+                    </tr>
+                    <tr ng-repeat="cont in company.standardcontrols | orderBy:'title'" class="link">
+                        <td ng-click="beginEditControl(cont)">
+                            <b>{{cont.title}}</b></td>
+                        <td ng-click="beginEditControl(cont)">{{cont.target}}</td>
+                        <td ng-click="beginEditControl(cont)">{{cont.conacc}}</td>
+                        <td ng-click="beginEditControl(cont)">{{cont.level}}</td>
+                        <td ng-click="beginEditControl(cont)">{{cont.freq}}</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="overview" ng-show="views=='perimeterviews'">
+
+        <div class="popup">
+            <div class="overview popupcontent">
+                <div class="actions">
+                    <div class="layout">
+                        <div class="layoutelement">
+                            <button type="button" id="saveButton5" ng-if="user.admin && companyedit"
+                                ng-click="savePerimeters()">save</button>
+                        </div>
+                        <div class="layoutelement center">
+                            <button type="button primary" class="Red" ng-click="deletePerimeter(editperimeter)"
+                            ng-if="user.admin && companyedit">delete</button>
+                        </div>
+                        <div class="layoutelement right">
+                            <button type="button" class="close" ng-click="close()"></button>
+                        </div>
+                    </div>
+                </div>
+                <h3>
+                    Standard perimeter
+                </h3>
+                <table class="formtable smaller">
+                    <tr>
+                        <td class="formlabel">Title</td>
+                        <td>
+                            <input ng-model="editperimeter.title" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="formlabel">Security target</td>
+                        <td>
+                            <select ng-model="editperimeter.target">
+                                <option value="Infrastructure">Infrastructure</option>
+                                <option value="Application">Application</option>
+                                <option value="Network">Network</option>
+                                <option value="Cloud">Cloud</option>
+                                <option value="IOT">IOT</option>
+
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="formlabel">Perimeter description</td>
+                        <td>
+                            <textarea ng-model="editperimeter.description" maxlength="800"
+                                placeholder="Describe the perimeter."></textarea>
+                        </td>
+
+                    </tr>
+                    <tr>
+                        <td class="formlabel">Security Product</td>
+                        <td>
+                            <input ng-model="editperimeter.product" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="formlabel">Product management type</td>
+                        <td>
+                            <select ng-model="editperimeter.managementtype">
+                                <option value="Internal ad hoc">Internal ad hoc</option>
+                                <option value="Internal SLA">Internal SLA</option>
+                                <option value="Managed Service Provider">Managed Service Provider</option>
+                                <option value="Vendor Managed">Vendor Managed</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="formlabel">Product management</td>
+                        <td>
+                            <textarea ng-model="editperimeter.management" maxlength="800"
+                                placeholder="Describe the product management."></textarea>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="formlabel">Contact info</td>
+                        <td>
+                            <textarea ng-model="editperimeter.contact" maxlength="800"
+                                placeholder="Describe the product management contact info."></textarea>
+                        </td>
+
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div class="mainbox">
+            <h3>
+                Standard perimeters
+            </h3>
+            <div class="right">
+                <button type="button" ng-click="newPerimeter()" ng-if="user.admin && companyedit">create new
+                    standard perimeter</button>
+            </div>
+            <div class="overview">
+                <table class="tablelist smaller" ng-if="company.standardperimeters.length > 0">
+                    <tr class="header">
+                        <td>Perimeter title</td>
+                        <td>Target</td>
+                        <td>Product</td>
+                        <td>Managed</td>
+                    </tr>
+                    <tr ng-repeat="perimeter in company.standardperimeters | orderBy:'title'" class="link">
+                        <td ng-click="beginEditPerimeter(perimeter)" class="{{perimeter.status}}">
+                            <b>{{perimeter.title}}</b></td>
+                        <td ng-click="beginEditPerimeter(perimeter)">{{perimeter.target}}</td>
+                        <td ng-click="beginEditPerimeter(perimeter)">{{perimeter.product}}</td>
+                        <td ng-click="beginEditPerimeter(perimeter)">{{perimeter.managementtype}}</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="overview" ng-show="views=='systemsview'">
+        <h3>Systems</h3>
+        <div class="popup">
+            <div class="overview popupcontent">
+                <div class="actions">
+                    <div class="layout">
+                        <div class="layoutelement">
+                            <button type="button" id="saveButton1" ng-if="user.admin && companyedit"
+                                ng-click="saveSystem(np)">save</button>
+                        </div>
+                        <div class="layoutelement center">
+                            <button type="button primary" class="Red" ng-click="deleteSystem(np)"
+                            ng-if="user.admin && companyedit">delete</button>
+                        </div>
+                        <div class="layoutelement right">
+                            <button type="button" class="close" ng-click="close()"></button>
+                        </div>
+                    </div>
+                </div>
+                <h3>
+                    Edit system
+                </h3>
+                <table class="formtable smaller">
+                    <tr>
+                        <td class="formlabel">System title</td>
+                        <td><input type="text" ng-model="np.title" /></td>
+                    </tr>
+                    <tr>
+                        <td class="formlabel">Business unit</td>
+                        <td>
+                            <select ng-model="np.bu" ng-options="bu.name for bu in bus track by bu.name"></select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="formlabel">System admin</td>
+                        <td>
+                            <select ng-model="np.pm"
+                                ng-options="u.name for u in tempusers | filter: {source: true} | orderBy:'name' track by u.name">
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="formlabel">System Owner</td>
+                        <td>
+                            <select ng-model="np.po"
+                                ng-options="u.name for u in tempusers | filter: {source: true} | orderBy:'name' track by u.name">
+                            </select>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div class="right"><button ng-click="newSystem()" ng-if="user.admin && companyedit">create new system</button></div>
+        <div class="mainbox" ng-if="systems.length > 0">
+            <table class="tablelist smaller">
+                <tr class="header">
+                    <td>System</td>
+                    <td>BU</td>
+                    <td>System Admin</td>
+                    <td>System Owner</td>
+                    <td>Go to system</td>
                 </tr>
-                <tr>
-                    <td class="formlabel">Business unit</td>
-                    <td>
-                        <select ng-model="np.bu" ng-options="bu.name for bu in bus track by bu.name"></select>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="formlabel">System admin</td>
-                    <td>
-                        <select ng-model="np.pm"
-                            ng-options="u.name for u in users | filter: {source: true} | orderBy:'name' track by u.name">
-                        </select>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="formlabel">System Owner</td>
-                    <td>
-                        <select ng-model="np.po"
-                            ng-options="u.name for u in users | filter: {source: true} | orderBy:'name' track by u.name">
-                        </select>
-                    </td>
+                <tr ng-repeat="system in systems | orderBy: 'title'">
+                    <td ng-click="editSystem(system)">{{system.title}}</td>
+                    <td ng-click="editSystem(system)">{{system.bu.name}}</td>
+                    <td ng-click="editSystem(system)">{{system.pm.name}}</td>
+                    <td ng-click="editSystem(system)">{{system.po.name}}</td>
+                    <td ng-click="gotoSystem(system)">--></td>
                 </tr>
             </table>
         </div>
     </div>
-    <div class="right"><button ng-click="newSystem()" ng-if="user.admin">create new system</button></div>
-    <div class="mainbox" ng-if="systems.length > 0">
-        <table class="tablelist smaller">
-            <tr class="header">
-                <td>System</td>
-                <td>BU</td>
-                <td>System Admin</td>
-                <td>System Owner</td>
-                <td>Go to system</td>
-            </tr>
-            <tr ng-repeat="system in systems | orderBy: 'title'">
-                <td ng-click="editSystem(system)">{{system.title}}</td>
-                <td ng-click="editSystem(system)">{{system.bu.name}}</td>
-                <td ng-click="editSystem(system)">{{system.pm.name}}</td>
-                <td ng-click="editSystem(system)">{{system.po.name}}</td>
-                <td ng-click="gotoSystem(system)">--></td>
-            </tr>
-        </table>
+
+    <div class="overview" ng-show="views=='datacategoriesview'">
+        <h3>Data categories</h3>
+        <div class="popupcat">
+            <div class="overview popupcontent">
+                <div class="actions">
+                    <div class="layout">
+                        <div class="layoutelement">
+                            <button type="button" id="saveButton2" ng-if="user.admin && companyedit" ng-click="saveCat()">save</button>
+                        </div>
+                        <div class="layoutelement center">
+                            <button type="button primary" class="Red" ng-click="delCat(editcat)"
+                            ng-if="user.admin && companyedit">delete</button>
+                        </div>
+                        <div class="layoutelement right">
+                            <button type="button" class="close" ng-click="close()"></button>
+                        </div>
+                    </div>
+                </div>
+                <h3>
+                    Edit data category
+                </h3>
+                <table class="formtable smaller">
+                    <tr>
+                        <td class="formlabel">Data category name</td>
+                        <td>
+                            <input ng-model="editcat.name" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="formlabel">Data categry subjects</td>
+                        <td>
+                            <select class="multiple-select" multiple="multiple" ng-multiple="true"
+                                ng-model="editcat.categorysubjects">
+                                <option ng-repeat="catsub in company.datacatsubs| orderBy:'name'">{{catsub.name}}
+                                </option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="formlabel">
+                            Data sensitivity
+                        </td>
+                        <td>
+                            <input type="radio" id="yes" ng-model="editcat.sensitivedata" name="sensitivedata" value="yes"
+                                ng-change="saveNowDatacat(editcat)">
+                            <label for="yes">Sensitive personal data </label><br>
+                            <input type="radio" id="no" ng-model="editcat.sensitivedata" name="sensitivedata" value="no"
+                                ng-change="saveNowDatacat(editcat)">
+                            <label for="no">General personal data </label>
+                        </td>
+                    </tr>
+                    <tr ng-show="editcat.sensitivedata=='yes'">
+                        <td class="formlabel">Contains sensitive data types</td>
+                        <td>
+                            <select class="multiple-select" multiple="multiple" ng-multiple="true"
+                                ng-model="editcat.type">
+                                <option value="Race">Race</option>
+                                <option value="Ethnicity">Ethnicity</option>
+                                <option value="Political">Political</option>
+                                <option value="Religious">Religious</option>
+                                <option value="Philosophical beliefs">Philosophical beliefs</option>
+                                <option value="Union membership">Union membership</option>
+                                <option value="Health">Health</option>
+                                <option value="Sex life">Sex life</option>
+                                <option value="Sexual orientation">Sexual orientation</option>
+                                <option value="Genetic and Biometric data">Genetic and biometric data</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="formlabel">Origin of source</td>
+                        <td>
+                            <div class="field">
+                                <textarea ng-model="editcat.source" maxlength="800"
+                                    placeholder="Describe the origin and source of this data set"></textarea>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="formlabel">Description of data set</td>
+                        <td>
+                            <div class="field">
+                                <textarea ng-model="editcat.description" maxlength="800"
+                                    placeholder="Describe the data set"></textarea>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="formlabel">Data fields</td>
+                        <td>
+                            <div class="field">
+                                <textarea ng-model="editcat.datafields" maxlength="800"
+                                    placeholder="Describe the data fields"></textarea>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="formlabel">Purpose required</td>
+                        <td>
+                            <input type="checkbox" ng-model="editcat.purposerequired">
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div class="right"><button ng-click="addCat()" ng-if="user.admin && companyedit">create new data category</button></div>
+        <div class="overview" ng-if="company.datacategories.length > 0">
+            <table class="tablelist smaller">
+                <tr class="header">
+                    <td class="header">Category</td>
+                    <td class="header">Data types</td>
+                    <td class="header">Data category subjects</td>
+                    <td class="header">Purpose required</td>
+                </tr>
+                <tr ng-repeat="cat in company.datacategories| orderBy:'name'" ng-click="editCat(cat)">
+                    <td> {{cat.name}}</td>
+                    <td>
+                        <div ng-if="cat.sensitivedata == 'yes'">Sensitive personal data: </div>
+                        <div ng-if="cat.sensitivedata != 'yes'">General personal data</div>
+                        <div ng-repeat="t in cat.type">
+                            {{t}}<br />
+                        </div>
+                    </td>
+                    <td>
+                        <div ng-repeat="s in cat.categorysubjects">
+                            {{s}}<br />
+                        </div>
+                    </td>
+                    <td> <input type="checkbox" ng-model="cat.purposerequired" ng-disabled="true"></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <div class="overview" ng-show="views=='datasubjectsview'">
+        <h3>Data subject categories</h3>
+        <div class="popupcatsub">
+            <div class="overview popupcontent">
+                <div class="actions">
+                    <div class="layout">
+                        <div class="layoutelement">
+                            <button type="button" id="saveButton3" ng-if="user.admin && companyedit"
+                                ng-click="saveCatsub()">save</button>
+                        </div>
+                        <div class="layoutelement center">
+                            <button type="button primary" class="Red" ng-click="delCatsub(editcatsub)"
+                            ng-if="user.admin && companyedit">delete</button>
+                        </div>
+                        <div class="layoutelement right">
+                            <button type="button" class="close" ng-click="close()"></button>
+                        </div>
+                    </div>
+                </div>
+                <h3>
+                    Edit data subject category
+                </h3>
+                <table class="formtable smaller">
+                    <tr>
+                        <td class="formlabel">Data subject category name</td>
+                        <td>
+                            <input ng-model="editcatsub.name" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="formlabel">Description of data subject</td>
+                        <td>
+                            <div class="field">
+                                <textarea ng-model="editcatsub.description" maxlength="800"
+                                    placeholder="Describe the data set"></textarea>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div class="right"><button ng-click="addCatsub()" ng-if="user.admin && companyedit">create new data category subject</button>
+        </div>
+
+        <div class="overview" ng-if="company.datacatsubs.length > 0">
+            <table class="tablelist smaller">
+                <tr class="header">
+                    <td class="header">Category subject</td>
+                    <td class="header">Description</td>
+                </tr>
+                <tr ng-repeat="catsub in company.datacatsubs| orderBy:'name'" ng-click="editthisCatsub(catsub)">
+                    <td> {{catsub.name}}</td>
+                    <td>
+                        <pre>{{catsub.description}}</pre>
+                    </td>
+                </tr>
+            </table>
+        </div>
     </div>
 </div>

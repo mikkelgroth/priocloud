@@ -29,6 +29,14 @@ angular
                     $scope.bus = units;
                 });
 
+            // LOCK
+            $scope.companyedit = false;
+            if ($scope.company.locked && $scope.company.lockedby != undefined && $scope.company.lockedby != {} && $scope.company.lockedby.name == $scope.user.name) {
+                $scope.companyedit = true;
+            }
+
+
+
             $scope.editUser = function (user) {
                 $scope.edituser = user;
                 $('.popup').addClass('active');
@@ -47,7 +55,7 @@ angular
                 $scope.edituser = {};
                 $('.popup').addClass('active');
             };
-            
+
             $scope.deleteUser = function (user) {
                 userService.deleteUser(user);
                 $('.popup').removeClass('active');

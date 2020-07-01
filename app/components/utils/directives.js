@@ -182,17 +182,19 @@ $(function () {
 
 
 
-$('body').on('keydown', 'textarea', autosize);
-$('body').on('click', function(){
+    $('body').on('keydown', 'textarea', autosize);
+    $('body').on('click', function () {
 
-    $('textarea').each(function(){
-        var thetextarea = this;
+        $('textarea').each(function () {
+            var thetextarea = this;
             thetextarea.style.cssText = 'height:auto; padding:0; ';
             // for box-sizing other than "content-box" use:
             // thetextarea.style.cssText = '-moz-box-sizing:content-box';
             thetextarea.style.cssText = 'height:' + (parseInt(thetextarea.scrollHeight) + 20) + 'px';
+        });
     });
-});
 
 
 });
+
+

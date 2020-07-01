@@ -7,19 +7,19 @@ angular
         _this._company = {};
         _this._projects = [];
         _this._systems = [];
-        _this._processes = [];
+        _this._processs = [];
 
         _this.company = new rx.BehaviorSubject({});
         _this.businessUnits = new rx.BehaviorSubject([]);
         _this.projects = new rx.BehaviorSubject([]);
         _this.systems = new rx.BehaviorSubject([]);
-        _this.processes = new rx.BehaviorSubject([]);
+        _this.processs = new rx.BehaviorSubject([]);
 
         _this.projects.subscribe(function (projects) {
             _this._projects = projects;
         });
-        _this.processes.subscribe(function (processes) {
-            _this._processes = processes;
+        _this.processs.subscribe(function (processs) {
+            _this._processs = processs;
         });
         _this.systems.subscribe(function (systems) {
             _this._systems = systems;
@@ -50,9 +50,9 @@ angular
                 _this.systems.onNext(data.systems);
             });
         };
-        _this.reloadProcesses = function () {           
-            loadCompanyProcesses().then(function (data) {                
-                _this.processes.onNext(data.processes);
+        _this.reloadProcesss = function () {           
+            loadCompanyProcesss().then(function (data) {                
+                _this.processs.onNext(data.processs);
             });
         };
 
@@ -66,11 +66,11 @@ angular
             });
             return deferred.promise;
         }
-        function loadCompanyProcesses() {
+        function loadCompanyProcesss() {
             var deferred = $q.defer();
             restService.getData('process').then(function (dataResponse) {
                 if (dataResponse.data && dataResponse.data.length > 0) {
-                    _this.processes.onNext(dataResponse.data);
+                    _this.processs.onNext(dataResponse.data);
                 }
             });
             return deferred.promise;
@@ -107,10 +107,6 @@ angular
                     return rx.Observable.fromArray(systems);
                 })
                 .first(function (a) {
-                    console.log(a);
-                    console.log(systemId);
-                    console.log(a._id.$oid);
-                    console.log( a && a._id.$oid === systemId);
                     return a && a._id.$oid === systemId;
                 });
         };
@@ -188,11 +184,11 @@ angular
         };
         //Systems END
 
-        //PROCESSES START
+        //PROCESSS START
         _this.getProcess = function (processId) {
-            return _this.processes
-                .flatMap(function (processes) {
-                    return rx.Observable.fromArray(processes);
+            return _this.processs
+                .flatMap(function (processs) {
+                    return rx.Observable.fromArray(processs);
                 })
                 .first(function (a, b, c) {
                     return a && a._id.$oid === processId;
@@ -230,12 +226,12 @@ angular
                         console.log("UPDATED: " + process.title);
                         processhaschanged = false;
                         deleteThis = false;
-                        var processIndex = _this._processes
+                        var processIndex = _this._processs
                             .map(function (p) { return p._id.$oid; })
                             .indexOf(updatedProcess._id.$oid);
                         if (~processIndex) {
-                            _this._processes[processIndex] = updatedProcess;
-                            _this.processes.onNext(_this._processes);
+                            _this._processs[processIndex] = updatedProcess;
+                            _this.processs.onNext(_this._processs);
                         }
                     })
                     .error(function (dataResponse) {
@@ -246,8 +242,8 @@ angular
                 restService
                     .saveData('process', angular.fromJson(process))
                     .success(function (newProcess) {
-                        _this._processes.push(newProcess);
-                        _this.processes.onNext(_this._processes);
+                        _this._processs.push(newProcess);
+                        _this.processs.onNext(_this._processs);
                     })
                     .error(function (dataResponse) {
                         console.log('ERROR ...');
@@ -259,18 +255,18 @@ angular
             restService
                 .deleteData('process', angular.fromJson(process))
                 .success(function (dataResponse) {
-                    var processIndex = _this._processes
+                    var processIndex = _this._processs
                         .map(function (p) { return p._id.$oid; })
                         .indexOf(process._id.$oid);
 
-                    _this._processes.splice(processIndex, 1);
-                    _this.processes.onNext(_this._processes);
+                    _this._processs.splice(processIndex, 1);
+                    _this.processs.onNext(_this._processs);
                 })
                 .error(function (dataResponse) {
                     console.log('ERROR DELETE SYSTEM');
                 });
         };
-        //PROCESSES END
+        //PROCESSS END
 
 
         //PROJECTS START
@@ -355,6 +351,8 @@ angular
                     console.log('ERROR DELETE PROJECT');
                 });
         };
+
+
         //Projects END
 
         function loadCompanyData() {

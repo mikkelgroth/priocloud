@@ -26,23 +26,31 @@ angular
             companyService
                 .getProject(projectId)
                 .subscribe(function (project) {
-
                     $scope.project = project;
-
                 });
 
             companyService
                 .businessUnits
                 .subscribe(function (units) {
-
                     $scope.bus = units;
                 });
 
             companyService
                 .company
                 .subscribe(function (company) {
-
                     $scope.company = company;
+                });
+
+            companyService
+                .systems
+                .subscribe(function (systems) {
+                    $scope.systems = systems;
+                });
+
+            companyService
+                .processs
+                .subscribe(function (processs) {
+                    $scope.processs = processs;
                 });
 
             userService
@@ -77,7 +85,7 @@ angular
                 $scope.project.rawstartdate = $("#projdate")[0].value;
                 $scope.project.rawenddate = $("#projenddate")[0].value;
             }
-
+            
             // GUID factory
             //guid = newguid();
             function newguid() {
@@ -87,10 +95,10 @@ angular
             //  Start LINK ENGINE
 
             $scope.closelink = function (link) {
-                if (link.lable=="orglink") {
+                if (link.lable == "orglink") {
                     $scope.showeditlinkorg = false;
                 }
-                if (link.lable=="busylink") {
+                if (link.lable == "Details") {
                     $scope.showeditlinkbusi = false;
                 }
             };
@@ -99,12 +107,12 @@ angular
                 if ($scope.user.changeContent) {
                     companyService.saveProjectName($scope.project, $scope.user, true);
                     $scope.editlink = {};
-                    if (link.lable=="orglink") {
+                    if (link.lable == "orglink") {
                         $scope.showeditlinkorg = false;
                     }
-                    if (link.lable=="busylink") {
+                    if (link.lable == "Details") {
                         $scope.showeditlinkbusi = false;
-                    }$scope.hasChanged = false;
+                    } $scope.hasChanged = false;
                 }
             };
 
@@ -121,10 +129,10 @@ angular
                     companyService.saveProjectName($scope.project, $scope.user, true);
 
                     $scope.editlink = n;
-                    if (lable=="orglink") {
+                    if (lable == "orglink") {
                         $scope.showeditlinkorg = true;
                     }
-                    if (lable=="busylink") {
+                    if (lable == "Details") {
                         $scope.showeditlinkbusi = true;
                     }
                 }
@@ -135,25 +143,25 @@ angular
                     c.linkuid = newguid();
                 }
                 $scope.editlink = c;
-                if (c.lable=="orglink") {
+                if (c.lable == "orglink") {
                     $scope.showeditlinkorg = true;
                 }
-                if (c.lable=="busylink") {
+                if (c.lable == "Details") {
                     $scope.showeditlinkbusi = true;
                 }
             };
 
             $scope.dellink = function (c) {
                 if ($scope.user.changeContent) {
-                $scope.project.linklist.splice($scope.project.linklist.indexOf(c), 1);
-                companyService.saveProjectName($scope.project, $scope.user, true);
-                $scope.editlink = {};
-                if (c.lable=="orglink") {
-                    $scope.showeditlinkorg = false;
-                }
-                if (c.lable=="busylink") {
-                    $scope.showeditlinkbusi = false;
-                }$scope.hasChanged = false;
+                    $scope.project.linklist.splice($scope.project.linklist.indexOf(c), 1);
+                    companyService.saveProjectName($scope.project, $scope.user, true);
+                    $scope.editlink = {};
+                    if (c.lable == "orglink") {
+                        $scope.showeditlinkorg = false;
+                    }
+                    if (c.lable == "Details") {
+                        $scope.showeditlinkbusi = false;
+                    } $scope.hasChanged = false;
                 }
             };
             // END LINK ENGINE

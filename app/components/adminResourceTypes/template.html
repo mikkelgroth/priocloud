@@ -9,11 +9,11 @@
                 <div class="actions">
                     <div class="layout">
                         <div class="layoutelement">
-                            <button type="button" id="saveButton1" ng-if="user.admin" ng-click="saveType(edittype)">save</button>
+                            <button type="button" id="saveButton1" ng-if="user.admin && companyedit" ng-click="saveType(edittype)">save</button>
                         </div>
                         <div class="layoutelement center">
                             <button type="button primary" class="Red" ng-click="delType(edittype)"
-                                ng-if="user.admin">delete</button>
+                                ng-if="user.admin && companyedit">delete</button>
                         </div>
                         <div class="layoutelement right">
                             <button type="button" class="close" ng-click="close()"></button>
@@ -70,7 +70,7 @@
                         <td class="formlabel">Names</td>
                         <td>
                             <div class="field">
-                                <textarea ng-model="edittype.names" maxlength="300"
+                                <textarea ng-model="edittype.names" maxlength="800"
                                     placeholder="Name the members of this resource type group."></textarea>
                             </div>
                         </td>
@@ -301,7 +301,7 @@
                 </table>
             </div>
         </div>
-        <div class="right"><button ng-click="addType()" ng-if="user.admin">create new resuorce type</button></div>
+        <div class="right"><button ng-click="addType()" ng-if="user.admin && companyedit">create new resuorce type</button></div>
         <div class="overview">
             <table ng-if="company.resourceTypes.length > 0" class="tablelist smaller">
                 <tr class="header">
@@ -340,11 +340,11 @@
                 <div class="actions">
                     <div class="layout">
                         <div class="layoutelement">
-                            <button type="button" id="saveButton2" ng-if="user.admin" ng-click="saveCat()">save</button>
+                            <button type="button" id="saveButton2" ng-if="user.admin && companyedit" ng-click="saveCat()">save</button>
                         </div>
                         <div class="layoutelement center">
                             <button type="button primary" class="Red" ng-click="delCat(editcat)"
-                                ng-if="user.admin">delete</button>
+                                ng-if="user.admin && companyedit">delete</button>
                         </div>
                         <div class="layoutelement right">
                             <button type="button" class="close" ng-click="close()"></button>
@@ -364,7 +364,7 @@
                 </table>
             </div>
         </div>
-        <div class="right"><button ng-click="addCat()" ng-if="user.admin">create new resuorce type category</button></div>
+        <div class="right"><button ng-click="addCat()" ng-if="user.admin && companyedit">create new resuorce type category</button></div>
         
         <div class="overview" ng-if="company.categories.length > 0">
             <table class="tablelist smaller">
@@ -384,11 +384,11 @@
                 <div class="actions">
                     <div class="layout">
                         <div class="layoutelement">
-                            <button type="button" id="saveButton3" ng-if="user.admin" ng-click="saveAcc()">save</button>
+                            <button type="button" id="saveButton3" ng-if="user.admin && companyedit" ng-click="saveAcc()">save</button>
                         </div>
                         <div class="layoutelement center">
                             <button type="button primary" class="Red" ng-click="delAcc(editacc)"
-                                ng-if="user.admin">delete</button>
+                                ng-if="user.admin && companyedit">delete</button>
                         </div>
                         <div class="layoutelement right">
                             <button type="button" class="close" ng-click="close()"></button>
@@ -414,7 +414,7 @@
                 </table>
             </div>
         </div>
-        <div class="right"><button ng-click="addAcc()" ng-if="user.admin">create new account</button></div>
+        <div class="right"><button ng-click="addAcc()" ng-if="user.admin && companyedit">create new account</button></div>
         <div class="overview" ng-if="company.accounts.length > 0">
             <table class="tablelist smaller">
                 <tr class="header">

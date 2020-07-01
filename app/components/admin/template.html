@@ -1,4 +1,35 @@
 <prio-admin-menu></prio-admin-menu>
+<div id="lock" class="lockbox" ng-show="companylock.lockbox && user.admin">
+    <div class="layoutelement right">
+        <button type="button" class="close" ng-click="closelockbox()"></button>
+    </div>
+    <h1>Lock administration</h1>
+    <div ng-show="company.locked">
+        <h2>Locked by: {{company.lockedby.name}} - {{company.lockeddate | date:'y, MMM d - H:mm:ss'}}</h3>
+    </div>
+    <div ng-show="!company.locked">
+        <h2>Company open for edit!</h3>
+    </div>
+    <h4>History</h4>
+    Last saved company by: {{company.lastsavedby}} - {{company.lastsaved | date:'y, MMM d - H:mm:ss'}}<br />
+    Last forced release lock by: {{company.forcedlockedby.name}} - {{company.forcedlockeddate | date:'y, MMM d - H:mm:ss'}}
+    <h4>Actions</h4>
+    <div class="layout">
+        <div class="layoutelement">
+            <button type="button" ng-show="companylock.showtakelock" ng-click="takelock()">Take the lock</button>
+        </div>
+        <div class="layoutelement center">
+            <button type="button primary" class="Red" ng-click="releaselock()"
+                ng-show="companylock.showreleaselock">Release
+                the lock</button>
+        </div>
+        <div class="layoutelement right">
+            <button type="button" class="Red" ng-click="forcereleaselock()"
+                ng-show="companylock.showforcedreleaselock">Force release!!</button>
+        </div>
+    </div>
+
+</div>
 <div id="admin" class="view">
     <div class="mainbox">
         <h2>Company</h2>
@@ -12,7 +43,7 @@
                 </td>
                 <td>
                     <div class="right">
-                        <button type="button" ng-click="saveCompany(company)">save company</button>
+                        <button type="button" ng-click="saveCompany(company)" ng-show="companyedit">save company</button>
                     </div>
                 </td>
             </tr>
@@ -23,12 +54,12 @@
                 <div class="actions">
                     <div class="layout">
                         <div class="layoutelement">
-                            <button type="button" id="saveButton1" ng-if="user.admin"
+                            <button type="button" id="saveButton1" ng-show="companyedit"
                                 ng-click="saveBu(editbu)">save</button>
                         </div>
                         <div class="layoutelement center">
                             <button type="button primary" class="Red" ng-click="removeBU(editbu)"
-                                ng-if="$index != 0 && user.admin">delete</button>
+                                ng-if="$index != 0 && companyedit">delete</button>
                         </div>
                         <div class="layoutelement right">
                             <button type="button" class="close" ng-click="close()"></button>
@@ -36,7 +67,7 @@
                     </div>
                 </div>
                 <h3>
-                    Edit user
+                    Edit Business Unit
                 </h3>
                 <table class="formtable smaller">
                     <tr>
@@ -86,7 +117,7 @@
                 </table>
             </div>
         </div>
-        <div class="right"><button ng-click="addBu()" ng-if="user.admin">create new business unit</button></div>
+        <div class="right"><button ng-click="addBu()" ng-if="user.admin && companyedit">create new business unit</button></div>
         <div class="overview">
             <table class="tablelist smaller">
                 <tr class="header">

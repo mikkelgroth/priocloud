@@ -193,6 +193,7 @@ angular
 
                     companyService.saveProjectName($scope.project, $scope.user, true);
                     $scope.hasChanged = false;
+                    $('.popup').removeClass('active');
                 }
 
             }
@@ -219,6 +220,7 @@ angular
                     companyService.saveProjectName($scope.project, $scope.user, true);
                     $scope.hasChanged = false;
                     $scope.actiondeleteThis = false;
+                    $('.popupaction').removeClass('active');
                 }
             };
 

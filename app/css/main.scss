@@ -28,7 +28,54 @@ pre {
 	display: inherit;
 }
 
-.popup, .popupport, .popupcat, .popupacc, .popupaction, .popupsteerco, .popupposted, .popupbaseline {
+.infobox {
+	display: block;
+	position: fixed;
+	top: 10%;
+	left: 5%;
+	width: 40%;
+	height: 70%;
+	overflow-y: scroll;
+	border-style: solid;
+	border-width: 3px;
+	background-color: rgba(194, 238, 186, 0.932);
+	border-color: rgba(15, 119, 1, 0.966);
+	border-radius: 20px;
+	box-shadow: 0 -4px 16px 0 rgba(0, 0, 0, 0.5);
+	padding: 16px 16px 16px 16px;
+	z-index: 200;
+}
+
+
+.lockbox {
+	display: block;
+	position: fixed;
+	top: 10%;
+	left: 5%;
+	height: 85%;
+	width: 90%;
+	border-style: solid;
+	border-width: 3px;
+	background-color: rgba(241, 228, 228, 0.932);
+	border-color: rgba(241, 7, 7, 0.966);
+	border-radius: 20px;
+	box-shadow: 0 -4px 16px 0 rgba(0, 0, 0, 0.5);
+	padding: 16px 16px 16px 16px;
+	z-index: 100;
+}
+
+.popup,
+.popupport,
+.popupcat,
+.popupacc,
+.popupaction,
+.popupsteerco,
+.popupposted,
+.popupbaseline,
+.popupcatsub,
+.popuplink,
+.popupcontrol,
+.popupperimeter {
 	&.active {
 		content: "";
 		display: block;
@@ -113,7 +160,6 @@ pre {
 	}
 	.small {
 		font-weight: normal;
-
 	}
 }
 div.view {
@@ -126,6 +172,7 @@ div.view {
 
 .left {
 	//float: left;
+	text-align: left;
 }
 .right {
 	//float: right;
@@ -555,7 +602,7 @@ h2.Green:before {
 	padding: 8px 0;
 }
 .columnsection {
-    columns: 3;
+	columns: 3;
 }
 /* LOGIN */
 .login-container {
@@ -633,8 +680,8 @@ h2.Green:before {
 			display: none;
 			~ span {
 				display: block;
-		font-size: 14px;
-        padding: 12px 4px;
+				font-size: 14px;
+				padding: 12px 4px;
 				background-color: #f6f7f7;
 				border: 1px solid white;
 			}
@@ -702,14 +749,14 @@ td .field {
 input,
 select,
 textarea {
-    border: 1px solid #667789;
-    padding: 0.5em;
-    font-size: 14px;
-    + input,
-    + textarea,
-    + select {
-        margin-left: 4px;
-    }
+	border: 1px solid #667789;
+	padding: 0.5em;
+	font-size: 14px;
+	+ input,
+	+ textarea,
+	+ select {
+		margin-left: 4px;
+	}
 }
 textarea {
 	overflow-y: hidden;
@@ -753,7 +800,6 @@ select:disabled {
 	border: 1px solid rgb(250, 193, 8);
 	color: rgb(250, 193, 8);
 }
-
 
 /* SORTABLE */
 ul.sortable-container {
@@ -983,7 +1029,18 @@ h2 button {
 }
 
 @media (max-width: 1079px) {
-	.popup, .popupport, .popupcat, .popupacc, .popupaction, .popupsteerco, .popupposted, .popupbaseline {
+	.popup,
+	.popupport,
+	.popupcat,
+	.popupacc,
+	.popupaction,
+	.popupsteerco,
+	.popupposted,
+	.popupbaseline,
+	.popupcatsub,
+	.popuplink,
+	.popupcontrol,
+	.popupperimeter {
 		.popupcontent,
 		.actions {
 			min-width: calc(100% - 40px);

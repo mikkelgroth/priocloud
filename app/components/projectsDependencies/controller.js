@@ -295,6 +295,17 @@ angular
             };
 
 
+            $scope.onlyProject = function () {
+                if ($scope.onlyfromproject) {
+                    $scope.depsearch.projecttitle = [$scope.rtfromproject];
+                } else {
+                    $scope.depsearch.projecttitle = [];
+                }
+                $scope.ressums = [];
+                calcRes();
+                getRTfromProjectfunction();
+            };
+
             $scope.getRTfromBu = function () {
                 $scope.rtfromprojectlist = [];
                 $scope.rtfromproject = "";
@@ -349,6 +360,39 @@ angular
             }
 
             $scope.getRTfromProject = function () {
+                $scope.rtfromprojectlist = [];
+                $scope.rtfrombu = "";
+                if ($scope.rtfromproject == "") {
+                    $scope.depsearch.deprtname = [];
+                    $scope.rtfromprojectlist = [];
+                    $scope.ressums = [];
+                    calcRes();
+                    $scope.views = 'cat';
+                } else {
+                    var rfoundmap = [];
+                    let o = $scope.projects.find(x => x.title === $scope.rtfromproject);
+                    if (o != undefined && o.deps != undefined && o.deps.length > 0) {
+                        $scope.rtfromprojectlist.push(o.title);
+                        setDepList($scope.projects, o.title);
+                        for (let d = 0; d < o.deps.length; d++) {
+                            if (!rfoundmap.includes(o.deps[d].rt.name)) {
+                                rfoundmap.push(o.deps[d].rt.name);
+                            }
+                        }
+                        $scope.depsearch.deprtname = rfoundmap;
+                        //console.log(JSON.stringify($scope.depsearch.deprtname));
+                    }
+                    $scope.ressums = [];
+                    calcRes();
+                    $scope.views = 'res';
+                }
+            };
+
+            $scope.getRTfromProject = function () {
+                getRTfromProjectfunction();
+            };
+
+            function getRTfromProjectfunction() {
                 $scope.rtfromprojectlist = [];
                 $scope.rtfrombu = "";
                 if ($scope.rtfromproject == "") {
@@ -492,6 +536,7 @@ angular
 
                     var type = {};
                     type.name = element.name;
+                    type.names = element.names;
                     type.buname = element.buname;
                     type.catagory = element.catagory;
                     type.cap = parseInt(element.capacity);

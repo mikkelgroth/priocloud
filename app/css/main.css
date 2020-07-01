@@ -29,7 +29,55 @@ pre {
   display: inherit;
 }
 
-.popup.active, .popupport.active, .popupcat.active, .popupacc.active, .popupaction.active, .popupsteerco.active, .popupposted.active, .popupbaseline.active {
+.infobox {
+  display: block;
+  position: fixed;
+  top: 10%;
+  left: 5%;
+  width: 40%;
+  height: 70%;
+  overflow-y: scroll;
+  border-style: solid;
+  border-width: 3px;
+  background-color: rgba(194, 238, 186, 0.932);
+  border-color: rgba(15, 119, 1, 0.966);
+  border-radius: 20px;
+  -webkit-box-shadow: 0 -4px 16px 0 rgba(0, 0, 0, 0.5);
+          box-shadow: 0 -4px 16px 0 rgba(0, 0, 0, 0.5);
+  padding: 16px 16px 16px 16px;
+  z-index: 200;
+}
+
+.lockbox {
+  display: block;
+  position: fixed;
+  top: 10%;
+  left: 5%;
+  height: 85%;
+  width: 90%;
+  border-style: solid;
+  border-width: 3px;
+  background-color: rgba(241, 228, 228, 0.932);
+  border-color: rgba(241, 7, 7, 0.966);
+  border-radius: 20px;
+  -webkit-box-shadow: 0 -4px 16px 0 rgba(0, 0, 0, 0.5);
+          box-shadow: 0 -4px 16px 0 rgba(0, 0, 0, 0.5);
+  padding: 16px 16px 16px 16px;
+  z-index: 100;
+}
+
+.popup.active,
+.popupport.active,
+.popupcat.active,
+.popupacc.active,
+.popupaction.active,
+.popupsteerco.active,
+.popupposted.active,
+.popupbaseline.active,
+.popupcatsub.active,
+.popuplink.active,
+.popupcontrol.active,
+.popupperimeter.active {
   content: "";
   display: block;
   position: fixed;
@@ -42,20 +90,46 @@ pre {
 }
 
 .popup.active .popupcontent,
-.popup.active .actions, .popupport.active .popupcontent,
-.popupport.active .actions, .popupcat.active .popupcontent,
-.popupcat.active .actions, .popupacc.active .popupcontent,
-.popupacc.active .actions, .popupaction.active .popupcontent,
-.popupaction.active .actions, .popupsteerco.active .popupcontent,
-.popupsteerco.active .actions, .popupposted.active .popupcontent,
-.popupposted.active .actions, .popupbaseline.active .popupcontent,
-.popupbaseline.active .actions {
+.popup.active .actions,
+.popupport.active .popupcontent,
+.popupport.active .actions,
+.popupcat.active .popupcontent,
+.popupcat.active .actions,
+.popupacc.active .popupcontent,
+.popupacc.active .actions,
+.popupaction.active .popupcontent,
+.popupaction.active .actions,
+.popupsteerco.active .popupcontent,
+.popupsteerco.active .actions,
+.popupposted.active .popupcontent,
+.popupposted.active .actions,
+.popupbaseline.active .popupcontent,
+.popupbaseline.active .actions,
+.popupcatsub.active .popupcontent,
+.popupcatsub.active .actions,
+.popuplink.active .popupcontent,
+.popuplink.active .actions,
+.popupcontrol.active .popupcontent,
+.popupcontrol.active .actions,
+.popupperimeter.active .popupcontent,
+.popupperimeter.active .actions {
   -webkit-transition: right 0.3s;
   transition: right 0.3s;
   right: 0;
 }
 
-.popup .popupcontent, .popupport .popupcontent, .popupcat .popupcontent, .popupacc .popupcontent, .popupaction .popupcontent, .popupsteerco .popupcontent, .popupposted .popupcontent, .popupbaseline .popupcontent {
+.popup .popupcontent,
+.popupport .popupcontent,
+.popupcat .popupcontent,
+.popupacc .popupcontent,
+.popupaction .popupcontent,
+.popupsteerco .popupcontent,
+.popupposted .popupcontent,
+.popupbaseline .popupcontent,
+.popupcatsub .popupcontent,
+.popuplink .popupcontent,
+.popupcontrol .popupcontent,
+.popupperimeter .popupcontent {
   display: block;
   position: fixed;
   height: 100%;
@@ -76,26 +150,56 @@ pre {
 
 .popup .popupcontent select,
 .popup .popupcontent input,
-.popup .popupcontent textarea, .popupport .popupcontent select,
+.popup .popupcontent textarea,
+.popupport .popupcontent select,
 .popupport .popupcontent input,
-.popupport .popupcontent textarea, .popupcat .popupcontent select,
+.popupport .popupcontent textarea,
+.popupcat .popupcontent select,
 .popupcat .popupcontent input,
-.popupcat .popupcontent textarea, .popupacc .popupcontent select,
+.popupcat .popupcontent textarea,
+.popupacc .popupcontent select,
 .popupacc .popupcontent input,
-.popupacc .popupcontent textarea, .popupaction .popupcontent select,
+.popupacc .popupcontent textarea,
+.popupaction .popupcontent select,
 .popupaction .popupcontent input,
-.popupaction .popupcontent textarea, .popupsteerco .popupcontent select,
+.popupaction .popupcontent textarea,
+.popupsteerco .popupcontent select,
 .popupsteerco .popupcontent input,
-.popupsteerco .popupcontent textarea, .popupposted .popupcontent select,
+.popupsteerco .popupcontent textarea,
+.popupposted .popupcontent select,
 .popupposted .popupcontent input,
-.popupposted .popupcontent textarea, .popupbaseline .popupcontent select,
+.popupposted .popupcontent textarea,
+.popupbaseline .popupcontent select,
 .popupbaseline .popupcontent input,
-.popupbaseline .popupcontent textarea {
+.popupbaseline .popupcontent textarea,
+.popupcatsub .popupcontent select,
+.popupcatsub .popupcontent input,
+.popupcatsub .popupcontent textarea,
+.popuplink .popupcontent select,
+.popuplink .popupcontent input,
+.popuplink .popupcontent textarea,
+.popupcontrol .popupcontent select,
+.popupcontrol .popupcontent input,
+.popupcontrol .popupcontent textarea,
+.popupperimeter .popupcontent select,
+.popupperimeter .popupcontent input,
+.popupperimeter .popupcontent textarea {
   min-width: unset;
   width: 100%;
 }
 
-.popup .actions, .popupport .actions, .popupcat .actions, .popupacc .actions, .popupaction .actions, .popupsteerco .actions, .popupposted .actions, .popupbaseline .actions {
+.popup .actions,
+.popupport .actions,
+.popupcat .actions,
+.popupacc .actions,
+.popupaction .actions,
+.popupsteerco .actions,
+.popupposted .actions,
+.popupbaseline .actions,
+.popupcatsub .actions,
+.popuplink .actions,
+.popupcontrol .actions,
+.popupperimeter .actions {
   position: fixed;
   background: white;
   padding: 8px 16px;
@@ -167,6 +271,10 @@ div.view {
 .hide,
 .noview {
   display: none;
+}
+
+.left {
+  text-align: left;
 }
 
 .right {
@@ -1141,14 +1249,29 @@ h2 button {
 
 @media (max-width: 1079px) {
   .popup .popupcontent,
-  .popup .actions, .popupport .popupcontent,
-  .popupport .actions, .popupcat .popupcontent,
-  .popupcat .actions, .popupacc .popupcontent,
-  .popupacc .actions, .popupaction .popupcontent,
-  .popupaction .actions, .popupsteerco .popupcontent,
-  .popupsteerco .actions, .popupposted .popupcontent,
-  .popupposted .actions, .popupbaseline .popupcontent,
-  .popupbaseline .actions {
+  .popup .actions,
+  .popupport .popupcontent,
+  .popupport .actions,
+  .popupcat .popupcontent,
+  .popupcat .actions,
+  .popupacc .popupcontent,
+  .popupacc .actions,
+  .popupaction .popupcontent,
+  .popupaction .actions,
+  .popupsteerco .popupcontent,
+  .popupsteerco .actions,
+  .popupposted .popupcontent,
+  .popupposted .actions,
+  .popupbaseline .popupcontent,
+  .popupbaseline .actions,
+  .popupcatsub .popupcontent,
+  .popupcatsub .actions,
+  .popuplink .popupcontent,
+  .popuplink .actions,
+  .popupcontrol .popupcontent,
+  .popupcontrol .actions,
+  .popupperimeter .popupcontent,
+  .popupperimeter .actions {
     min-width: calc(100% - 40px);
   }
 }

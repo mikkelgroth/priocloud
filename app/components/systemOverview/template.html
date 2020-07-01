@@ -1,4 +1,4 @@
-<h2 class="center {{system.status}}">
+<h2 class="center {{system.statusFlag}}">
     {{system.title}}
 </h2>
 
@@ -15,36 +15,613 @@
                 <button type="button" id="releaseButton" save-this="$parent.hasChanged" class=" Red"
                     ng-if="user.changeContent && system.showRelease" ng-click="releaseSystem(system)">release
                     system</button>
+                <button class="" prio-class ng-click="showfilters=true" ng-show="!showfilters">show
+                    filters</button>
+                <button class="" prio-class ng-click="showfilters=false" ng-show="showfilters">hide
+                    filters</button>
             </div>
         </div>
-        
-        <div ng-if="system.editUser != null">(Is under edit by {{system.editUser.name}})</div>
-        <table class="noborder nopadding smaller gutter-top">
+        <div ng-show="showfilters" class=" ">
+            <div class="columnsection contentblock">
+                <label for="details"><input type="checkbox" id="details" ng-model="system.filters.showddetails"><i>
+                        Show detail section</i></br></label>
+                <label for="dpa"><input type="checkbox" id="dpa" ng-model="system.filters.showddpa"><i>
+                        Show DPA section</i></br></label>
+                <label for="access"><input type="checkbox" id="access" ng-model="system.filters.showdaccess"><i>
+                        Show access section</i></br></label>
+                <label for="perimeter"><input type="checkbox" id="perimeter"
+                        ng-model="system.filters.showdperimeter"><i>
+                        Show perimater section</i></br></label>
+                <label for="continuity"><input type="checkbox" id="continuity"
+                        ng-model="system.filters.showdcontinuity"><i>
+                        Show IT continuity section</i></br></label>
+                <label for="connections"><input type="checkbox" id="connections"
+                        ng-model="system.filters.showdconnections"><i>
+                        Show connection section</i></br></label>
+                <label for="extdoc"><input type="checkbox" id="extdoc"
+                        ng-model="system.filters.showextdoc"><i>
+                        Show external link section</i></br></label>
+                <label for="data"><input type="checkbox" id="data" ng-model="system.filters.showddata"><i>
+                        Show data section</i></br></label>
+                <label for="extdata" ng-show="system.filters.showddata">&nbsp; - <input type="checkbox" id="extdata"
+                        ng-model="system.filters.showdextendeddata"><i>
+                        Show extended data sheets</i></br></label>
+            </div>
+
+            <div class="contentblock">
+                <button type="button" id="saveButton" prio-class save-this="$parent.hasChanged"
+                    ng-if="user.changeContent && !system.showRelease" ng-click="saveSystem(system)">save view</button>
+
+            </div>
+        </div>
+
+        <div ng-if="system.editUser != null" class="hideOnPrint">(Is under edit by {{system.editUser.name}})</div>
+
+
+        <h3 ng-if="system.filters.showddetails">System details</h3>
+        <table ng-if="system.filters.showddetails" class="smaller">
             <tr>
+                <td class="header {{system.statusFlag}}">
+                    Last saved status
+                </td>
+                <td>
+                    {{system.statusdate | date:'longDate'}}
+                </td>
+                <td class="header">
+                    Notify
+                </td>
+                <td>
+                    <select ng-model="system.pending" ng-change="saveNow()" ng-disabled="true">
+                        <option value="None">None Pending</option>
+                        <option value="Internal">Pending Internal</option>
+                        <option value="Portfolio">Pending Portfolio</option>
+                        <option value="Company">Pending Company</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td class="header">Overall status</td>
                 <td colspan="3">
-                    <div class="overview">
-                        <table class="tablelist">
-                            <tr class="header">
-                                <td colspan="4">System details</td>
-                            </tr>
-                            <tr>
-                                <td class="header">Business unit</td>
-                                <td>{{system.bu.name}}</td>
-                                <td class="header"></td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <td class="header">Administrator </td>
-                                <td class="wrap">{{system.pm.name}}</td>
-                                <td class="header">Owner </td>
-                                <td class="wrap">{{system.po.name}}</td>
-                            </tr>
-                        </table>
-                    </div>
+                    <pre>{{system.overallcomments}}</pre>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="header">Pending action</td>
+                <td colspan="3">
+                    <pre>{{system.deccomment}}</pre>
+                </td>
+            </tr>
+            <tr class="header">
+                <td colspan="4">Purpose</td>
+            </tr>
+            <tr>
+                <td class="l header">System type</td>
+                <td>
+                    {{system.type}}
+                </td>
+                <td class="header" rowspan="2">Affected units</td>
+                <td rowspan="2">
+                    <div ng-repeat="st in system.connect"> &#9675; {{st}}<br /></div>
+                </td>
+            </tr>
+            <tr>
+                <td class="header">Owner Unit</td>
+                <td>
+                    {{system.bu.name}}
+                </td>
+            </tr>
+            <tr>
+                <td class="header">
+                    Key purpose
+                </td>
+                <td colspan="3" class="wrap">
+                    {{system.keypurpose}}
+                </td>
+            </tr>
+            <tr class="header">
+                <td colspan="4">Priority & Risk</td>
+            </tr>
+            <tr>
+                <td class="header">System total score (0-100)</td>
+                <td colspan="3">
+                    {{system.risklevel}}
+                </td>
+            </tr>
+            <tr>
+                <td class="header">Business priority</td>
+                <td>
+                    {{system.priority}}
+                </td>
+                <td class="header">Data security level</td>
+                <td>
+                    {{system.datasecuritylevel}}
+                </td>
+            </tr>
+            <tr>
+                <td class="header">Business enabler
+                </td>
+                <td>
+                    {{system.valuestreammagnitude}}
+                </td>
+                <td class="header">External exposure</td>
+                <td>
+                    {{system.externalexposure}}
+                </td>
+            </tr>
+            <tr class="header">
+                <td colspan="4">Organization</td>
+            </tr>
+            <tr>
+                <td class="header">Administrator</td>
+                <td>
+                    {{system.pm.name}}
+                </td>
+                <td class="header">Alt. Administrator</td>
+                <td>
+                    {{system.altpm.name}}
+                </td>
+            </tr>
+            <tr>
+                <td class="header">Owner</td>
+                <td>
+                    {{system.po.name}}
+                </td>
+                <td class="header">Alt. Owner</td>
+                <td>
+                    {{system.altpo.name}}
+                </td>
+            </tr>
+            <tr>
+                <td class="header">GDPR responsible</td>
+                <td>
+                    {{system.gdprresp.name}}
+                </td>
+                <td class="header">Alt. GDPR responsible</td>
+                <td>
+                    {{system.altgdprresp.name}}
+                </td>
+            </tr>
+            <tr>
+                <td class="header">
+                    Location of system use
+                </td>
+                <td class="wrap" colspan="3">
+                    <pre>{{system.locationUse}}</pre>
                 </td>
             </tr>
 
         </table>
+
+        <h3 ng-show="system.filters.showddpa" class="{{system.data.securityownerfeedback}}">DPA section</h3>
+        <table class="smaller" ng-show="system.filters.showddpa">
+            <tr>
+                <td class="header">
+                    Link to DPA applied
+                </td>
+                <td>
+                    {{system.dpaapplied}}
+                </td>
+            </tr>
+            <tr ng-show="system.dpaapplied=='no'">
+                <td class="header">
+                    No DPA arguement
+                </td>
+                <td>
+                    <pre>{{system.dpaarguement}}</pre>
+                </td>
+            </tr>
+        </table>
+        <h3 ng-show="system.dpaapplied=='yes' && system.filters.showddpa">DPA Control</h3>
+        <table class="smaller" ng-show="system.dpaapplied=='yes'">
+            <tr>
+                <td class="header">Use standard control</td>
+                <td>
+                    {{system.controltemplate.title}}
+                </td>
+                <td class="header">Control level</td>
+                <td>
+                    {{system.level}}
+                </td>
+            </tr>
+            <tr>
+                <td class="header">Control responsible</td>
+                <td>
+                    {{system.conresp}}
+                </td>
+
+                <td class="header">Control accountable</td>
+                <td>
+                    {{system.conacc}}
+                </td>
+            </tr>
+            <tr>
+                <td class="header">Control description</td>
+                <td colspan="3">
+                    <pre>{{system.controldescription}}</pre>
+                </td>
+            </tr>
+            <tr>
+
+            </tr>
+            <tr>
+                <td class="header">Control frequency</td>
+                <td>
+                    {{system.freq}}
+                </td>
+                <td class="header">Next DPA control</td>
+                <td>
+                    {{system.nextdate | date:'longDate'}}
+                </td>
+            </tr>
+            <tr>
+                <td class="header">Last DPA control</td>
+                <td>
+                    {{system.lastdate | date:'longDate'}}
+                </td>
+                <td class="header">Last control result</td>
+                <td>
+                    {{system.result}}
+                </td>
+            </tr>
+            <tr>
+                <td class="header">Control conclusion</td>
+                <td colspan="3">
+                    <pre>{{system.conclusion}}</pre>
+                </td>
+            </tr>
+        </table>
+
+        <h3 class="{{system.data.securityownerfeedback}}" ng-if="system.datas.length > 0 && system.filters.showddata">
+            Data package section</h3>
+        <table class="tablelist smaller"
+            ng-if="system.datas.length > 0  && system.filters.showddata && !system.filters.showdextendeddata">
+            <tr class="header">
+                <td>Data package title</td>
+                <td>Data category</td>
+                <td>Category subjects</td>
+                <td>Category types</td>
+                <td>Last control</td>
+                <td>Control result</td>
+            </tr>
+            <tr ng-repeat="data in system.datas | orderBy:'title'" ng-if="data.showInReport">
+                <td class="{{data.status}}">{{data.title}}</td>
+                <td>{{data.datacat.name}}</td>
+                <td>
+                    <div ng-repeat="s in data.datacat.categorysubjects">
+                        {{s}}<br />
+                    </div>
+                </td>
+                <td>
+                    <div ng-repeat="t in data.datacat.type">
+                        {{t}}<br />
+                    </div>
+                </td>
+                <td>{{data.lastdate | date:'longDate'}}</td>
+                <td>{{data.result}}</td>
+            </tr>
+        </table>
+
+        <div ng-if="system.datas.length > 0  && system.filters.showddata && system.filters.showdextendeddata">
+            <div ng-repeat="data in system.datas | orderBy:'title'" ng-if="data.showInReport" class="link breaker">
+                <h4></h4>
+                <table class="smaller">
+                    <tr>
+                        <td class="header">Data package title</td>
+                        <td class="{{data.status}}">{{data.title}}</td>
+                        <td class="header">Data category</td>
+                        <td>{{data.datacat.name}}</td>
+                    </tr>
+                    <tr>
+                        <td class="header">Company contact</td>
+                        <td>{{data.comcontact}}</td>
+                        <td class="header">Data controller</td>
+                        <td>{{data.controller}}</td>
+                    </tr>
+                    <tr>
+                        <td class="header">Retention period</td>
+                        <td>{{data.retention}}</td>
+                        <td class="header">Deletion procedure</td>
+                        <td>{{data.deletionprocedure}}</td>
+                    </tr>
+                    <tr>
+                        <td class="header">Legal basis for retention</td>
+                        <td>{{data.legal}}</td>
+                        <td class="header">Primary data storage</td>
+                        <td>{{data.storage}}</td>
+                    </tr>
+                    <tr>
+                        <td class="header">Data transferred externally</td>
+                        <td>
+                            <input type="checkbox" ng-model="data.transferred" ng-disabled="true">
+                        </td>
+                        <td class="header">Purpose required</td>
+                        <td>
+                            <input type="checkbox" ng-model="data.datacat.purposerequired" ng-disabled="true">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="header">Purpose of processing</td>
+                        <td colspan="3">
+                            <pre>{{data.purpose}}</pre>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="header">Data processor</td>
+                        <td colspan="3">
+                            <pre>{{data.processor}}</pre>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="header">Data store location</td>
+                        <td colspan="3">
+                            <pre>{{data.location}}</pre>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="header">General security refrences</td>
+                        <td colspan="3">
+                            <pre>{{data.generalsecurity}}</pre>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="header">Data types in category</td>
+                        <td colspan="3">
+                            <div ng-repeat="t in data.datacat.type">
+                                {{t}}
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="header">Data category subjects</td>
+                        <td colspan="3">
+                            <div ng-repeat="s in data.datacat.categorysubjects">
+                                {{s}}
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="header">Origin source of the data set</td>
+                        <td colspan="3">
+                            <pre>{{data.datacat.source}}</pre>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="header">Description of data set</td>
+                        <td colspan="3">
+                            <pre>{{data.datacat.description}}</pre>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="header">Data fields</td>
+                        <td colspan="3">
+                            <pre>{{data.datacat.datafields}}</pre>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="header">Data retention strategy</td>
+                        <td colspan="3">
+                            <pre>{{data.retentionstrategy}}</pre>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="header">Data deletion strategy</td>
+                        <td colspan="3">
+                            <pre>{{data.deletion}}</pre>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="header">Data integrity strategy</td>
+                        <td colspan="3">
+                            <pre>{{data.integrity}}</pre>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="header">Data backup strategy</td>
+                        <td colspan="3">
+                            <pre>{{data.backup}}</pre>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="4" class="header">Control</td>
+                    </tr>
+                    <tr>
+                        <td class="header">Use standard control</td>
+                        <td>{{data.controltemplate.title}}</td>
+                        <td class="header">Next control</td>
+                        <td>{{data.nextdate | date:'longDate'}}</td>
+                    </tr>
+                    <tr>
+                        <td class="header">Control responsible</td>
+                        <td>{{data.conresp}}</td>
+                        <td class="header">Control accountable</td>
+                        <td>{{data.conacc}}</td>
+                    </tr>
+                    <tr>
+                        <td class="header">Control level</td>
+                        <td>{{data.level}}</td>
+                        <td class="header">Control frequency</td>
+                        <td>{{data.freq}}</td>
+                    </tr>
+                    <tr>
+                        <td class="header">Last control</td>
+                        <td>{{data.lastdate | date:'longDate'}}</td>
+                        <td class="header">Last control result</td>
+                        <td>{{data.result}}</td>
+                    </tr>
+                    <tr>
+                        <td class="header">Control description</td>
+                        <td colspan="3">{{data.controldescription}}</td>
+                    </tr>
+                    <tr>
+                        <td class="header">Control conclusion</td>
+                        <td colspan="3">
+                            <pre>{{data.conclusion}}</pre>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <h3 class="{{system.access.securityownerfeedback}}"
+            ng-if="system.accesss.length > 0 && system.filters.showdaccess">Access section</h3>
+        <table class="tablelist smaller" ng-if="system.accesss.length > 0  && system.filters.showdaccess">
+            <tr class="header">
+                <td>Access titles</td>
+                <td>Data category</td>
+                <td>User type</td>
+                <td>Quantity</td>
+                <td>Last control</td>
+                <td>Control result</td>
+            </tr>
+            <tr ng-repeat="access in system.accesss | orderBy:'title'" ng-if="access.showInReport">
+                <td class="{{access.status}}">
+                    <b>{{access.title}}</b></td>
+                <td>{{access.datacat.name}}</td>
+                <td>{{access.type}}</td>
+                <td>{{access.numberaccounts}}</td>
+                <td>{{access.lastdate | date:'longDate'}}</td>
+                <td>{{access.result}}</td>
+            </tr>
+        </table>
+
+        <h3 class="{{system.connectionsobj.securityownerfeedback}}"
+            ng-if="system.connections.length > 0 && system.filters.showdconnections">Connection
+            section</h3>
+        <table class="tablelist smaller" ng-if="system.connections.length > 0 && system.filters.showdconnections">
+            <tr class="header">
+                <td>Connection title</td>
+                <td>Data category</td>
+                <td>Connected system</td>
+                <td>Direction</td>
+                <td>Last control</td>
+                <td>Control result</td>
+            </tr>
+            <tr ng-repeat="connection in system.connections | orderBy:'title'" ng-if="connection.showInReport">
+                <td class="{{connection.status}}">
+                    <b>{{connection.title}}</b></td>
+                <td>{{connection.datacat}}</td>
+                <td>{{connection.connectedsystem}}</td>
+                <td>{{connection.direction}}</td>
+                <td>{{connection.lastdate | date:'longDate'}}</td>
+                <td>{{connection.result}}</td>
+            </tr>
+        </table>
+
+        <h3 class="{{system.continuity.securityownerfeedback}}"
+            ng-if="system.continuitys.length > 0 && system.filters.showdcontinuity">IT Continuity
+            section</h3>
+        <table class="tablelist smaller" ng-if="system.continuitys.length > 0 && system.filters.showdcontinuity">
+            <tr class="header">
+                <td>Continuity plan</td>
+                <td>Data category</td>
+                <td>Plan type</td>
+                <td>Responsible</td>
+                <td>Last control</td>
+                <td>Control result</td>
+            </tr>
+            <tr ng-repeat="continuity in system.continuitys | orderBy:'title'" ng-if="continuity.showInReport">
+                <td class="{{continuity.status}}">
+                    <b>{{continuity.title}}</b></td>
+                <td>{{continuity.datacat}}</td>
+                <td>{{continuity.type}}</td>
+                <td>{{continuity.pm.name}}</td>
+                <td>{{continuity.lastdate | date:'longDate'}}</td>
+                <td>{{continuity.result}}</td>
+            </tr>
+        </table>
+
+        <h3 class="{{system.perimeter.securityownerfeedback}}"
+            ng-if="system.perimeters.length > 0 && system.filters.showdperimeter">Perimeter security
+            section</h3>
+        <table class="tablelist smaller" ng-if="system.perimeters.length > 0 && system.filters.showdperimeter">
+            <tr class="header">
+                <td>Perimeter title</td>
+                <td>Target</td>
+                <td>Product</td>
+                <td>Managed</td>
+                <td>Level</td>
+                <td>Last control</td>
+                <td>Control result</td>
+            </tr>
+            <tr ng-repeat="perimeter in system.perimeters | orderBy:'title'" ng-if="perimeter.showInReport">
+                <td class="{{perimeter.status}}">
+                    <b>{{perimeter.title}}</b></td>
+                <td>{{perimeter.target}}</td>
+                <td>{{perimeter.product}}</td>
+                <td>{{perimeter.managementtype}}</td>
+                <td>{{perimeter.level}}</td>
+                <td>{{perimeter.lastdate | date:'longDate'}}</td>
+                <td>{{perimeter.result}}</td>
+            </tr>
+        </table>
+
+        <h3 ng-if="system.linklist.length > 0 && system.filters.showextdoc">External documents</h3>
+        <table class="tablelist smaller" ng-if="system.linklist.length > 0 && system.filters.showextdoc">
+            <tr class="header">
+                <td colspan="4">System links</td>
+            </tr>
+            <tr class="header">
+                <td>Area</td>
+                <td>Title</td>
+                <td>URL</td>
+                <td>Follow link</td>
+            </tr>
+            <tr ng-repeat="link in system.linklist" ng-if="link.showinreport">
+                <td ng-click="editlinkitem(link)">
+                    {{link.lable}}
+                </td>
+                <td ng-click="editlinkitem(link)">
+                    {{link.title}}
+                </td>
+                <td ng-click="editlinkitem(link)">
+                    {{link.url}}
+                </td>
+                <td>
+                    <a target="_blank" href="{{link.url}}">
+                        <div class="linkicon right"></div>
+                    </a>
+                </td>
+            </tr>
+        </table>
+
+
+        <div class="popup">
+            <div class="overview popupcontent">
+                <div class="actions">
+                    <div class="layout">
+                        <div class="layoutelement">
+                            <button type="button" id="saveButton5" ng-if="user.changeContent"
+                                ng-click="savelink(editlink)">save</button>
+                        </div>
+                        <div class="layoutelement center">
+                            <button type="button primary" class="Red" ng-click="dellink(editlink)"
+                                ng-if="user.changeContent">delete</button>
+                        </div>
+                        <div class="layoutelement right">
+                            <button type="button" class="close" ng-click="closelink(editlink)"></button>
+                        </div>
+                    </div>
+                </div>
+                <h3>
+                    Edit link
+                </h3>
+                <table class="formtable smaller">
+                    <tr>
+                        <td class="header">Link title</td>
+                        <td><input ng-model="editlink.title" /></td>
+                    </tr>
+                    <tr>
+                        <td class="header">Link URL</td>
+                        <td><input ng-model="editlink.url" /></td>
+                    </tr>
+                    <tr>
+                        <td class="header">Show link in report</td>
+                        <td><input type="checkbox" ng-model="editlink.showinreport"></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
     </div>
 </div>
 {{system.lastchangedby}} - {{system.lastchangeddate | date:'longDate'}}

@@ -23,5 +23,3 @@ company
 organisation department
 KPI's
 Projects
-
-Theis

@@ -9,7 +9,7 @@ angular
         return {
             restrict: 'E',
             replace: true,
-           
+
             templateUrl: 'components/systemMenu/template.html',
             link: linkFunction
 
@@ -18,18 +18,13 @@ angular
 
 
 
-$(window).bind('hashchange', function () {
-    setMenu();
-});
+$(window).on('hashchange', function () {
+    if (window.location.href.indexOf('system') > 0) {
+        setSystemMenu();
+    }
+}).trigger('hashchange');
 
-$(document).ready(function () {
-    setInterval(function () {
-        setMenu();
-
-    }, 200)
-});
-
-function setMenu() {
+function setSystemMenu() {
     if (window.location.href.indexOf('/') > 0) {
         $('.menuactive').removeClass('menuactive');
         $('.system-menu-home').addClass('menuactive');
@@ -37,6 +32,10 @@ function setMenu() {
     if (window.location.href.indexOf('/details') > 0) {
         $('.menuactive').removeClass('menuactive');
         $('.system-menu-details').addClass('menuactive');
+    }
+    if (window.location.href.indexOf('/dpia') > 0) {
+        $('.menuactive').removeClass('menuactive');
+        $('.system-menu-dpia').addClass('menuactive');
     }
     if (window.location.href.indexOf('/access') > 0) {
         $('.menuactive').removeClass('menuactive');
@@ -54,8 +53,8 @@ function setMenu() {
         $('.menuactive').removeClass('menuactive');
         $('.system-menu-connections').addClass('menuactive');
     }
-    if (window.location.href.indexOf('/controls') > 0) {
+    if (window.location.href.indexOf('/continuity') > 0) {
         $('.menuactive').removeClass('menuactive');
-        $('.system-menu-controls').addClass('menuactive');
+        $('.system-menu-continuity').addClass('menuactive');
     }
 }
