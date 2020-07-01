@@ -1,0 +1,56 @@
+
+<!doctype html>
+<html ng-app="todoApp">
+
+<head>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.1/angular.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.1/angular-animate.js"></script>
+  
+  <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+  <script src="rest.js"></script>
+  <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-combined.min.css" rel="stylesheet">
+</head>
+
+<body>
+
+  <div class="login" ng-show="!user.authenticated" ng-controller="LoginController">
+
+    <div id="login">
+      <form ng-submit="doLogin()">
+        <input placeholder="Email address" type="email" name="email" ng-model="login.email" />        <br>
+        <input placeholder="Password" type="password" name="password" ng-model="login.password" />        <br>
+        <button ng-submit="doLogin()">Login</button>
+      </form>
+      <div class="footer">Don't have an account? <a href ng-click="showCreate = !showCreate">Sign Up</a></div>
+    </div>
+
+    <div id="createUser" class="fadein fadeout" ng-show="showCreate">
+      <h3>Create user</h3>
+      <form ng-submit="createUser()">
+        <input placeholder="Email address" type="email" name="email" ng-model="create.email">        <br>
+        <input placeholder="Password" type="password" name="password" ng-model="create.password">        <br>
+        <button ng-submit="createUser()">Create user</button>
+      </form>
+    </div>
+
+  </div>
+
+  <div ng-show="user.authenticated" ng-controller="TodoController">
+    	<h2>REST DEMO!</h2>
+      Email: {{ user.email }} <button ng-controller="LoginController" ng-click="doLogout()">Logout</button>  <hr>
+    		<button ng-click="doRest('GET')">GET</button>
+    		<button ng-click="doRest('POST')">POST</button>
+    		<button ng-click="doRest('PUT')">PUT</button>
+    		<button ng-click="doRest('DEL')">DELETE</button>
+    		<hr>
+    		<input ng-model="collection"><input ng-model="oid" placeholder="oid"><textarea ng-model="data" style="height:220px;width:400px"></textarea>
+    		<hr>
+        <div class="animate" ng-repeat="todo in todos" >
+          <span ng-click="select(todo)">{{todo}}</span>
+        </div>
+    </div>
+
+
+</body>
+
+</html>

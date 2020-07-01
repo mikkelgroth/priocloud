@@ -1,0 +1,44 @@
+version: '2'
+services:
+
+    mongodb:
+        image: mongo
+        container_name: "mongo"
+        environment:
+          - MONGO_DATA_DIR=/data/db
+          - MONGO_LOG_DIR=/dev/null
+        volumes:
+          - mongodata:/data/db
+          - ./backup:/backup
+            #        ports:
+            #            - 27017:27017
+        command: mongod --logpath=/dev/null # --quiet
+
+
+    backend:
+        image: jetty
+        container_name: "backend"
+        volumes:
+            - ./priorest/target/:/var/lib/jetty/webapps
+        user: "jetty"
+        environment:
+            - SERVER_TYPE=dev
+        depends_on:
+            - "mongodb"
+
+    frontend:
+        image: nginx
+        container_name: "frontend"
+        volumes:
+            - ./app/:/usr/share/nginx/html/priocloud
+            - ./certs:/etc/letsencrypt
+            - ./certs-data:/data/letsencrypt
+            - ./nginx/:/etc/nginx/conf.d/
+        depends_on:
+            - "backend"
+        ports:
+            - "80:80"
+            - "443:443"
+
+volumes:
+   mongodata:

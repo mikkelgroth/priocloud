@@ -1,0 +1,18 @@
+version: '3'
+services:
+
+    priocloud:
+        image: jetty
+        container_name: "priocloud"
+        volumes:
+            - ./priorest/target/:/var/lib/jetty/webapps
+        user: "jetty"
+        environment:
+                - "JAVA_OPTIONS=-Xmx64m -Djetty.port=8082"
+                - SERVER_TYPE=local
+
+networks:
+  default:
+    external:
+      name: mynet
+

@@ -1,0 +1,70 @@
+*************************
+Roles and access.
+*************************
+Validation must happen on the backend - otherwise any hacker would be in control
+
+1. project creator can create multiple roles for useraccess and restaccess
+2. application owner can create users and assign roles
+3. create user role / change role must be validated
+4. access must be checked on all REST calls
+5. each REST object contains array of roles, i.e. _roles: ['bu', 'pm']
+
+So to levels of controls: user roles and rest roles:
+
+createuser?email=dsdfg@sdfg.dk&application=prio&project=<uuid>&role=bu&role=pm
+
+bu users can create project and task objects in REST:
+
+#restaccess: project: {'C': ['bu']}, task: {'C': ['bu']}
+#or perhaps
+restaccess: {'bu':{'C':['project', 'task']}}
+restaccess: {'bu':{'project':['C'],'task':['C']}}
+
+and bu users can create, read and update pm users:
+useraccess: {'bu':{'C':['pm'],'R':['pm'],'U':['pm']}}
+
+step 0: nuværende sikkerhedsmodel ændres fra user til application, project
+step 1: kun application owner kan oprette brugere
+step 2: usere kan oprette usere hvis de har useraccess
+
+--------------------------------------------------------
+
+00000000000000
+admin creates access rights for solution
+mongo insert here
+
+11111111111111
+return a project <auid> sets the user to owner
+createproject?email=dsdfg@sdfg.dk&solution=prio
+
+22222222222222
+only project.owner can add other users. onetime link created.
+createuser?email=abc@sdfg.dk&solution=prio&project=<auid>&role=bu&role=pm
+
+33333333333333
+user with role abc can perform CRUD on entity
+
+44444444444444
+reset password / first time user
+
+55555555555555
+login to a specific solution returns application <auid> and user <uuid>
+user?action=login&email=abc@sdfg.dk&solution=prio
+
+66666666666666
+user manipulates data through REST GET
+http://rest.ttsoftware.dk/<auid>/<uuid>/player?rnd=0.1423780376822944
+
+Next version: users can create users in large orgs.
+
+--------------------------------------------------------
+
+application(puid, solution, owner): auid
+user (uuid, auid, email, sha1password, roles): owner or normal user
+access (application, CRUD, entity, role): user with <role> can CRUD <entity>
+public (entities galore): all of the REST data
+  company
+  project
+
+
+
