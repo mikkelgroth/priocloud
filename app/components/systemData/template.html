@@ -1,0 +1,837 @@
+<h2 class="center {{system.statusFlag}}">
+    {{system.title}}
+</h2>
+<prio-system-menu prio-system-id="{{system._id.$oid}}"></prio-system-menu>
+</prio-data-menu>
+
+<div id="lock" class="infobox" ng-show="showInfoboxLegalbasis">
+    <div class="layoutelement right">
+        <button type="button" class="close" ng-click="showInfoboxLegalbasis=false"></button>
+    </div>
+
+    <h3>Legal basis</h3>
+    <b>Consent</b>
+    <ul>
+        <li>Consent given by the Data Subject. This must be specific, granular, clear, prominent, opt-in, documented and
+            easily withdrawn</li>
+    </ul>
+    <b>Contract</b>
+    <ul>
+        <li>Where the use of personal data is necessary for the performance of a contract with the individual or is
+            required in order to put such a contract in place</li>
+    </ul>
+    <b>Legal obligations</b>
+    <ul>
+        <li>Where a person’s personal data is required in order to comply with either EU or other local law</li>
+    </ul>
+    <b>Vital interests</b>
+    <ul>
+        <li>Where the personal data of an individual is required to protect either the vital interests of that
+            individual or the vital interest of another person and where that individual cannot give consent. (This
+            legal basis should only be relied upon when there are no other ground available, e.g. medical emergencies)
+        </li>
+    </ul>
+    <b>Public interests</b>
+    <ul>
+        <li>This legal basis applies where the processing of personal data is required for the performance of a task or
+            function that is carried out in the public interest or as part of the exercise of official authority vested
+            in the data controller</li>
+    </ul>
+    <b>Legitimate interests</b>
+    <ul>
+        <li>The legal basis is available to individuals and bodies, including commercial bodies, who are processing
+            people’s personal data in ways those people would reasonably expect and which have a minimal privacy impact,
+            or where there is a compelling justification for the data processing. Ex. DFDS processing data for the
+            purposes of complying with industry standards</li>
+    </ul>
+
+</div>
+
+
+
+
+
+
+<div class="view">
+    <div class="popup">
+        <div class="overview popupcontent">
+            <div class="actions">
+                <div class="layout">
+                    <div class="layoutelement">
+                        <button type="button" id="saveButton1" prio-class save-this="$parent.hasChanged"
+                            ng-if="user.changeContent" ng-click="saveDatas()">save</button>
+                    </div>
+                    <div class="layoutelement center">
+                        <button type="button" ng-if="user.changeContent"
+                            ng-click="newCloneData(editdata)">clone</button>
+                        <button type="button" class="Red" ng-click="removeData(editdata)" ng-show="$parent.deleteThis"
+                            ng-if="user.changeContent">confirm
+                            delete!!!</button>
+                        <button type="button" ng-click="delete()" ng-show="!$parent.deleteThis"
+                            ng-if="user.changeContent">delete</button>
+                    </div>
+                    <div class="layoutelement right">
+                        <button type="button" class="close" ng-click="close()"></button>
+                    </div>
+                </div>
+            </div>
+            <h3 class="{{editdata.status}}">
+                {{editdata.title}}
+            </h3>
+            <table class="formtable smaller">
+                <tr>
+                    <td class="formlabel">Title</td>
+                    <td>
+                        <input ng-model="editdata.title" ng-change="saveNow(editdata)"
+                            ng-disabled="!user.changeContent" />
+                    </td>
+                </tr>
+                <tr>
+                    <td class="formlabel {{editdata.status}}">
+                        Status
+                    </td>
+                    <td>
+                        <select ng-model="editdata.status" ng-change="saveNow(editdata)"
+                            ng-disabled="!user.changeContent">
+                            <option value="Green">OK (Green)</option>
+                            <option value="Yellow">Observe (Yellow)</option>
+                            <option value="Orange">Assist (Orange)</option>
+                            <option value="Red">Intervention (Red)</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="formlabel">
+                        Technical and Organisational Measures
+                    </td>
+                    <td>
+                        <div class="Green" ng-show="editdata.okassesment && !editdata.makeassessment">All data assessment actions in
+                            place</div>
+                        <div class="Yellow" ng-show="!editdata.okassesment && !editdata.makeassessment">Data assessment action(s) not in
+                            place</div>
+                        <div class="Red" ng-show="editdata.makeassessment">Data assessment incomplete</div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="formlabel">Company contact</td>
+                    <td>
+                        <select ng-model="editdata.comcontact" id="companycontact" ng-disabled="!user.changeContent"
+                            ng-change="saveNow(editdata)">
+                            <option ng-repeat="u in tempusers | filter: {source: true} | orderBy:'name'"
+                                value="{{u.name}}">{{u.name}}</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="formlabel">Data controller</td>
+                    <td>
+                        <input ng-model="editdata.controller" ng-change="saveNow(editdata)"
+                            ng-disabled="!user.changeContent" />
+                    </td>
+                </tr>
+                <tr>
+                    <td class="formlabel">Data processor</td>
+                    <td>
+                        <textarea ng-change="saveNow(editdata)" ng-model="editdata.processor" maxlength="800"
+                            id="dataprocessor" placeholder="Describe the Data processor."
+                            ng-disabled="!user.changeContent"></textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="formlabel">Data store location</td>
+                    <td>
+                        <textarea ng-change="saveNow(editdata)" ng-model="editdata.location" maxlength="800"
+                            id="datalocation" placeholder="Describe where the Data is stored."
+                            ng-disabled="!user.changeContent"></textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="formlabel">General security refrences</td>
+                    <td>
+                        <textarea ng-change="saveNow(editdata)" ng-model="editdata.generalsecurity" maxlength="800"
+                            id="gensecurity" placeholder="Describe or reference general data security."
+                            ng-disabled="!user.changeContent"></textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="formlabel">Data transferred externally</td>
+                    <td>
+                        <input type="checkbox" ng-model="editdata.transferred" ng-change="saveNow(editdata)"
+                            ng-disabled="!user.changeContent">
+                    </td>
+                </tr>
+                <tr>
+                    <td class="formlabel">Show in report</td>
+                    <td>
+                        <input type="checkbox" ng-model="editdata.showInReport" ng-change="saveNow(editdata)"
+                            ng-disabled="!user.changeContent">
+                    </td>
+                </tr>
+                <tr>
+                    <td class="formlabel">Data category</td>
+                    <td>
+                        <select ng-change="saveNow(editdata)" ng-model="editdata.datacat"
+                            ng-disabled="!user.changeContent"
+                            ng-options="cat.name for cat in company.datacategories | orderBy:'name' track by cat.name">
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="formlabel">Purpose required</td>
+                    <td>
+                        <input type="checkbox" ng-model="editdata.datacat.purposerequired" ng-disabled="true">
+                    </td>
+                </tr>
+                <tr>
+                    <td class="formlabel">Purpose of processing</td>
+                    <td>
+                        <textarea ng-change="saveNow(editdata)" ng-model="editdata.purpose" maxlength="800" id="datadec"
+                            placeholder="Describe the purpose." ng-disabled="!user.changeContent"></textarea>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="formlabel">Data types in category</td>
+                    <td>
+                        <div ng-repeat="t in editdata.datacat.type">
+                            {{t}}<br />
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="formlabel">Data category subjects</td>
+                    <td>
+                        <div ng-repeat="s in editdata.datacat.categorysubjects">
+                            {{s}}<br />
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="formlabel">Origin source of the data set</td>
+                    <td>
+                        <textarea>{{editdata.datacat.source}}</textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="formlabel">Description of data set</td>
+                    <td>
+                        <textarea>{{editdata.datacat.description}}</textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="formlabel">Data fields</td>
+                    <td>
+                        <div class="field">
+                            <textarea>{{editdata.datacat.datafields}}</textarea>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="formlabel">Retention period</td>
+                    <td>
+                        <select ng-model="editdata.retention" ng-change="saveNow(editdata)"
+                            ng-disabled="!user.changeContent">
+                            <option value="0">Ad hoc</option>
+                            <option value="1">1 year</option>
+                            <option value="2">2 year</option>
+                            <option value="3">3 year</option>
+                            <option value="4">4 year</option>
+                            <option value="5">5 year</option>
+                            <option value="6">6 year</option>
+                            <option value="7">7 year</option>
+                            <option value="8">8 year</option>
+                            <option value="9">9 year</option>
+                            <option value="10">10 year</option>
+                            <option value="11">11 year</option>
+                            <option value="12">12 year</option>
+                            <option value="13">13 year</option>
+                            <option value="14">14 year</option>
+                            <option value="15">15 year</option>
+                            <option value="16">16 year</option>
+                            <option value="17">17 year</option>
+                            <option value="18">18 year</option>
+                            <option value="19">19 year</option>
+                            <option value="20">20 year</option>
+                            <option value="100">Forever</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="formlabel">
+                        <div id="deletionwarning">Deletion procedure</div>
+                    </td>
+                    <td>
+                        <select ng-model="editdata.deletionprocedure" ng-change="saveNow(editdata)"
+                            ng-disabled="!user.changeContent">
+                            <option value="Not defined">Not defined</option>
+                            <option value="Automatic">Automatic</option>
+                            <option value="Manual on system warning">Manual on system warning</option>
+                            <option value="Manual on process">Manual on process</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="formlabel">Legal basis <a ng-click="showInfoboxLegalbasis=true">&oplus;</a></td>
+                    <td>
+                        <select ng-model="editdata.legal" multiple="multiple" ng-multiple="true"
+                            ng-change="saveNow(editdata)" ng-disabled="!user.changeContent">
+                            <option value="Consent">Consent</option>
+                            <option value="Contract">Contract</option>
+                            <option value="Legal obligations">Legal obligations</option>
+                            <option value="Vital interests">Vital interests</option>
+                            <option value="Public interests">Public interests</option>
+                            <option value="Legitimate interests">Legitimate interests</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="formlabel">Primary data storage</td>
+                    <td>
+                        <select ng-model="editdata.storage" ng-change="saveNow(editdata)"
+                            ng-disabled="!user.changeContent">
+                            <option value="Clear text files">Clear text files</option>
+                            <option value="Clear text database">Clear text database</option>
+                            <option value="Encrypted file">Encrypted file</option>
+                            <option value="Encrypted database">Encrypted database</option>
+                        </select>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="formlabel">Data retention strategy</td>
+                    <td>
+                        <textarea ng-change="saveNow(editdata)" ng-model="editdata.retentionstrategy" maxlength="800"
+                            id="datadec" placeholder="Describe the retenteion strategy."
+                            ng-disabled="!user.changeContent"></textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="formlabel">Data deletion strategy</td>
+                    <td>
+                        <textarea ng-change="saveNow(editdata)" ng-model="editdata.deletion" maxlength="800"
+                            id="datadec" placeholder="Describe the deletion strategy."
+                            ng-disabled="!user.changeContent"></textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="formlabel">Data integrity strategy</td>
+                    <td>
+                        <textarea ng-change="saveNow(editdata)" ng-model="editdata.integrity" maxlength="800"
+                            id="datadec" placeholder="Describe the integrity strategy."
+                            ng-disabled="!user.changeContent"></textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="formlabel">Data backup strategy</td>
+                    <td>
+                        <textarea ng-change="saveNow(editdata)" ng-model="editdata.backup" maxlength="800" id="datadec"
+                            placeholder="Describe the backup strategy." ng-disabled="!user.changeContent"></textarea>
+                    </td>
+                </tr>
+
+            </table></br>
+            <h3>Technical and Organisational Measures</h3>
+            <table class="formtable smaller">
+                <tr>
+                    <td class="formlabel">Measure status</td>
+                    <td colspan="2">
+                        <div class="Green" ng-show="editdata.okassesment && !editdata.makeassessment">All data assessment actions in
+                            place</div>
+                        <div class="Yellow" ng-show="!editdata.okassesment && !editdata.makeassessment">Data assessment action(s) not in
+                            place</div>
+                        <div class="Red" ng-show="editdata.makeassessment">Data assessment incomplete</div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="formlabel">Specified purpose</td>
+                    <td>
+                        Do you ensure processes are in place to embed privacy by design and default into projects, to
+                        include measures that ensure data minimization, pseudonymization, encryption and the processing
+                        of only personal data necessary for specified purposes?
+                    </td>
+                    <td class="formlabel">
+                        <input type="radio" id="yes" ng-model="editdata.assessQ1" name="assessq1" value="yes"
+                            ng-change="saveNow(editdata)">
+                        <label for="yes">Yes</label> &nbsp;
+                        <input type="radio" id="no" ng-model="editdata.assessQ1" name="assessq1" value="no"
+                            ng-change="saveNow(editdata)">
+                        <label for="no">No</label>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="formlabel">Audits</td>
+                    <td>
+                        Do you frequently audit and test systems and services to ensure ongoing confidentiality,
+                        integrity, availability and resilience?
+                    </td>
+                    <td class="formlabel">
+                        <input type="radio" id="yes" ng-model="editdata.assessQ2" name="assessq2" value="yes"
+                            ng-change="saveNow(editdata)">
+                        <label for="yes">Yes</label> &nbsp;
+                        <input type="radio" id="no" ng-model="editdata.assessQ2" name="assessq2" value="no"
+                            ng-change="saveNow(editdata)">
+                        <label for="no">No</label>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="formlabel">Authorization</td>
+                    <td>
+                        Is personal data processed in a manner that ensures appropriate security of the personal data,
+                        including protection against unauthorized or unlawful processing.
+                    </td>
+                    <td class="formlabel">
+                        <input type="radio" id="yes" ng-model="editdata.assessQ3" name="assessq3" value="yes"
+                            ng-change="saveNow(editdata)">
+                        <label for="yes">Yes</label> &nbsp;
+                        <input type="radio" id="no" ng-model="editdata.assessQ3" name="assessq3" value="no"
+                            ng-change="saveNow(editdata)">
+                        <label for="no">No</label>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="formlabel">Access restriction</td>
+                    <td>
+                        Do you restrict access to personal data to only those employees processing the data?
+                    </td>
+                    <td class="formlabel">
+                        <input type="radio" id="yes" ng-model="editdata.assessQ4" name="assessq4" value="yes"
+                            ng-change="saveNow(editdata)">
+                        <label for="yes">Yes</label> &nbsp;
+                        <input type="radio" id="no" ng-model="editdata.assessQ4" name="assessq4" value="no"
+                            ng-change="saveNow(editdata)">
+                        <label for="no">No</label>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="formlabel">Restoration</td>
+                    <td>
+                        Do you ensure processes and systems can be restored in the event of physical or technical
+                        incidents?
+                    </td>
+                    <td class="formlabel">
+                        <input type="radio" id="yes" ng-model="editdata.assessQ5" name="assessq5" value="yes"
+                            ng-change="saveNow(editdata)">
+                        <label for="yes">Yes</label> &nbsp;
+                        <input type="radio" id="no" ng-model="editdata.assessQ5" name="assessq5" value="no"
+                            ng-change="saveNow(editdata)">
+                        <label for="no">No</label>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="formlabel">Testing process</td>
+                    <td>
+                        Do you maintain a process for regularly testing, assessing and evaluating the effectiveness of
+                        technical and organizational measures to ensure the security of the processing?
+                    </td>
+                    <td class="formlabel">
+                        <input type="radio" id="yes" ng-model="editdata.assessQ6" name="assessq6" value="yes"
+                            ng-change="saveNow(editdata)">
+                        <label for="yes">Yes</label> &nbsp;
+                        <input type="radio" id="no" ng-model="editdata.assessQ6" name="assessq6" value="no"
+                            ng-change="saveNow(editdata)">
+                        <label for="no">No</label>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="formlabel">Awareness</td>
+                    <td>
+                        Ensure efficient awareness and training for all employees processing the date?
+                    </td>
+                    <td class="formlabel">
+                        <input type="radio" id="yes" ng-model="editdata.assessQ7" name="assessq7" value="yes"
+                            ng-change="saveNow(editdata)">
+                        <label for="yes">Yes</label> &nbsp;
+                        <input type="radio" id="no" ng-model="editdata.assessQ7" name="assessq7" value="no"
+                            ng-change="saveNow(editdata)">
+                        <label for="no">No</label>
+                    </td>
+                </tr>
+
+            </table>
+
+            <h3>Control</h3>
+            <table class="formtable smaller">
+                <tr>
+                    <td class="formlabel">Use standard control</td>
+                    <td>
+                        <select ng-model="editdata.controltemplate"
+                            ng-change="usecontroltemplate(editdata.controltemplate, editdata);saveNow(editdata)"
+                            ng-disabled="!user.changeContent"
+                            ng-options="control.title for control in company.standardcontrols | filter: {target: 'Data'} | orderBy:'title' track by control.title">
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="formlabel">Control responsible</td>
+                    <td>
+                        <select ng-model="editdata.conresp" id="contresp" ng-disabled="!user.changeContent"
+                            ng-change="saveNow(editdata)">
+                            <option ng-repeat="u in tempusers | filter: {source: true} | orderBy:'name'"
+                                value="{{u.name}}">{{u.name}}</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="formlabel">Control accountable</td>
+                    <td>
+                        <select ng-model="editdata.conacc" id="contacc" ng-disabled="!user.changeContent"
+                            ng-change="saveNow(editdata)">
+                            <option ng-repeat="u in tempusers | filter: {source: true} | orderBy:'name'"
+                                value="{{u.name}}">{{u.name}}</option>
+                        </select>
+                    </td>
+
+                </tr>
+                <tr>
+                    <td class="formlabel">Control description</td>
+                    <td>
+                        <textarea ng-change="saveNow(editdata)" ng-model="editdata.controldescription" maxlength="800"
+                            id="controldec" placeholder="Describe the control."
+                            ng-disabled="!user.changeContent"></textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="formlabel">Control level</td>
+                    <td>
+                        <select ng-model="editdata.level" ng-change="saveNow(editdata)"
+                            ng-disabled="!user.changeContent">
+                            <option value="Ad hoc Internal">Ad hoc Internal</option>
+                            <option value="Ad hoc External">Ad hoc External</option>
+                            <option value="Mandatory Internal">Mandatory Internal</option>
+                            <option value="Mandatory External">Mandatory External</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="formlabel">Control frequency</td>
+                    <td>
+                        <select ng-model="editdata.freq" ng-change="saveNow(editdata)"
+                            ng-disabled="!user.changeContent">
+                            <option value="Weekly">Weekly</option>
+                            <option value="Bi-weekly">Bi-weekly</option>
+                            <option value="Monthly">Monthly</option>
+                            <option value="Quarterly">Quarterly</option>
+                            <option value="Half yearly">Half yearly</option>
+                            <option value="Yearly">Yearly</option>
+                            <option value="On request">On request</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="formlabel">Next control</td>
+                    <td>
+                        <input type="text" id="nextdate" datepicker="" ng-model="editdata.rawnextdate"
+                            ng-change="saveNow(editdata)" class="cal" ng-disabled="!user.changeContent" />
+                        {{editdata.nextdate | date:'longDate'}}
+                    </td>
+                </tr>
+                <tr>
+                    <td class="formlabel">Last control</td>
+                    <td>
+                        <input type="text" id="lastdate" datepicker="" ng-model="editdata.rawlastdate"
+                            ng-change="saveNow(editdata)" class="cal" ng-disabled="!user.changeContent" />
+                        {{editdata.lastdate | date:'longDate'}}
+                    </td>
+                </tr>
+                <tr>
+                    <td class="formlabel">Last control result</td>
+                    <td>
+                        <select ng-model="editdata.result" ng-change="saveNow(editdata)"
+                            ng-disabled="!user.changeContent">
+                            <option value="Control not passed">Control not passed</option>
+                            <option value="Control insuficient">Control insuficient</option>
+                            <option value="Control passed">Control passed</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="formlabel">Control conclusion</td>
+                    <td>
+                        <textarea ng-change="saveNow(editdata)" ng-model="editdata.conclusion" maxlength="800"
+                            id="controldec" placeholder="Describe the control."
+                            ng-disabled="!user.changeContent"></textarea>
+                    </td>
+                </tr>
+            </table>
+            <h3>Comments</h3>
+            <table class="formtable smaller">
+                <tr>
+                    <td class="formlabel">Comment</td>
+                    <td>
+                        <textarea ng-model="newcomment" maxlength="800" id="newcom" placeholder="Create comment"
+                            ng-disabled="!user.changeContent"></textarea>
+                        <button type="button" id="commentadd" prio-class ng-if="user.changeContent"
+                            ng-click="addcomment(editdata)">Add comment</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="formlabel">Comment log</td>
+                    <td>
+                        <pre>{{editdata.commentslist}}</pre>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="formlabel"></td>
+                    <td>
+                        <button type="button" id="clearcomment" prio-class class="right" ng-if="user.changeContent"
+                            ng-click="clearcomment(editdata)" ng-show="!$parent.clearThis">Clear all
+                            comments</button>
+                        <button type="button" ng-click="confirmclearcomment(editdata)" ng-show="$parent.clearThis"
+                            ng-if="user.changeContent">Confirm clear all comments</button>
+                    </td>
+                </tr>
+            </table>
+
+        </div>
+    </div>
+    <div class="right">
+        <button type="button" id="saveButton4" prio-class save-this="$parent.hasChanged" ng-if="user.changeContent"
+            ng-click="saveSystem(system)">save</button>
+    </div>
+
+    <div class="mainbox">
+        <div class="{{system.data.securityownerfeedback}}">Overall internal data security assesment
+            <select ng-model="system.data.securityownerfeedback" ng-change="saveDatas()"
+                ng-disabled="!user.changeContent" ng-show="user.securityowner || user.admin">
+                <option value="Green">OK (Green)</option>
+                <option value="Yellow">Observe (Yellow)</option>
+                <option value="Orange">Assist (Orange)</option>
+                <option value="Red">Intervention (Red)</option>
+            </select>
+        </div>
+
+
+        <table class="formtable smaller">
+            <tr>
+                <td>
+                    Link to DPA applied
+                </td>
+                <td>
+                    <input type="radio" id="yes" ng-model="system.dpaapplied" name="dpaapp" value="yes"
+                        ng-change="systemsaveNow()">
+                    <label for="yes">Yes</label>, <input type="checkbox" ng-model="system.showdpaapplied"
+                        ng-change="systemsaveNow()"> Show DPA Control <br />
+                    <input type="radio" id="no" ng-model="system.dpaapplied" name="dpaapp" value="no"
+                        ng-change="systemsaveNow()">
+                    <label for="no">No</label>
+                </td>
+            </tr>
+            <tr ng-show="system.dpaapplied=='no'">
+                <td>
+                    No DPA arguement
+                </td>
+                <td>
+                    <div class="field">
+                        <textarea ng-model="system.dpaarguement" maxlength="800" ng-change="systemsaveNow()"
+                            placeholder="Why should this system not have a DPA"
+                            ng-disabled="!user.changeContent"></textarea>
+                    </div>
+                </td>
+            </tr>
+        </table>
+        <h3 ng-show="system.dpaapplied=='yes' && system.showdpaapplied">DPA Control</h3>
+        <table class="smaller gutter-top" ng-show="system.dpaapplied=='yes' && system.showdpaapplied">
+            <tr>
+                <td class="formlabel">Use standard control</td>
+                <td>
+                    <select ng-model="system.controltemplate" ng-change="usecontroltemplate(system);systemsaveNow()"
+                        ng-disabled="!user.changeContent"
+                        ng-options="control.title for control in company.standardcontrols | filter: {target: 'DPA'} | orderBy:'title' track by control.title">
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td class="formlabel">Control responsible</td>
+                <td>
+                    <select ng-model="system.conresp" id="contresp" ng-disabled="!user.changeContent"
+                        ng-change="systemsaveNow()">
+                        <option ng-repeat="u in tempusers | filter: {source: true} | orderBy:'name'" value="{{u.name}}">
+                            {{u.name}}</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td class="formlabel">Control accountable</td>
+                <td>
+                    <select ng-model="system.conacc" id="contacc" ng-disabled="!user.changeContent"
+                        ng-change="systemsaveNow()">
+                        <option ng-repeat="u in tempusers | filter: {source: true} | orderBy:'name'" value="{{u.name}}">
+                            {{u.name}}</option>
+                    </select>
+                </td>
+
+            </tr>
+            <tr>
+                <td class="formlabel">Control description</td>
+                <td>
+                    <textarea ng-change="systemsaveNow()" ng-model="system.controldescription" maxlength="800"
+                        id="controldec" placeholder="Describe the control."
+                        ng-disabled="!user.changeContent"></textarea>
+                </td>
+            </tr>
+            <tr>
+                <td class="formlabel">Control level</td>
+                <td>
+                    <select ng-model="system.level" ng-change="systemsaveNow()" ng-disabled="!user.changeContent">
+                        <option value="Ad hoc Internal">Ad hoc Internal</option>
+                        <option value="Ad hoc External">Ad hoc External</option>
+                        <option value="Mandatory Internal">Mandatory Internal</option>
+                        <option value="Mandatory External">Mandatory External</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td class="formlabel">Control frequency</td>
+                <td>
+                    <select ng-model="system.freq" ng-change="systemsaveNow()" ng-disabled="!user.changeContent">
+                        <option value="Weekly">Weekly</option>
+                        <option value="Bi-weekly">Bi-weekly</option>
+                        <option value="Monthly">Monthly</option>
+                        <option value="Quarterly">Quarterly</option>
+                        <option value="Half yearly">Half yearly</option>
+                        <option value="Yearly">Yearly</option>
+                        <option value="On request">On request</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td class="formlabel">Next DPA control</td>
+                <td>
+                    <input type="text" id="systemnextdate" datepicker="" ng-model="system.rawsystemnextdate"
+                        ng-change="systemsaveNow()" class="cal" ng-disabled="!user.changeContent" />
+                    {{system.nextdate | date:'longDate'}}
+                </td>
+            </tr>
+            <tr>
+                <td class="formlabel">Last DPA control</td>
+                <td>
+                    <input type="text" id="systemlastdate" datepicker="" ng-model="system.rawsystemlastdate"
+                        ng-change="systemsaveNow()" class="cal" ng-disabled="!user.changeContent" />
+                    {{system.lastdate | date:'longDate'}}
+                </td>
+            </tr>
+            <tr>
+                <td class="formlabel">Last control result</td>
+                <td>
+                    <select ng-model="system.result" ng-change="systemsaveNow()" ng-disabled="!user.changeContent">
+                        <option value="Control not passed">Control not passed</option>
+                        <option value="Control insuficient">Control insuficient</option>
+                        <option value="Control passed">Control passed</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td class="formlabel">Control conclusion</td>
+                <td>
+                    <textarea ng-change="systemsaveNow()" ng-model="system.conclusion" maxlength="800" id="controldec"
+                        placeholder="Describe the control." ng-disabled="!user.changeContent"></textarea>
+                </td>
+            </tr>
+        </table>
+        <table class="smaller gutter-top">
+            <tr class="header">
+                <td colspan="4">Links to documentation
+                    <div class="right">
+                        <button ng-if="user.changeContent" ng-click="addlink('Data')" ng-if="user.changeContent">create
+                            link</button>
+                    </div>
+                </td>
+            </tr>
+            <tr class="header" ng-if="system.linklist.length > 0">
+                <td>Title</td>
+                <td>URL</td>
+                <td>Show in report</td>
+                <td>Follow link</td>
+            </tr>
+            <tr ng-repeat="link in system.linklist" ng-if="link.lable=='Data'">
+                <td ng-click="editlinkitem(link)">
+                    {{link.title}}
+                </td>
+                <td ng-click="editlinkitem(link)">
+                    {{link.url}}
+                </td>
+                <td class="Green" ng-show="link.showinreport">Show</td>
+                <td class="Red" ng-show="!link.showinreport">Hide</td>
+                <td>
+                    <a target="_blank" href="{{link.url}}">
+                        <div class="linkicon right"></div>
+                    </a>
+                </td>
+            </tr>
+        </table>
+
+        <div class="popuplink">
+            <div class="overview popupcontent">
+                <div class="actions">
+                    <div class="layout">
+                        <div class="layoutelement">
+                            <button type="button" id="saveButton5" ng-if="user.changeContent"
+                                ng-click="savelink(editlink)">save</button>
+                        </div>
+                        <div class="layoutelement center">
+                            <button type="button primary" class="Red" ng-click="dellink(editlink)"
+                                ng-if="user.changeContent">delete</button>
+                        </div>
+                        <div class="layoutelement right">
+                            <button type="button" class="close" ng-click="closelink(editlink)"></button>
+                        </div>
+                    </div>
+                </div>
+                <h3>
+                    Edit link
+                </h3>
+                <table class="formtable smaller">
+                    <tr>
+                        <td class="formlabel">Link title</td>
+                        <td><input ng-model="editlink.title" /></td>
+                    </tr>
+                    <tr>
+                        <td class="formlabel">Link URL</td>
+                        <td><input ng-model="editlink.url" /></td>
+                    </tr>
+                    <tr>
+                        <td class="formlabel">Show link in report</td>
+                        <td><input type="checkbox" ng-model="editlink.showinreport"></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <div class="right">
+            <button type="button" ng-click="newData()" ng-if="user.changeContent">create new
+                data package</button>
+        </div>
+        <div class="overview">
+            <table class="tablelist smaller" ng-if="system.datas.length > 0">
+                <tr class="header">
+                    <td>Data package title</td>
+                    <td>Data category</td>
+                    <td>Category subjects</td>
+                    <td>Category types</td>
+                    <td>Last control</td>
+                    <td>Control result</td>
+                    <td>Report</td>
+                </tr>
+                <tr ng-repeat="data in system.datas | orderBy:'title'" class="link">
+                    <td ng-click="beginEditData(data)" class="{{data.status}}">
+                        <b>{{data.title}}</b></td>
+                    <td ng-click="beginEditData(data)">{{data.datacat.name}}</td>
+                    <td ng-click="beginEditData(data)">
+                        <div ng-repeat="s in data.datacat.categorysubjects">
+                            {{s}}<br />
+                        </div>
+                    </td>
+                    <td ng-click="beginEditData(data)">
+                        <div ng-repeat="t in data.datacat.type">
+                            {{t}}<br />
+                        </div>
+                    </td>
+                    <td ng-click="beginEditData(data)">{{data.lastdate | date:'longDate'}}</td>
+                    <td ng-click="beginEditData(data)">{{data.result}}</td>
+                    <td><input type="checkbox" ng-model="data.showInReport" ng-change="saveDatas()"
+                            ng-disabled="!user.changeContent"></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>

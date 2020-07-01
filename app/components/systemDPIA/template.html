@@ -1,0 +1,368 @@
+<h2 class="center {{system.statusFlag}}">
+    {{system.title}}
+</h2>
+<prio-system-menu prio-system-id="{{system._id.$oid}}" prio-system-title="{{system.title}}"></prio-system-menu>
+<div class="view">
+    <div class="mainbox editboxon" id="dpia">
+        <div class="right">
+            <button type="button" id="saveButton1" prio-class save-this="$parent.hasChanged" ng-if="user.changeContent"
+                ng-click="saveSystem()">save</button>
+        </div></br>
+        <h2>DPIA Pre-assessment <a ng-click="showInfoboxPreAssessment=true">&oplus;</a></h2>
+        <div id="lock" class="infobox" ng-show="showInfoboxPreAssessment">
+            <div class="layoutelement right">
+                <button type="button" class="close" ng-click="showInfoboxPreAssessment=false"></button>
+            </div>
+
+            <h3>DPIA Pre-assessment</h3>
+            <b>Why</b>
+            <ul>
+                <li>Before {{company.name}} begins processing personal data, using in particular new technologies but also
+                    technologies replacing old solutions/software, it is required in accordance with GDPR Art. 35 to
+                    conduct a Data Protection Impact Assessment (“DPIA”) because processing the personal data might
+                    result in a high risk to the rights and freedoms of natural persons e.g. employees, external
+                    consultants, customer employees, vendor employees</li>
+            </ul>
+            <b>When</b>
+            <ul>
+                <li>{{company.name}} is only required to conduct a DPIA if we are conducting one or more of the following actions.
+                    If all the answers are ticked ‘No’ {{company.name}} is not required to conduct a DPIA.
+                </li>
+            </ul>
+            <b>Who</b>
+            <ul>
+                <li>The specific system owner {{system.po.name}} in {{system.bu.name}} is responsible for completing
+                    this
+                    Pre-Assessment including receiving an approval from the {{company.name}} GDPR Team of the Pre-Assessment as soon
+                    as it has been completed. For final approval of the Pre-Assessment please send this document in a
+                    Pdf format to the {{company.name}} GDPR Team. If you have any questions to the DPIA process
+                    including this Pre-Assessment, please contact the {{company.name}} GDPR Team accordingly.
+                </li>
+                <li>When a DPIA Pre-Assessment concludes that {{company.name}} is required to conduct a full DPIA this shall be
+                    coordinated with the {{company.name}} GDPR Team in order to ensure that all GDPR requirements are meet. The {{company.name}}
+                    GDPR Team is responsible for completing the full DPIA in coordination with {{system.po.name}} in
+                    {{system.bu.name}}. The DPIA Template can be found using below link:
+                </li>
+            </ul>
+
+        </div>
+        <table class="smaller">
+            <tr>
+                <td class="header {{system.dpiastatusFlag}}">
+                    Status
+                </td>
+                <td>
+                    <h3>
+                        <div ng-show="system.dpiafulldpia && !system.dpiamakedpia">Full DPIA needed</div>
+                        <div ng-show="!system.dpiafulldpia && !system.dpiamakedpia">No full DPIA needed</div>
+                        <div ng-show="system.dpiamakedpia">DPIA assessment incomplete</div>
+                    </h3>
+                </td>
+                <td>
+                    <select ng-disabled="!user.changeContent" ng-model="system.dpiastatusFlag" ng-change="saveNow()">
+                        <option value="Green">OK (Green)</option>
+                        <option value="Yellow">Observe (Yellow)</option>
+                        <option value="Orange">Assist (Orange)</option>
+                        <option value="Red">Intervention (Red)</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td class="header" colspan="3">Purpose of data processing</td>
+            </tr>
+            <tr>
+                <td class="header">Nature of processing</td>
+                <td colspan="2">
+                    <div class="field"><textarea ng-change="saveNow()" ng-disabled="!user.changeContent"
+                            ng-model="system.dpianature" maxlength="800" id="dpianature"
+                            placeholder="Describe nature"></textarea></div>
+                </td>
+            </tr>
+            <tr>
+                <td class="header">Scale of processing</td>
+                <td colspan="2">
+                    <div class="field"><textarea ng-change="saveNow()" ng-disabled="!user.changeContent"
+                            ng-model="system.dpiascale" maxlength="800" id="dpiascale"
+                            placeholder="Describe scale"></textarea></div>
+                </td>
+            </tr>
+            <tr>
+                <td class="header">Context of processing</td>
+                <td colspan="2">
+                    <div class="field"><textarea ng-change="saveNow()" ng-disabled="!user.changeContent"
+                            ng-model="system.dpiacontext" maxlength="800" id="dpiacontext"
+                            placeholder="Describe context"></textarea></div>
+                </td>
+            </tr>
+            <tr>
+                <td class="header">Purpose of processing</td>
+                <td colspan="2">
+                    <div class="field"><textarea ng-change="saveNow()" ng-disabled="!user.changeContent"
+                            ng-model="system.dpiapurpose" maxlength="800" id="dpianature"
+                            placeholder="Describe purpose"></textarea></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="header" colspan="3">Pre-assesment questions</td>
+            </tr>
+            <tr>
+                <td class="header">Extensive evaluation</td>
+                <td>
+                    {{company.name}} wants to implement/use a solution which include systematic and extensive evaluation of personal
+                    aspects relating to natural persons based on automated processing, including profiling?
+                </td>
+                <td class="header">
+                    <input type="radio" id="yes" ng-model="system.dpiaq1" name="dpiaq1" value="yes"
+                        ng-change="saveNow()">
+                    <label for="yes">Yes</label> &nbsp;
+                    <input type="radio" id="no" ng-model="system.dpiaq1" name="dpiaq1" value="no" ng-change="saveNow()">
+                    <label for="no">No</label>
+                </td>
+            </tr>
+            <tr>
+                <td class="header">Scale of special categories</td>
+                <td>
+                    {{company.name}} want to process a large scale of special categories of personal data referred to in GDPR Art.
+                    9, or of personal data relating to criminal convictions, or of personal data relating to children?
+                </td>
+                <td class="header">
+                    <input type="radio" id="yes" ng-model="system.dpiaq2" name="dpiaq2" value="yes"
+                        ng-change="saveNow()">
+                    <label for="yes">Yes</label> &nbsp;
+                    <input type="radio" id="no" ng-model="system.dpiaq2" name="dpiaq2" value="no" ng-change="saveNow()">
+                    <label for="no">No</label>
+                </td>
+            </tr>
+            <tr>
+                <td class="header">Systematic monitoring </td>
+                <td>
+                    {{company.name}} wants to conduct systematic monitoring of a publicly accessible area on a large scale e.g.
+                    people at {{company.name}}’ locations or business areas?
+                </td>
+                <td class="header">
+                    <input type="radio" id="yes" ng-model="system.dpiaq3" name="dpiaq3" value="yes"
+                        ng-change="saveNow()">
+                    <label for="yes">Yes</label> &nbsp;
+                    <input type="radio" id="no" ng-model="system.dpiaq3" name="dpiaq3" value="no" ng-change="saveNow()">
+                    <label for="no">No</label>
+                </td>
+            </tr>
+            <tr>
+                <td class="header">Re-purpose personal data</td>
+                <td>
+                    {{company.name}} wants to process old personal data for a new purpose in large scale or on permanent basis?
+                </td>
+                <td class="header">
+                    <input type="radio" id="yes" ng-model="system.dpiaq4" name="dpiaq4" value="yes"
+                        ng-change="saveNow()">
+                    <label for="yes">Yes</label> &nbsp;
+                    <input type="radio" id="no" ng-model="system.dpiaq4" name="dpiaq4" value="no" ng-change="saveNow()">
+                    <label for="no">No</label>
+                </td>
+            </tr>
+        </table>
+        <div class="right">
+            <button type="button" id="saveButton2" prio-class save-this="$parent.hasChanged" ng-if="user.changeContent"
+                ng-click="saveSystem()">save</button>
+        </div></br>
+        <h3>DPIA Control</h3>
+        <table class="smaller gutter-top">
+            <tr>
+                <td class="header">Use standard control</td>
+                <td>
+                    <select ng-model="system.dpiacontroltemplate" ng-change="usecontroltemplate(system.dpiacontroltemplate,system);saveNow()"
+                        ng-disabled="!user.changeContent"
+                        ng-options="control.title for control in company.standardcontrols | filter: {target: 'DPIA'} | orderBy:'title' track by control.title">
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td class="header">Control responsible</td>
+                <td>
+                    <select ng-model="system.dpiaconresp" id="contresp" ng-disabled="!user.changeContent"
+                        ng-change="saveNow()">
+                        <option ng-repeat="u in tempusers | filter: {source: true} | orderBy:'name'" value="{{u.name}}">
+                            {{u.name}}</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td class="header">Control accountable</td>
+                <td>
+                    <select ng-model="system.dpiaconacc" id="contacc" ng-disabled="!user.changeContent"
+                        ng-change="saveNow()">
+                        <option ng-repeat="u in tempusers | filter: {source: true} | orderBy:'name'" value="{{u.name}}">
+                            {{u.name}}</option>
+                    </select>
+                </td>
+
+            </tr>
+            <tr>
+                <td class="header">Control description</td>
+                <td>
+                    <textarea ng-change="saveNow()" ng-model="system.dpiacontroldescription" maxlength="800" id="controldec"
+                        placeholder="Describe the control." ng-disabled="!user.changeContent"></textarea>
+                </td>
+            </tr>
+            <tr>
+                <td class="header">Control level</td>
+                <td>
+                    <select ng-model="system.dpialevel" ng-change="saveNow()" ng-disabled="!user.changeContent">
+                        <option value="Ad hoc Internal">Ad hoc Internal</option>
+                        <option value="Ad hoc External">Ad hoc External</option>
+                        <option value="Mandatory Internal">Mandatory Internal</option>
+                        <option value="Mandatory External">Mandatory External</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td class="header">Control frequency</td>
+                <td>
+                    <select ng-model="system.dpiafreq" ng-change="saveNow()" ng-disabled="!user.changeContent">
+                        <option value="Weekly">Weekly</option>
+                        <option value="Bi-weekly">Bi-weekly</option>
+                        <option value="Monthly">Monthly</option>
+                        <option value="Quarterly">Quarterly</option>
+                        <option value="Half yearly">Half yearly</option>
+                        <option value="Yearly">Yearly</option>
+                        <option value="On request">On request</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td class="header">Next DPA control</td>
+                <td>
+                    <input type="text" id="systemnextdate" datepicker="" ng-model="system.dpiarawsystemnextdate" ng-change="saveNow()"
+                        class="cal" ng-disabled="!user.changeContent" />
+                    {{system.dpianextdate | date:'longDate'}}
+                </td>
+            </tr>
+            <tr>
+                <td class="header">Last DPA control</td>
+                <td>
+                    <input type="text" id="systemlastdate" datepicker="" ng-model="system.dpiarawsystemlastdate" ng-change="saveNow()"
+                        class="cal" ng-disabled="!user.changeContent" />
+                    {{system.dpialastdate | date:'longDate'}}
+                </td>
+            </tr>
+            <tr>
+                <td class="header">Last control result</td>
+                <td>
+                    <select ng-model="system.dpiaresult" ng-change="saveNow()" ng-disabled="!user.changeContent">
+                        <option value="Control not passed">Control not passed</option>
+                        <option value="Control insuficient">Control insuficient</option>
+                        <option value="Control passed">Control passed</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td class="header">Control conclusion</td>
+                <td>
+                    <textarea ng-change="saveNow()" ng-model="system.dpiaconclusion" maxlength="800" id="controldec"
+                        placeholder="Describe the control." ng-disabled="!user.changeContent"></textarea>
+                </td>
+            </tr>
+        </table>
+
+
+        <h3>Comments</h3>
+        <table class="smaller gutter-top">
+            <tr>
+                <td class="header">Comment</td>
+                <td>
+                    <textarea ng-model="newcomment" maxlength="800" id="newcom" placeholder="Create comment"
+                        ng-disabled="!user.changeContent"></textarea>
+                    <button type="button" id="commentadd" prio-class ng-if="user.changeContent"
+                        ng-click="addcomment(system.dpiaobj)">Add comment</button>
+                </td>
+            </tr>
+            <tr>
+                <td class="header">Comment log</td>
+                <td>
+                    <pre>{{system.dpiaobj.commentslist}}</pre>
+                </td>
+            </tr>
+            <tr>
+                <td class="header"></td>
+                <td>
+                    <button type="button" id="clearcomment" prio-class class="right" ng-if="user.changeContent"
+                        ng-click="clearcomment(system.dpiaobj)" ng-show="!$parent.clearThis">Clear all comments</button>
+                    <button type="button" ng-click="confirmclearcomment(system.dpiaobj)" ng-show="$parent.clearThis"
+                        ng-if="user.changeContent">Confirm clear all comments</button>
+                </td>
+            </tr>
+        </table>
+        <h3>Links</h3>
+        <table class="smaller gutter-top">
+            <tr class="header">
+                <td colspan="4">Links to documentation
+                    <div class="right">
+                        <button ng-if="user.changeContent" ng-click="addlink('DPIA')" ng-if="user.changeContent">create
+                            link</button>
+                    </div>
+                </td>
+            </tr>
+            <tr class="header" ng-if="system.linklist.length > 0">
+                <td>Title</td>
+                <td>URL</td>
+                <td>Show in report</td>
+                <td>Follow link</td>
+            </tr>
+            <tr ng-repeat="link in system.linklist" ng-if="link.lable=='DPIA'">
+                <td ng-click="editlinkitem(link)">
+                    {{link.title}}
+                </td>
+                <td ng-click="editlinkitem(link)">
+                    {{link.url}}
+                </td>
+                <td class="Green" ng-show="link.showinreport">Show</td>
+                <td class="Red" ng-show="!link.showinreport">Hide</td>
+                <td>
+                    <a target="_blank" href="{{link.url}}">
+                        <div class="linkicon right"></div>
+                    </a>
+                </td>
+            </tr>
+        </table>
+
+
+        <div class="popup">
+            <div class="overview popupcontent">
+                <div class="actions">
+                    <div class="layout">
+                        <div class="layoutelement">
+                            <button type="button" id="saveButton5" ng-if="user.changeContent"
+                                ng-click="savelink(editlink)">save</button>
+                        </div>
+                        <div class="layoutelement center">
+                            <button type="button primary" class="Red" ng-click="dellink(editlink)"
+                                ng-if="user.changeContent">delete</button>
+                        </div>
+                        <div class="layoutelement right">
+                            <button type="button" class="close" ng-click="closelink(editlink)"></button>
+                        </div>
+                    </div>
+                </div>
+                <h3>
+                    Edit link
+                </h3>
+                <table class="formtable smaller">
+                    <tr>
+                        <td class="header">Link title</td>
+                        <td><input ng-model="editlink.title" /></td>
+                    </tr>
+                    <tr>
+                        <td class="header">Link URL</td>
+                        <td><input ng-model="editlink.url" /></td>
+                    </tr>
+                    <tr>
+                        <td class="header">Show link in report</td>
+                        <td><input type="checkbox" ng-model="editlink.showinreport"></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

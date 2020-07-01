@@ -1,0 +1,316 @@
+<h2 class="center {{system.statusFlag}}">
+    {{system.title}}
+</h2>
+<prio-system-menu prio-system-id="{{system._id.$oid}}"></prio-system-menu>
+</prio-access-menu>
+<div class="view">
+    <div class="popup">
+        <div class="overview popupcontent">
+            <div class="actions">
+                <div class="layout">
+                    <div class="layoutelement">
+                        <button type="button" id="saveButton1" prio-class save-this="$parent.hasChanged"
+                            ng-if="user.changeContent" ng-click="saveAccesss()">save</button>
+                    </div>
+                    <div class="layoutelement center">
+                        <button type="button" ng-if="user.changeContent"
+                            ng-click="newCloneAccess(editaccess)">clone</button>
+                        <button type="button" class="Red" ng-click="removeAccess(editaccess)"
+                            ng-show="$parent.deleteThis" ng-if="user.changeContent">confirm
+                            delete!!!</button>
+                        <button type="button" ng-click="delete()" ng-show="!$parent.deleteThis"
+                            ng-if="user.changeContent">delete</button>
+                    </div>
+                    <div class="layoutelement right">
+                        <button type="button" class="close" ng-click="close()"></button>
+                    </div>
+                </div>
+            </div>
+            <h3 class="{{editaccess.status}}">
+                {{editaccess.title}}
+            </h3>
+            <table class="formtable smaller">
+                <tr>
+                    <td class="formlabel">Title</td>
+                    <td>
+                        <input ng-model="editaccess.title" ng-change="saveNow(editaccess)"
+                            ng-disabled="!user.changeContent" />
+                    </td>
+                </tr>
+                <tr>
+
+                    <td class="formlabel">Show in report</td>
+                    <td>
+                        <input type="checkbox" ng-model="editaccess.showInReport" ng-change="saveNow(editaccess)"
+                            ng-disabled="!user.changeContent">
+                    </td>
+                </tr>
+                <tr>
+                    <td class="formlabel">Data category</td>
+                    <td>
+                        <select ng-change="saveNow(editaccess)" ng-model="editaccess.datacat"
+                            ng-disabled="!user.changeContent"
+                            ng-options="cat.name for cat in company.datacategories | orderBy:'name' track by cat.name">
+                        </select>
+                    </td>
+
+                </tr>
+
+                <tr>
+                    <td class="formlabel">Access type</td>
+                    <td>
+                        <select ng-model="editaccess.type" ng-change="saveNow(editaccess)"
+                            ng-disabled="!user.changeContent">
+                            <option value="Guest (read)">Guest (read)</option>
+                            <option value="User (read/write)">User (read/write)</option>
+                            <option value="User (read/write/create)">User (read/write/create)</option>
+                            <option value="User (read/write/create/delete)">User (read/write/create/delete)</option>
+                            <option value="Administrator">Administrator</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="formlabel">Access purpose</td>
+                    <td>
+                        <textarea ng-change="saveNow(editaccess)" ng-model="editaccess.purpose" maxlength="800"
+                            id="accessdec" placeholder="Describe the purpose."
+                            ng-disabled="!user.changeContent"></textarea>
+                    </td>
+
+                </tr>
+                <tr>
+                    <td class="formlabel">Number of active accounts</td>
+                    <td>
+                        <input ng-model="editaccess.numberaccounts" ng-change="saveNow(editaccess)"
+                            ng-disabled="!user.changeContent" />
+                    </td>
+                </tr>
+                <tr>
+                    <td class="formlabel">Primary log in method</td>
+                    <td>
+                        <select ng-model="editaccess.primaryloginmethod" ng-change="saveNow(editaccess)"
+                            ng-disabled="!user.changeContent">
+                            <option value="All access">All access</option>
+                            <option value="Username/Password">Username/Password</option>
+                            <option value="Single sign on">Single sign on</option>
+                            <option value="Device/Token/Key/App/Phone">Device/Token/Key/App/Phone</option>
+                            <option value="Bio metric">Bio metric</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="formlabel">Two factor authentication</td>
+                    <td>
+                        <select ng-model="editaccess.twofactor" ng-change="saveNow(editaccess)"
+                            ng-disabled="!user.changeContent">
+                            <option value="None">None</option>
+                            <option value="Device/Token/Key/App/Phone">Device/Token/Key/App/Phone</option>
+                            <option value="Bio metric">Bio metric</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="formlabel">Access from</td>
+                    <td>
+                        <select ng-model="editaccess.accessfrom" ng-change="saveNow(editaccess)"
+                            ng-disabled="!user.changeContent">
+                            <option value="Internet (open gateway)">Internet (open gateway)</option>
+                            <option value="Specific network">Specific network</option>
+                            <option value="Specific MAC">Specific MAC</option>
+                            <option value="No network access">No network access</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="formlabel">Access policy</td>
+                    <td>
+                        <textarea ng-change="saveNow(editaccess)" ng-model="editaccess.accesspolicy" maxlength="800"
+                            id="accessdec" placeholder="Describe the access policy for this type of user."
+                            ng-disabled="!user.changeContent"></textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="formlabel">Status</td>
+                    <td>
+                        <select ng-model="editaccess.status" ng-change="saveNow(editaccess)"
+                            ng-disabled="!user.changeContent">
+                            <option value="Green">OK (Green)</option>
+                            <option value="Yellow">Observe (Yellow)</option>
+                            <option value="Orange">Assist (Orange)</option>
+                            <option value="Red">Intervention (Red)</option>
+                        </select>
+                    </td>
+                </tr>
+            </table>
+            <h3>Control</h3>
+            <table class="formtable smaller">
+                <tr>
+                    <td class="formlabel">Use standard control</td>
+                    <td>
+                        <select ng-model="editaccess.controltemplate"
+                            ng-change="usecontroltemplate(editaccess.controltemplate, editaccess);saveNow(editaccess)"
+                            ng-disabled="!user.changeContent"
+                            ng-options="control.title for control in company.standardcontrols | filter: {target: 'Access'} | orderBy:'title' track by control.title">
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="formlabel">Control responsible</td>
+                    <td>
+                        <select ng-model="editaccess.conresp" id="contresp" ng-disabled="!user.changeContent"
+                            ng-change="saveNow(editaccess)">
+                            <option ng-repeat="u in tempusers | filter: {source: true} | orderBy:'name'"
+                                value="{{u.name}}">{{u.name}}</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="formlabel">Control accountable</td>
+                    <td>
+                        <select ng-model="editaccess.conacc" id="contacc" ng-disabled="!user.changeContent"
+                            ng-change="saveNow(editaccess)">
+                            <option ng-repeat="u in tempusers | filter: {source: true} | orderBy:'name'"
+                                value="{{u.name}}">{{u.name}}</option>
+                        </select>
+                    </td>
+
+                </tr>
+                <tr>
+                    <td class="formlabel">Control description</td>
+                    <td>
+                        <textarea ng-change="saveNow(editaccess)" ng-model="editaccess.controldescription" maxlength="800"
+                            id="controldec" placeholder="Describe the control."
+                            ng-disabled="!user.changeContent"></textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="formlabel">Control level</td>
+                    <td>
+                        <select ng-model="editaccess.level" ng-change="saveNow(editaccess)"
+                            ng-disabled="!user.changeContent">
+                            <option value="Ad hoc Internal">Ad hoc Internal</option>
+                            <option value="Ad hoc External">Ad hoc External</option>
+                            <option value="Mandatory Internal">Mandatory Internal</option>
+                            <option value="Mandatory External">Mandatory External</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="formlabel">Control frequency</td>
+                    <td>
+                        <select ng-model="editaccess.freq" ng-change="saveNow(editaccess)"
+                            ng-disabled="!user.changeContent">
+                            <option value="Weekly">Weekly</option>
+                            <option value="Bi-weekly">Bi-weekly</option>
+                            <option value="Monthly">Monthly</option>
+                            <option value="Quarterly">Quarterly</option>
+                            <option value="Half yearly">Half yearly</option>
+                            <option value="Yearly">Yearly</option>
+                            <option value="On request">On request</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="formlabel">Next control</td>
+                    <td>
+                        <input type="text" id="nextdate" datepicker="" ng-model="editaccess.rawnextdate"
+                            ng-change="saveNow(editaccess)" class="cal" ng-disabled="!user.changeContent" />
+                        {{editaccess.nextdate | date:'longDate'}}
+                    </td>
+                </tr>
+                <tr>
+                    <td class="formlabel">Last control</td>
+                    <td>
+                        <input type="text" id="lastdate" datepicker="" ng-model="editaccess.rawlastdate"
+                            ng-change="saveNow(editaccess)" class="cal" ng-disabled="!user.changeContent" />
+                        {{editaccess.lastdate | date:'longDate'}}
+                    </td>
+                </tr>
+                <tr>
+                    <td class="formlabel">Last control result</td>
+                    <td>
+                        <select ng-model="editaccess.result" ng-change="saveNow(editaccess)"
+                            ng-disabled="!user.changeContent">
+                            <option value="Control not passed">Control not passed</option>
+                            <option value="Control insuficient">Control insuficient</option>
+                            <option value="Control passed">Control passed</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="formlabel">Control conclusion</td>
+                    <td>
+                        <textarea ng-change="saveNow(editaccess)" ng-model="editaccess.conclusion" maxlength="800"
+                            id="controldec" placeholder="Describe the control."
+                            ng-disabled="!user.changeContent"></textarea>
+                    </td>
+                </tr>
+            </table>
+            <h3>Comments</h3>
+            <table class="formtable smaller">
+                <tr>
+                    <td class="formlabel">Comment</td>
+                    <td>
+                        <textarea ng-model="newcomment" maxlength="800" id="newcom" placeholder="Create comment"
+                            ng-disabled="!user.changeContent"></textarea>
+                        <button type="button" id="commentadd" prio-class ng-if="user.changeContent"
+                            ng-click="addcomment(editaccess)">Add comment</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="formlabel">Comment log</td>
+                    <td>
+                        <pre>{{editaccess.commentslist}}</pre>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="formlabel"></td>
+                    <td>
+                        <button type="button" id="clearcomment" prio-class class="right" ng-if="user.changeContent"
+                            ng-click="clearcomment(editaccess)" ng-show="!$parent.clearThis">Clear all
+                            comments</button>
+                        <button type="button" ng-click="confirmclearcomment(editaccess)" ng-show="$parent.clearThis"
+                            ng-if="user.changeContent">Confirm clear all comments</button>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <div class="mainbox">
+        <div class="{{system.access.securityownerfeedback}}">Security assesment
+            <select ng-model="system.access.securityownerfeedback" ng-change="saveAccesss()"
+                ng-disabled="!user.changeContent" ng-show="user.securityowner || user.admin">
+                <option value="Green">OK (Green)</option>
+                <option value="Yellow">Observe (Yellow)</option>
+                <option value="Orange">Assist (Orange)</option>
+                <option value="Red">Intervention (Red)</option>
+            </select>
+        </div>
+        <div class="right">
+            <button type="button" ng-click="newAccess()" ng-if="user.changeContent">create new
+                access</button>
+        </div>
+        <div class="overview">
+            <table class="tablelist smaller" ng-if="system.accesss.length > 0">
+                <tr class="header">
+                    <td>Access titles</td>
+                    <td>Data category</td>
+                    <td>User type</td>
+                    <td>Last control</td>
+                    <td>Control result</td>
+                    <td>Report</td>
+                </tr>
+                <tr ng-repeat="access in system.accesss | orderBy:'title'" class="link">
+                    <td ng-click="beginEditAccess(access)" class="{{access.status}}">
+                        <b>{{access.title}}</b></td>
+                    <td ng-click="beginEditAccess(access)">{{access.datacat.name}}</td>
+                    <td ng-click="beginEditAccess(access)">{{access.type}}</td>
+                    <td ng-click="beginEditAccess(access)">{{access.lastdate | date:'longDate'}}</td>
+                    <td ng-click="beginEditAccess(access)">{{access.result}}</td>
+                    <td><input type="checkbox" ng-model="access.showInReport" ng-change="saveAccesss()"
+                            ng-disabled="!user.changeContent"></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>

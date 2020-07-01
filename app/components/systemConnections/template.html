@@ -1,0 +1,286 @@
+<h2 class="center {{system.statusFlag}}">
+    {{system.title}}
+</h2>
+<prio-system-menu prio-system-id="{{system._id.$oid}}"></prio-system-menu>
+</prio-connection-menu>
+<div class="view">
+    <div class="popup">
+        <div class="overview popupcontent">
+            <div class="actions">
+                <div class="layout">
+                    <div class="layoutelement">
+                        <button type="button" id="saveButton1" prio-class save-this="$parent.hasChanged"
+                            ng-if="user.changeContent" ng-click="saveConnections()">save</button>
+                    </div>
+                    <div class="layoutelement center">
+                        <button type="button" ng-if="user.changeContent"
+                            ng-click="newCloneConnection(editconnection)">clone</button>
+                        <button type="button" class="Red" ng-click="removeConnection(editconnection)"
+                            ng-show="$parent.deleteThis" ng-if="user.changeContent">confirm
+                            delete!!!</button>
+                        <button type="button" ng-click="delete()" ng-show="!$parent.deleteThis"
+                            ng-if="user.changeContent">delete</button>
+                    </div>
+                    <div class="layoutelement right">
+                        <button type="button" class="close" ng-click="close()"></button>
+                    </div>
+                </div>
+            </div>
+            <h3 class="{{editconnection.status}}">
+                {{editconnection.title}}
+            </h3>
+            <table class="formtable smaller">
+                <tr>
+                    <td class="formlabel">Title</td>
+                    <td>
+                        <input ng-model="editconnection.title" ng-change="saveNow(editconnection)"
+                            ng-disabled="!user.changeContent" />
+                    </td>
+                </tr>
+                <tr>
+
+                    <td class="formlabel">Show in report</td>
+                    <td>
+                        <input type="checkbox" ng-model="editconnection.showInReport"
+                            ng-change="saveNow(editconnection)" ng-disabled="!user.changeContent">
+                    </td>
+                </tr>
+                <tr>
+                    <td class="formlabel">Data category</td>
+                    <td>
+                        <select ng-change="saveNow(editconnection)" ng-model="editconnection.datacat"
+                            ng-disabled="!user.changeContent">
+                            <option ng-repeat="cat in company.datacategories| orderBy:'name'" value="{{cat.name}}">
+                                {{cat.name}}</option>
+                        </select>
+                    </td>
+
+                </tr>
+                <tr>
+                    <td class="formlabel">Connected system</td>
+                    <td>
+                        <select ng-change="saveNow(editconnection)" ng-model="editconnection.connectedsystem"
+                            ng-disabled="!user.changeContent">
+                            <option ng-repeat="sys in systems| orderBy:'title'" value="{{sys.title}}">
+                                {{sys.title}}</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="formlabel">Direction</td>
+                    <td>
+                        <select ng-model="editconnection.direction" ng-change="saveNow(editconnection)"
+                            ng-disabled="!user.changeContent">
+                            <option value="Outbound">Outbound</option>
+                            <option value="Inbound">Inbound</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="formlabel">Purpose</td>
+                    <td>
+                        <textarea ng-change="saveNow(editconnection)" ng-model="editconnection.purpose" maxlength="800"
+                            id="connectiondec" placeholder="Describe the purpose."
+                            ng-disabled="!user.changeContent"></textarea>
+                    </td>
+
+                </tr>
+                <tr>
+                    <td class="formlabel">Transport method</td>
+                    <td>
+                        <select ng-model="editconnection.transport" ng-change="saveNow(editconnection)"
+                            ng-disabled="!user.changeContent">
+                            <option value="Public file">Public file</option>
+                            <option value="Encrypted file">Encrypted file</option>
+                            <option value="Public API">Public API</option>
+                            <option value="Encrypted API">Encrypted API</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="formlabel">Status</td>
+                    <td>
+                        <select ng-model="editconnection.status" ng-change="saveNow(editconnection)"
+                            ng-disabled="!user.changeContent">
+                            <option value="Green">OK (Green)</option>
+                            <option value="Yellow">Observe (Yellow)</option>
+                            <option value="Orange">Assist (Orange)</option>
+                            <option value="Red">Intervention (Red)</option>
+                        </select>
+                    </td>
+                </tr>
+            </table>
+            <h3>Control</h3>
+            <table class="formtable smaller">
+                <tr>
+                    <td class="formlabel">Use standard control</td>
+                    <td>
+                        <select ng-model="editconnection.controltemplate"
+                            ng-change="usecontroltemplate(editconnection.controltemplate, editconnection);saveNow(editconnection)"
+                            ng-disabled="!user.changeContent"
+                            ng-options="control.title for control in company.standardcontrols | filter: {target: 'Connections'} | orderBy:'title' track by control.title">
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="formlabel">Control responsible</td>
+                    <td>
+                        <select ng-model="editconnection.conresp" id="contresp" ng-disabled="!user.changeContent"
+                            ng-change="saveNow(editconnection)">
+                            <option ng-repeat="u in tempusers | filter: {source: true} | orderBy:'name'"
+                                value="{{u.name}}">{{u.name}}</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="formlabel">Control accountable</td>
+                    <td>
+                        <select ng-model="editconnection.conacc" id="contacc" ng-disabled="!user.changeContent"
+                            ng-change="saveNow(editconnection)">
+                            <option ng-repeat="u in tempusers | filter: {source: true} | orderBy:'name'"
+                                value="{{u.name}}">{{u.name}}</option>
+                        </select>
+                    </td>
+
+                </tr>
+                <tr>
+                    <td class="formlabel">Control description</td>
+                    <td>
+                        <textarea ng-change="saveNow(editconnection)" ng-model="editconnection.controldescription"
+                            maxlength="800" id="controldec" placeholder="Describe the control."
+                            ng-disabled="!user.changeContent"></textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="formlabel">Control level</td>
+                    <td>
+                        <select ng-model="editconnection.level" ng-change="saveNow(editconnection)"
+                            ng-disabled="!user.changeContent">
+                            <option value="Ad hoc Internal">Ad hoc Internal</option>
+                            <option value="Ad hoc External">Ad hoc External</option>
+                            <option value="Mandatory Internal">Mandatory Internal</option>
+                            <option value="Mandatory External">Mandatory External</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="formlabel">Control frequency</td>
+                    <td>
+                        <select ng-model="editconnection.freq" ng-change="saveNow(editconnection)"
+                            ng-disabled="!user.changeContent">
+                            <option value="Weekly">Weekly</option>
+                            <option value="Bi-weekly">Bi-weekly</option>
+                            <option value="Monthly">Monthly</option>
+                            <option value="Quarterly">Quarterly</option>
+                            <option value="Half yearly">Half yearly</option>
+                            <option value="Yearly">Yearly</option>
+                            <option value="On request">On request</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="formlabel">Next control</td>
+                    <td>
+                        <input type="text" id="nextdate" datepicker="" ng-model="editconnection.rawnextdate"
+                            ng-change="saveNow(editconnection)" class="cal" ng-disabled="!user.changeContent" />
+                        {{editconnection.nextdate | date:'longDate'}}
+                    </td>
+                </tr>
+                <tr>
+                    <td class="formlabel">Last control</td>
+                    <td>
+                        <input type="text" id="lastdate" datepicker="" ng-model="editconnection.rawlastdate"
+                            ng-change="saveNow(editconnection)" class="cal" ng-disabled="!user.changeContent" />
+                        {{editconnection.lastdate | date:'longDate'}}
+                    </td>
+                </tr>
+                <tr>
+                    <td class="formlabel">Last control result</td>
+                    <td>
+                        <select ng-model="editconnection.result" ng-change="saveNow(editconnection)"
+                            ng-disabled="!user.changeContent">
+                            <option value="Control not passed">Control not passed</option>
+                            <option value="Control insuficient">Control insuficient</option>
+                            <option value="Control passed">Control passed</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="formlabel">Control conclusion</td>
+                    <td>
+                        <textarea ng-change="saveNow(editconnection)" ng-model="editconnection.conclusion"
+                            maxlength="800" id="controldec" placeholder="Describe the control."
+                            ng-disabled="!user.changeContent"></textarea>
+                    </td>
+                </tr>
+            </table>
+            <h3>Comments</h3>
+            <table class="formtable smaller">
+                <tr>
+                    <td class="formlabel">Comment</td>
+                    <td>
+                        <textarea ng-model="newcomment" maxlength="800" id="newcom" placeholder="Create comment"
+                            ng-disabled="!user.changeContent"></textarea>
+                        <button type="button" id="commentadd" prio-class ng-if="user.changeContent"
+                            ng-click="addcomment(editconnection)">Add comment</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="formlabel">Comment log</td>
+                    <td>
+                        <pre>{{editconnection.commentslist}}</pre>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="formlabel"></td>
+                    <td>
+                        <button type="button" id="clearcomment" prio-class class="right" ng-if="user.changeContent"
+                            ng-click="clearcomment(editconnection)" ng-show="!$parent.clearThis">Clear all
+                            comments</button>
+                        <button type="button" ng-click="confirmclearcomment(editconnection)" ng-show="$parent.clearThis"
+                            ng-if="user.changeContent">Confirm clear all comments</button>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <div class="mainbox">
+        <div class="{{system.connectionsobj.securityownerfeedback}}">Security assesment
+            <select ng-model="system.connectionsobj.securityownerfeedback" ng-change="saveConnections()"
+                ng-disabled="!user.changeContent" ng-show="user.securityowner || user.admin">
+                <option value="Green">OK (Green)</option>
+                <option value="Yellow">Observe (Yellow)</option>
+                <option value="Orange">Assist (Orange)</option>
+                <option value="Red">Intervention (Red)</option>
+            </select>
+        </div>
+        <div class="right">
+            <button type="button" ng-click="newConnection()" ng-if="user.changeContent">create new
+                connection</button>
+        </div>
+        <div class="overview">
+            <table class="tablelist smaller" ng-if="system.connections.length > 0">
+                <tr class="header">
+                    <td>Connection title</td>
+                    <td>Data category</td>
+                    <td>Connected system</td>
+                    <td>Direction</td>
+                    <td>Last control</td>
+                    <td>Control result</td>
+                    <td>Report</td>
+                </tr>
+                <tr ng-repeat="connection in system.connections | orderBy:'title'" class="link">
+                    <td ng-click="beginEditConnection(connection)" class="{{connection.status}}">
+                        <b>{{connection.title}}</b></td>
+                    <td ng-click="beginEditConnection(connection)">{{connection.datacat}}</td>
+                    <td ng-click="beginEditConnection(connection)">{{connection.connectedsystem}}</td>
+                    <td ng-click="beginEditConnection(connection)">{{connection.direction}}</td>
+                    <td ng-click="beginEditConnection(connection)">{{connection.lastdate | date:'longDate'}}</td>
+                    <td ng-click="beginEditConnection(connection)">{{connection.result}}</td>
+                    <td><input type="checkbox" ng-model="connection.showInReport" ng-change="saveConnections()"
+                            ng-disabled="!user.changeContent"></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>

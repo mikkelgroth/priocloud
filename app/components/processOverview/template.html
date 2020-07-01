@@ -1,0 +1,50 @@
+<h2 class="center {{process.statusFlag}}">
+    {{process.title}}
+</h2>
+
+<prio-process-menu prio-process-id="{{process._id.$oid}}"></prio-process-menu>
+
+<div id="process-overview" class="view">
+    <div class="mainbox" id="overview">
+        <div class="header-with-actions">
+
+            <div class="headeractions hideOnPrint">
+                <button type="button" id="editButton" save-this="$parent.hasChanged" class=" Green"
+                    ng-if="user.changeContent && !process.showRelease" ng-click="editProcess(process)">edit
+                    process</button>
+                <button type="button" id="releaseButton" save-this="$parent.hasChanged" class=" Red"
+                    ng-if="user.changeContent && process.showRelease" ng-click="releaseProcess(process)">release
+                    process</button>
+            </div>
+        </div>
+        
+        <div ng-if="process.editUser != null">(Is under edit by {{process.editUser.name}})</div>
+        <table class="noborder nopadding smaller gutter-top">
+            <tr>
+                <td colspan="3">
+                    <div class="overview">
+                        <table class="tablelist">
+                            <tr class="header">
+                                <td colspan="4">Process details</td>
+                            </tr>
+                            <tr>
+                                <td class="header">Business unit</td>
+                                <td>{{process.bu.name}}</td>
+                                <td class="header"></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td class="header">Administrator </td>
+                                <td class="wrap">{{process.pm.name}}</td>
+                                <td class="header">Owner </td>
+                                <td class="wrap">{{process.po.name}}</td>
+                            </tr>
+                        </table>
+                    </div>
+                </td>
+            </tr>
+
+        </table>
+    </div>
+</div>
+{{process.lastchangedby}} - {{process.lastchangeddate | date:'longDate'}}

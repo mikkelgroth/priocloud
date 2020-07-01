@@ -1,0 +1,299 @@
+<h2 class="center {{process.statusFlag}}">
+    {{process.title}}
+</h2>
+<prio-process-menu prio-process-id="{{process._id.$oid}}" prio-process-title="{{process.title}}"></prio-process-menu>
+<div class="view">
+    <div class="mainbox editboxon" id="details">
+        <div class="right">
+            <button type="button" id="saveButton1" prio-class save-this="$parent.hasChanged" ng-if="user.changeContent"
+                ng-click="saveProcess()">save</button>
+        </div>
+        <table class="smaller">
+            <tr>
+                <td class="header">
+                    Status
+                </td>
+                <td>
+                    <select ng-disabled="!user.changeContent" ng-model="process.statusFlag" ng-change="saveNow()">
+                        <option value="Green">OK (Green)</option>
+                        <option value="Yellow">Observe (Yellow)</option>
+                        <option value="Orange">Assist (Orange)</option>
+                        <option value="Red">Intervention (Red)</option>
+                    </select>
+                </td>
+                <td class="header">
+                    <p>Last saved status</p>
+                </td>
+                <td>
+                    {{process.statusdate | date:'longDate'}}
+                </td>
+            </tr>
+            <tr>
+                <td class="header">Overall status</td>
+                <td colspan="3">
+                    <div class="field"><textarea ng-change="saveNow()" ng-disabled="!user.changeContent"
+                            ng-model="process.overallcomments" maxlength="800" id="overallstatus"
+                            placeholder="Describe current status"></textarea></div>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="header">Pending action</td>
+                <td colspan="3">
+                    <div class="field">
+                        <textarea ng-model="process.deccomment" maxlength="800" ng-change="saveNow()"
+                            placeholder="Comments for decisions pending or output of decision"
+                            ng-disabled="!user.changeContent"></textarea>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td class="header">Company broadcast</td>
+                <td>
+                    <input type="checkbox" ng-model="process.broadcast" ng-change="saveNow()">
+                </td>
+                <td class="header">
+                    Notify
+                </td>
+                <td>
+                    <select ng-model="process.pending" ng-change="saveNow()" ng-disabled="!user.changeContent">
+                        <option value="None">None Pending</option>
+                        <option value="Internal">Pending Internal</option>
+                        <option value="Portfolio">Pending Portfolio</option>
+                        <option value="Company">Pending Company</option>
+                    </select>
+                </td>
+            </tr>
+        </table>
+        <h2>
+            Details
+            <div class="right">
+                <button type="button" id="saveButton2" prio-class save-this="$parent.hasChanged"
+                    ng-if="user.changeContent" ng-click="saveProcess(process)">save</button>
+            </div>
+        </h2>
+        <table class="smaller gutter-top">
+            <tr>
+                <td class="l header">Title </td>
+                <td>
+                    <input ng-model="process.title" ng-change="saveNow()" ng-disabled="!user.changeContent"
+                        maxlength="25" />
+                </td>
+                <td class="header" rowspan="3">Affected units</td>
+                <td rowspan="3">
+                    <select class="multiple-select" multiple="multiple" ng-multiple="true" ng-model="process.connect"
+                        ng-change="saveNow()" ng-disabled="!user.changeContent">
+                        <option ng-repeat="bu in bus | orderBy:'order'" value="{{bu.name}}">{{bu.indent}}{{bu.name}}
+                        </option>
+                    </select>
+                </td>
+
+            </tr>
+            <tr>
+                <td class="l header">Process category</td>
+                <td>
+                    <select ng-model="process.type" id="type" ng-change="saveNow()" ng-disabled="!user.changeContent">
+                        <option value="Employee business process">Employee business process</option>
+                        <option value="Customer business process">Customer business process</option>
+                        <option value="Data protection process">Data protection process</option>
+                        <option value="IT Security process">IT Security process</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td class="header">Unit</td>
+                <td>
+                    <select ng-change="saveNow()" ng-model="process.bu" id="probu"
+                        ng-options="bu.name for bu in bus | orderBy: 'order' track by bu.name"
+                        ng-disabled="!(user.changeContent && (user.admin || user.subadmin))"></select>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Key purpose
+                </td>
+                <td colspan="3">
+                    <div class="field">
+                        <textarea ng-model="process.keypurpose" maxlength="800" ng-change="saveNow()"
+                            placeholder="What is the key purpose of this process"
+                            ng-disabled="!user.changeContent"></textarea>
+                    </div>
+                </td>
+            </tr>
+            <tr class="header">
+                <td colspan="4">Link to purpose documentation
+                    <div class="right">
+                        <button ng-if="user.changeContent" ng-click="addlink('Details')"
+                            ng-if="user.changeContent">create link</button>
+                    </div>
+                </td>
+            </tr>
+            <tr class="header" ng-if="process.linklist.length > 0">
+                <td>Title</td>
+                <td>URL</td>
+                <td>Show in report</td>
+                <td>Follow link</td>
+            </tr>
+            <tr ng-repeat="link in process.linklist" ng-if="link.lable=='Details'">
+                <td ng-click="editlinkitem(link)">
+                    {{link.title}}
+                </td>
+                <td ng-click="editlinkitem(link)">
+                    {{link.url}}
+                </td>
+                <td class="Green" ng-show="link.showinreport">Show</td>
+                <td class="Red" ng-show="!link.showinreport">Hide</td>
+                <td>
+                    <a target="_blank" href="{{link.url}}">
+                        <div class="linkicon right"></div>
+                    </a>
+                </td>
+            </tr>
+        </table>
+
+        <h2>Process priority level: {{process.risklevel}}
+            <div class="right">
+                <button type="button" id="saveButton3" prio-class save-this="$parent.hasChanged"
+                    ng-if="user.changeContent" ng-click="saveProcess(process)">save</button>
+            </div>
+        </h2>
+        <table class="smaller">
+            <tr>
+                <td class="header">Business priority</td>
+                <td>
+                    <select ng-model="process.priority" ng-change="statechange();saveNow()"
+                        ng-disabled="!user.changeContent">
+                        <option value="5. Mandatory">5. Mandatory</option>
+                        <option value="4. Top priority">4. Top priority</option>
+                        <option value="3. Very High priority">3. Very High priority</option>
+                        <option value="2. High priority">2. High priority</option>
+                        <option value="1. Valued">1. Valued</option>
+                    </select>
+                </td>
+                <td class="header">Data security level</td>
+                <td>
+                    <select ng-model="process.datasecuritylevel" ng-change="statechange();saveNow()"
+                        ng-disabled="!user.changeContent">
+                        <option value="5. Confidential">5. Confidential</option>
+                        <option value="4. Personal information">4. Personal information</option>
+                        <option value="3. Business integrity">3. Business integrity</option>
+                        <option value="2. Non esential">2. Non esential</option>
+                        <option value="1. Public">1. Public</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td class="header">Business enabler
+                </td>
+                <td>
+                    <select ng-model="process.valuestreammagnitude" ng-change="saveNow()"
+                        ng-disabled="!user.changeContent">
+                        <option value="1. Minimal value">1. Minimal value</option>
+                        <option value="2. Medium value">2. Medium value</option>
+                        <option value="3. Large value">3. Large value</option>
+                        <option value="4. Game changer">4. Game changer</option>
+                    </select>
+                </td>
+                <td class="header">External exposure</td>
+                <td>
+                    <select ng-model="process.externalexposure" ng-change="saveNow()" ng-disabled="!user.changeContent">
+                        <option value="1. No exposure">1. No exposure</option>
+                        <option value="2. Minimal exposure">2. Minimal exposure</option>
+                        <option value="3. Large exposure">3. Large exposure</option>
+                        <option value="4. Unknown exposure">4. Unknown exposure</option>
+                    </select>
+                </td>
+            </tr>
+
+        </table>
+
+        <h2>Organization
+            <div class="right">
+                <button type="button" id="saveButton4" prio-class save-this="$parent.hasChanged"
+                    ng-if="user.changeContent" ng-click="saveProcess(process)">save</button>
+            </div>
+        </h2>
+        <table class="smaller">
+            <tr>
+                <td class="header">Administrator</td>
+                <td>
+                    <select ng-model="process.pm" id="propm" ng-disabled="!user.changeContent" ng-change="saveNow()"
+                        ng-options="u.name for u in tempusers | filter: {source: true} | orderBy:'name' track by u.name">
+                    </select>
+
+                </td>
+                <td class="header">Owner</td>
+                <td>
+                    <select ng-model="process.po" id="propo" ng-disabled="!user.changeContent" ng-change="saveNow()"
+                        ng-options="u.name for u in tempusers | filter: {source: true} | orderBy:'name' track by u.name">
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td class="header">Alt. Administrator</td>
+                <td>
+                    <select ng-model="process.altpm" id="proaltpm" ng-disabled="!user.changeContent"
+                        ng-change="saveNow()"
+                        ng-options="u.name for u in tempusers | filter: {source: true} | orderBy:'name' track by u.name">
+                    </select>
+                </td>
+                <td class="header">Alt. Owner</td>
+                <td>
+                    <select ng-model="process.altpo" id="proaltpo" ng-disabled="!user.changeContent"
+                        ng-change="saveNow()"
+                        ng-options="u.name for u in tempusers | filter: {source: true} | orderBy:'name' track by u.name">
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Location of process use
+                </td>
+                <td colspan="3">
+                    <div class="field">
+                        <textarea ng-model="process.locationUse" maxlength="800" ng-change="saveNow()"
+                            placeholder="Where is this process used" ng-disabled="!user.changeContent"></textarea>
+                    </div>
+                </td>
+            </tr>
+
+        </table>
+
+        <div class="popup">
+            <div class="overview popupcontent">
+                <div class="actions">
+                    <div class="layout">
+                        <div class="layoutelement">
+                            <button type="button" id="saveButton5" ng-if="user.changeContent"
+                                ng-click="savelink(editlink)">save</button>
+                        </div>
+                        <div class="layoutelement center">
+                            <button type="button primary" class="Red" ng-click="dellink(editlink)"
+                                ng-if="user.changeContent">delete</button>
+                        </div>
+                        <div class="layoutelement right">
+                            <button type="button" class="close" ng-click="closelink(editlink)"></button>
+                        </div>
+                    </div>
+                </div>
+                <h3>
+                    Edit link
+                </h3>
+                <table class="formtable smaller">
+                    <tr>
+                        <td class="formlabel">Link title</td>
+                        <td><input ng-model="editlink.title" /></td>
+                    </tr>
+                    <tr>
+                        <td class="formlabel">Link URL</td>
+                        <td><input ng-model="editlink.url" /></td>
+                    </tr>
+                    <tr>
+                        <td class="formlabel">Show link in report</td>
+                        <td><input type="checkbox" ng-model="editlink.showinreport"></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,310 @@
+<h2 class="center {{system.statusFlag}}">
+    {{system.title}}
+</h2>
+<prio-system-menu prio-system-id="{{system._id.$oid}}"></prio-system-menu>
+<div class="view">
+    <div class="popup">
+        <div class="overview popupcontent">
+            <div class="actions">
+                <div class="layout">
+                    <div class="layoutelement">
+                        <button type="button" id="saveButton1" prio-class save-this="$parent.hasChanged"
+                            ng-if="user.changeContent" ng-click="savePerimeters()">save</button>
+                    </div>
+                    <div class="layoutelement center">
+                        <button type="button" ng-if="user.changeContent"
+                            ng-click="newClonePerimeter(editperimeter)">clone</button>
+                        <button type="button" class="Red" ng-click="removePerimeter(editperimeter)"
+                            ng-show="$parent.deleteThis" ng-if="user.changeContent">confirm
+                            delete!!!</button>
+                        <button type="button" ng-click="delete()" ng-show="!$parent.deleteThis"
+                            ng-if="user.changeContent">delete</button>
+                    </div>
+                    <div class="layoutelement right">
+                        <button type="button" class="close" ng-click="close()"></button>
+                    </div>
+                </div>
+            </div>
+            <h3 class="{{editperimeter.status}}">
+                {{editperimeter.title}}
+            </h3>
+            <table class="formtable smaller">
+                <tr>
+                    <td class="formlabel">Title</td>
+                    <td>
+                        <input ng-model="editperimeter.title" ng-change="saveNow(editperimeter)"
+                            ng-disabled="!user.changeContent" />
+                    </td>
+                </tr>
+                <tr>
+                    <td class="formlabel">Use standard perimeter</td>
+                    <td>
+                        <select ng-model="editperimeter.template" ng-change="usetemplate(editperimeter);saveNow(editperimeter)"
+                            ng-disabled="!user.changeContent" ng-options="per.title for per in company.standardperimeters | orderBy:'title' track by per.title">
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="formlabel">Show in report</td>
+                    <td>
+                        <input type="checkbox" ng-model="editperimeter.showInReport" ng-change="saveNow(editperimeter)"
+                            ng-disabled="!user.changeContent">
+                    </td>
+                </tr>
+                <tr>
+                    <td class="formlabel">Security target</td>
+                    <td>
+                        <select ng-model="editperimeter.target" ng-change="saveNow(editperimeter)"
+                            ng-disabled="!user.changeContent">
+                            <option value="Infrastructure">Infrastructure</option>
+                            <option value="Application">Application</option>
+                            <option value="Network">Network</option>
+                            <option value="Cloud">Cloud</option>
+                            <option value="IOT">IOT</option>
+
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="formlabel">Perimeter description</td>
+                    <td>
+                        <textarea ng-change="saveNow(editperimeter)" ng-model="editperimeter.description"
+                            maxlength="800" id="perimeterdec" placeholder="Describe the perimeter."
+                            ng-disabled="!user.changeContent"></textarea>
+                    </td>
+
+                </tr>
+                <tr>
+                    <td class="formlabel">Security Product</td>
+                    <td>
+                        <input ng-model="editperimeter.product" ng-change="saveNow(editperimeter)"
+                            ng-disabled="!user.changeContent" />
+                    </td>
+                </tr>
+                <tr>
+                    <td class="formlabel">Product management type</td>
+                    <td>
+                        <select ng-model="editperimeter.managementtype" ng-change="saveNow(editperimeter)"
+                            ng-disabled="!user.changeContent">
+                            <option value="Internal ad hoc">Internal ad hoc</option>
+                            <option value="Internal SLA">Internal SLA</option>
+                            <option value="Managed Service Provider">Managed Service Provider</option>
+                            <option value="Vendor Managed">Vendor Managed</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="formlabel">Product management</td>
+                    <td>
+                        <textarea ng-change="saveNow(editperimeter)" ng-model="editperimeter.management" maxlength="800"
+                            id="perimeterdec" placeholder="Describe the product management."
+                            ng-disabled="!user.changeContent"></textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="formlabel">Contact info</td>
+                    <td>
+                        <textarea ng-change="saveNow(editperimeter)" ng-model="editperimeter.contact" maxlength="800"
+                            id="perimeterdec" placeholder="Describe the product management contact info."
+                            ng-disabled="!user.changeContent"></textarea>
+                    </td>
+
+                </tr>
+                <tr>
+                    <td class="formlabel">Protection level</td>
+                    <td>
+                        <select ng-model="editperimeter.protectlevel" ng-change="saveNow(editperimeter)"
+                            ng-disabled="!user.changeContent">
+                            <option value="Below needed level">Below needed level</option>
+                            <option value="On level">On level</option>
+                            <option value="Above level">Above level</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="formlabel">Status</td>
+                    <td>
+                        <select ng-model="editperimeter.status" ng-change="saveNow(editperimeter)"
+                            ng-disabled="!user.changeContent">
+                            <option value="Green">OK (Green)</option>
+                            <option value="Yellow">Observe (Yellow)</option>
+                            <option value="Orange">Assist (Orange)</option>
+                            <option value="Red">Intervention (Red)</option>
+                        </select>
+                    </td>
+                </tr>
+            </table>
+            <h3>Control</h3>
+            <table class="formtable smaller">
+                <tr>
+                    <td class="formlabel">Use standard control</td>
+                    <td>
+                        <select ng-model="editperimeter.controltemplate" ng-change="usecontroltemplate(editperimeter);saveNow(editperimeter)"
+                            ng-disabled="!user.changeContent" ng-options="control.title for control in company.standardcontrols | filter: {target: 'Perimeter'} | orderBy:'title' track by control.title">
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="formlabel">Control responsible</td>
+                    <td>
+                        <select ng-model="editperimeter.conresp" id="contresp" ng-disabled="!user.changeContent"
+                            ng-change="saveNow(editperimeter)">
+                            <option ng-repeat="u in tempusers | filter: {source: true} | orderBy:'name'"
+                                value="{{u.name}}">{{u.name}}</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="formlabel">Control accountable</td>
+                    <td>
+                        <select ng-model="editperimeter.conacc" id="contacc" ng-disabled="!user.changeContent"
+                            ng-change="saveNow(editperimeter)">
+                            <option ng-repeat="u in tempusers | filter: {source: true} | orderBy:'name'"
+                                value="{{u.name}}">{{u.name}}</option>
+                        </select>
+                    </td>
+
+                </tr>
+                <tr>
+                    <td class="formlabel">Control description</td>
+                    <td>
+                        <textarea ng-change="saveNow(editperimeter)" ng-model="editperimeter.controldescription" maxlength="800"
+                            id="controldec" placeholder="Describe the control."
+                            ng-disabled="!user.changeContent"></textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="formlabel">Control level</td>
+                    <td>
+                        <select ng-model="editperimeter.level" ng-change="saveNow(editperimeter)"
+                            ng-disabled="!user.changeContent">
+                            <option value="Ad hoc Internal">Ad hoc Internal</option>
+                            <option value="Ad hoc External">Ad hoc External</option>
+                            <option value="Mandatory Internal">Mandatory Internal</option>
+                            <option value="Mandatory External">Mandatory External</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="formlabel">Control frequency</td>
+                    <td>
+                        <select ng-model="editperimeter.freq" ng-change="saveNow(editperimeter)"
+                            ng-disabled="!user.changeContent">
+                            <option value="Weekly">Weekly</option>
+                            <option value="Bi-weekly">Bi-weekly</option>
+                            <option value="Monthly">Monthly</option>
+                            <option value="Quarterly">Quarterly</option>
+                            <option value="Half yearly">Half yearly</option>
+                            <option value="Yearly">Yearly</option>
+                            <option value="On request">On request</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="formlabel">Next control</td>
+                    <td>
+                        <input type="text" id="nextdate" datepicker="" ng-model="editperimeter.rawnextdate"
+                            ng-change="saveNow(editperimeter)" class="cal" ng-disabled="!user.changeContent" />
+                        {{editperimeter.nextdate | date:'longDate'}}
+                    </td>
+                </tr>
+                <tr>
+                    <td class="formlabel">Last control</td>
+                    <td>
+                        <input type="text" id="lastdate" datepicker="" ng-model="editperimeter.rawlastdate"
+                            ng-change="saveNow(editperimeter)" class="cal" ng-disabled="!user.changeContent" />
+                        {{editperimeter.lastdate | date:'longDate'}}
+                    </td>
+                </tr>
+                <tr>
+                    <td class="formlabel">Last control result</td>
+                    <td>
+                        <select ng-model="editperimeter.result" ng-change="saveNow(editperimeter)"
+                            ng-disabled="!user.changeContent">
+                            <option value="Control not passed">Control not passed</option>
+                            <option value="Control insuficient">Control insuficient</option>
+                            <option value="Control passed">Control passed</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="formlabel">Control conclusion</td>
+                    <td>
+                        <textarea ng-change="saveNow(editperimeter)" ng-model="editperimeter.conclusion" maxlength="800"
+                            id="controldec" placeholder="Describe the control."
+                            ng-disabled="!user.changeContent"></textarea>
+                    </td>
+                </tr>
+            </table>
+            <h3>Comments</h3>
+            <table class="formtable smaller">
+                <tr>
+                    <td class="formlabel">Comment</td>
+                    <td>
+                        <textarea ng-model="newcomment" maxlength="800" id="newcom"
+                            placeholder="Create comment" ng-disabled="!user.changeContent"></textarea>
+                            <button type="button" id="commentadd" prio-class
+                            ng-if="user.changeContent" ng-click="addcomment(editperimeter)">Add comment</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="formlabel">Comment log</td>
+                    <td>
+                        <pre>{{editperimeter.commentslist}}</pre>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="formlabel"></td>
+                    <td>
+                            <button type="button" id="clearcomment" prio-class class="right"
+                            ng-if="user.changeContent" ng-click="clearcomment(editperimeter)"  ng-show="!$parent.clearThis">Clear all comments</button>
+                            <button type="button" ng-click="confirmclearcomment(editperimeter)" ng-show="$parent.clearThis"
+                            ng-if="user.changeContent">Confirm clear all comments</button>
+                    </td>
+                </tr>
+            </table>
+
+        </div>
+    </div>
+    <div class="mainbox">
+        <div class="{{system.perimeter.securityownerfeedback}}">Security assesment
+            <select ng-model="system.perimeter.securityownerfeedback" ng-change="savePerimeters()"
+                ng-disabled="!user.changeContent" ng-show="user.securityowner || user.admin">
+                <option value="Green">OK (Green)</option>
+                <option value="Yellow">Observe (Yellow)</option>
+                <option value="Orange">Assist (Orange)</option>
+                <option value="Red">Intervention (Red)</option>
+            </select>
+        </div>
+        <div class="right">
+            <button type="button" ng-click="newPerimeter()" ng-if="user.changeContent">create new
+                perimeter</button>
+        </div>
+        <div class="overview">
+            <table class="tablelist smaller" ng-if="system.perimeters.length > 0">
+                <tr class="header">
+                    <td>Perimeter title</td>
+                    <td>Target</td>
+                    <td>Product</td>
+                    <td>Managed</td>
+                    <td>Level</td>
+                    <td>Last control</td>
+                    <td>Control result</td>
+                    <td>Report</td>
+                </tr>
+                <tr ng-repeat="perimeter in system.perimeters | orderBy:'title'" class="link">
+                    <td ng-click="beginEditPerimeter(perimeter)" class="{{perimeter.status}}">
+                        <b>{{perimeter.title}}</b></td>
+                    <td ng-click="beginEditPerimeter(perimeter)">{{perimeter.target}}</td>
+                    <td ng-click="beginEditPerimeter(perimeter)">{{perimeter.product}}</td>
+                    <td ng-click="beginEditPerimeter(perimeter)">{{perimeter.managementtype}}</td>
+                    <td ng-click="beginEditPerimeter(perimeter)">{{perimeter.level}}</td>
+                    <td ng-click="beginEditPerimeter(perimeter)">{{perimeter.lastdate | date:'longDate'}}</td>
+                    <td ng-click="beginEditPerimeter(perimeter)">{{perimeter.result}}</td>
+                    <td><input type="checkbox" ng-model="perimeter.showInReport" ng-change="savePerimeters()"
+                            ng-disabled="!user.changeContent"></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
