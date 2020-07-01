@@ -42,10 +42,10 @@ import com.mongodb.WriteResult;
 
 /**
  * This user application has two different kind of users: private users and application users.
- * 
+ *
  * A private user will only get access to content he has created himself.
  * An application user will get access according to the access rights defined for the application
- * 
+ *
  * @author g95511
  *
  */
@@ -53,47 +53,48 @@ import com.mongodb.WriteResult;
 @WebServlet("/user")
 public class UserServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-  private String DATABASE;
-  private String USER;
+	private String DATABASE;
+	private String USER;
 	Mongo m = null;
 	private String SITE;
-       
-    public UserServlet() {
-        super();
-    }
-    public void init(ServletConfig config) {
-        try {
-			 String serverType = System.getenv("SERVER_TYPE");
-			 System.out.println("****************************************");
-			 System.out.println("serverType="+ serverType);
-			 System.out.println("****************************************");
-				if (serverType==null || serverType.equalsIgnoreCase("local") || serverType.equalsIgnoreCase("dev")|| serverType.equalsIgnoreCase("Prod")) {
-					m = new MongoClient("mongo", 27017);
+	String serverType="";
+
+	public UserServlet() {
+		super();
+	}
+	public void init(ServletConfig config) {
+		try {
+			serverType = System.getenv("SERVER_TYPE");
+			System.out.println("****************************************");
+			System.out.println("serverType="+ serverType);
+			System.out.println("****************************************");
+			if (serverType==null || serverType.equalsIgnoreCase("local") || serverType.equalsIgnoreCase("dev")|| serverType.equalsIgnoreCase("Prod")) {
+				m = new MongoClient("mongo", 27017);
 //				} else if(serverType.equalsIgnoreCase("dev")){
 //					m = new MongoClient(new MongoClientURI("mongodb://prioclouddevdb.westeurope.cloudapp.azure.com:27017"));
-				} else if(serverType.equalsIgnoreCase("test")){
-// 					Test env. used for Cosmo re-trial 
+			} else if(serverType.equalsIgnoreCase("test")){
+// 					Test env. used for Cosmo re-trial
 //					m = new MongoClient(new MongoClientURI("mongodb://priocloudtestdb.westeurope.cloudapp.azure.com:27017"));
-					m = new MongoClient(new MongoClientURI("mongodb://priocosmodbtest:DgkDqmlT9O6ZYYVVKRehm40ebrFEsY150FnlD7qh4AE5rLSPc6mnS3D9A4xdvGCX2xgcxIOPbh754Xysu6qzyw%3D%3D@priocosmodbtest.documents.azure.com:10255/?ssl=true"));     
-//					
+				m = new MongoClient(new MongoClientURI("mongodb://priocosmodbtest:DgkDqmlT9O6ZYYVVKRehm40ebrFEsY150FnlD7qh4AE5rLSPc6mnS3D9A4xdvGCX2xgcxIOPbh754Xysu6qzyw%3D%3D@priocosmodbtest.documents.azure.com:10255/?ssl=true"));
+//
 //				} else if(serverType.equalsIgnoreCase("prod")){
 ////					m = new MongoClient(new MongoClientURI("mongodb://priocloudproddb.westeurope.cloudapp.azure.com:27017"));
 //					m = new MongoClient("mongo", 27017);
 //				}else{
 //					System.out.println("UNKNOWN SERVER TYPE: " + serverType);
-				}
-				System.out.println("Connected");
-            SITE=Prop.load(config.getServletContext()).getProperty("sitename");
-            DATABASE=Prop.load(config.getServletContext()).getProperty("database");
-            USER=Prop.load(config.getServletContext()).getProperty("userdatabase");
-        } catch (UnknownHostException e) {
-            e.printStackTrace();
-        } catch (MongoException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
+			}
+			System.out.println("Connected");
+			SITE=Prop.load(config.getServletContext()).getProperty("sitename");
+			DATABASE=Prop.load(config.getServletContext()).getProperty("database");
+			USER=Prop.load(config.getServletContext()).getProperty("userdatabase");
+		} catch (UnknownHostException e) {
+			e.printStackTrace();
+		} catch (MongoException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
-    }
+	}
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		System.out.println("GET NOT SUPPORTED");
 	}
@@ -116,7 +117,7 @@ public class UserServlet extends HttpServlet {
 			System.out.println("no action param set");
 			return;
 		}
-			
+
 		System.out.println("action ["+action+"]");
 		response.setContentType("application/json;charset=UTF-8");
 		response.addHeader("Access-Control-Allow-Origin", "*"); 	//for now let anyone use this userapplication
@@ -133,7 +134,7 @@ public class UserServlet extends HttpServlet {
 			BasicDBObject whereQuery = new BasicDBObject();
 			whereQuery.put("email", frontendjson.getString("user_id").toLowerCase());
 			whereQuery.put("application", application);
-			DBCursor cursor = collection.find(whereQuery);		
+			DBCursor cursor = collection.find(whereQuery);
 			if(cursor.hasNext()) {
 				DBObject json = cursor.next();
 				uuid=(String) json.get("uuid");
@@ -164,7 +165,7 @@ public class UserServlet extends HttpServlet {
 			BasicDBObject whereQuery = new BasicDBObject();
 			whereQuery.put("email", email);
 			whereQuery.put("application", application);
-			DBCursor cursor = collection.find(whereQuery);		
+			DBCursor cursor = collection.find(whereQuery);
 			if(cursor.hasNext()) {
 				DBObject json = cursor.next();
 				uuid=(String) json.get("uuid");
@@ -181,7 +182,7 @@ public class UserServlet extends HttpServlet {
 					user=json;
 					DBObject update = new BasicDBObject();
 					update.put("$set", new BasicDBObject("authtoken",UUID.randomUUID().toString()).append("lastlogin", new Date()));
-					
+
 //					user.put("authtoken", UUID.randomUUID().toString());
 //					user.put("lastlogin", new Date());
 					System.out.println("updating login user: " + update.toString());
@@ -256,7 +257,7 @@ public class UserServlet extends HttpServlet {
 						BasicDBObject whereQuery = new BasicDBObject();
 						whereQuery.put("email", email);
 						whereQuery.put("application", application);
-						DBCursor cursor = collection.find(whereQuery);		
+						DBCursor cursor = collection.find(whereQuery);
 						if(cursor.hasNext()) {
 							response.setStatus(HttpServletResponse.SC_FORBIDDEN);
 							user.put("authenticated", false);
@@ -370,7 +371,7 @@ public class UserServlet extends HttpServlet {
 			BasicDBObject whereQuery = new BasicDBObject();
 			whereQuery.put("application", application);
 			whereQuery.put("auid", auid);
-			DBCursor cursor = collection.find(whereQuery);		
+			DBCursor cursor = collection.find(whereQuery);
 			PrintWriter out = response.getWriter();
 			out.print("[");
 			while (cursor.hasNext()) {
@@ -384,7 +385,7 @@ public class UserServlet extends HttpServlet {
 							System.out.println("Is sub admin but not allowed to look at admin - removing OTPW");
 							json.removeField("uuid");
 							json.removeField("onetimepassword");
-						}						
+						}
 					}else {
 						System.out.println("normal user - removing OTPW");
 						json.removeField("uuid");
@@ -399,7 +400,7 @@ public class UserServlet extends HttpServlet {
 			out.println("]");
 			out.flush();
 			out.close();
-			return;	
+			return;
 		}else if (action.equals("masterlogin")) {
 			if(userIsMaster(uuid, auid, application)){
 				String masteruuid=request.getParameter("masteruuid");
@@ -408,7 +409,7 @@ public class UserServlet extends HttpServlet {
 				BasicDBObject whereQuery = new BasicDBObject();
 				whereQuery.put("uuid", masteruuid);
 				whereQuery.put("application", application);
-				DBCursor cursor = collection.find(whereQuery);		
+				DBCursor cursor = collection.find(whereQuery);
 				if(cursor.hasNext()) {
 					DBObject json = cursor.next();
 					user=json;
@@ -420,7 +421,7 @@ public class UserServlet extends HttpServlet {
 			if(userIsMaster(uuid, auid, application)){
 				DB db = m.getDB(USER);
 				DBCollection collection = db.getCollection("application");
-				DBCursor cursor = collection.find();		
+				DBCursor cursor = collection.find();
 				PrintWriter out = response.getWriter();
 				out.print("[");
 				while (cursor.hasNext()) {
@@ -431,11 +432,11 @@ public class UserServlet extends HttpServlet {
 				out.println("]");
 				out.flush();
 				out.close();
-				return;	
+				return;
 			}
 		}else if (action.equals("updatepassword")) {	//sets new pw after one time pw hit
 			String onetimepassword=request.getParameter("onetimepassword");
-			user=updatePassword(application, email, password, onetimepassword);			
+			user=updatePassword(application, email, password, onetimepassword);
 		}else if (action.equals("createproject")) {	//creates project and admin user
 			if (application==null) {
 				System.out.println("Application cannot be null");
@@ -446,7 +447,7 @@ public class UserServlet extends HttpServlet {
 			BasicDBObject whereQuery = new BasicDBObject();
 			whereQuery.put("email", email);
 			whereQuery.put("application", application);
-			DBCursor cursor = collection.find(whereQuery);		
+			DBCursor cursor = collection.find(whereQuery);
 			if(cursor.hasNext()) {
 				user.put("authenticated", false);
 				user.put("message", "Username already in use. Please choose another");
@@ -462,7 +463,9 @@ public class UserServlet extends HttpServlet {
 				user.put("authenticated", true);
 				user.put("admin", true);
 				user.put("uuid", uuid);
-				new DkimMail("noreply@priocloud.com", email, "PrioCloud account created", "We have created your PrioCloud account.").send();
+				if(serverType.equals("prod")){
+					new DkimMail("noreply@priocloud.com", email, "PrioCloud account created", "We have created your PrioCloud account.").send();
+				}
 			}
 		}
 		user.removeField("_id");
@@ -475,18 +478,18 @@ public class UserServlet extends HttpServlet {
 	}
 
 	private String getAdSsoUrl() {
-		 String serverType = System.getenv("SERVER_TYPE");
-			if (serverType==null  || serverType.equalsIgnoreCase("local")) {
-				return null;
-			} else if(serverType.equalsIgnoreCase("dev")){
-				return "https://prioclouddevfrontend.azurewebsites.net/.auth/me";
-			} else if(serverType.equalsIgnoreCase("test")){
-				return "https://priocloudtest.azurewebsites.net/.auth/me";
-			} else if(serverType.equalsIgnoreCase("prod")){
-				return "https://priocloud.azurewebsites.net/.auth/me";
-			}else{
-				System.out.println("UNKNOWN SERVER TYPE CANNOT SET SSO AD: " + serverType);
-			}
+		String serverType = System.getenv("SERVER_TYPE");
+		if (serverType==null  || serverType.equalsIgnoreCase("local")) {
+			return null;
+		} else if(serverType.equalsIgnoreCase("dev")){
+			return "https://prioclouddevfrontend.azurewebsites.net/.auth/me";
+		} else if(serverType.equalsIgnoreCase("test")){
+			return "https://priocloudtest.azurewebsites.net/.auth/me";
+		} else if(serverType.equalsIgnoreCase("prod")){
+			return "https://priocloud.azurewebsites.net/.auth/me";
+		}else{
+			System.out.println("UNKNOWN SERVER TYPE CANNOT SET SSO AD: " + serverType);
+		}
 		return null;
 	}
 	private void removeByAuid(String dbname, String collectionname, String auid) {
@@ -527,7 +530,7 @@ public class UserServlet extends HttpServlet {
 		whereQuery.put("uuid", uuid);
 		whereQuery.put("auid", auid);
 		whereQuery.put("application", application);
-		DBCursor cursor = collection.find(whereQuery);		
+		DBCursor cursor = collection.find(whereQuery);
 		if(cursor.hasNext()) {
 			System.out.println("user is owner");
 			return true;
@@ -544,7 +547,7 @@ public class UserServlet extends HttpServlet {
 		whereQuery.put("uuid", uuid);
 		whereQuery.put("auid", auid);
 		whereQuery.put("application", application);
-		DBCursor cursor = collection.find(whereQuery);		
+		DBCursor cursor = collection.find(whereQuery);
 		if(cursor.hasNext()) {
 			String email=cursor.next().get("email").toString();
 			boolean master=email.equals("theisborg@gDkimMail.com") || email.equals("mikkel.groth.privat@gDkimMail.com");
@@ -561,7 +564,7 @@ public class UserServlet extends HttpServlet {
 		BasicDBObject whereQuery = new BasicDBObject();
 		whereQuery.put("uuid", uuid);
 		whereQuery.put("auid", auid);
-		DBCursor cursor = collection.find(whereQuery);		
+		DBCursor cursor = collection.find(whereQuery);
 		if(cursor.hasNext()) {
 			return cursor.next();
 		}
@@ -598,7 +601,7 @@ public class UserServlet extends HttpServlet {
 		BasicDBObject whereQuery = new BasicDBObject();
 		whereQuery.put("email", email);
 		whereQuery.put("application", application);
-		DBCursor cursor = collection.find(whereQuery);		
+		DBCursor cursor = collection.find(whereQuery);
 		if(cursor.hasNext()) {
 			DBObject json = cursor.next();
 			String uuid=(String) json.get("uuid");
@@ -686,7 +689,7 @@ public class UserServlet extends HttpServlet {
 		formatter.close();
 		return result;
 	}
-	
+
 	private boolean isAdmin(DBObject dbUser) {
 		return hasTrueKey((BasicDBObject) dbUser, "admin");
 	}
@@ -703,7 +706,7 @@ public class UserServlet extends HttpServlet {
 
 	/**
 	 * This is the place to ensure that requests only comes from a certain domain. For now everyone can write to this database
-	 * 
+	 *
 	 * @param request
 	 * @param response
 	 */
@@ -719,32 +722,32 @@ public class UserServlet extends HttpServlet {
 		response.addHeader("Access-Control-Allow-Methods", "GET,POST,PUT,DELETE,OPTIONS");
 		response.addHeader("Access-Control-Allow-Headers", "Content-Type");
 	}
-	
 
-	  private static String readAll(Reader rd) throws IOException {
-	    StringBuilder sb = new StringBuilder();
-	    int cp;
-	    while ((cp = rd.read()) != -1) {
-	      sb.append((char) cp);
-	    }
-	    return sb.toString();
-	  }
 
-	  public static JSONObject readJsonFromUrl(String urlname, String token) throws IOException, JSONException {
-          URL url = new URL(urlname);
-          URLConnection connection = url.openConnection();
-		  connection.setRequestProperty("Authorization", "Bearer " + token);
+	private static String readAll(Reader rd) throws IOException {
+		StringBuilder sb = new StringBuilder();
+		int cp;
+		while ((cp = rd.read()) != -1) {
+			sb.append((char) cp);
+		}
+		return sb.toString();
+	}
 
-	    InputStream is = connection.getInputStream();
-	    try {
-	      BufferedReader rd = new BufferedReader(new InputStreamReader(is, Charset.forName("UTF-8")));
-	      String jsonText = readAll(rd);
-	      System.out.println("got json");
-	      System.out.println(jsonText);
-	      JSONArray json = new JSONArray(jsonText);
-	      return json.getJSONObject(0);
-	    } finally {
-	      is.close();
-	    }
-	  }
+	public static JSONObject readJsonFromUrl(String urlname, String token) throws IOException, JSONException {
+		URL url = new URL(urlname);
+		URLConnection connection = url.openConnection();
+		connection.setRequestProperty("Authorization", "Bearer " + token);
+
+		InputStream is = connection.getInputStream();
+		try {
+			BufferedReader rd = new BufferedReader(new InputStreamReader(is, Charset.forName("UTF-8")));
+			String jsonText = readAll(rd);
+			System.out.println("got json");
+			System.out.println(jsonText);
+			JSONArray json = new JSONArray(jsonText);
+			return json.getJSONObject(0);
+		} finally {
+			is.close();
+		}
+	}
 }
