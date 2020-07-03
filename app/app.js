@@ -16,7 +16,7 @@ angular
             $routeProvider.when('/', { redirectTo: '/projects' });
             $routeProvider.when('/dashboard', { redirectTo: '/projects' });
 
-            $routeProvider.when('/theis', { controller: 'TheisController', templateUrl: 'components/theis/template.html?version4.04' });
+            $routeProvider.when('/theis', { controller: 'TheisController', templateUrl: 'components/theis/template.html?version=5.70' });
 
             // home menu
             $routeProvider.when('/login', { controller: 'LoginController', templateUrl: 'components/login/template.html?version=5.70' });
