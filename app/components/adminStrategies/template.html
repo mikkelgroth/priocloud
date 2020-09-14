@@ -1,0 +1,273 @@
+<prio-admin-menu></prio-admin-menu>
+<div class="view">
+    <div class="radiotabs">
+        <label for="strategyview"><input type="radio" id="strategyview" name="views" ng-model="views"
+                value="strategyview"><span>
+                Strategies</span></label>
+        <label for="objectiveview"><input type="radio" id="objectiveview" name="views" ng-model="views"
+                value="objectiveview"><span>
+                Objectives</span></label>
+        <label for="metricview"><input type="radio" id="metricview" name="views" ng-model="views"
+                value="metricview"><span>
+                Metrics</span></label>
+    </div>
+    <div class="overview" ng-show="views=='strategyview'">
+        <h3>
+            Strategies
+        </h3>
+        <div class="popup">
+            <div class="overview popupcontent">
+                <div class="actions">
+                    <div class="layout">
+                        <div class="layoutelement">
+                            <button type="button" id="saveButton4" ng-if="user.admin && companyedit"
+                                ng-click="saveStrategy()">save</button>
+                        </div>
+                        <div class="layoutelement center">
+                            <button type="button primary" class="Red" ng-click="deleteStrategy(editstrategy)"
+                                ng-if="user.admin && companyedit">delete</button>
+                        </div>
+                        <div class="layoutelement right">
+                            <button type="button" class="close" ng-click="close()"></button>
+                        </div>
+                    </div>
+                </div>
+                <h3>Strategy</h3>
+                <table class="formtable smaller">
+                    <tr>
+                        <td class="formlabel">Strategy name</td>
+                        <td><input ng-model="editstrategy.title" /></td>
+                    </tr>
+                    <tr>
+                        <td class="formlabel">
+                            Expected business value
+                        </td>
+                        <td>
+                            <div class="field"><textarea ng-model="editstrategy.businessreaction" maxlength="1500"
+                                    id="businessaction"
+                                    placeholder="Describe how the business value is changing for the positive"></textarea>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="formlabel">
+                            Expected process change
+                        </td>
+                        <td>
+                            <div class="field"><textarea ng-model="editstrategy.processreaction" maxlength="1500"
+                                    id="processreaction"
+                                    placeholder="Describe how the business process is changing for the positive"></textarea>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="formlabel">
+                            Expected people change
+                        </td>
+                        <td>
+                            <div class="field"><textarea ng-model="editstrategy.peoplereaction" maxlength="1500"
+                                    id="peoplereaction"
+                                    placeholder="Describe how people are going to meet the change"></textarea></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="formlabel">
+                            Expected risks
+                        </td>
+                        <td>
+                            <div class="field"><textarea ng-model="editstrategy.riskreaction" maxlength="1500"
+                                    id="riskreaction"
+                                    placeholder="Describe risks associated with the implementation of this strategy"></textarea>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div class="mainbox">
+            <div class="right">
+                <button
+                    ng-if="user.admin && companyedit && (company.strategys == null || company.strategys.length == 0)"
+                    ng-click="newStrategy()">create first strategy</button>
+            </div>
+            <div class="overview" ng-if="company.strategys.length > 0">
+                <table class="tablelist smaller">
+                    <tr class="header">
+                        <td>
+                            <div class="right">
+                                <button ng-click="newStrategy()" ng-if="user.admin && companyedit">create
+                                    strategy</button>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr ng-repeat="strat in company.strategys| orderBy:'title'" ng-click="beginEditStrategy(strat)">
+                        <td> {{strat.title}}</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="overview" ng-show="views=='objectiveview'">
+        <h3>
+            Objectives
+        </h3>
+        <div class="popup">
+            <div class="overview popupcontent">
+                <div class="actions">
+                    <div class="layout">
+                        <div class="layoutelement">
+                            <button type="button" id="saveButton5" ng-if="user.admin && companyedit"
+                                ng-click="saveObjective()">save</button>
+                        </div>
+                        <div class="layoutelement center">
+                            <button type="button primary" class="Red" ng-click="deleteObjective(editobjective)"
+                                ng-if="user.admin && companyedit">delete</button>
+                        </div>
+                        <div class="layoutelement right">
+                            <button type="button" class="close" ng-click="close()"></button>
+                        </div>
+                    </div>
+                </div>
+                <h3>
+                    Objective
+                </h3>
+                <table class="formtable smaller">
+                    <tr>
+                        <td class="formlabel">Title</td>
+                        <td>
+                            <input ng-model="editobjective.title" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="formlabel">Business unit</td>
+                        <td>
+                            <select ng-model="editobjective.bu"
+                                ng-options="bu.name for bu in bus track by bu.name"></select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="formlabel">Strategy supported</td>
+                        <td>
+                            <select ng-model="editobjective.strategysupport"
+                                ng-options="strat.title for strat in company.strategys track by strat.title"></select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="formlabel">Objective motivation</td>
+                        <td>
+                            <textarea ng-model="editobjective.motivation" maxlength="1500"
+                                placeholder="Describe the objective."></textarea>
+                        </td>
+
+                    </tr>
+                    <tr>
+                        <td class="formlabel">Outcome</td>
+                        <td>
+                            <textarea ng-model="editobjective.outcome" maxlength="1500"
+                                placeholder="Describe the outcome."></textarea>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div class="mainbox">
+            <div class="right">
+                <button type="button" ng-click="newObjective()" ng-if="user.admin && companyedit">create new
+                    objective</button>
+            </div>
+            <div class="overview" ng-if="company.objectives.length > 0">
+                <table class="tablelist smaller">
+                    <tr class="header">
+                        <td>Objective title</td>
+                        <td>BU</td>
+                        <td>Strategy</td>
+                    </tr>
+                    <tr ng-repeat="objective in company.objectives | orderBy:'title'" class="link">
+                        <td ng-click="beginEditObjective(objective)"><b>{{objective.title}}</b></td>
+                        <td ng-click="beginEditObjective(objective)">{{objective.bu.name}}</td>
+                        <td ng-click="beginEditObjective(objective)">{{objective.strategysupport.title}}</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="overview" ng-show="views=='metricview'">
+        <h3>Metrics</h3>
+        <div class="popup">
+            <div class="overview popupcontent">
+                <div class="actions">
+                    <div class="layout">
+                        <div class="layoutelement">
+                            <button type="button" id="saveButton1" ng-if="user.admin && companyedit"
+                                ng-click="saveMetric(np)">save</button>
+                        </div>
+                        <div class="layoutelement center">
+                            <button type="button primary" class="Red" ng-click="deleteMetric(np)"
+                                ng-if="user.admin && companyedit">delete</button>
+                        </div>
+                        <div class="layoutelement right">
+                            <button type="button" class="close" ng-click="close()"></button>
+                        </div>
+                    </div>
+                </div>
+                <h3>
+                    Edit metric
+                </h3>
+                <table class="formtable smaller">
+                    <tr>
+                        <td class="formlabel">Metric title</td>
+                        <td><input type="text" ng-model="np.title" /></td>
+                    </tr>
+                    <tr>
+                        <td class="formlabel">Business unit</td>
+                        <td>
+                            <select ng-model="np.bu" ng-options="bu.name for bu in bus track by bu.name"></select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="formlabel">Metric admin</td>
+                        <td>
+                            <select ng-model="np.pm"
+                                ng-options="u.name for u in tempusers | filter: {source: true} | orderBy:'name' track by u.name">
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="formlabel">Metric Owner</td>
+                        <td>
+                            <select ng-model="np.po"
+                                ng-options="u.name for u in tempusers | filter: {source: true} | orderBy:'name' track by u.name">
+                            </select>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div class="mainbox">
+            <div class="right"><button ng-click="newMetric()" ng-if="user.admin && companyedit">create new
+                    metric</button>
+            </div>
+            <div class="overview" ng-if="metrics.length > 0">
+                <table class="tablelist smaller">
+                    <tr class="header">
+                        <td>Metric</td>
+                        <td>BU</td>
+                        <td>Metric Admin</td>
+                        <td>Metric Owner</td>
+                        <td>Go to metric</td>
+                    </tr>
+                    <tr ng-repeat="metric in metrics | orderBy: 'title'">
+                        <td ng-click="editMetric(metric)">{{metric.title}}</td>
+                        <td ng-click="editMetric(metric)">{{metric.bu.name}}</td>
+                        <td ng-click="editMetric(metric)">{{metric.pm.name}}</td>
+                        <td ng-click="editMetric(metric)">{{metric.po.name}}</td>
+                        <td ng-click="gotoMetric(metric)">--></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
