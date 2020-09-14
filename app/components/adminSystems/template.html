@@ -365,6 +365,10 @@
                             <input type="radio" id="no" ng-model="editcat.sensitivedata" name="sensitivedata" value="no"
                                 ng-change="saveNowDatacat(editcat)">
                             <label for="no">General personal data </label>
+                            <br>
+                            <input type="radio" id="none" ng-model="editcat.sensitivedata" name="sensitivedata" value="none"
+                                ng-change="saveNowDatacat(editcat)">
+                            <label for="no">No personal data </label>
                         </td>
                     </tr>
                     <tr ng-show="editcat.sensitivedata=='yes'">
@@ -434,7 +438,8 @@
                     <td> {{cat.name}}</td>
                     <td>
                         <div ng-if="cat.sensitivedata == 'yes'">Sensitive personal data: </div>
-                        <div ng-if="cat.sensitivedata != 'yes'">General personal data</div>
+                        <div ng-if="cat.sensitivedata == 'no'">General personal data</div>
+                        <div ng-if="cat.sensitivedata == 'none'">No personal data</div>
                         <div ng-repeat="t in cat.type">
                             {{t}}<br />
                         </div>

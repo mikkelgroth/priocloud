@@ -84,6 +84,7 @@ angular
             $routeProvider.when('/admin/portfolios', { controller: 'AdminPortfoliosController', templateUrl: 'components/adminPortfolios/template.html?version=6.00' });
             $routeProvider.when('/admin/systems', { controller: 'AdminSystemsController', templateUrl: 'components/adminSystems/template.html?version=6.00' });
             $routeProvider.when('/admin/processs', { controller: 'AdminProcesssController', templateUrl: 'components/adminProcesss/template.html?version=6.00' });
+            $routeProvider.when('/admin/strategies', { controller: 'AdminStrategiesController', templateUrl: 'components/adminStrategies/template.html?version=6.00' });
             $routeProvider.when('/admin/delete', { controller: 'AdminDeleteController', templateUrl: 'components/adminDelete/template.html?version=6.00' });
 
             // other

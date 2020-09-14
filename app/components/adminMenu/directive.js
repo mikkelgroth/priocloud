@@ -50,5 +50,9 @@ angular
             $('.menuactive').removeClass('menuactive');
             $('.admin-menu-processs').addClass('menuactive');
         }
+        if (window.location.href.indexOf('/strategies') > 0) {
+            $('.menuactive').removeClass('menuactive');
+            $('.admin-menu-strategies').addClass('menuactive');
+        }
     }
     

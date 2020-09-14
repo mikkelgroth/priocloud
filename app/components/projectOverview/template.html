@@ -36,6 +36,8 @@
                         case</i></br></label>
                 <label for="status"><input type="checkbox" id="status" ng-model="project.filters.showStatus"
                         ng-change="saveNow()"> <i> Status</i></br></label>
+                <label for="steerco"><input type="checkbox" id="steerco" ng-model="project.filters.showSteerco"
+                        ng-change="saveNow()"> <i> Steerco</i></br></label>
                 <label for="deliverables" ng-show="company.filters.companyshowDeliverables"><input type="checkbox"
                         id="deliverables" ng-model="project.filters.showDeliverables" ng-change="saveNow()"> <i>
                         Deliverables</i></br></label>
@@ -272,10 +274,7 @@
                                         Status flags,
                                         <input type="checkbox" ng-model="project.filters.showStatusElab"
                                             ng-change="saveNow()">
-                                        Status elaboration,
-                                        <input type="checkbox" ng-model="project.filters.showStatusSteerco"
-                                            ng-change="saveNow()">
-                                        Steerco section
+                                        Status elaboration
                                     </div>
                                 </td>
                             </tr>
@@ -393,31 +392,37 @@
                                     <pre>{{editstatus.changes}}</pre>
                                 </td>
                             </tr>
-                            <tr ng-if="project.filters.showStatusSteerco" ng-if="company.filters.companyshowStatus">
-                                <td class="header" colspan="4">Steerco section </td>
+                        </table>
+                    </div>
+                </td>
+            </tr>
+
+            <tr ng-if="project.filters.showSteerco">
+                <td colspan="3">
+                    <div class="overview">
+                        <table class="tablelist">
+                            <tr class="header">
+                                <td colspan="4">Steerco meetings</td>
                             </tr>
-                            <tr ng-if="project.filters.showStatusSteerco" ng-if="company.filters.companyshowStatus">
-                                <td class="label texttop">Steerco date </td>
-                                <td colspan="3" class="wrap xxxl">
-                                    {{editstatus.steercodate | date:'longDate'}}
+                            <tr class="header">
+                                <td>Date</td>
+                                <td>Agenda</td>
+                                <td>Attendees</td>
+                                <td>Minutes</td>
+                            </tr>
+                            <tr ng-repeat="steerco in project.steercos | orderBy: 'steercodate' : true"
+                                ng-if="steerco.showInReport">
+                                <td>
+                                    {{steerco.steercodate | date:'longDate'}}
                                 </td>
-                            </tr>
-                            <tr ng-if="project.filters.showStatusSteerco" ng-if="company.filters.companyshowStatus">
-                                <td class="label texttop">Agenda </td>
-                                <td colspan="3" class="wrap xxxl">
-                                    <pre>{{editstatus.steercoagenda}}</pre>
+                                <td>
+                                    {{steerco.steercoagenda}}
                                 </td>
-                            </tr>
-                            <tr ng-if="project.filters.showStatusSteerco" ng-if="company.filters.companyshowStatus">
-                                <td class="label texttop">Attendees </td>
-                                <td colspan="3" class="wrap xxxl">
-                                    <pre>{{editstatus.steercoattendees}}</pre>
+                                <td>
+                                    {{steerco.steercoattendees}}
                                 </td>
-                            </tr>
-                            <tr ng-if="project.filters.showStatusSteerco" ng-if="company.filters.companyshowStatus">
-                                <td class="label texttop">Minutes </td>
-                                <td colspan="3" class="wrap xxxl">
-                                    <pre>{{editstatus.steercominutes}}</pre>
+                                <td>
+                                    {{steerco.steercominutes}}
                                 </td>
                             </tr>
                         </table>

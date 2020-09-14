@@ -8,18 +8,23 @@ angular
         _this._projects = [];
         _this._systems = [];
         _this._processs = [];
+        _this._metrics = [];
 
         _this.company = new rx.BehaviorSubject({});
         _this.businessUnits = new rx.BehaviorSubject([]);
         _this.projects = new rx.BehaviorSubject([]);
         _this.systems = new rx.BehaviorSubject([]);
         _this.processs = new rx.BehaviorSubject([]);
+        _this.metrics = new rx.BehaviorSubject([]);
 
         _this.projects.subscribe(function (projects) {
             _this._projects = projects;
         });
         _this.processs.subscribe(function (processs) {
             _this._processs = processs;
+        });
+        _this.metrics.subscribe(function (metrics) {
+            _this._metrics = metrics;
         });
         _this.systems.subscribe(function (systems) {
             _this._systems = systems;
@@ -55,6 +60,11 @@ angular
                 _this.processs.onNext(data.processs);
             });
         };
+        _this.reloadMetrics = function () {           
+            loadCompanyMetrics().then(function (data) {                
+                _this.Metrics.onNext(data.Metrics);
+            });
+        };
 
 
         function loadCompanySystems() {
@@ -71,6 +81,15 @@ angular
             restService.getData('process').then(function (dataResponse) {
                 if (dataResponse.data && dataResponse.data.length > 0) {
                     _this.processs.onNext(dataResponse.data);
+                }
+            });
+            return deferred.promise;
+        }
+        function loadCompanyMetrics() {
+            var deferred = $q.defer();
+            restService.getData('metric').then(function (dataResponse) {
+                if (dataResponse.data && dataResponse.data.length > 0) {
+                    _this.metrics.onNext(dataResponse.data);
                 }
             });
             return deferred.promise;
@@ -267,6 +286,90 @@ angular
                 });
         };
         //PROCESSS END
+
+        //METRICS START
+        _this.getMetric = function (metricId) {
+            return _this.metrics
+                .flatMap(function (metrics) {
+                    return rx.Observable.fromArray(metrics);
+                })
+                .first(function (a, b, c) {
+                    return a && a._id.$oid === metricId;
+                });
+        };
+
+        _this.saveMetric = function (metric, user) {
+            _this.saveMetricName(metric, user, true)
+        }
+        _this.saveMetricOnLoad = function (metric) {
+            _this.saveMetricName(metric, null, false)
+        }
+        _this.saveMetricName = function (metric, user, showSaver) {
+            metrichaschanged = false;
+            deleteThis = false;
+            if (showSaver) {
+                if ((metric.pm != null && user.email == metric.pm.email) ||
+                    (metric.altpm != null && user.email == metric.altpm.email)) {
+                    metric.lastchangeddatepm = new Date();
+                    metric.lastchangedbypm = user.name;
+                }
+                if ((metric.po != null && user.email == metric.po.email) ||
+                    (metric.altpo != null && user.email == metric.altpo.email)) {
+                    metric.lastchangeddatepo = new Date();
+                    metric.lastchangedbypo = user.name;
+                }
+                metric.lastchangeddate = new Date();
+                metric.lastchangedby = user.name;
+            }
+            // Update metric if it exists
+            if (metric._id) {
+                restService
+                    .updateData('metric', angular.fromJson(metric))
+                    .success(function (updatedMetric) {
+                        console.log("UPDATED: " + metric.title);
+                        metrichaschanged = false;
+                        deleteThis = false;
+                        var metricIndex = _this._metrics
+                            .map(function (p) { return p._id.$oid; })
+                            .indexOf(updatedMetric._id.$oid);
+                        if (~metricIndex) {
+                            _this._metrics[metricIndex] = updatedMetric;
+                            _this.metrics.onNext(_this._metrics);
+                        }
+                    })
+                    .error(function (dataResponse) {
+                        console.log('ERROR ...');
+                    });
+                // Add metric if id doesn't exists
+            } else {
+                restService
+                    .saveData('metric', angular.fromJson(metric))
+                    .success(function (newMetric) {
+                        _this._metrics.push(newMetric);
+                        _this.metrics.onNext(_this._metrics);
+                    })
+                    .error(function (dataResponse) {
+                        console.log('ERROR ...');
+                    });
+            }
+        };
+
+        _this.deleteMetric = function (metric) {
+            restService
+                .deleteData('metric', angular.fromJson(metric))
+                .success(function (dataResponse) {
+                    var metricIndex = _this._metrics
+                        .map(function (p) { return p._id.$oid; })
+                        .indexOf(metric._id.$oid);
+
+                    _this._metrics.splice(metricIndex, 1);
+                    _this.metrics.onNext(_this._metrics);
+                })
+                .error(function (dataResponse) {
+                    console.log('ERROR DELETE SYSTEM');
+                });
+        };
+        //METRICS END
 
 
         //PROJECTS START

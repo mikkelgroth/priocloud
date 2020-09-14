@@ -33,7 +33,7 @@ angular
             $scope.priceengine.monthlyusercost = 0;
             $scope.priceengine.yearlydiscount = 40;
             $scope.priceengine.yearlycost = 0;
-            $scope.priceengine.minimumfee = 29;
+            $scope.priceengine.minimumfee = 9;
             updateprice();
 
             function updateprice() {
@@ -58,8 +58,13 @@ angular
                 if($scope.priceengine.Steerco)priceperuser += $scope.priceengine.SteercoPrice;
 
                 $scope.priceengine.monthlyusercost = priceperuser;
-                $scope.priceengine.monthlycost = Math.max(Math.ceil(priceperuser * $scope.priceengine.NrUsers) + priceperviewuser, $scope.priceengine.minimumfee);
-                $scope.priceengine.yearlycost = Math.max(((Math.ceil(priceperuser * $scope.priceengine.NrUsers) + priceperviewuser) * 12 * (100-$scope.priceengine.yearlydiscount) / 100), $scope.priceengine.minimumfee);
+                $scope.priceengine.monthlycost = Math.ceil(priceperuser * $scope.priceengine.NrUsers) + priceperviewuser;
+                $scope.priceengine.yearlycost = $scope.priceengine.monthlycost * 12 * (100-$scope.priceengine.yearlydiscount) / 100;
+
+                if($scope.priceengine.monthlycost <= $scope.priceengine.minimumfee){
+                    $scope.priceengine.monthlycost = 0;
+                    $scope.priceengine.yearlycost = 0;
+                }
             }
             
             $scope.updatepriceengine = function () {

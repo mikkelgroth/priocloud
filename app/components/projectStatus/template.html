@@ -106,43 +106,7 @@
                                     <div class="linkicon right"></div></a></div>
                         </td>
                     </tr>
-                    <tr>
-                        <td class="header" colspan="2">Steerco</td>
-                    </tr>
-                    <tr>
-                        <td class="formlabel">
-                            Steerco meeting date
-                        </td>
-                        <td>
-                            {{editstatus.steercodate | date:'longDate'}}
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="formlabel">
-                            Agenda
-                        </td>
-                        <td>
-                            {{editstatus.steercoagenda}}
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="formlabel">
-                            Attendees
-                        </td>
-                        <td>
-                            {{editstatus.steercoattendees}}
-
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="formlabel">
-                            Minutes
-                        </td>
-                        <td>
-                            {{editstatus.steercominutes}}
-
-                        </td>
-                    </tr>
+                    
                     <tr>
                         <td class="header" colspan="2">Status flags</td>
                     </tr>
@@ -740,7 +704,7 @@
                         <td>
                             <div class="field"><textarea ng-disabled="!user.changeContent"
                                     ng-change="saveNow(editsteerco)" ng-model="editsteerco.steercoagenda"
-                                    maxlength="800" id="steercoagenda"
+                                    maxlength="1500" id="steercoagenda"
                                     placeholder="Agenda for upcomming meeting"></textarea></div>
                         </td>
                     </tr>
@@ -751,7 +715,7 @@
                         <td>
                             <div class="field"><textarea ng-disabled="!user.changeContent"
                                     ng-change="saveNow(editsteerco)" ng-model="editsteerco.steercoattendees"
-                                    maxlength="800" id="steercoattendees"
+                                    maxlength="1500" id="steercoattendees"
                                     placeholder="Who attends the meeting"></textarea></div>
                         </td>
                     </tr>
@@ -762,7 +726,7 @@
                         <td>
                             <div class="field"><textarea ng-disabled="!user.changeContent"
                                     ng-change="saveNow(editsteerco)" ng-model="editsteerco.steercominutes"
-                                    maxlength="800" id="steercominutes" placeholder="Minutes from meeting"></textarea>
+                                    maxlength="1500" id="steercominutes" placeholder="Minutes from meeting"></textarea>
                             </div>
                         </td>
                     </tr>

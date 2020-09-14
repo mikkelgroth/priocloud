@@ -8,11 +8,12 @@
             <div class="actions">
                 <div class="layout">
                     <div class="layoutelement">
-                        <button type="button" id="saveButton" save-this="$parent.hasChanged"
-                        ng-if="user.changeContent" ng-click="saveMilestones(true)">save</button>
+                        <button type="button" id="saveButton" save-this="$parent.hasChanged" ng-if="user.changeContent"
+                            ng-click="saveMilestones(true)">save</button>
                     </div>
                     <div class="layoutelement center">
-                        <button type="button" ng-if="user.changeContent" ng-click="newCloneMilestone(editmile)">clone</button>
+                        <button type="button" ng-if="user.changeContent"
+                            ng-click="newCloneMilestone(editmile)">clone</button>
                         <button type="button" ng-click="$parent.deleteThis=true" ng-show="!$parent.deleteThis"
                             ng-if="user.changeContent && !editmile.prime">delete</button>
                         <button type="button primary" class="Red"
@@ -153,13 +154,49 @@
                     <td>{{editmile.limiterlable}}</td>
                 </tr>
                 <tr>
-                    <td class="formlabel" prio-class prio-value-bar-render="editmile.bena">Business enabler</td>
+                    <td class="formlabel" prio-class prio-value-bar-render="editmile.bena">Platform enabler</td>
                     <td>
                         <select ng-model="editmile.bena" ng-change="saveNow(editmile)"
                             ng-disabled="!user.changeContent">
                             <option value="1">1. Minimal value</option>
                             <option value="2">2. Medium value</option>
                             <option value="3">3. Large value</option>
+                            <option value="4">4. Game changer</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="formlabel" prio-class prio-value-bar-render="editmile.sena">Strategy enabler</td>
+                    <td>
+                        <select ng-model="editmile.sena" ng-change="saveNow(editmile)"
+                            ng-disabled="!user.changeContent">
+                            <option value="1">1. Minimal value</option>
+                            <option value="2">2. Medium value</option>
+                            <option value="3">3. Large value</option>
+                            <option value="4">4. Game changer</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="formlabel" prio-class prio-value-bar-render="editmile.cena">Customer enabler</td>
+                    <td>
+                        <select ng-model="editmile.cena" ng-change="saveNow(editmile)"
+                            ng-disabled="!user.changeContent">
+                            <option value="1">1. None</option>
+                            <option value="2">2. Customer benefit</option>
+                            <option value="3">3. Customer demand</option>
+                            <option value="4">4. Deal maker</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="formlabel" prio-class prio-value-bar-render="editmile.mena">Market enabler</td>
+                    <td>
+                        <select ng-model="editmile.mena" ng-change="saveNow(editmile)"
+                            ng-disabled="!user.changeContent">
+                            <option value="1">1. None</option>
+                            <option value="2">2. Catch up</option>
+                            <option value="3">3. Market leading</option>
                             <option value="4">4. Game changer</option>
                         </select>
                     </td>
@@ -173,18 +210,6 @@
                             <option value="2">2. Medium effort</option>
                             <option value="3">3. Large effort</option>
                             <option value="4">4. Unknown effort</option>
-                        </select>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="formlabel" prio-class prio-value-bar-render="editmile.sena">Strategy enabler</td>
-                    <td>
-                        <select ng-model="editmile.sena" ng-change="saveNow(editmile)"
-                            ng-disabled="!user.changeContent">
-                            <option value="1">1. Minimal value</option>
-                            <option value="2">2. Medium value</option>
-                            <option value="3">3. Large value</option>
-                            <option value="4">4. Game changer</option>
                         </select>
                     </td>
                 </tr>
@@ -248,10 +273,36 @@
     <div class="mainbox">
         <div class="overview">
             <div class="right">
-                <select ng-model="orderdate" ng-init="orderdate='date'" style="font-size: 12px;">
+                <input type="radio" name="mileview" ng-model="mileview" value="all"> All &nbsp;
+                <input type="radio" name="mileview" ng-model="mileview" value="rm"> Roadmap &nbsp;
+                <input type="radio" name="mileview" ng-model="mileview" value="activity"> Activity &nbsp;
+
+                <select ng-model="order1" ng-init="order1='date'" style="font-size: 12px;">
                     <option value="enddate" selected="selected">Order by end date</option>
                     <option value="date">Order by start date</option>
                     <option value="-wsjf">Order by WSJF</option>
+                    <option value="-enablervaluetotal">Order by Enabler total</option>
+                    <option value="-limitervaluetotal">Order by Limiter total</option>
+                    <option value="-wsjf">Order by WSJF</option>
+                    <option value="-bena">Order by Platform value</option>
+                    <option value="-sena">Order by Strategy value</option>
+                    <option value="-cena">Order by Customer value</option>
+                    <option value="-mena">Order by Market value</option>
+                    <option value="-effort">Order by Effort</option>
+                    <option value="-risklevel">Order by Risk</option>
+                </select>
+                <select ng-model="order2" ng-init="order2='-wsjf'" style="font-size: 12px;">
+                    <option value="enddate" selected="selected">Order by end date</option>
+                    <option value="date">Order by start date</option>
+                    <option value="-wsjf">Order by WSJF</option>
+                    <option value="-enablervaluetotal">Order by Enabler total</option>
+                    <option value="-limitervaluetotal">Order by Limiter total</option>
+                    <option value="-bena">Order by Platform value</option>
+                    <option value="-sena">Order by Strategy value</option>
+                    <option value="-cena">Order by Customer value</option>
+                    <option value="-mena">Order by Market value</option>
+                    <option value="-effort">Order by Effort</option>
+                    <option value="-risklevel">Order by Risk</option>
                 </select>
                 <button ng-click="newMilestone()" ng-if="user.changeContent">create new
                     deliverable</button>
@@ -269,8 +320,10 @@
                     <td>Responsible<br />Approver</td>
                     <td>Show in<br />Report</td>
                 </tr>
-                <tr ng-repeat="mile in project.milestones | orderBy:orderdate"
-                    ng-if="showDone || (!showDone && mile.state!='Done')" class="link">
+                <tr ng-repeat="mile in project.milestones | orderBy:[order1,order2]"
+                    ng-if="(showDone || (!showDone && mile.state!='Done')) && 
+                    (mileview=='all' || (mileview=='activity' && mile.type=='Activity') || (mileview=='rm' && mile.type=='Roadmap item'))"
+                    class="link">
                     <td ng-click="beginEditMile(mile)" class="{{mile.status}}"><b>{{mile.title}}</b></td>
                     <td ng-click="beginEditMile(mile)"><b>{{mile.priority}}</b><br />{{mile.wsjf}}</td>
                     <td ng-click="beginEditMile(mile)" class="bar" ng-style="barRender(mile)" colspan="3">

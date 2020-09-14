@@ -30,8 +30,9 @@
             <i> People & dependencies</br></i></label>
 
         <div class="right">
-            <button type="button" id="saveButton" prio-class ng-if="user.admin && companyedit" ng-click="saveCompanyFilters()"><b>save
-                settings</b></button>
+            <button type="button" id="saveButton" prio-class ng-if="user.admin && companyedit"
+                ng-click="saveCompanyFilters()"><b>save
+                    settings</b></button>
 
         </div>
 
@@ -44,7 +45,8 @@
             <div class="actions">
                 <div class="layout">
                     <div class="layoutelement">
-                        <button type="button" id="saveButton1" ng-if="user.admin && companyedit" ng-click="saveport()">save</button>
+                        <button type="button" id="saveButton1" ng-if="user.admin && companyedit"
+                            ng-click="saveport()">save</button>
                     </div>
                     <div class="layoutelement center">
                         <button type="button primary" class="Red" ng-click="delport(editport)"
@@ -96,55 +98,4 @@
         </table>
     </div>
 
-
-
-    <h3>Strategies</h3>
-    <div class="popup">
-        <div class="overview popupcontent">
-            <div class="actions">
-                <div class="layout">
-                    <div class="layoutelement">
-                        <button type="button" id="saveButton2" ng-if="user.admin && companyedit" ng-click="saveStrat()">save</button>
-                    </div>
-                    <div class="layoutelement center">
-                        <button type="button primary" class="Red" ng-click="delStrat(editstrat)"
-                            ng-if="user.admin && companyedit">delete</button>
-                    </div>
-                    <div class="layoutelement right">
-                        <button type="button" class="close" ng-click="closestrat()"></button>
-                    </div>
-                </div>
-            </div>
-            <h2>
-                Edit strategy
-            </h2>
-            <table class="formtable smaller">
-                <tr>
-                    <td class="formlabel">Strategy name</td>
-                    <td><input ng-model="editstrat.name" /></td>
-                </tr>
-            </table>
-        </div>
-    </div>
-    <div class="right">
-        <button ng-if="user.admin && companyedit && (company.strategytypes == null || company.strategytypes.length == 0)"
-            ng-click="addStrat()">create strategy</button>
-    </div>
-    <div class="overview" ng-if="company.strategytypes.length > 0">
-        <table class="tablelist smaller">
-            <tr class="header">
-                <td>
-                    <div class="right">
-                        <button ng-click="addStrat()" ng-if="user.admin && companyedit">create
-                            strategy</button>
-                    </div>
-                </td>
-            </tr>
-            <tr ng-repeat="strat in company.strategytypes| orderBy:'name'" ng-click="editStrat(strat)">
-                <td> {{strat.name}}</td>
-            </tr>
-        </table>
-    </div>
-
-</div>
 </div>

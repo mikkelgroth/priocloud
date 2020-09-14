@@ -1,21 +1,55 @@
 <div id="help">
     <div class="mainbox editboxon">
-        <h2>Price engine</h2>
+        <h2>Price engine - first 30 days all modules are open and FREE of charge!</h2>
         <div class="overview">
             <table class="smaller gutter-top">
                 <tr>
                     <td class="header">Number of view users</td>
                     <td>
-                        <input style="width: 200px" ng-model="priceengine.NrViewUsers" ng-change="updatepriceengine()"
-                            id="numviewusers" /> <b> {{priceengine.NrViewUsersPrice | number:2}} &euro;
-                                month/user</b>
+                        <table class="noborder">
+                            <tr>
+                                <td style="width: 500px;">
+                                    <input style="width: 60px" ng-model="priceengine.NrViewUsers"
+                                        ng-change="updatepriceengine()" id="numviewusers" /> <b>
+                                        {{priceengine.NrViewUsersPrice | number:2}} &euro;
+                                        month/user</b>
+                                </td>
+                                <td class="right"><b>
+                                        {{priceengine.NrViewUsersPrice * priceengine.NrViewUsers | number:2}}
+                                        &euro;</b></td>
+                            </tr>
+                        </table>
                     </td>
                 </tr>
                 <tr>
                     <td class="header">Number of role based users</td>
                     <td>
-                        <input style="width: 200px" ng-model="priceengine.NrUsers" ng-change="updatepriceengine()"
-                            id="numusers" /> <b>{{priceengine.monthlyusercost | number:2}} &euro; month/role based user</b>
+                        <table class="noborder">
+                            <tr>
+                                <td style="width: 500px;">
+                                    <input style="width: 60px" ng-model="priceengine.NrUsers"
+                                        ng-change="updatepriceengine()" id="numusers" />
+                                    <b>{{priceengine.monthlyusercost | number:2}} &euro; month/role based
+                                        user </b>
+                                </td>
+                                <td class="right"><b> {{priceengine.monthlyusercost * priceengine.NrUsers | number:2}}
+                                        &euro;</b></td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="header">Total monthly</td>
+                    <td>
+                        <table class="noborder">
+                            <tr>
+                                <td style="width: 500px;">
+                                    
+                                </td>
+                                <td class="right"><b> {{(priceengine.NrViewUsersPrice * priceengine.NrViewUsers) + (priceengine.monthlyusercost * priceengine.NrUsers) | number:2}}
+                                        &euro;</b></td>
+                            </tr>
+                        </table>
                     </td>
                 </tr>
                 <tr>
@@ -23,10 +57,10 @@
                     <td>
                         <table class="noborder">
                             <tr>
-                                <td>
+                                <td style="width: 500px;">
                                     <label for="basic"><input type="checkbox" ng-change="updatepriceengine()" id="basic"
                                             ng-model="priceengine.basic" ng-disabled="true">
-                                        <i> Basic Portfolio Management</i></label></td>
+                                        <i> Basic Project & Portfolio Management</i></label></td>
                                 <td class="right"><b> {{priceengine.BasicPrice | number:2}} &euro;</b></td>
                             </tr>
                             <tr>
@@ -40,56 +74,56 @@
                                 <td>
                                     <label for="status"><input type="checkbox" ng-change="updatepriceengine()"
                                             id="status" ng-model="priceengine.Status">
-                                        <i> Status history</i></label></td>
+                                        <i> Status elaboration and Status history</i></label></td>
                                 <td class="right"><b> {{priceengine.StatusPrice | number:2}} &euro;</b></td>
                             </tr>
                             <tr>
                                 <td>
                                     <label for="actionpoints"><input type="checkbox" ng-change="updatepriceengine()"
                                             id="actionpoints" ng-model="priceengine.Actionpoints">
-                                        <i> Action & decision points</i></label></td>
+                                        <i> Action points & decision points</i></label></td>
                                 <td class="right"><b> {{priceengine.ActionpointsPrice | number:2}} &euro;</b></td>
                             </tr>
                             <tr>
                                 <td>
                                     <label for="steerco"><input type="checkbox" ng-change="updatepriceengine()"
                                             id="steerco" ng-model="priceengine.Steerco">
-                                        <i> Steerco</i></label></td>
+                                        <i> Steerco management</i></label></td>
                                 <td class="right"><b> {{priceengine.SteercoPrice | number:2}} &euro;</b></td>
                             </tr>
                             <tr>
                                 <td>
                                     <label for="deliverables"><input type="checkbox" ng-change="updatepriceengine()"
                                             id="deliverables" ng-model="priceengine.Deliverables">
-                                        <i> Deliverables</i></label></td>
+                                        <i> Deliverables, Phases and/or Product Backlog management</i></label></td>
                                 <td class="right"><b> {{priceengine.DeliverablesPrice | number:2}} &euro;</b></td>
                             </tr>
                             <tr>
                                 <td>
                                     <label for="issues"><input type="checkbox" ng-change="updatepriceengine()"
                                             id="issues" ng-model="priceengine.Issues">
-                                        <i> Risk & issues</i></label></td>
+                                        <i> Risk log & issues log management</i></label></td>
                                 <td class="right"><b> {{priceengine.IssuesPrice | number:2}} &euro;</b></td>
                             </tr>
                             <tr>
                                 <td>
                                     <label for="finance"><input type="checkbox" ng-change="updatepriceengine()"
                                             id="finance" ng-model="priceengine.Finance">
-                                        <i> Finance</i></label></td>
+                                        <i> Finance overview and Project budgets</i></label></td>
                                 <td class="right"><b> {{priceengine.FinancePrice | number:2}} &euro;</b></td>
                             </tr>
                             <tr>
                                 <td>
                                     <label for="dependencies"><input type="checkbox" ng-change="updatepriceengine()"
                                             id="dependencies" ng-model="priceengine.Depend">
-                                        <i> People & dependencies</i></label></td>
+                                        <i> People resource types allocation & dependencies</i></label></td>
                                 <td class="right"><b> {{priceengine.DependPrice | number:2}} &euro;</b></td>
                             </tr>
                             <tr>
                                 <td>
                                     <label for="resource"><input type="checkbox" ng-change="updatepriceengine()"
                                             id="resource" ng-model="priceengine.ResourceOverview">
-                                        <i> Resource overview</i></label></td>
+                                        <i> Portfolio resource overview and bottle neck detection</i></label></td>
                                 <td class="right"><b> {{priceengine.ResourceOverviewPrice | number:2}} &euro;</b></td>
                             </tr>
                         </table>
@@ -100,9 +134,10 @@
                     <td>
                         <table class="noborder">
                             <tr>
-                                <td><label for="strategy"><input type="checkbox" ng-change="updatepriceengine()"
-                                            id="strategy" ng-model="priceengine.Strategy">
-                                        <i> Strategy & Metrics</i></label></td>
+                                <td style="width: 500px;"><label for="strategy"><input type="checkbox"
+                                            ng-change="updatepriceengine()" id="strategy"
+                                            ng-model="priceengine.Strategy">
+                                        <i> Strategy, Objectives, Metrics, Key results and KPI's</i></label></td>
                                 <td class="right"><b> {{priceengine.StrategyPrice | number:2}} &euro;</b></td>
                             </tr>
                         </table>
@@ -115,10 +150,10 @@
                     <td>
                         <table class="noborder">
                             <tr>
-                                <td>
+                                <td style="width: 500px;">
                                     <label for="system"><input type="checkbox" ng-change="updatepriceengine()"
                                             id="system" ng-model="priceengine.System">
-                                        <i> Service catalogue</i></label></td>
+                                        <i> Service catalogue, IT security and IT Continuity</i></label></td>
                                 <td class="right"> <b> {{priceengine.SystemPrice | number:2}} &euro;</b></td>
                             </tr>
                             <tr>
@@ -126,7 +161,8 @@
 
                                     <label for="process"><input type="checkbox" ng-change="updatepriceengine()"
                                             id="process" ng-model="priceengine.Process">
-                                        <i> Business Process catalogue</i></label>
+                                        <i> Business process catalogue, System dependencies and Business
+                                            continuity</i></label>
                                 </td>
                                 <td class="right"> <b> {{priceengine.ProcessPrice | number:2}} &euro;</b></td>
                             </tr>
@@ -135,7 +171,7 @@
 
                                     <label for="gdpr"><input type="checkbox" ng-change="updatepriceengine()" id="gdpr"
                                             ng-model="priceengine.GDPR">
-                                        <i> GDPR</i></label></td>
+                                        <i> GDPR, DPIA and Data integrity Management</i></label></td>
                                 <td class="right"> <b> {{priceengine.GDPRPrice | number:2}} &euro;</b></td>
                             </tr>
                         </table>
@@ -154,10 +190,33 @@
                     </td>
                 </tr>
             </table>
-            * Minimum invoice ammount {{priceengine.minimumfee}} &euro;<br />
-            ** All prices exclusive vat<br />
-            *** Role based users is active users like Project Managers, Admins and Owners that create info<br />
-            **** View users is users that only consumes info from PrioCloud
+            <br />
+            <table class="smaller gutter-top">
+                <tr>
+                    <td class="header">Pricing terms and condition</td>
+                </tr>
+                <tr>
+                    <td>
+                        * Minimum invoice ammount {{priceengine.minimumfee}} &euro;<br />
+                        * All prices exclusive vat<br />
+                        * Role based users is active users like Project Managers, Admins and Owners that create
+                        info<br />
+                        * View users is users that only consumes info from PrioCloud<br />
+                        * After the 30 day trial the company account is paused and deleted after 60 days unless the
+                        customer actively commits to further user<br />
+                        * The customer will never be charged from PrioCloud unless active commitment<br />
+                        * If a payment is not made then the Account is paused after 30 days and deleted after 60
+                        days<br />
+                        * PrioCloud will not add late fees or pursue unpaid invoices we will simply pause and delete the
+                        account<br />
+                        * A 12 month payment account can be terminated at any point in time and should there be a
+                        difference between used months at monthly cost and the 12 month payment then the customer is
+                        getting reimbursed the difference<br />
+
+                    </td>
+                </tr>
+            </table>
+
         </div>
 
     </div>

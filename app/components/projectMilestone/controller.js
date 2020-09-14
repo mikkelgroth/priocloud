@@ -18,6 +18,7 @@ angular
             var milestoneId = $routeParams.milestoneid;
 
             $scope.showMilestoneForm = false;
+            $scope.mileview = "all";
 
             userService
                 .user
@@ -93,21 +94,23 @@ angular
                         mile.enddate = md.toISOString();
                         mile.rawenddate = $("#miledate")[0].value;
                     }
-                    mile.wsjf = Math.floor((mile.bena * mile.sena) /
-                        (mile.effort * mile.risklevel) * 100 / 16);
+                    mile.wsjf = Math.floor((mile.bena * mile.sena * mile.cena * mile.mena) /
+                        (mile.effort * mile.risklevel) * 100 / (4 * 4 * 4 * 4));
                     mile.enablerlable = "XS";
                     mile.enablervalue = 0;
-                    if (mile.bena * mile.sena > 1) { mile.enablervalue = 1; mile.enablerlable = "S"; }
-                    if (mile.bena * mile.sena > 2) { mile.enablervalue = 2; mile.enablerlable = "M"; }
-                    if (mile.bena * mile.sena > 4) { mile.enablervalue = 3; mile.enablerlable = "L"; }
-                    if (mile.bena * mile.sena > 9) { mile.enablervalue = 4; mile.enablerlable = "XL"; }
+                    mile.enablervaluetotal = mile.bena * mile.sena * mile.cena * mile.mena;
+                    if (mile.enablervaluetotal > 1) { mile.enablervalue = 1; mile.enablerlable = "S"; }
+                    if (mile.enablervaluetotal > 8) { mile.enablervalue = 2; mile.enablerlable = "M"; }
+                    if (mile.enablervaluetotal > 50) { mile.enablervalue = 3; mile.enablerlable = "L"; }
+                    if (mile.enablervaluetotal > 100) { mile.enablervalue = 4; mile.enablerlable = "XL"; }
 
                     mile.limiterlable = "XS";
                     mile.limitervalue = 0;
-                    if (mile.effort * mile.risklevel > 1) { mile.limitervalue = 1; mile.limiterlable = "S"; }
-                    if (mile.effort * mile.risklevel > 2) { mile.limitervalue = 2; mile.limiterlable = "M"; }
-                    if (mile.effort * mile.risklevel > 4) { mile.limitervalue = 3; mile.limiterlable = "L"; }
-                    if (mile.effort * mile.risklevel > 9) { mile.limitervalue = 4; mile.limiterlable = "XL"; }
+                    mile.limitervaluetotal = mile.effort * mile.risklevel;
+                    if (mile.limitervaluetotal > 1) { mile.limitervalue = 1; mile.limiterlable = "S"; }
+                    if (mile.limitervaluetotal > 2) { mile.limitervalue = 2; mile.limiterlable = "M"; }
+                    if (mile.limitervaluetotal > 4) { mile.limitervalue = 3; mile.limiterlable = "L"; }
+                    if (mile.limitervaluetotal > 9) { mile.limitervalue = 4; mile.limiterlable = "XL"; }
 
                     $scope.hasChanged = true;
                 }
@@ -139,7 +142,15 @@ angular
                     $scope.editmile.bena = '1';
                     $scope.editmile.effort = '1';
                     $scope.editmile.sena = '1';
+                    $scope.editmile.cena = '1';
+                    $scope.editmile.mena = '1';
                     $scope.editmile.risklevel = '1';
+                    mile.enablerlable = "XS";
+                    mile.enablervalue = 0;
+                    mile.enablervaluetotal = 1;
+                    mile.limiterlable = "XS";
+                    mile.limitervalue = 0;
+                    mile.limitervaluetotal = 1;
                     $scope.editmile.title = 'NEW DELIVERABLE';
 
                     $scope.deleteThis = false;
