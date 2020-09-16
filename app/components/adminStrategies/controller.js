@@ -153,46 +153,6 @@ angular
 
             //objectives END
 
-            //MetricValue value START
-
-            function editMetricValue(metricvalue) {
-                $scope.editmetricvalue = metricvalue;
-                $('.popup').addClass('active');
-            }
-
-            $scope.beginEditMetricValue = function (metricvalue) {
-                editMetricValue(metricvalue);
-            };
-
-            $scope.saveMetricValue = function () {
-                if ($scope.companyedit) {
-                    companyService.saveMetric(metric, $scope.user);
-                    $('.popup').removeClass('active');
-                }
-            };
-
-
-            $scope.newMetricValue = function () {
-                if ($scope.companyedit) {
-                    if ($scope.company.metricvalues == null) {
-                        $scope.company.metricvalues = [];
-                    }
-                    $scope.company.metricvalues.push({});
-                    $scope.editmetricvalue = $scope.company.metricvalues[$scope.company.metricvalues.length - 1];
-                    $scope.editmetricvalue._id = Math.random().toString(36).substr(2, 9);
-                    $scope.editmetricvalue.title = 'NEW METRICVALUE';
-                    $('.popup').addClass('active');
-                }
-            };
-
-            $scope.deleteMetricValue = function (metricvalue) {
-                if ($scope.companyedit) {
-                    $scope.company.metricvalues.splice($scope.company.metricvalues.indexOf(metricvalue), 1);
-                    companyService.saveCompany($scope.company);
-                    $('.popup').removeClass('active');
-                }
-            };
-            //MetricValue END
 
 
             // Metric start
@@ -204,8 +164,11 @@ angular
                 metric.creationdate = (new Date()).toISOString();
                 metric.title = "NEW METRIC";
                 metric.bu = $scope.bus[0];
-                metric.format = "Points"
+                metric.valueformat = "Points";
                 metric.metricvalues = [];
+                metric.valuestreammagnitude = "1. Minimal value";
+                metric.externalexposure = "1. No exposure";
+                metric.risklevel = 1;
 
                 $scope.np = metric;
 

@@ -1,0 +1,136 @@
+<h2 class="center {{metric.status}}">
+    {{metric.title}}
+</h2>
+<prio-metric-menu prio-metric-id="{{metric._id.$oid}}"></prio-metric-menu>
+</prio-metricvalue-menu>
+<div class="view">
+    <div class="popup">
+        <div class="overview popupcontent">
+            <div class="actions">
+                <div class="layout">
+                    <div class="layoutelement">
+                        <button type="button" id="saveButton1" prio-class save-this="$parent.hasChanged"
+                            ng-if="user.changeContent" ng-click="saveMetricvalues()">save</button>
+                    </div>
+                    <div class="layoutelement center">
+                        <button type="button" class="Red" ng-click="removeMetricvalue(editmetricvalue)"
+                            ng-show="$parent.deleteThis" ng-if="user.changeContent">confirm
+                            delete!!!</button>
+                        <button type="button" ng-click="delete()" ng-show="!$parent.deleteThis"
+                            ng-if="user.changeContent">delete</button>
+                    </div>
+                    <div class="layoutelement right">
+                        <button type="button" class="close" ng-click="close()"></button>
+                    </div>
+                </div>
+            </div>
+
+            <table class="formtable smaller">
+                <tr>
+                    <td class="formlabel">Observation value {{metric.valueformat}}</td>
+                    <td>
+                        <input ng-model="editmetricvalue.value" ng-change="saveNow(editmetricvalue)"
+                            ng-disabled="!user.changeContent" />
+                    </td>
+                </tr>
+                <tr>
+
+                    <td class="formlabel">Show in report</td>
+                    <td>
+                        <input type="checkbox" ng-model="editmetricvalue.showInReport"
+                            ng-change="saveNow(editmetricvalue)" ng-disabled="!user.changeContent">
+                    </td>
+                </tr>
+                <tr>
+                    <td class="formlabel">Observation value notes</td>
+                    <td>
+                        <textarea ng-change="saveNow(editmetricvalue)" ng-model="editmetricvalue.note" maxlength="800"
+                            id="metricvaluedec" placeholder="Notes..." ng-disabled="!user.changeContent"></textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="formlabel">Date</td>
+                    <td>
+                        {{editmetricvalue.date | date:'longDate'}}
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <div class="mainbox">
+        <table class="tablelist smaller" ng-if="metric.metricvalues.length > 0">
+            <tr>
+                <td class="header">Observation value format</td>
+                <td>
+                    <input ng-model="metric.valueformat" ng-change="saveMetric(metric)"
+                        ng-disabled="!user.changeContent" />
+                </td>
+                <td class="header">High/Low operator</td>
+                <td>
+                    <select ng-disabled="!user.changeContent" ng-model="metric.operator" ng-change="saveMetric(metric)">
+                        <option value="high">Higher is best</option>
+                        <option value="low">Lower is best</option>
+                    </select>
+                </td>
+            </tr>
+            <tr class="header">
+                <td rowspan="2">Trend boundries (%)</td>
+                <td class="header Yellow">Green - Yellow</td>
+                <td class="header Orange">Yellow - Orange</td>
+                <td class="header Red">Orange - Red</td>
+
+            </tr>
+            <tr>
+                <td>
+                    <input ng-model="metric.greenvalue" ng-change="saveMetric(metric)"
+                        ng-disabled="!user.changeContent" />
+                </td>
+
+                <td>
+                    <input ng-model="metric.yellowvalue" ng-change="saveMetric(metric)"
+                        ng-disabled="!user.changeContent" />
+                </td>
+                <td>
+                    <input ng-model="metric.orangevalue" ng-change="saveMetric(metric)"
+                        ng-disabled="!user.changeContent" />
+                </td>
+            </tr>
+            <tr>
+                <td class="header">Format notes</td>
+                <td colspan="3">
+                    <textarea ng-change="saveMetric(metric)" ng-model="metric.note" maxlength="800" id="metricvaluedec"
+                        placeholder="Describe the used format" ng-disabled="!user.changeContent"></textarea>
+                </td>
+            </tr>
+        </table>
+
+        <br />
+
+        <div class="right">
+            <button type="button" ng-click="newMetricvalue()" ng-if="user.changeContent">Enter new observation
+                value</button>
+        </div>
+        <div class="overview">
+            <table class="tablelist smaller" ng-if="metric.metricvalues.length > 0">
+                <tr class="header">
+                    <td>Observation value</td>
+                    <td>Date</td>
+                    <td>{{metric.valueformat}} trend</td>
+                    <td>{{metric.valueformat}} average to date</td>
+                    <td>Show</td>
+                </tr>
+                <tr ng-repeat="metricvalue in metric.metricvalues | orderBy:'title'" class="link">
+                    <td ng-click="beginEditMetricvalue(metricvalue)" class="{{metricvalue.status}}">
+                        <b>{{metricvalue.value}} {{metric.valueformat}}</b></td>
+                    <td ng-click="beginEditMetricvalue(metricvalue)">{{metricvalue.date | date:'longDate'}}</td>
+                    <td ng-click="beginEditMetricvalue(metricvalue)" class="right {{metricvalue.trendstatus}}text">
+                        {{metricvalue.trend}} %</td>
+                    <td ng-click="beginEditMetricvalue(metricvalue)" class="right">{{metricvalue.average}}</td>
+                    <td><input type="checkbox" ng-model="metricvalue.showInReport" ng-change="saveMetricvalues()"
+                            ng-disabled="!user.changeContent"></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>

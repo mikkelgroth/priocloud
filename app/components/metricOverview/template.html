@@ -1,0 +1,78 @@
+<h2 class="center {{metric.status}}">
+    {{metric.title}}
+</h2>
+
+<prio-metric-menu prio-metric-id="{{metric._id.$oid}}"></prio-metric-menu>
+
+<div id="metric-overview" class="view">
+    <div class="mainbox" id="overview">
+        <div class="header-with-actions">
+
+            <div class="headeractions hideOnPrint">
+                <button type="button" id="editButton" save-this="$parent.hasChanged" class=" Green"
+                    ng-if="user.changeContent && !metric.showRelease" ng-click="editMetric(metric)">edit
+                    metric</button>
+                <button type="button" id="releaseButton" save-this="$parent.hasChanged" class=" Red"
+                    ng-if="user.changeContent && metric.showRelease" ng-click="releaseMetric(metric)">release
+                    metric</button>
+            </div>
+        </div>
+
+        <div ng-if="metric.editUser != null">(Is under edit by {{metric.editUser.name}})</div>
+
+        <div class="overview">
+            <table class="tablelist smaller">
+                <tr>
+                    <td class="header">Business unit</td>
+                    <td>{{metric.bu.name}}</td>
+                    <td class="header">Affected units</td>
+                    <td>
+                        <div ng-repeat="st in metric.connect"> &#9675; {{st}}<br /></div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="header">Metric priority level </td>
+                    <td class="wrap">{{metric.risklevel}}</td>
+                    <td class="header">Key purpose </td>
+                    <td class="wrap">{{metric.keypurpose}}</td>
+                </tr>
+                <tr>
+                    <td class="header">Category </td>
+                    <td class="wrap">{{metric.type}}</td>
+                    <td class="header">Frequency </td>
+                    <td class="wrap">{{metric.freq}}</td>
+                </tr>
+                <tr>
+                    <td class="header">Business importance </td>
+                    <td class="wrap">{{metric.valuestreammagnitude}}</td>
+                    <td class="header">External exposure </td>
+                    <td class="wrap">{{metric.externalexposure}}</td>
+                </tr>
+                <tr>
+                    <td class="header">Administrator </td>
+                    <td class="wrap">{{metric.pm.name}}</td>
+                    <td class="header">Owner </td>
+                    <td class="wrap">{{metric.po.name}}</td>
+                </tr>
+            </table>
+            <h2>Observations</h2>
+            <table class="tablelist smaller" ng-if="metric.metricvalues.length > 0">
+                <tr class="header">
+                    <td>Observation value</td>
+                    <td>Date</td>
+                    <td>{{metric.valueformat}} trend</td>
+                    <td>{{metric.valueformat}} average to date</td>
+                </tr>
+                <tr ng-repeat="metricvalue in metric.metricvalues | orderBy:'title'" class="link" ng-if="metricvalue.showInReport">
+                    <td class="{{metricvalue.status}}">
+                        <b>{{metricvalue.value}} {{metric.valueformat}}</b></td>
+                    <td>{{metricvalue.date | date:'longDate'}}</td>
+                    <td class="right {{metricvalue.trendstatus}}text">
+                        {{metricvalue.trend}} %</td>
+                    <td class="right">{{metricvalue.average}}</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+{{metric.lastchangedby}} - {{metric.lastchangeddate | date:'longDate'}}

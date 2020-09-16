@@ -1,0 +1,223 @@
+<h2 class="center {{metric.status}}">
+    {{metric.title}}
+</h2>
+<prio-metric-menu prio-metric-id="{{metric._id.$oid}}" prio-metric-title="{{metric.title}}"></prio-metric-menu>
+<div class="view">
+    <div class="mainbox editboxon" id="details">
+        <div class="right">
+            <button type="button" id="saveButton2" prio-class save-this="$parent.hasChanged" ng-if="user.changeContent"
+                ng-click="saveMetric(metric)">save</button>
+        </div>
+        <table class="smaller gutter-top">
+            <tr>
+                <td class="l header">Title </td>
+                <td>
+                    <input ng-model="metric.title" ng-change="saveNow()" ng-disabled="!user.changeContent"
+                        maxlength="25" />
+                </td>
+                <td class="header" rowspan="4">Affected units</td>
+                <td rowspan="4">
+                    <select class="multiple-select" multiple="multiple" ng-multiple="true" ng-model="metric.connect"
+                        ng-change="saveNow()" ng-disabled="!user.changeContent">
+                        <option ng-repeat="bu in bus | orderBy:'order'" value="{{bu.name}}">{{bu.indent}}{{bu.name}}
+                        </option>
+                    </select>
+                </td>
+
+            </tr>
+            <tr>
+                <td class="l header">Metric category</td>
+                <td>
+                    <select ng-model="metric.type" id="type" ng-change="saveNow()" ng-disabled="!user.changeContent">
+                        <option value="Customer employee metric">Customer employee metric</option>
+                        <option value="Customer product metric">Customer product metric</option>
+                        <option value="Customer process metric">Customer process metric</option>
+                        <option value="Customer financial metric">Customer financial metric</option>
+                        <option value="Company employee metric">Company employee metric</option>
+                        <option value="Company product metric">Company product metric</option>
+                        <option value="Company process metric">Company process metric</option>
+                        <option value="Company financial metric">Company financial metric</option>
+
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td class="header">Unit</td>
+                <td>
+                    <select ng-change="saveNow()" ng-model="metric.bu" id="probu"
+                        ng-options="bu.name for bu in bus | orderBy: 'order' track by bu.name"
+                        ng-disabled="!(user.changeContent && (user.admin || user.subadmin))"></select>
+                </td>
+            </tr>
+            <tr>
+                <td class="header">Observation frequency</td>
+                <td>
+                    <select ng-model="metric.freq" ng-change="saveNow(editdata)" ng-disabled="!user.changeContent">
+                        <option value="Weekly">Weekly</option>
+                        <option value="Bi-weekly">Bi-weekly</option>
+                        <option value="Monthly">Monthly</option>
+                        <option value="Quarterly">Quarterly</option>
+                        <option value="Half yearly">Half yearly</option>
+                        <option value="Yearly">Yearly</option>
+                        <option value="On request">On request</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Key purpose
+                </td>
+                <td colspan="3">
+                    <div class="field">
+                        <textarea ng-model="metric.keypurpose" maxlength="800" ng-change="saveNow()"
+                            placeholder="What is the key purpose of this metric"
+                            ng-disabled="!user.changeContent"></textarea>
+                    </div>
+                </td>
+            </tr>
+            <tr class="header">
+                <td colspan="4">Link to purpose documentation
+                    <div class="right">
+                        <button ng-if="user.changeContent" ng-click="addlink('Details')"
+                            ng-if="user.changeContent">create link</button>
+                    </div>
+                </td>
+            </tr>
+            <tr class="header" ng-if="metric.linklist.length > 0">
+                <td>Title</td>
+                <td>URL</td>
+                <td>Show in report</td>
+                <td>Follow link</td>
+            </tr>
+            <tr ng-repeat="link in metric.linklist" ng-if="link.lable=='Details'">
+                <td ng-click="editlinkitem(link)">
+                    {{link.title}}
+                </td>
+                <td ng-click="editlinkitem(link)">
+                    {{link.url}}
+                </td>
+                <td class="Green" ng-show="link.showinreport">Show</td>
+                <td class="Red" ng-show="!link.showinreport">Hide</td>
+                <td>
+                    <a target="_blank" href="{{link.url}}">
+                        <div class="linkicon right"></div>
+                    </a>
+                </td>
+            </tr>
+        </table>
+
+        <h2>Metric priority level: {{metric.risklevel}}</h2>
+        <table class="smaller">
+            <tr>
+                <td class="header">Business importance
+                </td>
+                <td>
+                    <select ng-model="metric.valuestreammagnitude" ng-change="saveNow()"
+                        ng-disabled="!user.changeContent">
+                        <option value="1. Minimal value">1. Minimal value</option>
+                        <option value="2. Medium value">2. Medium value</option>
+                        <option value="3. Large value">3. Large value</option>
+                        <option value="4. Game changer">4. Game changer</option>
+                    </select>
+                </td>
+                <td class="header">External exposure</td>
+                <td>
+                    <select ng-model="metric.externalexposure" ng-change="saveNow()" ng-disabled="!user.changeContent">
+                        <option value="1. No exposure">1. No exposure</option>
+                        <option value="2. Minimal exposure">2. Minimal exposure</option>
+                        <option value="3. Large exposure">3. Large exposure</option>
+                        <option value="4. Unknown exposure">4. Unknown exposure</option>
+                    </select>
+                </td>
+            </tr>
+        </table>
+
+        <h2>Administration</h2>
+        <div class="right">
+            <button type="button" id="saveButton3" prio-class save-this="$parent.hasChanged" ng-if="user.changeContent"
+                ng-click="saveMetric(metric)">save</button>
+        </div>
+        <table class="smaller">
+            <tr>
+                <td class="header">Administrator</td>
+                <td>
+                    <select ng-model="metric.pm" id="propm" ng-disabled="!user.changeContent" ng-change="saveNow()"
+                        ng-options="u.name for u in tempusers | filter: {source: true} | orderBy:'name' track by u.name">
+                    </select>
+
+                </td>
+                <td class="header">Owner</td>
+                <td>
+                    <select ng-model="metric.po" id="propo" ng-disabled="!user.changeContent" ng-change="saveNow()"
+                        ng-options="u.name for u in tempusers | filter: {source: true} | orderBy:'name' track by u.name">
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td class="header">Alt. Administrator</td>
+                <td>
+                    <select ng-model="metric.altpm" id="proaltpm" ng-disabled="!user.changeContent"
+                        ng-change="saveNow()"
+                        ng-options="u.name for u in tempusers | filter: {source: true} | orderBy:'name' track by u.name">
+                    </select>
+                </td>
+                <td class="header">Alt. Owner</td>
+                <td>
+                    <select ng-model="metric.altpo" id="proaltpo" ng-disabled="!user.changeContent"
+                        ng-change="saveNow()"
+                        ng-options="u.name for u in tempusers | filter: {source: true} | orderBy:'name' track by u.name">
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Location of metric use
+                </td>
+                <td colspan="3">
+                    <div class="field">
+                        <textarea ng-model="metric.locationUse" maxlength="800" ng-change="saveNow()"
+                            placeholder="Where is this metric used" ng-disabled="!user.changeContent"></textarea>
+                    </div>
+                </td>
+            </tr>
+
+        </table>
+
+        <div class="popup">
+            <div class="overview popupcontent">
+                <div class="actions">
+                    <div class="layout">
+                        <div class="layoutelement">
+                            <button type="button" id="saveButton5" ng-if="user.changeContent"
+                                ng-click="savelink(editlink)">save</button>
+                        </div>
+                        <div class="layoutelement center">
+                            <button type="button primary" class="Red" ng-click="dellink(editlink)"
+                                ng-if="user.changeContent">delete</button>
+                        </div>
+                        <div class="layoutelement right">
+                            <button type="button" class="close" ng-click="closelink(editlink)"></button>
+                        </div>
+                    </div>
+                </div>
+                <h3>
+                    Edit link
+                </h3>
+                <table class="formtable smaller">
+                    <tr>
+                        <td class="formlabel">Link title</td>
+                        <td><input ng-model="editlink.title" /></td>
+                    </tr>
+                    <tr>
+                        <td class="formlabel">Link URL</td>
+                        <td><input ng-model="editlink.url" /></td>
+                    </tr>
+                    <tr>
+                        <td class="formlabel">Show link in report</td>
+                        <td><input type="checkbox" ng-model="editlink.showinreport"></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

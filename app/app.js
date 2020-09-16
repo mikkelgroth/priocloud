@@ -75,6 +75,12 @@ angular
             $routeProvider.when('/process/:id/details', { controller: 'ProcessDetailsController', templateUrl: 'components/processDetails/template.html?version=6.00' });
             $routeProvider.when('/process/:id/steps', { controller: 'ProcessStepController', templateUrl: 'components/processSteps/template.html?version=6.00' });
 
+            // metric
+            $routeProvider.when('/metrics', { controller: 'MetricsController', templateUrl: 'components/metricsOverview/template.html?version=6.00' });
+            $routeProvider.when('/metric/:id', { controller: 'MetricOverviewController', templateUrl: 'components/metricOverview/template.html?version=6.00' });
+            $routeProvider.when('/metric/:id/details', { controller: 'MetricDetailsController', templateUrl: 'components/metricDetails/template.html?version=6.00' });
+            $routeProvider.when('/metric/:id/metricvalues', { controller: 'MetricValuesController', templateUrl: 'components/metricValues/template.html?version=6.00' });
+
 
             // admin
             $routeProvider.when('/admin', { controller: 'AdminController', templateUrl: 'components/admin/template.html?version=6.00' });
