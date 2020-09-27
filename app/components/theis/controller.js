@@ -10,6 +10,7 @@ angular
         '$timeout',
         '$window',
         '$routeParams',
+        'util',
         function (
             $scope,
             $rootScope,
@@ -19,9 +20,13 @@ angular
             companyService,
             $timeout,
             $window,
-            $routeParams
+            $routeParams,
+            util
         ) {
 
+    $scope.makeUuid = function() {
+        window.alert(util.uuid());
+    }
     $scope.cleanupDemoData = function() {
         console.log("cleanupDemoData");
         $http.post(USERSERVER+'?action=cleanupdemodata&application=priocloud')
