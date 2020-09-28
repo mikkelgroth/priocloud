@@ -517,7 +517,6 @@ angular
                 var q2start = (new Date(thisYear, 3, 1)).getTime();
                 var q3start = (new Date(thisYear, 6, 1)).getTime();
                 var q4start = (new Date(thisYear, 9, 1)).getTime();
-                var q4end = (new Date(thisYear + 1, 0, 1)).getTime();
                 var q1nextstart = (new Date(nextyear, 0, 1)).getTime();
                 var q2nextstart = (new Date(nextyear, 3, 1)).getTime();
                 var q3nextstart = (new Date(nextyear, 6, 1)).getTime();
@@ -564,7 +563,7 @@ angular
                             type.showtype = true;
                             var a = catmap[type.catagory];
                             var t = catmap["total"];
-                            if ((depstart >= q1start && depstart < q2start) || (depend >= q1start && depend < q2start) || (depstart <= q1start && depend > q2start)) {
+                            if ((depstart >= q1start && depstart < q2start) || (depend >= q1start && depend < q2start) || (depstart <= q1start && depend > q1start)) {
                                 type.requestedq1 += parseInt(element.quantum);
                                 $scope.totalreqq1 += parseInt(element.quantum);
                                 a[0] += parseInt(element.quantum);
@@ -573,7 +572,7 @@ angular
                                     type.backgroundq1 = "greybackground";
                                 }
                             }
-                            if ((depstart >= q2start && depstart < q3start) || (depend >= q2start && depend < q3start) || (depstart <= q2start && depend > q3start)) {
+                            if ((depstart >= q2start && depstart < q3start) || (depend >= q2start && depend < q3start) || (depstart <= q2start && depend > q2start)) {
                                 type.requestedq2 += parseInt(element.quantum);
                                 $scope.totalreqq2 += parseInt(element.quantum);
                                 a[1] += parseInt(element.quantum);
@@ -582,7 +581,7 @@ angular
                                     type.backgroundq2 = "greybackground";
                                 }
                             }
-                            if ((depstart >= q3start && depstart < q4start) || (depend >= q3start && depend < q4start) || (depstart <= q3start && depend > q4start)) {
+                            if ((depstart >= q3start && depstart < q4start) || (depend >= q3start && depend < q4start) || (depstart <= q3start && depend > q3start)) {
                                 type.requestedq3 += parseInt(element.quantum);
                                 $scope.totalreqq3 += parseInt(element.quantum);
                                 a[2] += parseInt(element.quantum);
@@ -591,7 +590,14 @@ angular
                                     type.backgroundq3 = "greybackground";
                                 }
                             }
-                            if ((depstart >= q4start && depstart < q4end) || (depend >= q4start && depend < q4end) || (depstart <= q4start && depend > q4end)) {
+                            console.log("depstart:"+depstart);
+                            console.log("depend:"+depend);
+                            console.log("q4start:"+q4start);
+                            console.log("q1nextstart:"+q1nextstart);
+                            console.log("(depstart >= q4start && depstart < q1nextstart):"+(depstart >= q4start && depstart < q1nextstart));
+                            console.log("(depend >= q4start && depend < q1nextstart):"+(depend >= q4start && depend < q1nextstart));
+                            console.log("(depstart <= q4start && depend > q1nextstart):"+(depstart <= q4start && depend > q1nextstart));
+                            if ((depstart >= q4start && depstart < q1nextstart) || (depend >= q4start && depend < q1nextstart) || (depstart <= q4start && depend > q4start)) {
                                 type.requestedq4 += parseInt(element.quantum);
                                 $scope.totalreqq4 += parseInt(element.quantum);
                                 a[3] += parseInt(element.quantum);
@@ -600,7 +606,7 @@ angular
                                     type.backgroundq4 = "greybackground";
                                 }
                             }
-                            if ((depstart >= q1nextstart && depstart < q2nextstart) || (depend >= q1nextstart && depend < q2nextstart) || (depstart <= q1nextstart && depend > q2nextstart)) {
+                            if ((depstart >= q1nextstart && depstart < q2nextstart) || (depend >= q1nextstart && depend < q2nextstart) || (depstart <= q1nextstart && depend > q1nextstart)) {
                                 type.requestedq1next += parseInt(element.quantum);
                                 $scope.totalreqq1next += parseInt(element.quantum);
                                 a[4] += parseInt(element.quantum);
@@ -609,7 +615,7 @@ angular
                                     type.backgroundq1next = "greybackground";
                                 }
                             }
-                            if ((depstart >= q2nextstart && depstart < q3nextstart) || (depend >= q2nextstart && depend < q3nextstart) || (depstart <= q2nextstart && depend > q3nextstart)) {
+                            if ((depstart >= q2nextstart && depstart < q3nextstart) || (depend >= q2nextstart && depend < q3nextstart) || (depstart <= q2nextstart && depend > q2nextstart)) {
                                 type.requestedq2next += parseInt(element.quantum);
                                 $scope.totalreqq2next += parseInt(element.quantum);
                                 a[5] += parseInt(element.quantum);

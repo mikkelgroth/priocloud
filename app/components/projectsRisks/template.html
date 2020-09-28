@@ -257,19 +257,22 @@
         <div class="overview">
             <table class="tablelist" ng-if="riskList.length > 0">
                 <tr class="header">
-                    <td>Risk - (Risk prio)<br />Project (Project prio)</td>
+                    <td>Risk<br />Project</td>
+                    <td>Risk total<br />Project/Risk total</td>
                     <td>Prob.</td>
                     <td>Impact</td>
                     <td>Reco.</td>
                     <td>Response<br />Accountable</td>
                     <td>Description<br />Request</td>
-
                 </tr>
                 <tr ng-repeat="risk in riskList | multiFilter:risksearch | orderBy:[porderparam, porderparam2, porderparam3]"
                     ng-click="goToRiskInProject(risk._id, risk.projectid)" class="link"
                     ng-if="risk.state != 'Closed' && risk.audience != 'Confidential'">
-                    <td class="{{risk.status}}"><b>{{risk.title}} <div class="right">({{risk.total}})</div></b><br />
-                        {{risk.projecttitle}}<div class="right">({{risk.wtotal}})</div>
+                    <td class="{{risk.status}}"><b>{{risk.title}}</b> <br />
+                        {{risk.projecttitle}}
+                    </td>
+                    <td><b>{{risk.total}}</b><br />
+                        {{risk.wtotal}}
                     </td>
                     <td prio-class prio-risk-bar-render="risk.prob">{{risk.prob}}</td>
                     <td prio-class prio-risk-bar-render="risk.impact">{{risk.impact}}</td>
