@@ -6,12 +6,14 @@ angular
         'userService',
         'companyService',
         'restService',
+        'util',
         function (
             $scope,
             $location,
             userService,
             companyService,
-            restService
+            restService,
+            util
         ) {
             companyService.reloadSystems();
 
@@ -58,12 +60,6 @@ angular
             if ($scope.company.locked && $scope.company.lockedby != undefined && $scope.company.lockedby != {} && $scope.company.lockedby.name == $scope.user.name) {
                 $scope.companyedit = true;
             }
-            // GUID factory
-            //guid = newguid();
-            function newguid() {
-                let u = Date.now().toString(16) + Math.random().toString(16) + '0'.repeat(16);
-                return [u.substr(0, 8), u.substr(8, 4), '4000-8' + u.substr(13, 3), u.substr(16, 12)].join('-');
-            }
 
             $scope.close = function () {
                 $('.popup').removeClass('active');
@@ -101,7 +97,7 @@ angular
                     }
                     $scope.company.standardperimeters.push({});
                     $scope.editperimeter = $scope.company.standardperimeters[$scope.company.standardperimeters.length - 1];
-                    $scope.editperimeter._id = Math.random().toString(36).substr(2, 9);
+                    $scope.editperimeter._id = util.uuid();
                     $scope.editperimeter.title = 'NEW PERIMETER';
                     $('.popup').addClass('active');
                 }
@@ -144,7 +140,7 @@ angular
                     }
                     $scope.company.standardcontrols.push({});
                     $scope.editcontrol = $scope.company.standardcontrols[$scope.company.standardcontrols.length - 1];
-                    $scope.editcontrol._id = Math.random().toString(36).substr(2, 9);
+                    $scope.editcontrol._id = util.uuid();
                     $scope.editcontrol.title = 'NEW control';
                     $('.popup').addClass('active');
                 }
@@ -232,7 +228,7 @@ angular
             $scope.addCat = function () {
                 if ($scope.company.datacategories == null) $scope.company.datacategories = [];
                 var n = {};
-                n.catuid = newguid();
+                n.catuid = util.uuid();
                 n.name = "NEW Category";
 
                 $scope.company.datacategories.push(n);
@@ -244,7 +240,7 @@ angular
 
             $scope.editCat = function (c) {
                 if (c.catuid == undefined) {
-                    c.catuid = newguid();
+                    c.catuid = util.uuid();
                 }
                 $scope.editcat = c;
                 $('.popupcat').addClass('active');
@@ -272,7 +268,7 @@ angular
             $scope.addCatsub = function () {
                 if ($scope.company.datacatsubs == null) $scope.company.datacatsubs = [];
                 var n = {};
-                n.catsubuid = newguid();
+                n.catsubuid = util.uuid();
                 n.name = "NEW Category subject";
 
                 $scope.company.datacatsubs.push(n);
@@ -284,7 +280,7 @@ angular
 
             $scope.editthisCatsub = function (c) {
                 if (c.catsubuid == undefined) {
-                    c.catsubuid = newguid();
+                    c.catsubuid = util.uuid();
                 }
                 $scope.editcatsub = c;
                 $('.popupcatsub').addClass('active');

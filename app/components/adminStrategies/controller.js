@@ -6,12 +6,14 @@ angular
         'userService',
         'companyService',
         'restService',
+        'util',
         function (
             $scope,
             $location,
             userService,
             companyService,
-            restService
+            restService,
+            util
         ) {
             companyService.reloadMetrics();
 
@@ -58,12 +60,6 @@ angular
             if ($scope.company.locked && $scope.company.lockedby != undefined && $scope.company.lockedby != {} && $scope.company.lockedby.name == $scope.user.name) {
                 $scope.companyedit = true;
             }
-            // GUID factory
-            //guid = newguid();
-            function newguid() {
-                let u = Date.now().toString(16) + Math.random().toString(16) + '0'.repeat(16);
-                return [u.substr(0, 8), u.substr(8, 4), '4000-8' + u.substr(13, 3), u.substr(16, 12)].join('-');
-            }
 
             $scope.close = function () {
                 $('.popup').removeClass('active');
@@ -95,7 +91,7 @@ angular
                     }
                     $scope.company.strategys.push({});
                     $scope.editstrategy = $scope.company.strategys[$scope.company.strategys.length - 1];
-                    $scope.editstrategy._id = Math.random().toString(36).substr(2, 9);
+                    $scope.editstrategy._id = util.uuid();
                     $scope.editstrategy.title = 'NEW strategy';
                     $('.popup').addClass('active');
                 }
@@ -136,7 +132,7 @@ angular
                     }
                     $scope.company.objectives.push({});
                     $scope.editobjective = $scope.company.objectives[$scope.company.objectives.length - 1];
-                    $scope.editobjective._id = Math.random().toString(36).substr(2, 9);
+                    $scope.editobjective._id = util.uuid();
                     $scope.editobjective.title = 'NEW objective';
                     $('.popup').addClass('active');
                 }

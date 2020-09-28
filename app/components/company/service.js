@@ -1,6 +1,6 @@
 angular
     .module('riskApp')
-    .service('companyService', ['$rootScope', '$q', 'rx', 'restService', function ($rootScope, $q, rx, restService) {
+    .service('companyService', ['$rootScope', '$q', 'rx', 'restService', 'util', function ($rootScope, $q, rx, restService,util) {
 
         var _this = this;
 
@@ -510,7 +510,7 @@ angular
             if (project.risks) {
                 project.risks.map(function (risk) {
                     if (!risk._id) {
-                        risk._id = Math.random().toString(36).substr(2, 9);
+                        risk._id = util.uuid();
                         anyNewIds = true;
                     }
                     return risk;
@@ -524,7 +524,7 @@ angular
             if (project.milestones) {
                 project.milestones.map(function (milestone) {
                     if (!milestone._id) {
-                        milestone._id = Math.random().toString(36).substr(2, 9);
+                        milestone._id = util.uuid();
                         anyNewIds = true;
                     }
                     return milestone;

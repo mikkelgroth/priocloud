@@ -6,12 +6,14 @@ angular
         '$location',
         'userService',
         'companyService',
+        'util',
         function (
             $scope,
             $routeParams,
             $location,
             userService,
-            companyService
+            companyService,
+            util
         ) {
             var projectId = $routeParams.id;
             var riskId = $routeParams.riskid;
@@ -56,7 +58,7 @@ angular
             $scope.newRisk = function () {
                 if ($scope.user.changeContent) {
                     $scope.editrisk = {};
-                    $scope.editrisk._id = Math.random().toString(36).substr(2, 9);
+                    $scope.editrisk._id = util.uuid();
                     $scope.editrisk.title = 'NEW ITEM';
                     $scope.editrisk.proximity = 'Project';
                     $scope.editrisk.acc = $scope.project.pm.name;

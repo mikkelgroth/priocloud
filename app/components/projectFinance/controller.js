@@ -7,13 +7,15 @@ angular
         'userService',
         'companyService',
         'routeService',
+        'util',
         function (
             $scope,
             $routeParams,
             $location,
             userService,
             companyService,
-            routeService
+            routeService,
+            util
         ) {
 
             var projectId = $routeParams.id;
@@ -70,12 +72,6 @@ angular
             loadposted($scope.project);
             listenForViewChanges();
 
-            // GUID factory
-            //guid = newguid();
-            function newguid() {
-                let u = Date.now().toString(16) + Math.random().toString(16) + '0'.repeat(16);
-                return [u.substr(0, 8), u.substr(8, 4), '4000-8' + u.substr(13, 3), u.substr(16, 12)].join('-');
-            }
 
             $scope.close = function () {
                 $('.popup').removeClass('active');
@@ -102,7 +98,7 @@ angular
             $scope.addbaseline = function () {
                 if ($scope.project.finance.baselines == null) $scope.project.finance.baselines = [];
                 var n = {};
-                n.baselineuid = newguid();
+                n.baselineuid = util.uuid();
                 n.date =  new Date();
                 n.peoplecapex = $scope.project.finance.costdepcapextotalttotal;
                 n.peopleopex = $scope.project.finance.costdepopextotalttotal;
@@ -141,7 +137,7 @@ angular
 
             $scope.editbase = function (c) {
                 if (c.baselineuid == undefined) {
-                    c.baselineuid = newguid();
+                    c.baselineuid = util.uuid();
                 }
                 $scope.editbaseline = c;
                 $('.popupbaseline').addClass('active');
@@ -160,12 +156,6 @@ angular
             $scope.deletebaseline = function () {
                 $scope.deletebaselineThis = true;
             };
-
-
-
-
-
-
 
 
             function cleanbudget(project) {
@@ -730,6 +720,7 @@ angular
                 newtype = {};
                 if ($scope.project.costitems == null) $scope.project.costitems = [];
                 newtype.title = "NEW COST ITEM";
+                newtype._id = util.uuid();
                 newtype.depreciationtype = "Capex";
                 newtype.budq1 = 0;
                 newtype.budq2 = 0;
@@ -747,7 +738,7 @@ angular
             $scope.newCloneCostItem = function (c) {
                 if ($scope.user.changeContent) {
                     $scope.editcostitem = angular.copy(c);
-                    $scope.editcostitem._id = Math.random().toString(36).substr(2, 9);
+                    $scope.editcostitem._id = util.uuid();
                     $scope.editcostitem.title = "NEW CLONE";
                     $scope.project.costitems.push($scope.editcostitem);
                     companyService.saveProjectName($scope.project, $scope.user, true);
@@ -889,6 +880,7 @@ angular
                 newtype = {};
                 if ($scope.project.posteditems == null) $scope.project.posteditems = [];
                 newtype.title = "NEW POSTED ITEM";
+                newtype._id = util.uuid();
                 newtype.ledgercode = "";
                 newtype.depreciationtype = "Capex";
                 newtype.postq1 = 0;

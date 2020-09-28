@@ -89,6 +89,28 @@ function setProjectMenu() {
     if (window.location.href.indexOf('/details') > 0) {
         $('.menuactive').removeClass('menuactive');
         $('.project-menu-details').addClass('menuactive');
+        $('.details-menu-details').addClass('submenuactive');
+
+        if (window.location.href.indexOf('/priority') > 0) {
+            $('.submenuactive').removeClass('submenuactive');
+            $('.details-menu-priority').addClass('submenuactive');
+        }
+        if (window.location.href.indexOf('/simplestatus') > 0) {
+            $('.submenuactive').removeClass('submenuactive');
+            $('.details-menu-simplestatus').addClass('submenuactive');
+        }
+        if (window.location.href.indexOf('/strategy') > 0) {
+            $('.submenuactive').removeClass('submenuactive');
+            $('.details-menu-strategy').addClass('submenuactive');
+        }
+        if (window.location.href.indexOf('/owners') > 0) {
+            $('.submenuactive').removeClass('submenuactive');
+            $('.details-menu-owners').addClass('submenuactive');
+        }
+        if (window.location.href.indexOf('/businesscase') > 0) {
+            $('.submenuactive').removeClass('submenuactive');
+            $('.details-menu-businesscase').addClass('submenuactive');
+        }
     }
 
 

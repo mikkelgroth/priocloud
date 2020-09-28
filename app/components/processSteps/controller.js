@@ -6,12 +6,14 @@ angular
         '$location',
         'userService',
         'companyService',
+        'util',
         function (
             $scope,
             $routeParams,
             $location,
             userService,
-            companyService
+            companyService,
+            util
         ) {
 
             var processId = $routeParams.id;
@@ -67,12 +69,7 @@ angular
                         element.bu = {};
                     };
                 });
-            // GUID factory
-            //guid = newguid();
-            function newguid() {
-                let u = Date.now().toString(16) + Math.random().toString(16) + '0'.repeat(16);
-                return [u.substr(0, 8), u.substr(8, 4), '4000-8' + u.substr(13, 3), u.substr(16, 12)].join('-');
-            }
+            
             //  Start LINK ENGINE
 
             $scope.closelink = function () {
@@ -94,7 +91,7 @@ angular
                 if ($scope.user.changeContent) {
                     if ($scope.process.linklist == null) $scope.process.linklist = [];
                     var n = {};
-                    n.linkuid = newguid();
+                    n.linkuid = util.uuid();
 
                     n.lable = lable;
                     n.showinreport = true;
@@ -115,7 +112,7 @@ angular
 
             $scope.editlinkitem = function (c) {
                 if (c.linkuid == undefined) {
-                    c.linkuid = newguid();
+                    c.linkuid = util.uuid();
                 }
                 $scope.editlink = c;
                 if (c.lable == "dpalink") {

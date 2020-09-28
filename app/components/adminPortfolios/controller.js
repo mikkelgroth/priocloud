@@ -4,10 +4,12 @@ angular
         '$scope',
         'userService',
         'companyService',
+        'util',
         function (
             $scope,
             userService,
-            companyService
+            companyService,
+            util
         ) {
             $scope.newport = {};
             userService
@@ -50,13 +52,6 @@ angular
                 $scope.companyedit = true;
             }
 
-            // GUID factory
-            //guid = newguid();
-            function newguid() {
-                let u = Date.now().toString(16) + Math.random().toString(16) + '0'.repeat(16);
-                return [u.substr(0, 8), u.substr(8, 4), '4000-8' + u.substr(13, 3), u.substr(16, 12)].join('-');
-            }
-
             $scope.closestrat = function () {
                 $('.popup').removeClass('active');
             };
@@ -75,7 +70,7 @@ angular
             $scope.addport = function () {
                 if ($scope.company.portfolios == null) $scope.company.portfolios = [];
                 var n = {};
-                n.portuid = newguid();
+                n.portuid = util.uuid();
                 n.name = "NEW Portfolio";
 
                 $scope.company.portfolios.push(n);
@@ -87,7 +82,7 @@ angular
 
             $scope.editportfolio = function (c) {
                 if (c.portuid == undefined) {
-                    c.portuid = newguid();
+                    c.portuid = util.uuid();
                 }
                 $scope.editport = c;
                 $('.popupport').addClass('active');
@@ -114,7 +109,7 @@ angular
             $scope.addStrat = function () {
                 if ($scope.company.strategytypes == null) $scope.company.strategytypes = [];
                 var n = {};
-                n.stratuid = newguid();
+                n.stratuid = util.uuid();
                 n.name = "NEW Strategy";
 
                 $scope.company.strategytypes.push(n);
@@ -126,7 +121,7 @@ angular
 
             $scope.editStrat = function (c) {
                 if (c.stratuid == undefined) {
-                    c.stratuid = newguid();
+                    c.stratuid = util.uuid();
                 }
                 $scope.editstrat = c;
                 $scope.showeditstrat = true;

@@ -6,12 +6,14 @@ angular
         '$location',
         'userService',
         'companyService',
+        'util',
         function (
             $scope,
             $routeParams,
             $location,
             userService,
-            companyService
+            companyService,
+            util
         ) {
 
             var systemId = $routeParams.id;
@@ -166,7 +168,7 @@ angular
                     }
                     $scope.system.perimeters.push({});
                     $scope.editperimeter = $scope.system.perimeters[$scope.system.perimeters.length - 1];
-                    $scope.editperimeter._id = Math.random().toString(36).substr(2, 9);
+                    $scope.editperimeter._id = util.uuid()
                     $scope.editperimeter.title = 'NEW PERIMETER';
                     $scope.editperimeter.showInReport = true;
                     $scope.editperimeter.status = 'Green';
@@ -181,7 +183,7 @@ angular
                 if ($scope.user.changeContent) {
                     $scope.editperimeter = angular.copy(perimeter);
                     $scope.system.perimeters.push($scope.editperimeter);
-                    $scope.editperimeter._id = Math.random().toString(36).substr(2, 9);
+                    $scope.editperimeter._id = util.uuid()
                     $scope.editperimeter.title = 'NEW CLONE PERIMETER';
                     $('.popup').addClass('active');
                     $scope.deleteThis = false;

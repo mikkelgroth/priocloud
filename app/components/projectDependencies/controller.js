@@ -6,12 +6,14 @@ angular
         '$location',
         'userService',
         'companyService',
+        'util',
         function (
             $scope,
             $routeParams,
             $location,
             userService,
-            companyService
+            companyService,
+            util
         ) {
 
             var projectId = $routeParams.id;
@@ -134,7 +136,7 @@ angular
                     }
                     $scope.project.deps.push({});
                     $scope.editdep = $scope.project.deps[$scope.project.deps.length - 1];
-                    $scope.editdep._id = Math.random().toString(36).substr(2, 9);
+                    $scope.editdep._id = util.uuid();
                     $scope.editdep.status = 'Green';
                     $scope.editdep.title = 'NEW DEPENDENCY';
                     $scope.editdep.names = "";
@@ -169,7 +171,7 @@ angular
                 if ($scope.user.changeContent) {
                     $scope.editdep = angular.copy(dep);
                     $scope.project.deps.push($scope.editdep);
-                    $scope.editdep._id = Math.random().toString(36).substr(2, 9);
+                    $scope.editdep._id = util.uuid();
                     $scope.editdep.title = 'NEW CLONE DEPENDENCY';
                     $('.popup').addClass('active');
                     $scope.deleteThis = false;

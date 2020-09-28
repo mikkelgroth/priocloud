@@ -6,12 +6,14 @@ angular
         'userService',
         'companyService',
         'restService',
+        'util',
         function (
             $scope,
             $location,
             userService,
             companyService,
-            restService
+            restService,
+            util
         ) {
 
             userService
@@ -203,7 +205,7 @@ angular
                 /** Project Milestones/Deliverables  */
                 project.milestones = [];
                 project.milestones.push({});
-                project.milestones[0]._id = Math.random().toString(36).substr(2, 9);
+                project.milestones[0]._id = util.uuid();
                 
                 project.milestones[0].date = (new Date()).toISOString();
                 var end = new Date();
@@ -229,6 +231,7 @@ angular
                 project.statuses.push({});
                 project.statuses[0].date = (new Date()).toISOString();   
                 project.statuses[0].title = 'Project created';
+                project.statuses[0]._id = util.uuid();
 
                 project.statuses[0].status = "Green";
                 project.statuses[0].overallcomments = "TBD";

@@ -6,12 +6,14 @@ angular
         '$location',
         'userService',
         'companyService',
+        'util',
         function (
             $scope,
             $routeParams,
             $location,
             userService,
-            companyService
+            companyService,
+            util
         ) {
 
             var metricId = $routeParams.id;
@@ -67,12 +69,6 @@ angular
                         element.bu = {};
                     };
                 });
-            // GUID factory
-            //guid = newguid();
-            function newguid() {
-                let u = Date.now().toString(16) + Math.random().toString(16) + '0'.repeat(16);
-                return [u.substr(0, 8), u.substr(8, 4), '4000-8' + u.substr(13, 3), u.substr(16, 12)].join('-');
-            }
 
 
             function editMetricvalue(metricvalue) {
@@ -136,7 +132,7 @@ angular
                     }
                     $scope.metric.metricvalues.push({});
                     $scope.editmetricvalue = $scope.metric.metricvalues[$scope.metric.metricvalues.length - 1];
-                    $scope.editmetricvalue._id = Math.random().toString(36).substr(2, 9);
+                    $scope.editmetricvalue._id = util.uuid();
                     $scope.editmetricvalue.date = (new Date()).toISOString();
                     $scope.editmetricvalue.showInReport = true;
                     $scope.editmetricvalue.status = 'Green';

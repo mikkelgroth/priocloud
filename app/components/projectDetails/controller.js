@@ -5,16 +5,22 @@ angular
         '$routeParams',
         '$location',
         'userService',
+        'routeService',
         'companyService',
+        'util',
         function (
             $scope,
             $routeParams,
             $location,
             userService,
-            companyService
+            routeService,
+            companyService,
+            util
         ) {
 
             var projectId = $routeParams.id;
+            $scope.id = $routeParams.id;
+            $scope.showsimplestatus = !$scope.company.filters.companyshowStatus
 
             userService
                 .user
@@ -53,6 +59,12 @@ angular
                     $scope.processs = processs;
                 });
 
+            routeService
+                .route
+                .subscribe(function (route) {
+                    $scope.route = route.substring(route.lastIndexOf('/') + 1);
+                });
+
             userService
                 .users
                 .subscribe(function (users) {
@@ -85,13 +97,7 @@ angular
                 $scope.project.rawstartdate = $("#projdate")[0].value;
                 $scope.project.rawenddate = $("#projenddate")[0].value;
             }
-            
-            // GUID factory
-            //guid = newguid();
-            function newguid() {
-                let u = Date.now().toString(16) + Math.random().toString(16) + '0'.repeat(16);
-                return [u.substr(0, 8), u.substr(8, 4), '4000-8' + u.substr(13, 3), u.substr(16, 12)].join('-');
-            }
+
             //  Start LINK ENGINE
 
             $scope.closelink = function (link) {
@@ -120,7 +126,7 @@ angular
                 if ($scope.user.changeContent) {
                     if ($scope.project.linklist == null) $scope.project.linklist = [];
                     var n = {};
-                    n.linkuid = newguid();
+                    n.linkuid = util.uuid();
 
                     n.lable = lable;
                     n.showinreport = true;
@@ -140,7 +146,7 @@ angular
 
             $scope.editlinkitem = function (c) {
                 if (c.linkuid == undefined) {
-                    c.linkuid = newguid();
+                    c.linkuid = util.uuid();
                 }
                 $scope.editlink = c;
                 if (c.lable == "orglink") {

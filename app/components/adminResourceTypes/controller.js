@@ -4,10 +4,12 @@ angular
         '$scope',
         'userService',
         'companyService',
+        'util',
         function (
             $scope,
             userService,
-            companyService
+            companyService,
+            util
         ) {
             $scope.newtype = {};
             userService
@@ -66,13 +68,6 @@ angular
             $scope.companyedit = false;
             if ($scope.company.locked && $scope.company.lockedby != undefined && $scope.company.lockedby != {} && $scope.company.lockedby.name == $scope.user.name) {
                 $scope.companyedit = true;
-            }
-
-            // GUID factory
-            //guid = newguid();
-            function newguid() {
-                let u = Date.now().toString(16) + Math.random().toString(16) + '0'.repeat(16);
-                return [u.substr(0, 8), u.substr(8, 4), '4000-8' + u.substr(13, 3), u.substr(16, 12)].join('-');
             }
 
             function calcrestype(type) {
@@ -150,7 +145,7 @@ angular
             $scope.addType = function () {
                 if ($scope.company.resourceTypes == null) $scope.company.resourceTypes = [];
                 var nt = {};
-                nt.rtuid = newguid();
+                nt.rtuid = util.uuid();
                 nt.name = "NEW TYPE";
                 nt.inthourprice = "150";
                 nt.exthourprice = "150";
@@ -177,7 +172,7 @@ angular
 
             $scope.editType = function (type) {
                 if (type.rtuid == undefined) {
-                    type.rtuid = newguid();
+                    type.rtuid = util.uuid();
                 }
                 if (type.catGUID == undefined && type.catagory != undefined && $scope.company.categories != undefined && $scope.company.categories.length > 0) {
                     let o = $scope.company.categories.find(x => x.name === type.catagory);
@@ -220,7 +215,7 @@ angular
             $scope.addCat = function () {
                 if ($scope.company.categories == null) $scope.company.categories = [];
                 var n = {};
-                n.catuid = newguid();
+                n.catuid = util.uuid();
                 n.name = "NEW Category";
 
                 $scope.company.categories.push(n);
@@ -232,7 +227,7 @@ angular
 
             $scope.editCat = function (c) {
                 if (c.catuid == undefined) {
-                    c.catuid = newguid();
+                    c.catuid = util.uuid();
                 }
                 $scope.editcat = c;
                 $('.popupcat').addClass('active');
@@ -258,7 +253,7 @@ angular
             $scope.addAcc = function () {
                 if ($scope.company.accounts == null) $scope.company.accounts = [];
                 var n = {};
-                n.accuid = newguid();
+                n.accuid = util.uuid();
                 n.name = "NEW Account";
 
                 $scope.company.accounts.push(n);
@@ -270,7 +265,7 @@ angular
 
             $scope.editAcc = function (c) {
                 if (c.accuid == undefined) {
-                    c.accuid = newguid();
+                    c.accuid = util.uuid();
                 }
                 $scope.editacc = c;
                 $('.popupacc').addClass('active');

@@ -7,13 +7,15 @@ angular
         'userService',
         'companyService',
         'routeService',
+        'util',
         function (
             $scope,
             $routeParams,
             $location,
             userService,
             companyService,
-            routeService
+            routeService,
+            util
         ) {
 
             var projectId = $routeParams.id;
@@ -73,6 +75,7 @@ angular
                     var newdate = (new Date()).toISOString();
 
                     $scope.editstatus = {};
+                    $scope.editstatus._id = util.uuid();
                     $scope.editstatus.date = newdate;
                     $scope.editstatus.demodate = newdate;
                     $scope.editstatus.title = "No title";
@@ -109,7 +112,7 @@ angular
                 if ($scope.user.changeContent) {
                     status.active = false;
                     $scope.editstatus = angular.copy(status);
-                    $scope.editstatus._id = Math.random().toString(36).substr(2, 9);
+                    $scope.editstatus._id = util.uuid();
                     $scope.editstatus.apo = "Draft";
                     $scope.editstatus.title = "No title";
                     $scope.editstatus.active = true;
@@ -250,7 +253,7 @@ angular
                     $scope.project.actions.push({});
                     $scope.editaction = $scope.project.actions[$scope.project.actions.length - 1];
 
-                    $scope.editaction._id = Math.random().toString(36).substr(2, 9);
+                    $scope.editaction._id = util.uuid();
                     $scope.editaction.status = 'Green';
                     $scope.editaction.title = 'NEW ACTION OR DECISION';
                     $scope.editaction.showInReport = true;
@@ -359,7 +362,7 @@ angular
                     $scope.project.steercos.push({});
                     $scope.editsteerco = $scope.project.steercos[$scope.project.steercos.length - 1];
 
-                    $scope.editsteerco._id = Math.random().toString(36).substr(2, 9);
+                    $scope.editsteerco._id = util.uuid();
 
                     $scope.editsteerco.rawsteercodate = new Date();
                     $scope.editsteerco.steercodate = $scope.editsteerco.rawsteercodate.toISOString();

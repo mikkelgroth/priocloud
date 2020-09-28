@@ -6,12 +6,14 @@ angular
         '$location',
         'userService',
         'companyService',
+        'util',
         function (
             $scope,
             $routeParams,
             $location,
             userService,
-            companyService
+            companyService,
+            util
         ) {
 
             var systemId = $routeParams.id;
@@ -189,7 +191,7 @@ angular
                     }
                     $scope.system.datas.push({});
                     $scope.editdata = $scope.system.datas[$scope.system.datas.length - 1];
-                    $scope.editdata._id = Math.random().toString(36).substr(2, 9);
+                    $scope.editdata._id = util.uuid()
                     $scope.editdata.title = 'NEW DATA';
                     $scope.editdata.showInReport = true;
                     $scope.editdata.datacat = $scope.company.datacategories[0].name;
@@ -205,7 +207,7 @@ angular
                 if ($scope.user.changeContent) {
                     $scope.editdata = angular.copy(data);
                     $scope.system.datas.push($scope.editdata);
-                    $scope.editdata._id = Math.random().toString(36).substr(2, 9);
+                    $scope.editdata._id = util.uuid()
                     $scope.editdata.title = 'NEW CLONE DATA';
                     $('.popup').addClass('active');
                     $scope.deleteThis = false;
@@ -275,13 +277,6 @@ angular
             };
             // COMMENTS END
 
-
-            // GUID factory
-            //guid = newguid();
-            function newguid() {
-                let u = Date.now().toString(16) + Math.random().toString(16) + '0'.repeat(16);
-                return [u.substr(0, 8), u.substr(8, 4), '4000-8' + u.substr(13, 3), u.substr(16, 12)].join('-');
-            }
             //  Start LINK ENGINE
 
             $scope.closelink = function () {
@@ -301,7 +296,7 @@ angular
                 if ($scope.user.changeContent) {
                     if ($scope.system.linklist == null) $scope.system.linklist = [];
                     var n = {};
-                    n.linkuid = newguid();
+                    n.linkuid = util.uuid();
 
                     n.lable = lable;
                     n.showinreport = true;
@@ -321,7 +316,7 @@ angular
 
             $scope.editlinkitem = function (c) {
                 if (c.linkuid == undefined) {
-                    c.linkuid = newguid();
+                    c.linkuid = util.uuid();
                 }
                 $scope.editlink = c;
                 if (c.lable == "Data") {

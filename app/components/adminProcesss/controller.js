@@ -6,12 +6,14 @@ angular
         'userService',
         'companyService',
         'restService',
+        'util',
         function (
             $scope,
             $location,
             userService,
             companyService,
-            restService
+            restService,
+            util
         ) {
             companyService.reloadProcesss();
             companyService.reloadSystems();
@@ -71,6 +73,7 @@ angular
                 /** Process audits  */
                 process.audits = [];
                 process.audits.push({});
+                process.audits[0]._id = util.uuid();
                 process.audits[0].date = (new Date()).toISOString();
                 process.audits[0].title = 'Process created';
 

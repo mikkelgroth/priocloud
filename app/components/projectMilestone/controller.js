@@ -6,12 +6,14 @@ angular
         '$location',
         'userService',
         'companyService',
+        'util',
         function (
             $scope,
             $routeParams,
             $location,
             userService,
-            companyService
+            companyService,
+            util
         ) {
 
             var projectId = $routeParams.id;
@@ -129,7 +131,7 @@ angular
                     if ($scope.project.milestones.length == 1) {
                         $scope.editmile.prime = true;
                     }
-                    $scope.editmile._id = Math.random().toString(36).substr(2, 9);
+                    $scope.editmile._id = util.uuid();
                     $scope.editmile.date = newdate;
                     $scope.editmile.enddate = end.toISOString();
                     $scope.editmile.status = 'Green';
@@ -162,7 +164,7 @@ angular
             $scope.newCloneMilestone = function (m) {
                 if ($scope.user.changeContent) {
                     $scope.editmile = angular.copy(m);
-                    $scope.editmile._id = Math.random().toString(36).substr(2, 9);
+                    $scope.editmile._id = util.uuid();
                     $scope.editmile.prime = false;
                     $scope.editmile.title = 'NEW CLONE DELIVERABLE';
                     $scope.project.milestones.push($scope.editmile);

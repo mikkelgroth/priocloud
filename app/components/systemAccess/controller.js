@@ -6,12 +6,14 @@ angular
         '$location',
         'userService',
         'companyService',
+        'util',
         function (
             $scope,
             $routeParams,
             $location,
             userService,
-            companyService
+            companyService,
+            util
         ) {
 
             var systemId = $routeParams.id;
@@ -158,7 +160,7 @@ angular
                     }
                     $scope.system.accesss.push({});
                     $scope.editaccess = $scope.system.accesss[$scope.system.accesss.length - 1];
-                    $scope.editaccess._id = Math.random().toString(36).substr(2, 9);
+                    $scope.editaccess._id = util.uuid();
                     $scope.editaccess.title = 'NEW ACCESS TYPE';
                     $scope.editaccess.showInReport = true;
                     $scope.editaccess.datacat = $scope.company.datacategories[0].name;
@@ -177,7 +179,7 @@ angular
                 if ($scope.user.changeContent) {
                     $scope.editaccess = angular.copy(access);
                     $scope.system.accesss.push($scope.editaccess);
-                    $scope.editaccess._id = Math.random().toString(36).substr(2, 9);
+                    $scope.editaccess._id = util.uuid();
                     $scope.editaccess.title = 'NEW CLONE ACCESS';
                     $('.popup').addClass('active');
                     $scope.deleteThis = false;

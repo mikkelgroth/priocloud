@@ -6,12 +6,14 @@ angular
         '$location',
         'userService',
         'companyService',
+        'util',
         function (
             $scope,
             $routeParams,
             $location,
             userService,
-            companyService
+            companyService,
+            util
         ) {
 
             var systemId = $routeParams.id;
@@ -156,7 +158,7 @@ angular
                     }
                     $scope.system.connections.push({});
                     $scope.editconnection = $scope.system.connections[$scope.system.connections.length - 1];
-                    $scope.editconnection._id = Math.random().toString(36).substr(2, 9);
+                    $scope.editconnection._id = util.uuid()
                     $scope.editconnection.title = 'NEW CONNECTION';
                     $scope.editconnection.showInReport = true;
                     $scope.editconnection.connectedsystem = $scope.systems[0].title;
@@ -175,7 +177,7 @@ angular
                 if ($scope.user.changeContent) {
                     $scope.editconnection = angular.copy(connection);
                     $scope.system.connections.push($scope.editconnection);
-                    $scope.editconnection._id = Math.random().toString(36).substr(2, 9);
+                    $scope.editconnection._id = util.uuid()
                     $scope.editconnection.title = 'NEW CLONE CONNECTION';
                     $('.popup').addClass('active');
                     $scope.deleteThis = false;
