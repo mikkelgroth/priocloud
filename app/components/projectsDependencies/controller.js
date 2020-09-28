@@ -590,13 +590,6 @@ angular
                                     type.backgroundq3 = "greybackground";
                                 }
                             }
-                            console.log("depstart:"+depstart);
-                            console.log("depend:"+depend);
-                            console.log("q4start:"+q4start);
-                            console.log("q1nextstart:"+q1nextstart);
-                            console.log("(depstart >= q4start && depstart < q1nextstart):"+(depstart >= q4start && depstart < q1nextstart));
-                            console.log("(depend >= q4start && depend < q1nextstart):"+(depend >= q4start && depend < q1nextstart));
-                            console.log("(depstart <= q4start && depend > q1nextstart):"+(depstart <= q4start && depend > q1nextstart));
                             if ((depstart >= q4start && depstart < q1nextstart) || (depend >= q4start && depend < q1nextstart) || (depstart <= q4start && depend > q4start)) {
                                 type.requestedq4 += parseInt(element.quantum);
                                 $scope.totalreqq4 += parseInt(element.quantum);
