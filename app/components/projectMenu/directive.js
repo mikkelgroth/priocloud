@@ -68,6 +68,10 @@ function setProjectMenu() {
         $('.menuactive').removeClass('menuactive');
         $('.project-menu-deliverables').addClass('menuactive');
     }
+    if (window.location.href.indexOf('/keyresults') > 0) {
+        $('.menuactive').removeClass('menuactive');
+        $('.project-menu-keyresults').addClass('menuactive');
+    }
     if (window.location.href.indexOf('/status') > 0) {
         $('.menuactive').removeClass('menuactive');
         $('.project-menu-status').addClass('menuactive');

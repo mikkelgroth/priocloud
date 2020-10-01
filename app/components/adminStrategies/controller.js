@@ -20,7 +20,6 @@ angular
             userService
                 .user
                 .subscribe(function (user) {
-
                     $scope.user = user;
                 });
 

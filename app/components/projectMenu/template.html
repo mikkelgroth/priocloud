@@ -1,6 +1,8 @@
 <div class="fanes">
     <a class="fane project-menu-home" href="#/project/{{project._id.$oid}}">Overview</a>
     <a class="fane project-menu-details" href="#/project/{{project._id.$oid}}/details">Details</a>
+    <a class="fane project-menu-keyresults" ng-show="company.filters.companyshowKeyresults"
+        href="#/project/{{project._id.$oid}}/keyresults">Goals</a>
     <a class="fane project-menu-status"
         ng-show="company.filters.companyshowActionpoints && company.filters.companyshowStatus"
         href="#/project/{{project._id.$oid}}/status">Governance</a>

@@ -147,13 +147,14 @@ angular
                     $scope.editmile.cena = '1';
                     $scope.editmile.mena = '1';
                     $scope.editmile.risklevel = '1';
-                    mile.enablerlable = "XS";
-                    mile.enablervalue = 0;
-                    mile.enablervaluetotal = 1;
-                    mile.limiterlable = "XS";
-                    mile.limitervalue = 0;
-                    mile.limitervaluetotal = 1;
+                    $scope.editmile.enablerlable = "XS";
+                    $scope.editmile.enablervalue = 0;
+                    $scope.editmile.enablervaluetotal = 1;
+                    $scope.editmile.limiterlable = "XS";
+                    $scope.editmile.limitervalue = 0;
+                    $scope.editmile.limitervaluetotal = 1;
                     $scope.editmile.title = 'NEW DELIVERABLE';
+                    $scope.editmile.priority = '5. Valued';
 
                     $scope.deleteThis = false;
                     $scope.saveNow($scope.editmile);

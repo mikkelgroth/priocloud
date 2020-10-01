@@ -34,6 +34,8 @@
                 <label for="businesscase"><input type="checkbox" id="businesscase"
                         ng-model="project.filters.showBusinesscase" ng-change="saveNow()"> <i> Business
                         case</i></br></label>
+                <label for="keyresults"><input type="checkbox" id="keyresults" ng-model="project.filters.showKeyresults"
+                        ng-change="saveNow()"> <i> Key results</i></br></label>
                 <label for="status"><input type="checkbox" id="status" ng-model="project.filters.showStatus"
                         ng-change="saveNow()"> <i> Status</i></br></label>
                 <label for="steerco"><input type="checkbox" id="steerco" ng-model="project.filters.showSteerco"
@@ -256,6 +258,36 @@
                                 <td colspan="100%"><a target="_blank" href="{{link.url}}">{{link.url}}<div
                                             class="linkicon right">
                                         </div></a></td>
+                            </tr>
+                        </table>
+                    </div>
+                </td>
+            </tr>
+
+            <tr ng-if="project.filters.showKeyresults">
+                <td colspan="3">
+                    <div class="overview">
+                        <table class="tablelist" ng-if="project.keyresults.length > 0">
+                            <tr class="header">
+                                <td>Goal</td>
+                                <td>Deadline</td>
+                                <td>Trend</td>
+                                <td>Metric</td>
+                                <td>Current</td>
+                            </tr>
+                            <tr ng-repeat="keyresult in project.keyresults | orderBy:'krdate'"
+                                ng-click="goToKeyresultInProject(keyresult)" class="link texttop" ng-if=" keyresult.showInReport">
+                                <td class="{{keyresult.status}}">
+                                    <b>{{keyresult.value}} {{getMetric(keyresult.metricID).valueformat}}</b></td>
+                                <td class="{{setDeadlinestatus(keyresult.krdate)}}">
+                                    {{keyresult.krdate | date:'longDate'}}</td>
+                                <td class="right {{getLastValue(keyresult.metricID).trendstatus}}text">
+                                    {{getLastValue(keyresult.metricID).trend}} %</td>
+                                <td class="{{getMetric(keyresult.metricID).status}}">
+                                    {{getMetric(keyresult.metricID).title}}</td>
+                                <td>
+                                    {{getLastValue(keyresult.metricID).value}}
+                                    {{getMetric(keyresult.metricID).valueformat}}</td>
                             </tr>
                         </table>
                     </div>

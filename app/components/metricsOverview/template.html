@@ -22,6 +22,9 @@
                     Overview</span> </label>
             <label for="level"><input type="radio" id="level" name="views" ng-model="views" value="level"><span>
                     Priority</span></label>
+            <label for="keyresult"><input type="radio" id="keyresult" name="views" ng-model="views"
+                    value="keyresult"><span>
+                    Key results</span></label>
         </div>
     </div>
 
@@ -46,7 +49,7 @@
                             ng-show="showfilters">clear</button></div>
                 </td>
                 <td class="filter-container">Metric status<div class="right"><button ng-click="metricsearch.status=[]"
-                    ng-show="showfilters">clear</button></div>
+                            ng-show="showfilters">clear</button></div>
                 </td>
             </tr>
 
@@ -85,12 +88,12 @@
                 </td>
                 <td>
                     <select class="multiple-select" multiple="multiple" ng-multiple="true" ng-change="saveSearch()"
-                    ng-model="metricsearch.status">
-                    <option value="Green">OK (Green)</option>
-                    <option value="Yellow">Observe (Yellow)</option>
-                    <option value="Orange">Assist (Orange)</option>
-                    <option value="Red">Intervention (Red)</option>
-                </select>
+                        ng-model="metricsearch.status">
+                        <option value="Green">OK (Green)</option>
+                        <option value="Yellow">Observe (Yellow)</option>
+                        <option value="Orange">Assist (Orange)</option>
+                        <option value="Red">Intervention (Red)</option>
+                    </select>
                 </td>
             </tr>
 
@@ -185,6 +188,34 @@
                     <td class="right {{metric.trendstatus}}text">
                         {{metric.trend}} %</td>
                     <td class="right">{{metric.average}}</td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="overview" ng-show="views=='keyresult'">
+            <table class="tablelist">
+                <tr class="header">
+                    <td>Entity</td>
+                    <td>Goal</td>
+                    <td>Deadline</td>
+                    <td>Trend</td>
+                    <td>Metric</td>
+                    <td>Last value</td>
+                </tr>
+                <tr ng-repeat="keyresult in keyresultList | multiFilter:metricsearch | orderBy:[porderparam, porderparam2, porderparam3]"
+                    ng-click="goToKeyresultInProject(keyresult.projectoid,keyresult._id)" class="link">
+                    <td class="{{keyresult.pstatus}}">
+                        <b>{{keyresult.projecttitle}}</b></td>
+                    <td class="{{keyresult.status}}">
+                        {{keyresult.value}} {{getMetric(keyresult.metricID).valueformat}}</td>
+                    <td class="{{setDeadlinestatus(keyresult.krdate)}}">
+                        {{keyresult.krdate | date:'longDate'}}</td>
+                    <td class="right {{getLastValue(keyresult.metricID).trendstatus}}text">
+                        {{getLastValue(keyresult.metricID).trend}} %</td>
+                    <td class="{{getMetric(keyresult.metricID).status}}">
+                        {{getMetric(keyresult.metricID).title}}</td>
+                    <td>
+                        {{getLastValue(keyresult.metricID).value}} {{getMetric(keyresult.metricID).valueformat}}</td>
                 </tr>
             </table>
         </div>

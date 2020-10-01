@@ -1,0 +1,227 @@
+<h2 class="center {{project.lastStatusFlag}}">
+    {{project.type}} - {{project.title}} ({{project.projectnumber}})
+</h2>
+<prio-project-menu prio-project-id="{{project._id.$oid}}"></prio-project-menu>
+<div class="radiotabs">
+    <label for="objective"><input type="radio" id="objective" name="views" ng-model="views" value="objective"><span>
+            Objective</span></label>
+    <label for="keyresult"><input type="radio" id="keyresult" name="views" ng-model="views" value="keyresult"><span>
+            Key results</span></label>
+</div>
+<br />
+<div class="view">
+    <div ng-show="views=='objective'">
+        <div class="right">
+            <button type="button" id="saveButton1" prio-class save-this="$parent.hasChanged"
+                ng-if="user.changeContent" ng-click="saveKeyresults()">save</button>
+        </div>
+        <table class="smaller gutter-top">
+            <tr>
+                <td class="header">Target objective</td>
+                <td>
+                    <select ng-model="project.objectiveID" id="targetobjective"
+                                ng-options="objective._id as objective.title for objective in company.objectives | orderBy:'title'"
+                                ng-disabled="!user.changeContent"
+                                ng-change="saveNowObjective()"></select>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Reflection
+                </td>
+                <td>
+                    <div class="field">
+                        <textarea ng-model="project.reflection" maxlength="800" ng-change="saveNowObjective()"
+                            placeholder="Reflections for supporting objective and strategy?"
+                            ng-disabled="!user.changeContent"></textarea>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Objective motivation
+                </td>
+                <td>
+                    <pre>{{getobjective(project.objectiveID).motivation}}</pre>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Objective outcome
+                </td>
+                <td>
+                    <pre>{{getobjective(project.objectiveID).outcome}}</pre>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Strategy supported
+                </td>
+                <td>
+                    <pre>{{getobjective(project.objectiveID).strategysupport.title}}</pre>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Expected business value
+                </td>
+                <td>
+                    <pre>{{getobjective(project.objectiveID).strategysupport.businessreaction}}</pre>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Expected process change
+                </td>
+                <td>
+                    <pre>{{getobjective(project.objectiveID).strategysupport.processreaction}}</pre>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Expected people change
+                </td>
+                <td>
+                    <pre>{{getobjective(project.objectiveID).strategysupport.peoplereaction}}</pre>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Expected risks
+                </td>
+                <td>
+                    <pre>{{getobjective(project.objectiveID).strategysupport.riskreaction}}</pre>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <div ng-show="views=='keyresult'">
+        <div class="popup">
+            <div class="overview popupcontent">
+                <div class="actions">
+                    <div class="layout">
+                        <div class="layoutelement">
+                            <button type="button" id="saveButton2" prio-class save-this="$parent.hasChanged"
+                                ng-if="user.changeContent" ng-click="saveKeyresults()">save</button>
+                        </div>
+                        <div class="layoutelement center">
+                            <button type="button" class="Red" ng-click="removeKeyresult(editkeyresult)"
+                                ng-show="$parent.deleteThis" ng-if="user.changeContent">confirm
+                                delete!!!</button>
+                            <button type="button" ng-click="delete()" ng-show="!$parent.deleteThis"
+                                ng-if="user.changeContent">delete</button>
+                        </div>
+                        <div class="layoutelement right">
+                            <button type="button" class="close" ng-click="close()"></button>
+                        </div>
+                    </div>
+                </div>
+
+                <table class="formtable smaller">
+                    <tr>
+                        <td class="formlabel">Metric</td>
+                        <td>
+                            <select ng-change="saveNow(editkeyresult)" ng-model="editkeyresult.metricID" id="krmetric"
+                                ng-options="metric._id.$oid as metric.title for metric in metrics | orderBy:'title'"
+                                ng-disabled="!user.changeContent"></select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="formlabel">Metric format</td>
+                        <td class="right">
+                            {{getMetric(editkeyresult.metricID).valueformat}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="formlabel {{editkeyresult.status}}">Result
+                            {{getMetric(editkeyresult.metricID).valueformat}}</td>
+                        <td>
+                            <input ng-model="editkeyresult.value" ng-change="saveNow(editkeyresult)"
+                                ng-disabled="!user.changeContent" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="formlabel">Deadline</td>
+                        <td>
+                            <input type="text" id="krdate" datepicker="" ng-model="editkeyresult.rawkrdate"
+                                ng-change="saveNow(editkeyresult)" class="cal" ng-disabled="!user.changeContent" />
+                            {{editkeyresult.krdate | date:'longDate'}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="formlabel">Last value</td>
+                        <td class="right">
+                            {{getLastValue(editkeyresult.metricID).value}}
+                            {{getMetric(editkeyresult.metricID).valueformat}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="formlabel">Last date</td>
+                        <td class="right">
+                            {{getLastValue(editkeyresult.metricID).date | date:'longDate'}}</td>
+                    </tr>
+                    <tr>
+                        <td class="formlabel">Trend</td>
+                        <td class="right {{getLastValue(editkeyresult.metricID).trendstatus}}text">
+                            {{getLastValue(editkeyresult.metricID).trend}} %</td>
+                    </tr>
+                    <tr>
+                        <td class="formlabel">Average to last date</td>
+                        <td class="right">{{getLastValue(editkeyresult.metricID).average}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="formlabel">Show in report</td>
+                        <td>
+                            <input type="checkbox" ng-model="editkeyresult.showInReport"
+                                ng-change="saveNow(editkeyresult)" ng-disabled="!user.changeContent">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="formlabel">Result description</td>
+                        <td>
+                            <textarea ng-change="saveNow(editkeyresult)" ng-model="editkeyresult.note" maxlength="800"
+                                id="keyresultdec" placeholder="Key result notes..."
+                                ng-disabled="!user.changeContent"></textarea>
+                        </td>
+                    </tr>
+
+                </table>
+            </div>
+        </div>
+
+
+        <div class="right">
+            <button type="button" ng-click="newKeyresult()" ng-if="user.changeContent">Enter new observation
+                value</button>
+        </div>
+        <div class="overview">
+            <table class="tablelist smaller" ng-if="project.keyresults.length > 0">
+                <tr class="header">
+                    <td>Goal</td>
+                    <td>Deadline</td>
+                    <td>Trend</td>
+                    <td>Metric</td>
+                    <td>Current</td>
+                    <td>Show</td>
+                </tr>
+                <tr ng-repeat="keyresult in project.keyresults | orderBy:'krdate'" class="link">
+                    <td ng-click="beginEditKeyresult(keyresult)" class="{{keyresult.status}}">
+                        <b>{{keyresult.value}} {{getMetric(keyresult.metricID).valueformat}}</b></td>
+                    <td ng-click="beginEditKeyresult(keyresult)" class="{{setDeadlinestatus(keyresult.krdate)}}">
+                        {{keyresult.krdate | date:'longDate'}}</td>
+                    <td ng-click="beginEditKeyresult(keyresult)"
+                        class="right {{getLastValue(keyresult.metricID).trendstatus}}text">
+                        {{getLastValue(keyresult.metricID).trend}} %</td>
+                    <td ng-click="beginEditKeyresult(keyresult)" class="{{getMetric(keyresult.metricID).status}}">
+                        {{getMetric(keyresult.metricID).title}}</td>
+                    <td ng-click="beginEditKeyresult(keyresult)">
+                        {{getLastValue(keyresult.metricID).value}} {{getMetric(keyresult.metricID).valueformat}}</td>
+                    <td><input type="checkbox" ng-model="keyresult.showInReport" ng-change="saveKeyresults()"
+                            ng-disabled="!user.changeContent"></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>

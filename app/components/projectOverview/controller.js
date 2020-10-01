@@ -15,6 +15,7 @@ angular
         ) {
 
             var projectId = $routeParams.id;
+            companyService.reloadMetrics();
 
             companyService
                 .getProject(projectId)
@@ -60,6 +61,45 @@ angular
 
                     $scope.company = company;
                 });
+
+            // Metrics utils START
+            companyService.metrics.subscribe(function (metrics) {
+                $scope.metrics = metrics;
+            });
+
+            function getMetricByID(metricID) {
+                let p = $scope.metrics.find(x => x._id.$oid === metricID);
+                if (p != undefined) {
+                    return p;
+                } else {
+                    console.log("Found no Metric with this ID: " + metricID);
+                }
+            }
+
+            $scope.setDeadlinestatus = function (d) {
+                if (d != undefined) {
+                    var da = new Date(Date.parse(d));
+                    var today = new Date();
+                    return (today < da) ? "Green" : "Red";
+                }
+            }
+
+            $scope.getMetric = function (metricID) {
+                if (metricID != undefined) {
+                    return getMetricByID(metricID);
+                }
+            }
+
+            $scope.getLastValue = function (metricID) {
+                if (metricID != undefined) {
+                    let p = getMetricByID(metricID);
+                    if (p != undefined) {
+                        return p.metricvalues[p.metricvalues.length - 1];
+                    }
+                }
+            }
+
+            // Metric utils END
 
             $scope.saveProject = function (project) {
 
@@ -196,29 +236,24 @@ angular
 
             // This code is also in Status controller
 
-            
-
-
-
+            $scope.goToKeyresultInProject = function (keyresult) {
+                $location.path('/project/' + projectId + '/keyresults/' + keyresult._id);
+            };
 
             $scope.goToRiskInProject = function (risk) {
-
                 $location.path('/project/' + projectId + '/risks/' + risk._id);
             };
 
             $scope.goToActionInProject = function (action) {
-
                 $location.path('/project/' + projectId + '/status/' + action._id);
             };
 
 
             $scope.goToMilestoneInProject = function (milestone) {
-
                 $location.path('/project/' + projectId + '/milestone/' + milestone._id);
             };
 
             $scope.goToDepInProject = function (dep) {
-
                 $location.path('/project/' + projectId + '/dependencies/' + dep._id);
             };
 

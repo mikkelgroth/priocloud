@@ -47,6 +47,8 @@ angular
             $routeProvider.when('/project/:id/risks/:riskid', { controller: 'ProjectRisksController', templateUrl: 'components/projectRisks/template.html?version=8.00' });
             $routeProvider.when('/project/:id/dependencies', { controller: 'ProjectDependenciesController', templateUrl: 'components/projectDependencies/template.html?version=8.00' });
             $routeProvider.when('/project/:id/dependencies/:depid', { controller: 'ProjectDependenciesController', templateUrl: 'components/projectDependencies/template.html?version=8.00' });
+            $routeProvider.when('/project/:id/keyresults', { controller: 'ProjectKeyresultsController', templateUrl: 'components/projectKeyresults/template.html?version=8.00' });
+            $routeProvider.when('/project/:id/keyresults/:krid', { controller: 'ProjectKeyresultsController', templateUrl: 'components/projectKeyresults/template.html?version=8.00' });
 
             // status
             $routeProvider.when('/project/:id/status', { controller: 'ProjectStatusController', templateUrl: 'components/projectStatus/template.html?version=8.00' });

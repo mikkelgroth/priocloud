@@ -29,6 +29,11 @@
         <label for="dependencies"><input type="checkbox" id="dependencies" ng-model="company.filters.companyshowDepend">
             <i> People & dependencies</br></i></label>
 
+        <label for="keyresults"><input type="checkbox" id="keyresults" ng-model="company.filters.companyshowKeyresults">
+            <i> Key results</br></i></label>
+
+
+
         <div class="right">
             <button type="button" id="saveButton" prio-class ng-if="user.admin && companyedit"
                 ng-click="saveCompanyFilters()"><b>save

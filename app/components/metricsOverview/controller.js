@@ -18,7 +18,7 @@ angular
             companyService.reloadMetrics();
             companyService.reloadSystems();
             companyService.reloadProcesss();
-            
+
 
             companyService.company.subscribe(function (company) {
                 $scope.company = company;
@@ -26,6 +26,7 @@ angular
 
             companyService.projects.subscribe(function (projects) {
                 $scope.projects = projects;
+                $scope.keyresultList = setKeyresultsList(projects);
             });
 
             companyService.metrics.subscribe(function (metrics) {
@@ -49,6 +50,44 @@ angular
             function qcopy(src) {
                 return Object.assign({}, src);
             }
+
+            // Metrics utils START
+
+            function getMetricByID(metricID) {
+                let p = $scope.metrics.find(x => x._id.$oid === metricID);
+                if (p != undefined) {
+                    return p;
+                } else {
+                    console.log("Found no Metric with this ID: " + metricID);
+                }
+            }
+
+            $scope.setDeadlinestatus = function (d) {
+                if (d != undefined) {
+                    var da = new Date(Date.parse(d));
+                    var today = new Date();
+                    return (today < da) ? "Green" : "Red";
+                }
+            }
+
+            $scope.getMetric = function (metricID) {
+                if (metricID != undefined) {
+                    return getMetricByID(metricID);
+                }
+            }
+
+            $scope.getLastValue = function (metricID) {
+                if (metricID != undefined) {
+                    let p = getMetricByID(metricID);
+                    if (p != undefined) {
+                        return p.metricvalues[p.metricvalues.length - 1];
+                    }
+                }
+            }
+
+            // Metric utils END
+
+
             $scope.views = 'overview';
             $scope.showmepmbutton = true;
             $scope.showmeresbutton = true;
@@ -89,6 +128,34 @@ angular
                 }
                 return returnlist;
             }
+
+            function setKeyresultsList(projects) {
+                var keyresults = [];
+                keyresults = keyresults.concat.apply([], projects.map(function (project) {
+                    if (!project.keyresults) {
+                        return [];
+                    }
+                    return project.keyresults.map(function (keyresult) {
+                        project.portname = '';
+                        if (project.support != null) keyresult['pportname'] = project.support.name;
+                        keyresult['projectid'] = project._id.$oid;
+                        keyresult['projectoid'] = project._id.$oid;
+                        keyresult['projecttitle'] = project.title;
+                        keyresult['pbuname'] = project.bu.name;
+                        keyresult['pstate'] = project.state;
+                        keyresult['pstatus'] = project.status;
+                        keyresult['ppm'] = project.pm;
+                        keyresult['pconnect'] = project.connect;
+                        keyresult['ppriority'] = project.priority;
+                        return keyresult;
+                    });
+                }));
+                return keyresults;
+            }
+
+            $scope.goToKeyresultInProject = function (projectId, keyresultId) {
+                $location.path('/project/' + projectId + '/keyresults/' + keyresultId);
+            };
 
             $scope.goToMetric = function (metricId) {
                 $location.path('/metric/' + metricId);
