@@ -208,13 +208,33 @@
                         <td>{{project.milestones[0].wsjf}}</td>
                     </tr>
                     <tr>
-                        <td class="header">Value enabler</td>
-                        <td><b>{{project.milestones[0].enablerlable}}</b></td>
-                        <td class="header">Value limiter</td>
-                        <td><b>{{project.milestones[0].limiterlable}}</b></td>
+                        <td class="header">Value enabler total</td>
+                        <td colspan="3"><b>{{project.milestones[0].enablerlable}}</b></td>
                     </tr>
                     <tr>
-                        <td class="header" prio-class prio-value-bar-render="project.milestones[0].bena">Business
+                        <td class="header" prio-class prio-value-bar-render="project.milestones[0].cena">Customer enabler</td>
+                        <td>
+                            <select ng-model="project.milestones[0].cena" ng-change="saveNow()"
+                                ng-disabled="!user.changeContent">
+                                <option value="1">1. None</option>
+                                <option value="2">2. Customer benefit</option>
+                                <option value="3">3. Customer demand</option>
+                                <option value="4">4. Deal maker</option>
+                            </select>
+                        </td>
+                        <td class="header" prio-class prio-value-bar-render="project.milestones[0].mena">Market enabler</td>
+                        <td>
+                            <select ng-model="project.milestones[0].mena" ng-change="saveNow()"
+                                ng-disabled="!user.changeContent">
+                                <option value="1">1. None</option>
+                                <option value="2">2. Catch up</option>
+                                <option value="3">3. Market leading</option>
+                                <option value="4">4. Game changer</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="header" prio-class prio-value-bar-render="project.milestones[0].bena">Platform
                             enabler
                         </td>
                         <td>
@@ -226,19 +246,6 @@
                                 <option value="4">4. Game changer</option>
                             </select>
                         </td>
-                        <td class="header" prio-class prio-value-bar-render-neg="project.milestones[0].effort">Effort
-                        </td>
-                        <td>
-                            <select ng-model="project.milestones[0].effort" ng-change="saveNow()"
-                                ng-disabled="!user.changeContent">
-                                <option value="1">1. Minimal effort</option>
-                                <option value="2">2. Medium effort</option>
-                                <option value="3">3. Large effort</option>
-                                <option value="4">4. Unknown effort</option>
-                            </select>
-                        </td>
-                    </tr>
-                    <tr>
                         <td class="header" prio-class prio-value-bar-render="project.milestones[0].sena">Strategy
                             enabler
                         </td>
@@ -249,6 +256,23 @@
                                 <option value="2">2. Medium value</option>
                                 <option value="3">3. Large value</option>
                                 <option value="4">4. Game changer</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="header">Value limiter total</td>
+                        <td colspan="3"><b>{{project.milestones[0].limiterlable}}</b></td>
+                    </tr>
+                    <tr>
+                        <td class="header" prio-class prio-value-bar-render-neg="project.milestones[0].effort">Effort
+                        </td>
+                        <td>
+                            <select ng-model="project.milestones[0].effort" ng-change="saveNow()"
+                                ng-disabled="!user.changeContent">
+                                <option value="1">1. Minimal effort</option>
+                                <option value="2">2. Medium effort</option>
+                                <option value="3">3. Large effort</option>
+                                <option value="4">4. Unknown effort</option>
                             </select>
                         </td>
                         <td class="header" prio-class prio-value-bar-render-neg="project.milestones[0].risklevel">Risk

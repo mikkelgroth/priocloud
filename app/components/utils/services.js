@@ -1,11 +1,32 @@
 angular
     .module('riskApp')
     .service('util', function () {
-         var _this = this;
-         _this.uuid=function () {
-                    let u = Date.now().toString(16) + Math.random().toString(16) + '0'.repeat(16);
-                    return [u.substr(0, 8), u.substr(8, 4), '4000-8' + u.substr(13, 3), u.substr(16, 12)].join('-');
-                }
+        var _this = this;
+        _this.uuid = function () {
+            let u = Date.now().toString(16) + Math.random().toString(16) + '0'.repeat(16);
+            return [u.substr(0, 8), u.substr(8, 4), '4000-8' + u.substr(13, 3), u.substr(16, 12)].join('-');
+        }
+
+        _this.setmileflags = function (mile) {
+            mile.wsjf = Math.floor((mile.bena * mile.sena * mile.cena * mile.mena) /
+                (mile.effort * mile.risklevel) * 100 / (4 * 4 * 4 * 4));
+            mile.enablerlable = "XS";
+            mile.enablervalue = 0;
+            mile.enablervaluetotal = mile.bena * mile.sena * mile.cena * mile.mena;
+            if (mile.enablervaluetotal > 3) { mile.enablervalue = 1; mile.enablerlable = "S"; }
+            if (mile.enablervaluetotal > 9) { mile.enablervalue = 2; mile.enablerlable = "M"; }
+            if (mile.enablervaluetotal > 50) { mile.enablervalue = 3; mile.enablerlable = "L"; }
+            if (mile.enablervaluetotal > 100) { mile.enablervalue = 4; mile.enablerlable = "XL"; }
+
+            mile.limiterlable = "XS";
+            mile.limitervalue = 0;
+            mile.limitervaluetotal = mile.effort * mile.risklevel;
+            if (mile.limitervaluetotal > 1) { mile.limitervalue = 1; mile.limiterlable = "S"; }
+            if (mile.limitervaluetotal > 2) { mile.limitervalue = 2; mile.limiterlable = "M"; }
+            if (mile.limitervaluetotal > 4) { mile.limitervalue = 3; mile.limiterlable = "L"; }
+            if (mile.limitervaluetotal > 9) { mile.limitervalue = 4; mile.limiterlable = "XL"; }
+        }
+
     })
     .service('restService', ['$http', 'userService', function ($http, userService) {
 

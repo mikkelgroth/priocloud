@@ -96,23 +96,8 @@ angular
                         mile.enddate = md.toISOString();
                         mile.rawenddate = $("#miledate")[0].value;
                     }
-                    mile.wsjf = Math.floor((mile.bena * mile.sena * mile.cena * mile.mena) /
-                        (mile.effort * mile.risklevel) * 100 / (4 * 4 * 4 * 4));
-                    mile.enablerlable = "XS";
-                    mile.enablervalue = 0;
-                    mile.enablervaluetotal = mile.bena * mile.sena * mile.cena * mile.mena;
-                    if (mile.enablervaluetotal > 1) { mile.enablervalue = 1; mile.enablerlable = "S"; }
-                    if (mile.enablervaluetotal > 8) { mile.enablervalue = 2; mile.enablerlable = "M"; }
-                    if (mile.enablervaluetotal > 50) { mile.enablervalue = 3; mile.enablerlable = "L"; }
-                    if (mile.enablervaluetotal > 100) { mile.enablervalue = 4; mile.enablerlable = "XL"; }
 
-                    mile.limiterlable = "XS";
-                    mile.limitervalue = 0;
-                    mile.limitervaluetotal = mile.effort * mile.risklevel;
-                    if (mile.limitervaluetotal > 1) { mile.limitervalue = 1; mile.limiterlable = "S"; }
-                    if (mile.limitervaluetotal > 2) { mile.limitervalue = 2; mile.limiterlable = "M"; }
-                    if (mile.limitervaluetotal > 4) { mile.limitervalue = 3; mile.limiterlable = "L"; }
-                    if (mile.limitervaluetotal > 9) { mile.limitervalue = 4; mile.limiterlable = "XL"; }
+                    util.setmileflags(mile);
 
                     $scope.hasChanged = true;
                 }

@@ -224,6 +224,7 @@ angular
             $scope.statechange = function () {
                 $scope.statehasChanged = true;
             }
+
             $scope.saveNow = function () {
                 $scope.hasChanged = true;
 
@@ -244,22 +245,7 @@ angular
                 $scope.project.milestones[0].priority = $scope.project.priority;
                 $scope.project.milestones[0].title = $scope.project.title;
 
-                $scope.project.milestones[0].wsjf = Math.floor(($scope.project.milestones[0].bena * $scope.project.milestones[0].sena) /
-                    ($scope.project.milestones[0].effort * $scope.project.milestones[0].risklevel) * 100 / 16);
-
-                $scope.project.milestones[0].enablerlable = "XS";
-                $scope.project.milestones[0].enablervalue = 0;
-                if ($scope.project.milestones[0].bena * $scope.project.milestones[0].sena > 1) { $scope.project.milestones[0].enablervalue = 1; $scope.project.milestones[0].enablerlable = "S"; }
-                if ($scope.project.milestones[0].bena * $scope.project.milestones[0].sena > 2) { $scope.project.milestones[0].enablervalue = 2; $scope.project.milestones[0].enablerlable = "M"; }
-                if ($scope.project.milestones[0].bena * $scope.project.milestones[0].sena > 4) { $scope.project.milestones[0].enablervalue = 3; $scope.project.milestones[0].enablerlable = "L"; }
-                if ($scope.project.milestones[0].bena * $scope.project.milestones[0].sena > 9) { $scope.project.milestones[0].enablervalue = 4; $scope.project.milestones[0].enablerlable = "XL"; }
-
-                $scope.project.milestones[0].limiterlable = "XS";
-                $scope.project.milestones[0].limitervalue = 0;
-                if ($scope.project.milestones[0].effort * $scope.project.milestones[0].risklevel > 1) { $scope.project.milestones[0].limitervalue = 1; $scope.project.milestones[0].limiterlable = "S"; }
-                if ($scope.project.milestones[0].effort * $scope.project.milestones[0].risklevel > 2) { $scope.project.milestones[0].limitervalue = 2; $scope.project.milestones[0].limiterlable = "M"; }
-                if ($scope.project.milestones[0].effort * $scope.project.milestones[0].risklevel > 4) { $scope.project.milestones[0].limitervalue = 3; $scope.project.milestones[0].limiterlable = "L"; }
-                if ($scope.project.milestones[0].effort * $scope.project.milestones[0].risklevel > 9) { $scope.project.milestones[0].limitervalue = 4; $scope.project.milestones[0].limiterlable = "XL"; }
+                util.setmileflags($scope.project.milestones[0]);
             };
         }
     ]);
