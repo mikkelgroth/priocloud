@@ -5,24 +5,134 @@
 <div class="radiotabs">
     <label for="objective"><input type="radio" id="objective" name="views" ng-model="views" value="objective"><span>
             Objective</span></label>
+    <label for="businesscase"><input type="radio" id="businesscase" name="views" ng-model="views"
+            value="businesscase"><span>
+            Business case</span></label>
     <label for="keyresult"><input type="radio" id="keyresult" name="views" ng-model="views" value="keyresult"><span>
             Key results</span></label>
 </div>
 <br />
+
 <div class="view">
+    <div ng-show="views=='businesscase'">
+        <div class="right">
+            <button type="button" id="saveButton3" prio-class save-this="$parent.hasChanged" ng-if="user.changeContent"
+                ng-click="saveKeyresults()">save</button>
+        </div>
+        <table class="smaller gutter-top">
+            <tr>
+                <td class="header">
+                    Benefits
+                </td>
+                <td colspan="3">
+                    <div class="field ">
+                        <textarea ng-model="project.costbenefit" maxlength="500" ng-change="saveNowObjective()"
+                            id="detailbenefit"
+                            placeholder="What will you achieve by running this project and what will the business gain by this investment."
+                            ng-disabled="!user.changeContent"></textarea>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td class="header">
+                    Don't do impact
+                </td>
+                <td colspan="3">
+                    <div class="field">
+                        <textarea ng-model="project.costrisk" maxlength="500" ng-change="saveNowObjective()" id="detailrisk"
+                            placeholder="What will it cost the company to not make this investment."
+                            ng-disabled="!user.changeContent"></textarea>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td class="header">
+                    Benefit realisation plan
+                </td>
+                <td colspan="3">
+                    <div class="field">
+                        <textarea ng-model="project.benefitplan" maxlength="500" ng-change="saveNowObjective()" id="detailreal"
+                            placeholder="When in time will you asses the results of this project and evaluate its bennefits."
+                            ng-disabled="!user.changeContent"></textarea>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="header">
+                    Link external document
+                </td>
+                <td colspan="3" class="right">
+                    <button ng-if="user.changeContent" ng-click="addlink('Details')" ng-if="user.changeContent">create
+                        link</button>
+                </td>
+            </tr>
+            <tr class="header" ng-if="project.linklist.length > 0">
+                <td>Title</td>
+                <td>URL</td>
+                <td>Show in report</td>
+                <td>Follow link</td>
+            </tr>
+            <tr ng-repeat="link in project.linklist" ng-if="link.lable=='Details'">
+                <td ng-click="editlinkitem(link)">
+                    {{link.title}}
+                </td>
+                <td ng-click="editlinkitem(link)">
+                    {{link.url}}
+                </td>
+                <td class="Green" ng-show="link.showinreport">Show</td>
+                <td class="Red" ng-show="!link.showinreport">Hide</td>
+                <td>
+                    <a target="_blank" href="{{link.url}}">
+                        <div class="linkicon right"></div>
+                    </a>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="overview popup" ng-show="showeditlinkbusi">
+        <table class="smaller gutter-top">
+            <tr class="header">
+                <td colspan="2">Edit link
+                    <div class="right">
+                        <button type="button" ng-click="closelink(editlink)">cancel</button>&nbsp;
+                        <button ng-click="savelink(editlink)" ng-if="user.changeContent">save link</button>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td class="header">Link title</td>
+                <td><input ng-model="editlink.title" /></td>
+            </tr>
+            <tr>
+                <td class="header">Link URL</td>
+                <td><input ng-model="editlink.url" /></td>
+            </tr>
+            <tr>
+                <td class="header">Show link in report</td>
+                <td><input type="checkbox" ng-model="editlink.showinreport"></td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <button ng-click="dellink(editlink)" ng-if="user.changeContent">delete link</button>
+                </td>
+            </tr>
+        </table>
+    </div>
+
     <div ng-show="views=='objective'">
         <div class="right">
-            <button type="button" id="saveButton1" prio-class save-this="$parent.hasChanged"
-                ng-if="user.changeContent" ng-click="saveKeyresults()">save</button>
+            <button type="button" id="saveButton1" prio-class save-this="$parent.hasChanged" ng-if="user.changeContent"
+                ng-click="saveKeyresults()">save</button>
         </div>
         <table class="smaller gutter-top">
             <tr>
                 <td class="header">Target objective</td>
                 <td>
                     <select ng-model="project.objectiveID" id="targetobjective"
-                                ng-options="objective._id as objective.title for objective in company.objectives | orderBy:'title'"
-                                ng-disabled="!user.changeContent"
-                                ng-change="saveNowObjective()"></select>
+                        ng-options="objective._id as objective.title for objective in company.objectives | orderBy:'title'"
+                        ng-disabled="!user.changeContent" ng-change="saveNowObjective()"></select>
                 </td>
             </tr>
             <tr>

@@ -111,10 +111,6 @@ function setProjectMenu() {
             $('.submenuactive').removeClass('submenuactive');
             $('.details-menu-owners').addClass('submenuactive');
         }
-        if (window.location.href.indexOf('/businesscase') > 0) {
-            $('.submenuactive').removeClass('submenuactive');
-            $('.details-menu-businesscase').addClass('submenuactive');
-        }
     }
 
 

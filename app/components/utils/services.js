@@ -27,6 +27,147 @@ angular
             if (mile.limitervaluetotal > 9) { mile.limitervalue = 4; mile.limiterlable = "XL"; }
         }
 
+        _this.getObjectByID = function (objID, list) {
+            if (objID != undefined) {
+                let p = list.find(x => x._id === objID);
+                if (p != undefined) {
+                    return p;
+                }
+            }
+        }
+        _this.getObjectByOID = function (objID, list) {
+            if (objID != undefined) {
+                let p = list.find(x => x._id.$oid === objID);
+                if (p != undefined) {
+                    return p;
+                }
+            }
+        }
+        //depBarRender START
+        _this.depbarRender = function (dep) {
+
+            var s = new Date(Date.parse(dep.depdate));
+            var e = new Date(Date.parse(dep.depdeaddate));
+            var start = 0;
+            var end = 100;
+
+            var thisyear = new Date();
+            var base = new Date();
+            var startbase = new Date();
+            base.setFullYear(thisyear.getFullYear(), 0, 1);
+            startbase.setFullYear(thisyear.getFullYear() - 1, 0, 1);
+
+            var today = Math.round((((thisyear.getTime() - base.getTime()) / 86400000) * 33 / 365) + 33);
+            var oneday = today + 1;
+
+            //console.log("thisyear-1 = " + (thisyear.getFullYear()-1));
+
+            if ((thisyear.getFullYear() - 1) == s.getFullYear() || thisyear.getFullYear() == s.getFullYear() || (thisyear.getFullYear() + 1) == s.getFullYear()) start = Math.round(((s.getTime() - startbase.getTime()) / 86400000) * 100 / (3 * 365));
+            if ((thisyear.getFullYear() - 1) == e.getFullYear() || thisyear.getFullYear() == e.getFullYear() || (thisyear.getFullYear() + 1) == e.getFullYear()) end = Math.round(((e.getTime() - startbase.getTime()) / 86400000) * 100 / (3 * 365));
+            if (start == end && end != 100) end = end + 1;
+            if (start == 100) start--;
+            //console.log("Start = " + start);
+            //console.log("End = " + end);
+
+            var colorbackground = "#f7f8f9";
+            var color = "rgb(38,38,38)";
+            var colorlevel = "rgb(0,176,240)";
+
+            if (dep.state != undefined && dep.state != "") {
+                if (dep.state == "On hold") colorlevel = "rgba(243,54,49)";
+                if (dep.state == "Requested") colorlevel = "rgb(254,236,2)";
+                if (dep.state == "Allocated") colorlevel = "rgb(95,185,59)";
+            }
+
+            var ret = "#f6f1d3";
+            if (start < end) {
+                if (today <= start) {
+                    ret = "linear-gradient(to right, " + colorbackground + " " + today + "%, " + color + " " + today + "%, " + color + " " + oneday + "%, " + colorbackground + " " + oneday + "%, " + colorbackground + " " + start + "%, " + colorlevel + " " + start + "%, " + colorlevel + " " + end + "%, " + colorbackground + " " + end + "%)";
+                }
+                if (today > start && today <= end) {
+                    ret = "linear-gradient(to right, " + colorbackground + " " + start + "%, " + colorlevel + " " + start + "%, " + colorlevel + " " + today + "%, " + color + " " + today + "%, " + color + " " + oneday + "%, " + colorlevel + " " + oneday + "%," + colorlevel + " " + end + "%, " + colorbackground + " " + end + "%)";
+                }
+                if (today > end) {
+                    if (dep.state == "Open") color = "red";
+                    ret = "linear-gradient(to right, " + colorbackground + " " + start + "%, " + colorlevel + " " + start + "%, " + colorlevel + " " + end + "%, " + colorbackground + " " + end + "%, " + colorbackground + " " + today + "%, " + color + " " + today + "%, " + color + " " + oneday + "%, " + colorbackground + " " + oneday + "%)";
+                }
+                if ((thisyear.getFullYear() - 1) > s.getFullYear() && (thisyear.getFullYear() - 1) > e.getFullYear()) {
+                    var dist = Math.round(today / 4);
+                    if (dep.state == "Open") color = "red";
+                    ret = "linear-gradient(to right, " + colorlevel + " 0%, " + colorbackground + " " + dist + "%, " + colorbackground + " " + today + "%, " + color + " " + today + "%, " + color + " " + oneday + "%, " + colorbackground + " " + oneday + "%)";
+                }
+                if ((thisyear.getFullYear() + 1) < s.getFullYear() && (thisyear.getFullYear() + 1) < e.getFullYear()) {
+                    var dist = 100 - Math.round((100 - today) / 4);
+                    ret = "linear-gradient(to right, " + colorbackground + " " + today + "%, " + color + " " + today + "%, " + color + " " + oneday + "%, " + colorbackground + " " + oneday + "%, " + colorbackground + " " + dist + "%, " + colorlevel + " 100%)";
+                }
+            }
+            return { background: ret }
+        }
+        //depBarRender END   
+        //BarRender START
+        _this.barRender = function (mi) {
+
+            var s = new Date(Date.parse(mi.date));
+            var e = new Date(Date.parse(mi.enddate));
+            var start = 0;
+            var end = 100;
+
+            var thisyear = new Date();
+            var base = new Date();
+            var startbase = new Date();
+            base.setFullYear(thisyear.getFullYear(), 0, 1);
+            startbase.setFullYear(thisyear.getFullYear() - 1, 0, 1);
+
+            var today = Math.round((((thisyear.getTime() - base.getTime()) / 86400000) * 33 / 365) + 33);
+            var oneday = today + 1;
+
+            //console.log("thisyear-1 = " + (thisyear.getFullYear()-1));
+
+            if ((thisyear.getFullYear() - 1) == s.getFullYear() || thisyear.getFullYear() == s.getFullYear() || (thisyear.getFullYear() + 1) == s.getFullYear()) start = Math.round(((s.getTime() - startbase.getTime()) / 86400000) * 100 / (3 * 365));
+            if ((thisyear.getFullYear() - 1) == e.getFullYear() || thisyear.getFullYear() == e.getFullYear() || (thisyear.getFullYear() + 1) == e.getFullYear()) end = Math.round(((e.getTime() - startbase.getTime()) / 86400000) * 100 / (3 * 365));
+            if (start == end && end != 100) end = end + 1;
+            if (start == 100) start--;
+            //console.log("Start = " + start);
+            //console.log("End = " + end);
+
+            var colorbackground = "#f7f8f9";
+            var color = "rgb(38,38,38)";
+            var colorlevel = "rgba(243,54,49)";
+
+            if (mi.risklevel != null && mi.risklevel != "" && mi.effort != null && mi.effort != "") {
+                var val = mi.risklevel * mi.effort;
+                if (val <= 12) colorlevel = "rgba(245,160,47)";
+                if (val <= 6) colorlevel = "rgb(254,236,2)";
+                if (val <= 3) colorlevel = "rgb(95,185,59)";
+            }
+
+            var ret = "#f6f1d3";
+            if (start < end) {
+                if (today <= start) {
+                    ret = "linear-gradient(to right, " + colorbackground + " " + today + "%, " + color + " " + today + "%, " + color + " " + oneday + "%, " + colorbackground + " " + oneday + "%, " + colorbackground + " " + start + "%, " + colorlevel + " " + start + "%, " + colorlevel + " " + end + "%, " + colorbackground + " " + end + "%)";
+                }
+                if (today > start && today <= end) {
+                    ret = "linear-gradient(to right, " + colorbackground + " " + start + "%, " + colorlevel + " " + start + "%, " + colorlevel + " " + today + "%, " + color + " " + today + "%, " + color + " " + oneday + "%, " + colorlevel + " " + oneday + "%," + colorlevel + " " + end + "%, " + colorbackground + " " + end + "%)";
+                }
+                if (today > end) {
+                    if ((mi.state == "Progress" || mi.state == "Target" || mi.state == "Qualified")) color = "red";
+                    ret = "linear-gradient(to right, " + colorbackground + " " + start + "%, " + colorlevel + " " + start + "%, " + colorlevel + " " + end + "%, " + colorbackground + " " + end + "%, " + colorbackground + " " + today + "%, " + color + " " + today + "%, " + color + " " + oneday + "%, " + colorbackground + " " + oneday + "%)";
+                }
+                if ((thisyear.getFullYear() - 1) > s.getFullYear() && (thisyear.getFullYear() - 1) > e.getFullYear()) {
+                    var dist = Math.round(today / 4);
+                    if ((mi.state == "Progress" || mi.state == "Target" || mi.state == "Qualified")) color = "red";
+                    ret = "linear-gradient(to right, " + colorlevel + " 0%, " + colorbackground + " " + dist + "%, " + colorbackground + " " + today + "%, " + color + " " + today + "%, " + color + " " + oneday + "%, " + colorbackground + " " + oneday + "%)";
+                }
+                if ((thisyear.getFullYear() + 1) < s.getFullYear() && (thisyear.getFullYear() + 1) < e.getFullYear()) {
+                    var dist = 100 - Math.round((100 - today) / 4);
+                    ret = "linear-gradient(to right, " + colorbackground + " " + today + "%, " + color + " " + today + "%, " + color + " " + oneday + "%, " + colorbackground + " " + oneday + "%, " + colorbackground + " " + dist + "%, " + colorlevel + " 100%)";
+                }
+            }
+
+            return { background: ret }
+        }
+        //BarRender END
+
     })
     .service('restService', ['$http', 'userService', function ($http, userService) {
 

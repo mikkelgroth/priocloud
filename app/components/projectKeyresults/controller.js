@@ -49,6 +49,7 @@ angular
             });
 
             $scope.views = 'objective';
+            $scope.hasChanged = false;
 
             userService
                 .users
@@ -74,27 +75,9 @@ angular
                 editKeyresult(keyresult);
             };
 
-            function getobjectiveByID(objectiveID) {
-                let p = $scope.company.objectives.find(x => x._id === objectiveID);
-                if (p != undefined) {
-                    return p;
-                } else {
-                    console.log("Found no Objective with this ID: " + objectiveID);
-                }
-            }
             $scope.getobjective = function (objectiveID) {
                 if (objectiveID != undefined) {
-                    return getobjectiveByID(objectiveID);
-                }
-            }
-
-
-            function getMetricByID(metricID) {
-                let p = $scope.metrics.find(x => x._id.$oid === metricID);
-                if (p != undefined) {
-                    return p;
-                } else {
-                    console.log("Found no Metric with this ID: " + metricID);
+                    return util.getObjectByID(objectiveID,$scope.company.objectives);
                 }
             }
 
@@ -108,13 +91,13 @@ angular
 
             $scope.getMetric = function (metricID) {
                 if (metricID != undefined) {
-                    return getMetricByID(metricID);
+                    return util.getObjectByOID(metricID,$scope.metrics);
                 }
             }
 
             $scope.getLastValue = function (metricID) {
                 if (metricID != undefined) {
-                    let p = getMetricByID(metricID);
+                    let p = util.getObjectByOID(metricID,$scope.metrics);
                     if (p != undefined) {
                         return p.metricvalues[p.metricvalues.length - 1];
                     }
@@ -195,7 +178,7 @@ angular
             };
 
             calcKeyresult = function () {
-                var lastmetric = getMetricByID($scope.editkeyresult.metricID);
+                var lastmetric = util.getObjectByOID($scope.editkeyresult.metricID,$scope.metrics);
                 var last = lastmetric.metricvalues[lastmetric.metricvalues.length - 1];
                 if (lastmetric.operator == "high") {
                     $scope.editkeyresult.status = (Number($scope.editkeyresult.value) <= Number(last.value)) ? "Green" : "Red";
