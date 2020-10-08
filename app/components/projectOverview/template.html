@@ -478,6 +478,9 @@
                                         <input type="checkbox" ng-model="project.filters.showActionPriority"
                                             ng-change="saveNow()">
                                         Priority,
+                                        <input type="checkbox" ng-model="project.filters.showActionCommitment"
+                                            ng-change="saveNow()">
+                                        Commitment,
                                         <input type="checkbox" ng-model="project.filters.showActionCreated"
                                             ng-change="saveNow()">
                                         Created,
@@ -534,6 +537,7 @@
                                 <td ng-if="project.filters.showActionRequester">Requester</td>
                                 <td ng-if="project.filters.showActionResponsible">Responsible</td>
                                 <td ng-if="project.filters.showActionPriority">Priority</td>
+                                <td ng-if="project.filters.showActionCommitment">Commitment</td>
                                 <td ng-if="project.filters.showActionGoal">Goal</td>
                                 <td ng-if="project.filters.showActionAction">Action</td>
                                 <td ng-if="project.filters.showActionDecision">Decision</td>
@@ -552,6 +556,7 @@
                                 <td ng-if="project.filters.showActionRequester">{{action.requester}}</td>
                                 <td ng-if="project.filters.showActionResponsible">{{action.responsible}}</td>
                                 <td ng-if="project.filters.showActionPriority">{{action.priority}}</td>
+                                <td ng-if="project.filters.showActionCommitment">{{action.commitment}}</td>
                                 <td ng-if="project.filters.showActionGoal">{{action.goal}}</td>
                                 <td ng-if="project.filters.showActionAction">{{action.action}}</td>
                                 <td ng-if="project.filters.showActionDecision">{{action.decision}}</td>
@@ -577,6 +582,9 @@
                                         <input type="checkbox" ng-model="project.filters.showDecisionPriority"
                                             ng-change="saveNow()">
                                         Priority,
+                                        <input type="checkbox" ng-model="project.filters.showDecisionCommitment"
+                                            ng-change="saveNow()">
+                                        Commitment,
                                         <input type="checkbox" ng-model="project.filters.showDecisionCreated"
                                             ng-change="saveNow()">
                                         Created,
@@ -633,6 +641,7 @@
                                 <td ng-if="project.filters.showDecisionRequester">Requester</td>
                                 <td ng-if="project.filters.showDecisionResponsible">Responsible</td>
                                 <td ng-if="project.filters.showDecisionPriority">Priority</td>
+                                <td ng-if="project.filters.showDecisionCommitment">Commitment</td>
                                 <td ng-if="project.filters.showDecisionGoal">Goal</td>
                                 <td ng-if="project.filters.showDecisionAction">Action</td>
                                 <td ng-if="project.filters.showDecisionDecision">Decision</td>
@@ -651,6 +660,7 @@
                                 <td ng-if="project.filters.showDecisionRequester">{{action.requester}}</td>
                                 <td ng-if="project.filters.showDecisionResponsible">{{action.responsible}}</td>
                                 <td ng-if="project.filters.showDecisionPriority">{{action.priority}}</td>
+                                <td ng-if="project.filters.showDecisionCommitment">{{action.commitment}}</td>
                                 <td ng-if="project.filters.showDecisionGoal">{{action.goal}}</td>
                                 <td ng-if="project.filters.showDecisionAction">{{action.action}}</td>
                                 <td ng-if="project.filters.showDecisionDecision">{{action.decision}}</td>

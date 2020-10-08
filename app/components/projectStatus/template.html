@@ -583,6 +583,27 @@
                                     id="decision" placeholder="Describe the decisions taken!"></textarea></div>
                         </td>
                     </tr>
+                    <tr>
+                        <td class="formlabel">Stakeholder commitment</td>
+                        <td>
+                            <select ng-model="editaction.commitment" ng-change="actionsaveNow(editaction)"
+                                ng-disabled="!user.changeContent">
+                                <option value="Uniform agreement">Uniform agreement</option>
+                                <option value="Objections noted">Objections noted</option>
+                                <option value="Strong opposistion">Strong opposistion</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="formlabel">
+                            Objections
+                        </td>
+                        <td>
+                            <div class="field"><textarea ng-disabled="!user.changeContent"
+                                    ng-change="actionsaveNow(editaction)" ng-model="editaction.objection" maxlength="800"
+                                    id="objection" placeholder="Document any objections from stakeholders!"></textarea></div>
+                        </td>
+                    </tr>
                 </table>
             </div>
         </div>
@@ -597,6 +618,7 @@
                         <td>Title</td>
                         <td>Goal</td>
                         <td>Action</td>
+                        <td>Commitment</td>
                         <td>Responsible</td>
                         <td>Show</td>
                     </tr>
@@ -619,6 +641,9 @@
                             &nbsp;{{action.action}}
                         </td>
                         <td ng-click="beginEditaction(action)">
+                            &nbsp;{{action.commitment}}
+                        </td>
+                        <td ng-click="beginEditaction(action)">
                             &nbsp;{{action.responsible}}<br />
                             &nbsp;{{action.priority}}
                         </td>
@@ -637,6 +662,7 @@
                         <td>Title</td>
                         <td>Goal</td>
                         <td>Decision</td>
+                        <td>Commitment</td>
                         <td>Show</td>
                     </tr>
                     <tr ng-repeat="action in project.actions | orderBy: 'actiondate' : true" class="link"
@@ -656,6 +682,9 @@
                         </td>
                         <td ng-click="beginEditaction(action)">
                             &nbsp;{{action.decision}}
+                        </td>
+                        <td ng-click="beginEditaction(action)">
+                            &nbsp;{{action.commitment}}
                         </td>
                         <td><input type="checkbox" ng-model="action.showInReport" ng-change="saveactions()"
                                 ng-disabled="!user.changeContent"></td>

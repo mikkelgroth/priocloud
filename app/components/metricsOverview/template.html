@@ -195,27 +195,30 @@
         <div class="overview" ng-show="views=='keyresult'">
             <table class="tablelist">
                 <tr class="header">
-                    <td>Entity</td>
+                    <td>Metric</td>
                     <td>Goal</td>
+                    <td>Format</td>
                     <td>Deadline</td>
                     <td>Trend</td>
-                    <td>Metric</td>
                     <td>Last value</td>
+                    <td>Entity</td>
                 </tr>
                 <tr ng-repeat="keyresult in keyresultList | multiFilter:metricsearch | orderBy:[porderparam, porderparam2, porderparam3]"
                     ng-click="goToKeyresultInProject(keyresult.projectoid,keyresult._id)" class="link">
-                    <td class="{{keyresult.pstatus}}">
-                        <b>{{keyresult.projecttitle}}</b></td>
-                    <td class="{{keyresult.status}}">
-                        {{keyresult.value}} {{getMetric(keyresult.metricID).valueformat}}</td>
+                    <td class="{{getMetric(keyresult.metricID).status}}">
+                        {{getMetric(keyresult.metricID).title}}</td>
+                    <td class="{{keyresult.tstatus}}">
+                        {{keyresult.value}}</td>
+                    <td>
+                        {{getMetric(keyresult.metricID).valueformat}}</td>
                     <td class="{{setDeadlinestatus(keyresult.krdate)}}">
                         {{keyresult.krdate | date:'longDate'}}</td>
                     <td class="right {{getLastValue(keyresult.metricID).trendstatus}}text">
                         {{getLastValue(keyresult.metricID).trend}} %</td>
-                    <td class="{{getMetric(keyresult.metricID).status}}">
-                        {{getMetric(keyresult.metricID).title}}</td>
                     <td>
                         {{getLastValue(keyresult.metricID).value}} {{getMetric(keyresult.metricID).valueformat}}</td>
+                    <td class="{{keyresult.pstatus}}">
+                        {{keyresult.projecttitle}}</td>
                 </tr>
             </table>
         </div>

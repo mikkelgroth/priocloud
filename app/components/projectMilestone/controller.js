@@ -96,7 +96,11 @@ angular
                         mile.enddate = md.toISOString();
                         mile.rawenddate = $("#miledate")[0].value;
                     }
+                    mile.numestimate = Number(mile.estimate);
+                    //calc estimate
+                    util.calcestimate(mile,$scope.project,$scope.company);
 
+                    //set t-shirt size
                     util.setmileflags(mile);
 
                     $scope.hasChanged = true;
@@ -128,6 +132,8 @@ angular
                     $scope.editmile.responsible = $scope.user.name;
                     $scope.editmile.bena = '1';
                     $scope.editmile.effort = '1';
+                    $scope.editmile.estimate = '1';
+                    $scope.editmile.numestimate = 1;
                     $scope.editmile.sena = '1';
                     $scope.editmile.cena = '1';
                     $scope.editmile.mena = '1';
@@ -165,7 +171,7 @@ angular
             };
 
             $scope.removeMilestone = function (dep) {
-                if ($scope.user.changeContent) {
+                if ($scope.user.changeContent && !dep.prime) {
                     $scope.project.milestones.splice($scope.project.milestones.indexOf(dep), 1);
                     companyService.saveProjectName($scope.project, $scope.user.name);
                     $('.popup').removeClass('active');

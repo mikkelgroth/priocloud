@@ -264,6 +264,8 @@
                                     <option value="-limitervalue">Effort/Risk High-Low</option>
                                     <option value="limitervalue">Effort/Risk Low-High</option>
                                     <option value="-wsjf">WSJF</option>
+                                    <option value="-numestimate">High-low Estimate</option>
+                                    <option value="numestimate">Low-high Estimate</option>
                                     <option value="title">Title</option>
                                     <option value="bu.name">Unit</option>
                                     <option value="support.name">Portfolio</option>
@@ -281,6 +283,8 @@
                                     <option value="-limitervalue">Effort/Risk High-Low</option>
                                     <option value="limitervalue">Effort/Risk Low-High</option>
                                     <option value="-wsjf">WSJF</option>
+                                    <option value="-numestimate">High-low Estimate</option>
+                                    <option value="numestimate">Low-high Estimate</option>
                                     <option value="title">Title</option>
                                     <option value="bu.name">Unit</option>
                                     <option value="support.name">Portfolio</option>
@@ -298,6 +302,8 @@
                                     <option value="-limitervalue">Effort/Risk High-Low</option>
                                     <option value="limitervalue">Effort/Risk Low-High</option>
                                     <option value="-wsjf">WSJF</option>
+                                    <option value="-numestimate">High-low Estimate</option>
+                                    <option value="numestimate">Low-high Estimate</option>
                                     <option value="title">Title</option>
                                     <option value="bu.name">Unit</option>
                                     <option value="support.name">Portfolio</option>
@@ -320,7 +326,7 @@
                         <br />PM/PO
                     </td>
                     <td>Unit<br />Owner</td>
-                    <td>Portfolio<br />Priority - (Enabler - Limiter)</td>
+                    <td>Portfolio<br />Priority - (Enabler - Limiter - Estimate)</td>
                     <td ng-if="showPending">Pending action</td>
                     <td>Type - ID - State<br />Lock</td>
                 </tr>
@@ -354,7 +360,8 @@
                     </td>
                     <td>
                         <b>{{project.support.name}}</b><br />{{project.priority}} -
-                        ({{project.milestones[0].enablerlable}} - {{project.milestones[0].limiterlable}})
+                        ({{project.milestones[0].enablerlable}} - {{project.milestones[0].limiterlable}} -
+                        {{project.milestones[0].numestimate}})
                     </td>
                     <td class="texttop" ng-if="showPending">{{project.deccomment}}</td>
                     <td><b>{{project.type}} - {{project.projectnumber}} - {{project.state}}</b><br />

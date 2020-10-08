@@ -71,7 +71,7 @@ angular
                 });
 
 
-            function editMetricvalue(metricvalue) {
+            function funeditMetricvalue(metricvalue) {
                 if ($scope.company == undefined) {
                     $scope.company = companyService.company;
                 }
@@ -82,7 +82,7 @@ angular
             }
 
             $scope.beginEditMetricvalue = function (metricvalue) {
-                editMetricvalue(metricvalue);
+                funeditMetricvalue(Object.assign({}, metricvalue));
             };
 
             $scope.saveMetric = function (metric) {
@@ -113,7 +113,10 @@ angular
                     if (metricvalue.isNan) {
                         alert("This is not a number, try 123 or 1.23");
                     } else {
-                        calcMetricvaluesTotals();
+                        var md = new Date($("#metricvaluedate")[0].value);
+                        if (md instanceof Date && !isNaN(md.valueOf())) {
+                            metricvalue.date = md.toISOString();
+                        }
                     }
                     $scope.hasChanged = true;
                 }
@@ -147,6 +150,9 @@ angular
 
             calcMetricvaluesTotals = function () {
                 var total = 0;
+                $scope.metric.metricvalues.sort((a, b) => a.date.localeCompare(b.date))
+                console.log($scope.metric.metricvalues);
+
                 for (let i = 0; i < $scope.metric.metricvalues.length; i++) {
                     const e = $scope.metric.metricvalues[i];
                     total += Number(e.value);
@@ -167,12 +173,12 @@ angular
                     if (Number(e.trend) >= Number($scope.metric.yellowvalue)) e.status = "Yellow";
                     if (Number(e.trend) >= Number($scope.metric.greenvalue)) e.status = "Green";
                 }
-                $scope.metric.status = $scope.metric.metricvalues[$scope.metric.metricvalues.length-1].status;
-                $scope.metric.trend = $scope.metric.metricvalues[$scope.metric.metricvalues.length-1].trend;
-                $scope.metric.trendstatus = $scope.metric.metricvalues[$scope.metric.metricvalues.length-1].trendstatus;
-                $scope.metric.average = $scope.metric.metricvalues[$scope.metric.metricvalues.length-1].average;
-                $scope.metric.date = $scope.metric.metricvalues[$scope.metric.metricvalues.length-1].date;
-                $scope.metric.value = $scope.metric.metricvalues[$scope.metric.metricvalues.length-1].value;
+                $scope.metric.status = $scope.metric.metricvalues[$scope.metric.metricvalues.length - 1].status;
+                $scope.metric.trend = $scope.metric.metricvalues[$scope.metric.metricvalues.length - 1].trend;
+                $scope.metric.trendstatus = $scope.metric.metricvalues[$scope.metric.metricvalues.length - 1].trendstatus;
+                $scope.metric.average = $scope.metric.metricvalues[$scope.metric.metricvalues.length - 1].average;
+                $scope.metric.date = $scope.metric.metricvalues[$scope.metric.metricvalues.length - 1].date;
+                $scope.metric.value = $scope.metric.metricvalues[$scope.metric.metricvalues.length - 1].value;
             }
 
 

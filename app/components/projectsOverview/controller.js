@@ -432,6 +432,7 @@ angular
                     project.limiterlable = (project.milestones[0] != undefined) ? project.milestones[0].limiterlable : "XL";
                     project.limitervalue = (project.milestones[0] != undefined) ? project.milestones[0].limitervalue : 16;
                     project.wsjf = (project.milestones[0] != undefined) ? project.milestones[0].wsjf : 0;
+                    project.numestimate = (project.milestones[0] != undefined) ? project.milestones[0].numestimate : 0;
 
                     project.projbuownername = "";
                     if (project.bu != undefined && project.bu.owner != undefined) project.projbuownername = project.bu.owner.name;

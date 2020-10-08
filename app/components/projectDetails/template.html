@@ -204,9 +204,13 @@
                                 <option value="5. Valued">5. Valued</option>
                             </select>
                         </td>
+                    </tr>
+                    <tr>
                         <td class="header">WSJF</td>
                         <td>{{project.milestones[0].wsjf}}</td>
                     </tr>
+                </tr>
+                <tr>
                     <tr>
                         <td class="header">Value enabler total</td>
                         <td colspan="3"><b>{{project.milestones[0].enablerlable}}</b></td>
@@ -222,6 +226,8 @@
                                 <option value="4">4. Deal maker</option>
                             </select>
                         </td>
+                    </tr>
+                    <tr>
                         <td class="header" prio-class prio-value-bar-render="project.milestones[0].mena">Market enabler</td>
                         <td>
                             <select ng-model="project.milestones[0].mena" ng-change="saveNow()"
@@ -246,6 +252,8 @@
                                 <option value="4">4. Game changer</option>
                             </select>
                         </td>
+                    </tr>
+                    <tr>
                         <td class="header" prio-class prio-value-bar-render="project.milestones[0].sena">Strategy
                             enabler
                         </td>
@@ -264,17 +272,57 @@
                         <td colspan="3"><b>{{project.milestones[0].limiterlable}}</b></td>
                     </tr>
                     <tr>
-                        <td class="header" prio-class prio-value-bar-render-neg="project.milestones[0].effort">Effort
-                        </td>
+                        <td class="header" prio-class prio-value-bar-render-neg="project.milestones[0].effort">Effort</td>
                         <td>
-                            <select ng-model="project.milestones[0].effort" ng-change="saveNow()"
-                                ng-disabled="!user.changeContent">
+                            <select ng-model="project.milestones[0].effort" ng-disabled="true">
                                 <option value="1">1. Minimal effort</option>
                                 <option value="2">2. Medium effort</option>
                                 <option value="3">3. Large effort</option>
                                 <option value="4">4. Unknown effort</option>
                             </select>
                         </td>
+                    </tr>
+                    <tr>
+                        <td class="header">Highlevel hour estimate</td>
+                        <td>
+                            <select ng-model="project.milestones[0].estimate" ng-change="saveNow()"
+                                ng-disabled="!user.changeContent">
+                                <option value="1">1 hour</option>
+                                <option value="2">2 hour</option>
+                                <option value="3">3 hour</option>
+                                <option value="5">5 hour</option>
+                                <option value="8">8 hour</option>
+                                <option value="13">13 hour</option>
+                                <option value="20">20 hour</option>
+                                <option value="40">40 hour</option>
+                                <option value="60">60 hour</option>
+                                <option value="80">80 hour</option>
+                                <option value="100">100 hour</option>
+                                <option value="150">150 hour</option>
+                                <option value="200">200 hour</option>
+                                <option value="300">300 hour</option>
+                                <option value="400">400 hour</option>
+                                <option value="500">500 hour</option>
+                                <option value="700">700 hour</option>
+                                <option value="1000">1.000 hour</option>
+                                <option value="1500">1.500 hour</option>
+                                <option value="2000">2.000 hour</option>
+                                <option value="3000">3.000 hour</option>
+                                <option value="5000">5.000 hour</option>
+                                <option value="8000">8.000 hour</option>
+                                <option value="10000">10.000 hour</option>
+                                <option value="13000">13.000 hour</option>
+                                <option value="15000">15.000 hour</option>
+                                <option value="20000">20.000 hour</option>
+                                <option value="30000">30.000 hour</option>
+                                <option value="50000">50.000 hour</option>
+                                <option value="80000">80.000 hour</option>
+                                <option value="100000">100.000 hour</option>
+                                <option value="-1">Unknown estimate</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
                         <td class="header" prio-class prio-value-bar-render-neg="project.milestones[0].risklevel">Risk
                             of
                             failure</td>

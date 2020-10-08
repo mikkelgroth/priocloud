@@ -98,6 +98,7 @@ angular
                 $scope.project.rawenddate = $("#projenddate")[0].value;
             }
 
+
             //  Start LINK ENGINE
 
             $scope.closelink = function (link) {
@@ -244,6 +245,10 @@ angular
                 }
                 $scope.project.milestones[0].priority = $scope.project.priority;
                 $scope.project.milestones[0].title = $scope.project.title;
+
+                //calc estimate
+                $scope.project.milestones[0].numestimate = Number($scope.project.milestones[0].estimate);
+                util.calcestimate($scope.project.milestones[0],$scope.project,$scope.company);
 
                 util.setmileflags($scope.project.milestones[0]);
             };
