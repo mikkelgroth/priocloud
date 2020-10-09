@@ -1,73 +1,89 @@
-<prio-admin-menu></prio-admin-menu>
-<div class="view">
-    <h3>Projects</h3>
-    <div class="popup">
-        <div class="overview popupcontent">
-            <div class="actions">
-                <div class="layout">
-                    <div class="layoutelement">
-                        <button type="button" id="saveButton1" ng-if="user.admin && companyedit"
-                            ng-click="saveProject(np)">save</button>
-                    </div>
-                    <div class="layoutelement center">
-                        <button type="button primary" class="Red" ng-click="deleteProject(np)"
-                            ng-if="user.admin && companyedit">delete</button>
-                    </div>
-                    <div class="layoutelement right">
-                        <button type="button" class="close" ng-click="close()"></button>
-                    </div>
-                </div>
-            </div>
-            <h3>
-                Edit project
-            </h3>
-            <table class="formtable smaller">
-                <tr>
-                    <td class="formlabel">Project title</td>
-                    <td><input type="text" ng-model="np.title" /></td>
-                </tr>
-                <tr>
-                    <td class="formlabel">Business unit</td>
-                    <td>
-                        <select ng-model="np.bu" ng-options="bu.name for bu in bus track by bu.name"></select>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="formlabel">PM</td>
-                    <td>
-                        <select ng-model="np.pm"
-                            ng-options="u.name for u in users | filter: {source: true} | orderBy:'name' track by u.name">
-                        </select>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="formlabel">PO</td>
-                    <td>
-                        <select ng-model="np.po"
-                            ng-options="u.name for u in users | filter: {source: true} | orderBy:'name' track by u.name">
-                        </select>
-                    </td>
-                </tr>
-            </table>
-        </div>
-    </div>
-    <div class="right"><button ng-click="newProject()" ng-if="user.admin && companyedit">create new project</button></div>
-    <div class="mainbox" ng-if="projects.length > 0">
-        <table class="tablelist smaller">
-            <tr class="header">
-                <td>Project</td>
-                <td>BU</td>
-                <td>Portfolio</td>
-                <td>State</td>
-                <td>Go to project</td>
-            </tr>
-            <tr ng-repeat="project in projects | orderBy: 'title'">
-                <td ng-click="editProject(project)">{{project.title}}</td>
-                <td ng-click="editProject(project)">{{project.bu.name}}</td>
-                <td ng-click="editProject(project)">{{project.support.name}}</td>
-                <td ng-click="editProject(project)">{{project.state}}</td>
-                <td ng-click="gotoProject(project)">--></td>
-            </tr>
-        </table>
-    </div>
+<header>
+	<div class="title">
+		<h1>
+			Administration
+		</h1>
+	
+	</div>
+	<div class="options">
+
+	</div>
+</header>
+<div class="maincontentcontainer">
+	<prio-admin-menu></prio-admin-menu>
+
+	<div class="content">
+		<div class="view">
+			<h3>Projects</h3>
+			<div class="popup">
+				<div class="overview popupcontent">
+					<div class="actions">
+						<div class="layout">
+							<div class="layoutelement">
+								<button type="button" id="saveButton1" ng-if="user.admin && companyedit"
+									ng-click="saveProject(np)">save</button>
+							</div>
+							<div class="layoutelement center">
+								<button type="button primary" class="Red" ng-click="deleteProject(np)"
+									ng-if="user.admin && companyedit">delete</button>
+							</div>
+							<div class="layoutelement right">
+								<button type="button" class="close" ng-click="close()"></button>
+							</div>
+						</div>
+					</div>
+					<h3>
+						Edit project
+					</h3>
+					<table class="formtable smaller">
+						<tr>
+							<td class="formlabel">Project title</td>
+							<td><input type="text" ng-model="np.title" /></td>
+						</tr>
+						<tr>
+							<td class="formlabel">Business unit</td>
+							<td>
+								<select ng-model="np.bu" ng-options="bu.name for bu in bus track by bu.name"></select>
+							</td>
+						</tr>
+						<tr>
+							<td class="formlabel">PM</td>
+							<td>
+								<select ng-model="np.pm"
+									ng-options="u.name for u in users | filter: {source: true} | orderBy:'name' track by u.name">
+								</select>
+							</td>
+						</tr>
+						<tr>
+							<td class="formlabel">PO</td>
+							<td>
+								<select ng-model="np.po"
+									ng-options="u.name for u in users | filter: {source: true} | orderBy:'name' track by u.name">
+								</select>
+							</td>
+						</tr>
+					</table>
+				</div>
+			</div>
+			<div class="right"><button ng-click="newProject()" ng-if="user.admin && companyedit">create new project</button></div>
+			<div class="mainbox" ng-if="projects.length > 0">
+				<table class="tablelist smaller">
+					<tr class="header">
+						<td>Project</td>
+						<td>BU</td>
+						<td>Portfolio</td>
+						<td>State</td>
+						<td>Go to project</td>
+					</tr>
+					<tr ng-repeat="project in projects | orderBy: 'title'">
+						<td ng-click="editProject(project)">{{project.title}}</td>
+						<td ng-click="editProject(project)">{{project.bu.name}}</td>
+						<td ng-click="editProject(project)">{{project.support.name}}</td>
+						<td ng-click="editProject(project)">{{project.state}}</td>
+						<td ng-click="gotoProject(project)">--></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+	</div>
 </div>

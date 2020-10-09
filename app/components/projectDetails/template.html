@@ -1,435 +1,453 @@
-<h2 class="center {{project.lastStatusFlag}}">
-    {{project.type}} - {{project.title}} ({{project.projectnumber}})
-</h2>
-<prio-project-menu prio-project-id="{{project._id.$oid}}"></prio-project-menu>
-<prio-project-details-menu prio-project-id="{{project._id.$oid}}"></prio-project-details-menu>
-<form ng-submit="saveProject()">
-    <div class="view">
-        <div class="mainbox editboxon">
-            <div class="right">
-                <button type="button" id="saveButton1" prio-class save-this="$parent.hasChanged"
-                    ng-if="user.changeContent" ng-click="saveProject()">save</button>
-            </div>
-            <div id="simplestatus" ng-show="route == 'simplestatus'">
-                <table class="smaller gutter-top">
-                    <tr>
-                        <td class="header">
-                            <p>Overall flag <span id="overallstatus_count" class="right"></span></p>
-                        </td>
-                        <td>
-                            <select ng-disabled="!user.changeContent || !saveStatusEnabled" ng-model="editstatus.status"
-                                ng-change="saveNow()">
-                                <option value="Green">OK (Green)</option>
-                                <option value="Yellow">Observe (Yellow)</option>
-                                <option value="Orange">Assist (Orange)</option>
-                                <option value="Red">Intervention (Red)</option>
-                            </select>
-                        </td>
-                        <td class="header">
-                            <p>Last saved status</p>
-                        </td>
-                        <td>
-                            {{editstatus.date | date:'longDate'}}
 
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="header">Overall status</td>
-                        <td colspan="3">
+<header>
+<div class="title">
+	<div class="breadcrumbs">
+		<a href="#/projects" class="breadcrumb">
+			Projects &amp; Products
+		</a>
+	</div>
+	<h1 class="center {{project.lastStatusFlag}}">
+		{{project.type}} - {{project.title}} ({{project.projectnumber}})
+	</h1>
+</div>
+<div class="options">
 
-                            <div class="field"><textarea ng-change="saveNow()"
-                                    ng-disabled="!user.changeContent || !saveStatusEnabled"
-                                    ng-model="editstatus.overallcomments" maxlength="500" id="overallstatus"
-                                    placeholder="Comments"></textarea></div>
+</div>
+</header>
+<div class="maincontentcontainer">
+	<prio-project-menu prio-project-id="{{project._id.$oid}}"></prio-project-menu>
+	<prio-project-details-menu prio-project-id="{{project._id.$oid}}"></prio-project-details-menu>
+	<div class="content">
+		<form ng-submit="saveProject()">
+			<div class="view">
+				<div class="mainbox editboxon">
+					<div class="right">
+						<button type="button" id="saveButton1" prio-class save-this="$parent.hasChanged"
+							ng-if="user.changeContent" ng-click="saveProject()">save</button>
+					</div>
+					<div id="simplestatus" ng-show="route == 'simplestatus'">
+						<table class="smaller gutter-top">
+							<tr>
+								<td class="header">
+									<p>Overall flag <span id="overallstatus_count" class="right"></span></p>
+								</td>
+								<td>
+									<select ng-disabled="!user.changeContent || !saveStatusEnabled" ng-model="editstatus.status"
+										ng-change="saveNow()">
+										<option value="Green">OK (Green)</option>
+										<option value="Yellow">Observe (Yellow)</option>
+										<option value="Orange">Assist (Orange)</option>
+										<option value="Red">Intervention (Red)</option>
+									</select>
+								</td>
+								<td class="header">
+									<p>Last saved status</p>
+								</td>
+								<td>
+									{{editstatus.date | date:'longDate'}}
+		
+								</td>
+							</tr>
+							<tr>
+								<td class="header">Overall status</td>
+								<td colspan="3">
+		
+									<div class="field"><textarea ng-change="saveNow()"
+											ng-disabled="!user.changeContent || !saveStatusEnabled"
+											ng-model="editstatus.overallcomments" maxlength="500" id="overallstatus"
+											placeholder="Comments"></textarea></div>
+		
+		
+								</td>
+							</tr>
+		
+						</table>
+					</div>
+					<div id="details" ng-show="route == 'details'">
+						<table class="smaller gutter-top">
+							<tr>
+								<td class="l header">Title </td>
+								<td>
+									<input style="width: 200px" ng-model="project.title" ng-change="saveNow()" id="title"
+										ng-disabled="!user.changeContent" maxlength="25" />
+								</td>
+								<td class="l header">Type</td>
+								<td>
+									<select ng-model="project.type" id="type" ng-change="saveNow()"
+										ng-disabled="!user.changeContent">
+										<option value="Project">Project</option>
+										<option value="Product">Product</option>
+									</select>
+								</td>
+							</tr>
+							<tr>
+								<td class="header">Unit</td>
+								<td>
+		
+									<select ng-change="saveNow()" ng-model="project.bu" id="probu"
+										ng-options="bu.name for bu in bus | orderBy: 'order' track by bu.name"
+										ng-disabled="!(user.changeContent && (user.admin || user.subadmin))"></select>
+								</td>
+								<td class="header">State</td>
+								<td>
+									<select ng-model="project.state" id="state" ng-change="statechange();saveNow()"
+										ng-disabled="!user.changeContent">
+										<option value="Template">Template</option>
+										<option value="Internal Approved">Internal Approved</option>
+										<option value="Portfolio Approved">Portfolio Approved</option>
+										<option value="Company Approved">Company Approved</option>
+										<option value="Progress">Progress</option>
+										<option value="Onhold">On hold</option>
+										<option value="Rejected">Rejected</option>
+										<option value="Closed">Closed</option>
+									</select>
+								</td>
+							</tr>
+							<tr>
+								<td class="header">Portfolio</td>
+								<td>
+									<select ng-change="saveNow()" ng-model="project.support" id="prosupport"
+										ng-options="port.name for port in company.portfolios | orderBy: 'level' track by port.name"
+										ng-disabled="!user.changeContent"></select>
+								</td>
+								<td class="header">ID</td>
+								<td>
+									<input ng-model="project.projectnumber" ng-change="saveNow()"
+										ng-disabled="!user.changeContent && (user.financecontroller || user.admin || user.subadmin)" />
+								</td>
+							</tr>
+							<tr>
+								<td class="header">Start Date</td>
+								<td>
+									<input type="text" id="projdate" datepicker="" ng-model="project.milestones[0].rawdate"
+										ng-change="saveNow()" class="cal" ng-disabled="!user.changeContent" />
+									{{project.milestones[0].date | date:'longDate'}}
+								</td>
+								<td class="header">End Date</td>
+								<td>
+									<input type="text" id="projenddate" datepicker=""
+										ng-model="project.milestones[0].rawenddate" ng-change="statechange();saveNow()"
+										class="cal" ng-disabled="!user.changeContent" />
+									{{project.milestones[0].enddate | date:'longDate'}}
+								</td>
+							</tr>
+							<tr>
+								<td class="header">Pending action</td>
+								<td colspan="3">
+									<div class="field">
+										<textarea ng-model="project.deccomment" maxlength="500" ng-change="saveNow()"
+											placeholder="Comments for decisions pending or output of decision"
+											ng-disabled="!user.changeContent"></textarea>
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td class="header">Company broadcast</td>
+								<td>
+									<input type="checkbox" ng-model="project.broadcast" ng-change="saveNow()">
+								</td>
+								<td class="header">
+									Notify
+								</td>
+								<td>
+									<select ng-model="project.pending" ng-change="saveNow()" ng-disabled="!user.changeContent">
+										<option value="None">None Pending</option>
+										<option value="Internal">Pending Internal</option>
+										<option value="Portfolio">Pending Portfolio</option>
+										<option value="Company">Pending Company</option>
+									</select>
+								</td>
+							</tr>
+							<tr>
+								<td class="header">Affected units</td>
+								<td>
+									<select class="multiple-select" style="width: 200px" multiple="multiple" ng-multiple="true"
+										ng-model="project.connect" ng-change="saveNow()" ng-disabled="!user.changeContent">
+										<option ng-repeat="bu in bus | orderBy:'order'" value="{{bu.name}}">
+											{{bu.indent}}{{bu.name}}
+										</option>
+									</select>
+								</td>
+								<td class="header">Affected strategies</td>
+								<td>
+									<select class="multiple-select" style="width: 200px" multiple="multiple" ng-multiple="true"
+										ng-model="project.strategies" ng-change="saveNow()" ng-disabled="!user.changeContent">
+										<option ng-repeat="type in company.strategys| orderBy:'title'" value="{{type.title}}">
+											{{type.title}}</option>
+									</select>
+								</td>
+							</tr>
+							<tr>
+								<td class="header">Affected systems</td>
+								<td>
+									<select class="multiple-select" style="width: 200px" multiple="multiple" ng-multiple="true"
+										ng-model="project.systems" ng-change="saveNow()" ng-disabled="!user.changeContent">
+										<option ng-repeat="system in systems | orderBy: 'title'" value="{{system.title}}">
+											{{system.title}}
+										</option>
+									</select>
+								</td>
+								<td class="header">Affected processes</td>
+								<td>
+									<select class="multiple-select" style="width: 200px" multiple="multiple" ng-multiple="true"
+										ng-model="project.processes" ng-change="saveNow()" ng-disabled="!user.changeContent">
+										<option ng-repeat="process in processs | orderBy:'title'" value="{{process.title}}">
+											{{process.title}}</option>
+									</select>
+								</td>
+							</tr>
+		
+							<tr>
+								<td class="header">State log</td>
+								<td colspan="3">
+									<div class="field"><textarea>{{project.statelog}}</textarea></div>
+								</td>
+							</tr>
+						</table>
+					</div>
+					<div id="priority" ng-show="route == 'priority'">
+						<table class="smaller gutter-top">
+							<tr>
+								<td class="header">Priority</td>
+								<td>
+									<select ng-model="project.priority" ng-change="statechange();saveNow()"
+										ng-disabled="!user.changeContent">
+										<option value="1. Mandatory">1. Mandatory</option>
+										<option value="2. Top priority">2. Top priority</option>
+										<option value="3. High priority">3. High priority</option>
+										<option value="4. Needed">4. Needed</option>
+										<option value="5. Valued">5. Valued</option>
+									</select>
+								</td>
+								<td class="header">WSJF</td>
+								<td>{{project.milestones[0].wsjf}}</td>
+							</tr>
+							<tr>
+								<td class="header">Value enabler total</td>
+								<td colspan="3"><b>{{project.milestones[0].enablerlable}}</b></td>
+							</tr>
+							<tr>
+								<td class="header" prio-class prio-value-bar-render="project.milestones[0].cena">Customer enabler</td>
+								<td>
+									<select ng-model="project.milestones[0].cena" ng-change="saveNow()"
+										ng-disabled="!user.changeContent">
+										<option value="1">1. None</option>
+										<option value="2">2. Customer benefit</option>
+										<option value="3">3. Customer demand</option>
+										<option value="4">4. Deal maker</option>
+									</select>
+								</td>
+								<td class="header" prio-class prio-value-bar-render="project.milestones[0].mena">Market enabler</td>
+								<td>
+									<select ng-model="project.milestones[0].mena" ng-change="saveNow()"
+										ng-disabled="!user.changeContent">
+										<option value="1">1. None</option>
+										<option value="2">2. Catch up</option>
+										<option value="3">3. Market leading</option>
+										<option value="4">4. Game changer</option>
+									</select>
+								</td>
+							</tr>
+							<tr>
+								<td class="header" prio-class prio-value-bar-render="project.milestones[0].bena">Platform
+									enabler
+								</td>
+								<td>
+									<select ng-model="project.milestones[0].bena" ng-change="saveNow()"
+										ng-disabled="!user.changeContent">
+										<option value="1">1. Minimal value</option>
+										<option value="2">2. Medium value</option>
+										<option value="3">3. Large value</option>
+										<option value="4">4. Game changer</option>
+									</select>
+								</td>
+								<td class="header" prio-class prio-value-bar-render="project.milestones[0].sena">Strategy
+									enabler
+								</td>
+								<td>
+									<select ng-model="project.milestones[0].sena" ng-change="saveNow()"
+										ng-disabled="!user.changeContent">
+										<option value="1">1. Minimal value</option>
+										<option value="2">2. Medium value</option>
+										<option value="3">3. Large value</option>
+										<option value="4">4. Game changer</option>
+									</select>
+								</td>
+							</tr>
+							<tr>
+								<td class="header">Value limiter total</td>
+								<td colspan="3"><b>{{project.milestones[0].limiterlable}}</b></td>
+							</tr>
+							<tr>
+								<td class="header" prio-class prio-value-bar-render-neg="project.milestones[0].effort">Effort
+								</td>
+								<td>
+									<select ng-model="project.milestones[0].effort" ng-change="saveNow()"
+										ng-disabled="!user.changeContent">
+										<option value="1">1. Minimal effort</option>
+										<option value="2">2. Medium effort</option>
+										<option value="3">3. Large effort</option>
+										<option value="4">4. Unknown effort</option>
+									</select>
+								</td>
+								<td class="header" prio-class prio-value-bar-render-neg="project.milestones[0].risklevel">Risk
+									of
+									failure</td>
+								<td>
+									<select ng-model="project.milestones[0].risklevel" ng-change="saveNow()"
+										ng-disabled="!user.changeContent">
+										<option value="1">1. Slim risk</option>
+										<option value="2">2. Could happen</option>
+										<option value="3">3. Likely to happen</option>
+										<option value="4">4. Most likely to happen</option>
+									</select>
+								</td>
+							</tr>
+						</table>
+					</div>
+					<div id="owners" ng-show="route == 'owners'">
+						<table class="smaller gutter-top">
+							<tr>
+								<td class="header">PM/PO</td>
+								<td>
+									<select ng-model="project.pm" id="propm" ng-disabled="!user.changeContent"
+										ng-change="saveNow()"
+										ng-options="u.name for u in tempusers | filter: {source: true} | orderBy:'name' track by u.name">
+									</select>
+		
+								</td>
+								<td class="header">Owner</td>
+								<td>
+									<select ng-model="project.po" id="propo" ng-disabled="!user.changeContent"
+										ng-change="saveNow()"
+										ng-options="u.name for u in tempusers | filter: {source: true} | orderBy:'name' track by u.name">
+									</select>
+								</td>
+							</tr>
+							<tr>
+								<td class="header">Alt. PM/PO</td>
+								<td>
+									<select ng-model="project.altpm" id="proaltpm" ng-disabled="!user.changeContent"
+										ng-change="saveNow()"
+										ng-options="u.name for u in tempusers | filter: {source: true} | orderBy:'name' track by u.name">
+									</select>
+								</td>
+								<td class="header">Alt. Owner</td>
+								<td>
+									<select ng-model="project.altpo" id="proaltpo" ng-disabled="!user.changeContent"
+										ng-change="saveNow()"
+										ng-options="u.name for u in tempusers | filter: {source: true} | orderBy:'name' track by u.name">
+									</select>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<p>Steering Commitee members</p>
+								</td>
+								<td colspan="3">
+									<div class="field">
+										<textarea ng-model="project.memberssteering" maxlength="500" ng-change="saveNow()"
+											placeholder="Name the members of your steering commitee."
+											ng-disabled="!user.changeContent"></textarea>
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<p>Resource demand</p>
+								</td>
+								<td colspan="3">
+									<div class="field">
+										<textarea ng-model="project.membersproject" maxlength="500" ng-change="saveNow()"
+											placeholder="Name the members of your project."
+											ng-disabled="!user.changeContent"></textarea>
+									</div>
+								</td>
+							</tr>
+		
+							<tr class="header">
+								<td colspan="4">Link external Organization document
+									<button ng-if="user.changeContent" ng-click="addlink('orglink')" ng-if="user.changeContent"
+										class="right">create link</button>
+								</td>
+							</tr>
+							<tr class="header" ng-if="project.linklist.length > 0">
+								<td>Title</td>
+								<td>URL</td>
+								<td>Show in report</td>
+								<td>Follow link</td>
+							</tr>
+							<tr ng-repeat="link in project.linklist" ng-if="link.lable=='orglink'">
+								<td ng-click="editlinkitem(link)">
+									{{link.title}}
+								</td>
+								<td ng-click="editlinkitem(link)">
+									{{link.url}}
+								</td>
+								<td class="Green" ng-show="link.showinreport">Show</td>
+								<td class="Red" ng-show="!link.showinreport">Hide</td>
+								<td>
+									<a target="_blank" href="{{link.url}}">
+										<div class="linkicon right"></div>
+									</a>
+								</td>
+							</tr>
+						</table>
+					</div>
+		
+					<div class="overview popup" ng-show="showeditlinkorg">
+						<table class="smaller gutter-top">
+							<tr class="header">
+								<td colspan="2">Edit link
+									<div class="right">
+										<button type="button" ng-click="closelink(editlink)">cancel</button>&nbsp;
+										<button ng-click="savelink(editlink)" ng-if="user.changeContent">save link</button>
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td class="header">Link title</td>
+								<td><input ng-model="editlink.title" /></td>
+							</tr>
+							<tr>
+								<td class="header">Link URL</td>
+								<td><input ng-model="editlink.url" /></td>
+							</tr>
+							<tr>
+								<td class="header">Show link in report</td>
+								<td><input type="checkbox" ng-model="editlink.showinreport"></td>
+							</tr>
+							<tr>
+								<td colspan="2">
+									<button ng-click="dellink(editlink)" ng-if="user.changeContent">delete link</button>
+								</td>
+							</tr>
+						</table>
+					</div>
+		
+		
+					<!--
+					<h2>Project logs</h2>
+					<h3>Save log</h3>
+					<table>
+						<tr ng-repeat="log in project.logSave">
+							<td>{{log.date | date:'yyyy-MM-dd @ HH:mm'}}</td>
+							<td>{{log.username}}</td>
+							<td>{{log.desc}}</td>
+						</tr>
+					</table>
+					<h3>View log</h3>
+					<table>
+						<tr ng-repeat="log in project.logWatch">
+							<td>{{log.date | date:'yyyy-MM-dd @ HH:mm'}}</td>
+							<td>{{log.username}}</td>
+							<td>{{log.desc}}</td>
+						</tr>
+					</table>
+					-->
+				</div>
+			</div>
+		</form>
+	</div>
+</div>
 
-
-                        </td>
-                    </tr>
-
-                </table>
-            </div>
-            <div id="details" ng-show="route == 'details'">
-                <table class="smaller gutter-top">
-                    <tr>
-                        <td class="l header">Title </td>
-                        <td>
-                            <input style="width: 200px" ng-model="project.title" ng-change="saveNow()" id="title"
-                                ng-disabled="!user.changeContent" maxlength="25" />
-                        </td>
-                        <td class="l header">Type</td>
-                        <td>
-                            <select ng-model="project.type" id="type" ng-change="saveNow()"
-                                ng-disabled="!user.changeContent">
-                                <option value="Project">Project</option>
-                                <option value="Product">Product</option>
-                            </select>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="header">Unit</td>
-                        <td>
-
-                            <select ng-change="saveNow()" ng-model="project.bu" id="probu"
-                                ng-options="bu.name for bu in bus | orderBy: 'order' track by bu.name"
-                                ng-disabled="!(user.changeContent && (user.admin || user.subadmin))"></select>
-                        </td>
-                        <td class="header">State</td>
-                        <td>
-                            <select ng-model="project.state" id="state" ng-change="statechange();saveNow()"
-                                ng-disabled="!user.changeContent">
-                                <option value="Template">Template</option>
-                                <option value="Internal Approved">Internal Approved</option>
-                                <option value="Portfolio Approved">Portfolio Approved</option>
-                                <option value="Company Approved">Company Approved</option>
-                                <option value="Progress">Progress</option>
-                                <option value="Onhold">On hold</option>
-                                <option value="Rejected">Rejected</option>
-                                <option value="Closed">Closed</option>
-                            </select>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="header">Portfolio</td>
-                        <td>
-                            <select ng-change="saveNow()" ng-model="project.support" id="prosupport"
-                                ng-options="port.name for port in company.portfolios | orderBy: 'level' track by port.name"
-                                ng-disabled="!user.changeContent"></select>
-                        </td>
-                        <td class="header">ID</td>
-                        <td>
-                            <input ng-model="project.projectnumber" ng-change="saveNow()"
-                                ng-disabled="!user.changeContent && (user.financecontroller || user.admin || user.subadmin)" />
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="header">Start Date</td>
-                        <td>
-                            <input type="text" id="projdate" datepicker="" ng-model="project.milestones[0].rawdate"
-                                ng-change="saveNow()" class="cal" ng-disabled="!user.changeContent" />
-                            {{project.milestones[0].date | date:'longDate'}}
-                        </td>
-                        <td class="header">End Date</td>
-                        <td>
-                            <input type="text" id="projenddate" datepicker=""
-                                ng-model="project.milestones[0].rawenddate" ng-change="statechange();saveNow()"
-                                class="cal" ng-disabled="!user.changeContent" />
-                            {{project.milestones[0].enddate | date:'longDate'}}
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="header">Pending action</td>
-                        <td colspan="3">
-                            <div class="field">
-                                <textarea ng-model="project.deccomment" maxlength="500" ng-change="saveNow()"
-                                    placeholder="Comments for decisions pending or output of decision"
-                                    ng-disabled="!user.changeContent"></textarea>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="header">Company broadcast</td>
-                        <td>
-                            <input type="checkbox" ng-model="project.broadcast" ng-change="saveNow()">
-                        </td>
-                        <td class="header">
-                            Notify
-                        </td>
-                        <td>
-                            <select ng-model="project.pending" ng-change="saveNow()" ng-disabled="!user.changeContent">
-                                <option value="None">None Pending</option>
-                                <option value="Internal">Pending Internal</option>
-                                <option value="Portfolio">Pending Portfolio</option>
-                                <option value="Company">Pending Company</option>
-                            </select>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="header">Affected units</td>
-                        <td>
-                            <select class="multiple-select" style="width: 200px" multiple="multiple" ng-multiple="true"
-                                ng-model="project.connect" ng-change="saveNow()" ng-disabled="!user.changeContent">
-                                <option ng-repeat="bu in bus | orderBy:'order'" value="{{bu.name}}">
-                                    {{bu.indent}}{{bu.name}}
-                                </option>
-                            </select>
-                        </td>
-                        <td class="header">Affected strategies</td>
-                        <td>
-                            <select class="multiple-select" style="width: 200px" multiple="multiple" ng-multiple="true"
-                                ng-model="project.strategies" ng-change="saveNow()" ng-disabled="!user.changeContent">
-                                <option ng-repeat="type in company.strategys| orderBy:'title'" value="{{type.title}}">
-                                    {{type.title}}</option>
-                            </select>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="header">Affected systems</td>
-                        <td>
-                            <select class="multiple-select" style="width: 200px" multiple="multiple" ng-multiple="true"
-                                ng-model="project.systems" ng-change="saveNow()" ng-disabled="!user.changeContent">
-                                <option ng-repeat="system in systems | orderBy: 'title'" value="{{system.title}}">
-                                    {{system.title}}
-                                </option>
-                            </select>
-                        </td>
-                        <td class="header">Affected processes</td>
-                        <td>
-                            <select class="multiple-select" style="width: 200px" multiple="multiple" ng-multiple="true"
-                                ng-model="project.processes" ng-change="saveNow()" ng-disabled="!user.changeContent">
-                                <option ng-repeat="process in processs | orderBy:'title'" value="{{process.title}}">
-                                    {{process.title}}</option>
-                            </select>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td class="header">State log</td>
-                        <td colspan="3">
-                            <div class="field"><textarea>{{project.statelog}}</textarea></div>
-                        </td>
-                    </tr>
-                </table>
-            </div>
-            <div id="priority" ng-show="route == 'priority'">
-                <table class="smaller gutter-top">
-                    <tr>
-                        <td class="header">Priority</td>
-                        <td>
-                            <select ng-model="project.priority" ng-change="statechange();saveNow()"
-                                ng-disabled="!user.changeContent">
-                                <option value="1. Mandatory">1. Mandatory</option>
-                                <option value="2. Top priority">2. Top priority</option>
-                                <option value="3. High priority">3. High priority</option>
-                                <option value="4. Needed">4. Needed</option>
-                                <option value="5. Valued">5. Valued</option>
-                            </select>
-                        </td>
-                        <td class="header">WSJF</td>
-                        <td>{{project.milestones[0].wsjf}}</td>
-                    </tr>
-                    <tr>
-                        <td class="header">Value enabler total</td>
-                        <td colspan="3"><b>{{project.milestones[0].enablerlable}}</b></td>
-                    </tr>
-                    <tr>
-                        <td class="header" prio-class prio-value-bar-render="project.milestones[0].cena">Customer enabler</td>
-                        <td>
-                            <select ng-model="project.milestones[0].cena" ng-change="saveNow()"
-                                ng-disabled="!user.changeContent">
-                                <option value="1">1. None</option>
-                                <option value="2">2. Customer benefit</option>
-                                <option value="3">3. Customer demand</option>
-                                <option value="4">4. Deal maker</option>
-                            </select>
-                        </td>
-                        <td class="header" prio-class prio-value-bar-render="project.milestones[0].mena">Market enabler</td>
-                        <td>
-                            <select ng-model="project.milestones[0].mena" ng-change="saveNow()"
-                                ng-disabled="!user.changeContent">
-                                <option value="1">1. None</option>
-                                <option value="2">2. Catch up</option>
-                                <option value="3">3. Market leading</option>
-                                <option value="4">4. Game changer</option>
-                            </select>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="header" prio-class prio-value-bar-render="project.milestones[0].bena">Platform
-                            enabler
-                        </td>
-                        <td>
-                            <select ng-model="project.milestones[0].bena" ng-change="saveNow()"
-                                ng-disabled="!user.changeContent">
-                                <option value="1">1. Minimal value</option>
-                                <option value="2">2. Medium value</option>
-                                <option value="3">3. Large value</option>
-                                <option value="4">4. Game changer</option>
-                            </select>
-                        </td>
-                        <td class="header" prio-class prio-value-bar-render="project.milestones[0].sena">Strategy
-                            enabler
-                        </td>
-                        <td>
-                            <select ng-model="project.milestones[0].sena" ng-change="saveNow()"
-                                ng-disabled="!user.changeContent">
-                                <option value="1">1. Minimal value</option>
-                                <option value="2">2. Medium value</option>
-                                <option value="3">3. Large value</option>
-                                <option value="4">4. Game changer</option>
-                            </select>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="header">Value limiter total</td>
-                        <td colspan="3"><b>{{project.milestones[0].limiterlable}}</b></td>
-                    </tr>
-                    <tr>
-                        <td class="header" prio-class prio-value-bar-render-neg="project.milestones[0].effort">Effort
-                        </td>
-                        <td>
-                            <select ng-model="project.milestones[0].effort" ng-change="saveNow()"
-                                ng-disabled="!user.changeContent">
-                                <option value="1">1. Minimal effort</option>
-                                <option value="2">2. Medium effort</option>
-                                <option value="3">3. Large effort</option>
-                                <option value="4">4. Unknown effort</option>
-                            </select>
-                        </td>
-                        <td class="header" prio-class prio-value-bar-render-neg="project.milestones[0].risklevel">Risk
-                            of
-                            failure</td>
-                        <td>
-                            <select ng-model="project.milestones[0].risklevel" ng-change="saveNow()"
-                                ng-disabled="!user.changeContent">
-                                <option value="1">1. Slim risk</option>
-                                <option value="2">2. Could happen</option>
-                                <option value="3">3. Likely to happen</option>
-                                <option value="4">4. Most likely to happen</option>
-                            </select>
-                        </td>
-                    </tr>
-                </table>
-            </div>
-            <div id="owners" ng-show="route == 'owners'">
-                <table class="smaller gutter-top">
-                    <tr>
-                        <td class="header">PM/PO</td>
-                        <td>
-                            <select ng-model="project.pm" id="propm" ng-disabled="!user.changeContent"
-                                ng-change="saveNow()"
-                                ng-options="u.name for u in tempusers | filter: {source: true} | orderBy:'name' track by u.name">
-                            </select>
-
-                        </td>
-                        <td class="header">Owner</td>
-                        <td>
-                            <select ng-model="project.po" id="propo" ng-disabled="!user.changeContent"
-                                ng-change="saveNow()"
-                                ng-options="u.name for u in tempusers | filter: {source: true} | orderBy:'name' track by u.name">
-                            </select>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="header">Alt. PM/PO</td>
-                        <td>
-                            <select ng-model="project.altpm" id="proaltpm" ng-disabled="!user.changeContent"
-                                ng-change="saveNow()"
-                                ng-options="u.name for u in tempusers | filter: {source: true} | orderBy:'name' track by u.name">
-                            </select>
-                        </td>
-                        <td class="header">Alt. Owner</td>
-                        <td>
-                            <select ng-model="project.altpo" id="proaltpo" ng-disabled="!user.changeContent"
-                                ng-change="saveNow()"
-                                ng-options="u.name for u in tempusers | filter: {source: true} | orderBy:'name' track by u.name">
-                            </select>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <p>Steering Commitee members</p>
-                        </td>
-                        <td colspan="3">
-                            <div class="field">
-                                <textarea ng-model="project.memberssteering" maxlength="500" ng-change="saveNow()"
-                                    placeholder="Name the members of your steering commitee."
-                                    ng-disabled="!user.changeContent"></textarea>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <p>Resource demand</p>
-                        </td>
-                        <td colspan="3">
-                            <div class="field">
-                                <textarea ng-model="project.membersproject" maxlength="500" ng-change="saveNow()"
-                                    placeholder="Name the members of your project."
-                                    ng-disabled="!user.changeContent"></textarea>
-                            </div>
-                        </td>
-                    </tr>
-
-                    <tr class="header">
-                        <td colspan="4">Link external Organization document
-                            <button ng-if="user.changeContent" ng-click="addlink('orglink')" ng-if="user.changeContent"
-                                class="right">create link</button>
-                        </td>
-                    </tr>
-                    <tr class="header" ng-if="project.linklist.length > 0">
-                        <td>Title</td>
-                        <td>URL</td>
-                        <td>Show in report</td>
-                        <td>Follow link</td>
-                    </tr>
-                    <tr ng-repeat="link in project.linklist" ng-if="link.lable=='orglink'">
-                        <td ng-click="editlinkitem(link)">
-                            {{link.title}}
-                        </td>
-                        <td ng-click="editlinkitem(link)">
-                            {{link.url}}
-                        </td>
-                        <td class="Green" ng-show="link.showinreport">Show</td>
-                        <td class="Red" ng-show="!link.showinreport">Hide</td>
-                        <td>
-                            <a target="_blank" href="{{link.url}}">
-                                <div class="linkicon right"></div>
-                            </a>
-                        </td>
-                    </tr>
-                </table>
-            </div>
-
-            <div class="overview popup" ng-show="showeditlinkorg">
-                <table class="smaller gutter-top">
-                    <tr class="header">
-                        <td colspan="2">Edit link
-                            <div class="right">
-                                <button type="button" ng-click="closelink(editlink)">cancel</button>&nbsp;
-                                <button ng-click="savelink(editlink)" ng-if="user.changeContent">save link</button>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="header">Link title</td>
-                        <td><input ng-model="editlink.title" /></td>
-                    </tr>
-                    <tr>
-                        <td class="header">Link URL</td>
-                        <td><input ng-model="editlink.url" /></td>
-                    </tr>
-                    <tr>
-                        <td class="header">Show link in report</td>
-                        <td><input type="checkbox" ng-model="editlink.showinreport"></td>
-                    </tr>
-                    <tr>
-                        <td colspan="2">
-                            <button ng-click="dellink(editlink)" ng-if="user.changeContent">delete link</button>
-                        </td>
-                    </tr>
-                </table>
-            </div>
-
-
-            <!--
-            <h2>Project logs</h2>
-            <h3>Save log</h3>
-            <table>
-                <tr ng-repeat="log in project.logSave">
-                    <td>{{log.date | date:'yyyy-MM-dd @ HH:mm'}}</td>
-                    <td>{{log.username}}</td>
-                    <td>{{log.desc}}</td>
-                </tr>
-            </table>
-            <h3>View log</h3>
-            <table>
-                <tr ng-repeat="log in project.logWatch">
-                    <td>{{log.date | date:'yyyy-MM-dd @ HH:mm'}}</td>
-                    <td>{{log.username}}</td>
-                    <td>{{log.desc}}</td>
-                </tr>
-            </table>
-            -->
-        </div>
-    </div>
-</form>

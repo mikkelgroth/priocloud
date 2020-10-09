@@ -1,6 +1,6 @@
 <ul>
-    <li prio-route-active="login|price|about|alternatives|register|help|dashboard">
-        <a href="#/login">Home</a>
+    <!-- <li prio-route-active="login|price|about|alternatives|register|help|dashboard">
+        <a href="#/login">Util (deprecated)</a>
         <ul>
             <li><a href="#/login">Log in/out</a></li>
             <li><a href="#/price">Pricing</a></li>
@@ -9,32 +9,52 @@
             <li><a href="#/register">Create a new Company Portfolio</a></li>
             <li><a href="#/help">Help</a></li>
         </ul>
-    </li>
+    </li> -->
     <span prio-user-authenticated="{display: true}">
         <li prio-route-active="projects|project">
-            <a href="#/dashboard">Portfolio</a>
+			<!-- <a href="#/dashboard">Portfolio</a> -->
+			<div class="menutitle">
+				Portfolio
+			</div>
             <ul>
-                <li><a href="#/projects">Lists</a></li>
+				<li>
+
+					<a href="#/projects">
+						Projects &amp; Products
+					</a>
+					<li><a href="#/systems">Systems</a></li>
+					<li><a href="#/processs">Processes</a></li>   
+				</li>
                 <li ng-if="user.businessowner"><a href="#/projects/create">New entry</a></li>                               
-                <li ng-if="company.filters.companyshowDepend"><a href="#/projects/dependencies">People</a></li>
-                <li ng-if="company.filters.companyshowDeliverables"><a href="#/projects/deliverables">Deliverables</a></li>
-                <li ng-if="company.filters.companyshowIssues"><a href="#/projects/risks">Risks</a></li>     
+
+				<li prio-route-active="metrics|metric">
+					<a href="#/metrics">Metrics</a>
+					<!-- <ul>
+						<li><a href="#/metrics">Metrics</a></li>              
+					</ul> -->
+				</li>  
             </ul>
             
-        </li>
+		</li>
+	
         <li prio-route-active="systems|system|processs|process">
-            <a href="#/systems">Compliance</a>
+			<!-- <a href="#/systems">Compliance</a> -->
+			<div class="menutitle">
+				Insights
+			</div>
             <ul>
-                <li><a href="#/systems">Systems</a></li>
-                <li><a href="#/processs">Processes</a></li>                
+				<li ng-if="company.filters.companyshowDepend"><a href="#/projects/dependencies">People</a></li>
+                <li ng-if="company.filters.companyshowDeliverables"><a href="#/projects/deliverables">Deliverables</a></li>
+				<li ng-if="company.filters.companyshowIssues"><a href="#/projects/risks">Risks</a></li>   
+                         
             </ul>
-        </li>
-        <li prio-route-active="metrics|metric">
-            <a href="#/metrics">Metrics</a>
-            <ul>
-                <li><a href="#/metrics">Metrics</a></li>              
-            </ul>
-        </li>
+		</li>
+		<li>
+			<div class="menutitle">
+				Other
+			</div>
+		</li>
+      
         <li prio-route-active="settings" ng-if="!user.demo">
             <a href="#/settings">Settings</a>
         </li>

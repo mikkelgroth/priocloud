@@ -1,106 +1,121 @@
-<prio-admin-menu></prio-admin-menu>
 
-<div class="view">
-    <div class="mainbox">
+<header>
+	<div class="title">
+		<h1>
+			Administration
+		</h1>
+		
+	</div>
+	<div class="options">
 
-        <h3>Use these sections of PrioCloud</h3>
-
-        <div class="columnsection contentblock"></div>
-
-        <label for="posection"><input type="checkbox" id="posection" ng-model="company.filters.companyshowPOsection">
-            <i> Business owner feedback</i></br></label>
-
-        <label for="status"><input type="checkbox" id="status" ng-model="company.filters.companyshowStatus">
-            <i> Elaborate status & status history</i></br></label>
-
-        <label for="status"><input type="checkbox" id="actionpoints" ng-model="company.filters.companyshowActionpoints">
-            <i> Action points & decision points</i></br></label>
-
-        <label for="deliverables"><input type="checkbox" id="deliverables"
-                ng-model="company.filters.companyshowDeliverables">
-            <i> Deliverables</i></br></label>
-
-        <label for="finance"><input type="checkbox" id="finance" ng-model="company.filters.companyshowFinance">
-            <i> Finance</i></br></label>
-
-        <label for="issues"><input type="checkbox" id="issues" ng-model="company.filters.companyshowIssues">
-            <i> Risk & issues</i></br></label>
-
-        <label for="dependencies"><input type="checkbox" id="dependencies" ng-model="company.filters.companyshowDepend">
-            <i> People & dependencies</br></i></label>
-
-        <label for="keyresults"><input type="checkbox" id="keyresults" ng-model="company.filters.companyshowKeyresults">
-            <i> Key results</br></i></label>
-
-
-
-        <div class="right">
-            <button type="button" id="saveButton" prio-class ng-if="user.admin && companyedit"
-                ng-click="saveCompanyFilters()"><b>save
-                    settings</b></button>
-
-        </div>
-
-    </div>
-
-
-    <h3>Portfolios</h3>
-    <div class="popupport">
-        <div class="overview popupcontent">
-            <div class="actions">
-                <div class="layout">
-                    <div class="layoutelement">
-                        <button type="button" id="saveButton1" ng-if="user.admin && companyedit"
-                            ng-click="saveport()">save</button>
-                    </div>
-                    <div class="layoutelement center">
-                        <button type="button primary" class="Red" ng-click="delport(editport)"
-                            ng-if="user.admin && companyedit">delete</button>
-                    </div>
-                    <div class="layoutelement right">
-                        <button type="button" class="close" ng-click="closeport()"></button>
-                    </div>
-                </div>
-            </div>
-            <h2>
-                Edit portfolio
-            </h2>
-            <table class="formtable smaller">
-                <tr>
-                    <td class="formlabel">Portfolio name</td>
-                    <td><input ng-model="editport.name" /></td>
-                </tr>
-                <tr>
-                    <td class="formlabel">Portfolio level</td>
-                    <td>
-                        <select ng-model="editport.level">
-                            <option value="1">Executive</option>
-                            <option value="2">High</option>
-                            <option value="3">Medium</option>
-                            <option value="4">Low</option>
-                        </select>
-                    </td>
-                </tr>
-            </table>
-        </div>
-    </div>
-    <div class="right">
-        <button ng-if="user.admin && companyedit && (company.portfolios == null || company.portfolios.length == 0)"
-            ng-click="addport()">create portfolio</button>
-    </div>
-    <div class="overview" ng-if="company.portfolios.length > 0">
-        <table class="tablelist smaller">
-            <tr class="header">
-                <td>
-                    <div class="right">
-                        <button ng-click="addport()" ng-if="user.admin && companyedit">create portfolio</button>
-                    </div>
-                </td>
-            </tr>
-            <tr ng-repeat="port in company.portfolios| orderBy:'name'" ng-click="editportfolio(port)">
-                <td> {{port.name}}</td>
-            </tr>
-        </table>
-    </div>
-
+	</div>
+</header>
+<div class="maincontentcontainer">
+	<prio-admin-menu></prio-admin-menu>
+	<div class="content">
+		<div class="view">
+			<div class="mainbox">
+		
+				<h3>Use these sections of PrioCloud</h3>
+		
+				<div class="columnsection contentblock"></div>
+		
+				<label for="posection"><input type="checkbox" id="posection" ng-model="company.filters.companyshowPOsection">
+					<i> Business owner feedback</i></br></label>
+		
+				<label for="status"><input type="checkbox" id="status" ng-model="company.filters.companyshowStatus">
+					<i> Elaborate status & status history</i></br></label>
+		
+				<label for="status"><input type="checkbox" id="actionpoints" ng-model="company.filters.companyshowActionpoints">
+					<i> Action points & decision points</i></br></label>
+		
+				<label for="deliverables"><input type="checkbox" id="deliverables"
+						ng-model="company.filters.companyshowDeliverables">
+					<i> Deliverables</i></br></label>
+		
+				<label for="finance"><input type="checkbox" id="finance" ng-model="company.filters.companyshowFinance">
+					<i> Finance</i></br></label>
+		
+				<label for="issues"><input type="checkbox" id="issues" ng-model="company.filters.companyshowIssues">
+					<i> Risk & issues</i></br></label>
+		
+				<label for="dependencies"><input type="checkbox" id="dependencies" ng-model="company.filters.companyshowDepend">
+					<i> People & dependencies</br></i></label>
+		
+				<label for="keyresults"><input type="checkbox" id="keyresults" ng-model="company.filters.companyshowKeyresults">
+					<i> Key results</br></i></label>
+		
+		
+		
+				<div class="right">
+					<button type="button" id="saveButton" prio-class ng-if="user.admin && companyedit"
+						ng-click="saveCompanyFilters()"><b>save
+							settings</b></button>
+		
+				</div>
+		
+			</div>
+		
+		
+			<h3>Portfolios</h3>
+			<div class="popupport">
+				<div class="overview popupcontent">
+					<div class="actions">
+						<div class="layout">
+							<div class="layoutelement">
+								<button type="button" id="saveButton1" ng-if="user.admin && companyedit"
+									ng-click="saveport()">save</button>
+							</div>
+							<div class="layoutelement center">
+								<button type="button primary" class="Red" ng-click="delport(editport)"
+									ng-if="user.admin && companyedit">delete</button>
+							</div>
+							<div class="layoutelement right">
+								<button type="button" class="close" ng-click="closeport()"></button>
+							</div>
+						</div>
+					</div>
+					<h2>
+						Edit portfolio
+					</h2>
+					<table class="formtable smaller">
+						<tr>
+							<td class="formlabel">Portfolio name</td>
+							<td><input ng-model="editport.name" /></td>
+						</tr>
+						<tr>
+							<td class="formlabel">Portfolio level</td>
+							<td>
+								<select ng-model="editport.level">
+									<option value="1">Executive</option>
+									<option value="2">High</option>
+									<option value="3">Medium</option>
+									<option value="4">Low</option>
+								</select>
+							</td>
+						</tr>
+					</table>
+				</div>
+			</div>
+			<div class="right">
+				<button ng-if="user.admin && companyedit && (company.portfolios == null || company.portfolios.length == 0)"
+					ng-click="addport()">create portfolio</button>
+			</div>
+			<div class="overview" ng-if="company.portfolios.length > 0">
+				<table class="tablelist smaller">
+					<tr class="header">
+						<td>
+							<div class="right">
+								<button ng-click="addport()" ng-if="user.admin && companyedit">create portfolio</button>
+							</div>
+						</td>
+					</tr>
+					<tr ng-repeat="port in company.portfolios| orderBy:'name'" ng-click="editportfolio(port)">
+						<td> {{port.name}}</td>
+					</tr>
+				</table>
+			</div>
+		
+		</div>
+	</div>
 </div>

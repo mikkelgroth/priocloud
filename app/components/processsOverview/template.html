@@ -1,179 +1,179 @@
 <div id="processs">
-    <div class="hideOnPrint">
-        <div class="layout">
-            <div class="layoutelement fluid">
-                <h2>
-                    Processs
-                </h2>
-            </div>
-            <div class="layoutelement right">
-                <button ng-click="showdefault()">my default</button>
-                <button ng-click="showmepm()" ng-show="showmepmbutton">me as admin</button>
-                <button class="buttonOn" ng-click="clearmepm()" ng-show="!showmepmbutton">me as admin</button>
-                <button ng-click="showmeres()" ng-show="showmeresbutton">me as owner</button>
-                <button class="buttonOn" ng-click="clearmeres()" ng-show="!showmeresbutton">me as owner</button>
-                <button ng-click="showfilters=true" ng-show="!showfilters">filters</button>
-                <button class="buttonOn" ng-click="showfilters=false" ng-show="showfilters">filters</button>
-            </div>
-        </div>
-        <div class="radiotabs">
-            <label for="overview"><input type="radio" id="overview" name="views" ng-model="views"
-                    value="overview"><span>
-                    Overview</span> </label>
-            <label for="level"><input type="radio" id="level" name="views" ng-model="views" value="level"><span>
-                    Priority</span></label>
-        </div>
-    </div>
+	<header>
+		<div class="title">
+			<h1>
+				Processes
+			</h1>
+		</div>
+		<div class="options hideOnPrint">
+			<button ng-click="showdefault()">my default</button>
+			<button ng-click="showmepm()" ng-show="showmepmbutton">me as admin</button>
+			<button class="buttonOn" ng-click="clearmepm()" ng-show="!showmepmbutton">me as admin</button>
+			<button ng-click="showmeres()" ng-show="showmeresbutton">me as owner</button>
+			<button class="buttonOn" ng-click="clearmeres()" ng-show="!showmeresbutton">me as owner</button>
+			<button ng-click="showfilters=true" ng-show="!showfilters">filters</button>
+			<button class="buttonOn" ng-click="showfilters=false" ng-show="showfilters">filters</button>
+		</div>
+	</header>
+	<div class="maincontentcontainer">
+		<div class="radiotabs hideOnPrint">
+			<label for="overview"><input type="radio" id="overview" name="views" ng-model="views"
+					value="overview"><span>
+					Overview</span> </label>
+			<label for="level"><input type="radio" id="level" name="views" ng-model="views" value="level"><span>
+					Priority</span></label>
+		</div>
 
-    <div class="smaller">
-        <table ng-show="showfilters">
-            <tr class="header">
-                <td colspan="5">Filters<div class="right"><button class="clearbtn" ng-click="clearall()"
-                            ng-show="showfilters">clear all</button></div>
-                </td>
-            </tr>
-            <tr class="header">
-                <td class="filter-container">Unit<div class="right"><button ng-click="processsearch.buname=[]"
-                            ng-show="showfilters">clear</button></div>
-                </td>
-                <td class="filter-container">Admin<div class="right"><button ng-click="processsearch.pmname=[]"
-                            ng-show="showfilters">clear</button></div>
-                </td>
-                <td class="filter-container">Owner<div class="right"><button ng-click="processsearch.poname=[]"
-                            ng-show="showfilters">clear</button></div>
-                </td>
-                <td class="filter-container">Process category<div class="right"><button ng-click="processsearch.type=[]"
-                            ng-show="showfilters">clear</button></div>
-                </td>
-                <td class="filter-container">
-                </td>
-            </tr>
-
-            <tr class="filtertd">
-                <td>
-                    <select class="multiple-select" multiple="multiple" ng-multiple="true" ng-change="saveSearch()"
-                        ng-model="processsearch.buname"
-                        ng-options="bu.name as bu.name for bu in bus | orderBy: 'name'"></select>
-                </td>
-                <td>
-                    <select class="multiple-select" multiple="multiple" ng-multiple="true" ng-change="saveSearch()"
-                        ng-model="processsearch.pmname">
-                        <option ng-repeat="u in users | filter: {source: true} | orderBy:'name'" value="{{u.name}}">
-                            {{u.name}}</option>
-                    </select>
-                </td>
-                <td>
-                    <select class="multiple-select" multiple="multiple" ng-multiple="true" ng-change="saveSearch()"
-                        ng-model="processsearch.poname">
-                        <option ng-repeat="u in users | filter: {source: true} | orderBy:'name'" value="{{u.name}}">
-                            {{u.name}}</option>
-                    </select>
-                </td>
-                <td>
-                    <select class="multiple-select" multiple="multiple" ng-multiple="true" ng-change="saveSearch()"
-                        ng-model="processsearch.type">
-                        <option value="Employee business process">Employee business process</option>
-                        <option value="Customer business process">Customer business process</option>
-                        <option value="Data protection process">Data protection process</option>
-                        <option value="IT Security process">IT Security process</option>
-                    </select>
-                </td>
-                <td>
-
-                </td>
-            </tr>
-
-
-            <tr class="header">
-                <td colspan="5">Order by</td>
-            </tr>
-            <tr>
-                <td colspan="5">
-                    <select ng-model="porderparam" ng-init="porderparam='-priostepstotal'">
-                        <option value="buname">Unit</option>
-                        <option value="pmname">Admin</option>
-                        <option value="poname">Owner</option>
-                        <option value="-risklevel">Priority level</option>
-                        <option value="-stepstotal">Risk/Asset level</option>
-                        <option value="-priostepstotal">Total level</option>
-                        <option value="type">Process category</option>
-                    </select>
-                    <select ng-model="porderparam2" ng-init="porderparam2='-risklevel'">
-                        <option value="buname">Unit</option>
-                        <option value="pmname">Admin</option>
-                        <option value="poname">Owner</option>
-                        <option value="-risklevel">Priority level</option>
-                        <option value="-stepstotal">Risk/Asset level</option>
-                        <option value="-priostepstotal">Total level</option>
-                        <option value="type">Process category</option>
-                    </select>
-                    <select ng-model="porderparam3" ng-init="porderparam3='-stepstotal'">
-                        <option value="buname">Unit</option>
-                        <option value="pmname">Admin</option>
-                        <option value="poname">Owner</option>
-                        <option value="-risklevel">Priority level</option>
-                        <option value="-stepstotal">Risk/Asset level</option>
-                        <option value="-priostepstotal">Total level</option>
-                        <option value="type">Process category</option>
-                    </select>
-
-                    <div class="right">
-                        <button ng-click="saveFilters()">Save as default</button>
-                    </div>
-
-                </td>
-            </tr>
-        </table>
-
-        <div class="overview" ng-show="views=='overview'">
-            <table class="tablelist" ng-if="processs.length > 0">
-                <tr class="header">
-                    <td>Process</td>
-                    <td>Category</td>
-                    <td>BU</td>
-                    <td>Process Admin</td>
-                    <td>Process Owner</td>
-                    <td>Pending</td>
-                    <td>Lock</td>
-                </tr>
-                </tr>
-                <tr ng-repeat="process in processs | multiFilter:processsearch | orderBy:[porderparam, porderparam2, porderparam3]"
-                    ng-click="goToProcess(process._id.$oid)" class="link">
-                    <td class="{{process.statusFlag}}"><b>{{process.title}}</td>
-                    <td>{{process.type}}</td>
-                    <td>{{process.buname}}</td>
-                    <td>{{process.pmname}}</td>
-                    <td>{{process.poname}}</td>
-                    <td>{{process.pending}}</td>
-                    <td>
-                        <div ng-if="process.editUser == null" class="Green">Open</div>
-                        <div ng-if="process.editUser != null" class="Red">{{process.editUser.name}}</div>
-                    </td>
-                </tr>
-            </table>
-        </div>
-
-        <div class="overview" ng-show="views=='level'">
-            <table class="tablelist" ng-if="processs.length > 0">
-                <tr class="header">
-                    <td>Process</td>
-                    <td>Category</td>
-                    <td>Assesment</td>
-                    <td>Total level</td>
-                    <td>Priority level</td>
-                    <td>Risk/Asset level</td>
-                </tr>
-                </tr>
-                <tr ng-repeat="process in processs | multiFilter:processsearch | orderBy:[porderparam, porderparam2, porderparam3]"
-                    ng-click="goToProcess(process._id.$oid)" class="link">
-                    <td class="{{process.statusFlag}}"><b>{{process.title}}</td>
-                    <td>{{process.type}}</td>
-                    <td class="{{process.step.securityownerfeedback}}"></td>
-                    <td class="{{process.controlsobj.securityownerfeedback}}">{{process.priostepstotal}}</td>
-                    <td class="{{process.connectionsobj.securityownerfeedback}}">{{process.risklevel}}</td>
-                    <td class="{{process.controlsobj.securityownerfeedback}}">{{process.stepstotal}}</td>
-                </tr>
-            </table>
-        </div>
-    </div>
+		<div class="content">
+			<table ng-show="showfilters">
+				<tr class="header">
+					<td colspan="5">Filters<div class="right"><button class="clearbtn" ng-click="clearall()"
+								ng-show="showfilters">clear all</button></div>
+					</td>
+				</tr>
+				<tr class="header">
+					<td class="filter-container">Unit<div class="right"><button ng-click="processsearch.buname=[]"
+								ng-show="showfilters">clear</button></div>
+					</td>
+					<td class="filter-container">Admin<div class="right"><button ng-click="processsearch.pmname=[]"
+								ng-show="showfilters">clear</button></div>
+					</td>
+					<td class="filter-container">Owner<div class="right"><button ng-click="processsearch.poname=[]"
+								ng-show="showfilters">clear</button></div>
+					</td>
+					<td class="filter-container">Process category<div class="right"><button ng-click="processsearch.type=[]"
+								ng-show="showfilters">clear</button></div>
+					</td>
+					<td class="filter-container">
+					</td>
+				</tr>
+	
+				<tr class="filtertd">
+					<td>
+						<select class="multiple-select" multiple="multiple" ng-multiple="true" ng-change="saveSearch()"
+							ng-model="processsearch.buname"
+							ng-options="bu.name as bu.name for bu in bus | orderBy: 'name'"></select>
+					</td>
+					<td>
+						<select class="multiple-select" multiple="multiple" ng-multiple="true" ng-change="saveSearch()"
+							ng-model="processsearch.pmname">
+							<option ng-repeat="u in users | filter: {source: true} | orderBy:'name'" value="{{u.name}}">
+								{{u.name}}</option>
+						</select>
+					</td>
+					<td>
+						<select class="multiple-select" multiple="multiple" ng-multiple="true" ng-change="saveSearch()"
+							ng-model="processsearch.poname">
+							<option ng-repeat="u in users | filter: {source: true} | orderBy:'name'" value="{{u.name}}">
+								{{u.name}}</option>
+						</select>
+					</td>
+					<td>
+						<select class="multiple-select" multiple="multiple" ng-multiple="true" ng-change="saveSearch()"
+							ng-model="processsearch.type">
+							<option value="Employee business process">Employee business process</option>
+							<option value="Customer business process">Customer business process</option>
+							<option value="Data protection process">Data protection process</option>
+							<option value="IT Security process">IT Security process</option>
+						</select>
+					</td>
+					<td>
+	
+					</td>
+				</tr>
+	
+	
+				<tr class="header">
+					<td colspan="5">Order by</td>
+				</tr>
+				<tr>
+					<td colspan="5">
+						<select ng-model="porderparam" ng-init="porderparam='-priostepstotal'">
+							<option value="buname">Unit</option>
+							<option value="pmname">Admin</option>
+							<option value="poname">Owner</option>
+							<option value="-risklevel">Priority level</option>
+							<option value="-stepstotal">Risk/Asset level</option>
+							<option value="-priostepstotal">Total level</option>
+							<option value="type">Process category</option>
+						</select>
+						<select ng-model="porderparam2" ng-init="porderparam2='-risklevel'">
+							<option value="buname">Unit</option>
+							<option value="pmname">Admin</option>
+							<option value="poname">Owner</option>
+							<option value="-risklevel">Priority level</option>
+							<option value="-stepstotal">Risk/Asset level</option>
+							<option value="-priostepstotal">Total level</option>
+							<option value="type">Process category</option>
+						</select>
+						<select ng-model="porderparam3" ng-init="porderparam3='-stepstotal'">
+							<option value="buname">Unit</option>
+							<option value="pmname">Admin</option>
+							<option value="poname">Owner</option>
+							<option value="-risklevel">Priority level</option>
+							<option value="-stepstotal">Risk/Asset level</option>
+							<option value="-priostepstotal">Total level</option>
+							<option value="type">Process category</option>
+						</select>
+	
+						<div class="right">
+							<button ng-click="saveFilters()">Save as default</button>
+						</div>
+	
+					</td>
+				</tr>
+			</table>
+	
+			<div class="overview" ng-show="views=='overview'">
+				<table class="tablelist" ng-if="processs.length > 0">
+					<tr class="header">
+						<td>Process</td>
+						<td>Category</td>
+						<td>BU</td>
+						<td>Process Admin</td>
+						<td>Process Owner</td>
+						<td>Pending</td>
+						<td>Lock</td>
+					</tr>
+					</tr>
+					<tr ng-repeat="process in processs | multiFilter:processsearch | orderBy:[porderparam, porderparam2, porderparam3]"
+						ng-click="goToProcess(process._id.$oid)" class="link">
+						<td class="{{process.statusFlag}}"><b>{{process.title}}</td>
+						<td>{{process.type}}</td>
+						<td>{{process.buname}}</td>
+						<td>{{process.pmname}}</td>
+						<td>{{process.poname}}</td>
+						<td>{{process.pending}}</td>
+						<td>
+							<div ng-if="process.editUser == null" class="Green">Open</div>
+							<div ng-if="process.editUser != null" class="Red">{{process.editUser.name}}</div>
+						</td>
+					</tr>
+				</table>
+			</div>
+	
+			<div class="overview" ng-show="views=='level'">
+				<table class="tablelist" ng-if="processs.length > 0">
+					<tr class="header">
+						<td>Process</td>
+						<td>Category</td>
+						<td>Assesment</td>
+						<td>Total level</td>
+						<td>Priority level</td>
+						<td>Risk/Asset level</td>
+					</tr>
+					</tr>
+					<tr ng-repeat="process in processs | multiFilter:processsearch | orderBy:[porderparam, porderparam2, porderparam3]"
+						ng-click="goToProcess(process._id.$oid)" class="link">
+						<td class="{{process.statusFlag}}"><b>{{process.title}}</td>
+						<td>{{process.type}}</td>
+						<td class="{{process.step.securityownerfeedback}}"></td>
+						<td class="{{process.controlsobj.securityownerfeedback}}">{{process.priostepstotal}}</td>
+						<td class="{{process.connectionsobj.securityownerfeedback}}">{{process.risklevel}}</td>
+						<td class="{{process.controlsobj.securityownerfeedback}}">{{process.stepstotal}}</td>
+					</tr>
+				</table>
+			</div>
+		</div>
+	</div>
 </div>

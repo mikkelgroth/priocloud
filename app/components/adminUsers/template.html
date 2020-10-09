@@ -1,136 +1,153 @@
-<prio-admin-menu></prio-admin-menu>
-<div class="view">
-    <h3>Users</h3>
-    <div class="popup">
-        <div class="overview popupcontent">
-            <div class="actions">
-                <div class="layout">
-                    <div class="layoutelement">
-                        <button type="button" id="saveButton1" ng-if="user.admin && companyedit"
-                            ng-click="saveUser(edituser)">save</button>
-                    </div>
-                    <div class="layoutelement center">
-                        <button type="button primary" class="Red" ng-click="deleteUser(edituser)"
-                            ng-if="user.admin && companyedit && edituser.email != user.email">delete</button>
-                    </div>
-                    <div class="layoutelement center">
-                        <button type="button primary" ng-click="resetPassword(edituser)" ng-if="user.admin && companyedit">reset
-                            password by mail</button>
-                    </div>
-                    <div class="layoutelement right">
-                        <button type="button" class="close" ng-click="close()"></button>
-                    </div>
-                </div>
-            </div>
-            <h3>
-                Edit user
-            </h3>
-            <table class="formtable smaller">
-                <tr>
-                    <td class="formlabel">User email</td>
-                    <td><input type="email" ng-model="edituser.email" placeholder="Email" /></td>
-                </tr>
-                <tr>
-                    <td class="formlabel">Users BU</td>
-                    <td>
-                        <select multiple="multiple" ng-multiple="true" style="height:200px;width:300px"
-                            ng-model="edituser.bu"
-                            ng-options="bu.name for bu in bus | orderBy:'order' track by bu.name"></select>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="formlabel">User name</td>
-                    <td><input type="text" ng-model="edituser.name" /></td>
-                </tr>
-                <tr>
-                    <td class="formlabel">Source for PM, PO or Owner</td>
-                    <td><input type="checkbox" ng-model="edituser.source" /></td>
-                </tr>
-                <tr>
-                    <td class="formlabel">Demo user</td>
-                    <td><input type="checkbox" ng-model="edituser.demo" /></td>
-                </tr>
-                <tr>
-                    <td class="formlabel">Finance controller</td>
-                    <td><input type="checkbox" ng-model="edituser.financecontroller" /></td>
-                </tr>
-                <tr>
-                    <td class="formlabel">Resource owner</td>
-                    <td><input type="checkbox" ng-model="edituser.resowner" /></td>
-                </tr>
-                <tr>
-                    <td class="formlabel">Business owner</td>
-                    <td><input type="checkbox" ng-model="edituser.businessowner" /></td>
-                </tr>
-                <tr>
-                    <td class="formlabel">Security owner</td>
-                    <td><input type="checkbox" ng-model="edituser.securityowner" /></td>
-                </tr>
-                <tr>
-                    <td class="formlabel">Sub Admin</td>
-                    <td><input type="checkbox" ng-disabled="!user.admin" ng-model="edituser.subadmin" /></td>
-                </tr>
-                <tr>
-                    <td class="formlabel">Admin</td>
-                    <td><input type="checkbox" ng-disabled="!user.admin" ng-model="edituser.admin" /></td>
-                </tr>
-                <tr>
-                    <td class="formlabel">OTPW</td>
-                    <td>#/otpw/{{edituser.onetimepassword}}</td>
-                </tr>
-            </table>
-        </div>
-    </div>
-    <div class="right"><button ng-click="newUser()" ng-if="user.admin && companyedit">create new user</button></div>
-    <div class="overview">
-        <table class="tablelist smaller">
-            <tr class="header">
-                <td class="header">Name</td>
-                <td class="header">Units</td>
-                <td class="header">Email</td>
-                <td class="header">Res. owner</td>
-                <td class="header">Created</td>
-            </tr>
-            <tr ng-repeat="u in users | orderBy:'name'" ng-click="editUser(u)">
-                <td>
-                    {{u.name}}
-                </td>
-                <td>
-                    <pre ng-repeat="b in u.bu">{{b.name}}, </pre>
-                </td>
-                <td>
-                    {{u.email}}
-                </td>
-                <td>
-                    {{(u.resowner)?"Res. owner":""}}
-                </td>
-                <td>
-                    {{u.created.$date| date:'d MMM, yyyy'}}
-                </td>
-            </tr>
-        </table>
-    </div>
+<header>
+	<div class="title">
+		<h1>
+			Administration
+		</h1>
+	
+	</div>
+	<div class="options">
 
-    <h3>User names</h3>
-    <div class="overview">
-        <table class="tablelist smaller">
-            <tr>
-                <td>
-                    <b ng-repeat="subuser in users | orderBy:'name'">{{subuser.name}}{{$last ? '' : '; '}}</b>
-                </td>
-            </tr>
-        </table>
-    </div>
-    <br />
+	</div>
+</header>
+<div class="maincontentcontainer">
+	<prio-admin-menu></prio-admin-menu>
 
-    <h3>User emails</h3>
-    <div class="overview">
-        <table class="tablelist smaller">
-            <tr>
-                <td>
-                    <b ng-repeat="subuser in users | orderBy:'name'">{{subuser.email}}{{$last ? '' : '; '}}</b>
-                </td>
-            </tr>
-        </table>
-    </div>
+	<div class="content">
+		<div class="view">
+			<h3>Users</h3>
+			<div class="popup">
+				<div class="overview popupcontent">
+					<div class="actions">
+						<div class="layout">
+							<div class="layoutelement">
+								<button type="button" id="saveButton1" ng-if="user.admin && companyedit"
+									ng-click="saveUser(edituser)">save</button>
+							</div>
+							<div class="layoutelement center">
+								<button type="button primary" class="Red" ng-click="deleteUser(edituser)"
+									ng-if="user.admin && companyedit && edituser.email != user.email">delete</button>
+							</div>
+							<div class="layoutelement center">
+								<button type="button primary" ng-click="resetPassword(edituser)" ng-if="user.admin && companyedit">reset
+									password by mail</button>
+							</div>
+							<div class="layoutelement right">
+								<button type="button" class="close" ng-click="close()"></button>
+							</div>
+						</div>
+					</div>
+					<h3>
+						Edit user
+					</h3>
+					<table class="formtable smaller">
+						<tr>
+							<td class="formlabel">User email</td>
+							<td><input type="email" ng-model="edituser.email" placeholder="Email" /></td>
+						</tr>
+						<tr>
+							<td class="formlabel">Users BU</td>
+							<td>
+								<select multiple="multiple" ng-multiple="true" style="height:200px;width:300px"
+									ng-model="edituser.bu"
+									ng-options="bu.name for bu in bus | orderBy:'order' track by bu.name"></select>
+							</td>
+						</tr>
+						<tr>
+							<td class="formlabel">User name</td>
+							<td><input type="text" ng-model="edituser.name" /></td>
+						</tr>
+						<tr>
+							<td class="formlabel">Source for PM, PO or Owner</td>
+							<td><input type="checkbox" ng-model="edituser.source" /></td>
+						</tr>
+						<tr>
+							<td class="formlabel">Demo user</td>
+							<td><input type="checkbox" ng-model="edituser.demo" /></td>
+						</tr>
+						<tr>
+							<td class="formlabel">Finance controller</td>
+							<td><input type="checkbox" ng-model="edituser.financecontroller" /></td>
+						</tr>
+						<tr>
+							<td class="formlabel">Resource owner</td>
+							<td><input type="checkbox" ng-model="edituser.resowner" /></td>
+						</tr>
+						<tr>
+							<td class="formlabel">Business owner</td>
+							<td><input type="checkbox" ng-model="edituser.businessowner" /></td>
+						</tr>
+						<tr>
+							<td class="formlabel">Security owner</td>
+							<td><input type="checkbox" ng-model="edituser.securityowner" /></td>
+						</tr>
+						<tr>
+							<td class="formlabel">Sub Admin</td>
+							<td><input type="checkbox" ng-disabled="!user.admin" ng-model="edituser.subadmin" /></td>
+						</tr>
+						<tr>
+							<td class="formlabel">Admin</td>
+							<td><input type="checkbox" ng-disabled="!user.admin" ng-model="edituser.admin" /></td>
+						</tr>
+						<tr>
+							<td class="formlabel">OTPW</td>
+							<td>#/otpw/{{edituser.onetimepassword}}</td>
+						</tr>
+					</table>
+				</div>
+			</div>
+			<div class="right"><button ng-click="newUser()" ng-if="user.admin && companyedit">create new user</button></div>
+			<div class="overview">
+				<table class="tablelist smaller">
+					<tr class="header">
+						<td class="header">Name</td>
+						<td class="header">Units</td>
+						<td class="header">Email</td>
+						<td class="header">Res. owner</td>
+						<td class="header">Created</td>
+					</tr>
+					<tr ng-repeat="u in users | orderBy:'name'" ng-click="editUser(u)">
+						<td>
+							{{u.name}}
+						</td>
+						<td>
+							<pre ng-repeat="b in u.bu">{{b.name}}, </pre>
+						</td>
+						<td>
+							{{u.email}}
+						</td>
+						<td>
+							{{(u.resowner)?"Res. owner":""}}
+						</td>
+						<td>
+							{{u.created.$date| date:'d MMM, yyyy'}}
+						</td>
+					</tr>
+				</table>
+			</div>
+		
+			<h3>User names</h3>
+			<div class="overview">
+				<table class="tablelist smaller">
+					<tr>
+						<td>
+							<b ng-repeat="subuser in users | orderBy:'name'">{{subuser.name}}{{$last ? '' : '; '}}</b>
+						</td>
+					</tr>
+				</table>
+			</div>
+			<br />
+		
+			<h3>User emails</h3>
+			<div class="overview">
+				<table class="tablelist smaller">
+					<tr>
+						<td>
+							<b ng-repeat="subuser in users | orderBy:'name'">{{subuser.email}}{{$last ? '' : '; '}}</b>
+						</td>
+					</tr>
+				</table>
+			</div>
+		</div>
+	</div>
 </div>
+
