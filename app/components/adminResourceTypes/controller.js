@@ -72,8 +72,8 @@ angular
 
             function calcrestype(type) {
                 type.capacity = Number(type.capacityint) + Number(type.capacityext);
-                type.intdayprice = Number(type.inthourprice) * 7;
-                type.extdayprice = Number(type.exthourprice) * 7;
+                type.intdayprice = Number(type.inthourprice) * $scope.company.hoursaday;
+                type.extdayprice = Number(type.exthourprice) * $scope.company.hoursaday;
                 if (type.capacity == 0) {
                     type.capacityintpercent = 0;
                     type.capacityextpercent = 0;

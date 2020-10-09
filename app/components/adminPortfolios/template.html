@@ -43,81 +43,134 @@
 
     </div>
 
+    <h3>Work hours a day</h3>
+    <table class="tablelist smaller">
+        <tr>
+            <td>Hours a day</td>
+            <td>
+                <select ng-model="company.hoursaday">
+                    <option value="1">1 hour</option>
+                    <option value="2">2 hours</option>
+                    <option value="3">3 hours</option>
+                    <option value="4">4 hours</option>
+                    <option value="5">5 hours</option>
+                    <option value="6">6 hours</option>
+                    <option value="7">7 hours</option>
+                    <option value="8">8 hours</option>
+                    <option value="9">9 hours</option>
+                    <option value="10">10 hours</option>
+                    <option value="11">11 hours</option>
+                    <option value="12">12 hours</option>
+                    <option value="13">13 hours</option>
+                    <option value="14">14 hours</option>
+                    <option value="15">15 hours</option>
+                    <option value="16">16 hours</option>
+                    <option value="17">17 hours</option>
+                    <option value="18">18 hours</option>
+                    <option value="19">19 hours</option>
+                    <option value="20">20 hours</option>
+                    <option value="21">21 hours</option>
+                    <option value="22">22 hours</option>
+                    <option value="23">23 hours</option>
+                    <option value="24">24 hours</option>
+                </select>
+            </td>
+        </tr>
+    </table>
+    <h3>Work days a week</h3>
+    <table class="tablelist smaller">
+        <tr>
+            <td>Days a week</td>
+            <td>
+                <select ng-model="company.daysaweek">
+                    <option value="1">1 day</option>
+                    <option value="2">2 days</option>
+                    <option value="3">3 days</option>
+                    <option value="4">4 days</option>
+                    <option value="5">5 days</option>
+                    <option value="6">6 days</option>
+                    <option value="7">7 days</option>
+                </select>
+            </td>
+        </tr>
+    </table>
+
+
     <h3>Estimates to Effort flag limits</h3>
-    <table  class="tablelist smaller">
-                <tr>
+    <table class="tablelist smaller">
+        <tr>
             <td class="Green">1. Minimal effort</td>
             <td>
                 <select ng-model="company.estimatelevelyellow">
                     <option value="1">1 hour</option>
-                            <option value="2">2 hour</option>
-                            <option value="3">3 hour</option>
-                            <option value="5">5 hour</option>
-                            <option value="8">8 hour</option>
-                            <option value="13">13 hour</option>
-                            <option value="20">20 hour</option>
-                            <option value="40">40 hour</option>
-                            <option value="60">60 hour</option>
-                            <option value="80">80 hour</option>
-                            <option value="100">100 hour</option>
-                            <option value="150">150 hour</option>
-                            <option value="200">200 hour</option>
-                            <option value="300">300 hour</option>
-                            <option value="400">400 hour</option>
-                            <option value="500">500 hour</option>
-                            <option value="700">700 hour</option>
-                            <option value="1000">1.000 hour</option>
-                            <option value="1500">1.500 hour</option>
-                            <option value="2000">2.000 hour</option>
-                            <option value="3000">3.000 hour</option>
-                            <option value="5000">5.000 hour</option>
-                            <option value="8000">8.000 hour</option>
-                            <option value="10000">10.000 hour</option>
-                            <option value="13000">13.000 hour</option>
-                            <option value="15000">15.000 hour</option>
-                            <option value="20000">20.000 hour</option>
-                            <option value="30000">30.000 hour</option>
-                            <option value="50000">50.000 hour</option>
-                            <option value="80000">80.000 hour</option>
-                            <option value="100000">100.000 hour</option>
+                    <option value="2">2 hours</option>
+                    <option value="3">3 hours</option>
+                    <option value="5">5 hours</option>
+                    <option value="8">8 hours</option>
+                    <option value="13">13 hours</option>
+                    <option value="20">20 hours</option>
+                    <option value="40">40 hours</option>
+                    <option value="60">60 hours</option>
+                    <option value="80">80 hours</option>
+                    <option value="100">100 hours</option>
+                    <option value="150">150 hours</option>
+                    <option value="200">200 hours</option>
+                    <option value="300">300 hours</option>
+                    <option value="400">400 hours</option>
+                    <option value="500">500 hours</option>
+                    <option value="700">700 hours</option>
+                    <option value="1000">1.000 hours</option>
+                    <option value="1500">1.500 hours</option>
+                    <option value="2000">2.000 hours</option>
+                    <option value="3000">3.000 hours</option>
+                    <option value="5000">5.000 hours</option>
+                    <option value="8000">8.000 hours</option>
+                    <option value="10000">10.000 hours</option>
+                    <option value="13000">13.000 hours</option>
+                    <option value="15000">15.000 hours</option>
+                    <option value="20000">20.000 hours</option>
+                    <option value="30000">30.000 hours</option>
+                    <option value="50000">50.000 hours</option>
+                    <option value="80000">80.000 hours</option>
+                    <option value="100000">100.000 hours</option>
                 </select>
             </td>
             <td class="Yellow">2. Medium effort</td>
             <td>
                 <select ng-model="company.estimatelevelorange">
                     <option value="1">1 hour</option>
-                            <option value="2">2 hour</option>
-                            <option value="3">3 hour</option>
-                            <option value="5">5 hour</option>
-                            <option value="8">8 hour</option>
-                            <option value="13">13 hour</option>
-                            <option value="20">20 hour</option>
-                            <option value="40">40 hour</option>
-                            <option value="60">60 hour</option>
-                            <option value="80">80 hour</option>
-                            <option value="100">100 hour</option>
-                            <option value="150">150 hour</option>
-                            <option value="200">200 hour</option>
-                            <option value="300">300 hour</option>
-                            <option value="400">400 hour</option>
-                            <option value="500">500 hour</option>
-                            <option value="700">700 hour</option>
-                            <option value="1000">1.000 hour</option>
-                            <option value="1500">1.500 hour</option>
-                            <option value="2000">2.000 hour</option>
-                            <option value="3000">3.000 hour</option>
-                            <option value="5000">5.000 hour</option>
-                            <option value="8000">8.000 hour</option>
-                            <option value="10000">10.000 hour</option>
-                            <option value="13000">13.000 hour</option>
-                            <option value="15000">15.000 hour</option>
-                            <option value="20000">20.000 hour</option>
-                            <option value="30000">30.000 hour</option>
-                            <option value="50000">50.000 hour</option>
-                            <option value="80000">80.000 hour</option>
-                            <option value="100000">100.000 hour</option>
+                    <option value="2">2 hours</option>
+                    <option value="3">3 hours</option>
+                    <option value="5">5 hours</option>
+                    <option value="8">8 hours</option>
+                    <option value="13">13 hours</option>
+                    <option value="20">20 hours</option>
+                    <option value="40">40 hours</option>
+                    <option value="60">60 hours</option>
+                    <option value="80">80 hours</option>
+                    <option value="100">100 hours</option>
+                    <option value="150">150 hours</option>
+                    <option value="200">200 hours</option>
+                    <option value="300">300 hours</option>
+                    <option value="400">400 hours</option>
+                    <option value="500">500 hours</option>
+                    <option value="700">700 hours</option>
+                    <option value="1000">1.000 hours</option>
+                    <option value="1500">1.500 hours</option>
+                    <option value="2000">2.000 hours</option>
+                    <option value="3000">3.000 hours</option>
+                    <option value="5000">5.000 hours</option>
+                    <option value="8000">8.000 hours</option>
+                    <option value="10000">10.000 hours</option>
+                    <option value="13000">13.000 hours</option>
+                    <option value="15000">15.000 hours</option>
+                    <option value="20000">20.000 hours</option>
+                    <option value="30000">30.000 hours</option>
+                    <option value="50000">50.000 hours</option>
+                    <option value="80000">80.000 hours</option>
+                    <option value="100000">100.000 hours</option>
                 </select>
-                <td class="Orange">3. Large effort</td>
+            <td class="Orange">3. Large effort</td>
             </td>
         </tr>
     </table>

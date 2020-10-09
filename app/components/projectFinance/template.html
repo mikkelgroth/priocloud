@@ -501,7 +501,8 @@
                             </div>
                             <div class="layoutelement center">
                                 <button type="button" class="Red" ng-click="delbaseline(editbaseline)"
-                                    ng-show="$parent.deletebaselineThis" ng-if="user.admin || user.changeContent">confirm
+                                    ng-show="$parent.deletebaselineThis"
+                                    ng-if="user.admin || user.changeContent">confirm
                                     delete!!!</button>
                                 <button type="button" ng-click="deletebaseline()" ng-show="!$parent.deletebaselineThis"
                                     ng-if="user.admin || user.changeContent">delete</button>
@@ -627,9 +628,9 @@
                             </td>
                         </tr>
                         <tr>
-                            <td class="sums"><b>People</b><br /><b>Cost items</b><br /><b>Grand total</b></td>
+                            <td class="sums"><b>People</b><br /><b>Cost items</b>External total<br /><b>Grand total</b></td>
                             <td class="sums">
-                                <b>{{editbaseline.peopletotal | number:0 }}</b><br /><b>{{editbaseline.costtotal | number:0 }}</b><br /><b>{{editbaseline.grandtotal | number:0 }}</b>
+                                <b>{{editbaseline.peopletotal | number:0 }}</b><br /><b>{{editbaseline.costtotal | number:0 }}</b><br /><b>{{editbaseline.budExternalTotalgrandSum | number:0 }}</b><br /><b>{{editbaseline.grandtotal | number:0 }}</b>
                             </td>
                         </tr>
                     </table>
@@ -648,40 +649,49 @@
                     <table class="tablelist smaller" ng-if="project.statuses.length > 0">
                         <tr class="header">
                             <td>
-                                <table>
-                                    <tr>
-                                        <td>Date</td>
-                                        <td>State</td>
-                                        <td>Priority</td>
-                                        <td>End date</td>
-                                        <td class="sums">People<br />Cost<br />Total</td>
-                                    </tr>
-                                    <tr>
-                                        <td colspan="5">Description</td>
-                                    </tr>
-                                </table>
+                                Baseline date<br />
+                                State<br />
+                                Priority
+                            </td>
+                            <td>
+                                Start<br />
+                                End
+                            </td>
+                            <td class="sums">
+                                Deliverable est.<br />
+                                People est.
+                            </td>
+                            <td class="sums">
+                                People cost<br />
+                                Cost items<br />
+                                Total cost
+                            </td>
+                            <td>
+                                <pre>Description</pre>
                             </td>
                         </tr>
-
                         <tr ng-repeat="baseline in project.finance.baselines | orderBy:'-date'"
                             ng-click="editbase(baseline)">
                             <td>
-                                <table>
-                                    <tr>
-                                        <td>{{baseline.date | date:'longDate'}}</td>
-                                        <td>{{baseline.state}}</td>
-                                        <td>{{baseline.priority}}</td>
-                                        <td>{{baseline.enddate | date:'longDate'}}</td>
-                                        <td class="sums">
-                                            {{baseline.peopletotal | number:0 }}<br />{{baseline.costtotal | number:0 }}<br /><b>{{baseline.grandtotal | number:0 }}</b>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td colspan="5">
-                                            <pre>{{baseline.description}}</pre>
-                                        </td>
-                                    </tr>
-                                </table>
+                                {{baseline.date | date:'longDate'}}<br />
+                                {{baseline.state}}<br />
+                                {{baseline.priority}}
+                            </td>
+                            <td>
+                                {{baseline.startdate | date:'longDate'}}<br />
+                                {{baseline.enddate | date:'longDate'}}
+                            </td>
+                            <td class="sums">
+                                {{baseline.estimate | number:0 }} h<br />
+                                {{baseline.peopleestimatetotal | number:0 }} h
+                            </td>
+                            <td class="sums">
+                                {{baseline.peopletotal | number:0 }}<br />
+                                {{baseline.costtotal | number:0 }}<br />
+                                {{baseline.grandtotal | number:0 }}
+                            </td>
+                            <td>
+                                <pre>{{baseline.description}}</pre>
                             </td>
                         </tr>
                     </table>

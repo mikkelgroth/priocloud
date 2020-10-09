@@ -109,6 +109,7 @@ angular
                 n.costopex = $scope.project.finance.costopexttotal;
                 n.costtotal = $scope.project.finance.costtotalttotal;
                 n.grandtotal = $scope.project.finance.budTotalgrandSum;
+                n.budExternalTotalgrandSum = $scope.project.finance.budExternalTotalgrandSum;
 
                 var last = $scope.project.statuses[$scope.project.statuses.length - 1];
 
@@ -121,6 +122,8 @@ angular
                 n.enddate = $scope.project.milestones[0].enddate;
                 n.enabler = $scope.project.milestones[0].enablerlable;
                 n.limiter = $scope.project.milestones[0].limiterlable;
+                n.estimate = $scope.project.milestones[0].estimate;
+                n.peopleestimatetotal = $scope.project.peopleestimatetotal;
 
                 n.bu = $scope.project.bu.name;
                 n.portfolio = $scope.project.support.name;

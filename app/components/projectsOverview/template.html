@@ -52,9 +52,6 @@
             <label for="status" ng-show="company.filters.companyshowStatus"><input type="radio" id="status" name="views"
                     ng-model="views" value="status"><span>
                     Status</span></label>
-            <label for="objectives"><input type="radio" id="objectives" name="views" ng-model="views"
-                    value="objectives"><span>
-                    Objectives</span></label>
             <label for="finance" ng-show="company.filters.companyshowFinance"><input type="radio" id="finance"
                     name="views" ng-model="views" value="finance"><span>
                     Finance</span></label>
@@ -380,6 +377,7 @@
                     <td colspan="4" style="text-align: center">{{year}}</td>
                     <td colspan="4" style="text-align: center">{{year+1}}</td>
                     <td ng-if="company.filters.companyshowDepend">Dependency</td>
+                    <td ng-if="company.filters.companyshowDepend">People</td>
                     <td ng-if="showPending"></td>
                 </tr>
                 <tr class="header">
@@ -397,6 +395,7 @@
                     <td>Q3</td>
                     <td>Q4</td>
                     <td ng-if="company.filters.companyshowDepend">Allocation</td>
+                    <td ng-if="company.filters.companyshowDepend">Estimate</td>
                     <td ng-if="showPending">Pending action</td>
                 </tr>
                 <tr ng-repeat="project in projectList | multiFilter:searchParams | orderBy:[porderparam, porderparam2, porderparam3]"
@@ -406,13 +405,18 @@
                         <b>{{project.title}}</b><br />{{project.bu.name}}
                     </td>
                     <td class="bar" ng-style="barRender(project.milestones[0])" colspan="12">
-                        <div class="ganttcontentfirst">State: <b>{{project.state}} </b></div>
-                        <div class="ganttcontentfirst">Priority: <b>{{project.priority}}</b></div>
-                        <div class="ganttcontentsmall">Enabler: <b>{{project.milestones[0].enablerlable}}</b></div>
-                        <div class="ganttcontent">Limiter: <b>{{project.milestones[0].limiterlable}}</b></div>
+                        State: <b>{{project.state}} </b>,
+                        Priority: <b>{{project.priority}}</b>,
+                        Enabler: <b>{{project.milestones[0].enablerlable}}</b>,
+                        Limiter: <b>{{project.milestones[0].limiterlable}}</b>
                     </td>
                     <td ng-if="company.filters.companyshowDepend" class="{{project.allocatedflag}}">
                         {{project.allocatedstring}}
+                    </td>
+                    <td ng-if="company.filters.companyshowDepend">
+                        {{project.peoplequantumtotal | number: '2'}}<br />
+                        {{project.peopleestimatetotal | number: '0'}} h
+
                     </td>
                     <td class="texttop" ng-if="showPending">{{project.deccomment}}</td>
                 </tr>
@@ -498,7 +502,7 @@
                             <div class="layoutelement">
                                 <div class="bigsmall">
                                     <div class="big right">
-                                        {{project.finance.costdeptotalexternalttotal | number:0}}
+                                        {{project.finance.budExternalTotalgrandSum | number:0}}
                                         TDKK
                                     </div>
                                     <div class="small right">
@@ -594,49 +598,7 @@
                 </tr>
             </table>
         </div>
-        <div class="overview" ng-show="views=='objectives'">
-            <table class="tablelist" ng-if="projectList.length > 0">
-                <tr class="header">
-                    <td>Item<br />PM/PO</td>
-                    <td>Objective & Benefit<br />Benefit realisation plan</td>
-                    <td>Priority - Value - Effort/Risk
-                        <br />Overall status</td>
-                    <td ng-if="showPending">Pending action</td>
-                </tr>
-                <tr ng-repeat="project in projectList | multiFilter:searchParams | orderBy:[porderparam, porderparam2, porderparam3]"
-                    ng-if="!showPending || (project.pending && showPending == project.pending)"
-                    ng-click="goToProject(project._id.$oid)" class="link">
-                    <td class="texttop {{project.lastStatus.status}}">&nbsp;
-                        <b>{{project.title}}</b>
-                        <br />{{project.type}}
-                        <br />{{project.pm.name}}</td>
-                    <td class="texttop">
-                        <b>Objective:</b>
-                        <br />{{project.outcome}}
-                        <br />
-                        <b>Benefit:</b>
-                        <br />{{project.costbenefit}}
-                        <br />
-                        <b>Benefit realisation plan:</b>
-                        <br />{{project.benefitplan}}
-                    </td>
-                    <td class="texttop">
-                        <b>Priority:</b>
-                        <div class="right">{{project.priority}} -
-                            {{project.milestones[0].enablerlable}} -
-                            {{project.milestones[0].limiterlable}}
-                        </div>
-                        <br />
-                        <b>Date:</b>
-                        <div class="right">{{project.lastStatus.date | date:'d MMM, yyyy'}}</div>
-                        <br />
-                        <b>Last status:</b>
-                        <br />{{project.lastStatus.overallcomments}}
-                    </td>
-                    <td class="texttop" ng-if="showPending">{{project.deccomment}}</td>
-                </tr>
-            </table>
-        </div>
+
         <div class="overview" ng-show="views=='finance'">
             <table class="tablelist" ng-if="projectList.length > 0">
                 <tr class="header">
