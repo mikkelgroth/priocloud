@@ -6,12 +6,14 @@ angular
         '$location',
         'userService',
         'companyService',
+        'util',
         function (
             $scope,
             $rootScope,
             $location,
             userService,
-            companyService
+            companyService,
+            util
         ) {
             companyService.loadCompany();
             companyService.reloadCompany();
@@ -53,15 +55,6 @@ angular
 
             // Metrics utils START
 
-            function getMetricByID(metricID) {
-                let p = $scope.metrics.find(x => x._id.$oid === metricID);
-                if (p != undefined) {
-                    return p;
-                } else {
-                    console.log("Found no Metric with this ID: " + metricID);
-                }
-            }
-
             $scope.setDeadlinestatus = function (d) {
                 if (d != undefined) {
                     var da = new Date(Date.parse(d));
@@ -72,13 +65,13 @@ angular
 
             $scope.getMetric = function (metricID) {
                 if (metricID != undefined) {
-                    return getMetricByID(metricID);
+                    return util.getObjectByOID(metricID, $scope.metrics);
                 }
             }
 
             $scope.getLastValue = function (metricID) {
                 if (metricID != undefined) {
-                    let p = getMetricByID(metricID);
+                    let p = $scope.getMetric(metricID);
                     if (p != undefined) {
                         return p.metricvalues[p.metricvalues.length - 1];
                     }
@@ -143,10 +136,18 @@ angular
                         keyresult['projecttitle'] = project.title;
                         keyresult['pbuname'] = project.bu.name;
                         keyresult['pstate'] = project.state;
-                        keyresult['pstatus'] = project.status;
+                        keyresult['pstatus'] = project.lastStatusFlag;
                         keyresult['ppm'] = project.pm;
                         keyresult['pconnect'] = project.connect;
                         keyresult['ppriority'] = project.priority;
+
+                        var lastmetric = util.getObjectByOID(keyresult.metricID, $scope.metrics);
+                        var last = lastmetric.metricvalues[lastmetric.metricvalues.length - 1];
+                        if (lastmetric.operator == "high") {
+                            keyresult.tstatus = (Number(keyresult.value) <= Number(last.value)) ? "Green" : "Red";
+                        } else {
+                            keyresult.tstatus = (Number(keyresult.value) >= Number(last.value)) ? "Green" : "Red";
+                        }
                         return keyresult;
                     });
                 }));

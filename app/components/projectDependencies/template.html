@@ -156,6 +156,13 @@
                         {{editdep.depdeaddate | date:'longDate'}}
                     </td>
                 </tr>
+                <tr>
+
+                    <td class="formlabel">Hour estimate</td>
+                    <td>
+                        {{editdep.estimate}}
+                    </td>
+                </tr>
 
 
 
@@ -265,11 +272,20 @@
                     <td>{{year-1}}</td>
                     <td>{{year}}</td>
                     <td>{{year+1}}</td>
+                    <td>People</td>
+                    <td>Estimate</td>
                     <td>Type</td>
-                    <td>Category</td>
-                    <td>Res. Owner</td>
                     <td>State</td>
                     <td>Report</td>
+                </tr>
+                <tr class="header">
+                    <td>Project totals</td>
+                    <td colspan="3"></td>
+                    <td>{{project.peoplequantumtotal | number: '2'}}</td>
+                    <td>{{project.peopleestimatetotal | number: '0'}} h</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
                 </tr>
                 <tr ng-repeat="dep in project.deps | orderBy:'depdate'" class="link">
                     <td ng-click="beginEditDep(dep)" class="{{dep.status}}"><b>{{dep.title}}</b></td>
@@ -277,11 +293,10 @@
                         {{dep.quantum/100}}
                         ({{dep.rt.capacity/100}}) - {{dep.depreciationtype}}
                     </td>
+                    <td ng-click="beginEditDep(dep)">{{dep.quantum/100 | number: '2'}}</td>
+                    <td ng-click="beginEditDep(dep)">{{dep.estimate | number: '0'}} h</td>
                     <td ng-click="beginEditDep(dep)">{{dep.rt.name}}</td>
-                    <td ng-click="beginEditDep(dep)">{{dep.rt.catagory}}</td>
-                    <td ng-click="beginEditDep(dep)">{{dep.rt.resown}}</td>
                     <td ng-click="beginEditDep(dep)">{{dep.state}}</td>
-
                     <td><input type="checkbox" ng-model="dep.showInReport" ng-change="saveDeps()"
                             ng-disabled="!user.changeContent"></td>
 

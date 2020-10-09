@@ -34,6 +34,14 @@
                     </td>
                 </tr>
                 <tr>
+                    <td class="formlabel">Date</td>
+                    <td>
+                        <input type="text" id="metricvaluedate" datepicker="" ng-model="editmetricvalue.rawdate"
+                            ng-change="saveNow(editmetricvalue)" class="cal" ng-disabled="!user.changeContent" />
+                        {{editmetricvalue.date | date:'longDate'}}
+                    </td>
+                </tr>
+                <tr>
 
                     <td class="formlabel">Show in report</td>
                     <td>
@@ -46,12 +54,6 @@
                     <td>
                         <textarea ng-change="saveNow(editmetricvalue)" ng-model="editmetricvalue.note" maxlength="800"
                             id="metricvaluedec" placeholder="Notes..." ng-disabled="!user.changeContent"></textarea>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="formlabel">Date</td>
-                    <td>
-                        {{editmetricvalue.date | date:'longDate'}}
                     </td>
                 </tr>
             </table>

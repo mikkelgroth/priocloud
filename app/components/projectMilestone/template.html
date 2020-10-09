@@ -70,8 +70,8 @@
                             ng-disabled="!user.changeContent || editmile.prime">
                             <option value="1. Mandatory">1. Mandatory</option>
                             <option value="2. Top priority">2. Top priority</option>
-                            <option value="3. Very High priority">3. Very High priority</option>
-                            <option value="4. High priority">4. High priority</option>
+                            <option value="3. High priority">3. High priority</option>
+                            <option value="4. Needed">4. Needed</option>
                             <option value="5. Valued">5. Valued</option>
                         </select>
                     </td>
@@ -204,12 +204,51 @@
                 <tr>
                     <td class="formlabel" prio-class prio-value-bar-render-neg="editmile.effort">Effort</td>
                     <td>
-                        <select ng-model="editmile.effort" ng-change="saveNow(editmile)"
-                            ng-disabled="!user.changeContent">
+                        <select ng-model="editmile.effort" ng-disabled="true">
                             <option value="1">1. Minimal effort</option>
                             <option value="2">2. Medium effort</option>
                             <option value="3">3. Large effort</option>
                             <option value="4">4. Unknown effort</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="formlabel">Highlevel hour estimate</td>
+                    <td>
+                        <select ng-model="editmile.estimate" ng-change="saveNow(editmile)"
+                            ng-disabled="!user.changeContent">
+                            <option value="1">1 hour</option>
+                            <option value="2">2 hour</option>
+                            <option value="3">3 hour</option>
+                            <option value="5">5 hour</option>
+                            <option value="8">8 hour</option>
+                            <option value="13">13 hour</option>
+                            <option value="20">20 hour</option>
+                            <option value="40">40 hour</option>
+                            <option value="60">60 hour</option>
+                            <option value="80">80 hour</option>
+                            <option value="100">100 hour</option>
+                            <option value="150">150 hour</option>
+                            <option value="200">200 hour</option>
+                            <option value="300">300 hour</option>
+                            <option value="400">400 hour</option>
+                            <option value="500">500 hour</option>
+                            <option value="700">700 hour</option>
+                            <option value="1000">1.000 hour</option>
+                            <option value="1500">1.500 hour</option>
+                            <option value="2000">2.000 hour</option>
+                            <option value="3000">3.000 hour</option>
+                            <option value="5000">5.000 hour</option>
+                            <option value="8000">8.000 hour</option>
+                            <option value="10000">10.000 hour</option>
+                            <option value="13000">13.000 hour</option>
+                            <option value="15000">15.000 hour</option>
+                            <option value="20000">20.000 hour</option>
+                            <option value="30000">30.000 hour</option>
+                            <option value="50000">50.000 hour</option>
+                            <option value="80000">80.000 hour</option>
+                            <option value="100000">100.000 hour</option>
+                            <option value="-1">Unknown estimate</option>
                         </select>
                     </td>
                 </tr>
@@ -272,45 +311,55 @@
     </div>
     <div class="mainbox">
         <div class="overview">
-            <div class="right">
-                <input type="radio" name="mileview" ng-model="mileview" value="all"> All &nbsp;
-                <input type="radio" name="mileview" ng-model="mileview" value="rm"> Roadmap &nbsp;
-                <input type="radio" name="mileview" ng-model="mileview" value="activity"> Activity &nbsp;
-
-                <select ng-model="order1" ng-init="order1='date'" style="font-size: 12px;">
-                    <option value="enddate" selected="selected">Order by end date</option>
-                    <option value="date">Order by start date</option>
-                    <option value="-wsjf">Order by WSJF</option>
-                    <option value="-enablervaluetotal">Order by Enabler total</option>
-                    <option value="-limitervaluetotal">Order by Limiter total</option>
-                    <option value="-wsjf">Order by WSJF</option>
-                    <option value="-bena">Order by Platform value</option>
-                    <option value="-sena">Order by Strategy value</option>
-                    <option value="-cena">Order by Customer value</option>
-                    <option value="-mena">Order by Market value</option>
-                    <option value="-effort">Order by Effort</option>
-                    <option value="-risklevel">Order by Risk</option>
-                </select>
-                <select ng-model="order2" ng-init="order2='-wsjf'" style="font-size: 12px;">
-                    <option value="enddate" selected="selected">Order by end date</option>
-                    <option value="date">Order by start date</option>
-                    <option value="-wsjf">Order by WSJF</option>
-                    <option value="-enablervaluetotal">Order by Enabler total</option>
-                    <option value="-limitervaluetotal">Order by Limiter total</option>
-                    <option value="-bena">Order by Platform value</option>
-                    <option value="-sena">Order by Strategy value</option>
-                    <option value="-cena">Order by Customer value</option>
-                    <option value="-mena">Order by Market value</option>
-                    <option value="-effort">Order by Effort</option>
-                    <option value="-risklevel">Order by Risk</option>
-                </select>
-                <button ng-click="newMilestone()" ng-if="user.changeContent">create new
-                    deliverable</button>
-            </div>
+            <div class="right"><button ng-click="newMilestone()" ng-if="user.changeContent" class="Green">create new
+                    deliverable</button></div>
             <table class="tablelist smaller">
                 <tr class="header">
-                    <td>Title <div class="right"><input type="checkbox" ng-model="showDone" ng-init="showDone=false">
-                            show done</div>
+                    <td colspan="8">
+                        <div class="right">
+                            Show: &nbsp;
+                            <input type="radio" name="mileview" ng-model="mileview" value="all"> All &nbsp;
+                            <input type="radio" name="mileview" ng-model="mileview" value="rm"> Roadmap &nbsp;
+                            <input type="radio" name="mileview" ng-model="mileview" value="activity"> Activity &nbsp;
+                            <input type="checkbox" ng-model="showDone" ng-init="showDone=false"> Done &nbsp;
+
+                            <select ng-model="order1" ng-init="order1='date'" style="font-size: 12px;">
+                                <option value="enddate" selected="selected">Order by end date</option>
+                                <option value="date">Order by start date</option>
+                                <option value="-wsjf">Order by WSJF</option>
+                                <option value="-enablervaluetotal">Order by Enabler total</option>
+                                <option value="-limitervaluetotal">Order by Limiter total</option>
+                                <option value="-wsjf">Order by WSJF</option>
+                                <option value="-bena">Order by Platform value</option>
+                                <option value="-sena">Order by Strategy value</option>
+                                <option value="-cena">Order by Customer value</option>
+                                <option value="-mena">Order by Market value</option>
+                                <option value="-effort">Order by Effort</option>
+                                <option value="-numestimate">Order by high-low Estimate</option>
+                                <option value="numestimate">Order by low-high Estimate</option>
+                                <option value="-risklevel">Order by Risk</option>
+                            </select>
+                            <select ng-model="order2" ng-init="order2='-wsjf'" style="font-size: 12px;">
+                                <option value="enddate" selected="selected">Order by end date</option>
+                                <option value="date">Order by start date</option>
+                                <option value="-wsjf">Order by WSJF</option>
+                                <option value="-enablervaluetotal">Order by Enabler total</option>
+                                <option value="-limitervaluetotal">Order by Limiter total</option>
+                                <option value="-bena">Order by Platform value</option>
+                                <option value="-sena">Order by Strategy value</option>
+                                <option value="-cena">Order by Customer value</option>
+                                <option value="-mena">Order by Market value</option>
+                                <option value="-effort">Order by Effort</option>
+                                <option value="-numestimate">Order by high-low Estimate</option>
+                                <option value="numestimate">Order by low-high Estimate</option>
+                                <option value="-risklevel">Order by Risk</option>
+                            </select>
+                        </div>
+                    </td>
+                </tr>
+                <tr class="header">
+                    <td>Title <br />
+                        Estimated hours
                     </td>
                     <td>Priority<br />WSJF</td>
                     <td>{{year-1}}</td>
@@ -322,9 +371,9 @@
                 </tr>
                 <tr ng-repeat="mile in project.milestones | orderBy:[order1,order2]"
                     ng-if="(showDone || (!showDone && mile.state!='Done')) && 
-                    (mileview=='all' || (mileview=='activity' && mile.type=='Activity') || (mileview=='rm' && mile.type=='Roadmap item'))"
-                    class="link">
-                    <td ng-click="beginEditMile(mile)" class="{{mile.status}}"><b>{{mile.title}}</b></td>
+                    (mileview=='all' || (mileview=='activity' && mile.type=='Activity') || (mileview=='rm' && mile.type=='Roadmap item'))" class="link">
+                    <td ng-click="beginEditMile(mile)" class="{{mile.status}}">
+                        <b>{{mile.title}}</b><br />{{mile.estimate}}</td>
                     <td ng-click="beginEditMile(mile)"><b>{{mile.priority}}</b><br />{{mile.wsjf}}</td>
                     <td ng-click="beginEditMile(mile)" class="bar" ng-style="barRender(mile)" colspan="3">
                         {{mile.type}}/{{mile.state}}

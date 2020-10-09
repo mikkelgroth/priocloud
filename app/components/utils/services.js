@@ -26,6 +26,27 @@ angular
             if (mile.limitervaluetotal > 4) { mile.limitervalue = 3; mile.limiterlable = "L"; }
             if (mile.limitervaluetotal > 9) { mile.limitervalue = 4; mile.limiterlable = "XL"; }
         }
+        _this.calcestimate = function (mile, project, company) {
+            mile.effort = '4';
+            if (Number(mile.estimate) > 0) mile.effort = '1';
+            if (Number(mile.estimate) >= Number(company.estimatelevelyellow)) mile.effort = '2';
+            if (Number(mile.estimate) >= Number(company.estimatelevelorange)) mile.effort = '3';
+
+            project.milestonestotalproject = 0;
+            project.milestonestotalroadmap = 0;
+            project.milestonestotalactivity = 0;
+
+            for (let i = 0; i < project.milestones.length; i++) {
+                const e = project.milestones[i];
+                if (e.type == "Roadmap item") {
+                    project.milestonestotalroadmap += Number(e.estimate);
+                } else if (e.type == "Activity") {
+                    project.milestonestotalactivity += Number(e.estimate);
+                } else {
+                    project.milestonestotalproject += Number(e.estimate);
+                }
+            }
+        }
 
         _this.getObjectByID = function (objID, list) {
             if (objID != undefined) {

@@ -432,6 +432,7 @@ angular
                     project.limiterlable = (project.milestones[0] != undefined) ? project.milestones[0].limiterlable : "XL";
                     project.limitervalue = (project.milestones[0] != undefined) ? project.milestones[0].limitervalue : 16;
                     project.wsjf = (project.milestones[0] != undefined) ? project.milestones[0].wsjf : 0;
+                    project.numestimate = (project.milestones[0] != undefined) ? project.milestones[0].numestimate : 0;
 
                     project.projbuownername = "";
                     if (project.bu != undefined && project.bu.owner != undefined) project.projbuownername = project.bu.owner.name;
@@ -459,14 +460,14 @@ angular
                     project.baselinestate = project.state;
                     project.baselinepriority = project.priority;
                     project.baselineenddate = project.milestones[0].enddate;
-                    project.baselinepeopleexternal = project.finance.costdeptotalexternalttotal;
+                    project.baselinepeopleexternal = project.finance.budexternaltotalgrandsum;
                     project.baselinegrandtotal = project.finance.budTotalgrandSum;
 
                     if (project.finance.baselines != undefined && project.finance.baselines[project.finance.baselines.length - 1] != undefined) {
                         project.baselinestate = project.finance.baselines[project.finance.baselines.length - 1].state;
                         project.baselinepriority = project.finance.baselines[project.finance.baselines.length - 1].priority;
                         project.baselineenddate = project.finance.baselines[project.finance.baselines.length - 1].enddate;
-                        project.baselinepeopleexternal = project.finance.baselines[project.finance.baselines.length - 1].peopleexternal;
+                        project.baselinepeopleexternal = project.finance.baselines[project.finance.baselines.length - 1].budExternalTotalgrandSum;
                         project.baselinegrandtotal = project.finance.baselines[project.finance.baselines.length - 1].grandtotal;
                     }
 
@@ -474,8 +475,8 @@ angular
                     (project.baselineenddate == project.milestones[0].enddate) ? project.baselineenddateFLAG = "Green" : project.baselineenddateFLAG = "Yellow";
 
                     project.baselinepeopleexternalDIV = 0;
-                    if (project.baselinepeopleexternal != 0 && project.finance.costdeptotalexternalttotal != undefined) {
-                        project.baselinepeopleexternalDIV = (project.baselinepeopleexternal - project.finance.costdeptotalexternalttotal) * 100 / project.baselinepeopleexternal;
+                    if (project.baselinepeopleexternal != 0 && project.finance.budexternaltotalgrandsum != undefined) {
+                        project.baselinepeopleexternalDIV = (project.baselinepeopleexternal - project.finance.budexternaltotalgrandsum) * 100 / project.baselinepeopleexternal;
                     }
 
                     project.baselinegrandtotalDIV = 0;

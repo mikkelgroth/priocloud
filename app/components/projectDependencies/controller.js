@@ -82,6 +82,15 @@ angular
 
             $scope.saveDeps = function () {
                 if ($scope.user.changeContent) {
+                    $scope.project.peoplequantumtotal = 0;
+                    $scope.project.peopleestimatetotal = 0;
+                    for (let i = 0; i < $scope.project.deps.length; i++) {
+                        const e = $scope.project.deps[i];
+                        $scope.project.peoplequantumtotal += Number(e.quantum);
+                        $scope.project.peopleestimatetotal += Number(e.estimate);
+                    }
+                    $scope.project.peoplequantumtotal = $scope.project.peoplequantumtotal / 100;
+
                     companyService.saveProjectName($scope.project, $scope.user, true);
                     $scope.hasChanged = false;
                     $scope.deleteThis = false;
@@ -114,9 +123,10 @@ angular
                     if (md instanceof Date && dmd instanceof Date) {
                         timeDiff = Math.abs(md.getTime() - dmd.getTime());
                         depdays = Math.ceil(timeDiff / (1000 * 3600 * 24));
+                        dep.estimate = Math.ceil(dep.quantum * depdays * Number($scope.company.daysaweek) * Number($scope.company.hoursaday) / 7 / 100);
                     }
-                    dep.priceint = Math.ceil(depdays * dep.rt.intdayprice * dep.quantumint / 100 * 60 / 100 / 1000); // 0,6 effective work day factor
-                    dep.priceext = Math.ceil(depdays * dep.rt.extdayprice * dep.quantumext / 100 * 60 / 100 / 1000);
+                    dep.priceint = Math.ceil(depdays * dep.rt.intdayprice * dep.quantumint * $scope.company.daysaweek / 7 / 100 / 1000);
+                    dep.priceext = Math.ceil(depdays * dep.rt.extdayprice * dep.quantumext * $scope.company.daysaweek / 7 / 100 / 1000);
                     dep.price = dep.priceint + dep.priceext;
                     $scope.editdep.requester = $scope.project.pm.name;
                     $scope.hasChanged = true;
@@ -155,7 +165,7 @@ angular
                     $scope.editdep.state = 'Requested';
                     $scope.editdep.requester = $scope.project.pm.name;
                     $scope.editdep.rt = $scope.company.resourceTypes[0];
-                    $scope.editdep.quantum = "0";
+                    $scope.editdep.estimate = 0;
                     $scope.editdep.priceint = 0;
                     $scope.editdep.priceext = 0;
                     $scope.editdep.price = 0;
