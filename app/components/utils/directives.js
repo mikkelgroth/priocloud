@@ -91,9 +91,9 @@ angular
 
             scope.$watch(attrs['prioValueBarRender'], function (newVal) {
 
-                if (newVal == 1) classList['prioValueBarRender'] = "Red";
-                else if (newVal == 2) classList['prioValueBarRender'] = "Orange";
-                else if (newVal == 3) classList['prioValueBarRender'] = "Yellow";
+                if (newVal == '1') classList['prioValueBarRender'] = "Red";
+                else if (newVal == '2') classList['prioValueBarRender'] = "Orange";
+                else if (newVal == '3') classList['prioValueBarRender'] = "Yellow";
                 else if (newVal) classList['prioValueBarRender'] = "Green";
 
                 repaintClasses();
@@ -102,9 +102,9 @@ angular
 
             scope.$watch(attrs['prioValueBarRenderNeg'], function (newVal) {
 
-                if (newVal == 1) classList['prioValueBarRenderNeg'] = "Green";
-                else if (newVal == 2) classList['prioValueBarRenderNeg'] = "Yellow";
-                else if (newVal == 3) classList['prioValueBarRenderNeg'] = "Orange";
+                if (newVal == '1') classList['prioValueBarRenderNeg'] = "Green";
+                else if (newVal == '2') classList['prioValueBarRenderNeg'] = "Yellow";
+                else if (newVal == '3') classList['prioValueBarRenderNeg'] = "Orange";
                 else if (newVal) classList['prioValueBarRenderNeg'] = "Red";
 
                 repaintClasses();

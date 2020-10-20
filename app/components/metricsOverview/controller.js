@@ -63,20 +63,27 @@ angular
                 }
             }
 
-            $scope.getMetric = function (metricID) {
-                if (metricID != undefined) {
-                    return util.getObjectByOID(metricID, $scope.metrics);
+            function getMetric(ID) {
+                if (ID != undefined) {
+                    return util.getObjectByOID(ID, $scope.metrics);
                 }
             }
-
-            $scope.getLastValue = function (metricID) {
-                if (metricID != undefined) {
-                    let p = $scope.getMetric(metricID);
+            $scope.getMetric = function (metricID) {
+                return getMetric(metricID);
+            }
+            function getLastValue(ID) {
+                if (ID != undefined) {
+                    let p = getMetric(ID);
                     if (p != undefined) {
                         return p.metricvalues[p.metricvalues.length - 1];
                     }
                 }
             }
+            $scope.getLastValue = function (metricID) {
+                return getLastValue(metricID);
+            }
+
+
 
             // Metric utils END
 
@@ -141,12 +148,18 @@ angular
                         keyresult['pconnect'] = project.connect;
                         keyresult['ppriority'] = project.priority;
 
-                        var lastmetric = util.getObjectByOID(keyresult.metricID, $scope.metrics);
-                        var last = lastmetric.metricvalues[lastmetric.metricvalues.length - 1];
-                        if (lastmetric.operator == "high") {
-                            keyresult.tstatus = (Number(keyresult.value) <= Number(last.value)) ? "Green" : "Red";
-                        } else {
-                            keyresult.tstatus = (Number(keyresult.value) >= Number(last.value)) ? "Green" : "Red";
+                        console.log("MetricID: " + keyresult.metricID);
+                        //var lastmetric = util.getObjectByOID(keyresult.metricID, $scope.metrics);
+                        //var last = lastmetric.metricvalues[lastmetric.metricvalues.length - 1];
+                        var last = getLastValue(keyresult.metricID);
+                        if (last != undefined) {
+                            console.log("Lastvalue: " + last + " last.value: " + last.value);
+
+                            if (lastmetric.operator == "high") {
+                                keyresult.tstatus = (Number(keyresult.value) <= Number(last.value)) ? "Green" : "Red";
+                            } else {
+                                keyresult.tstatus = (Number(keyresult.value) >= Number(last.value)) ? "Green" : "Red";
+                            }
                         }
                         return keyresult;
                     });

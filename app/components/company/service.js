@@ -62,7 +62,7 @@ angular
         };
         _this.reloadMetrics = function () {           
             loadCompanyMetrics().then(function (data) {                
-                _this.Metrics.onNext(data.Metrics);
+                _this.metrics.onNext(data.metrics);
             });
         };
 

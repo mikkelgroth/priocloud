@@ -49,7 +49,7 @@ angular
         }
 
         _this.getObjectByID = function (objID, list) {
-            if (objID != undefined) {
+            if (objID != undefined && list != undefined) {
                 let p = list.find(x => x._id === objID);
                 if (p != undefined) {
                     return p;
@@ -57,7 +57,7 @@ angular
             }
         }
         _this.getObjectByOID = function (objID, list) {
-            if (objID != undefined) {
+            if (objID != undefined && list != undefined) {
                 let p = list.find(x => x._id.$oid === objID);
                 if (p != undefined) {
                     return p;
