@@ -17,6 +17,7 @@ angular
         ) {
 
             var metricId = $routeParams.id;
+            $scope.views = 'info';
 
             userService
                 .user

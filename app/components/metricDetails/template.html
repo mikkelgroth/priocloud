@@ -4,11 +4,22 @@
 <prio-metric-menu prio-metric-id="{{metric._id.$oid}}" prio-metric-title="{{metric.title}}"></prio-metric-menu>
 <div class="view">
     <div class="mainbox editboxon" id="details">
+        <div class="radiotabs">
+
+            <label for="info"><input type="radio" id="info" name="views" ng-model="views" value="info"><span>
+                    Information and admininstration</span> </label>
+            <label for="prio"><input type="radio" id="prio" name="views" ng-model="views" value="prio"><span>
+                    Priority</span></label>
+            <label for="admin"><input type="radio" id="admin" name="views" ng-model="views" value="admin"><span>
+                    Administrators</span></label>
+        </div>
+
         <div class="right">
             <button type="button" id="saveButton2" prio-class save-this="$parent.hasChanged" ng-if="user.changeContent"
                 ng-click="saveMetric(metric)">save</button>
         </div>
-        <table class="smaller gutter-top">
+
+        <table class="smaller gutter-top" ng-show="views=='info'">
             <tr>
                 <td class="l header">Title </td>
                 <td>
@@ -105,9 +116,53 @@
                 </td>
             </tr>
         </table>
+        <table class="smaller gutter-top" ng-show="views=='admin'">
+        <tr>
+            <td class="header">Administrator</td>
+            <td>
+                <select ng-model="metric.pm" id="propm" ng-disabled="!user.changeContent" ng-change="saveNow()"
+                    ng-options="u.name for u in tempusers | filter: {source: true} | orderBy:'name' track by u.name">
+                </select>
 
-        <h2>Metric priority level: {{metric.risklevel}}</h2>
-        <table class="smaller">
+            </td>
+            <td class="header">Owner</td>
+            <td>
+                <select ng-model="metric.po" id="propo" ng-disabled="!user.changeContent" ng-change="saveNow()"
+                    ng-options="u.name for u in tempusers | filter: {source: true} | orderBy:'name' track by u.name">
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td class="header">Alt. Administrator</td>
+            <td>
+                <select ng-model="metric.altpm" id="proaltpm" ng-disabled="!user.changeContent" ng-change="saveNow()"
+                    ng-options="u.name for u in tempusers | filter: {source: true} | orderBy:'name' track by u.name">
+                </select>
+            </td>
+            <td class="header">Alt. Owner</td>
+            <td>
+                <select ng-model="metric.altpo" id="proaltpo" ng-disabled="!user.changeContent" ng-change="saveNow()"
+                    ng-options="u.name for u in tempusers | filter: {source: true} | orderBy:'name' track by u.name">
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Location of metric use
+            </td>
+            <td colspan="3">
+                <div class="field">
+                    <textarea ng-model="metric.locationUse" maxlength="800" ng-change="saveNow()"
+                        placeholder="Where is this metric used" ng-disabled="!user.changeContent"></textarea>
+                </div>
+            </td>
+        </tr>
+        </table>
+
+        <table class="smaller" ng-show="views=='prio'">
+            <tr>
+                <td colspan="4" class="header">Metric priority level: {{metric.risklevel}}
+                </td>
             <tr>
                 <td class="header">Business importance
                 </td>
@@ -130,57 +185,6 @@
                     </select>
                 </td>
             </tr>
-        </table>
-
-        <h2>Administration</h2>
-        <div class="right">
-            <button type="button" id="saveButton3" prio-class save-this="$parent.hasChanged" ng-if="user.changeContent"
-                ng-click="saveMetric(metric)">save</button>
-        </div>
-        <table class="smaller">
-            <tr>
-                <td class="header">Administrator</td>
-                <td>
-                    <select ng-model="metric.pm" id="propm" ng-disabled="!user.changeContent" ng-change="saveNow()"
-                        ng-options="u.name for u in tempusers | filter: {source: true} | orderBy:'name' track by u.name">
-                    </select>
-
-                </td>
-                <td class="header">Owner</td>
-                <td>
-                    <select ng-model="metric.po" id="propo" ng-disabled="!user.changeContent" ng-change="saveNow()"
-                        ng-options="u.name for u in tempusers | filter: {source: true} | orderBy:'name' track by u.name">
-                    </select>
-                </td>
-            </tr>
-            <tr>
-                <td class="header">Alt. Administrator</td>
-                <td>
-                    <select ng-model="metric.altpm" id="proaltpm" ng-disabled="!user.changeContent"
-                        ng-change="saveNow()"
-                        ng-options="u.name for u in tempusers | filter: {source: true} | orderBy:'name' track by u.name">
-                    </select>
-                </td>
-                <td class="header">Alt. Owner</td>
-                <td>
-                    <select ng-model="metric.altpo" id="proaltpo" ng-disabled="!user.changeContent"
-                        ng-change="saveNow()"
-                        ng-options="u.name for u in tempusers | filter: {source: true} | orderBy:'name' track by u.name">
-                    </select>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    Location of metric use
-                </td>
-                <td colspan="3">
-                    <div class="field">
-                        <textarea ng-model="metric.locationUse" maxlength="800" ng-change="saveNow()"
-                            placeholder="Where is this metric used" ng-disabled="!user.changeContent"></textarea>
-                    </div>
-                </td>
-            </tr>
-
         </table>
 
         <div class="popup">

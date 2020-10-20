@@ -59,9 +59,16 @@
             </table>
         </div>
     </div>
+    <div class="radiotabs">
+        <label for="observations"><input type="radio" id="observations" name="views" ng-model="views" value="observations"><span>
+            Observations</span></label>
+        <label for="format"><input type="radio" id="format" name="views" ng-model="views" value="format"><span>
+                Format and boundries</span> </label>
+        
+    </div>
 
     <div class="mainbox">
-        <table class="tablelist smaller" ng-if="metric.metricvalues.length > 0">
+        <table class="tablelist smaller"  ng-show="views=='format'">
             <tr>
                 <td class="header">Observation value format</td>
                 <td>
@@ -109,11 +116,12 @@
 
         <br />
 
-        <div class="right">
+        <div class="right" ng-show="views=='observations'">
             <button type="button" ng-click="newMetricvalue()" ng-if="user.changeContent">Enter new observation
                 value</button>
         </div>
-        <div class="overview">
+
+        <div class="overview" ng-show="views=='observations'">
             <table class="tablelist smaller" ng-if="metric.metricvalues.length > 0">
                 <tr class="header">
                     <td>Observation value</td>
