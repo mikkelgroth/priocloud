@@ -1,25 +1,44 @@
-<h2 class="center {{editstatus.status}}">
-    {{project.type}} - {{project.title}} ({{project.projectnumber}})
-</h2>
+
+<header>
+	<div class="title">
+		<div class="breadcrumbs">
+			<a href="#/projects" class="breadcrumb">
+				Projects &amp; Products
+			</a>
+		</div>
+		<h1 class="{{editstatus.status}}">
+			{{project.type}} - {{project.title}} ({{project.projectnumber}})
+		</h1>
+	</div>
+	<div class="options">
+
+	</div>
+</header>
+<div class="maincontentcontainer">
+
 
 <prio-project-menu prio-project-id="{{project._id.$oid}}" prio-project-title="{{project.title}}"></prio-project-menu>
-
+<div class="content">
 <div id="project-overview" class="view">
     <div class="mainbox" id="overview">
         <div class="header-with-actions">
 
             <div class="headeractions hideOnPrint">
                 <button type="button" id="editButton" save-this="$parent.hasChanged" class=" Green"
-                    ng-if="user.changeContent && !project.showRelease" ng-click="editProject(project)">edit
-                    project</button>
+					ng-if="user.changeContent && !project.showRelease" ng-click="editProject(project)">
+					Edit project
+				</button>
                 <button type="button" id="releaseButton" save-this="$parent.hasChanged" class=" Red"
-                    ng-if="user.changeContent && project.showRelease" ng-click="releaseProject(project)">release
-                    project</button>
+					ng-if="user.changeContent && project.showRelease" ng-click="releaseProject(project)">
+					Release project
+				</button>
 
-                <button class="" prio-class ng-click="showfilters=true" ng-show="!showfilters">show
-                    filters</button>
-                <button class="" prio-class ng-click="showfilters=false" ng-show="showfilters">hide
-                    filters</button>
+                <button class="" prio-class ng-click="showfilters=true" ng-show="!showfilters">
+					Show filters
+				</button>
+                <button class="" prio-class ng-click="showfilters=false" ng-show="showfilters">
+					Hide filters
+				</button>
             </div>
         </div>
         <div ng-show="showfilters" class=" ">
@@ -1396,4 +1415,7 @@
         </table>
     </div>
 </div>
+</div>
+</div>
+
 {{project.lastchangedby}} - {{project.lastchangeddate | date:'longDate'}}

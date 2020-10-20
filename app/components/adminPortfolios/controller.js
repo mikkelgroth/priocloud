@@ -56,7 +56,7 @@ angular
                 $('.popup').removeClass('active');
             };
             $scope.closeport = function () {
-                $('.popupport').removeClass('active');   
+                $('.popupport').removeClass('active');
             };
 
             // Portfolios
@@ -94,46 +94,6 @@ angular
                 companyService.saveCompany($scope.company);
                 $scope.editport = {};
                 $('.popupport').removeClass('active');
-
-            };
-
-
-            // Strategies
-
-            $scope.saveStrat = function () {
-                companyService.saveCompany($scope.company);
-                $scope.editstrat = {};
-                $('.popup').removeClass('active');
-            };
-
-            $scope.addStrat = function () {
-                if ($scope.company.strategytypes == null) $scope.company.strategytypes = [];
-                var n = {};
-                n.stratuid = util.uuid();
-                n.name = "NEW Strategy";
-
-                $scope.company.strategytypes.push(n);
-                companyService.saveCompany($scope.company);
-
-                $scope.editstrat = n;
-                $('.popup').addClass('active');
-            };
-
-            $scope.editStrat = function (c) {
-                if (c.stratuid == undefined) {
-                    c.stratuid = util.uuid();
-                }
-                $scope.editstrat = c;
-                $scope.showeditstrat = true;
-                $('.popup').addClass('active');
-
-            };
-
-            $scope.delStrat = function (c) {
-                $scope.company.strategytypes.splice($scope.company.strategytypes.indexOf(c), 1);
-                companyService.saveCompany($scope.company);
-                $scope.editstrat = {};
-                $('.popup').removeClass('active');
 
             };
 

@@ -1,342 +1,355 @@
-<h2 class="center {{process.statusFlag}}">
-    {{process.title}}
-</h2>
-<prio-process-menu prio-process-id="{{process._id.$oid}}"></prio-process-menu>
-</prio-step-menu>
-<div class="view">
-    <div class="popup">
-        <div class="overview popupcontent">
-            <div class="actions">
-                <div class="layout">
-                    <div class="layoutelement">
-                        <button type="button" id="saveButton1" prio-class save-this="$parent.hasChanged"
-                            ng-if="user.changeContent" ng-click="saveSteps()">save</button>
-                    </div>
-                    <div class="layoutelement center">
-                        <button type="button" ng-if="user.changeContent"
-                            ng-click="newCloneStep(editstep)">clone</button>
-                        <button type="button" class="Red" ng-click="removeStep(editstep)" ng-show="$parent.deleteThis"
-                            ng-if="user.changeContent">confirm
-                            delete!!!</button>
-                        <button type="button" ng-click="delete()" ng-show="!$parent.deleteThis"
-                            ng-if="user.changeContent">delete</button>
-                    </div>
-                    <div class="layoutelement right">
-                        <button type="button" class="close" ng-click="close()"></button>
-                    </div>
-                </div>
-            </div>
-            <h3 class="{{editstep.status}}">
-                {{editstep.title}}  - Risk/Asset value {{editstep.riskassetvalue}}
-            </h3>
-            <table class="formtable smaller">
-                <tr>
-                    <td class="formlabel">Title</td>
-                    <td>
-                        <input ng-model="editstep.title" ng-change="saveNow(editstep)"
-                            ng-disabled="!user.changeContent" />
-                    </td>
-                </tr>
-                <tr>
+<header>
+	<div class="title">
+		<div class="breadcrumbs">
+			<a href="#/processs" class="breadcrumb"></a>
+		</div>
+		<h1 class="center {{process.statusFlag}}">
+			{{process.title}}
+		</h1>
+	</div>
+</header>
+<div class="maincontentcontainer">
+	<prio-process-menu prio-process-id="{{process._id.$oid}}"></prio-process-menu>
+	</prio-step-menu>
 
-                    <td class="formlabel">Show in report</td>
-                    <td>
-                        <input type="checkbox" ng-model="editstep.showInReport" ng-change="saveNow(editstep)"
-                            ng-disabled="!user.changeContent">
-                    </td>
-                </tr>
-                <tr>
-                    <td class="formlabel">Purpose</td>
-                    <td>
-                        <textarea ng-change="saveNow(editstep)" ng-model="editstep.purpose" maxlength="800" id="stepdec"
-                            placeholder="Describe the purpose." ng-disabled="!user.changeContent"></textarea>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="formlabel">
-                        Description
-                    </td>
-                    <td>
-                        <textarea ng-change="saveNow(editstep)" ng-disabled="!user.changeContent" ng-model="editstep.desc"
-                            maxlength="800" id="riskdesc"
-                            placeholder="Describe the step"></textarea>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="formlabel">Step responsible</td>
-                    <td>
-                        <select ng-model="editstep.stepresp" id="stepresp" ng-disabled="!user.changeContent" ng-change="saveNow(editstep)"
-                            ng-options="u.name for u in sessionsusers | filter: {source: true} | orderBy:'name' track by u.name">
-                        </select>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="formlabel">System/Manual mapping</td>
-                    <td>
-                        <select ng-model="editstep.manualmapping" id="manualmapping" ng-disabled="!user.changeContent"  ng-init="TBD"
-                            ng-change="saveNow(editstep)">
-                            <option value="Manual step">Manual step</option>
-                            <option value="TBD">TBD</option>
-                            <option ng-repeat="s in systems | orderBy:'title'" value="{{s.title}}">{{s.title}}</option>
-                        </select>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="formlabel">Predesessor</td>
-                    <td>
-                        <select ng-model="editstep.predesessor" id="proaltgdprresp" ng-disabled="!user.changeContent"  ng-init="TBD"
-                            ng-change="saveNow(editstep)">
-                            <option ng-repeat="step in process.steps" value="{{step.title}}">{{step.title}}</option>
-                            <option value="Initial step">Initial step</option>
-                        </select>
-                    </td>
-                </tr>
-            </table>
-            <h3>
-                Business asset stepvalue - Asset points {{editstep.assetvalue}}
-            </h3>
-            <table class="formtable smaller">
-                <tr>
-                    <td class="formlabel">Customer exposure</td>
-                    <td>
-                        <select ng-model="editstep.custexposure" ng-change="saveNow(editstep)" ng-disabled="!user.changeContent">
-                            <option value="1">None</option>
-                            <option value="2">Indirect exposure</option>
-                            <option value="5">Direct exposure</option>
-                            <option value="12">Critical exposure</option>
-                        </select>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="formlabel">Financial income</td>
-                    <td>
-                        <select ng-model="editstep.finincome" ng-change="saveNow(editstep)" ng-disabled="!user.changeContent">
-                            <option value="1">None</option>
-                            <option value="2">Minimal income gain</option>
-                            <option value="5">General income gain</option>
-                            <option value="12">Critical income gain</option>
-                        </select>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="formlabel">Cost efficiency</td>
-                    <td>
-                        <select ng-model="editstep.costeficient" ng-change="saveNow(editstep)" ng-disabled="!user.changeContent">
-                            <option value="1">None</option>
-                            <option value="2">Minimal efficiency gain</option>
-                            <option value="5">General efficiency gain</option>
-                            <option value="12">Critical efficiency gain</option>
-                        </select>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="formlabel">Process step dependency</td>
-                    <td>
-                        <select ng-model="editstep.processdependency" ng-change="saveNow(editstep)" ng-disabled="!user.changeContent">
-                            <option value="1">Optional</option>
-                            <option value="2">Easy workaround</option>
-                            <option value="5">General dependency</option>
-                            <option value="12">Critical dependency</option>
-                        </select>
-                    </td>
-                </tr>
-            </table>
-            <h3>
-                Business step contingency - Risk points {{editstep.risklevelvalue}}
-            </h3>
-            <table class="formtable smaller">
-                <tr>
-                    <td class="formlabel"  prio-class prio-risk-bar-render="editstep.recComp">Step recovery complexity</td>
-                    <td>
-                        <select ng-model="editstep.recComp" ng-change="saveNow(editstep)" ng-disabled="!user.changeContent">
-                            <option value="1">Easy fix (Green)</option>
-                            <option value="2">Taskforce (Yellow)</option>
-                            <option value="5">Project (Orange)</option>
-                            <option value="12">Unknow/Massive (Red)</option>
-                        </select>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="formlabel" prio-class prio-risk-bar-render="editstep.prob">Risk probability</td>
-                    <td>
-                        <select ng-model="editstep.prob" ng-change="saveNow(editstep)" ng-disabled="!user.changeContent">
-                            <option value="1">1. Slim chance</option>
-                            <option value="2">2. Could happen</option>
-                            <option value="5">3. Likely to happen</option>
-                            <option value="12">4. Most likely to happen</option>
-                        </select>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="formlabel" prio-class prio-risk-bar-render="editstep.impact">Risk impact</td>
-                    <td>
-                        <select ng-model="editstep.impact" ng-change="saveNow(editstep)" ng-disabled="!user.changeContent">
-                            <option value="1">1. Minor Project impact</option>
-                            <option value="2">2. Major Project impact</option>
-                            <option value="5">3. Business Unit impact</option>
-                            <option value="12">4. Company impact</option>
-                        </select>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="formlabel">
-                        Request
-                    </td>
-                    <td>
-                        <textarea ng-change="saveNow(editstep)" ng-disabled="!user.changeContent" ng-model="editstep.request"
-                            maxlength="800" id="riskrequest"
-                            placeholder="Describe the request for action from Steerco or senior management."></textarea>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="formlabel">
-                        Mitigation
-                    </td>
-                    <td>
-                        <textarea ng-change="saveNow(editstep)" ng-disabled="!user.changeContent" ng-model="editstep.miti"
-                            maxlength="800" id="riskmit"
-                            placeholder="Describe actions beside normal work or attention that can decrease or remove the risk and its associatted cost."></textarea>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="formlabel">
-                        Contingency trigger
-                    </td>
-                    <td>
-                        <textarea ng-change="saveNow(editstep)" ng-disabled="!user.changeContent" ng-model="editstep.trigger"
-                            maxlength="800" id="risktrig"
-                            placeholder="Describe the tippingpoint were a risk turns in to an issue that demands for the contingency plan to come in to effect."></textarea>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="formlabel">
-                        Contingency plan
-                    </td>
-                    <td>
-                        <textarea ng-change="saveNow(editstep)" ng-disabled="!user.changeContent" ng-model="editstep.cont"
-                            maxlength="800" id="riskplan"
-                            placeholder="Describe the plan and associated cost for getting back in control after an risk incident."></textarea>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="formlabel">
-                        Documentation
-                    </td>
-                    <td>
-                        <table class="tablelist smaller">
-                            <tr>
-                                <td colspan="4">
-                                    <div class="right">
-                                        <button ng-if="user.changeContent" ng-click="addlink('stepdoc')"
-                                            ng-if="user.changeContent">create link</button>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr class="header" ng-if="process.linklist.length > 0">
-                                <td>Title</td>
-                                <td>URL</td>
-                                <td>Show in report</td>
-                                <td>Follow link</td>
-                            </tr>
-                            <tr ng-repeat="link in process.linklist" ng-if="link.lable=='stepdoc'">
-                                <td ng-click="editlinkitem(link)">
-                                    {{link.title}}
-                                </td>
-                                <td ng-click="editlinkitem(link)">
-                                    {{link.url}}
-                                </td>
-                                <td class="Green" ng-show="link.showinreport">Show</td>
-                                <td class="Red" ng-show="!link.showinreport">Hide</td>
-                                <td>
-                                    <a target="_blank" href="{{link.url}}">
-                                        <div class="linkicon right"></div>
-                                    </a>
-                                </td>
-                            </tr>
-                        </table>
-                    </td>
-                </tr>
-
-            </table>
-        </div>
-    </div>
-    <div class="popuplink">
-        <div class="overview popupcontent">
-            <div class="actions">
-                <div class="layout">
-                    <div class="layoutelement">
-                        <button type="button" id="saveButton5" ng-if="user.changeContent"
-                            ng-click="savelink(editlink)">save</button>
-                    </div>
-                    <div class="layoutelement center">
-                        <button type="button primary" class="Red" ng-click="dellink(editlink)"
-                            ng-if="user.changeContent">delete</button>
-                    </div>
-                    <div class="layoutelement right">
-                        <button type="button" class="close" ng-click="closelink(editlink)"></button>
-                    </div>
-                </div>
-            </div>
-            <h3>
-                Edit link
-            </h3>
-            <table class="formtable smaller">
-                <tr>
-                    <td class="formlabel">Link title</td>
-                    <td><input ng-model="editlink.title" /></td>
-                </tr>
-                <tr>
-                    <td class="formlabel">Link URL</td>
-                    <td><input ng-model="editlink.url" /></td>
-                </tr>
-                <tr>
-                    <td class="formlabel">Show link in report</td>
-                    <td><input type="checkbox" ng-model="editlink.showinreport"></td>
-                </tr>
-            </table>
-        </div>
-    </div>
-
-    <div class="mainbox">
-        <div class="{{process.step.securityownerfeedback}}">Security assesment
-            <select ng-model="process.step.securityownerfeedback" ng-change="saveSteps()"
-                ng-disabled="!user.changeContent" ng-show="user.securityowner || user.admin">
-                <option value="Green">OK (Green)</option>
-                <option value="Yellow">Observe (Yellow)</option>
-                <option value="Orange">Assist (Orange)</option>
-                <option value="Red">Intervention (Red)</option>
-            </select>
-        </div>
-        <div class="right">
-            <button type="button" ng-click="newStep()" ng-if="user.changeContent">create new
-                step</button>
-        </div>
-        <h3>
-            Steps Risk/Asset total: {{process.stepstotal}}
-        </h3>
-        <div class="overview">
-            <table class="tablelist smaller" ng-if="process.steps.length > 0">
-                <tr class="header">
-                    <td>Title</td>
-                    <td>Predessesor</td>
-                    <td>Risk/Asset value</td>
-                    <td>Risk value</td>
-                    <td>Asset value</td>
-                    <td>System/Manual</td>
-                    <td>Report</td>
-                </tr>
-                <tr ng-repeat="step in process.steps | orderBy:'title'" class="link">
-                    <td ng-click="beginEditStep(step)" class="{{step.status}}">
-                        <b>{{step.title}}</b></td>
-                    <td ng-click="beginEditStep(step)">{{step.predesessor}}</td>
-                    <td ng-click="beginEditStep(step)">{{step.riskassetvalue}}</td>
-                    <td ng-click="beginEditStep(step)">{{step.risklevelvalue}}</td>
-                    <td ng-click="beginEditStep(step)">{{step.assetvalue}}</td>
-                    <td ng-click="beginEditStep(step)">{{step.manualmapping}}</td>
-                    <td><input type="checkbox" ng-model="step.showInReport" ng-change="saveSteps()"
-                            ng-disabled="!user.changeContent"></td>
-                </tr>
-            </table>
-        </div>
-    </div>
+	<div class="content">
+		<div class="view">
+			<div class="popup">
+				<div class="overview popupcontent">
+					<div class="actions">
+						<div class="layout">
+							<div class="layoutelement">
+								<button type="button" id="saveButton1" prio-class save-this="$parent.hasChanged"
+									ng-if="user.changeContent" ng-click="saveSteps()">save</button>
+							</div>
+							<div class="layoutelement center">
+								<button type="button" ng-if="user.changeContent"
+									ng-click="newCloneStep(editstep)">clone</button>
+								<button type="button" class="Red" ng-click="removeStep(editstep)" ng-show="$parent.deleteThis"
+									ng-if="user.changeContent">confirm
+									delete!!!</button>
+								<button type="button" ng-click="delete()" ng-show="!$parent.deleteThis"
+									ng-if="user.changeContent">delete</button>
+							</div>
+							<div class="layoutelement right">
+								<button type="button" class="close" ng-click="close()"></button>
+							</div>
+						</div>
+					</div>
+					<h3 class="{{editstep.status}}">
+						{{editstep.title}}  - Risk/Asset value {{editstep.riskassetvalue}}
+					</h3>
+					<table class="formtable smaller">
+						<tr>
+							<td class="formlabel">Title</td>
+							<td>
+								<input ng-model="editstep.title" ng-change="saveNow(editstep)"
+									ng-disabled="!user.changeContent" />
+							</td>
+						</tr>
+						<tr>
+		
+							<td class="formlabel">Show in report</td>
+							<td>
+								<input type="checkbox" ng-model="editstep.showInReport" ng-change="saveNow(editstep)"
+									ng-disabled="!user.changeContent">
+							</td>
+						</tr>
+						<tr>
+							<td class="formlabel">Purpose</td>
+							<td>
+								<textarea ng-change="saveNow(editstep)" ng-model="editstep.purpose" maxlength="800" id="stepdec"
+									placeholder="Describe the purpose." ng-disabled="!user.changeContent"></textarea>
+							</td>
+						</tr>
+						<tr>
+							<td class="formlabel">
+								Description
+							</td>
+							<td>
+								<textarea ng-change="saveNow(editstep)" ng-disabled="!user.changeContent" ng-model="editstep.desc"
+									maxlength="800" id="riskdesc"
+									placeholder="Describe the step"></textarea>
+							</td>
+						</tr>
+						<tr>
+							<td class="formlabel">Step responsible</td>
+							<td>
+								<select ng-model="editstep.stepresp" id="stepresp" ng-disabled="!user.changeContent" ng-change="saveNow(editstep)"
+									ng-options="u.name for u in sessionsusers | filter: {source: true} | orderBy:'name' track by u.name">
+								</select>
+							</td>
+						</tr>
+						<tr>
+							<td class="formlabel">System/Manual mapping</td>
+							<td>
+								<select ng-model="editstep.manualmapping" id="manualmapping" ng-disabled="!user.changeContent"  ng-init="TBD"
+									ng-change="saveNow(editstep)">
+									<option value="Manual step">Manual step</option>
+									<option value="TBD">TBD</option>
+									<option ng-repeat="s in systems | orderBy:'title'" value="{{s.title}}">{{s.title}}</option>
+								</select>
+							</td>
+						</tr>
+						<tr>
+							<td class="formlabel">Predesessor</td>
+							<td>
+								<select ng-model="editstep.predesessor" id="proaltgdprresp" ng-disabled="!user.changeContent"  ng-init="TBD"
+									ng-change="saveNow(editstep)">
+									<option ng-repeat="step in process.steps" value="{{step.title}}">{{step.title}}</option>
+									<option value="Initial step">Initial step</option>
+								</select>
+							</td>
+						</tr>
+					</table>
+					<h3>
+						Business asset stepvalue - Asset points {{editstep.assetvalue}}
+					</h3>
+					<table class="formtable smaller">
+						<tr>
+							<td class="formlabel">Customer exposure</td>
+							<td>
+								<select ng-model="editstep.custexposure" ng-change="saveNow(editstep)" ng-disabled="!user.changeContent">
+									<option value="1">None</option>
+									<option value="2">Indirect exposure</option>
+									<option value="5">Direct exposure</option>
+									<option value="12">Critical exposure</option>
+								</select>
+							</td>
+						</tr>
+						<tr>
+							<td class="formlabel">Financial income</td>
+							<td>
+								<select ng-model="editstep.finincome" ng-change="saveNow(editstep)" ng-disabled="!user.changeContent">
+									<option value="1">None</option>
+									<option value="2">Minimal income gain</option>
+									<option value="5">General income gain</option>
+									<option value="12">Critical income gain</option>
+								</select>
+							</td>
+						</tr>
+						<tr>
+							<td class="formlabel">Cost efficiency</td>
+							<td>
+								<select ng-model="editstep.costeficient" ng-change="saveNow(editstep)" ng-disabled="!user.changeContent">
+									<option value="1">None</option>
+									<option value="2">Minimal efficiency gain</option>
+									<option value="5">General efficiency gain</option>
+									<option value="12">Critical efficiency gain</option>
+								</select>
+							</td>
+						</tr>
+						<tr>
+							<td class="formlabel">Process step dependency</td>
+							<td>
+								<select ng-model="editstep.processdependency" ng-change="saveNow(editstep)" ng-disabled="!user.changeContent">
+									<option value="1">Optional</option>
+									<option value="2">Easy workaround</option>
+									<option value="5">General dependency</option>
+									<option value="12">Critical dependency</option>
+								</select>
+							</td>
+						</tr>
+					</table>
+					<h3>
+						Business step contingency - Risk points {{editstep.risklevelvalue}}
+					</h3>
+					<table class="formtable smaller">
+						<tr>
+							<td class="formlabel"  prio-class prio-risk-bar-render="editstep.recComp">Step recovery complexity</td>
+							<td>
+								<select ng-model="editstep.recComp" ng-change="saveNow(editstep)" ng-disabled="!user.changeContent">
+									<option value="1">Easy fix (Green)</option>
+									<option value="2">Taskforce (Yellow)</option>
+									<option value="5">Project (Orange)</option>
+									<option value="12">Unknow/Massive (Red)</option>
+								</select>
+							</td>
+						</tr>
+						<tr>
+							<td class="formlabel" prio-class prio-risk-bar-render="editstep.prob">Risk probability</td>
+							<td>
+								<select ng-model="editstep.prob" ng-change="saveNow(editstep)" ng-disabled="!user.changeContent">
+									<option value="1">1. Slim chance</option>
+									<option value="2">2. Could happen</option>
+									<option value="5">3. Likely to happen</option>
+									<option value="12">4. Most likely to happen</option>
+								</select>
+							</td>
+						</tr>
+						<tr>
+							<td class="formlabel" prio-class prio-risk-bar-render="editstep.impact">Risk impact</td>
+							<td>
+								<select ng-model="editstep.impact" ng-change="saveNow(editstep)" ng-disabled="!user.changeContent">
+									<option value="1">1. Minor Project impact</option>
+									<option value="2">2. Major Project impact</option>
+									<option value="5">3. Business Unit impact</option>
+									<option value="12">4. Company impact</option>
+								</select>
+							</td>
+						</tr>
+						<tr>
+							<td class="formlabel">
+								Request
+							</td>
+							<td>
+								<textarea ng-change="saveNow(editstep)" ng-disabled="!user.changeContent" ng-model="editstep.request"
+									maxlength="800" id="riskrequest"
+									placeholder="Describe the request for action from Steerco or senior management."></textarea>
+							</td>
+						</tr>
+						<tr>
+							<td class="formlabel">
+								Mitigation
+							</td>
+							<td>
+								<textarea ng-change="saveNow(editstep)" ng-disabled="!user.changeContent" ng-model="editstep.miti"
+									maxlength="800" id="riskmit"
+									placeholder="Describe actions beside normal work or attention that can decrease or remove the risk and its associatted cost."></textarea>
+							</td>
+						</tr>
+						<tr>
+							<td class="formlabel">
+								Contingency trigger
+							</td>
+							<td>
+								<textarea ng-change="saveNow(editstep)" ng-disabled="!user.changeContent" ng-model="editstep.trigger"
+									maxlength="800" id="risktrig"
+									placeholder="Describe the tippingpoint were a risk turns in to an issue that demands for the contingency plan to come in to effect."></textarea>
+							</td>
+						</tr>
+						<tr>
+							<td class="formlabel">
+								Contingency plan
+							</td>
+							<td>
+								<textarea ng-change="saveNow(editstep)" ng-disabled="!user.changeContent" ng-model="editstep.cont"
+									maxlength="800" id="riskplan"
+									placeholder="Describe the plan and associated cost for getting back in control after an risk incident."></textarea>
+							</td>
+						</tr>
+						<tr>
+							<td class="formlabel">
+								Documentation
+							</td>
+							<td>
+								<table class="tablelist smaller">
+									<tr>
+										<td colspan="4">
+											<div class="right">
+												<button ng-if="user.changeContent" ng-click="addlink('stepdoc')"
+													ng-if="user.changeContent">create link</button>
+											</div>
+										</td>
+									</tr>
+									<tr class="header" ng-if="process.linklist.length > 0">
+										<td>Title</td>
+										<td>URL</td>
+										<td>Show in report</td>
+										<td>Follow link</td>
+									</tr>
+									<tr ng-repeat="link in process.linklist" ng-if="link.lable=='stepdoc'">
+										<td ng-click="editlinkitem(link)">
+											{{link.title}}
+										</td>
+										<td ng-click="editlinkitem(link)">
+											{{link.url}}
+										</td>
+										<td class="Green" ng-show="link.showinreport">Show</td>
+										<td class="Red" ng-show="!link.showinreport">Hide</td>
+										<td>
+											<a target="_blank" href="{{link.url}}">
+												<div class="linkicon right"></div>
+											</a>
+										</td>
+									</tr>
+								</table>
+							</td>
+						</tr>
+		
+					</table>
+				</div>
+			</div>
+			<div class="popuplink">
+				<div class="overview popupcontent">
+					<div class="actions">
+						<div class="layout">
+							<div class="layoutelement">
+								<button type="button" id="saveButton5" ng-if="user.changeContent"
+									ng-click="savelink(editlink)">save</button>
+							</div>
+							<div class="layoutelement center">
+								<button type="button primary" class="Red" ng-click="dellink(editlink)"
+									ng-if="user.changeContent">delete</button>
+							</div>
+							<div class="layoutelement right">
+								<button type="button" class="close" ng-click="closelink(editlink)"></button>
+							</div>
+						</div>
+					</div>
+					<h3>
+						Edit link
+					</h3>
+					<table class="formtable smaller">
+						<tr>
+							<td class="formlabel">Link title</td>
+							<td><input ng-model="editlink.title" /></td>
+						</tr>
+						<tr>
+							<td class="formlabel">Link URL</td>
+							<td><input ng-model="editlink.url" /></td>
+						</tr>
+						<tr>
+							<td class="formlabel">Show link in report</td>
+							<td><input type="checkbox" ng-model="editlink.showinreport"></td>
+						</tr>
+					</table>
+				</div>
+			</div>
+		
+			<div class="mainbox">
+				<div class="{{process.step.securityownerfeedback}}">Security assesment
+					<select ng-model="process.step.securityownerfeedback" ng-change="saveSteps()"
+						ng-disabled="!user.changeContent" ng-show="user.securityowner || user.admin">
+						<option value="Green">OK (Green)</option>
+						<option value="Yellow">Observe (Yellow)</option>
+						<option value="Orange">Assist (Orange)</option>
+						<option value="Red">Intervention (Red)</option>
+					</select>
+				</div>
+				<div class="right">
+					<button type="button" ng-click="newStep()" ng-if="user.changeContent">create new
+						step</button>
+				</div>
+				<h3>
+					Steps Risk/Asset total: {{process.stepstotal}}
+				</h3>
+				<div class="overview">
+					<table class="tablelist smaller" ng-if="process.steps.length > 0">
+						<tr class="header">
+							<td>Title</td>
+							<td>Predessesor</td>
+							<td>Risk/Asset value</td>
+							<td>Risk value</td>
+							<td>Asset value</td>
+							<td>System/Manual</td>
+							<td>Report</td>
+						</tr>
+						<tr ng-repeat="step in process.steps | orderBy:'title'" class="link">
+							<td ng-click="beginEditStep(step)" class="{{step.status}}">
+								<b>{{step.title}}</b></td>
+							<td ng-click="beginEditStep(step)">{{step.predesessor}}</td>
+							<td ng-click="beginEditStep(step)">{{step.riskassetvalue}}</td>
+							<td ng-click="beginEditStep(step)">{{step.risklevelvalue}}</td>
+							<td ng-click="beginEditStep(step)">{{step.assetvalue}}</td>
+							<td ng-click="beginEditStep(step)">{{step.manualmapping}}</td>
+							<td><input type="checkbox" ng-model="step.showInReport" ng-change="saveSteps()"
+									ng-disabled="!user.changeContent"></td>
+						</tr>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
+

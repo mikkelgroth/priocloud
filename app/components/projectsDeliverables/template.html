@@ -1,356 +1,366 @@
 <div id="projects-deliverables">
-    <h2>Deliverables <div class="right">
-            <button ng-click="showdefault()">my default</button>
-            <button ng-click="showmepm()" ng-show="showmepmbutton">me as PM</button>
-            <button ng-click="clearmepm()" ng-show="!showmepmbutton">all PMs</button>
-            <button ng-click="showmeres()" ng-show="showmeresbutton">me as responsible</button>
-            <button ng-click="clearmeres()" ng-show="!showmeresbutton">all responsibles</button>
-            <button ng-click="showmeap()" ng-show="showmeapbutton">me as approver</button>
-            <button ng-click="clearmeap()" ng-show="!showmeapbutton">all approvers</button>
-            <button ng-click="showfilters=true" ng-show="!showfilters">more filters</button>
-            <button ng-click="showfilters=false" ng-show="showfilters">hide filters</button>
-        </div>
-    </h2>
-    <div class="smaller">
+	<header>
+		<div class="title">
+			<h1>
+				Deliverables
+			</h1>
+		</div>
+		<div class="options">
+			<button ng-click="showdefault()">my default</button>
+			<button ng-click="showmepm()" ng-show="showmepmbutton">me as PM</button>
+			<button ng-click="clearmepm()" ng-show="!showmepmbutton">all PMs</button>
+			<button ng-click="showmeres()" ng-show="showmeresbutton">me as responsible</button>
+			<button ng-click="clearmeres()" ng-show="!showmeresbutton">all responsibles</button>
+			<button ng-click="showmeap()" ng-show="showmeapbutton">me as approver</button>
+			<button ng-click="clearmeap()" ng-show="!showmeapbutton">all approvers</button>
+			<button ng-click="showfilters=true" ng-show="!showfilters">more filters</button>
+			<button ng-click="showfilters=false" ng-show="showfilters">hide filters</button>
+		</div>
+	</header>
 
-        <table ng-show="showfilters">
-            <tr class="header">
-                <td colspan="5">Filters<div class="right"><button class="clearbtn" ng-click="clearall()"
-                            ng-show="showfilters">clear all</button></div>
-                </td>
-            </tr>
-            <tr class="header">
-                <td class="filter-container">Unit<div class="right"><button ng-click="milesearch.pbuname=[]"
-                            ng-show="showfilters">clear</button></div>
-                </td>
-                <td class="filter-container">Entity<div class="right"><button ng-click="milesearch.projecttitle=[]"
-                            ng-show="showfilters">clear</button></div>
-                </td>
-                <td class="filter-container">Entity State<div class="right"><button ng-click="milesearch.pstate=[]"
-                            ng-show="showfilters">clear</button></div>
-                </td>
-                <td class="filter-container">Entity manager<div class="right"><button ng-click="milesearch.ppm=[]"
-                            ng-show="showfilters">clear</button></div>
-                </td>
-                <td class="filter-container">Deliverable type<div class="right"><button ng-click="milesearch.type=[]"
-                            ng-show="showfilters">clear</button></div>
-                </td>
-            </tr>
+	<div class="maincontentcontainer">
 
-            <tr class="filtertd">
-                <td>
-                    <select class="multiple-select" multiple="multiple" ng-multiple="true" ng-change="saveSearch()"
-                        ng-model="milesearch.pbuname"
-                        ng-options="bu.name as bu.name for bu in bus | orderBy: 'name'"></select>
-                </td>
-                <td>
-                    <select class="multiple-select" multiple="multiple" ng-multiple="true" ng-change="saveSearch()"
-                        ng-model="milesearch.projecttitle"
-                        ng-options="p.title as p.title for p in projects | filter:{state: 'Progress'} | orderBy: 'title'"></select>
-                </td>
-                <td>
-                    <select class="multiple-select" multiple="multiple" ng-multiple="true" ng-change="saveSearch()"
-                        ng-model="milesearch.pstate">
-                        <option value="Template">Template</option>
-                        <option value="Internal Approved">Internal Approved</option>
-                        <option value="Portfolio Approved">Portfolio Approved</option>
-                        <option value="Company Approved">Company Approved</option>
-                        <option value="Progress">Progress</option>
-                        <option value="Onhold">On hold</option>
-                        <option value="Rejected">Rejected</option>
-                        <option value="Closed">Closed</option>
-                    </select>
-                </td>
-                <td>
-                    <select class="multiple-select" multiple="multiple" ng-multiple="true" ng-change="saveSearch()"
-                        ng-model="milesearch.ppm">
-                        <option ng-repeat="u in users | filter: {source: true} | orderBy:'name'" value="{{u.name}}">
-                            {{u.name}}</option>
-                    </select>
-                </td>
-                <td>
-                    <select class="multiple-select" multiple="multiple" ng-multiple="true" ng-change="saveSearch()"
-                        ng-model="milesearch.type">
-                        <option value="Project">Project</option>
-                        <option value="Roadmap item">Roadmap item</option>
-                        <option value="Activity">Activity</option>
-                    </select>
-                </td>
-            </tr>
-            <tr class="header">
-                <td>Approver<div class="right"><button ng-click="milesearch.acountable=[]"
-                            ng-show="showfilters">clear</button></div>
-                </td>
-                <td>Responsible<div class="right"><button ng-click="milesearch.responsible=[]"
-                            ng-show="showfilters">clear</button></div>
-                </td>
-                <td>Unit Affected<div class="right"><button ng-click="milesearch.pconnect=[]"
-                            ng-show="showfilters">clear</button></div>
-                </td>
-                <td>Entity Priority<div class="right"><button ng-click="milesearch.ppriority=[]"
-                            ng-show="showfilters">clear</button></div>
-                </td>
-                <td>Portfolio<div class="right"><button ng-click="milesearch.pportname=[]"
-                            ng-show="showfilters">clear</button></div>
-                </td>
-            </tr>
-            <tr class="filtertd">
-                <td>
-                    <select class="multiple-select" multiple="multiple" ng-multiple="true" ng-change="saveSearch()"
-                        ng-model="milesearch.acountable">
-                        <option ng-repeat="u in users | filter: {source: true} | orderBy:'name'" value="{{u.name}}">
-                            {{u.name}}</option>
-                    </select>
-
-                </td>
-                <td>
-                    <select class="multiple-select" multiple="multiple" ng-multiple="true" ng-change="saveSearch()"
-                        ng-model="milesearch.responsible">
-                        <option ng-repeat="u in users | filter: {source: true} | orderBy:'name'" value="{{u.name}}">
-                            {{u.name}}</option>
-                    </select>
-                </td>
-                <td>
-                    <select class="multiple-select" multiple="multiple" ng-multiple="true" ng-change="saveSearch()"
-                        ng-model="milesearch.pconnect"
-                        ng-options="bu.name as bu.name for bu in bus | orderBy: 'name'"></select>
-
-                </td>
-                <td>
-                    <select class="multiple-select" multiple="multiple" ng-multiple="true" ng-change="saveSearch()"
-                        ng-model="milesearch.priority">
-                        <option value="1. Mandatory">1. Mandatory</option>
-                        <option value="2. Top priority">2. Top priority</option>
-                        <option value="3. High priority">3. High priority</option>
-                        <option value="4. Needed">4. Needed</option>
-                        <option value="5. Valued">5. Valued</option>
-                    </select>
-                </td>
-                <td>
-                    <select class="multiple-select" multiple="multiple" ng-multiple="true" ng-change="saveSearch()"
-                        ng-model="milesearch.pportname"
-                        ng-options="port.name as port.name for port in company.portfolios | orderBy: 'level'"></select>
-                </td>
-            </tr>
-            <tr class="header">
-                <td>Deliverable Status<div class="right"><button ng-click="milesearch.status=[]"
-                            ng-show="showfilters">clear</button></div>
-                </td>
-                <td>Deliverable state<div class="right"><button ng-click="milesearch.state=[]"
-                            ng-show="showfilters">clear</button></div>
-                </td>
-                <td>Audience<div class="right"><button ng-click="milesearch.audience=[]"
-                            ng-show="showfilters">clear</button></div>
-                </td>
-                <td>Effort<div class="right"><button ng-click="milesearch.effort=[]"
-                            ng-show="showfilters">clear</button></div>
-                </td>
-                <td>Risk of failure<div class="right"><button ng-click="milesearch.risklevel=[]"
-                            ng-show="showfilters">clear</button></div>
-                </td>
-            </tr>
-            <tr class="filtertd">
-                <td>
-                    <select class="multiple-select" multiple="multiple" ng-multiple="true" ng-change="saveSearch()"
-                        ng-model="milesearch.status">
-                        <option value="Green">Accept</option>
-                        <option value="Yellow">Observe</option>
-                        <option value="Orange">Assist</option>
-                        <option value="Red">Intervent</option>
-                    </select>
-
-                </td>
-                <td>
-                    <select class="multiple-select" multiple="multiple" ng-multiple="true" ng-change="saveSearch()"
-                        ng-model="milesearch.state">
-                        <option value="Target">Target</option>
-                        <option value="Qualified">Qualified</option>
-                        <option value="Progress">Progress</option>
-                        <option value="Done">Done</option>
-                        <option value="Canceled">Canceled</option>
-                    </select>
-                </td>
-                <td>
-                    <select class="multiple-select" multiple="multiple" ng-multiple="true" ng-change="saveSearch()"
-                        ng-model="milesearch.audience">
-                        <option value="Internal">Internal</option>
-                        <option value="Portfolio">Portfolio</option>
-                        <option value="Company">Company</option>
-                    </select>
-                </td>
-                <td>
-                    <select class="multiple-select" multiple="multiple" ng-multiple="true" ng-change="saveSearch()"
-                        ng-model="milesearch.effort">
-                        <option value="1">1. Minimal effort</option>
-                        <option value="2">2. Medium effort</option>
-                        <option value="3">3. Large effort</option>
-                        <option value="4">4. Unknown effort</option>
-                    </select>
-                </td>
-                <td>
-                    <select class="multiple-select" multiple="multiple" ng-multiple="true" ng-change="saveSearch()"
-                        ng-model="milesearch.risklevel">
-                        <option value="1">1. Slim risk</option>
-                        <option value="2">2. Could happen</option>
-                        <option value="3">3. Likely to happen</option>
-                        <option value="4">4. Most likely to happen</option>
-                    </select>
-                </td>
-            </tr>
-            <tr class="header">
-                <td>Platform enabler<div class="right"><button ng-click="milesearch.bena=[]"
-                            ng-show="showfilters">clear</button></div>
-                </td>
-                <td>Strategic enabler<div class="right"><button ng-click="milesearch.sena=[]"
-                            ng-show="showfilters">clear</button></div>
-                </td>
-                <td>Customer enabler<div class="right"><button ng-click="milesearch.cena=[]"
-                            ng-show="showfilters">clear</button></div>
-                </td>
-                <td>Market enabler<div class="right"><button ng-click="milesearch.mena=[]"
-                            ng-show="showfilters">clear</button></div>
-                </td>
-                <td>
-                </td>
-            </tr>
-            <tr class="filtertd">
-                <td>
-                    <select class="multiple-select" multiple="multiple" ng-multiple="true" ng-change="saveSearch()"
-                        ng-model="milesearch.bena">
-                        <option value="1">1. Minimal value</option>
-                        <option value="2">2. Medium value</option>
-                        <option value="3">3. Large value</option>
-                        <option value="4">4. Game changer</option>
-                    </select>
-
-                </td>
-                <td>
-                    <select class="multiple-select" multiple="multiple" ng-multiple="true" ng-change="saveSearch()"
-                        ng-model="milesearch.sena">
-                        <option value="1">1. Minimal value</option>
-                        <option value="2">2. Medium value</option>
-                        <option value="3">3. Large value</option>
-                        <option value="4">4. Game changer</option>
-                    </select>
-                </td>
-                <td>
-                    <select class="multiple-select" multiple="multiple" ng-multiple="true" ng-change="saveSearch()"
-                        ng-model="milesearch.cena">
-                        <option value="1">1. None</option>
-                        <option value="2">2. Customer benefit</option>
-                        <option value="3">3. Customer demand</option>
-                        <option value="4">4. Deal maker</option>
-                    </select>
-                </td>
-                <td>
-                    <select class="multiple-select" multiple="multiple" ng-multiple="true" ng-change="saveSearch()"
-                        ng-model="milesearch.mena">
-                        <option value="1">1. None</option>
-                        <option value="2">2. Catch up</option>
-                        <option value="3">3. Market leading</option>
-                        <option value="4">4. Game changer</option>
-                    </select>
-                </td>
-                <td>
-
-                </td>
-            </tr>
-
-            <tr class="header">
-                <td colspan="5">Order by</td>
-            </tr>
-            <tr>
-                <td colspan="5">
-                    <select ng-model="porderparam" ng-init="porderparam='priority'">
-                        <option value="enddate">Order by end date</option>
-                        <option value="date">Order by start date</option>
-                        <option value="priority">Order by Priority</option>
-                        <option value="-wsjf">Order by WSJF</option>
-                        <option value="-enablervaluetotal">Order by Enabler total</option>
-                        <option value="-limitervaluetotal">Order by Limiter total</option>
-                        <option value="-bena">Order by Platform value</option>
-                        <option value="-sena">Order by Strategy value</option>
-                        <option value="-cena">Order by Customer value</option>
-                        <option value="-mena">Order by Market value</option>
-                        <option value="-effort">Order by Effort</option>
-                        <option value="-risklevel">Order by Risk</option>
-                        <option value="title">Deliverable title</option>
-                        <option value="projecttitle">Project title</option>
-                        <option value="ppriority">Portfolio priority</option>
-                        <option value="pbuname">Unit</option>
-                        <option value="pportname">Portfolio</option>
-                        <option value="state">State</option>
-                    </select>
-                    <select ng-model="porderparam2" ng-init="porderparam2='-enablervaluetotal'">
-                        <option value="enddate">Order by end date</option>
-                        <option value="date">Order by start date</option>
-                        <option value="priority">Order by Priority</option>
-                        <option value="-wsjf">Order by WSJF</option>
-                        <option value="-enablervaluetotal">Order by Enabler total</option>
-                        <option value="-limitervaluetotal">Order by Limiter total</option>
-                        <option value="-bena">Order by Platform value</option>
-                        <option value="-sena">Order by Strategy value</option>
-                        <option value="-cena">Order by Customer value</option>
-                        <option value="-mena">Order by Market value</option>
-                        <option value="-effort">Order by Effort</option>
-                        <option value="-risklevel">Order by Risk</option>
-                        <option value="title">Deliverable title</option>
-                        <option value="projecttitle">Project title</option>
-                        <option value="ppriority">Portfolio priority</option>
-                        <option value="pbuname">Unit</option>
-                        <option value="pportname">Portfolio</option>
-                        <option value="state">State</option>
-                    </select>
-                    <select ng-model="porderparam3" ng-init="porderparam3='-limitervaluetotal'">
-                        <option value="enddate">Order by end date</option>
-                        <option value="date">Order by start date</option>
-                        <option value="priority">Order by Priority</option>
-                        <option value="-wsjf">Order by WSJF</option>
-                        <option value="-enablervaluetotal">Order by Enabler total</option>
-                        <option value="-limitervaluetotal">Order by Limiter total</option>
-                        <option value="-bena">Order by Platform value</option>
-                        <option value="-sena">Order by Strategy value</option>
-                        <option value="-cena">Order by Customer value</option>
-                        <option value="-mena">Order by Market value</option>
-                        <option value="-effort">Order by Effort</option>
-                        <option value="-risklevel">Order by Risk</option>
-                        <option value="title">Deliverable title</option>
-                        <option value="projecttitle">Project title</option>
-                        <option value="ppriority">Portfolio priority</option>
-                        <option value="pbuname">Unit</option>
-                        <option value="pportname">Portfolio</option>
-                        <option value="state">State</option>
-                    </select>
-
-                    <div class="right">
-                        <button ng-click="saveFilters()">Save as default</button>
-                    </div>
-
-                </td>
-            </tr>
-        </table>
-
-        <div class="overview">
-            <table class="tablelist" ng-if="milestoneList.length > 0">
-                <tr class="header">
-                    <td>Deliverable<br />Entity</td>
-                    <td>Enabler<br />Limiter</td>
-                    <td>{{year-1}}</td>
-                    <td>{{year}}</td>
-                    <td>{{year+1}}</td>
-                    <td>Start Date<br />End Date</td>
-                    <td>Responsible<br />Approver</td>
-                </tr>
-                <tr ng-repeat="mile in milestoneList | multiFilter:milesearch | orderBy:[porderparam, porderparam2, porderparam3]"
-                    ng-click="goToMilestoneInProject(mile._id, mile.projectid)" class="link">
-                    <td class="{{mile.status}}"><b>{{mile.title}}</b><br />{{mile.projecttitle}}</td>
-                    <td><b>{{mile.enablerlable}}</b><br />{{mile.limiterlable}}</td>
-                    <td class="bar" ng-style="barRender(mile)" colspan="3"><b>{{mile.priority}}
-                            ({{mile.wsjf}})</b><br />{{mile.type}}/{{mile.state}}</td>
-                    <td><b>{{mile.date | date:'d MMM, yyyy'}}</b><br />{{mile.enddate | date:'d MMM, yyyy'}}</td>
-                    <td><b>{{mile.responsible}}</b><br />{{mile.acountable}}</td>
-                </tr>
-            </table>
-        </div>
-    </div>
+		<div class="content">
+			<table ng-show="showfilters">
+				<tr class="header">
+					<td colspan="5">Filters<div class="right"><button class="clearbtn" ng-click="clearall()"
+								ng-show="showfilters">clear all</button></div>
+					</td>
+				</tr>
+				<tr class="header">
+					<td class="filter-container">Unit<div class="right"><button ng-click="milesearch.pbuname=[]"
+								ng-show="showfilters">clear</button></div>
+					</td>
+					<td class="filter-container">Entity<div class="right"><button ng-click="milesearch.projecttitle=[]"
+								ng-show="showfilters">clear</button></div>
+					</td>
+					<td class="filter-container">Entity State<div class="right"><button ng-click="milesearch.pstate=[]"
+								ng-show="showfilters">clear</button></div>
+					</td>
+					<td class="filter-container">Entity manager<div class="right"><button ng-click="milesearch.ppm=[]"
+								ng-show="showfilters">clear</button></div>
+					</td>
+					<td class="filter-container">Deliverable type<div class="right"><button ng-click="milesearch.type=[]"
+								ng-show="showfilters">clear</button></div>
+					</td>
+				</tr>
+		
+				<tr class="filtertd">
+					<td>
+						<select class="multiple-select" multiple="multiple" ng-multiple="true" ng-change="saveSearch()"
+							ng-model="milesearch.pbuname"
+							ng-options="bu.name as bu.name for bu in bus | orderBy: 'name'"></select>
+					</td>
+					<td>
+						<select class="multiple-select" multiple="multiple" ng-multiple="true" ng-change="saveSearch()"
+							ng-model="milesearch.projecttitle"
+							ng-options="p.title as p.title for p in projects | filter:{state: 'Progress'} | orderBy: 'title'"></select>
+					</td>
+					<td>
+						<select class="multiple-select" multiple="multiple" ng-multiple="true" ng-change="saveSearch()"
+							ng-model="milesearch.pstate">
+							<option value="Template">Template</option>
+							<option value="Internal Approved">Internal Approved</option>
+							<option value="Portfolio Approved">Portfolio Approved</option>
+							<option value="Company Approved">Company Approved</option>
+							<option value="Progress">Progress</option>
+							<option value="Onhold">On hold</option>
+							<option value="Rejected">Rejected</option>
+							<option value="Closed">Closed</option>
+						</select>
+					</td>
+					<td>
+						<select class="multiple-select" multiple="multiple" ng-multiple="true" ng-change="saveSearch()"
+							ng-model="milesearch.ppm">
+							<option ng-repeat="u in users | filter: {source: true} | orderBy:'name'" value="{{u.name}}">
+								{{u.name}}</option>
+						</select>
+					</td>
+					<td>
+						<select class="multiple-select" multiple="multiple" ng-multiple="true" ng-change="saveSearch()"
+							ng-model="milesearch.type">
+							<option value="Project">Project</option>
+							<option value="Roadmap item">Roadmap item</option>
+							<option value="Activity">Activity</option>
+						</select>
+					</td>
+				</tr>
+				<tr class="header">
+					<td>Approver<div class="right"><button ng-click="milesearch.acountable=[]"
+								ng-show="showfilters">clear</button></div>
+					</td>
+					<td>Responsible<div class="right"><button ng-click="milesearch.responsible=[]"
+								ng-show="showfilters">clear</button></div>
+					</td>
+					<td>Unit Affected<div class="right"><button ng-click="milesearch.pconnect=[]"
+								ng-show="showfilters">clear</button></div>
+					</td>
+					<td>Entity Priority<div class="right"><button ng-click="milesearch.ppriority=[]"
+								ng-show="showfilters">clear</button></div>
+					</td>
+					<td>Portfolio<div class="right"><button ng-click="milesearch.pportname=[]"
+								ng-show="showfilters">clear</button></div>
+					</td>
+				</tr>
+				<tr class="filtertd">
+					<td>
+						<select class="multiple-select" multiple="multiple" ng-multiple="true" ng-change="saveSearch()"
+							ng-model="milesearch.acountable">
+							<option ng-repeat="u in users | filter: {source: true} | orderBy:'name'" value="{{u.name}}">
+								{{u.name}}</option>
+						</select>
+		
+					</td>
+					<td>
+						<select class="multiple-select" multiple="multiple" ng-multiple="true" ng-change="saveSearch()"
+							ng-model="milesearch.responsible">
+							<option ng-repeat="u in users | filter: {source: true} | orderBy:'name'" value="{{u.name}}">
+								{{u.name}}</option>
+						</select>
+					</td>
+					<td>
+						<select class="multiple-select" multiple="multiple" ng-multiple="true" ng-change="saveSearch()"
+							ng-model="milesearch.pconnect"
+							ng-options="bu.name as bu.name for bu in bus | orderBy: 'name'"></select>
+		
+					</td>
+					<td>
+						<select class="multiple-select" multiple="multiple" ng-multiple="true" ng-change="saveSearch()"
+							ng-model="milesearch.priority">
+							<option value="1. Mandatory">1. Mandatory</option>
+							<option value="2. Top priority">2. Top priority</option>
+							<option value="3. High priority">3. High priority</option>
+							<option value="4. Needed">4. Needed</option>
+							<option value="5. Valued">5. Valued</option>
+						</select>
+					</td>
+					<td>
+						<select class="multiple-select" multiple="multiple" ng-multiple="true" ng-change="saveSearch()"
+							ng-model="milesearch.pportname"
+							ng-options="port.name as port.name for port in company.portfolios | orderBy: 'level'"></select>
+					</td>
+				</tr>
+				<tr class="header">
+					<td>Deliverable Status<div class="right"><button ng-click="milesearch.status=[]"
+								ng-show="showfilters">clear</button></div>
+					</td>
+					<td>Deliverable state<div class="right"><button ng-click="milesearch.state=[]"
+								ng-show="showfilters">clear</button></div>
+					</td>
+					<td>Audience<div class="right"><button ng-click="milesearch.audience=[]"
+								ng-show="showfilters">clear</button></div>
+					</td>
+					<td>Effort<div class="right"><button ng-click="milesearch.effort=[]" ng-show="showfilters">clear</button>
+						</div>
+					</td>
+					<td>Risk of failure<div class="right"><button ng-click="milesearch.risklevel=[]"
+								ng-show="showfilters">clear</button></div>
+					</td>
+				</tr>
+				<tr class="filtertd">
+					<td>
+						<select class="multiple-select" multiple="multiple" ng-multiple="true" ng-change="saveSearch()"
+							ng-model="milesearch.status">
+							<option value="Green">Accept</option>
+							<option value="Yellow">Observe</option>
+							<option value="Orange">Assist</option>
+							<option value="Red">Intervent</option>
+						</select>
+		
+					</td>
+					<td>
+						<select class="multiple-select" multiple="multiple" ng-multiple="true" ng-change="saveSearch()"
+							ng-model="milesearch.state">
+							<option value="Target">Target</option>
+							<option value="Qualified">Qualified</option>
+							<option value="Progress">Progress</option>
+							<option value="Done">Done</option>
+							<option value="Canceled">Canceled</option>
+						</select>
+					</td>
+					<td>
+						<select class="multiple-select" multiple="multiple" ng-multiple="true" ng-change="saveSearch()"
+							ng-model="milesearch.audience">
+							<option value="Internal">Internal</option>
+							<option value="Portfolio">Portfolio</option>
+							<option value="Company">Company</option>
+						</select>
+					</td>
+					<td>
+						<select class="multiple-select" multiple="multiple" ng-multiple="true" ng-change="saveSearch()"
+							ng-model="milesearch.effort">
+							<option value="1">1. Minimal effort</option>
+							<option value="2">2. Medium effort</option>
+							<option value="3">3. Large effort</option>
+							<option value="4">4. Unknown effort</option>
+						</select>
+					</td>
+					<td>
+						<select class="multiple-select" multiple="multiple" ng-multiple="true" ng-change="saveSearch()"
+							ng-model="milesearch.risklevel">
+							<option value="1">1. Slim risk</option>
+							<option value="2">2. Could happen</option>
+							<option value="3">3. Likely to happen</option>
+							<option value="4">4. Most likely to happen</option>
+						</select>
+					</td>
+				</tr>
+				<tr class="header">
+					<td>Platform enabler<div class="right"><button ng-click="milesearch.bena=[]"
+								ng-show="showfilters">clear</button></div>
+					</td>
+					<td>Strategic enabler<div class="right"><button ng-click="milesearch.sena=[]"
+								ng-show="showfilters">clear</button></div>
+					</td>
+					<td>Customer enabler<div class="right"><button ng-click="milesearch.cena=[]"
+								ng-show="showfilters">clear</button></div>
+					</td>
+					<td>Market enabler<div class="right"><button ng-click="milesearch.mena=[]"
+								ng-show="showfilters">clear</button></div>
+					</td>
+					<td>
+					</td>
+				</tr>
+				<tr class="filtertd">
+					<td>
+						<select class="multiple-select" multiple="multiple" ng-multiple="true" ng-change="saveSearch()"
+							ng-model="milesearch.bena">
+							<option value="1">1. Minimal value</option>
+							<option value="2">2. Medium value</option>
+							<option value="3">3. Large value</option>
+							<option value="4">4. Game changer</option>
+						</select>
+		
+					</td>
+					<td>
+						<select class="multiple-select" multiple="multiple" ng-multiple="true" ng-change="saveSearch()"
+							ng-model="milesearch.sena">
+							<option value="1">1. Minimal value</option>
+							<option value="2">2. Medium value</option>
+							<option value="3">3. Large value</option>
+							<option value="4">4. Game changer</option>
+						</select>
+					</td>
+					<td>
+						<select class="multiple-select" multiple="multiple" ng-multiple="true" ng-change="saveSearch()"
+							ng-model="milesearch.cena">
+							<option value="1">1. None</option>
+							<option value="2">2. Customer benefit</option>
+							<option value="3">3. Customer demand</option>
+							<option value="4">4. Deal maker</option>
+						</select>
+					</td>
+					<td>
+						<select class="multiple-select" multiple="multiple" ng-multiple="true" ng-change="saveSearch()"
+							ng-model="milesearch.mena">
+							<option value="1">1. None</option>
+							<option value="2">2. Catch up</option>
+							<option value="3">3. Market leading</option>
+							<option value="4">4. Game changer</option>
+						</select>
+					</td>
+					<td>
+		
+					</td>
+				</tr>
+		
+				<tr class="header">
+					<td colspan="5">Order by</td>
+				</tr>
+				<tr>
+					<td colspan="5">
+						<select ng-model="porderparam" ng-init="porderparam='priority'">
+							<option value="enddate">Order by end date</option>
+							<option value="date">Order by start date</option>
+							<option value="priority">Order by Priority</option>
+							<option value="-wsjf">Order by WSJF</option>
+							<option value="-enablervaluetotal">Order by Enabler total</option>
+							<option value="-limitervaluetotal">Order by Limiter total</option>
+							<option value="-bena">Order by Platform value</option>
+							<option value="-sena">Order by Strategy value</option>
+							<option value="-cena">Order by Customer value</option>
+							<option value="-mena">Order by Market value</option>
+							<option value="-effort">Order by Effort</option>
+							<option value="-risklevel">Order by Risk</option>
+							<option value="title">Deliverable title</option>
+							<option value="projecttitle">Project title</option>
+							<option value="ppriority">Portfolio priority</option>
+							<option value="pbuname">Unit</option>
+							<option value="pportname">Portfolio</option>
+							<option value="state">State</option>
+						</select>
+						<select ng-model="porderparam2" ng-init="porderparam2='-enablervaluetotal'">
+							<option value="enddate">Order by end date</option>
+							<option value="date">Order by start date</option>
+							<option value="priority">Order by Priority</option>
+							<option value="-wsjf">Order by WSJF</option>
+							<option value="-enablervaluetotal">Order by Enabler total</option>
+							<option value="-limitervaluetotal">Order by Limiter total</option>
+							<option value="-bena">Order by Platform value</option>
+							<option value="-sena">Order by Strategy value</option>
+							<option value="-cena">Order by Customer value</option>
+							<option value="-mena">Order by Market value</option>
+							<option value="-effort">Order by Effort</option>
+							<option value="-risklevel">Order by Risk</option>
+							<option value="title">Deliverable title</option>
+							<option value="projecttitle">Project title</option>
+							<option value="ppriority">Portfolio priority</option>
+							<option value="pbuname">Unit</option>
+							<option value="pportname">Portfolio</option>
+							<option value="state">State</option>
+						</select>
+						<select ng-model="porderparam3" ng-init="porderparam3='-limitervaluetotal'">
+							<option value="enddate">Order by end date</option>
+							<option value="date">Order by start date</option>
+							<option value="priority">Order by Priority</option>
+							<option value="-wsjf">Order by WSJF</option>
+							<option value="-enablervaluetotal">Order by Enabler total</option>
+							<option value="-limitervaluetotal">Order by Limiter total</option>
+							<option value="-bena">Order by Platform value</option>
+							<option value="-sena">Order by Strategy value</option>
+							<option value="-cena">Order by Customer value</option>
+							<option value="-mena">Order by Market value</option>
+							<option value="-effort">Order by Effort</option>
+							<option value="-risklevel">Order by Risk</option>
+							<option value="title">Deliverable title</option>
+							<option value="projecttitle">Project title</option>
+							<option value="ppriority">Portfolio priority</option>
+							<option value="pbuname">Unit</option>
+							<option value="pportname">Portfolio</option>
+							<option value="state">State</option>
+						</select>
+		
+						<div class="right">
+							<button ng-click="saveFilters()">Save as default</button>
+						</div>
+		
+					</td>
+				</tr>
+			</table>
+		
+			<div class="overview">
+				<table class="tablelist" ng-if="milestoneList.length > 0">
+					<tr class="header">
+						<td>Deliverable<br />Entity</td>
+						<td>Enabler<br />Limiter</td>
+						<td>{{year-1}}</td>
+						<td>{{year}}</td>
+						<td>{{year+1}}</td>
+						<td>Start Date<br />End Date</td>
+						<td>Responsible<br />Approver</td>
+					</tr>
+					<tr ng-repeat="mile in milestoneList | multiFilter:milesearch | orderBy:[porderparam, porderparam2, porderparam3]"
+						ng-click="goToMilestoneInProject(mile._id, mile.projectid)" class="link">
+						<td class="{{mile.status}}"><b>{{mile.title}}</b><br />{{mile.projecttitle}}</td>
+						<td><b>{{mile.enablerlable}}</b><br />{{mile.limiterlable}}</td>
+						<td class="bar" ng-style="barRender(mile)" colspan="3"><b>{{mile.priority}}
+								({{mile.wsjf}})</b><br />{{mile.type}}/{{mile.state}}</td>
+						<td><b>{{mile.date | date:'d MMM, yyyy'}}</b><br />{{mile.enddate | date:'d MMM, yyyy'}}</td>
+						<td><b>{{mile.responsible}}</b><br />{{mile.acountable}}</td>
+					</tr>
+				</table>
+			</div>
+		</div>
+	</div>
+	
 </div>

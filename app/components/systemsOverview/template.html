@@ -1,21 +1,24 @@
 <div id="systems">
+	<header>
+		<div class="title">
+			<h1>
+				Systems
+			</h1>
+		</div>
+		<div class="options hideOnPrint">
+			<button ng-click="showdefault()">my default</button>
+			<button ng-click="showmepm()" ng-show="showmepmbutton">me as admin</button>
+			<button class="buttonOn" ng-click="clearmepm()" ng-show="!showmepmbutton">me as admin</button>
+			<button ng-click="showmeres()" ng-show="showmeresbutton">me as owner</button>
+			<button class="buttonOn" ng-click="clearmeres()" ng-show="!showmeresbutton">me as owner</button>
+			<button ng-click="showfilters=true" ng-show="!showfilters">filters</button>
+			<button class="buttonOn" ng-click="showfilters=false" ng-show="showfilters">filters</button>
+		</div>
+	</header>
+	<div class="maincontentcontainer">
+
     <div class="hideOnPrint">
-        <div class="layout">
-            <div class="layoutelement fluid">
-                <h2>
-                    Systems
-                </h2>
-            </div>
-            <div class="layoutelement right">
-                <button ng-click="showdefault()">my default</button>
-                <button ng-click="showmepm()" ng-show="showmepmbutton">me as admin</button>
-                <button class="buttonOn" ng-click="clearmepm()" ng-show="!showmepmbutton">me as admin</button>
-                <button ng-click="showmeres()" ng-show="showmeresbutton">me as owner</button>
-                <button class="buttonOn" ng-click="clearmeres()" ng-show="!showmeresbutton">me as owner</button>
-                <button ng-click="showfilters=true" ng-show="!showfilters">filters</button>
-                <button class="buttonOn" ng-click="showfilters=false" ng-show="showfilters">filters</button>
-            </div>
-        </div>
+       
         <div class="radiotabs">
             <label for="overview"><input type="radio" id="overview" name="views" ng-model="views"
                     value="overview"><span>
@@ -31,10 +34,8 @@
         </div>
     </div>
 
+	<div class="content">
 
-
-
-    <div class="smaller">
         <table ng-show="showfilters">
             <tr class="header">
                 <td colspan="5">Filters<div class="right"><button class="clearbtn" ng-click="clearall()"
@@ -256,6 +257,9 @@
                 </tr>
             </table>
         </div>
+	</div>
+
+
         
     </div>
 </div>

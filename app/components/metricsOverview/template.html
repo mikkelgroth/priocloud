@@ -1,226 +1,223 @@
 <div id="metrics">
-    <div class="hideOnPrint">
-        <div class="layout">
-            <div class="layoutelement fluid">
-                <h2>
-                    Metrics
-                </h2>
-            </div>
-            <div class="layoutelement right">
-                <button ng-click="showdefault()">my default</button>
-                <button ng-click="showmepm()" ng-show="showmepmbutton">me as admin</button>
-                <button class="buttonOn" ng-click="clearmepm()" ng-show="!showmepmbutton">me as admin</button>
-                <button ng-click="showmeres()" ng-show="showmeresbutton">me as owner</button>
-                <button class="buttonOn" ng-click="clearmeres()" ng-show="!showmeresbutton">me as owner</button>
-                <button ng-click="showfilters=true" ng-show="!showfilters">filters</button>
-                <button class="buttonOn" ng-click="showfilters=false" ng-show="showfilters">filters</button>
-            </div>
-        </div>
-        <div class="radiotabs">
-            <label for="overview"><input type="radio" id="overview" name="views" ng-model="views"
-                    value="overview"><span>
-                    Overview</span> </label>
-            <label for="level"><input type="radio" id="level" name="views" ng-model="views" value="level"><span>
-                    Priority</span></label>
-            <label for="keyresult"><input type="radio" id="keyresult" name="views" ng-model="views"
-                    value="keyresult"><span>
-                    Key results</span></label>
-        </div>
-    </div>
 
-    <div class="smaller">
-        <table ng-show="showfilters">
-            <tr class="header">
-                <td colspan="5">Filters<div class="right"><button class="clearbtn" ng-click="clearall()"
-                            ng-show="showfilters">clear all</button></div>
-                </td>
-            </tr>
-            <tr class="header">
-                <td class="filter-container">Unit<div class="right"><button ng-click="metricsearch.buname=[]"
-                            ng-show="showfilters">clear</button></div>
-                </td>
-                <td class="filter-container">Admin<div class="right"><button ng-click="metricsearch.pmname=[]"
-                            ng-show="showfilters">clear</button></div>
-                </td>
-                <td class="filter-container">Owner<div class="right"><button ng-click="metricsearch.poname=[]"
-                            ng-show="showfilters">clear</button></div>
-                </td>
-                <td class="filter-container">Metric category<div class="right"><button ng-click="metricsearch.type=[]"
-                            ng-show="showfilters">clear</button></div>
-                </td>
-                <td class="filter-container">Metric status<div class="right"><button ng-click="metricsearch.status=[]"
-                            ng-show="showfilters">clear</button></div>
-                </td>
-            </tr>
+	<header>
+		<div class="title">
+			<h1>
+				Metrics
+			</h1>
+		</div>
+		<div class="options hideOnPrint">
+			<button ng-click="showdefault()">my default</button>
+			<button ng-click="showmepm()" ng-show="showmepmbutton">me as admin</button>
+			<button class="buttonOn" ng-click="clearmepm()" ng-show="!showmepmbutton">me as admin</button>
+			<button ng-click="showmeres()" ng-show="showmeresbutton">me as owner</button>
+			<button class="buttonOn" ng-click="clearmeres()" ng-show="!showmeresbutton">me as owner</button>
+			<button ng-click="showfilters=true" ng-show="!showfilters">filters</button>
+			<button class="buttonOn" ng-click="showfilters=false" ng-show="showfilters">filters</button>
+		</div>
+	</header>
 
-            <tr class="filtertd">
-                <td>
-                    <select class="multiple-select" multiple="multiple" ng-multiple="true" ng-change="saveSearch()"
-                        ng-model="metricsearch.buname"
-                        ng-options="bu.name as bu.name for bu in bus | orderBy: 'name'"></select>
-                </td>
-                <td>
-                    <select class="multiple-select" multiple="multiple" ng-multiple="true" ng-change="saveSearch()"
-                        ng-model="metricsearch.pmname">
-                        <option ng-repeat="u in users | filter: {source: true} | orderBy:'name'" value="{{u.name}}">
-                            {{u.name}}</option>
-                    </select>
-                </td>
-                <td>
-                    <select class="multiple-select" multiple="multiple" ng-multiple="true" ng-change="saveSearch()"
-                        ng-model="metricsearch.poname">
-                        <option ng-repeat="u in users | filter: {source: true} | orderBy:'name'" value="{{u.name}}">
-                            {{u.name}}</option>
-                    </select>
-                </td>
-                <td>
-                    <select class="multiple-select" multiple="multiple" ng-multiple="true" ng-change="saveSearch()"
-                        ng-model="metricsearch.type">
-                        <option value="Customer employee metric">Customer employee metric</option>
-                        <option value="Customer product metric">Customer product metric</option>
-                        <option value="Customer process metric">Customer process metric</option>
-                        <option value="Customer financial metric">Customer financial metric</option>
-                        <option value="Company employee metric">Company employee metric</option>
-                        <option value="Company product metric">Company product metric</option>
-                        <option value="Company process metric">Company process metric</option>
-                        <option value="Company financial metric">Company financial metric</option>
-                    </select>
-                </td>
-                <td>
-                    <select class="multiple-select" multiple="multiple" ng-multiple="true" ng-change="saveSearch()"
-                        ng-model="metricsearch.status">
-                        <option value="Green">OK (Green)</option>
-                        <option value="Yellow">Observe (Yellow)</option>
-                        <option value="Orange">Assist (Orange)</option>
-                        <option value="Red">Intervention (Red)</option>
-                    </select>
-                </td>
-            </tr>
+	<div class="maincontentcontainer">
+		<div class="radiotabs hideOnPrint">
+			<label for="overview"><input type="radio" id="overview" name="views" ng-model="views" value="overview"><span>
+					Overview</span> </label>
+			<label for="level"><input type="radio" id="level" name="views" ng-model="views" value="level"><span>
+					Priority</span></label>
+			<label for="keyresult"><input type="radio" id="keyresult" name="views" ng-model="views" value="keyresult"><span>
+					Key results</span></label>
+		</div>
+		<div class="content">
+			<table ng-show="showfilters">
+				<tr class="header">
+					<td colspan="5">Filters<div class="right"><button class="clearbtn" ng-click="clearall()"
+								ng-show="showfilters">clear all</button></div>
+					</td>
+				</tr>
+				<tr class="header">
+					<td class="filter-container">Unit<div class="right"><button ng-click="metricsearch.buname=[]"
+								ng-show="showfilters">clear</button></div>
+					</td>
+					<td class="filter-container">Admin<div class="right"><button ng-click="metricsearch.pmname=[]"
+								ng-show="showfilters">clear</button></div>
+					</td>
+					<td class="filter-container">Owner<div class="right"><button ng-click="metricsearch.poname=[]"
+								ng-show="showfilters">clear</button></div>
+					</td>
+					<td class="filter-container">Metric category<div class="right"><button ng-click="metricsearch.type=[]"
+								ng-show="showfilters">clear</button></div>
+					</td>
+					<td class="filter-container">Metric status<div class="right"><button ng-click="metricsearch.status=[]"
+								ng-show="showfilters">clear</button></div>
+					</td>
+				</tr>
+	
+				<tr class="filtertd">
+					<td>
+						<select class="multiple-select" multiple="multiple" ng-multiple="true" ng-change="saveSearch()"
+							ng-model="metricsearch.buname"
+							ng-options="bu.name as bu.name for bu in bus | orderBy: 'name'"></select>
+					</td>
+					<td>
+						<select class="multiple-select" multiple="multiple" ng-multiple="true" ng-change="saveSearch()"
+							ng-model="metricsearch.pmname">
+							<option ng-repeat="u in users | filter: {source: true} | orderBy:'name'" value="{{u.name}}">
+								{{u.name}}</option>
+						</select>
+					</td>
+					<td>
+						<select class="multiple-select" multiple="multiple" ng-multiple="true" ng-change="saveSearch()"
+							ng-model="metricsearch.poname">
+							<option ng-repeat="u in users | filter: {source: true} | orderBy:'name'" value="{{u.name}}">
+								{{u.name}}</option>
+						</select>
+					</td>
+					<td>
+						<select class="multiple-select" multiple="multiple" ng-multiple="true" ng-change="saveSearch()"
+							ng-model="metricsearch.type">
+							<option value="Customer employee metric">Customer employee metric</option>
+							<option value="Customer product metric">Customer product metric</option>
+							<option value="Customer process metric">Customer process metric</option>
+							<option value="Customer financial metric">Customer financial metric</option>
+							<option value="Company employee metric">Company employee metric</option>
+							<option value="Company product metric">Company product metric</option>
+							<option value="Company process metric">Company process metric</option>
+							<option value="Company financial metric">Company financial metric</option>
+						</select>
+					</td>
+					<td>
+						<select class="multiple-select" multiple="multiple" ng-multiple="true" ng-change="saveSearch()"
+							ng-model="metricsearch.status">
+							<option value="Green">OK (Green)</option>
+							<option value="Yellow">Observe (Yellow)</option>
+							<option value="Orange">Assist (Orange)</option>
+							<option value="Red">Intervention (Red)</option>
+						</select>
+					</td>
+				</tr>
+	
+	
+				<tr class="header">
+					<td colspan="5">Order by</td>
+				</tr>
+				<tr>
+					<td colspan="5">
+						<select ng-model="porderparam" ng-init="porderparam='-risklevel'">
+							<option value="buname">Unit</option>
+							<option value="pmname">Admin</option>
+							<option value="poname">Owner</option>
+							<option value="-risklevel">Priority level</option>
+							<option value="-trend">Trend</option>
+							<option value="-date">Date</option>
+							<option value="type">Metric category</option>
+						</select>
+						<select ng-model="porderparam2" ng-init="porderparam2='-trend'">
+							<option value="buname">Unit</option>
+							<option value="pmname">Admin</option>
+							<option value="poname">Owner</option>
+							<option value="-risklevel">Priority level</option>
+							<option value="-trend">Trend</option>
+							<option value="-date">Date</option>
+							<option value="type">Metric category</option>
+						</select>
+						<select ng-model="porderparam3" ng-init="porderparam3='-date'">
+							<option value="buname">Unit</option>
+							<option value="pmname">Admin</option>
+							<option value="poname">Owner</option>
+							<option value="-risklevel">Priority level</option>
+							<option value="-trend">Trend</option>
+							<option value="-date">Date</option>
+							<option value="type">Metric category</option>
+						</select>
+	
+						<div class="right">
+							<button ng-click="saveFilters()">Save as default</button>
+						</div>
+	
+					</td>
+				</tr>
+			</table>
+	
+			<div class="overview" ng-show="views=='overview'">
+				<table class="tablelist" ng-if="metrics.length > 0">
+					<tr class="header">
+						<td>Metric</td>
+						<td>Category</td>
+						<td>BU</td>
+						<td>Metric Admin</td>
+						<td>Metric Owner</td>
+						<td>Lock</td>
+					</tr>
+					</tr>
+					<tr ng-repeat="metric in metrics | multiFilter:metricsearch | orderBy:[porderparam, porderparam2, porderparam3]"
+						ng-click="goToMetric(metric._id.$oid)" class="link">
+						<td class="{{metric.status}}"><b>{{metric.title}}</td>
+						<td>{{metric.type}}</td>
+						<td>{{metric.buname}}</td>
+						<td>{{metric.pmname}}</td>
+						<td>{{metric.poname}}</td>
+						<td>
+							<div ng-if="metric.editUser == null" class="Green">Open</div>
+							<div ng-if="metric.editUser != null" class="Red">{{metric.editUser.name}}</div>
+						</td>
+					</tr>
+				</table>
+			</div>
+	
+			<div class="overview" ng-show="views=='level'">
+				<table class="tablelist" ng-if="metrics.length > 0">
+					<tr class="header">
+						<td>Metric</td>
+						<td>Category</td>
+						<td>Priority</td>
+						<td>Value</td>
+						<td>Date</td>
+						<td>Trend</td>
+						<td>Average</td>
+					</tr>
+					</tr>
+					<tr ng-repeat="metric in metrics | multiFilter:metricsearch | orderBy:[porderparam, porderparam2, porderparam3]"
+						ng-click="goToMetric(metric._id.$oid)" class="link">
+						<td class="{{metric.status}}"><b>{{metric.title}}</td>
+						<td>{{metric.type}}</td>
+						<td>{{metric.risklevel}}</td>
+						<td class="{{metricvalue.status}}">
+							<b>{{metric.value}} {{metric.valueformat}}</b></td>
+						<td>{{metric.date | date:'longDate'}}</td>
+						<td class="right {{metric.trendstatus}}text">
+							{{metric.trend}} %</td>
+						<td class="right">{{metric.average}}</td>
+					</tr>
+				</table>
+			</div>
+	
+			<div class="overview" ng-show="views=='keyresult'">
+				<table class="tablelist">
+					<tr class="header">
+						<td>Entity</td>
+						<td>Goal</td>
+						<td>Deadline</td>
+						<td>Trend</td>
+						<td>Metric</td>
+						<td>Last value</td>
+					</tr>
+					<tr ng-repeat="keyresult in keyresultList | multiFilter:metricsearch | orderBy:[porderparam, porderparam2, porderparam3]"
+						ng-click="goToKeyresultInProject(keyresult.projectoid,keyresult._id)" class="link">
+						<td class="{{keyresult.pstatus}}">
+							<b>{{keyresult.projecttitle}}</b></td>
+						<td class="{{keyresult.status}}">
+							{{keyresult.value}} {{getMetric(keyresult.metricID).valueformat}}</td>
+						<td class="{{setDeadlinestatus(keyresult.krdate)}}">
+							{{keyresult.krdate | date:'longDate'}}</td>
+						<td class="right {{getLastValue(keyresult.metricID).trendstatus}}text">
+							{{getLastValue(keyresult.metricID).trend}} %</td>
+						<td class="{{getMetric(keyresult.metricID).status}}">
+							{{getMetric(keyresult.metricID).title}}</td>
+						<td>
+							{{getLastValue(keyresult.metricID).value}} {{getMetric(keyresult.metricID).valueformat}}</td>
+					</tr>
+				</table>
+			</div>
+		</div>
+	</div>
 
-
-            <tr class="header">
-                <td colspan="5">Order by</td>
-            </tr>
-            <tr>
-                <td colspan="5">
-                    <select ng-model="porderparam" ng-init="porderparam='-risklevel'">
-                        <option value="buname">Unit</option>
-                        <option value="pmname">Admin</option>
-                        <option value="poname">Owner</option>
-                        <option value="-risklevel">Priority level</option>
-                        <option value="-trend">Trend</option>
-                        <option value="-date">Date</option>
-                        <option value="type">Metric category</option>
-                    </select>
-                    <select ng-model="porderparam2" ng-init="porderparam2='-trend'">
-                        <option value="buname">Unit</option>
-                        <option value="pmname">Admin</option>
-                        <option value="poname">Owner</option>
-                        <option value="-risklevel">Priority level</option>
-                        <option value="-trend">Trend</option>
-                        <option value="-date">Date</option>
-                        <option value="type">Metric category</option>
-                    </select>
-                    <select ng-model="porderparam3" ng-init="porderparam3='-date'">
-                        <option value="buname">Unit</option>
-                        <option value="pmname">Admin</option>
-                        <option value="poname">Owner</option>
-                        <option value="-risklevel">Priority level</option>
-                        <option value="-trend">Trend</option>
-                        <option value="-date">Date</option>
-                        <option value="type">Metric category</option>
-                    </select>
-
-                    <div class="right">
-                        <button ng-click="saveFilters()">Save as default</button>
-                    </div>
-
-                </td>
-            </tr>
-        </table>
-
-        <div class="overview" ng-show="views=='overview'">
-            <table class="tablelist" ng-if="metrics.length > 0">
-                <tr class="header">
-                    <td>Metric</td>
-                    <td>Category</td>
-                    <td>BU</td>
-                    <td>Metric Admin</td>
-                    <td>Metric Owner</td>
-                    <td>Lock</td>
-                </tr>
-                </tr>
-                <tr ng-repeat="metric in metrics | multiFilter:metricsearch | orderBy:[porderparam, porderparam2, porderparam3]"
-                    ng-click="goToMetric(metric._id.$oid)" class="link">
-                    <td class="{{metric.status}}"><b>{{metric.title}}</td>
-                    <td>{{metric.type}}</td>
-                    <td>{{metric.buname}}</td>
-                    <td>{{metric.pmname}}</td>
-                    <td>{{metric.poname}}</td>
-                    <td>
-                        <div ng-if="metric.editUser == null" class="Green">Open</div>
-                        <div ng-if="metric.editUser != null" class="Red">{{metric.editUser.name}}</div>
-                    </td>
-                </tr>
-            </table>
-        </div>
-
-        <div class="overview" ng-show="views=='level'">
-            <table class="tablelist" ng-if="metrics.length > 0">
-                <tr class="header">
-                    <td>Metric</td>
-                    <td>Category</td>
-                    <td>Priority</td>
-                    <td>Value</td>
-                    <td>Date</td>
-                    <td>Trend</td>
-                    <td>Average</td>
-                </tr>
-                </tr>
-                <tr ng-repeat="metric in metrics | multiFilter:metricsearch | orderBy:[porderparam, porderparam2, porderparam3]"
-                    ng-click="goToMetric(metric._id.$oid)" class="link">
-                    <td class="{{metric.status}}"><b>{{metric.title}}</td>
-                    <td>{{metric.type}}</td>
-                    <td>{{metric.risklevel}}</td>
-                    <td class="{{metricvalue.status}}">
-                        <b>{{metric.value}} {{metric.valueformat}}</b></td>
-                    <td>{{metric.date | date:'longDate'}}</td>
-                    <td class="right {{metric.trendstatus}}text">
-                        {{metric.trend}} %</td>
-                    <td class="right">{{metric.average}}</td>
-                </tr>
-            </table>
-        </div>
-
-        <div class="overview" ng-show="views=='keyresult'">
-            <table class="tablelist">
-                <tr class="header">
-                    <td>Metric</td>
-                    <td>Goal</td>
-                    <td>Format</td>
-                    <td>Deadline</td>
-                    <td>Trend</td>
-                    <td>Last value</td>
-                    <td>Entity</td>
-                </tr>
-                <tr ng-repeat="keyresult in keyresultList | multiFilter:metricsearch | orderBy:[porderparam, porderparam2, porderparam3]"
-                    ng-click="goToKeyresultInProject(keyresult.projectoid,keyresult._id)" class="link">
-                    <td class="{{getMetric(keyresult.metricID).status}}">
-                        {{getMetric(keyresult.metricID).title}}</td>
-                    <td class="{{keyresult.tstatus}}">
-                        {{keyresult.value}}</td>
-                    <td>
-                        {{getMetric(keyresult.metricID).valueformat}}</td>
-                    <td class="{{setDeadlinestatus(keyresult.krdate)}}">
-                        {{keyresult.krdate | date:'longDate'}}</td>
-                    <td class="right {{getLastValue(keyresult.metricID).trendstatus}}text">
-                        {{getLastValue(keyresult.metricID).trend}} %</td>
-                    <td>
-                        {{getLastValue(keyresult.metricID).value}} {{getMetric(keyresult.metricID).valueformat}}</td>
-                    <td class="{{keyresult.pstatus}}">
-                        {{keyresult.projecttitle}}</td>
-                </tr>
-            </table>
-        </div>
-    </div>
 </div>

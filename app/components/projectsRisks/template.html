@@ -1,286 +1,295 @@
 <div id="projects-risks">
-    <h2>Risks <div class="right">
-            <button ng-click="showdefault()">my default</button>
+	<header>
+		<div class="title">
+			<h1>
+				Risks
+			</h1>
+		</div>
+		<div class="options hideOnPrint">
+			<button ng-click="showdefault()">my default</button>
             <button ng-click="showmepm()" ng-show="showmepmbutton">me as PM</button>
             <button ng-click="clearmepm()" ng-show="!showmepmbutton">all PMs</button>
             <button ng-click="showmeres()" ng-show="showmeresbutton">me as responsible</button>
             <button ng-click="clearmeres()" ng-show="!showmeresbutton">all responsibles</button>
             <button ng-click="showfilters=true" ng-show="!showfilters">more filters</button>
             <button ng-click="showfilters=false" ng-show="showfilters">hide filters</button></div>
-    </h2>
-    <div class="smaller">
+		</div>
+	</header>
+	<div class="maincontentcontainer">
+		<div class="content">
 
-        <table ng-show="showfilters">
-            <tr class="header">
-                <td colspan="5">Filters<div class="right"><button class="clearbtn" ng-click="clearall()"
-                            ng-show="showfilters">clear all</button></div>
-                </td>
-            </tr>
-            <tr class="header">
-                <td class="filter-container">Unit<div class="right"><button ng-click="risksearch.pbuname=[]"
-                            ng-show="showfilters">clear</button></div>
-                </td>
-                <td class="filter-container">Project<div class="right"><button ng-click="risksearch.projecttitle=[]"
-                            ng-show="showfilters">clear</button></div>
-                </td>
-                <td class="filter-container">Project State<div class="right"><button ng-click="risksearch.pstate=[]"
-                            ng-show="showfilters">clear</button></div>
-                </td>
-                <td class="filter-container">Project manager<div class="right"><button ng-click="risksearch.ppm=[]"
-                            ng-show="showfilters">clear</button></div>
-                </td>
-                <td class="filter-container">Response<div class="right"><button ng-click="risksearch.response=[]"
-                            ng-show="showfilters">clear</button></div>
-                </td>
-            </tr>
-
-            <tr class="filtertd">
-                <td>
-                    <select class="multiple-select" multiple="multiple" ng-multiple="true" ng-change="saveSearch()"
-                        ng-model="risksearch.pbuname"
-                        ng-options="bu.name as bu.name for bu in bus | orderBy: 'name'"></select>
-                </td>
-                <td>
-                    <select class="multiple-select" multiple="multiple" ng-multiple="true" ng-change="saveSearch()"
-                        ng-model="risksearch.projecttitle"
-                        ng-options="p.title as p.title for p in projects | filter:{state: 'Progress'} | orderBy: 'title'"></select>
-                </td>
-                <td>
-                    <select class="multiple-select" multiple="multiple" ng-multiple="true" ng-change="saveSearch()"
-                        ng-model="risksearch.pstate">
-                        <option value="Template">Template</option>
-                        <option value="Internal Approved">Internal Approved</option>
-                        <option value="Portfolio Approved">Portfolio Approved</option>
-                        <option value="Company Approved">Company Approved</option>
-                        <option value="Progress">Progress</option>
-                        <option value="Onhold">On hold</option>
-                        <option value="Rejected">Rejected</option>
-                        <option value="Closed">Closed</option>
-                    </select>
-                </td>
-                <td>
-                    <select class="multiple-select" multiple="multiple" ng-multiple="true" ng-change="saveSearch()"
-                        ng-model="risksearch.ppm">
-                        <option ng-repeat="u in users | filter: {source: true} | orderBy:'name'" value="{{u.name}}">
-                            {{u.name}}</option>
-                    </select>
-                </td>
-                <td>
-                    <select class="multiple-select" multiple="multiple" ng-multiple="true" ng-change="saveSearch()"
-                        ng-model="risksearch.response">
-                        <option value="Accept">Accept</option>
-                        <option value="Mitigation">Mitigation</option>
-                        <option value="Contingency">Contingency</option>
-                    </select>
-                </td>
-            </tr>
-            <tr class="header">
-                <td>Status<div class="right"><button ng-click="risksearch.status=[]"
-                            ng-show="showfilters">clear</button></div>
-                </td>
-                <td>Responsible<div class="right"><button ng-click="risksearch.acc=[]"
-                            ng-show="showfilters">clear</button></div>
-                </td>
-                <td>Unit Affected<div class="right"><button ng-click="risksearch.pconnect=[]"
-                            ng-show="showfilters">clear</button></div>
-                </td>
-                <td>Proj Priority<div class="right"><button ng-click="risksearch.ppriority=[]"
-                            ng-show="showfilters">clear</button></div>
-                </td>
-                <td>Portfolio<div class="right"><button ng-click="risksearch.pportname=[]"
-                            ng-show="showfilters">clear</button></div>
-                </td>
-            </tr>
-            <tr class="filtertd">
-                <td>
-                    <select class="multiple-select" multiple="multiple" ng-multiple="true" ng-change="saveSearch()"
-                        ng-model="risksearch.status">
-                        <option value="Green">OK (Green)</option>
-                        <option value="Yellow">Observe (Yellow)</option>
-                        <option value="Orange">Assist (Orange)</option>
-                        <option value="Red">Intervention (Red)</option>
-                    </select>
-
-                </td>
-                <td>
-                    <select class="multiple-select" multiple="multiple" ng-multiple="true" ng-change="saveSearch()"
-                        ng-model="risksearch.acc">
-                        <option ng-repeat="u in users | filter: {source: true} | orderBy:'name'" value="{{u.name}}">
-                            {{u.name}}</option>
-                    </select>
-                </td>
-                <td>
-                    <select class="multiple-select" multiple="multiple" ng-multiple="true" ng-change="saveSearch()"
-                        ng-model="risksearch.pconnect"
-                        ng-options="bu.name as bu.name for bu in bus | orderBy: 'name'"></select>
-
-                </td>
-                <td>
-                    <select class="multiple-select" multiple="multiple" ng-multiple="true" ng-change="saveSearch()"
-                        ng-model="risksearch.ppriority">
-                        <option value="1. Mandatory">1. Mandatory</option>
-                        <option value="2. Top priority">2. Top priority</option>
-                        <option value="3. High priority">3. High priority</option>
-                        <option value="4. Needed">4. Needed</option>
-                        <option value="5. Valued">5. Valued</option>
-                    </select>
-                </td>
-                <td>
-                    <select class="multiple-select" multiple="multiple" ng-multiple="true" ng-change="saveSearch()"
-                        ng-model="risksearch.pportname"
-                        ng-options="port.name as port.name for port in company.portfolios | orderBy: 'level'"></select>
-                </td>
-            </tr>
-            <tr class="header">
-                <td>Recovery<div class="right"><button ng-click="risksearch.recComp=[]"
-                            ng-show="showfilters">clear</button></div>
-                </td>
-                <td>Risk state<div class="right"><button ng-click="risksearch.state=[]"
-                            ng-show="showfilters">clear</button></div>
-                </td>
-                <td>Audience<div class="right"><button ng-click="risksearch.audience=[]"
-                            ng-show="showfilters">clear</button></div>
-                </td>
-                <td>Probability<div class="right"><button ng-click="risksearch.prob=[]"
-                            ng-show="showfilters">clear</button></div>
-                </td>
-                <td>Impact<div class="right"><button ng-click="risksearch.impact=[]"
-                            ng-show="showfilters">clear</button></div>
-                </td>
-            </tr>
-            <tr class="filtertd">
-                <td>
-                    <select class="multiple-select" multiple="multiple" ng-multiple="true" ng-change="saveSearch()"
-                        ng-model="risksearch.recComp">
-                        <option value="Green">1. Easy fix</option>
-                        <option value="Yellow">2. Taskforce</option>
-                        <option value="Orange">3. Project</option>
-                        <option value="Red">4. Unknow/Massive</option>
-                    </select>
-
-                </td>
-                <td>
-                    <select class="multiple-select" multiple="multiple" ng-multiple="true" ng-change="saveSearch()"
-                        ng-model="risksearch.state">
-                        <option value="New">New</option>
-                        <option value="Open">Open</option>
-                        <option value="Closed">Closed</option>
-                    </select>
-                </td>
-                <td>
-                    <select class="multiple-select" multiple="multiple" ng-multiple="true" ng-change="saveSearch()"
-                        ng-model="risksearch.audience">
-                        <option value="Internal">Internal</option>
-                        <option value="Portfolio">Portfolio</option>
-                        <option value="Company">Company</option>
-                    </select>
-                </td>
-                <td>
-                    <select class="multiple-select" multiple="multiple" ng-multiple="true" ng-change="saveSearch()"
-                        ng-model="risksearch.prob">
-                        <option value="1">1. Slim chance</option>
-                        <option value="2">2. Could happen</option>
-                        <option value="3">3. Likely to happen</option>
-                        <option value="4">4. Most likely to happen</option>
-                    </select>
-                </td>
-                <td>
-                    <select class="multiple-select" multiple="multiple" ng-multiple="true" ng-change="saveSearch()"
-                        ng-model="risksearch.impact">
-                        <option value="1">1. Minor Project impact</option>
-                        <option value="2">2. Major Project impact</option>
-                        <option value="3">3. Business Unit impact</option>
-                        <option value="4">4. Company impact</option>
-                    </select>
-                </td>
-            </tr>
-
-            <tr class="header">
-                <td colspan="5">Order by</td>
-            </tr>
-            <tr>
-                <td colspan="5">
-                    <select ng-model="porderparam" ng-init="porderparam='ppriority'">
-                        <option value="-wtotal">Project/Risk Prob./Risk Imp.</option>
-                        <option value="-wtotalprob">Project/Risk Prob.</option>
-                        <option value="-wtotalimpact">Project/Risk Imp.</option>
-                        <option value="title">Risk title</option>
-                        <option value="-total">Risk: Total</option>
-                        <option value="-prob">Risk: Probability</option>
-                        <option value="-impact">Risk: Impact</option>
-                        <option value="-recCompValue">Risk: Recovery complexity</option>
-                        <option value="projecttitle">Project title</option>
-                        <option value="ppriority">Portfolio priority</option>
-                        <option value="pbuname">Unit</option>
-                        <option value="pportname">Portfolio</option>
-                        <option value="state">State</option>
-                    </select>
-                    <select ng-model="porderparam2" ng-init="porderparam2='-total'">
-                        <option value="-wtotal">Project/Risk Prob./Risk Imp.</option>
-                        <option value="-wtotalprob">Project/Risk Prob.</option>
-                        <option value="-wtotalimpact">Project/Risk Imp.</option>
-                        <option value="title">Risk title</option>
-                        <option value="-total">Risk: Total</option>
-                        <option value="-prob">Risk: Probability</option>
-                        <option value="-impact">Risk: Impact</option>
-                        <option value="-recCompValue">Risk: Recovery complexity</option>
-                        <option value="projecttitle">Project title</option>
-                        <option value="ppriority">Portfolio priority</option>
-                        <option value="pbuname">Unit</option>
-                        <option value="pportname">Portfolio</option>
-                        <option value="state">State</option>
-                    </select>
-                    <select ng-model="porderparam3" ng-init="porderparam3='-recCompValue'">
-                        <option value="-wtotal">Project/Risk Prob./Risk Imp.</option>
-                        <option value="-wtotalprob">Project/Risk Prob.</option>
-                        <option value="-wtotalimpact">Project/Risk Imp.</option>
-                        <option value="title">Risk title</option>
-                        <option value="-total">Risk: Total</option>
-                        <option value="-prob">Risk: Probability</option>
-                        <option value="-impact">Risk: Impact</option>
-                        <option value="-recCompValue">Risk: Recovery complexity</option>
-                        <option value="projecttitle">Project title</option>
-                        <option value="ppriority">Portfolio priority</option>
-                        <option value="pbuname">Unit</option>
-                        <option value="pportname">Portfolio</option>
-                        <option value="state">State</option>
-                    </select>
-
-                    <div class="right">
-                        <button ng-click="saveFilters()">Save as default</button>
-                    </div>
-
-                </td>
-            </tr>
-        </table>
-
-        <div class="overview">
-            <table class="tablelist" ng-if="riskList.length > 0">
-                <tr class="header">
-                    <td>Risk<br />Project</td>
-                    <td>Risk total<br />Project/Risk total</td>
-                    <td>Prob.</td>
-                    <td>Impact</td>
-                    <td>Reco.</td>
-                    <td>Response<br />Accountable</td>
-                    <td>Description<br />Request</td>
-                </tr>
-                <tr ng-repeat="risk in riskList | multiFilter:risksearch | orderBy:[porderparam, porderparam2, porderparam3]"
-                    ng-click="goToRiskInProject(risk._id, risk.projectid)" class="link"
-                    ng-if="risk.state != 'Closed' && risk.audience != 'Confidential'">
-                    <td class="{{risk.status}}"><b>{{risk.title}}</b> <br />
-                        {{risk.projecttitle}}
-                    </td>
-                    <td><b>{{risk.total}}</b><br />
-                        {{risk.wtotal}}
-                    </td>
-                    <td prio-class prio-risk-bar-render="risk.prob">{{risk.prob}}</td>
-                    <td prio-class prio-risk-bar-render="risk.impact">{{risk.impact}}</td>
-                    <td prio-class prio-risk-bar-render="risk.recCompValue">{{risk.recCompValue}}</td>
-                    <td><b>{{risk.response}}</b><br />{{risk.acc}}</td>
-                    <td class="wrap xl">{{risk.desc}}<br /><b>Request</b><br />{{risk.request}}</td>
-                </tr>
-            </table>
-        </div>
-    </div>
+			<table ng-show="showfilters">
+				<tr class="header">
+					<td colspan="5">Filters<div class="right"><button class="clearbtn" ng-click="clearall()"
+								ng-show="showfilters">clear all</button></div>
+					</td>
+				</tr>
+				<tr class="header">
+					<td class="filter-container">Unit<div class="right"><button ng-click="risksearch.pbuname=[]"
+								ng-show="showfilters">clear</button></div>
+					</td>
+					<td class="filter-container">Project<div class="right"><button ng-click="risksearch.projecttitle=[]"
+								ng-show="showfilters">clear</button></div>
+					</td>
+					<td class="filter-container">Project State<div class="right"><button ng-click="risksearch.pstate=[]"
+								ng-show="showfilters">clear</button></div>
+					</td>
+					<td class="filter-container">Project manager<div class="right"><button ng-click="risksearch.ppm=[]"
+								ng-show="showfilters">clear</button></div>
+					</td>
+					<td class="filter-container">Response<div class="right"><button ng-click="risksearch.response=[]"
+								ng-show="showfilters">clear</button></div>
+					</td>
+				</tr>
+	
+				<tr class="filtertd">
+					<td>
+						<select class="multiple-select" multiple="multiple" ng-multiple="true" ng-change="saveSearch()"
+							ng-model="risksearch.pbuname"
+							ng-options="bu.name as bu.name for bu in bus | orderBy: 'name'"></select>
+					</td>
+					<td>
+						<select class="multiple-select" multiple="multiple" ng-multiple="true" ng-change="saveSearch()"
+							ng-model="risksearch.projecttitle"
+							ng-options="p.title as p.title for p in projects | filter:{state: 'Progress'} | orderBy: 'title'"></select>
+					</td>
+					<td>
+						<select class="multiple-select" multiple="multiple" ng-multiple="true" ng-change="saveSearch()"
+							ng-model="risksearch.pstate">
+							<option value="Template">Template</option>
+							<option value="Internal Approved">Internal Approved</option>
+							<option value="Portfolio Approved">Portfolio Approved</option>
+							<option value="Company Approved">Company Approved</option>
+							<option value="Progress">Progress</option>
+							<option value="Onhold">On hold</option>
+							<option value="Rejected">Rejected</option>
+							<option value="Closed">Closed</option>
+						</select>
+					</td>
+					<td>
+						<select class="multiple-select" multiple="multiple" ng-multiple="true" ng-change="saveSearch()"
+							ng-model="risksearch.ppm">
+							<option ng-repeat="u in users | filter: {source: true} | orderBy:'name'" value="{{u.name}}">
+								{{u.name}}</option>
+						</select>
+					</td>
+					<td>
+						<select class="multiple-select" multiple="multiple" ng-multiple="true" ng-change="saveSearch()"
+							ng-model="risksearch.response">
+							<option value="Accept">Accept</option>
+							<option value="Mitigation">Mitigation</option>
+							<option value="Contingency">Contingency</option>
+						</select>
+					</td>
+				</tr>
+				<tr class="header">
+					<td>Status<div class="right"><button ng-click="risksearch.status=[]"
+								ng-show="showfilters">clear</button></div>
+					</td>
+					<td>Responsible<div class="right"><button ng-click="risksearch.acc=[]"
+								ng-show="showfilters">clear</button></div>
+					</td>
+					<td>Unit Affected<div class="right"><button ng-click="risksearch.pconnect=[]"
+								ng-show="showfilters">clear</button></div>
+					</td>
+					<td>Proj Priority<div class="right"><button ng-click="risksearch.ppriority=[]"
+								ng-show="showfilters">clear</button></div>
+					</td>
+					<td>Portfolio<div class="right"><button ng-click="risksearch.pportname=[]"
+								ng-show="showfilters">clear</button></div>
+					</td>
+				</tr>
+				<tr class="filtertd">
+					<td>
+						<select class="multiple-select" multiple="multiple" ng-multiple="true" ng-change="saveSearch()"
+							ng-model="risksearch.status">
+							<option value="Green">OK (Green)</option>
+							<option value="Yellow">Observe (Yellow)</option>
+							<option value="Orange">Assist (Orange)</option>
+							<option value="Red">Intervention (Red)</option>
+						</select>
+	
+					</td>
+					<td>
+						<select class="multiple-select" multiple="multiple" ng-multiple="true" ng-change="saveSearch()"
+							ng-model="risksearch.acc">
+							<option ng-repeat="u in users | filter: {source: true} | orderBy:'name'" value="{{u.name}}">
+								{{u.name}}</option>
+						</select>
+					</td>
+					<td>
+						<select class="multiple-select" multiple="multiple" ng-multiple="true" ng-change="saveSearch()"
+							ng-model="risksearch.pconnect"
+							ng-options="bu.name as bu.name for bu in bus | orderBy: 'name'"></select>
+	
+					</td>
+					<td>
+						<select class="multiple-select" multiple="multiple" ng-multiple="true" ng-change="saveSearch()"
+							ng-model="risksearch.ppriority">
+							<option value="1. Mandatory">1. Mandatory</option>
+							<option value="2. Top priority">2. Top priority</option>
+							<option value="3. High priority">3. High priority</option>
+							<option value="4. Needed">4. Needed</option>
+							<option value="5. Valued">5. Valued</option>
+						</select>
+					</td>
+					<td>
+						<select class="multiple-select" multiple="multiple" ng-multiple="true" ng-change="saveSearch()"
+							ng-model="risksearch.pportname"
+							ng-options="port.name as port.name for port in company.portfolios | orderBy: 'level'"></select>
+					</td>
+				</tr>
+				<tr class="header">
+					<td>Recovery<div class="right"><button ng-click="risksearch.recComp=[]"
+								ng-show="showfilters">clear</button></div>
+					</td>
+					<td>Risk state<div class="right"><button ng-click="risksearch.state=[]"
+								ng-show="showfilters">clear</button></div>
+					</td>
+					<td>Audience<div class="right"><button ng-click="risksearch.audience=[]"
+								ng-show="showfilters">clear</button></div>
+					</td>
+					<td>Probability<div class="right"><button ng-click="risksearch.prob=[]"
+								ng-show="showfilters">clear</button></div>
+					</td>
+					<td>Impact<div class="right"><button ng-click="risksearch.impact=[]"
+								ng-show="showfilters">clear</button></div>
+					</td>
+				</tr>
+				<tr class="filtertd">
+					<td>
+						<select class="multiple-select" multiple="multiple" ng-multiple="true" ng-change="saveSearch()"
+							ng-model="risksearch.recComp">
+							<option value="Green">1. Easy fix</option>
+							<option value="Yellow">2. Taskforce</option>
+							<option value="Orange">3. Project</option>
+							<option value="Red">4. Unknow/Massive</option>
+						</select>
+	
+					</td>
+					<td>
+						<select class="multiple-select" multiple="multiple" ng-multiple="true" ng-change="saveSearch()"
+							ng-model="risksearch.state">
+							<option value="New">New</option>
+							<option value="Open">Open</option>
+							<option value="Closed">Closed</option>
+						</select>
+					</td>
+					<td>
+						<select class="multiple-select" multiple="multiple" ng-multiple="true" ng-change="saveSearch()"
+							ng-model="risksearch.audience">
+							<option value="Internal">Internal</option>
+							<option value="Portfolio">Portfolio</option>
+							<option value="Company">Company</option>
+						</select>
+					</td>
+					<td>
+						<select class="multiple-select" multiple="multiple" ng-multiple="true" ng-change="saveSearch()"
+							ng-model="risksearch.prob">
+							<option value="1">1. Slim chance</option>
+							<option value="2">2. Could happen</option>
+							<option value="3">3. Likely to happen</option>
+							<option value="4">4. Most likely to happen</option>
+						</select>
+					</td>
+					<td>
+						<select class="multiple-select" multiple="multiple" ng-multiple="true" ng-change="saveSearch()"
+							ng-model="risksearch.impact">
+							<option value="1">1. Minor Project impact</option>
+							<option value="2">2. Major Project impact</option>
+							<option value="3">3. Business Unit impact</option>
+							<option value="4">4. Company impact</option>
+						</select>
+					</td>
+				</tr>
+	
+				<tr class="header">
+					<td colspan="5">Order by</td>
+				</tr>
+				<tr>
+					<td colspan="5">
+						<select ng-model="porderparam" ng-init="porderparam='ppriority'">
+							<option value="-wtotal">Project/Risk Prob./Risk Imp.</option>
+							<option value="-wtotalprob">Project/Risk Prob.</option>
+							<option value="-wtotalimpact">Project/Risk Imp.</option>
+							<option value="title">Risk title</option>
+							<option value="-total">Risk: Total</option>
+							<option value="-prob">Risk: Probability</option>
+							<option value="-impact">Risk: Impact</option>
+							<option value="-recCompValue">Risk: Recovery complexity</option>
+							<option value="projecttitle">Project title</option>
+							<option value="ppriority">Portfolio priority</option>
+							<option value="pbuname">Unit</option>
+							<option value="pportname">Portfolio</option>
+							<option value="state">State</option>
+						</select>
+						<select ng-model="porderparam2" ng-init="porderparam2='-total'">
+							<option value="-wtotal">Project/Risk Prob./Risk Imp.</option>
+							<option value="-wtotalprob">Project/Risk Prob.</option>
+							<option value="-wtotalimpact">Project/Risk Imp.</option>
+							<option value="title">Risk title</option>
+							<option value="-total">Risk: Total</option>
+							<option value="-prob">Risk: Probability</option>
+							<option value="-impact">Risk: Impact</option>
+							<option value="-recCompValue">Risk: Recovery complexity</option>
+							<option value="projecttitle">Project title</option>
+							<option value="ppriority">Portfolio priority</option>
+							<option value="pbuname">Unit</option>
+							<option value="pportname">Portfolio</option>
+							<option value="state">State</option>
+						</select>
+						<select ng-model="porderparam3" ng-init="porderparam3='-recCompValue'">
+							<option value="-wtotal">Project/Risk Prob./Risk Imp.</option>
+							<option value="-wtotalprob">Project/Risk Prob.</option>
+							<option value="-wtotalimpact">Project/Risk Imp.</option>
+							<option value="title">Risk title</option>
+							<option value="-total">Risk: Total</option>
+							<option value="-prob">Risk: Probability</option>
+							<option value="-impact">Risk: Impact</option>
+							<option value="-recCompValue">Risk: Recovery complexity</option>
+							<option value="projecttitle">Project title</option>
+							<option value="ppriority">Portfolio priority</option>
+							<option value="pbuname">Unit</option>
+							<option value="pportname">Portfolio</option>
+							<option value="state">State</option>
+						</select>
+	
+						<div class="right">
+							<button ng-click="saveFilters()">Save as default</button>
+						</div>
+	
+					</td>
+				</tr>
+			</table>
+	
+			<div class="overview">
+				<table class="tablelist" ng-if="riskList.length > 0">
+					<tr class="header">
+						<td>Risk<br />Project</td>
+						<td>Risk total<br />Project/Risk total</td>
+						<td>Prob.</td>
+						<td>Impact</td>
+						<td>Reco.</td>
+						<td>Response<br />Accountable</td>
+						<td>Description<br />Request</td>
+					</tr>
+					<tr ng-repeat="risk in riskList | multiFilter:risksearch | orderBy:[porderparam, porderparam2, porderparam3]"
+						ng-click="goToRiskInProject(risk._id, risk.projectid)" class="link"
+						ng-if="risk.state != 'Closed' && risk.audience != 'Confidential'">
+						<td class="{{risk.status}}"><b>{{risk.title}}</b> <br />
+							{{risk.projecttitle}}
+						</td>
+						<td><b>{{risk.total}}</b><br />
+							{{risk.wtotal}}
+						</td>
+						<td prio-class prio-risk-bar-render="risk.prob">{{risk.prob}}</td>
+						<td prio-class prio-risk-bar-render="risk.impact">{{risk.impact}}</td>
+						<td prio-class prio-risk-bar-render="risk.recCompValue">{{risk.recCompValue}}</td>
+						<td><b>{{risk.response}}</b><br />{{risk.acc}}</td>
+						<td class="wrap xl">{{risk.desc}}<br /><b>Request</b><br />{{risk.request}}</td>
+					</tr>
+				</table>
+			</div>
+		</div>
+	</div>
 </div>

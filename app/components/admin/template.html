@@ -1,136 +1,151 @@
-<prio-admin-menu></prio-admin-menu>
-<div id="lock" class="lockbox" ng-show="companylock.lockbox && user.admin">
-    <div class="layoutelement right">
-        <button type="button" class="close" ng-click="closelockbox()"></button>
-    </div>
-    <h1>Lock administration</h1>
-    <div ng-show="company.locked">
-        <h2>Locked by: {{company.lockedby.name}} - {{company.lockeddate | date:'y, MMM d - H:mm:ss'}}</h3>
-    </div>
-    <div ng-show="!company.locked">
-        <h2>Company open for edit!</h3>
-    </div>
-    <h4>History</h4>
-    Last saved company by: {{company.lastsavedby}} - {{company.lastsaved | date:'y, MMM d - H:mm:ss'}}<br />
-    Last forced release lock by: {{company.forcedlockedby.name}} - {{company.forcedlockeddate | date:'y, MMM d - H:mm:ss'}}
-    <h4>Actions</h4>
-    <div class="layout">
-        <div class="layoutelement">
-            <button type="button" ng-show="companylock.showtakelock" ng-click="takelock()">Take the lock</button>
-        </div>
-        <div class="layoutelement center">
-            <button type="button primary" class="Red" ng-click="releaselock()"
-                ng-show="companylock.showreleaselock">Release
-                the lock</button>
-        </div>
-        <div class="layoutelement right">
-            <button type="button" class="Red" ng-click="forcereleaselock()"
-                ng-show="companylock.showforcedreleaselock">Force release!!</button>
-        </div>
-    </div>
+<header>
+	<div class="title">
+		<h1>
+			Administration
+		</h1>
+		
+	</div>
+	<div class="options">
 
-</div>
-<div id="admin" class="view">
-    <div class="mainbox">
-        <h2>Company</h2>
-        <table class="smaller">
-            <tr>
-                <td class="header">
-                    <p>Company name</p>
-                </td>
-                <td>
-                    <input ng-model="company.name" id="title" />
-                </td>
-                <td>
-                    <div class="right">
-                        <button type="button" ng-click="saveCompany(company)" ng-show="companyedit">save company</button>
-                    </div>
-                </td>
-            </tr>
-        </table>
-        <h3>Business Units</h3>
-        <div class="popup">
-            <div class="overview popupcontent">
-                <div class="actions">
-                    <div class="layout">
-                        <div class="layoutelement">
-                            <button type="button" id="saveButton1" ng-show="companyedit"
-                                ng-click="saveBu(editbu)">save</button>
-                        </div>
-                        <div class="layoutelement center">
-                            <button type="button primary" class="Red" ng-click="removeBU(editbu)"
-                                ng-if="$index != 0 && companyedit">delete</button>
-                        </div>
-                        <div class="layoutelement right">
-                            <button type="button" class="close" ng-click="close()"></button>
-                        </div>
-                    </div>
-                </div>
-                <h3>
-                    Edit Business Unit
-                </h3>
-                <table class="formtable smaller">
-                    <tr>
-                        <td class="formlabel">BU name</td>
-                        <td>
-                            <input id="buname" ng-model="editbu.name" />
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="formlabel">Owner</td>
-                        <td>
-                            <select required ng-model="editbu.owner"
-                                ng-options="subuser.name for subuser in sessionsusers | filter: {businessowner: true} | orderBy:'name' track by subuser.name"></select>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="formlabel">Parrent BU</td>
-                        <td>
-                            <div ng-if="$index != 0">
-                                <select ng-model="editbu.ownerbu"
-                                    ng-options="bu.name for bu in bus track by bu.name"></select>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="formlabel">Order</td>
-                        <td>
-                            <div ng-if="$index != 0">
-                                <input ng-model="editbu.order" />
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="formlabel">Indent</td>
-                        <td>
-                            <div ng-if="$index != 0">
-                                <select ng-model="editbu.indent">
-                                    <option value="">0</option>
-                                    <option value=".....">1</option>
-                                    <option value="..... .....">2</option>
-                                    <option value="..... ..... .....">3</option>
-                                </select>
-                            </div>
-                        </td>
-
-                    </tr>
-                </table>
-            </div>
-        </div>
-        <div class="right"><button ng-click="addBu()" ng-if="user.admin && companyedit">create new business unit</button></div>
-        <div class="overview">
-            <table class="tablelist smaller">
-                <tr class="header">
-                    <td>BU</td>
-                    <td>Parrent BU</td>
-                    <td>Owner</td>
-                </tr>
-                <tr ng-repeat="bu in bus | orderBy: 'order'" ng-click="editBu(bu)">
-                    <td>{{bu.indent}}{{bu.name}}</td>
-                    <td>{{bu.ownerbu.name}}</td>
-                    <td>{{bu.owner.name}}</td>
-                </tr>
-            </table>
-        </div>
-    </div>
+	</div>
+</header>
+<div class="maincontentcontainer">
+	<prio-admin-menu></prio-admin-menu>
+	<div class="content">
+		<div id="lock" class="lockbox" ng-show="companylock.lockbox && user.admin">
+			<div class="layoutelement right">
+				<button type="button" class="close" ng-click="closelockbox()"></button>
+			</div>
+			<h1>Lock administration</h1>
+			<div ng-show="company.locked">
+				<h2>Locked by: {{company.lockedby.name}} - {{company.lockeddate | date:'y, MMM d - H:mm:ss'}}</h3>
+			</div>
+			<div ng-show="!company.locked">
+				<h2>Company open for edit!</h3>
+			</div>
+			<h4>History</h4>
+			Last saved company by: {{company.lastsavedby}} - {{company.lastsaved | date:'y, MMM d - H:mm:ss'}}<br />
+			Last forced release lock by: {{company.forcedlockedby.name}} - {{company.forcedlockeddate | date:'y, MMM d - H:mm:ss'}}
+			<h4>Actions</h4>
+			<div class="layout">
+				<div class="layoutelement">
+					<button type="button" ng-show="companylock.showtakelock" ng-click="takelock()">Take the lock</button>
+				</div>
+				<div class="layoutelement center">
+					<button type="button primary" class="Red" ng-click="releaselock()"
+						ng-show="companylock.showreleaselock">Release
+						the lock</button>
+				</div>
+				<div class="layoutelement right">
+					<button type="button" class="Red" ng-click="forcereleaselock()"
+						ng-show="companylock.showforcedreleaselock">Force release!!</button>
+				</div>
+			</div>
+		
+		</div>
+		<div id="admin" class="view">
+			<div class="mainbox">
+				<h2>Company</h2>
+				<table class="smaller">
+					<tr>
+						<td class="header">
+							<p>Company name</p>
+						</td>
+						<td>
+							<input ng-model="company.name" id="title" />
+						</td>
+						<td>
+							<div class="right">
+								<button type="button" ng-click="saveCompany(company)" ng-show="companyedit">save company</button>
+							</div>
+						</td>
+					</tr>
+				</table>
+				<h3>Business Units</h3>
+				<div class="popup">
+					<div class="overview popupcontent">
+						<div class="actions">
+							<div class="layout">
+								<div class="layoutelement">
+									<button type="button" id="saveButton1" ng-show="companyedit"
+										ng-click="saveBu(editbu)">save</button>
+								</div>
+								<div class="layoutelement center">
+									<button type="button primary" class="Red" ng-click="removeBU(editbu)"
+										ng-if="$index != 0 && companyedit">delete</button>
+								</div>
+								<div class="layoutelement right">
+									<button type="button" class="close" ng-click="close()"></button>
+								</div>
+							</div>
+						</div>
+						<h3>
+							Edit Business Unit
+						</h3>
+						<table class="formtable smaller">
+							<tr>
+								<td class="formlabel">BU name</td>
+								<td>
+									<input id="buname" ng-model="editbu.name" />
+								</td>
+							</tr>
+							<tr>
+								<td class="formlabel">Owner</td>
+								<td>
+									<select required ng-model="editbu.owner"
+										ng-options="subuser.name for subuser in sessionsusers | filter: {businessowner: true} | orderBy:'name' track by subuser.name"></select>
+								</td>
+							</tr>
+							<tr>
+								<td class="formlabel">Parrent BU</td>
+								<td>
+									<div ng-if="$index != 0">
+										<select ng-model="editbu.ownerbu"
+											ng-options="bu.name for bu in bus track by bu.name"></select>
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td class="formlabel">Order</td>
+								<td>
+									<div ng-if="$index != 0">
+										<input ng-model="editbu.order" />
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td class="formlabel">Indent</td>
+								<td>
+									<div ng-if="$index != 0">
+										<select ng-model="editbu.indent">
+											<option value="">0</option>
+											<option value=".....">1</option>
+											<option value="..... .....">2</option>
+											<option value="..... ..... .....">3</option>
+										</select>
+									</div>
+								</td>
+		
+							</tr>
+						</table>
+					</div>
+				</div>
+				<div class="right"><button ng-click="addBu()" ng-if="user.admin && companyedit">create new business unit</button></div>
+				<div class="overview">
+					<table class="tablelist smaller">
+						<tr class="header">
+							<td>BU</td>
+							<td>Parrent BU</td>
+							<td>Owner</td>
+						</tr>
+						<tr ng-repeat="bu in bus | orderBy: 'order'" ng-click="editBu(bu)">
+							<td>{{bu.indent}}{{bu.name}}</td>
+							<td>{{bu.ownerbu.name}}</td>
+							<td>{{bu.owner.name}}</td>
+						</tr>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>

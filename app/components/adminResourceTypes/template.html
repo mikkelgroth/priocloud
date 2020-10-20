@@ -1,431 +1,448 @@
-<prio-admin-menu></prio-admin-menu>
 
-<div class="view">
-    <div class="mainbox">
-        <h3>Resource types</h3>
+<header>
+	<div class="title">
+		<h1>
+			Administration
+		</h1>
+	
+	</div>
+	<div class="options">
 
-        <div class="popup">
-            <div class="overview popupcontent">
-                <div class="actions">
-                    <div class="layout">
-                        <div class="layoutelement">
-                            <button type="button" id="saveButton1" ng-if="user.admin && companyedit" ng-click="saveType(edittype)">save</button>
-                        </div>
-                        <div class="layoutelement center">
-                            <button type="button primary" class="Red" ng-click="delType(edittype)"
-                                ng-if="user.admin && companyedit">delete</button>
-                        </div>
-                        <div class="layoutelement right">
-                            <button type="button" class="close" ng-click="close()"></button>
-                        </div>
-                    </div>
-                </div>
-                <h3>
-                    Edit resource type
-                </h3>
-                <table class="formtable smaller">
-                    <tr>
-                        <td class="formlabel">Resource type name</td>
-                        <td>
-                            <input ng-model="edittype.name" />
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="formlabel">Last saved by</td>
-                        <td>
-                            <div class="right">{{edittype.lastsavedby}}, {{edittype.lastsaved | date:'longDate'}}</div>
-                        </td>
-                    </tr>
-                    <tr>
+	</div>
+</header>
+<div class="maincontentcontainer">
+	<prio-admin-menu></prio-admin-menu>
 
-                        <td class="formlabel">BU</td>
-                        <td>
-                            <select ng-model="edittype.buname">
-                                <option ng-repeat="bu in bus | orderBy:'order'" value="{{bu.name}}">{{bu.indent}}{{bu.name}}
-                                </option>
-                            </select>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="formlabel">Resource Owner</td>
-                        <td>
-                            <select ng-model="edittype.resown">
-                                <option value="N/A">N/A</option>
-                                <option ng-repeat="u in sessionsusers | filter: {resowner: true} | orderBy:'name'"
-                                    value="{{u.name}}">{{u.name}}</option>
-                            </select>
-                        </td>
-                    </tr>
-                    <tr>
-
-                        <td class="formlabel">Category</td>
-                        <td>
-                            <select ng-model="edittype.catagory" ng-change="saveNowCat(edittype)">
-                                <option ng-repeat="cat in company.categories| orderBy:'name'" value="{{cat.name}}">
-                                    {{cat.name}}</option>
-                            </select>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="formlabel">Names</td>
-                        <td>
-                            <div class="field">
-                                <textarea ng-model="edittype.names" maxlength="800"
-                                    placeholder="Name the members of this resource type group."></textarea>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="formlabel">Capacity internal</td>
-                        <td>
-                            <select ng-model="edittype.capacityint" ng-change="saveNowType(edittype)">
-                                <option value="0">0 %</option>
-                                <option value="10">10 %</option>
-                                <option value="20">20 %</option>
-                                <option value="30">30 %</option>
-                                <option value="50">50 %</option>
-                                <option value="80">80 %</option>
-                                <option value="100">100 %</option>
-                                <option value="150">150 %</option>
-                                <option value="200">200 %</option>
-                                <option value="250">250 %</option>
-                                <option value="300">300 %</option>
-                                <option value="350">350 %</option>
-                                <option value="400">400 %</option>
-                                <option value="450">450 %</option>
-                                <option value="500">500 %</option>
-                                <option value="600">600 %</option>
-                                <option value="700">700 %</option>
-                                <option value="800">800 %</option>
-                                <option value="900">900 %</option>
-                                <option value="1000">1.000 %</option>
-                                <option value="1100">1.100 %</option>
-                                <option value="1200">1.200 %</option>
-                                <option value="1300">1.300 %</option>
-                                <option value="1400">1.400 %</option>
-                                <option value="1500">1.500 %</option>
-                                <option value="1600">1.600 %</option>
-                                <option value="1700">1.700 %</option>
-                                <option value="1800">1.800 %</option>
-                                <option value="1900">1.900 %</option>
-                                <option value="2000">2.000 %</option>
-                                <option value="2100">2.100 %</option>
-                                <option value="2200">2.200 %</option>
-                                <option value="2300">2.300 %</option>
-                                <option value="2400">2.400 %</option>
-                                <option value="2500">2.500 %</option>
-                                <option value="2600">2.600 %</option>
-                                <option value="2700">2.700 %</option>
-                                <option value="2800">2.800 %</option>
-                                <option value="2900">2.900 %</option>
-                                <option value="3000">3.000 %</option>
-                            </select>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="formlabel">Capacity external</td>
-                        <td>
-                            <select ng-model="edittype.capacityext" ng-change="saveNowType(edittype)">
-                                <option value="0">0 %</option>
-                                <option value="10">10 %</option>
-                                <option value="20">20 %</option>
-                                <option value="30">30 %</option>
-                                <option value="50">50 %</option>
-                                <option value="80">80 %</option>
-                                <option value="100">100 %</option>
-                                <option value="150">150 %</option>
-                                <option value="200">200 %</option>
-                                <option value="250">250 %</option>
-                                <option value="300">300 %</option>
-                                <option value="350">350 %</option>
-                                <option value="400">400 %</option>
-                                <option value="450">450 %</option>
-                                <option value="500">500 %</option>
-                                <option value="600">600 %</option>
-                                <option value="700">700 %</option>
-                                <option value="800">800 %</option>
-                                <option value="900">900 %</option>
-                                <option value="1000">1.000 %</option>
-                                <option value="1100">1.100 %</option>
-                                <option value="1200">1.200 %</option>
-                                <option value="1300">1.300 %</option>
-                                <option value="1400">1.400 %</option>
-                                <option value="1500">1.500 %</option>
-                                <option value="1600">1.600 %</option>
-                                <option value="1700">1.700 %</option>
-                                <option value="1800">1.800 %</option>
-                                <option value="1900">1.900 %</option>
-                                <option value="2000">2.000 %</option>
-                                <option value="2100">2.100 %</option>
-                                <option value="2200">2.200 %</option>
-                                <option value="2300">2.300 %</option>
-                                <option value="2400">2.400 %</option>
-                                <option value="2500">2.500 %</option>
-                                <option value="2600">2.600 %</option>
-                                <option value="2700">2.700 %</option>
-                                <option value="2800">2.800 %</option>
-                                <option value="2900">2.900 %</option>
-                                <option value="3000">3.000 %</option>
-                            </select>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="formlabel">Total capacity</td>
-                        <td>
-                            <div class="right">{{edittype.capacity.toLocaleString(undefined)}} %</div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="header" colspan="2">Finance</td>
-                    </tr>
-    
-                    
-                    <tr>
-
-                        <td class="formlabel">Internal hour rate</td>
-                        <td>
-                            <select ng-model="edittype.inthourprice" ng-change="saveNowType(edittype)">
-                                <option value="150">150,- DKK</option>
-                                <option value="200">200,- DKK</option>
-                                <option value="250">250,- DKK</option>
-                                <option value="300">300,- DKK</option>
-                                <option value="350">350,- DKK</option>
-                                <option value="400">400,- DKK</option>
-                                <option value="450">450,- DKK</option>
-                                <option value="500">500,- DKK</option>
-                                <option value="600">600,- DKK</option>
-                                <option value="700">700,- DKK</option>
-                                <option value="800">800,- DKK</option>
-                                <option value="900">900,- DKK</option>
-                                <option value="1000">1.000,- DKK</option>
-                                <option value="1100">1.100,- DKK</option>
-                                <option value="1200">1.200,- DKK</option>
-                                <option value="1400">1.400,- DKK</option>
-                                <option value="1600">1.600,- DKK</option>
-                                <option value="1800">1.800,- DKK</option>
-                                <option value="2000">2.000,- DKK</option>
-                                <option value="2200">2.200,- DKK</option>
-                                <option value="2400">2.400,- DKK</option>
-                                <option value="2800">2.800,- DKK</option>
-                                <option value="3200">3.200,- DKK</option>
-                                <option value="4000">4.000,- DKK</option>
-                            </select>
-                        </td>
-                    </tr>
-                    
-                    <tr>
-
-                        <td class="formlabel">External hour rate</td>
-                        <td>
-                            <select ng-model="edittype.exthourprice" ng-change="saveNowType(edittype)">
-                                <option value="150">150,- DKK</option>
-                                <option value="200">200,- DKK</option>
-                                <option value="250">250,- DKK</option>
-                                <option value="300">300,- DKK</option>
-                                <option value="350">350,- DKK</option>
-                                <option value="400">400,- DKK</option>
-                                <option value="450">450,- DKK</option>
-                                <option value="500">500,- DKK</option>
-                                <option value="600">600,- DKK</option>
-                                <option value="700">700,- DKK</option>
-                                <option value="800">800,- DKK</option>
-                                <option value="900">900,- DKK</option>
-                                <option value="1000">1.000,- DKK</option>
-                                <option value="1100">1.100,- DKK</option>
-                                <option value="1200">1.200,- DKK</option>
-                                <option value="1400">1.400,- DKK</option>
-                                <option value="1600">1.600,- DKK</option>
-                                <option value="1800">1.800,- DKK</option>
-                                <option value="2000">2.000,- DKK</option>
-                                <option value="2200">2.200,- DKK</option>
-                                <option value="2400">2.400,- DKK</option>
-                                <option value="2800">2.800,- DKK</option>
-                                <option value="3200">3.200,- DKK</option>
-                                <option value="4000">4.000,- DKK</option>
-                            </select>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="formlabel">Internal Day price</td>
-                        <td>
-                            <div class="right">{{edittype.intdayprice.toLocaleString(undefined)}},-</div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="formlabel">External Day price</td>
-                        <td>
-                            <div class="right">{{edittype.extdayprice.toLocaleString(undefined)}},-</div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="formlabel">Average Day price</td>
-                        <td>
-                            <div class="right">{{edittype.dayprice.toLocaleString(undefined)}},-</div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="header" colspan="2">Accounts</td>
-                    </tr>
-                    <tr>
-                        <td class="formlabel">Internal account, Capex</td>
-                        <td>
-                            <select ng-model="edittype.accountint"
-                                ng-options="acc.name for acc in company.accounts | orderBy:'name' track by acc.name">
-                            </select>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="formlabel">External account, Capex</td>
-                        <td>
-                            <select ng-model="edittype.accountext"
-                                ng-options="acc.name for acc in company.accounts | orderBy:'name' track by acc.name">
-                            </select>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="formlabel">Internal account, Opex</td>
-                        <td>
-                            <select ng-model="edittype.accountintop"
-                                ng-options="acc.name for acc in company.accounts | orderBy:'name' track by acc.name">
-                            </select>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="formlabel">External account, Opex</td>
-                        <td>
-                            <select ng-model="edittype.accountextop"
-                                ng-options="acc.name for acc in company.accounts | orderBy:'name' track by acc.name">
-                            </select>
-                        </td>
-                    </tr>  
-                </table>
-            </div>
-        </div>
-        <div class="right"><button ng-click="addType()" ng-if="user.admin && companyedit">create new resuorce type</button></div>
-        <div class="overview">
-            <table ng-if="company.resourceTypes.length > 0" class="tablelist smaller">
-                <tr class="header">
-                    <td class="header">Resource types</td>
-                    <td class="header">Category</td>
-                    <td class="header">BU</td>
-                    <td class="header">Owner</td>
-                    <td class="header">Names</td>
-                    <td class="header">Int Cap.</td>
-                    <td class="header">Ext Cap.</td>
-                    <td class="header">Cap.</td>
-                </tr>
-                <tr ng-repeat="type in company.resourceTypes| orderBy:'name'" ng-click="editType(type)">
-                    <td>{{type.name}}</td>
-                    <td>{{type.catagory}}</td>
-                    <td>{{type.buname}}</td>
-                    <td>{{type.resown}}</td>
-                    <td>{{type.names}}</td>
-                    <td>
-                        <div class="right">{{type.capacityint.toLocaleString(undefined)}}%</div>
-                    </td>
-                    <td>
-                        <div class="right">{{type.capacityext.toLocaleString(undefined)}}%</div>
-                    </td>
-
-                    <td>
-                        <div class="right">{{type.capacity.toLocaleString(undefined)}}%</div>
-                    </td>
-                </tr>
-            </table>
-        </div>
-
-        <h3>Categories</h3>
-        <div class="popupcat">
-            <div class="overview popupcontent">
-                <div class="actions">
-                    <div class="layout">
-                        <div class="layoutelement">
-                            <button type="button" id="saveButton2" ng-if="user.admin && companyedit" ng-click="saveCat()">save</button>
-                        </div>
-                        <div class="layoutelement center">
-                            <button type="button primary" class="Red" ng-click="delCat(editcat)"
-                                ng-if="user.admin && companyedit">delete</button>
-                        </div>
-                        <div class="layoutelement right">
-                            <button type="button" class="close" ng-click="close()"></button>
-                        </div>
-                    </div>
-                </div>
-                <h3>
-                    Edit resuorce type category
-                </h3>
-                <table class="formtable smaller">
-                    <tr>
-                        <td class="formlabel">Category name</td>
-                        <td>
-                            <input ng-model="editcat.name" />
-                        </td>
-                    </tr>
-                </table>
-            </div>
-        </div>
-        <div class="right"><button ng-click="addCat()" ng-if="user.admin && companyedit">create new resuorce type category</button></div>
-        
-        <div class="overview" ng-if="company.categories.length > 0">
-            <table class="tablelist smaller">
-                <tr class="header">
-                    <td class="header">Category</td>
-                </tr>
-                <tr ng-repeat="cat in company.categories| orderBy:'name'" ng-click="editCat(cat)">
-                    <td> {{cat.name}} ({{cat.catuid != undefined}})</td>
-                </tr>
-            </table>
-        </div>
-
-
-        <h3>Accounts</h3>
-        <div class="popupacc">
-            <div class="overview popupcontent">
-                <div class="actions">
-                    <div class="layout">
-                        <div class="layoutelement">
-                            <button type="button" id="saveButton3" ng-if="user.admin && companyedit" ng-click="saveAcc()">save</button>
-                        </div>
-                        <div class="layoutelement center">
-                            <button type="button primary" class="Red" ng-click="delAcc(editacc)"
-                                ng-if="user.admin && companyedit">delete</button>
-                        </div>
-                        <div class="layoutelement right">
-                            <button type="button" class="close" ng-click="close()"></button>
-                        </div>
-                    </div>
-                </div>
-                <h3>
-                    Edit account
-                </h3>
-                <table class="formtable smaller">
-                    <tr>
-                        <td class="formlabel">Account name</td>
-                        <td>
-                            <input ng-model="editacc.name" />
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="formlabel">Account number</td>
-                        <td>
-                            <input ng-model="editacc.number" />
-                        </td>
-                    </tr>
-                </table>
-            </div>
-        </div>
-        <div class="right"><button ng-click="addAcc()" ng-if="user.admin && companyedit">create new account</button></div>
-        <div class="overview" ng-if="company.accounts.length > 0">
-            <table class="tablelist smaller">
-                <tr class="header">
-                    <td>Account</td>
-                    <td>Number</td>
-                </tr>
-                <tr ng-repeat="acc in company.accounts| orderBy:'name'" ng-click="editAcc(acc)">
-                    <td>{{acc.name}}</td>
-                    <td>{{acc.number}}</td>
-                </tr>
-            </table>
-        </div>
-    </div>
+	<div class="content">
+		<div class="view">
+			<div class="mainbox">
+				<h3>Resource types</h3>
+		
+				<div class="popup">
+					<div class="overview popupcontent">
+						<div class="actions">
+							<div class="layout">
+								<div class="layoutelement">
+									<button type="button" id="saveButton1" ng-if="user.admin && companyedit" ng-click="saveType(edittype)">save</button>
+								</div>
+								<div class="layoutelement center">
+									<button type="button primary" class="Red" ng-click="delType(edittype)"
+										ng-if="user.admin && companyedit">delete</button>
+								</div>
+								<div class="layoutelement right">
+									<button type="button" class="close" ng-click="close()"></button>
+								</div>
+							</div>
+						</div>
+						<h3>
+							Edit resource type
+						</h3>
+						<table class="formtable smaller">
+							<tr>
+								<td class="formlabel">Resource type name</td>
+								<td>
+									<input ng-model="edittype.name" />
+								</td>
+							</tr>
+							<tr>
+								<td class="formlabel">Last saved by</td>
+								<td>
+									<div class="right">{{edittype.lastsavedby}}, {{edittype.lastsaved | date:'longDate'}}</div>
+								</td>
+							</tr>
+							<tr>
+		
+								<td class="formlabel">BU</td>
+								<td>
+									<select ng-model="edittype.buname">
+										<option ng-repeat="bu in bus | orderBy:'order'" value="{{bu.name}}">{{bu.indent}}{{bu.name}}
+										</option>
+									</select>
+								</td>
+							</tr>
+							<tr>
+								<td class="formlabel">Resource Owner</td>
+								<td>
+									<select ng-model="edittype.resown">
+										<option value="N/A">N/A</option>
+										<option ng-repeat="u in sessionsusers | filter: {resowner: true} | orderBy:'name'"
+											value="{{u.name}}">{{u.name}}</option>
+									</select>
+								</td>
+							</tr>
+							<tr>
+		
+								<td class="formlabel">Category</td>
+								<td>
+									<select ng-model="edittype.catagory" ng-change="saveNowCat(edittype)">
+										<option ng-repeat="cat in company.categories| orderBy:'name'" value="{{cat.name}}">
+											{{cat.name}}</option>
+									</select>
+								</td>
+							</tr>
+							<tr>
+								<td class="formlabel">Names</td>
+								<td>
+									<div class="field">
+										<textarea ng-model="edittype.names" maxlength="800"
+											placeholder="Name the members of this resource type group."></textarea>
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td class="formlabel">Capacity internal</td>
+								<td>
+									<select ng-model="edittype.capacityint" ng-change="saveNowType(edittype)">
+										<option value="0">0 %</option>
+										<option value="10">10 %</option>
+										<option value="20">20 %</option>
+										<option value="30">30 %</option>
+										<option value="50">50 %</option>
+										<option value="80">80 %</option>
+										<option value="100">100 %</option>
+										<option value="150">150 %</option>
+										<option value="200">200 %</option>
+										<option value="250">250 %</option>
+										<option value="300">300 %</option>
+										<option value="350">350 %</option>
+										<option value="400">400 %</option>
+										<option value="450">450 %</option>
+										<option value="500">500 %</option>
+										<option value="600">600 %</option>
+										<option value="700">700 %</option>
+										<option value="800">800 %</option>
+										<option value="900">900 %</option>
+										<option value="1000">1.000 %</option>
+										<option value="1100">1.100 %</option>
+										<option value="1200">1.200 %</option>
+										<option value="1300">1.300 %</option>
+										<option value="1400">1.400 %</option>
+										<option value="1500">1.500 %</option>
+										<option value="1600">1.600 %</option>
+										<option value="1700">1.700 %</option>
+										<option value="1800">1.800 %</option>
+										<option value="1900">1.900 %</option>
+										<option value="2000">2.000 %</option>
+										<option value="2100">2.100 %</option>
+										<option value="2200">2.200 %</option>
+										<option value="2300">2.300 %</option>
+										<option value="2400">2.400 %</option>
+										<option value="2500">2.500 %</option>
+										<option value="2600">2.600 %</option>
+										<option value="2700">2.700 %</option>
+										<option value="2800">2.800 %</option>
+										<option value="2900">2.900 %</option>
+										<option value="3000">3.000 %</option>
+									</select>
+								</td>
+							</tr>
+							<tr>
+								<td class="formlabel">Capacity external</td>
+								<td>
+									<select ng-model="edittype.capacityext" ng-change="saveNowType(edittype)">
+										<option value="0">0 %</option>
+										<option value="10">10 %</option>
+										<option value="20">20 %</option>
+										<option value="30">30 %</option>
+										<option value="50">50 %</option>
+										<option value="80">80 %</option>
+										<option value="100">100 %</option>
+										<option value="150">150 %</option>
+										<option value="200">200 %</option>
+										<option value="250">250 %</option>
+										<option value="300">300 %</option>
+										<option value="350">350 %</option>
+										<option value="400">400 %</option>
+										<option value="450">450 %</option>
+										<option value="500">500 %</option>
+										<option value="600">600 %</option>
+										<option value="700">700 %</option>
+										<option value="800">800 %</option>
+										<option value="900">900 %</option>
+										<option value="1000">1.000 %</option>
+										<option value="1100">1.100 %</option>
+										<option value="1200">1.200 %</option>
+										<option value="1300">1.300 %</option>
+										<option value="1400">1.400 %</option>
+										<option value="1500">1.500 %</option>
+										<option value="1600">1.600 %</option>
+										<option value="1700">1.700 %</option>
+										<option value="1800">1.800 %</option>
+										<option value="1900">1.900 %</option>
+										<option value="2000">2.000 %</option>
+										<option value="2100">2.100 %</option>
+										<option value="2200">2.200 %</option>
+										<option value="2300">2.300 %</option>
+										<option value="2400">2.400 %</option>
+										<option value="2500">2.500 %</option>
+										<option value="2600">2.600 %</option>
+										<option value="2700">2.700 %</option>
+										<option value="2800">2.800 %</option>
+										<option value="2900">2.900 %</option>
+										<option value="3000">3.000 %</option>
+									</select>
+								</td>
+							</tr>
+							<tr>
+								<td class="formlabel">Total capacity</td>
+								<td>
+									<div class="right">{{edittype.capacity.toLocaleString(undefined)}} %</div>
+								</td>
+							</tr>
+							<tr>
+								<td class="header" colspan="2">Finance</td>
+							</tr>
+			
+							
+							<tr>
+		
+								<td class="formlabel">Internal hour rate</td>
+								<td>
+									<select ng-model="edittype.inthourprice" ng-change="saveNowType(edittype)">
+										<option value="150">150,- DKK</option>
+										<option value="200">200,- DKK</option>
+										<option value="250">250,- DKK</option>
+										<option value="300">300,- DKK</option>
+										<option value="350">350,- DKK</option>
+										<option value="400">400,- DKK</option>
+										<option value="450">450,- DKK</option>
+										<option value="500">500,- DKK</option>
+										<option value="600">600,- DKK</option>
+										<option value="700">700,- DKK</option>
+										<option value="800">800,- DKK</option>
+										<option value="900">900,- DKK</option>
+										<option value="1000">1.000,- DKK</option>
+										<option value="1100">1.100,- DKK</option>
+										<option value="1200">1.200,- DKK</option>
+										<option value="1400">1.400,- DKK</option>
+										<option value="1600">1.600,- DKK</option>
+										<option value="1800">1.800,- DKK</option>
+										<option value="2000">2.000,- DKK</option>
+										<option value="2200">2.200,- DKK</option>
+										<option value="2400">2.400,- DKK</option>
+										<option value="2800">2.800,- DKK</option>
+										<option value="3200">3.200,- DKK</option>
+										<option value="4000">4.000,- DKK</option>
+									</select>
+								</td>
+							</tr>
+							
+							<tr>
+		
+								<td class="formlabel">External hour rate</td>
+								<td>
+									<select ng-model="edittype.exthourprice" ng-change="saveNowType(edittype)">
+										<option value="150">150,- DKK</option>
+										<option value="200">200,- DKK</option>
+										<option value="250">250,- DKK</option>
+										<option value="300">300,- DKK</option>
+										<option value="350">350,- DKK</option>
+										<option value="400">400,- DKK</option>
+										<option value="450">450,- DKK</option>
+										<option value="500">500,- DKK</option>
+										<option value="600">600,- DKK</option>
+										<option value="700">700,- DKK</option>
+										<option value="800">800,- DKK</option>
+										<option value="900">900,- DKK</option>
+										<option value="1000">1.000,- DKK</option>
+										<option value="1100">1.100,- DKK</option>
+										<option value="1200">1.200,- DKK</option>
+										<option value="1400">1.400,- DKK</option>
+										<option value="1600">1.600,- DKK</option>
+										<option value="1800">1.800,- DKK</option>
+										<option value="2000">2.000,- DKK</option>
+										<option value="2200">2.200,- DKK</option>
+										<option value="2400">2.400,- DKK</option>
+										<option value="2800">2.800,- DKK</option>
+										<option value="3200">3.200,- DKK</option>
+										<option value="4000">4.000,- DKK</option>
+									</select>
+								</td>
+							</tr>
+							<tr>
+								<td class="formlabel">Internal Day price</td>
+								<td>
+									<div class="right">{{edittype.intdayprice.toLocaleString(undefined)}},-</div>
+								</td>
+							</tr>
+							<tr>
+								<td class="formlabel">External Day price</td>
+								<td>
+									<div class="right">{{edittype.extdayprice.toLocaleString(undefined)}},-</div>
+								</td>
+							</tr>
+							<tr>
+								<td class="formlabel">Average Day price</td>
+								<td>
+									<div class="right">{{edittype.dayprice.toLocaleString(undefined)}},-</div>
+								</td>
+							</tr>
+							<tr>
+								<td class="header" colspan="2">Accounts</td>
+							</tr>
+							<tr>
+								<td class="formlabel">Internal account, Capex</td>
+								<td>
+									<select ng-model="edittype.accountint"
+										ng-options="acc.name for acc in company.accounts | orderBy:'name' track by acc.name">
+									</select>
+								</td>
+							</tr>
+							<tr>
+								<td class="formlabel">External account, Capex</td>
+								<td>
+									<select ng-model="edittype.accountext"
+										ng-options="acc.name for acc in company.accounts | orderBy:'name' track by acc.name">
+									</select>
+								</td>
+							</tr>
+							<tr>
+								<td class="formlabel">Internal account, Opex</td>
+								<td>
+									<select ng-model="edittype.accountintop"
+										ng-options="acc.name for acc in company.accounts | orderBy:'name' track by acc.name">
+									</select>
+								</td>
+							</tr>
+							<tr>
+								<td class="formlabel">External account, Opex</td>
+								<td>
+									<select ng-model="edittype.accountextop"
+										ng-options="acc.name for acc in company.accounts | orderBy:'name' track by acc.name">
+									</select>
+								</td>
+							</tr>  
+						</table>
+					</div>
+				</div>
+				<div class="right"><button ng-click="addType()" ng-if="user.admin && companyedit">create new resuorce type</button></div>
+				<div class="overview">
+					<table ng-if="company.resourceTypes.length > 0" class="tablelist smaller">
+						<tr class="header">
+							<td class="header">Resource types</td>
+							<td class="header">Category</td>
+							<td class="header">BU</td>
+							<td class="header">Owner</td>
+							<td class="header">Names</td>
+							<td class="header">Int Cap.</td>
+							<td class="header">Ext Cap.</td>
+							<td class="header">Cap.</td>
+						</tr>
+						<tr ng-repeat="type in company.resourceTypes| orderBy:'name'" ng-click="editType(type)">
+							<td>{{type.name}}</td>
+							<td>{{type.catagory}}</td>
+							<td>{{type.buname}}</td>
+							<td>{{type.resown}}</td>
+							<td>{{type.names}}</td>
+							<td>
+								<div class="right">{{type.capacityint.toLocaleString(undefined)}}%</div>
+							</td>
+							<td>
+								<div class="right">{{type.capacityext.toLocaleString(undefined)}}%</div>
+							</td>
+		
+							<td>
+								<div class="right">{{type.capacity.toLocaleString(undefined)}}%</div>
+							</td>
+						</tr>
+					</table>
+				</div>
+		
+				<h3>Categories</h3>
+				<div class="popupcat">
+					<div class="overview popupcontent">
+						<div class="actions">
+							<div class="layout">
+								<div class="layoutelement">
+									<button type="button" id="saveButton2" ng-if="user.admin && companyedit" ng-click="saveCat()">save</button>
+								</div>
+								<div class="layoutelement center">
+									<button type="button primary" class="Red" ng-click="delCat(editcat)"
+										ng-if="user.admin && companyedit">delete</button>
+								</div>
+								<div class="layoutelement right">
+									<button type="button" class="close" ng-click="close()"></button>
+								</div>
+							</div>
+						</div>
+						<h3>
+							Edit resuorce type category
+						</h3>
+						<table class="formtable smaller">
+							<tr>
+								<td class="formlabel">Category name</td>
+								<td>
+									<input ng-model="editcat.name" />
+								</td>
+							</tr>
+						</table>
+					</div>
+				</div>
+				<div class="right"><button ng-click="addCat()" ng-if="user.admin && companyedit">create new resuorce type category</button></div>
+				
+				<div class="overview" ng-if="company.categories.length > 0">
+					<table class="tablelist smaller">
+						<tr class="header">
+							<td class="header">Category</td>
+						</tr>
+						<tr ng-repeat="cat in company.categories| orderBy:'name'" ng-click="editCat(cat)">
+							<td> {{cat.name}} ({{cat.catuid != undefined}})</td>
+						</tr>
+					</table>
+				</div>
+		
+		
+				<h3>Accounts</h3>
+				<div class="popupacc">
+					<div class="overview popupcontent">
+						<div class="actions">
+							<div class="layout">
+								<div class="layoutelement">
+									<button type="button" id="saveButton3" ng-if="user.admin && companyedit" ng-click="saveAcc()">save</button>
+								</div>
+								<div class="layoutelement center">
+									<button type="button primary" class="Red" ng-click="delAcc(editacc)"
+										ng-if="user.admin && companyedit">delete</button>
+								</div>
+								<div class="layoutelement right">
+									<button type="button" class="close" ng-click="close()"></button>
+								</div>
+							</div>
+						</div>
+						<h3>
+							Edit account
+						</h3>
+						<table class="formtable smaller">
+							<tr>
+								<td class="formlabel">Account name</td>
+								<td>
+									<input ng-model="editacc.name" />
+								</td>
+							</tr>
+							<tr>
+								<td class="formlabel">Account number</td>
+								<td>
+									<input ng-model="editacc.number" />
+								</td>
+							</tr>
+						</table>
+					</div>
+				</div>
+				<div class="right"><button ng-click="addAcc()" ng-if="user.admin && companyedit">create new account</button></div>
+				<div class="overview" ng-if="company.accounts.length > 0">
+					<table class="tablelist smaller">
+						<tr class="header">
+							<td>Account</td>
+							<td>Number</td>
+						</tr>
+						<tr ng-repeat="acc in company.accounts| orderBy:'name'" ng-click="editAcc(acc)">
+							<td>{{acc.name}}</td>
+							<td>{{acc.number}}</td>
+						</tr>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
+

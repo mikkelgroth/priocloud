@@ -1,450 +1,483 @@
 <div id="projects-dependencies">
-    <h2>People dependencies
-        <div class="right">
-            <button ng-click="showmepm()" ng-show="showmepmbutton">me as PM</button>
-            <button class="buttonOn" ng-click="clearmepm()" ng-show="!showmepmbutton">me as PM</button>
-            <button ng-click="showmereq()" ng-show="showmereqbutton">me as requester</button>
-            <button class="buttonOn" ng-click="clearmereq()" ng-show="!showmereqbutton">me as requester</button>
-            <button ng-click="showmeown()" ng-show="showmeownbutton">me as resource owner</button>
-            <button class="buttonOn" ng-click="clearmeown()" ng-show="!showmeownbutton">me as resource owner</button>
-            <button ng-click="showfilters=true" ng-show="!showfilters">filters</button>
-            <button class="buttonOn" ng-click="showfilters=false" ng-show="showfilters">filters</button>
-        </div>
-    </h2>
+	<header>
+		<div class="title">
+			<h1>
+				People
+			</h1>
+		</div>
+		<div class="options hideOnPrint">
+			<button ng-click="showmepm()" ng-show="showmepmbutton">me as PM</button>
+			<button class="buttonOn" ng-click="clearmepm()" ng-show="!showmepmbutton">me as PM</button>
+			<button ng-click="showmereq()" ng-show="showmereqbutton">me as requester</button>
+			<button class="buttonOn" ng-click="clearmereq()" ng-show="!showmereqbutton">me as requester</button>
+			<button ng-click="showmeown()" ng-show="showmeownbutton">me as resource owner</button>
+			<button class="buttonOn" ng-click="clearmeown()" ng-show="!showmeownbutton">me as resource owner</button>
+			<button ng-click="showfilters=true" ng-show="!showfilters">filters</button>
+			<button class="buttonOn" ng-click="showfilters=false" ng-show="showfilters">filters</button>
+		</div>
+	</header>
+	<div class="maincontentcontainer">
+		<div class="content">
+			<div class="actionbar">
+				<div class="filter">
+					<div class="label">
+						BU:
+					</div>
+					<select ng-model="rtfrombu" ng-change="getRTfromBu()" ng-init="">
+						<option value="">All business units</option>
+						<option ng-repeat="bu in bus | orderBy:'order'" value="{{bu.name}}">{{bu.indent}}{{bu.name}}
+						</option>
+					</select>
 
-    <h4>
-        <div class="right">
-            BU:
-            <select ng-model="rtfrombu" ng-change="getRTfromBu()" ng-init="">
-                <option value="">All business units</option>
-                <option ng-repeat="bu in bus | orderBy:'order'" value="{{bu.name}}">{{bu.indent}}{{bu.name}}
-                </option>
-            </select>
-            Project:
-            <select ng-change="getRTfromProject()" ng-model="rtfromproject" ng-init="">
-                <option value="">All Projects</option>
-                <option ng-repeat="p in projects | filter: {hasdeps : true} | orderBy:'title'" value="{{p.title}}">
-                    {{p.title}}</option>
-            </select>
-            Only:
-            <input type="checkbox" ng-model="onlyfromproject" ng-checked='false' ng-change="onlyProject()">
+				</div>
+				<div class="filter">
+					<div class="label">
+						Project:
+					</div>
+					<select ng-change="getRTfromProject()" ng-model="rtfromproject" ng-init="">
+						<option value="">All Projects</option>
+						<option ng-repeat="p in projects | filter: {hasdeps : true} | orderBy:'title'"
+							value="{{p.title}}">
+							{{p.title}}</option>
+					</select>
 
-        </div>
-    </h4>
-    <div class="right">
-        <input type="radio" name="views" ng-model="views" value="cat" ng-click="clearRT();"> Category overview &nbsp;
-        <input type="radio" name="views" ng-model="views" value="res" ng-click="clearRT();"> Resource overview &nbsp;
-        <input type="radio" name="views" ng-model="views" value="list"> Dependency list &nbsp;
-        <input type="radio" name="views" ng-model="views" value="rt"> Resource types
-    </div>
+				</div>
+				<div class="filter">
+					<div class="label">
+						Only:
+					</div>
+					<input type="checkbox" ng-model="onlyfromproject" ng-checked='false' ng-change="onlyProject()">
+
+				</div>
+				<div class="filter">
+					<label for="categoryoverview">
+						<input type="radio" id="categoryoverview" name="views" ng-model="views" value="cat" ng-click="clearRT();"> Category overview
+					</label>
+					<label for="resourceoverview">
+						<input type="radio" id="resourceoverview"  name="views" ng-model="views" value="res" ng-click="clearRT();"> Resource overview
+					</label>
+					<label for="dependencylist">
+						<input type="radio" id="dependencylist" name="views" ng-model="views" value="list"> Dependency list &nbsp;
+					</label>
+					<label for="resourcetypes">
+						<input type="radio" id="resourcetypes" name="views" ng-model="views" value="rt"> Resource types
+					</label>
+				</div>
+			</div>
 
 
-    <div class="smaller">
-        <table ng-show="showfilters">
-            <tr class="header">
-                <td colspan="5">Filters<div class="right"><button class="clearbtn" ng-click="clearall()"
-                            ng-show="showfilters">clear all</button></div>
-                </td>
-            </tr>
-            <tr class="header">
-                <td class="filter-container">Project unit
-                    <div class="right"><button ng-click="depsearch.pbuname=[]; saveSearch()"
-                            ng-show="showfilters">clear</button></div>
-                </td>
-                <td class="filter-container">Portfolio
-                    <div class="right"><button ng-click="depsearch.pportname=[]; saveSearch()"
-                            ng-show="showfilters">clear</button></div>
-                </td>
-                <td class="filter-container">Project state
-                    <div class="right"><button ng-click="depsearch.pstate=[]; saveSearch()"
-                            ng-show="showfilters">clear</button></div>
-                </td>
-                <td class="filter-container">Project manager
-                    <div class="right"><button ng-click="depsearch.ppm=[]; saveSearch()"
-                            ng-show="showfilters">clear</button></div>
-                </td>
-                <td class="filter-container">Project priority
-                    <div class="right"><button ng-click="depsearch.ppriority=[]; saveSearch()"
-                            ng-show="showfilters">clear</button></div>
-                </td>
-            </tr>
-            <tr class="filtertd">
-                <td>
-                    <select class="multiple-select" multiple="multiple" ng-multiple="true" ng-change="saveSearch()"
-                        ng-model="depsearch.pbuname"
-                        ng-options="bu.name as bu.name for bu in bus | orderBy: 'name'"></select>
-                </td>
-                <td>
-                    <select class="multiple-select" multiple="multiple" ng-multiple="true" ng-change="saveSearch()"
-                        ng-model="depsearch.pportname"
-                        ng-options="port.name as port.name for port in company.portfolios | orderBy: 'level'"></select>
-                </td>
-                <td>
-                    <select class="multiple-select" multiple="multiple" ng-multiple="true" ng-change="saveSearch()"
-                        ng-model="depsearch.pstate">
-                        <option value="Template">Template</option>
-                        <option value="Internal Approved">Internal Approved</option>
-                        <option value="Portfolio Approved">Portfolio Approved</option>
-                        <option value="Company Approved">Company Approved</option>
-                        <option value="Progress">Progress</option>
-                        <option value="Onhold">On hold</option>
-                        <option value="Rejected">Rejected</option>
-                        <option value="Closed">Closed</option>
-                    </select>
-                </td>
-                <td>
-                    <select class="multiple-select" multiple="multiple" ng-multiple="true" ng-change="saveSearch()"
-                        ng-model="depsearch.ppm">
-                        <option ng-repeat="u in users | filter: {source: true} | orderBy:'name'" value="{{u.name}}">
-                            {{u.name}}</option>
-                    </select>
-                </td>
-                <td>
-                    <select class="multiple-select" multiple="multiple" ng-multiple="true" ng-change="saveSearch()"
-                        ng-model="depsearch.ppriority">
-                        <option value="1. Mandatory">1. Mandatory</option>
-                        <option value="2. Top priority">2. Top priority</option>
-                        <option value="3. High priority">3. High priority</option>
-                        <option value="4. Needed">4. Needed</option>
-                        <option value="5. Valued">5. Valued</option>
-                    </select>
-                </td>
-            </tr>
-            <tr class="header">
-                <td>Dep. requester<div class="right"><button ng-click="depsearch.requester=[]; saveSearch()"
-                            ng-show="showfilters">clear</button></div>
-                </td>
-                <td>Resource owner<div class="right"><button ng-click="depsearch.deprtowner=[]; saveSearch()"
-                            ng-show="showfilters">clear</button></div>
-                </td>
-                <td>
-                    Project Enabler<div class="right"><button ng-click="depsearch.penabler=[]; saveSearch()"
-                            ng-show="showfilters">clear</button></div>
-                </td>
-                <td>Dep. state<div class="right"><button ng-click="depsearch.state=[]; saveSearch()"
-                            ng-show="showfilters">clear</button></div>
-                </td>
-                <td class="filter-container">Project<div class="right"><button ng-click="depsearch.projecttitle=[]"
-                            ng-show="showfilters">clear</button></div>
-                </td>
-            </tr>
-            <tr class="filtertd">
-                <td>
-                    <select class="multiple-select" multiple="multiple" ng-multiple="true" ng-change="saveSearch()"
-                        ng-model="depsearch.requester">
-                        <option ng-repeat="u in users | filter: {source: true} | orderBy:'name'" value="{{u.name}}">
-                            {{u.name}}</option>
-                    </select>
+		
 
-                </td>
-                <td>
-                    <select class="multiple-select" multiple="multiple" ng-multiple="true" ng-change="saveSearch()"
-                        ng-model="depsearch.deprtowner">
-                        <option ng-repeat="u in users | filter: {resowner: true} | orderBy:'name'" value="{{u.name}}">
-                            {{u.name}}</option>
-                    </select>
-                </td>
-                <td>
-                    <select class="multiple-select" multiple="multiple" ng-multiple="true" ng-change="saveSearch()"
-                        ng-model="depsearch.penabler">
-                        <option value="XS">XS</option>
-                        <option value="S">S</option>
-                        <option value="M">M</option>
-                        <option value="L">L</option>
-                        <option value="XL">XL</option>
-                    </select>
-                </td>
-                <td>
-                    <select class="multiple-select" multiple="multiple" ng-multiple="true" ng-change="saveSearch()"
-                        ng-model="depsearch.state">
-                        <option value="Requested">Requested</option>
-                        <option value="Allocated">Allocated</option>
-                        <option value="On hold">On hold</option>
-                        <option value="Done">Done</option>
-                    </select>
-                </td>
-                <td>
-                    <select class="multiple-select" multiple="multiple" ng-multiple="true" ng-change="saveSearch()"
-                        ng-model="depsearch.projecttitle"
-                        ng-options="p.title as p.title for p in projects | filter:{state: 'Progress'} | orderBy: 'title'"></select>
-                </td>
-            </tr>
-            <tr class="header">
-                <td>Status<div class="right"><button ng-click="depsearch.status=[]; saveSearch()"
-                            ng-show="showfilters">clear</button></div>
-                </td>
-                <td>Unit affected<div class="right"><button ng-click="depsearch.pconnect=[]; saveSearch()"
-                            ng-show="showfilters">clear</button></div>
-                </td>
-                <td>Resource type<div class="right"><button ng-click="depsearch.deprtname=[]; saveSearch()"
-                            ng-show="showfilters">clear</button></div>
-                </td>
-                <td>Resource category<div class="right"><button ng-click="depsearch.deprtcatagory=[]; saveSearch()"
-                            ng-show="showfilters">clear</button></div>
-                </td>
-                <td>
-                </td>
-            </tr>
-            <tr class="filtertd">
-                <td>
-                    <select class="multiple-select" multiple="multiple" ng-multiple="true" ng-change="saveSearch()"
-                        ng-model="depsearch.status">
-                        <option value="Green">Accept</option>
-                        <option value="Yellow">Observe</option>
-                        <option value="Orange">Assist</option>
-                        <option value="Red">Intervent</option>
-                    </select>
 
-                </td>
-                <td>
-                    <select class="multiple-select" multiple="multiple" ng-multiple="true" ng-change="saveSearch()"
-                        ng-model="depsearch.pconnect"
-                        ng-options="bu.name as bu.name for bu in bus | orderBy: 'name'"></select>
+			<table ng-show="showfilters">
+				<tr class="header">
+					<td colspan="5">Filters<div class="right"><button class="clearbtn" ng-click="clearall()"
+								ng-show="showfilters">clear all</button></div>
+					</td>
+				</tr>
+				<tr class="header">
+					<td class="filter-container">Project unit
+						<div class="right"><button ng-click="depsearch.pbuname=[]; saveSearch()"
+								ng-show="showfilters">clear</button></div>
+					</td>
+					<td class="filter-container">Portfolio
+						<div class="right"><button ng-click="depsearch.pportname=[]; saveSearch()"
+								ng-show="showfilters">clear</button></div>
+					</td>
+					<td class="filter-container">Project state
+						<div class="right"><button ng-click="depsearch.pstate=[]; saveSearch()"
+								ng-show="showfilters">clear</button></div>
+					</td>
+					<td class="filter-container">Project manager
+						<div class="right"><button ng-click="depsearch.ppm=[]; saveSearch()"
+								ng-show="showfilters">clear</button></div>
+					</td>
+					<td class="filter-container">Project priority
+						<div class="right"><button ng-click="depsearch.ppriority=[]; saveSearch()"
+								ng-show="showfilters">clear</button></div>
+					</td>
+				</tr>
+				<tr class="filtertd">
+					<td>
+						<select class="multiple-select" multiple="multiple" ng-multiple="true" ng-change="saveSearch()"
+							ng-model="depsearch.pbuname"
+							ng-options="bu.name as bu.name for bu in bus | orderBy: 'name'"></select>
+					</td>
+					<td>
+						<select class="multiple-select" multiple="multiple" ng-multiple="true" ng-change="saveSearch()"
+							ng-model="depsearch.pportname"
+							ng-options="port.name as port.name for port in company.portfolios | orderBy: 'level'"></select>
+					</td>
+					<td>
+						<select class="multiple-select" multiple="multiple" ng-multiple="true" ng-change="saveSearch()"
+							ng-model="depsearch.pstate">
+							<option value="Template">Template</option>
+							<option value="Internal Approved">Internal Approved</option>
+							<option value="Portfolio Approved">Portfolio Approved</option>
+							<option value="Company Approved">Company Approved</option>
+							<option value="Progress">Progress</option>
+							<option value="Onhold">On hold</option>
+							<option value="Rejected">Rejected</option>
+							<option value="Closed">Closed</option>
+						</select>
+					</td>
+					<td>
+						<select class="multiple-select" multiple="multiple" ng-multiple="true" ng-change="saveSearch()"
+							ng-model="depsearch.ppm">
+							<option ng-repeat="u in users | filter: {source: true} | orderBy:'name'" value="{{u.name}}">
+								{{u.name}}</option>
+						</select>
+					</td>
+					<td>
+						<select class="multiple-select" multiple="multiple" ng-multiple="true" ng-change="saveSearch()"
+							ng-model="depsearch.ppriority">
+							<option value="1. Mandatory">1. Mandatory</option>
+							<option value="2. Top priority">2. Top priority</option>
+							<option value="3. High priority">3. High priority</option>
+							<option value="4. Needed">4. Needed</option>
+							<option value="5. Valued">5. Valued</option>
+						</select>
+					</td>
+				</tr>
+				<tr class="header">
+					<td>Dep. requester<div class="right"><button ng-click="depsearch.requester=[]; saveSearch()"
+								ng-show="showfilters">clear</button></div>
+					</td>
+					<td>Resource owner<div class="right"><button ng-click="depsearch.deprtowner=[]; saveSearch()"
+								ng-show="showfilters">clear</button></div>
+					</td>
+					<td>
+						Project Enabler<div class="right"><button ng-click="depsearch.penabler=[]; saveSearch()"
+								ng-show="showfilters">clear</button></div>
+					</td>
+					<td>Dep. state<div class="right"><button ng-click="depsearch.state=[]; saveSearch()"
+								ng-show="showfilters">clear</button></div>
+					</td>
+					<td class="filter-container">Project<div class="right"><button ng-click="depsearch.projecttitle=[]"
+								ng-show="showfilters">clear</button></div>
+					</td>
+				</tr>
+				<tr class="filtertd">
+					<td>
+						<select class="multiple-select" multiple="multiple" ng-multiple="true" ng-change="saveSearch()"
+							ng-model="depsearch.requester">
+							<option ng-repeat="u in users | filter: {source: true} | orderBy:'name'" value="{{u.name}}">
+								{{u.name}}</option>
+						</select>
 
-                </td>
+					</td>
+					<td>
+						<select class="multiple-select" multiple="multiple" ng-multiple="true" ng-change="saveSearch()"
+							ng-model="depsearch.deprtowner">
+							<option ng-repeat="u in users | filter: {resowner: true} | orderBy:'name'"
+								value="{{u.name}}">
+								{{u.name}}</option>
+						</select>
+					</td>
+					<td>
+						<select class="multiple-select" multiple="multiple" ng-multiple="true" ng-change="saveSearch()"
+							ng-model="depsearch.penabler">
+							<option value="XS">XS</option>
+							<option value="S">S</option>
+							<option value="M">M</option>
+							<option value="L">L</option>
+							<option value="XL">XL</option>
+						</select>
+					</td>
+					<td>
+						<select class="multiple-select" multiple="multiple" ng-multiple="true" ng-change="saveSearch()"
+							ng-model="depsearch.state">
+							<option value="Requested">Requested</option>
+							<option value="Allocated">Allocated</option>
+							<option value="On hold">On hold</option>
+							<option value="Done">Done</option>
+						</select>
+					</td>
+					<td>
+						<select class="multiple-select" multiple="multiple" ng-multiple="true" ng-change="saveSearch()"
+							ng-model="depsearch.projecttitle"
+							ng-options="p.title as p.title for p in projects | filter:{state: 'Progress'} | orderBy: 'title'"></select>
+					</td>
+				</tr>
+				<tr class="header">
+					<td>Status<div class="right"><button ng-click="depsearch.status=[]; saveSearch()"
+								ng-show="showfilters">clear</button></div>
+					</td>
+					<td>Unit affected<div class="right"><button ng-click="depsearch.pconnect=[]; saveSearch()"
+								ng-show="showfilters">clear</button></div>
+					</td>
+					<td>Resource type<div class="right"><button ng-click="depsearch.deprtname=[]; saveSearch()"
+								ng-show="showfilters">clear</button></div>
+					</td>
+					<td>Resource category<div class="right"><button ng-click="depsearch.deprtcatagory=[]; saveSearch()"
+								ng-show="showfilters">clear</button></div>
+					</td>
+					<td>
+					</td>
+				</tr>
+				<tr class="filtertd">
+					<td>
+						<select class="multiple-select" multiple="multiple" ng-multiple="true" ng-change="saveSearch()"
+							ng-model="depsearch.status">
+							<option value="Green">Accept</option>
+							<option value="Yellow">Observe</option>
+							<option value="Orange">Assist</option>
+							<option value="Red">Intervent</option>
+						</select>
 
-                <td>
-                    <select class="multiple-select" multiple="multiple" ng-multiple="true" ng-change="saveSearch()"
-                        ng-model="depsearch.deprtname">
-                        <option ng-repeat="u in company.resourceTypes | orderBy:'name'" value="{{u.name}}">{{u.name}}
-                        </option>
-                    </select>
-                </td>
-                <td>
-                    <select class="multiple-select" multiple="multiple" ng-multiple="true" ng-change="saveSearch()"
-                        ng-model="depsearch.deprtcatagory">
-                        <option ng-repeat="cat in company.categories| orderBy:'name'" value="{{cat.name}}">{{cat.name}}
-                        </option>
-                    </select>
-                </td>
-                <td>
+					</td>
+					<td>
+						<select class="multiple-select" multiple="multiple" ng-multiple="true" ng-change="saveSearch()"
+							ng-model="depsearch.pconnect"
+							ng-options="bu.name as bu.name for bu in bus | orderBy: 'name'"></select>
 
-                </td>
-            </tr>
-            <tr class="header">
-                <td colspan="5">Order by</td>
-            </tr>
-            <tr>
-                <td colspan="5">
-                    <select ng-model="porderparam" ng-init="porderparam='ppriority'">
-                        <option value="depdate">Order by work start</option>
-                        <option value="depdeaddate">Order by deadline</option>
-                        <option value="deprtname">Order by Source</option>
-                        <option value="projecttitle">Order by Project</option>
-                        <option value="title">Dependency title</option>
-                        <option value="ppriority">Project priority</option>
-                        <option value="-penablervalue">Project Enabler</option>
-                        <option value="priority">Dependency priority</option>
-                        <option value="pbuname">Unit</option>
-                        <option value="pportname">Portfolio</option>
-                        <option value="state">State</option>
-                    </select>
-                    <select ng-model="porderparam2" ng-init="porderparam2='-penablervalue'">
-                        <option value="depdate">Order by work start</option>
-                        <option value="depdeaddate">Order by deadline</option>
-                        <option value="deprtname">Order by Source</option>
-                        <option value="projecttitle">Order by Project</option>
-                        <option value="title">Dependency title</option>
-                        <option value="ppriority">Project priority</option>
-                        <option value="-penablervalue">Project Enabler</option>
-                        <option value="priority">Dependency priority</option>
-                        <option value="pbuname">Unit</option>
-                        <option value="pportname">Portfolio</option>
-                        <option value="state">State</option>
-                    </select>
-                    <select ng-model="porderparam3" ng-init="porderparam3='priority'">
-                        <option value="depdate">Order by work start</option>
-                        <option value="depdeaddate">Order by deadline</option>
-                        <option value="deprtname">Order by Source</option>
-                        <option value="projecttitle">Order by Project</option>
-                        <option value="title">Dependency title</option>
-                        <option value="ppriority">Project priority</option>
-                        <option value="-penablervalue">Project Enabler</option>
-                        <option value="priority">Dependency priority</option>
-                        <option value="pbuname">Unit</option>
-                        <option value="pportname">Portfolio</option>
-                        <option value="state">State</option>
-                    </select>
+					</td>
 
-                </td>
-            </tr>
-        </table>
-        <div class="overview" ng-show="views=='list'">
-            <table class="tablelist" ng-if="depList.length > 0">
-                <tr class="header">
-                    <td colspan="8">Dependency list
+					<td>
+						<select class="multiple-select" multiple="multiple" ng-multiple="true" ng-change="saveSearch()"
+							ng-model="depsearch.deprtname">
+							<option ng-repeat="u in company.resourceTypes | orderBy:'name'" value="{{u.name}}">
+								{{u.name}}
+							</option>
+						</select>
+					</td>
+					<td>
+						<select class="multiple-select" multiple="multiple" ng-multiple="true" ng-change="saveSearch()"
+							ng-model="depsearch.deprtcatagory">
+							<option ng-repeat="cat in company.categories| orderBy:'name'" value="{{cat.name}}">
+								{{cat.name}}
+							</option>
+						</select>
+					</td>
+					<td>
 
-                    </td>
-                </tr>
-                <tr class="header">
-                    <td>Dependency<br>Project<br>Priority</td>
-                    <td>Type<br>Area<br>Priority</td>
-                    <td>{{year-1}}</td>
-                    <td>{{year}}</td>
-                    <td>{{year+1}}</td>
-                    <td>Description<br />Action</td>
-                    <td>Requester<br>Owner</td>
-                </tr>
-                <tr ng-repeat="dep in depList | multiFilter:depsearch | orderBy:[porderparam, porderparam2, porderparam3]"
-                    ng-click="goToDepInProject(dep._id, dep.projectid)" class="link">
-                    <td class="{{dep.status}}"><b>{{dep.title}}</b><br>{{dep.projecttitle}}<br>{{dep.ppriority}} -
-                        {{dep.penabler}}</td>
-                    <td>{{dep.deprtname}}<br>{{dep.deprtbuname}}<br>{{dep.priority}}</td>
-                    <td class="bar xl" ng-style="depbarRender(dep)" colspan="3">FTE:
-                        {{dep.quantum/100}} - {{dep.state}}</td>
-                    <td>{{dep.description}}<br><b>Actions</b><br>{{dep.action}}</td>
-                    <td>{{dep.requester}}<br>{{dep.deprtowner}}</td>
-                </tr>
-            </table>
-        </div>
-        <div class="overview" ng-show="views=='qlist'">
-            <table class="tablelist" ng-if="depList.length > 0">
-                <tr class="header">
-                    <td>Resource type</td>
-                    <td>Area</td>
-                    <td>Capacity</td>
-                    <td>Time</td>
-                    <td>Owner</td>
-                </tr>
-                <tr>
-                    <td>{{disptype}}</td>
-                    <td>{{disparea}}</td>
-                    <td>{{dispcapacity/100}}</td>
-                    <td>{{dispquarter}} - {{dispyear}}</td>
-                    <td>{{dispowner}}</td>
-                </tr>
-                <tr class="header">
-                    <td>Project title<br>Dependency</td>
-                    <td>Priority</td>
-                    <td>FTE</td>
-                    <td>State</td>
-                    <td>Requester<br />Description<br />Action</td>
-                </tr>
-                <tr ng-repeat="dep in onlydepList | multiFilter:depsearch | orderBy:[porderparam, porderparam2, porderparam3]"
-                    ng-click="goToDepInProject(dep._id, dep.projectid)" class="link">
-                    <td class="{{dep.status}}"><b>{{dep.projecttitle}}</b><br />{{dep.title}}<br /><b>Start:</b>
-                        {{dep.depdate | date:'yyyy-MM-dd'}}<br /><b>End:</b> {{dep.depdeaddate | date:'yyyy-MM-dd'}}
-                    </td>
-                    <td>{{dep.ppriority}} - {{dep.penabler}}</td>
-                    <td id="{{dep._id}}" class="{{dep.freestring}}">{{dep.quantum/100}}</td>
-                    <td>{{dep.state}}</td>
-                    <td><b>Requester</b><br />{{dep.requester}}<br /><b>Description</b><br />{{dep.description}}<br><b>Actions</b><br>{{dep.action}}
-                    </td>
-                </tr>
-            </table>
-        </div>
-        <div class="overview" ng-show="views=='res'">
-            <table class="tablelist" ng-if="depList.length > 0">
-                <tr class="header">
-                    <td>Resource types</td>
-                    <td colspan="4" style="text-align: center">FTE {{year}}</td>
-                    <td colspan="2" style="text-align: center">FTE {{year+1}}</td>
-                    <td colspan="2">People</td>
-                </tr>
-                <tr class="header">
-                    <td>Type<br />Category<br />Home</td>
-                    <td>Q1</td>
-                    <td>Q2</td>
-                    <td>Q3</td>
-                    <td>Q4</td>
-                    <td>Q1</td>
-                    <td>Q2</td>
-                    <td>Capacity</td>
-                    <td>Names</td>
-                </tr>
-                <tr class="header">
-                    <td>Total requested</td>
-                    <td>{{totalreqq1/100}}</td>
-                    <td>{{totalreqq2/100}}</td>
-                    <td>{{totalreqq3/100}}</td>
-                    <td>{{totalreqq4/100}}</td>
-                    <td>{{totalreqq1next/100}}</td>
-                    <td>{{totalreqq2next/100}}</td>
-                    <td>{{totalcap/100}}</td>
-                    <td></td>
-                </tr>
-                <tr ng-repeat="r in ressums | orderBy:'name'" ng-if="r.showtype || showall">
-                    <td class="{{r.status}} link" ng-click="sellectRT(true, r, 'Q1', year);">
-                        <b>{{r.name}}</b><br />{{r.catagory}}<br />{{r.buname}}
-                    </td>
-                    <td class="{{r.q1status}} link {{r.backgroundq1}}" ng-click="sellectRT(false, r, 'Q1', year);">
-                        <b>{{r.requestedq1/100}}</b><br />({{r.q1diff/100}})
-                    </td>
-                    <td class="{{r.q2status}} link {{r.backgroundq2}}" ng-click="sellectRT(false, r, 'Q2', year);">
-                        <b>{{r.requestedq2/100}}</b><br />({{r.q2diff/100}})
-                    </td>
-                    <td class="{{r.q3status}} link {{r.backgroundq3}}" ng-click="sellectRT(false, r, 'Q3', year);">
-                        <b>{{r.requestedq3/100}}</b><br />({{r.q3diff/100}})
-                    </td>
-                    <td class="{{r.q4status}} link {{r.backgroundq4}}" ng-click="sellectRT(false, r, 'Q4', year);">
-                        <b>{{r.requestedq4/100}}</b><br />({{r.q4diff/100}})
-                    </td>
-                    <td class="{{r.q1nextstatus}} link {{r.backgroundq1next}}"
-                        ng-click="sellectRT(false, r, 'Q1', (year+1));">
-                        <b>{{r.requestedq1next/100}}</b><br />({{r.q1nextdiff/100}})
-                    </td>
-                    <td class="{{r.q2nextstatus}} link {{r.backgroundq2next}}"
-                        ng-click="sellectRT(false, r, 'Q2', (year+1));">
-                        <b>{{r.requestedq2next/100}}</b><br />({{r.q2nextdiff/100}})
-                    </td>
-                    <td>{{r.cap/100}}</td>
-                    <td>{{r.names}}</td>
-                </tr>
-            </table>
-        </div>
-        <div class="overview" ng-show="views=='cat'">
-            <table class="tablelist" ng-if="depList.length > 0">
-                <tr class="header">
-                    <td>Categories</td>
-                    <td colspan="4" style="text-align: center">FTE {{year}}</td>
-                    <td colspan="2" style="text-align: center">FTE {{year+1}}</td>
-                    <td></td>
-                </tr>
-                <tr class="header">
-                    <td>Category</td>
-                    <td>Q1</td>
-                    <td>Q2</td>
-                    <td>Q3</td>
-                    <td>Q4</td>
-                    <td>Q1</td>
-                    <td>Q2</td>
-                    <td>Capacity</td>
-                </tr>
-                <tr class="header">
-                    <td>Total requested</td>
-                    <td>{{catsums[0].q1/100}}</td>
-                    <td>{{catsums[0].q2/100}}</td>
-                    <td>{{catsums[0].q3/100}}</td>
-                    <td>{{catsums[0].q4/100}}</td>
-                    <td>{{catsums[0].q1next/100}}</td>
-                    <td>{{catsums[0].q2next/100}}</td>
-                    <td>{{totalcap/100}}</td>
-                </tr>
-                <tr ng-repeat="cat in catsums" ng-if="cat.name!='total'" class="link" ng-click="sellectCat(cat.name)">
-                    <td class="{{cat.status}}"><b>{{cat.name}}</b></td>
-                    <td class="{{cat.q1status}}"><b>{{cat.q1/100}}</b><br />({{cat.q1diff/100}})</td>
-                    <td class="{{cat.q2status}}"><b>{{cat.q2/100}}</b><br />({{cat.q2diff/100}})</td>
-                    <td class="{{cat.q3status}}"><b>{{cat.q3/100}}</b><br />({{cat.q3diff/100}})</td>
-                    <td class="{{cat.q4status}}"><b>{{cat.q4/100}}</b><br />({{cat.q4diff/100}})</td>
-                    <td class="{{cat.q1nextstatus}}"><b>{{cat.q1next/100}}</b><br />({{cat.q1nextdiff/100}})</td>
-                    <td class="{{cat.q2nextstatus}}"><b>{{cat.q2next/100}}</b><br />({{cat.q2nextdiff/100}})</td>
-                    <td>{{cat.t/100}}</td>
-                </tr>
-            </table>
-        </div>
-        <div class="overview" ng-show="views=='rt'">
-            <table ng-if="company.resourceTypes.length > 0" class="tablelist">
-                <tr class="header">
-                    <td class="header">Resource types</td>
-                    <td class="header">Category</td>
-                    <td class="header">BU</td>
-                    <td class="header">Owner</td>
-                    <td class="header">Names</td>
-                    <td class="header">Int FTE</td>
-                    <td class="header">Ext FTE</td>
-                    <td class="header">Total FTE</td>
-                </tr>
-                <tr ng-repeat="type in company.resourceTypes| orderBy:'name'" ng-if="isCatinFilter(depsearch.deprtcatagory,type.catagory) ||
+					</td>
+				</tr>
+				<tr class="header">
+					<td colspan="5">Order by</td>
+				</tr>
+				<tr>
+					<td colspan="5">
+						<select ng-model="porderparam" ng-init="porderparam='ppriority'">
+							<option value="depdate">Order by work start</option>
+							<option value="depdeaddate">Order by deadline</option>
+							<option value="deprtname">Order by Source</option>
+							<option value="projecttitle">Order by Project</option>
+							<option value="title">Dependency title</option>
+							<option value="ppriority">Project priority</option>
+							<option value="-penablervalue">Project Enabler</option>
+							<option value="priority">Dependency priority</option>
+							<option value="pbuname">Unit</option>
+							<option value="pportname">Portfolio</option>
+							<option value="state">State</option>
+						</select>
+						<select ng-model="porderparam2" ng-init="porderparam2='-penablervalue'">
+							<option value="depdate">Order by work start</option>
+							<option value="depdeaddate">Order by deadline</option>
+							<option value="deprtname">Order by Source</option>
+							<option value="projecttitle">Order by Project</option>
+							<option value="title">Dependency title</option>
+							<option value="ppriority">Project priority</option>
+							<option value="-penablervalue">Project Enabler</option>
+							<option value="priority">Dependency priority</option>
+							<option value="pbuname">Unit</option>
+							<option value="pportname">Portfolio</option>
+							<option value="state">State</option>
+						</select>
+						<select ng-model="porderparam3" ng-init="porderparam3='priority'">
+							<option value="depdate">Order by work start</option>
+							<option value="depdeaddate">Order by deadline</option>
+							<option value="deprtname">Order by Source</option>
+							<option value="projecttitle">Order by Project</option>
+							<option value="title">Dependency title</option>
+							<option value="ppriority">Project priority</option>
+							<option value="-penablervalue">Project Enabler</option>
+							<option value="priority">Dependency priority</option>
+							<option value="pbuname">Unit</option>
+							<option value="pportname">Portfolio</option>
+							<option value="state">State</option>
+						</select>
+
+					</td>
+				</tr>
+			</table>
+			<div class="overview" ng-show="views=='list'">
+				<table class="tablelist" ng-if="depList.length > 0">
+					<tr class="header">
+						<td colspan="8">Dependency list
+
+						</td>
+					</tr>
+					<tr class="header">
+						<td>Dependency<br>Project<br>Priority</td>
+						<td>Type<br>Area<br>Priority</td>
+						<td>{{year-1}}</td>
+						<td>{{year}}</td>
+						<td>{{year+1}}</td>
+						<td>Description<br />Action</td>
+						<td>Requester<br>Owner</td>
+					</tr>
+					<tr ng-repeat="dep in depList | multiFilter:depsearch | orderBy:[porderparam, porderparam2, porderparam3]"
+						ng-click="goToDepInProject(dep._id, dep.projectid)" class="link">
+						<td class="{{dep.status}}"><b>{{dep.title}}</b><br>{{dep.projecttitle}}<br>{{dep.ppriority}} -
+							{{dep.penabler}}</td>
+						<td>{{dep.deprtname}}<br>{{dep.deprtbuname}}<br>{{dep.priority}}</td>
+						<td class="bar xl" ng-style="depbarRender(dep)" colspan="3">FTE:
+							{{dep.quantum/100}} - {{dep.state}}</td>
+						<td>{{dep.description}}<br><b>Actions</b><br>{{dep.action}}</td>
+						<td>{{dep.requester}}<br>{{dep.deprtowner}}</td>
+					</tr>
+				</table>
+			</div>
+			<div class="overview" ng-show="views=='qlist'">
+				<table class="tablelist" ng-if="depList.length > 0">
+					<tr class="header">
+						<td>Resource type</td>
+						<td>Area</td>
+						<td>Capacity</td>
+						<td>Time</td>
+						<td>Owner</td>
+					</tr>
+					<tr>
+						<td>{{disptype}}</td>
+						<td>{{disparea}}</td>
+						<td>{{dispcapacity/100}}</td>
+						<td>{{dispquarter}} - {{dispyear}}</td>
+						<td>{{dispowner}}</td>
+					</tr>
+					<tr class="header">
+						<td>Project title<br>Dependency</td>
+						<td>Priority</td>
+						<td>FTE</td>
+						<td>State</td>
+						<td>Requester<br />Description<br />Action</td>
+					</tr>
+					<tr ng-repeat="dep in onlydepList | multiFilter:depsearch | orderBy:[porderparam, porderparam2, porderparam3]"
+						ng-click="goToDepInProject(dep._id, dep.projectid)" class="link">
+						<td class="{{dep.status}}"><b>{{dep.projecttitle}}</b><br />{{dep.title}}<br /><b>Start:</b>
+							{{dep.depdate | date:'yyyy-MM-dd'}}<br /><b>End:</b> {{dep.depdeaddate | date:'yyyy-MM-dd'}}
+						</td>
+						<td>{{dep.ppriority}} - {{dep.penabler}}</td>
+						<td id="{{dep._id}}" class="{{dep.freestring}}">{{dep.quantum/100}}</td>
+						<td>{{dep.state}}</td>
+						<td><b>Requester</b><br />{{dep.requester}}<br /><b>Description</b><br />{{dep.description}}<br><b>Actions</b><br>{{dep.action}}
+						</td>
+					</tr>
+				</table>
+			</div>
+			<div class="overview" ng-show="views=='res'">
+				<table class="tablelist" ng-if="depList.length > 0">
+					<tr class="header">
+						<td>Resource types</td>
+						<td colspan="4" style="text-align: center">FTE {{year}}</td>
+						<td colspan="2" style="text-align: center">FTE {{year+1}}</td>
+						<td colspan="2">People</td>
+					</tr>
+					<tr class="header">
+						<td>Type<br />Category<br />Home</td>
+						<td>Q1</td>
+						<td>Q2</td>
+						<td>Q3</td>
+						<td>Q4</td>
+						<td>Q1</td>
+						<td>Q2</td>
+						<td>Capacity</td>
+						<td>Names</td>
+					</tr>
+					<tr class="header">
+						<td>Total requested</td>
+						<td>{{totalreqq1/100}}</td>
+						<td>{{totalreqq2/100}}</td>
+						<td>{{totalreqq3/100}}</td>
+						<td>{{totalreqq4/100}}</td>
+						<td>{{totalreqq1next/100}}</td>
+						<td>{{totalreqq2next/100}}</td>
+						<td>{{totalcap/100}}</td>
+						<td></td>
+					</tr>
+					<tr ng-repeat="r in ressums | orderBy:'name'" ng-if="r.showtype || showall">
+						<td class="{{r.status}} link" ng-click="sellectRT(true, r, 'Q1', year);">
+							<b>{{r.name}}</b><br />{{r.catagory}}<br />{{r.buname}}
+						</td>
+						<td class="{{r.q1status}} link {{r.backgroundq1}}" ng-click="sellectRT(false, r, 'Q1', year);">
+							<b>{{r.requestedq1/100}}</b><br />({{r.q1diff/100}})
+						</td>
+						<td class="{{r.q2status}} link {{r.backgroundq2}}" ng-click="sellectRT(false, r, 'Q2', year);">
+							<b>{{r.requestedq2/100}}</b><br />({{r.q2diff/100}})
+						</td>
+						<td class="{{r.q3status}} link {{r.backgroundq3}}" ng-click="sellectRT(false, r, 'Q3', year);">
+							<b>{{r.requestedq3/100}}</b><br />({{r.q3diff/100}})
+						</td>
+						<td class="{{r.q4status}} link {{r.backgroundq4}}" ng-click="sellectRT(false, r, 'Q4', year);">
+							<b>{{r.requestedq4/100}}</b><br />({{r.q4diff/100}})
+						</td>
+						<td class="{{r.q1nextstatus}} link {{r.backgroundq1next}}"
+							ng-click="sellectRT(false, r, 'Q1', (year+1));">
+							<b>{{r.requestedq1next/100}}</b><br />({{r.q1nextdiff/100}})
+						</td>
+						<td class="{{r.q2nextstatus}} link {{r.backgroundq2next}}"
+							ng-click="sellectRT(false, r, 'Q2', (year+1));">
+							<b>{{r.requestedq2next/100}}</b><br />({{r.q2nextdiff/100}})
+						</td>
+						<td>{{r.cap/100}}</td>
+						<td>{{r.names}}</td>
+					</tr>
+				</table>
+			</div>
+			<div class="overview" ng-show="views=='cat'">
+				<table class="tablelist" ng-if="depList.length > 0">
+					<tr class="header">
+						<td>Categories</td>
+						<td colspan="4" style="text-align: center">FTE {{year}}</td>
+						<td colspan="2" style="text-align: center">FTE {{year+1}}</td>
+						<td></td>
+					</tr>
+					<tr class="header">
+						<td>Category</td>
+						<td>Q1</td>
+						<td>Q2</td>
+						<td>Q3</td>
+						<td>Q4</td>
+						<td>Q1</td>
+						<td>Q2</td>
+						<td>Capacity</td>
+					</tr>
+					<tr class="header">
+						<td>Total requested</td>
+						<td>{{catsums[0].q1/100}}</td>
+						<td>{{catsums[0].q2/100}}</td>
+						<td>{{catsums[0].q3/100}}</td>
+						<td>{{catsums[0].q4/100}}</td>
+						<td>{{catsums[0].q1next/100}}</td>
+						<td>{{catsums[0].q2next/100}}</td>
+						<td>{{totalcap/100}}</td>
+					</tr>
+					<tr ng-repeat="cat in catsums" ng-if="cat.name!='total'" class="link"
+						ng-click="sellectCat(cat.name)">
+						<td class="{{cat.status}}"><b>{{cat.name}}</b></td>
+						<td class="{{cat.q1status}}"><b>{{cat.q1/100}}</b><br />({{cat.q1diff/100}})</td>
+						<td class="{{cat.q2status}}"><b>{{cat.q2/100}}</b><br />({{cat.q2diff/100}})</td>
+						<td class="{{cat.q3status}}"><b>{{cat.q3/100}}</b><br />({{cat.q3diff/100}})</td>
+						<td class="{{cat.q4status}}"><b>{{cat.q4/100}}</b><br />({{cat.q4diff/100}})</td>
+						<td class="{{cat.q1nextstatus}}"><b>{{cat.q1next/100}}</b><br />({{cat.q1nextdiff/100}})</td>
+						<td class="{{cat.q2nextstatus}}"><b>{{cat.q2next/100}}</b><br />({{cat.q2nextdiff/100}})</td>
+						<td>{{cat.t/100}}</td>
+					</tr>
+				</table>
+			</div>
+			<div class="overview" ng-show="views=='rt'">
+				<table ng-if="company.resourceTypes.length > 0" class="tablelist">
+					<tr class="header">
+						<td class="header">Resource types</td>
+						<td class="header">Category</td>
+						<td class="header">BU</td>
+						<td class="header">Owner</td>
+						<td class="header">Names</td>
+						<td class="header">Int FTE</td>
+						<td class="header">Ext FTE</td>
+						<td class="header">Total FTE</td>
+					</tr>
+					<tr ng-repeat="type in company.resourceTypes| orderBy:'name'" ng-if="isCatinFilter(depsearch.deprtcatagory,type.catagory) ||
                 isRTinFilter(depsearch.deprtname,type.name) ||
                 isResowninFilter(depsearch.deprtowner,type.resown) ||
                 ((depsearch.deprtowner == undefined || depsearch.deprtowner.length==0) && 
@@ -452,24 +485,24 @@
                 (depsearch.deprtname == undefined || depsearch.deprtname.length==0))
                 
                 ">
-                    <td>{{type.name}}</td>
-                    <td>{{type.catagory}}</td>
-                    <td>{{type.buname}}</td>
-                    <td>{{type.resown}}</td>
-                    <td>{{type.names}}</td>
-                    <td>
-                        <div class="right">{{type.capacityint/100}}</div>
-                    </td>
-                    <td>
-                        <div class="right">{{type.capacityext/100}}</div>
-                    </td>
+						<td>{{type.name}}</td>
+						<td>{{type.catagory}}</td>
+						<td>{{type.buname}}</td>
+						<td>{{type.resown}}</td>
+						<td>{{type.names}}</td>
+						<td>
+							<div class="right">{{type.capacityint/100}}</div>
+						</td>
+						<td>
+							<div class="right">{{type.capacityext/100}}</div>
+						</td>
 
-                    <td>
-                        <div class="right">{{type.capacity/100}}</div>
-                    </td>
-                </tr>
-            </table>
-        </div>
-
-    </div>
+						<td>
+							<div class="right">{{type.capacity/100}}</div>
+						</td>
+					</tr>
+				</table>
+			</div>
+		</div>
+	</div>
 </div>
