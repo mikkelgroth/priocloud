@@ -80,9 +80,9 @@ angular
                 $('.popup').addClass('active');
                 $scope.deleteThis = false;
             }
-
+           
             $scope.beginEditMetricvalue = function (metricvalue) {
-                funeditMetricvalue(Object.assign({}, metricvalue));
+                funeditMetricvalue(metricvalue);
             };
 
             $scope.saveMetric = function (metric) {
@@ -101,6 +101,7 @@ angular
 
             $scope.saveMetricvalues = function () {
                 if ($scope.user.changeContent) {
+                    calcMetricvaluesTotals();
                     companyService.saveMetricName($scope.metric, $scope.user, true);
                     $scope.hasChanged = false;
                     $scope.deleteThis = false;
@@ -150,8 +151,9 @@ angular
 
             calcMetricvaluesTotals = function () {
                 var total = 0;
-                $scope.metric.metricvalues.sort((a, b) => a.date.localeCompare(b.date))
-                console.log($scope.metric.metricvalues);
+                var tempvalues = angular.copy($scope.metric.metricvalues.sort((a, b) => a.date.localeCompare(b.date)));
+                $scope.metric.metricvalues = tempvalues;
+                //console.log($scope.metric.metricvalues);
 
                 for (let i = 0; i < $scope.metric.metricvalues.length; i++) {
                     const e = $scope.metric.metricvalues[i];
@@ -204,7 +206,7 @@ angular
             function showMetricvalue() {
                 if (metricvalueId) {
                     let p = $scope.metric.metricvalues.find(x => x._id === metricvalueId);
-                    if (p != undefined) editMetricvalue(p);
+                    if (p != undefined) funeditMetricvalue(p);
                 }
             }
         }

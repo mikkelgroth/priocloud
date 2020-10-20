@@ -147,13 +147,10 @@ angular
                         keyresult['ppm'] = project.pm;
                         keyresult['pconnect'] = project.connect;
                         keyresult['ppriority'] = project.priority;
-
-                        console.log("MetricID: " + keyresult.metricID);
-                        //var lastmetric = util.getObjectByOID(keyresult.metricID, $scope.metrics);
-                        //var last = lastmetric.metricvalues[lastmetric.metricvalues.length - 1];
+                        
+                        var lastmetric = getMetric(keyresult.metricID);
                         var last = getLastValue(keyresult.metricID);
-                        if (last != undefined) {
-                            console.log("Lastvalue: " + last + " last.value: " + last.value);
+                        if (last != undefined && lastmetric != undefined) {
 
                             if (lastmetric.operator == "high") {
                                 keyresult.tstatus = (Number(keyresult.value) <= Number(last.value)) ? "Green" : "Red";
