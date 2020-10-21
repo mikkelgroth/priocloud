@@ -20,8 +20,7 @@ angular
 
             var projectId = $routeParams.id;
             $scope.id = $routeParams.id;
-            $scope.showsimplestatus = !$scope.company.filters.companyshowStatus
-
+            
             userService
                 .user
                 .subscribe(function (user) {
@@ -243,8 +242,11 @@ angular
                     $scope.project.milestones[0].rawenddate = $("#projdate")[0].value;
 
                 }
+                $scope.project.milestones[0].type = $scope.project.type;
                 $scope.project.milestones[0].priority = $scope.project.priority;
                 $scope.project.milestones[0].title = $scope.project.title;
+                $scope.project.milestones[0].acountable = $scope.project.po.name;
+                $scope.project.milestones[0].responsible = $scope.project.pm.name;
 
                 //calc estimate
                 $scope.project.milestones[0].numestimate = Number($scope.project.milestones[0].estimate);

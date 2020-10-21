@@ -103,6 +103,9 @@ angular
                     //set t-shirt size
                     util.setmileflags(mile);
 
+                    //temp to make first flag on all old milestones
+                    mile.first = ($scope.project.milestones[0]._id == mile._id);
+
                     $scope.hasChanged = true;
                 }
             };
@@ -114,6 +117,7 @@ angular
                     }
                     $scope.project.milestones.push({});
                     $scope.editmile = $scope.project.milestones[$scope.project.milestones.length - 1];
+                    $scope.editmile.first = ($scope.project.milestones.length == 1);
                     var newdate = (new Date()).toISOString();
                     var end = new Date();
                     end.setFullYear(end.getFullYear() + 1);

@@ -55,11 +55,11 @@
                     <td class="formlabel">Type</td>
                     <td>
                         <select ng-model="editmile.type" ng-change="saveNow(editmile)"
-                            ng-disabled="!user.changeContent">
-                            <option value="Project">Project</option>
+                            ng-disabled="!user.changeContent" ng-show="!editmile.first">
                             <option value="Roadmap item">Roadmap item</option>
                             <option value="Activity">Activity</option>
                         </select>
+                        <div ng-show="editmile.first">{{editmile.type}}</div>
                     </td>
                 </tr>
                 <tr>
@@ -80,20 +80,22 @@
                     <td class="formlabel">Delivery responsible</td>
                     <td>
                         <select ng-model="editmile.responsible" ng-change="saveNow(editmile)"
-                            ng-disabled="!user.changeContent">
+                            ng-disabled="!user.changeContent" ng-show="!editmile.first">
                             <option ng-repeat="u in users | filter: {source: true} | orderBy:'name'" value="{{u.name}}">
                                 {{u.name}}</option>
                         </select>
+                        <div ng-show="editmile.first">{{editmile.responsible}}</div>
                     </td>
                 </tr>
                 <tr>
                     <td class="formlabel">Delivery approver</td>
                     <td>
                         <select ng-model="editmile.acountable" ng-change="saveNow(editmile)"
-                            ng-disabled="!user.changeContent">
+                            ng-disabled="!user.changeContent" ng-show="!editmile.first">
                             <option ng-repeat="u in users | filter: {source: true} | orderBy:'name'" value="{{u.name}}">
                                 {{u.name}}</option>
                         </select>
+                        <div ng-show="editmile.first">{{editmile.acountable}}</div>
                     </td>
                 </tr>
                 <tr>
@@ -134,7 +136,6 @@
                         <select ng-model="editmile.state" ng-change="saveNow(editmile)"
                             ng-disabled="!user.changeContent">
                             <option value="Target">Target</option>
-                            <option value="Qualified">Qualified</option>
                             <option value="Progress">Progress</option>
                             <option value="Done">Done</option>
                             <option value="Canceled">Canceled</option>
@@ -233,8 +234,12 @@
                             <option value="300">300 hour</option>
                             <option value="400">400 hour</option>
                             <option value="500">500 hour</option>
+                            <option value="600">600 hour</option>
                             <option value="700">700 hour</option>
+                            <option value="800">800 hour</option>
+                            <option value="900">900 hour</option>
                             <option value="1000">1.000 hour</option>
+                            <option value="1200">1.200 hour</option>
                             <option value="1500">1.500 hour</option>
                             <option value="2000">2.000 hour</option>
                             <option value="3000">3.000 hour</option>
