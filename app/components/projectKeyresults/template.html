@@ -262,7 +262,7 @@
                     <tr>
                         <td class="formlabel">Last value</td>
                         <td class="right">
-                            {{getLastValue(editkeyresult.metricID).value}}
+                            {{getLastValue(editkeyresult.metricID).value | number:0}}
                             {{getMetric(editkeyresult.metricID).valueformat}}
                         </td>
                     </tr>
@@ -278,7 +278,9 @@
                     </tr>
                     <tr>
                         <td class="formlabel">Average to last date</td>
-                        <td class="right">{{getLastValue(editkeyresult.metricID).average}}
+                        <td class="right">
+                            {{getLastValue(editkeyresult.metricID).average | number:0}}
+                            {{getMetric(editkeyresult.metricID).valueformat}}
                         </td>
                     </tr>
                     <tr>
@@ -318,7 +320,7 @@
                 </tr>
                 <tr ng-repeat="keyresult in project.keyresults | orderBy:'krdate'" class="link">
                     <td ng-click="beginEditKeyresult(keyresult)" class="{{keyresult.status}}">
-                        <b>{{keyresult.value}} {{getMetric(keyresult.metricID).valueformat}}</b></td>
+                        <b>{{keyresult.value | number:0}} {{getMetric(keyresult.metricID).valueformat}}</b></td>
                     <td ng-click="beginEditKeyresult(keyresult)" class="{{setDeadlinestatus(keyresult.krdate)}}">
                         {{keyresult.krdate | date:'longDate'}}</td>
                     <td ng-click="beginEditKeyresult(keyresult)"
@@ -327,7 +329,7 @@
                     <td ng-click="beginEditKeyresult(keyresult)" class="{{getMetric(keyresult.metricID).status}}">
                         {{getMetric(keyresult.metricID).title}}</td>
                     <td ng-click="beginEditKeyresult(keyresult)">
-                        {{getLastValue(keyresult.metricID).value}} {{getMetric(keyresult.metricID).valueformat}}</td>
+                        {{getLastValue(keyresult.metricID).value | number:0}} {{getMetric(keyresult.metricID).valueformat}}</td>
                     <td><input type="checkbox" ng-model="keyresult.showInReport" ng-change="saveKeyresults()"
                             ng-disabled="!user.changeContent"></td>
                 </tr>

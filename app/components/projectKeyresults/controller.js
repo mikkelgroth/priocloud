@@ -185,37 +185,6 @@ angular
                 } else {
                     $scope.editkeyresult.status = (Number($scope.editkeyresult.value) >= Number(last.value)) ? "Green" : "Red";
                 }
-
-
-                /*
-                var total = 0;
-                for (let i = 0; i < $scope.metric.keyresults.length; i++) {
-                    const e = $scope.metric.keyresults[i];
-                    total += Number(e.value);
-                    e.average = Math.round(total / (i + 1));
-                    e.trendstatus = "Green";
-                    if (i > 0) {
-                        if ($scope.metric.operator == "high") {
-                            e.trend = Math.round(100 * (Number($scope.metric.keyresults[i].value) - Number($scope.metric.keyresults[i - 1].value)) / Number($scope.metric.keyresults[i - 1].value));
-                        } else {
-                            e.trend = Math.round(100 * (Number($scope.metric.keyresults[i - 1].value) - Number($scope.metric.keyresults[i].value)) / Number($scope.metric.keyresults[i - 1].value));
-                        }
-                        if (e.trend < 0) e.trendstatus = "Red";
-                    } else {
-                        e.trend = 0;
-                    }
-                    e.status = "Red";
-                    if (Number(e.trend) >= Number($scope.metric.orangevalue)) e.status = "Orange";
-                    if (Number(e.trend) >= Number($scope.metric.yellowvalue)) e.status = "Yellow";
-                    if (Number(e.trend) >= Number($scope.metric.greenvalue)) e.status = "Green";
-                }
-                $scope.metric.status = $scope.metric.keyresults[$scope.metric.keyresults.length - 1].status;
-                $scope.metric.trend = $scope.metric.keyresults[$scope.metric.keyresults.length - 1].trend;
-                $scope.metric.trendstatus = $scope.metric.keyresults[$scope.metric.keyresults.length - 1].trendstatus;
-                $scope.metric.average = $scope.metric.keyresults[$scope.metric.keyresults.length - 1].average;
-                $scope.metric.date = $scope.metric.keyresults[$scope.metric.keyresults.length - 1].date;
-                $scope.metric.value = $scope.metric.keyresults[$scope.metric.keyresults.length - 1].value;
-                */
             }
 
 
